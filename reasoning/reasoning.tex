@@ -1,0 +1,113 @@
+\documentclass{report}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\graphicspath{{images/}}
+
+\usepackage{amsmath}
+
+\begin{document}
+\author{J. T. Klooster}
+\title{Reasoning track notes}
+\maketitle
+\tableofcontents
+
+\chapter{Examples}
+
+\begin{itemize}
+	\item Software for medical diagonostics
+			Figure out how and what diseases a patiant has.
+	\item Software for games
+			This is different from diagnostics.
+\end{itemize}
+
+there is often a common core. After this course it should become easier to
+work with logic because you've developed your own as a refernce pont
+
+\chapter{Logic}
+stuff you need to know
+
+\begin{itemize}
+		\item Classical logic, important
+		\item Epistemic logics
+		\item modal logics, not really that important
+		\item logics for linguistics
+		\item fuzzy logics, seems important?
+\end{itemize}
+
+Logic should be decidable, can you solve the problem, for example:
+if you have $L$, does $A$ hold in $L$?
+does $L$ hold in $A$ \\
+
+It might be difficult to combine this with expressive power.
+
+\section{Predicate logic}
+
+Predicate logic is undeidable. Propositional logic is but its weaker. \\
+
+Description logic, is between predicate and propositional. But it isn't
+used in this course. Description logic has been devloped to be used in practice,
+meaning it wasn't really developed my mathematicans. But its very succesfull but.
+
+\subsection{proofs}
+
+If it is asked that something is proofed take effort to do it. No sloppy work!
+
+\subsection{propoistional logic}
+
+\begin{tabular}{@{}lll@{}}
+$\Rightarrow$ & implication & if A is true, then B is true \\
+$\iff$ & bi-implication
+
+\end{tabular}
+
+\subsubsection{CPC}
+Clasical propositional logic $\wedge$ clasical propositional computation
+
+\section{decidable}
+
+Logic is decidable if there is a turing machine when presented with a formula
+$\phi$ as input, outpus 1 if $\phi$ holds in the logic and 0 otherwise. \\
+
+Valdity in classical propoistional logic CPC is decidable. \\
+Validity in claical logic CPQ is undicidable \\
+
+Something with P vs NP
+
+\section{sound and complete}
+A proof system is sound and complete for a sementics if and only if formula
+is true acording to the semantics exeactly when it is dervable in the proof
+system.
+
+\section{Hilbert}
+
+hilbert is difficult to work with. Despair in 5. 4. 3. \dots
+
+There are a bunch of axioms which just define the operators I think.
+And there is one rule the Modus Ponens.
+
+\subsection{axioms}
+
+all the actioms have a name.
+
+W says weakining and E says Exchange.
+
+\subsection{nasty part}
+
+finding the right axiom
+
+\subsection{premises}
+also called assumption.
+
+\subsection{Lemma}
+
+
+
+\section{Proof}
+A proof of $A$ is $A_1 \dots A_n$ such that:
+\begin{itemize}
+	\item $A_n=A$
+	\item For all $1<= i <= n$ $A$ is an axiam in system \\
+		there are $j,h<i$ such that $A_j A_h / A_i$
+\end{itemize}
+
+\end{document}
