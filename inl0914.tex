@@ -17,6 +17,14 @@ if and only f $A$ is a tautology.
 
 Proof $A$ in $H$ is a sequance $B_1, B_2, \ldots, B_n$
 
+\begin{tabular}{@{}l|ll@{}}
+\#& statement			&reason \\ \toprule
+0& $A$ is part of a Hilbert system & given \\
+1& All axioms in a hilbert system are tautologies & property of hilbert systems\\
+2& $A$ consists of axioms or the one rule modus pones & $A$ is part of the hilbert sytem as stated by $0$ \\
+\end{tabular}
+
+
 \subsection{Axiom W}
 \begin{tabular}{@{ }c@{ }@{ }c | c@{}@{ }c@{ }@{ }c@{ }@{}c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{}@{}c@{ }}
 A & B & ( & A & $\rightarrow$ & ( & B & $\rightarrow$ & A & ) & )\\
@@ -73,13 +81,63 @@ $\bot$ & $\top$ &  &  & $\bot$ & $\top$ & $\top$ &  & \textcolor{red}{$\top$} & 
 $\bot$ & $\bot$ &  &  & $\bot$ & $\top$ & $\bot$ &  & \textcolor{red}{$\top$} &  &  & $\bot$ & $\top$ & $\top$ & $\bot$ &  & $\top$ & $\top$ & $\bot$ &  & \\
 \end{tabular}
 \subsection{Axiom CL}
-
+\begin{tabular}{@{ }c@{ }@{ }c | c@{}@{}c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{}@{ }c@{ }@{ }c@{ }@{}c@{ }}
+A & B & ( & ( & A & $\&$ & B & ) & $\rightarrow$ & A & )\\
+\hline 
+$\top$ & $\top$ &  &  & $\top$ & $\top$ & $\top$ &  & \textcolor{red}{$\top$} & $\top$ & \\
+$\top$ & $\bot$ &  &  & $\top$ & $\bot$ & $\bot$ &  & \textcolor{red}{$\top$} & $\top$ & \\
+$\bot$ & $\top$ &  &  & $\bot$ & $\bot$ & $\top$ &  & \textcolor{red}{$\top$} & $\bot$ & \\
+$\bot$ & $\bot$ &  &  & $\bot$ & $\bot$ & $\bot$ &  & \textcolor{red}{$\top$} & $\bot$ & \\
+\end{tabular}
 \subsection{Axiom CR}
-\subsection{Axiom DL}
-\subsection{Axiom DR}
+\begin{tabular}{@{ }c@{ }@{ }c | c@{}@{}c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{}@{ }c@{ }@{ }c@{ }@{}c@{ }}
+A & B & ( & ( & A & $\&$ & B & ) & $\rightarrow$ & B & )\\
+\hline 
+$\top$ & $\top$ &  &  & $\top$ & $\top$ & $\top$ &  & \textcolor{red}{$\top$} & $\top$ & \\
+$\top$ & $\bot$ &  &  & $\top$ & $\bot$ & $\bot$ &  & \textcolor{red}{$\top$} & $\bot$ & \\
+$\bot$ & $\top$ &  &  & $\bot$ & $\bot$ & $\top$ &  & \textcolor{red}{$\top$} & $\top$ & \\
+$\bot$ & $\bot$ &  &  & $\bot$ & $\bot$ & $\bot$ &  & \textcolor{red}{$\top$} & $\bot$ & \\
+\end{tabular}
 \subsection{Axiom C}
+\begin{tabular}{@{ }c@{ }@{ }c | c@{}@{ }c@{ }@{ }c@{ }@{}c@{}@{ }c@{ }@{ }c@{ }@{}c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{}@{}c@{}@{}c@{ }}
+A & B & ( & A & $\rightarrow$ & ( & B & $\rightarrow$ & ( & A & $\&$ & B & ) & ) & )\\
+\hline 
+$\top$ & $\top$ &  & $\top$ & \textcolor{red}{$\top$} &  & $\top$ & $\top$ &  & $\top$ & $\top$ & $\top$ &  &  & \\
+$\top$ & $\bot$ &  & $\top$ & \textcolor{red}{$\top$} &  & $\bot$ & $\top$ &  & $\top$ & $\bot$ & $\bot$ &  &  & \\
+$\bot$ & $\top$ &  & $\bot$ & \textcolor{red}{$\top$} &  & $\top$ & $\bot$ &  & $\bot$ & $\bot$ & $\top$ &  &  & \\
+$\bot$ & $\bot$ &  & $\bot$ & \textcolor{red}{$\top$} &  & $\bot$ & $\top$ &  & $\bot$ & $\bot$ & $\bot$ &  &  & \\
+\end{tabular}
+\subsection{Axiom DL}
+\begin{tabular}{@{ }c@{ }@{ }c | c@{}@{ }c@{ }@{ }c@{ }@{}c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{}@{}c@{ }}
+A & B & ( & A & $\rightarrow$ & ( & A & $\lor$ & B & ) & )\\
+\hline 
+$\top$ & $\top$ &  & $\top$ & \textcolor{red}{$\top$} &  & $\top$ & $\top$ & $\top$ &  & \\
+$\top$ & $\bot$ &  & $\top$ & \textcolor{red}{$\top$} &  & $\top$ & $\top$ & $\bot$ &  & \\
+$\bot$ & $\top$ &  & $\bot$ & \textcolor{red}{$\top$} &  & $\bot$ & $\top$ & $\top$ &  & \\
+$\bot$ & $\bot$ &  & $\bot$ & \textcolor{red}{$\top$} &  & $\bot$ & $\bot$ & $\bot$ &  & \\
+\end{tabular}
+\subsection{Axiom DR}
+\begin{tabular}{@{ }c@{ }@{ }c | c@{}@{ }c@{ }@{ }c@{ }@{}c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{}@{}c@{ }}
+A & B & ( & B & $\rightarrow$ & ( & A & $\lor$ & B & ) & )\\
+\hline 
+$\top$ & $\top$ &  & $\top$ & \textcolor{red}{$\top$} &  & $\top$ & $\top$ & $\top$ &  & \\
+$\top$ & $\bot$ &  & $\bot$ & \textcolor{red}{$\top$} &  & $\top$ & $\top$ & $\bot$ &  & \\
+$\bot$ & $\top$ &  & $\top$ & \textcolor{red}{$\top$} &  & $\bot$ & $\top$ & $\top$ &  & \\
+$\bot$ & $\bot$ &  & $\bot$ & \textcolor{red}{$\top$} &  & $\bot$ & $\bot$ & $\bot$ &  & \\
+\end{tabular}
 \subsection{Axiom D}
-
+\begin{tabular}{@{ }c@{ }@{ }c@{ }@{ }c | c@{}@{}c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{}@{ }c@{ }@{}c@{}@{}c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{}@{ }c@{ }@{}c@{}@{}c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{}@{ }c@{ }@{ }c@{ }@{}c@{}@{}c@{}@{}c@{ }}
+A & B & C & ( & ( & A & $\rightarrow$ & C & ) & $\rightarrow$ & ( & ( & B & $\rightarrow$ & C & ) & $\rightarrow$ & ( & ( & A & $\lor$ & B & ) & $\rightarrow$ & C & ) & ) & )\\
+\hline 
+$\top$ & $\top$ & $\top$ &  &  & $\top$ & $\top$ & $\top$ &  & \textcolor{red}{$\top$} &  &  & $\top$ & $\top$ & $\top$ &  & $\top$ &  &  & $\top$ & $\top$ & $\top$ &  & $\top$ & $\top$ &  &  & \\
+$\top$ & $\top$ & $\bot$ &  &  & $\top$ & $\bot$ & $\bot$ &  & \textcolor{red}{$\top$} &  &  & $\top$ & $\bot$ & $\bot$ &  & $\top$ &  &  & $\top$ & $\top$ & $\top$ &  & $\bot$ & $\bot$ &  &  & \\
+$\top$ & $\bot$ & $\top$ &  &  & $\top$ & $\top$ & $\top$ &  & \textcolor{red}{$\top$} &  &  & $\bot$ & $\top$ & $\top$ &  & $\top$ &  &  & $\top$ & $\top$ & $\bot$ &  & $\top$ & $\top$ &  &  & \\
+$\top$ & $\bot$ & $\bot$ &  &  & $\top$ & $\bot$ & $\bot$ &  & \textcolor{red}{$\top$} &  &  & $\bot$ & $\top$ & $\bot$ &  & $\bot$ &  &  & $\top$ & $\top$ & $\bot$ &  & $\bot$ & $\bot$ &  &  & \\
+$\bot$ & $\top$ & $\top$ &  &  & $\bot$ & $\top$ & $\top$ &  & \textcolor{red}{$\top$} &  &  & $\top$ & $\top$ & $\top$ &  & $\top$ &  &  & $\bot$ & $\top$ & $\top$ &  & $\top$ & $\top$ &  &  & \\
+$\bot$ & $\top$ & $\bot$ &  &  & $\bot$ & $\top$ & $\bot$ &  & \textcolor{red}{$\top$} &  &  & $\top$ & $\bot$ & $\bot$ &  & $\top$ &  &  & $\bot$ & $\top$ & $\top$ &  & $\bot$ & $\bot$ &  &  & \\
+$\bot$ & $\bot$ & $\top$ &  &  & $\bot$ & $\top$ & $\top$ &  & \textcolor{red}{$\top$} &  &  & $\bot$ & $\top$ & $\top$ &  & $\top$ &  &  & $\bot$ & $\bot$ & $\bot$ &  & $\top$ & $\top$ &  &  & \\
+$\bot$ & $\bot$ & $\bot$ &  &  & $\bot$ & $\top$ & $\bot$ &  & \textcolor{red}{$\top$} &  &  & $\bot$ & $\top$ & $\bot$ &  & $\top$ &  &  & $\bot$ & $\bot$ & $\bot$ &  & $\top$ & $\bot$ &  &  & \\
+\end{tabular}
 \subsection{Modes ponens}
 
 \[\frac{A \quad A\to B}{B}\] \\
@@ -110,35 +168,21 @@ To prove this $A \to B$ has to transformed with the hilbert system to $B$
 \section{Prove that it is not the case that $\vdash_H A \to B$ implies 
 $ \vdash_H \neg A \to \neg B$}
 
-\subsection{Truth table $\phi$}
-\begin{tabular}{@{ }c@{ }@{ }c | c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{ }}
-A & B & ( & A & $\rightarrow$ & B & )\\
+\begin{enumerate}
+	\item $A \to B$ implies $\neg A \to \neg B$ can be written as 
+		$(A \to B) \to (\neg A \to \neg B)$
+	\item If A was $\bot$ and B was $\top$ then $(A \to B) \to (\neg A \to 
+		\neg B)$ would be false (see truth table below), therefore it is not a tautology and cannot
+		be used in a hilbert system.
+\end{enumerate}
+\subsection{truth table}
+\begin{tabular}{@{ }c@{ }@{ }c | c@{}@{}c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{}@{ }c@{ }@{}c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{}@{}c@{ }}
+A & B & ( & ( & A & $\rightarrow$ & B & ) & $\rightarrow$ & ( & $\sim$ & A & $\rightarrow$ & $\sim$ & B & ) & )\\
 \hline 
-$\top$ & $\top$ &  & $\top$ & \textcolor{red}{$\top$} & $\top$ & \\
-$\top$ & $\bot$ &  & $\top$ & \textcolor{red}{$\bot$} & $\bot$ & \\
-$\bot$ & $\top$ &  & $\bot$ & \textcolor{red}{$\top$} & $\top$ & \\
-$\bot$ & $\bot$ &  & $\bot$ & \textcolor{red}{$\top$} & $\bot$ & \\
-\end{tabular}
-\subsection{Truth table $\delta$}
-\begin{tabular}{@{ }c@{ }@{ }c | c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{ }}
-A & B & ( & $\sim$ & A & $\rightarrow$ & $\sim$ & B & )\\
-\hline 
-$\top$ & $\top$ &  & $\bot$ & $\top$ & \textcolor{red}{$\top$} & $\bot$ & $\top$ & \\
-$\top$ & $\bot$ &  & $\bot$ & $\top$ & \textcolor{red}{$\top$} & $\top$ & $\bot$ & \\
-$\bot$ & $\top$ &  & $\top$ & $\bot$ & \textcolor{red}{$\bot$} & $\bot$ & $\top$ & \\
-$\bot$ & $\bot$ &  & $\top$ & $\bot$ & \textcolor{red}{$\top$} & $\top$ & $\bot$ & \\
-\end{tabular}
-
-
-
-
-\subsection{proof}
-
-\begin{tabular}{@{}l|ll@{}}
-\#& statement			&reason \\ \toprule
-0& the truth table of $\phi$ & given \\
-1& $\vdash_H A \to B$ & given \\
-2& $B$ & Modus Ponens 0,1 \\
+$\top$ & $\top$ &  &  & $\top$ & $\top$ & $\top$ &  & \textcolor{red}{$\top$} &  & $\bot$ & $\top$ & $\top$ & $\bot$ & $\top$ &  & \\
+$\top$ & $\bot$ &  &  & $\top$ & $\bot$ & $\bot$ &  & \textcolor{red}{$\top$} &  & $\bot$ & $\top$ & $\top$ & $\top$ & $\bot$ &  & \\
+$\bot$ & $\top$ &  &  & $\bot$ & $\top$ & $\top$ &  & \textcolor{red}{$\bot$} &  & $\top$ & $\bot$ & $\bot$ & $\bot$ & $\top$ &  & \\
+$\bot$ & $\bot$ &  &  & $\bot$ & $\top$ & $\bot$ &  & \textcolor{red}{$\top$} &  & $\top$ & $\bot$ & $\top$ & $\top$ & $\bot$ &  & \\
 \end{tabular}
 
 \section{Prove that $H$ and $G$ are equivalent}
