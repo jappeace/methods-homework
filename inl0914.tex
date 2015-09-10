@@ -1,0 +1,155 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{color}
+
+\begin{document}
+\author{J. T. Klooster}
+\title{Homework of 14 september}
+\maketitle
+\today
+\section{Prove that Hilbert system $H$ is sound with respect to this
+semantics: If $\vdash_H A$, then $A$ is true.}
+%TODO: I have no idea
+
+From the slides the thoerom says that $H$ is sound and complete
+if and only f $A$ is a tautology.
+
+Proof $A$ in $H$ is a sequance $B_1, B_2, \ldots, B_n$
+
+\subsection{Axiom W}
+\begin{tabular}{@{ }c@{ }@{ }c | c@{}@{ }c@{ }@{ }c@{ }@{}c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{}@{}c@{ }}
+A & B & ( & A & $\rightarrow$ & ( & B & $\rightarrow$ & A & ) & )\\
+\hline 
+$\top$ & $\top$ &  & $\top$ & \textcolor{red}{$\top$} &  & $\top$ & $\top$ & $\top$ &  & \\
+$\top$ & $\bot$ &  & $\top$ & \textcolor{red}{$\top$} &  & $\bot$ & $\top$ & $\top$ &  & \\
+$\bot$ & $\top$ &  & $\bot$ & \textcolor{red}{$\top$} &  & $\top$ & $\bot$ & $\bot$ &  & \\
+$\bot$ & $\bot$ &  & $\bot$ & \textcolor{red}{$\top$} &  & $\bot$ & $\top$ & $\bot$ &  & \\
+\end{tabular}
+
+\subsection{Axiom E}
+\begin{tabular}{@{ }c@{ }@{ }c@{ }@{ }c | c@{}@{}c@{}@{ }c@{ }@{ }c@{ }@{}c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{}@{}c@{}@{ }c@{ }@{}c@{}@{ }c@{ }@{ }c@{ }@{}c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{}@{}c@{}@{}c@{ }}
+A & B & C & ( & ( & A & $\rightarrow$ & ( & B & $\rightarrow$ & C & ) & ) & $\rightarrow$ & ( & B & $\rightarrow$ & ( & A & $\rightarrow$ & C & ) & ) & )\\
+\hline 
+$\top$ & $\top$ & $\top$ &  &  & $\top$ & $\top$ &  & $\top$ & $\top$ & $\top$ &  &  & \textcolor{red}{$\top$} &  & $\top$ & $\top$ &  & $\top$ & $\top$ & $\top$ &  &  & \\
+$\top$ & $\top$ & $\bot$ &  &  & $\top$ & $\bot$ &  & $\top$ & $\bot$ & $\bot$ &  &  & \textcolor{red}{$\top$} &  & $\top$ & $\bot$ &  & $\top$ & $\bot$ & $\bot$ &  &  & \\
+$\top$ & $\bot$ & $\top$ &  &  & $\top$ & $\top$ &  & $\bot$ & $\top$ & $\top$ &  &  & \textcolor{red}{$\top$} &  & $\bot$ & $\top$ &  & $\top$ & $\top$ & $\top$ &  &  & \\
+$\top$ & $\bot$ & $\bot$ &  &  & $\top$ & $\top$ &  & $\bot$ & $\top$ & $\bot$ &  &  & \textcolor{red}{$\top$} &  & $\bot$ & $\top$ &  & $\top$ & $\bot$ & $\bot$ &  &  & \\
+$\bot$ & $\top$ & $\top$ &  &  & $\bot$ & $\top$ &  & $\top$ & $\top$ & $\top$ &  &  & \textcolor{red}{$\top$} &  & $\top$ & $\top$ &  & $\bot$ & $\top$ & $\top$ &  &  & \\
+$\bot$ & $\top$ & $\bot$ &  &  & $\bot$ & $\top$ &  & $\top$ & $\bot$ & $\bot$ &  &  & \textcolor{red}{$\top$} &  & $\top$ & $\top$ &  & $\bot$ & $\top$ & $\bot$ &  &  & \\
+$\bot$ & $\bot$ & $\top$ &  &  & $\bot$ & $\top$ &  & $\bot$ & $\top$ & $\top$ &  &  & \textcolor{red}{$\top$} &  & $\bot$ & $\top$ &  & $\bot$ & $\top$ & $\top$ &  &  & \\
+$\bot$ & $\bot$ & $\bot$ &  &  & $\bot$ & $\top$ &  & $\bot$ & $\top$ & $\bot$ &  &  & \textcolor{red}{$\top$} &  & $\bot$ & $\top$ &  & $\bot$ & $\top$ & $\bot$ &  &  & \\
+\end{tabular}
+
+\subsection{Axiom I}
+\begin{tabular}{@{ }c@{ }@{ }c@{ }@{ }c | c@{}@{}c@{}@{ }c@{ }@{ }c@{ }@{}c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{}@{}c@{}@{ }c@{ }@{}c@{}@{}c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{}@{ }c@{ }@{}c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{}@{}c@{}@{}c@{ }}
+A & B & C & ( & ( & A & $\rightarrow$ & ( & B & $\rightarrow$ & C & ) & ) & $\rightarrow$ & ( & ( & A & $\rightarrow$ & B & ) & $\rightarrow$ & ( & A & $\rightarrow$ & C & ) & ) & )\\
+\hline 
+$\top$ & $\top$ & $\top$ &  &  & $\top$ & $\top$ &  & $\top$ & $\top$ & $\top$ &  &  & \textcolor{red}{$\top$} &  &  & $\top$ & $\top$ & $\top$ &  & $\top$ &  & $\top$ & $\top$ & $\top$ &  &  & \\
+$\top$ & $\top$ & $\bot$ &  &  & $\top$ & $\bot$ &  & $\top$ & $\bot$ & $\bot$ &  &  & \textcolor{red}{$\top$} &  &  & $\top$ & $\top$ & $\top$ &  & $\bot$ &  & $\top$ & $\bot$ & $\bot$ &  &  & \\
+$\top$ & $\bot$ & $\top$ &  &  & $\top$ & $\top$ &  & $\bot$ & $\top$ & $\top$ &  &  & \textcolor{red}{$\top$} &  &  & $\top$ & $\bot$ & $\bot$ &  & $\top$ &  & $\top$ & $\top$ & $\top$ &  &  & \\
+$\top$ & $\bot$ & $\bot$ &  &  & $\top$ & $\top$ &  & $\bot$ & $\top$ & $\bot$ &  &  & \textcolor{red}{$\top$} &  &  & $\top$ & $\bot$ & $\bot$ &  & $\top$ &  & $\top$ & $\bot$ & $\bot$ &  &  & \\
+$\bot$ & $\top$ & $\top$ &  &  & $\bot$ & $\top$ &  & $\top$ & $\top$ & $\top$ &  &  & \textcolor{red}{$\top$} &  &  & $\bot$ & $\top$ & $\top$ &  & $\top$ &  & $\bot$ & $\top$ & $\top$ &  &  & \\
+$\bot$ & $\top$ & $\bot$ &  &  & $\bot$ & $\top$ &  & $\top$ & $\bot$ & $\bot$ &  &  & \textcolor{red}{$\top$} &  &  & $\bot$ & $\top$ & $\top$ &  & $\top$ &  & $\bot$ & $\top$ & $\bot$ &  &  & \\
+$\bot$ & $\bot$ & $\top$ &  &  & $\bot$ & $\top$ &  & $\bot$ & $\top$ & $\top$ &  &  & \textcolor{red}{$\top$} &  &  & $\bot$ & $\top$ & $\bot$ &  & $\top$ &  & $\bot$ & $\top$ & $\top$ &  &  & \\
+$\bot$ & $\bot$ & $\bot$ &  &  & $\bot$ & $\top$ &  & $\bot$ & $\top$ & $\bot$ &  &  & \textcolor{red}{$\top$} &  &  & $\bot$ & $\top$ & $\bot$ &  & $\top$ &  & $\bot$ & $\top$ & $\bot$ &  &  & \\
+\end{tabular}
+
+\subsection{Axiom DN1}
+\begin{tabular}{@{ }c | c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{ }}
+A & ( & $\sim$ & $\sim$ & A & $\rightarrow$ & A & )\\
+\hline 
+$\top$ &  & $\top$ & $\bot$ & $\top$ & \textcolor{red}{$\top$} & $\top$ & \\
+$\bot$ &  & $\bot$ & $\top$ & $\bot$ & \textcolor{red}{$\top$} & $\bot$ & \\
+\end{tabular}
+
+\subsection{Axiom N1}
+\begin{tabular}{@{ }c@{ }@{ }c | c@{}@{}c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{}@{ }c@{ }@{}c@{}@{}c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{}@{}c@{ }}
+A & B & ( & ( & A & $\rightarrow$ & B & ) & $\rightarrow$ & ( & ( & A & $\rightarrow$ & $\sim$ & B & ) & $\rightarrow$ & $\sim$ & A & ) & )\\
+\hline 
+$\top$ & $\top$ &  &  & $\top$ & $\top$ & $\top$ &  & \textcolor{red}{$\top$} &  &  & $\top$ & $\bot$ & $\bot$ & $\top$ &  & $\top$ & $\bot$ & $\top$ &  & \\
+$\top$ & $\bot$ &  &  & $\top$ & $\bot$ & $\bot$ &  & \textcolor{red}{$\top$} &  &  & $\top$ & $\top$ & $\top$ & $\bot$ &  & $\bot$ & $\bot$ & $\top$ &  & \\
+$\bot$ & $\top$ &  &  & $\bot$ & $\top$ & $\top$ &  & \textcolor{red}{$\top$} &  &  & $\bot$ & $\top$ & $\bot$ & $\top$ &  & $\top$ & $\top$ & $\bot$ &  & \\
+$\bot$ & $\bot$ &  &  & $\bot$ & $\top$ & $\bot$ &  & \textcolor{red}{$\top$} &  &  & $\bot$ & $\top$ & $\top$ & $\bot$ &  & $\top$ & $\top$ & $\bot$ &  & \\
+\end{tabular}
+\subsection{Axiom CL}
+
+\subsection{Axiom CR}
+\subsection{Axiom DL}
+\subsection{Axiom DR}
+\subsection{Axiom C}
+\subsection{Axiom D}
+
+\subsection{Modes ponens}
+
+\[\frac{A \quad A\to B}{B}\] \\
+
+The modes ponens rule only work if and only if both A are B are true.
+This is a requirement for the entire hilbert system.
+
+
+%Where you are asked to show that if a formula A is derivable in system H,
+%then A is true (under all valuations).
+%This is a statement that you can best prove via induction to the length of
+%the proof of A. Recall that a proof of A in H is a sequence B1,B2,...,Bn,
+%of formulas such that such and so holds (see slides of today).
+%Then you show that the statement holds in case n=1
+%(when the proof consists of one formula) and that if the statement holds
+%for formulas with proofs of length n,
+%then it holds for formulas with proofs of length (n+1), the induction step.
+\section{Prove that $\vdash_H A \to B$ and $\vdash_H A$, then $\vdash_H$ B}
+To prove this $A \to B$ has to transformed with the hilbert system to $B$
+
+\begin{tabular}{@{}l|ll@{}}
+\#& statement			&reason \\ \toprule
+0& $\vdash_H A$ & given \\
+1& $\vdash_H A \to B$ & given \\
+2& $B$ & Modus Ponens 0,1 \\
+\end{tabular}
+
+\section{Prove that it is not the case that $\vdash_H A \to B$ implies 
+$ \vdash_H \neg A \to \neg B$}
+
+\subsection{Truth table $\phi$}
+\begin{tabular}{@{ }c@{ }@{ }c | c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{ }}
+A & B & ( & A & $\rightarrow$ & B & )\\
+\hline 
+$\top$ & $\top$ &  & $\top$ & \textcolor{red}{$\top$} & $\top$ & \\
+$\top$ & $\bot$ &  & $\top$ & \textcolor{red}{$\bot$} & $\bot$ & \\
+$\bot$ & $\top$ &  & $\bot$ & \textcolor{red}{$\top$} & $\top$ & \\
+$\bot$ & $\bot$ &  & $\bot$ & \textcolor{red}{$\top$} & $\bot$ & \\
+\end{tabular}
+\subsection{Truth table $\delta$}
+\begin{tabular}{@{ }c@{ }@{ }c | c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{ }}
+A & B & ( & $\sim$ & A & $\rightarrow$ & $\sim$ & B & )\\
+\hline 
+$\top$ & $\top$ &  & $\bot$ & $\top$ & \textcolor{red}{$\top$} & $\bot$ & $\top$ & \\
+$\top$ & $\bot$ &  & $\bot$ & $\top$ & \textcolor{red}{$\top$} & $\top$ & $\bot$ & \\
+$\bot$ & $\top$ &  & $\top$ & $\bot$ & \textcolor{red}{$\bot$} & $\bot$ & $\top$ & \\
+$\bot$ & $\bot$ &  & $\top$ & $\bot$ & \textcolor{red}{$\top$} & $\top$ & $\bot$ & \\
+\end{tabular}
+
+
+
+
+\subsection{proof}
+
+\begin{tabular}{@{}l|ll@{}}
+\#& statement			&reason \\ \toprule
+0& the truth table of $\phi$ & given \\
+1& $\vdash_H A \to B$ & given \\
+2& $B$ & Modus Ponens 0,1 \\
+\end{tabular}
+
+\section{Prove that $H$ and $G$ are equivalent}
+Let $G$ be the proof system $H$ to which the axiom $A \to A$ 
+is aded and in which axiom $(W)$ is replaced by the \emph{weakining rule}
+
+\[\frac{A}{B \to A}\quad\text{(RW)} \]
+
+I would say if you could transform G to have the same
+axioms as H then you would have proved that they're equivelant. But I think
+you also have to show that you can go from G to H because equivulance goes both
+ways
+
+\end{document}
