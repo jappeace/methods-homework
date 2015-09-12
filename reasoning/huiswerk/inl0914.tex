@@ -19,7 +19,7 @@ semantics: If $\vdash_H A$, then $A$ is true.}
 		$ or $\frac{A_h}{A_i}$ is an instance of one of the rules of $H$
 	\item Assume $B_1$ is true in $H$, then because all other steps
 		are either axioms (which are tautlogies) or the modes ponens
-		$B_n$ will also be true.
+		$B_n$, will also be true.
 
 \end{enumerate}
 
@@ -69,9 +69,32 @@ is aded and in which axiom $(W)$ is replaced by the \emph{weakining rule}
 
 \[\frac{A}{B \to A}\quad\text{(RW)} \]
 
-I would say if you could transform G to have the same
-axioms as H then you would have proved that they're equivelant. But I think
-you also have to show that you can go from G to H because equivulance goes both
-ways
+
+To prove $H$ and $G$ are equavelant it has to be shown that $H$ can become
+$G$ and that $G$ can become $H$ with subtition of their axioms.
+
+\subsection{$G$ to $H$}
+\begin{tabular}{@{}l|ll@{}}
+\#& statement			&reason \\ \toprule
+0& $A \to A$ & given \\
+1& $A \to (B \to A)$ &  RW 0 \\
+2& 1 is now the same as axiom $(W)$
+\end{tabular}
+
+\subsection{$H$ to $G$}
+\subsubsection{$A \to A$}
+Denote $A \to A$ by $B$, $A \to (B \to A)$ by $C$, and $C \to
+((A\to B) \to B)$ by D. Thus $A \to B$ and C are instances of
+axiom $(W)$ and $D$ of $(I)$. therefore the following is a proof
+of $B$: 
+\[C,D,(A\to B)\to B, A \to B, A \to A\].
+
+\subsubsection{RW}
+\begin{tabular}{@{}l|ll@{}}
+\#& statement			&reason \\ \toprule
+0& $A \to A$			& proven above \\
+1& $A \to (B \to A)$ & $W$ axiom\\
+2& $B \to A$		&Modes ponens 0,1
+\end{tabular}
 
 \end{document}
