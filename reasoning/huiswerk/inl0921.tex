@@ -1,0 +1,100 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{color}
+
+\begin{document}
+\author{J. T. Klooster}
+\title{Homework of 14 september}
+\maketitle
+\today
+\section{Prove that Hilbert system $H$ is sound with respect to this
+semantics: If $\vdash_H A$, then $A$ is true.}
+\begin{enumerate}
+	\item Given: Formula $A$ is true if $(v(A) = 1$
+	\item Given: If $\vdash_H A$ then $A$ is true 
+	\item The proof $A$ in H is a finite sequance of formulas $B_1, B_2,
+		\dots, B_n$ where $B_n = A$ and for every $i \le n$ either $A_i$ is
+		an axiom or there are $j,h < i$ such that $\frac{A_h \quad A_j}{A_i}
+		$ or $\frac{A_h}{A_i}$ is an instance of one of the rules of $H$
+	\item Assume $B_1$ is true in $H$, then because all other steps
+		are either axioms (which are tautlogies) or the modes ponens
+		$B_n$, will also be true.
+
+\end{enumerate}
+
+
+%Where you are asked to show that if a formula A is derivable in system H,
+%then A is true (under all valuations).
+%This is a statement that you can best prove via induction to the length of
+%the proof of A. Recall that a proof of A in H is a sequence B1,B2,...,Bn,
+%of formulas such that such and so holds (see slides of today).
+%Then you show that the statement holds in case n=1
+%(when the proof consists of one formula) and that if the statement holds
+%for formulas with proofs of length n,
+%then it holds for formulas with proofs of length (n+1), the induction step.
+\section{Prove that $\vdash_H A \to B$ and $\vdash_H A$, then $\vdash_H$ B}
+To prove this $A \to B$ has to transformed with the hilbert system to $B$
+
+\begin{tabular}{@{}l|ll@{}}
+\#& statement			&reason \\ \toprule
+0& $\vdash_H A$ & given \\
+1& $\vdash_H A \to B$ & given \\
+2& $B$ & Modus Ponens 0,1 \\
+\end{tabular}
+
+\section{Prove that it is not the case that $\vdash_H A \to B$ implies 
+$ \vdash_H \neg A \to \neg B$}
+
+\begin{enumerate}
+	\item $A \to B$ implies $\neg A \to \neg B$ can be written as 
+		$(A \to B) \to (\neg A \to \neg B)$
+	\item If A was $\bot$ and B was $\top$ then $(A \to B) \to (\neg A \to 
+		\neg B)$ would be false (see truth table below), therefore it is not a tautology and cannot
+		be used in a hilbert system.
+\end{enumerate}
+\subsection{truth table}
+\begin{tabular}{@{ }c@{ }@{ }c | c@{}@{}c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{}@{ }c@{ }@{}c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{}@{}c@{ }}
+A & B & ( & ( & A & $\rightarrow$ & B & ) & $\rightarrow$ & ( & $\sim$ & A & $\rightarrow$ & $\sim$ & B & ) & )\\
+\hline 
+1 & 1 &  &  & 1 & 1 & 1 &  & \textcolor{red}{1} &  & 0 & 1 & 1 & 0 & 1 &  & \\
+1 & 0 &  &  & 1 & 0 & 0 &  & \textcolor{red}{1} &  & 0 & 1 & 1 & 1 & 0 &  & \\
+0 & 1 &  &  & 0 & 1 & 1 &  & \textcolor{red}{0} &  & 1 & 0 & 0 & 0 & 1 &  & \\
+0 & 0 &  &  & 0 & 1 & 0 &  & \textcolor{red}{1} &  & 1 & 0 & 1 & 1 & 0 &  & \\
+\end{tabular}
+
+\section{Prove that $H$ and $G$ are equivalent}
+Let $G$ be the proof system $H$ to which the axiom $A \to A$ 
+is aded and in which axiom $(W)$ is replaced by the \emph{weakining rule}
+
+\[\frac{A}{B \to A}\quad\text{(RW)} \]
+
+
+To prove $H$ and $G$ are equavelant it has to be shown that $H$ can become
+$G$ and that $G$ can become $H$ with subtition of their axioms.
+
+\subsection{$G$ to $H$}
+\begin{tabular}{@{}l|ll@{}}
+\#& statement			&reason \\ \toprule
+0& $A \to A$ & given \\
+1& $A \to (B \to A)$ &  RW 0 \\
+2& 1 is now the same as axiom $(W)$
+\end{tabular}
+
+\subsection{$H$ to $G$}
+\subsubsection{$A \to A$}
+Denote $A \to A$ by $B$, $A \to (B \to A)$ by $C$, and $C \to
+((A\to B) \to B)$ by D. Thus $A \to B$ and C are instances of
+axiom $(W)$ and $D$ of $(I)$. therefore the following is a proof
+of $B$: 
+\[C,D,(A\to B)\to B, A \to B, A \to A\].
+
+\subsubsection{RW}
+\begin{tabular}{@{}l|ll@{}}
+\#& statement			&reason \\ \toprule
+0& $A \to A$			& proven above \\
+1& $A \to (B \to A)$ & $W$ axiom\\
+2& $B \to A$		&Modes ponens 0,1
+\end{tabular}
+
+\end{document}
