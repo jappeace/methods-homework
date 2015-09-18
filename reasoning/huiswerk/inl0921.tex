@@ -2,6 +2,7 @@
 \usepackage{booktabs}
 \usepackage{amsmath}
 \usepackage{color}
+\usepackage{bussproofs}
 
 \begin{document}
 \author{J. T. Klooster}
@@ -10,6 +11,17 @@
 
 \section{Give proofs of the folowing two sequants in $GK$}
 \subsection{$(A\to B\wedge C)\Rightarrow(A\to B)\wedge(A\to C)$}
+
+\begin{prooftree}
+\AxiomC{B}
+\AxiomC{C}
+\BinaryInfC{$(A\to B\wedge C)\Rightarrow(A\to B)$}
+\AxiomC{D}
+\AxiomC{A}
+\BinaryInfC{$(A\to B\wedge C)\Rightarrow(A\to C)$}
+\RightLabel{$R\wedge$}
+\BinaryInfC{$(A\to B\wedge C)\Rightarrow(A\to B)\wedge(A\to C)$}
+\end{prooftree}
 
 \subsection{$\neg(A\wedge\neg A)$}
 \section{Let P and Q be atoms. Give proofs in GK of the threee sequents}
