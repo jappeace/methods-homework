@@ -11,6 +11,7 @@
 
 \section{Give proofs of the folowing two sequants in $GK$}
 \subsection{$(A\to B\vee C)\Rightarrow(A\to B)\vee(A\to C)$}
+Using GK and assuming A B and C are atoms the following tree came to be:
 
 \begin{prooftree}
 \AxiomC{$A \Rightarrow A$}
@@ -46,7 +47,18 @@
 \UnaryInfC{$(A\to B\vee C)\Rightarrow(A\to B)\vee(A\to C)$}
 \end{prooftree}
 
-\subsection{$\neg(A\vee\neg A)$}
+\subsection{$\neg(A\vee\neg A) \Rightarrow$}
+Using GK and assuming A is an atom the following tree came to be:
+\begin{prooftree}
+\AxiomC{$A\Rightarrow A$}
+\RightLabel{$R\neg$}
+\UnaryInfC{$\Rightarrow A,\neg A$}
+\RightLabel{$R\vee$}
+\UnaryInfC{$\Rightarrow A\vee\neg A$}
+\RightLabel{$L\neg$}
+\UnaryInfC{$\neg(A\vee\neg A) \Rightarrow$}
+\end{prooftree}
+
 \section{Let P and Q be atoms. Give proofs in GK of the threee sequents}
 \subsection{$(P\wedge Q \Rightarrow P \wedge Q)$}
 \subsection{$(P\vee Q \Rightarrow P \vee Q)$}
