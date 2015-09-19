@@ -10,20 +10,43 @@
 \maketitle
 
 \section{Give proofs of the folowing two sequants in $GK$}
-\subsection{$(A\to B\wedge C)\Rightarrow(A\to B)\wedge(A\to C)$}
+\subsection{$(A\to B\vee C)\Rightarrow(A\to B)\vee(A\to C)$}
 
 \begin{prooftree}
-\AxiomC{B}
-\AxiomC{C}
-\BinaryInfC{$(A\to B\wedge C)\Rightarrow(A\to B)$}
-\AxiomC{D}
-\AxiomC{A}
-\BinaryInfC{$(A\to B\wedge C)\Rightarrow(A\to C)$}
-\RightLabel{$R\wedge$}
-\BinaryInfC{$(A\to B\wedge C)\Rightarrow(A\to B)\wedge(A\to C)$}
+\AxiomC{$A \Rightarrow A$}
+\RightLabel{$LW$}
+\UnaryInfC{$A, A\Rightarrow A$}
+\RightLabel{$RW$}
+\UnaryInfC{$A, A\Rightarrow A$}
+\RightLabel{$RW$}
+\UnaryInfC{$A, A\Rightarrow A, C$}
+\AxiomC{$B \Rightarrow B$}
+\RightLabel{$LW$}
+\UnaryInfC{$B, A\Rightarrow B$}
+\RightLabel{$LW$}
+\UnaryInfC{$B, A, A\Rightarrow B$}
+\RightLabel{$RW$}
+\UnaryInfC{$B, A, A\Rightarrow B, C$}
+\AxiomC{$C \Rightarrow C$}
+\RightLabel{$LW$}
+\UnaryInfC{$C, A \Rightarrow C$}
+\RightLabel{$LW$}
+\UnaryInfC{$C, A, A\Rightarrow C$}
+\RightLabel{$RW$}
+\UnaryInfC{$C, A, A\Rightarrow B, C$}
+\RightLabel{$L\vee$}
+\BinaryInfC{$(B\vee C), A, A\Rightarrow B, C$}
+\RightLabel{$L\to$}
+\BinaryInfC{$(A\to B\vee C), A, A\Rightarrow B, C$}
+\RightLabel{$R\to$}
+\UnaryInfC{$(A\to B\vee C), A\Rightarrow B,A\to C$}
+\RightLabel{$R\to$}
+\UnaryInfC{$(A\to B\vee C)\Rightarrow A\to B,A\to C$}
+\RightLabel{$R\vee$}
+\UnaryInfC{$(A\to B\vee C)\Rightarrow(A\to B)\vee(A\to C)$}
 \end{prooftree}
 
-\subsection{$\neg(A\wedge\neg A)$}
+\subsection{$\neg(A\vee\neg A)$}
 \section{Let P and Q be atoms. Give proofs in GK of the threee sequents}
 \subsection{$(P\wedge Q \Rightarrow P \wedge Q)$}
 \subsection{$(P\vee Q \Rightarrow P \vee Q)$}
