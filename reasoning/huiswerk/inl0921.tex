@@ -108,7 +108,8 @@ a different one or the atom count stays the same or becomes less.
 the subformula property}
 Because the Cut rule allows you to add atoms. Thus the formula can become
 very different from the root formula.
-\section{Give the versions of $L \to, L\vee,$ and Cut with split context}
+\newpage
+\section{Give the versions of $L \to, L\vee$ and Cut with split context}
 \begin{prooftree}
 \AxiomC{$\Gamma_1, \Gamma_2 \Rightarrow A, \Delta_1,\Delta_2$}
 \AxiomC{$\Gamma_1, \Gamma_2, B \Rightarrow \Delta_1,\Delta_2$}
@@ -128,6 +129,68 @@ very different from the root formula.
 \BinaryInfC{$\Gamma_1, \Gamma_2, \Rightarrow \Delta_1,\Delta_2$}
 \end{prooftree}
 \section{Prove that $GK_{split}$ and $GK$ prove the same sequants}
+The only things that has been moddified on $GK_{split}$ compared to $GK$ are
+$R\wedge, L \to, L\vee$ and the Cut rule.
+If the precedents can be transformed from the one system to the other
+system and the other way around than the systems can proof the same
+sequants.
+
+\subsection{$R\wedge$}
+\subsubsection{From $GK$ to $GK_{split}$}
+\begin{prooftree}
+\AxiomC{$\Gamma_1, \Gamma_2 \Rightarrow A \wedge B,  \Delta_1,\Delta_2$}
+\UnaryInfC{$\Gamma  \Rightarrow A \wedge B, \Delta$}
+\end{prooftree}
+\subsubsection{From $GK_{split}$ to $GK$}
+\begin{prooftree}
+\AxiomC{$\Gamma  \Rightarrow A \wedge B, \Delta$}
+\UnaryInfC{$\Gamma_1, \Gamma_2 \Rightarrow A \wedge B,  \Delta_1,\Delta_2$}
+\end{prooftree}
+\subsection{$L\to$}
+\subsubsection{From $GK$ to $GK_{split}$}
+\begin{prooftree}
+\AxiomC{$\Gamma_1, \Gamma_2, A \to B \Rightarrow \Delta_1,\Delta_2$}
+\UnaryInfC{$\Gamma, A \to B \Rightarrow \Delta$}
+\end{prooftree}
+\subsubsection{From $GK_{split}$ to $GK$}
+\begin{prooftree}
+\AxiomC{$\Gamma, A \to B \Rightarrow \Delta$}
+\UnaryInfC{$\Gamma_1, \Gamma_2, A \to B \Rightarrow \Delta_1,\Delta_2$}
+\end{prooftree}
+\subsection{$L\vee$}
+\subsubsection{From $GK$ to $GK_{split}$}
+\begin{prooftree}
+\AxiomC{$\Gamma_1, \Gamma_2, A \vee B \Rightarrow \Delta_1,\Delta_2$}
+\RightLabel{LC}
+\UnaryInfC{$\Gamma,A \vee B \Rightarrow \Delta_1,\Delta_2$}
+\RightLabel{RC}
+\UnaryInfC{$\Gamma, A \vee B \Rightarrow \Delta$}
+\end{prooftree}
+\subsubsection{From $GK_{split}$ to $GK$}
+\begin{prooftree}
+\AxiomC{$\Gamma,A \vee B \Rightarrow \Delta$}
+\RightLabel{RW}
+\UnaryInfC{$\Gamma,A \vee B\Rightarrow \Delta_1,\Delta_2$}
+\RightLabel{LW}
+\UnaryInfC{$\Gamma_1, \Gamma_2, A \vee B \Rightarrow \Delta_1,\Delta_2$}
+\end{prooftree}
+\subsection{Cut}
+\subsubsection{From $GK$ to $GK_{split}$}
+\begin{prooftree}
+\AxiomC{$\Gamma_1, \Gamma_2 \Rightarrow \Delta_1,\Delta_2$}
+\RightLabel{LC}
+\UnaryInfC{$\Gamma \Rightarrow \Delta_1,\Delta_2$}
+\RightLabel{RC}
+\UnaryInfC{$\Gamma \Rightarrow \Delta$}
+\end{prooftree}
+\subsubsection{From $GK_{split}$ to $GK$}
+\begin{prooftree}
+\AxiomC{$\Gamma \Rightarrow \Delta$}
+\RightLabel{RW}
+\UnaryInfC{$\Gamma \Rightarrow \Delta_1,\Delta_2$}
+\RightLabel{LW}
+\UnaryInfC{$\Gamma_1, \Gamma_2  \Rightarrow \Delta_1,\Delta_2$}
+\end{prooftree}
 \section{Prove that $GK$ is sound: If $\vdash_GK S$, then $I(S)$ is true.}
 
 \end{document}
