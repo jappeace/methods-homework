@@ -81,117 +81,60 @@
 \subsection{Two natural deduction proofs}
 \begin{prooftree}
 \AxiomC{$
-	B \multimap C \vdash
-	B \multimap C
+	(A \multimap C) \multimap C \vdash
+	(A \multimap C) \multimap C
 $}
 \AxiomC{$
-	A \multimap B,
-	\vdash
-	A \multimap B,
-$}
-\AxiomC{$
-	A \multimap A
-	\vdash
-	C
-$}
-\AxiomC{$
-	A \multimap C,
-	\vdash
-	C
+	A \multimap C \vdash
+	A \multimap C
 $}
 \RightLabel{$E\multimap$}
 \BinaryInfC{$
-	A \multimap C,
-	A \multimap A
-	\vdash
-	A
-$}
-\RightLabel{$E\multimap$}
-\BinaryInfC{$
-	A \multimap B,
-	A \multimap C,
-	A \multimap A
-	\vdash
-	B
-$}
-\RightLabel{$E\multimap$}
-\BinaryInfC{$
-	B \multimap C,
-	A \multimap B,
-	A \multimap C,
-	A \multimap A
-	\vdash
-	C
-$}
-\RightLabel{$I\multimap$}
-\UnaryInfC{$
-	B \multimap C,
-	A \multimap B,
+	(A \multimap C) \multimap C,
 	A \multimap C
 	\vdash
-	(A \multimap A) \multimap
-	C
-$}
-\AxiomC{$
-	A \vdash A
-$}
-\RightLabel{$I\multimap$}
-\UnaryInfC{$
-	\vdash
-	A \multimap A
-$}
-\RightLabel{$E\multimap$}
-\BinaryInfC{$
-	B \multimap C,
-	A \multimap B,
-	A \multimap C
-	\vdash
-	C
-$}
-\RightLabel{$I\multimap$}
-\LeftLabel{R}
-\UnaryInfC{$
-	B \multimap C,
-	A \multimap B
-	\vdash
-	(A \multimap C) \multimap
 	C
 $}
 \end{prooftree}
 \begin{prooftree}
-
 \AxiomC{$
-	((A \multimap B) \multimap C) \multimap C \vdash
+	((A \multimap B) \multimap C) \multimap C
+	 \vdash
 	((A \multimap B) \multimap C) \multimap C
 $}
 \AxiomC{$
-	(A \multimap C) \multimap C,
+	(A \multimap B) \multimap C)
 	\vdash
-	(A \multimap C) \multimap C,
+	(A \multimap B) \multimap C)
+$}
+\RightLabel{$E\multimap$}
+\BinaryInfC{$
+	((A \multimap B) \multimap C) \multimap C,
+	(A \multimap B) \multimap C)
+	\vdash
+	C
+$}
+\end{prooftree}
+\begin{prooftree}
+\AxiomC{$
+	L
+$}
+\AxiomC{$
+	L
 $}
 \AxiomC{$
 	R
 $}
 \RightLabel{$E\multimap$}
 \BinaryInfC{$
-	(A \multimap C) \multimap C,
-	B \multimap C,
-	A \multimap B
-	\vdash
-	C
-$}
-\RightLabel{$I\multimap$}
-\UnaryInfC{$
-	(A \multimap C) \multimap C,
-	B \multimap C,
-	\vdash
-	(A \multimap B) \multimap C
+	R
 $}
 \RightLabel{$E\multimap$}
 \BinaryInfC{$
 	(A \multimap C) \multimap C,
 	B \multimap C,
-	((A \multimap B) \multimap C) \multimap C \vdash
+	((A \multimap B) \multimap C) \multimap C 
+	\vdash
 	C
 	$
 }
