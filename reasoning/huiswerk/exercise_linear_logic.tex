@@ -1,0 +1,79 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{bussproofs}
+
+\begin{document}
+\author{J. T. Klooster}
+\title{Excersizes of Linear Logic}
+\maketitle
+\tableofcontents
+\section{Seq calc vs N. D.}
+\subsection{Give 2 variations of gentzen sequant calcules}
+
+\begin{prooftree}
+\AxiomC{$A \Rightarrow A$}
+\AxiomC{$A \Rightarrow A$}
+\AxiomC{$B \Rightarrow B$}
+\AxiomC{$C \Rightarrow C$}
+\RightLabel{$L\to$}
+\BinaryInfC{$B\to C, B \Rightarrow C$}
+\RightLabel{$L\to$}
+\BinaryInfC{$\textcolor{red}{(A \to (B \to C))}, B, A \Rightarrow C$}
+\RightLabel{$L\to$}
+\BinaryInfC{$(A \to (B \to C)), \textcolor{red}{(A \to B)}, A,A \Rightarrow C$}
+\RightLabel{$C$}
+\UnaryInfC{$(A \to (B \to C)), (A \to B), A \Rightarrow C$}
+\RightLabel{$R\to$}
+\UnaryInfC{$(A \to (B \to C)), (A \to B) \Rightarrow  (A \to C)$}
+\RightLabel{$R\to$}
+\UnaryInfC{$(A \to (B \to C)) \Rightarrow  ((A \to B) \to (A \to C))$}
+\RightLabel{$R\to$}
+\UnaryInfC{$\Rightarrow (A \to (B \to C)) \to ((A \to B) \to (A \to C))$}
+\end{prooftree}
+
+\begin{prooftree}
+\AxiomC{$A \Rightarrow A$}
+\AxiomC{$A \Rightarrow A$}
+\AxiomC{$B \Rightarrow B$}
+\AxiomC{$C \Rightarrow C$}
+\RightLabel{$L\to$}
+\BinaryInfC{$B\to C, B \Rightarrow C$}
+\RightLabel{$L\to$}
+\BinaryInfC{$(B \to C)), \textcolor{red}{(A \to B)}, A \Rightarrow C$}
+\RightLabel{$L\to$}
+\BinaryInfC{$\textcolor{red}{(A \to (B \to C))}, (A \to B), A,A \Rightarrow C$}
+\RightLabel{$C$}
+\UnaryInfC{$(A \to (B \to C)), (A \to B), A \Rightarrow C$}
+\RightLabel{$R\to$}
+\UnaryInfC{$(A \to (B \to C)), (A \to B) \Rightarrow  (A \to C)$}
+\RightLabel{$R\to$}
+\UnaryInfC{$(A \to (B \to C)) \Rightarrow  ((A \to B) \to (A \to C))$}
+\RightLabel{$R\to$}
+\UnaryInfC{$\Rightarrow (A \to (B \to C)) \to ((A \to B) \to (A \to C))$}
+\end{prooftree}
+\subsection{Turn previous answers into natural deduction}
+
+\begin{prooftree}
+\AxiomC{L}
+\AxiomC{R}
+\BinaryInfC{$(A \to (B \to C)), A\vdash B \to C$}
+\AxiomC{$A \to B \vdash (A \to B) \times B$}
+\AxiomC{$B \vdash B$}
+\RightLabel{W}
+\UnaryInfC{$A \to B, B \vdash B$}
+\RightLabel{$E\times$}
+\BinaryInfC{$A \to B \vdash B$}
+\RightLabel{$E\to$}
+\BinaryInfC{$(A \to (B \to C)), (A \to B), A \vdash C$}
+\RightLabel{$I\to$}
+\UnaryInfC{$(A \to (B \to C)), (A \to B) \vdash  (A \to C)$}
+\RightLabel{$I\to$}
+\UnaryInfC{$(A \to (B \to C)) \vdash  ((A \to B) \to (A \to C))$}
+\RightLabel{$I\to$}
+\UnaryInfC{$\vdash (A \to (B \to C)) \to ((A \to B) \to (A \to C))$}
+\end{prooftree}
+
+
+\end{document}
