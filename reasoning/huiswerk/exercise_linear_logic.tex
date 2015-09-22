@@ -82,11 +82,20 @@
 \begin{prooftree}
 \AxiomC{$
 	B \multimap C
-	\vdash A\multimap C
+	\vdash B\multimap C
 $}
 \AxiomC{$
+	((A \multimap B) \multimap C) \multimap C \vdash
+	A \multimap B
+$}
+\AxiomC{$
+	(A \multimap C) \multimap C, \vdash
+	A
+$}
+\RightLabel{$E\multimap$}
+\BinaryInfC{$
 	(A \multimap C) \multimap C,
-	((A \multimap B) \multimap C) \multimap C \vdash A
+	((A \multimap B) \multimap C) \multimap C \vdash B
 $}
 \RightLabel{$E\multimap$}
 \BinaryInfC{$
