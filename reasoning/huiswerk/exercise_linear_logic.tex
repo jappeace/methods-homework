@@ -81,17 +81,13 @@
 \subsection{Two natural deduction proofs}
 \begin{prooftree}
 \AxiomC{$
-	(A \multimap C) \multimap C,
-	((A \multimap B) \multimap C) \multimap C \vdash
-	C \multimap C
+	B \multimap C
+	\vdash A\multimap C
 $}
-\AxiomC{$L$}
-\AxiomC{$\vdash B$}
-\RightLabel{$E\multimap$}
-\BinaryInfC{$
-	B \multimap C \vdash C
-	$
-}
+\AxiomC{$
+	(A \multimap C) \multimap C,
+	((A \multimap B) \multimap C) \multimap C \vdash A
+$}
 \RightLabel{$E\multimap$}
 \BinaryInfC{$
 	(A \multimap C) \multimap C,
