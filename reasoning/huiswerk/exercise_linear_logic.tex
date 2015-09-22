@@ -1,6 +1,6 @@
 \documentclass{article}
+\usepackage{txfonts}
 \usepackage{booktabs}
-\usepackage{amsmath}
 \usepackage{color}
 \usepackage{bussproofs}
 
@@ -76,5 +76,38 @@
 \UnaryInfC{$\vdash (A \to (B \to C)) \to ((A \to B) \to (A \to C))$}
 \end{prooftree}
 
+\section{Linear proofs}
 
+\subsection{Two natural deduction proofs}
+\begin{prooftree}
+\AxiomC{$
+	(A \multimap C) \multimap C,
+	((A \multimap B) \multimap C) \multimap C \vdash
+	C \multimap C
+$}
+\AxiomC{$L$}
+\AxiomC{$\vdash B$}
+\RightLabel{$E\multimap$}
+\BinaryInfC{$
+	B \multimap C \vdash C
+	$
+}
+\RightLabel{$E\multimap$}
+\BinaryInfC{$
+	(A \multimap C) \multimap C,
+	B \multimap C,
+	((A \multimap B) \multimap C) \multimap C \vdash
+	C
+	$
+}
+\RightLabel{$I\multimap$}
+\UnaryInfC{$
+	(A \multimap C) \multimap C,
+	((A \multimap B) \multimap C) \multimap C \vdash
+	(B \multimap C) \multimap C
+	$
+}
+\end{prooftree}
+$
+	$
 \end{document}
