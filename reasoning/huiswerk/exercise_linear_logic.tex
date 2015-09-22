@@ -81,21 +81,71 @@
 \subsection{Two natural deduction proofs}
 \begin{prooftree}
 \AxiomC{$
-	B \multimap C
-	\vdash B\multimap C
+	B \multimap C \vdash B \multimap C
 $}
 \AxiomC{$
-	((A \multimap B) \multimap C) \multimap C \vdash
 	A \multimap B
+	\vdash
+	A \multimap B,
 $}
 \AxiomC{$
-	(A \multimap C) \multimap C, \vdash
+	A \multimap C
+	\vdash
 	A
 $}
 \RightLabel{$E\multimap$}
 \BinaryInfC{$
+	A \multimap B,
+	A \multimap C
+	\vdash
+	B
+$}
+\RightLabel{$E\multimap$}
+\BinaryInfC{$
+	B \multimap C,
+	A \multimap B,
+	A \multimap C
+	\vdash
+	C
+$}
+\RightLabel{$I\multimap$}
+\LeftLabel{R}
+\UnaryInfC{$
+	B \multimap C,
+	A \multimap B
+	\vdash
+	(A \multimap C) \multimap
+	C
+$}
+\end{prooftree}
+\begin{prooftree}
+
+\AxiomC{$
+	((A \multimap B) \multimap C) \multimap C \vdash
+	((A \multimap B) \multimap C) \multimap C
+$}
+\AxiomC{$
 	(A \multimap C) \multimap C,
-	((A \multimap B) \multimap C) \multimap C \vdash B
+	\vdash
+	(A \multimap C) \multimap C,
+$}
+\AxiomC{$
+	R
+$}
+\RightLabel{$E\multimap$}
+\BinaryInfC{$
+	(A \multimap C) \multimap C,
+	B \multimap C,
+	A \multimap B
+	\vdash
+	C
+$}
+\RightLabel{$I\multimap$}
+\UnaryInfC{$
+	(A \multimap C) \multimap C,
+	B \multimap C,
+	\vdash
+	(A \multimap B) \multimap C
 $}
 \RightLabel{$E\multimap$}
 \BinaryInfC{$
@@ -113,6 +163,6 @@ $}
 	$
 }
 \end{prooftree}
-$
-	$
+
+
 \end{document}
