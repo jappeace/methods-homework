@@ -56,21 +56,22 @@
 \subsection{Turn previous answers into natural deduction}
 
 \begin{prooftree}
-\AxiomC{L}
-\AxiomC{R}
-\BinaryInfC{$(A \to (B \to C)), A\vdash B \to C$}
-\AxiomC{$A \to B \vdash (A \to B) \times B$}
-\AxiomC{$B \vdash B$}
-\RightLabel{W}
-\UnaryInfC{$A \to B, B \vdash B$}
-\RightLabel{$E\times$}
-\BinaryInfC{$A \to B \vdash B$}
+\AxiomC{$A \to(B \to C) \vdash A\to (B \to C)$}
+\AxiomC{$A \vdash A$}
 \RightLabel{$E\to$}
-\BinaryInfC{$(A \to (B \to C)), (A \to B), A \vdash C$}
+\BinaryInfC{$A \to (B \to C), A \vdash B \to C$}
+\AxiomC{$A \to B \vdash A\to B$}
+\AxiomC{$A \vdash A$}
+\RightLabel{$E\to$}
+\BinaryInfC{$A \to B, A\vdash B$}
+\RightLabel{$E\to$}
+\BinaryInfC{$A \to (B \to C), A \to B, A, A \vdash C$}
+\RightLabel{C}
+\UnaryInfC{$A \to (B \to C), A \to B, A \vdash C$}
 \RightLabel{$I\to$}
-\UnaryInfC{$(A \to (B \to C)), (A \to B) \vdash  (A \to C)$}
+\UnaryInfC{$A \to (B \to C), A \to B \vdash  (A \to C)$}
 \RightLabel{$I\to$}
-\UnaryInfC{$(A \to (B \to C)) \vdash  ((A \to B) \to (A \to C))$}
+\UnaryInfC{$A \to (B \to C) \vdash  ((A \to B) \to (A \to C))$}
 \RightLabel{$I\to$}
 \UnaryInfC{$\vdash (A \to (B \to C)) \to ((A \to B) \to (A \to C))$}
 \end{prooftree}
