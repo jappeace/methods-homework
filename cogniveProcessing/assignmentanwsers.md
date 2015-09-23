@@ -28,6 +28,7 @@ because I've written games that used to suffer this problem.
 ##What values can get a vertical orentation
 180,0
 
-
+##What does the abreviation ISI mean?
+In Seconds Inteval
 
 
