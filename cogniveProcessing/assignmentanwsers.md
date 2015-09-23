@@ -37,5 +37,12 @@ To make sure the subject looks at the right location?
 ##How many inputs does the function fixationcross.m need?
 4
 
+##Why is the text between ''
+Because its a string, if you don't do that the interpeter will crash
+because its not sure if you're talking about variables.
+
+If you don't want to use '' for strings I recommend some bash.
 
 
+##How can you stop the program from drawing a fixation cross on top of the text.
+Clear the screen. Flip some gray into it.
