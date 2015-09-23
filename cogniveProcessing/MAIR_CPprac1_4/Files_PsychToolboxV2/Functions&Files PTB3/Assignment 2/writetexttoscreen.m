@@ -1,0 +1,1 @@
+function [] = writetexttoscreen(w,text,screenrect)Screen('TextFont',w, 'Arial');Screen('TextSize',w, 20);Screen('TextStyle', w, 1+2);bbox=Screen('TextBounds', w, text);centtextrect = CenterRect(bbox,screenrect);x = centtextrect(1);y = centtextrect(2);Screen('DrawText',w,text,[x],[y],255);Screen('Flip', w);
