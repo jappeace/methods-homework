@@ -31,4 +31,11 @@ because I've written games that used to suffer this problem.
 ##What does the abreviation ISI mean?
 In Seconds Inteval
 
+##Why do you need a fixation cross?
+To make sure the subject looks at the right location?
+
+##How many inputs does the function fixationcross.m need?
+4
+
+
 
