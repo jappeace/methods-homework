@@ -11,3 +11,4 @@ cogniveProcessing/MAIR_CPprac1_4/Files_PsychToolboxV2/__MACOSX
 # don't know its binary
 *.DS_Store
 *.m~
+*.mat
