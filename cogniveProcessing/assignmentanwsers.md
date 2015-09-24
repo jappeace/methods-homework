@@ -54,3 +54,10 @@ Because You want get closer at how good the subject is at the experiment.
 ## Why is the reversal method useful?
 Because it allows the user to recover from a silly mistake but it also allows
 the program to detect when a cap has been reached on difficulty.
+
+## What does == mean?
+Compare left side to ride side
+
+## What can you do with an if-statement?
+if the statement behind the if is true than the program will go inside the
+block, if not it won't. If an else is present it will go there instead.
