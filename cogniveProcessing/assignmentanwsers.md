@@ -68,3 +68,16 @@ To compare it against something
 
 ## Why is it a good thing to present staircases randomly interleaved?
 It makes it more difficult for subjects to cheat if they're familiar with the setup
+
+## What did you just do?
+Select the elements of 1 array with another
+
+## What variable do we use to select the data?
+criterion
+
+## what do the hold commands do?
+hold on always writing over the previous graph, hold off disables this again.
+
+## Did the staircases converge well?
+No mainly because I didn't want to do the experiment and started rigging it
+based on output.
