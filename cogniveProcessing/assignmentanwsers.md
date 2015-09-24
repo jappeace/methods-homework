@@ -61,3 +61,7 @@ Compare left side to ride side
 ## What can you do with an if-statement?
 if the statement behind the if is true than the program will go inside the
 block, if not it won't. If an else is present it will go there instead.
+
+# Multiple staircases
+## Why do you want to run more than one staircase of the same condition?
+To compare it against something
