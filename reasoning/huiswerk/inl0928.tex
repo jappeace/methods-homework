@@ -10,55 +10,96 @@
 \maketitle
 \tableofcontents
 \section{Deriviations}
+Let Q be $((A \multimap B) \multimap B) \multimap B$
 \begin{prooftree}
-\AxiomC{$
-	((A \multimap B) \multimap B) \multimap B
-	\vdash
-	((A \multimap B) \multimap B) \multimap B
-$}
-\AxiomC{$
-	(A \multimap B) \multimap B
-	\vdash
-	(A \multimap B) \multimap B
-$}
-\AxiomC{$
-	A \multimap B
-	\vdash
-	A \multimap B
-$}
-\RightLabel{$E\multimap$}
-\BinaryInfC{$
-	(A \multimap B) \multimap B,
-	A \multimap B
-	\vdash
-	B
+\AxiomC{}
+\RightLabel{Ax}
+\UnaryInfC{$
+	Q \vdash Q
 $}
 \RightLabel{$I\multimap$}
 \UnaryInfC{$
-	(A \multimap B) \multimap B
 	\vdash
-	(A \multimap B) \multimap B
+	Q \multimap Q
 $}
-\RightLabel{$E\multimap$}
-\BinaryInfC{$
-	((A \multimap B) \multimap B) \multimap B,
-	(A \multimap B) \multimap B
-	\vdash
-	B
-$}
-\RightLabel{$I\multimap$}
+\RightLabel{$I_2\oplus$}
 \UnaryInfC{$
-	((A \multimap B) \multimap B) \multimap B
 	\vdash
-	((A \multimap B) \multimap B) \multimap B
+	Q \multimap Q
+	\oplus
+	Q \multimap Q
 $}
-\RightLabel{$I\multimap$}
+\AxiomC{}
+\RightLabel{Ax}
 \UnaryInfC{$
-	\vdash (((A \multimap B) \multimap B) \multimap B)
-	\multimap
-	(((A \multimap B) \multimap B) \multimap B)
+	Q \multimap Q
+	\vdash
+	Q \multimap Q
+$}
+\AxiomC{}
+\RightLabel{Ax}
+\UnaryInfC{$
+	Q \multimap Q
+	\vdash
+	Q \multimap Q
+$}
+\RightLabel{$E\oplus$}
+\TrinaryInfC{$
+	\vdash
+	Q \multimap Q
 $}
 \end{prooftree}
 
+\begin{prooftree}
+\AxiomC{}
+\RightLabel{Ax}
+\UnaryInfC{$
+	Q \vdash Q
+$}
+\RightLabel{$I\multimap$}
+\UnaryInfC{$
+	\vdash
+	Q \multimap Q
+$}
+\AxiomC{}
+\RightLabel{Ax}
+\UnaryInfC{$
+	Q \vdash Q
+$}
+\RightLabel{$I\multimap$}
+\UnaryInfC{$
+	\vdash
+	Q \multimap Q
+$}
+\RightLabel{$I\otimes$}
+\BinaryInfC{$
+	\vdash
+	Q \multimap Q
+	\otimes
+	Q \multimap Q
+$}
+\AxiomC{}
+\RightLabel{Ax}
+\UnaryInfC{$
+	Q \multimap Q
+	\vdash
+	Q \multimap Q
+$}
+\RightLabel{Weakening}
+\UnaryInfC{$
+	Q \multimap Q,
+	Q \multimap Q
+	\vdash
+	Q
+	\multimap
+	Q
+$}
+\RightLabel{$E\otimes$}
+\BinaryInfC{$
+	\vdash Q
+	\multimap
+	Q
+$}
+\end{prooftree}
 
 \end{document}
