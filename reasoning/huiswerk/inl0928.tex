@@ -1,0 +1,64 @@
+\documentclass{article}
+\usepackage{txfonts}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{bussproofs}
+
+\begin{document}
+\author{J. T. Klooster}
+\title{Excersizes of Linear Logic}
+\maketitle
+\tableofcontents
+\section{Deriviations}
+\begin{prooftree}
+\AxiomC{$
+	((A \multimap B) \multimap B) \multimap B
+	\vdash
+	((A \multimap B) \multimap B) \multimap B
+$}
+\AxiomC{$
+	(A \multimap B) \multimap B
+	\vdash
+	(A \multimap B) \multimap B
+$}
+\AxiomC{$
+	A \multimap B
+	\vdash
+	A \multimap B
+$}
+\RightLabel{$E\multimap$}
+\BinaryInfC{$
+	(A \multimap B) \multimap B,
+	A \multimap B
+	\vdash
+	B
+$}
+\RightLabel{$I\multimap$}
+\UnaryInfC{$
+	(A \multimap B) \multimap B
+	\vdash
+	(A \multimap B) \multimap B
+$}
+\RightLabel{$E\multimap$}
+\BinaryInfC{$
+	((A \multimap B) \multimap B) \multimap B,
+	(A \multimap B) \multimap B
+	\vdash
+	B
+$}
+\RightLabel{$I\multimap$}
+\UnaryInfC{$
+	((A \multimap B) \multimap B) \multimap B
+	\vdash
+	((A \multimap B) \multimap B) \multimap B
+$}
+\RightLabel{$I\multimap$}
+\UnaryInfC{$
+	\vdash (((A \multimap B) \multimap B) \multimap B)
+	\multimap
+	(((A \multimap B) \multimap B) \multimap B)
+$}
+\end{prooftree}
+
+
+\end{document}
