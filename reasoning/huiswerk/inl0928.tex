@@ -11,17 +11,23 @@
 \tableofcontents
 \section{Deriviations}
 \begin{prooftree}
-\AxiomC{$
+\RightLabel{Ax}
+\AxiomC{}
+\UnaryInfC{$
 	((A \multimap B) \multimap B) \multimap B
 	\vdash
 	((A \multimap B) \multimap B) \multimap B
 $}
-\AxiomC{$
+\RightLabel{Ax}
+\AxiomC{}
+\UnaryInfC{$
 	(A \multimap B) \multimap B
 	\vdash
 	(A \multimap B) \multimap B
 $}
-\AxiomC{$
+\RightLabel{Ax}
+\AxiomC{}
+\UnaryInfC{$
 	A \multimap B
 	\vdash
 	A \multimap B
@@ -60,5 +66,71 @@ $}
 $}
 \end{prooftree}
 
+\begin{prooftree}
+\RightLabel{Ax}
+\AxiomC{}
+\UnaryInfC{$
+	((A \multimap B) \multimap B) \multimap B
+	\vdash
+	((A \multimap B) \multimap B) \multimap B
+$}
+\RightLabel{Ax}
+\AxiomC{}
+\UnaryInfC{$
+	(A \multimap B) \multimap B
+	\vdash
+	(A \multimap B) \multimap B
+$}
+\RightLabel{$E\multimap$}
+\BinaryInfC{$
+	((A \multimap B) \multimap B) \multimap B,
+	(A \multimap B) \multimap B
+	\vdash
+	B
+$}
+\RightLabel{$I\multimap$}
+\UnaryInfC{$
+	((A \multimap B) \multimap B) \multimap B
+	\vdash
+	((A \multimap B) \multimap B) \multimap B
+$}
+\RightLabel{$I\multimap$}
+\UnaryInfC{$
+	\vdash (((A \multimap B) \multimap B) \multimap B)
+	\multimap
+	(((A \multimap B) \multimap B) \multimap B)
+$}
+\end{prooftree}
+
+\section{Prove the ILL distributivity equivalance below}
+To prove $A \otimes (B \oplus C) \vdash (A \otimes B)\oplus(A\times C)$ 
+and $(A \otimes B)\oplus(A\otimes C) \vdash A \otimes (B \oplus C)$
+
+
+\begin{prooftree}
+\RightLabel{Ax}
+\AxiomC{}
+\UnaryInfC{$
+	(A \otimes B)\oplus(A\otimes C)
+	\vdash
+	A \otimes B
+	\oplus
+	A \otimes C
+$}
+\AxiomC{$
+	A \otimes B
+	\vdash
+	A \otimes (B \oplus C)
+$}
+\AxiomC{$
+	A \otimes C
+	\vdash
+	A \otimes (B \oplus C)
+$}
+\RightLabel{$E\oplus$}
+\TrinaryInfC{$
+	(A \otimes B)\oplus(A\otimes C) \vdash A \otimes (B \oplus C)
+$}
+\end{prooftree}
 
 \end{document}
