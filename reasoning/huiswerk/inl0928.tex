@@ -106,30 +106,83 @@ $}
 To prove $A \otimes (B \oplus C) \vdash (A \otimes B)\oplus(A\times C)$ 
 and $(A \otimes B)\oplus(A\otimes C) \vdash A \otimes (B \oplus C)$
 
-
 \begin{prooftree}
+\AxiomC{$
+	\cdots
+$}
+\AxiomC{$
+	\cdots
+$}
 \RightLabel{Ax}
 \AxiomC{}
 \UnaryInfC{$
+	A \vdash A
+$}
+\RightLabel{Ax}
+\AxiomC{}
+\UnaryInfC{$
+	B \vdash B
+$}
+\RightLabel{$I\otimes$}
+\BinaryInfC{$
+	A, B
+	\vdash
+	A\otimes B
+$}
+\RightLabel{$I\oplus$}
+\UnaryInfC{$
+	A, B
+	\vdash
 	(A \otimes B)\oplus(A\otimes C)
-	\vdash
-	A \otimes B
-	\oplus
-	A \otimes C
 $}
-\AxiomC{$
-	A \otimes B
-	\vdash
-	A \otimes (B \oplus C)
+\RightLabel{Ax}
+\AxiomC{}
+\UnaryInfC{$
+	A \vdash A
 $}
-\AxiomC{$
-	A \otimes C
+\RightLabel{Ax}
+\AxiomC{}
+\UnaryInfC{$
+	C \vdash C
+$}
+\RightLabel{$I\otimes$}
+\BinaryInfC{$
+	A, C
 	\vdash
-	A \otimes (B \oplus C)
+	A\otimes C
+$}
+\RightLabel{$I\oplus$}
+\UnaryInfC{$
+	A, C
+	\vdash
+	(A \otimes B)\oplus(A\otimes C)
 $}
 \RightLabel{$E\oplus$}
 \TrinaryInfC{$
-	(A \otimes B)\oplus(A\otimes C) \vdash A \otimes (B \oplus C)
+	A, B \oplus C
+	\vdash
+	(A \otimes B)\oplus(A\otimes C)
+$}
+\RightLabel{$E\otimes$}
+\BinaryInfC{$
+	A \otimes (B \oplus C)
+	\vdash
+	(A \otimes B)\oplus(A\otimes C)
+$}
+\end{prooftree}
+
+\subsection{not}
+\begin{prooftree}
+\AxiomC{$
+	L
+$}
+\AxiomC{$
+$}
+\RightLabel{$E\multimap$}
+\BinaryInfC{$
+	(A \otimes B)\oplus(A\otimes C)
+	\vdash
+	A \otimes (B \oplus C)
 $}
 \end{prooftree}
 
