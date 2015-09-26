@@ -220,9 +220,84 @@ $}
 
 \begin{prooftree}
 \AxiomC{$
+	\cdots
+$}
+\AxiomC{$
 $}
 \RightLabel{$Ax$}
 \UnaryInfC{$
+	\langle A \rangle \vdash A
+$}
+\RightLabel{$I{!}$}
+\UnaryInfC{$
+	\langle A \rangle \vdash {!} A
+$}
+\AxiomC{$
+$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
+	\langle {!}(A\& B) \rangle
+	\vdash
+	A \& B
+$}
+\RightLabel{$E\&$}
+\UnaryInfC{$
+	\langle {!}(A\& B) \rangle
+	\vdash
+	A
+$}
+\RightLabel{$I{!}$}
+\UnaryInfC{$
+	\langle {!}(A\& B) \rangle
+	\vdash
+	{!}A
+$}
+\RightLabel{$Ax$}
+\BinaryInfC{$
+	\langle {!}(A\& B) \rangle,
+	\langle A\rangle
+	\vdash
+	{!}A \otimes {!}B
+$}
+\AxiomC{$
+$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
+	\langle B \rangle \vdash B
+$}
+\RightLabel{$I{!}$}
+\UnaryInfC{$
+	\langle B \rangle \vdash {!} B
+$}
+\AxiomC{$
+$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
+	\langle {!}(A\& B) \rangle
+	\vdash
+	A \& B
+$}
+\RightLabel{$E\&$}
+\UnaryInfC{$
+	\langle {!}(A\& B) \rangle
+	\vdash
+	A
+$}
+\RightLabel{$I{!}$}
+\UnaryInfC{$
+	\langle {!}(A\& B) \rangle
+	\vdash
+	{!}A
+$}
+\RightLabel{$I\otimes$}
+\BinaryInfC{$
+	\langle {!}(A\& B) \rangle,
+	\langle B \rangle
+	\vdash
+	{!}A \otimes {!}B
+$}
+\RightLabel{$E\oplus$}
+\TrinaryInfC{$
 	\langle {!}(A\& B) \rangle
 	\vdash
 	{!}A \otimes {!}B
