@@ -8,7 +8,6 @@
 \author{J. T. Klooster}
 \title{Excersizes of Linear Logic}
 \maketitle
-\tableofcontents
 \section{Deriviations}
 \begin{prooftree}
 \RightLabel{Ax}
@@ -361,28 +360,127 @@ $}
 \end{prooftree}
 
 \section{embedding IL into ILL}
-\subsection{${(A \to B)}^* = {!}A^* \multimap B^*$}
-
+\subsection{${(A \times B)}^* = A^* \& B^*$}
 \begin{prooftree}
 \AxiomC{$
 $}
-\RightLabel{$\langle Id \rangle$}
+\RightLabel{$Ax$}
 \UnaryInfC{$
-	\langle {!A} \rangle \vdash A
+	A \times B \vdash A \times B
 $}
 \AxiomC{$
-	\Gamma, [A] \vdash B
 $}
-\RightLabel{$E{!}$}
-\BinaryInfC{$
-	\Gamma, \langle {!A} \rangle \vdash B
-$}
-\RightLabel{$I\multimap$}
+\RightLabel{$Ax$}
 \UnaryInfC{$
-	\Gamma \vdash \langle {!A} \rangle \multimap B
+	A \vdash A
+$}
+\AxiomC{$
+$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
+	B \vdash B
+$}
+\RightLabel{$I\&$}
+\BinaryInfC{$
+	A, B \vdash A \& B
+$}
+\RightLabel{$E\times$}
+\BinaryInfC{$
+	A \times B \vdash A \& B
 $}
 \end{prooftree}
-\subsection{${(A \times B)}^* = A^* \& B^*$}
+\begin{prooftree}
+\AxiomC{$
+$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
+	A \& B \vdash A \& B
+$}
+\RightLabel{$E\&$}
+\UnaryInfC{$
+	A \& B \vdash A
+$}
+\AxiomC{$
+	\Delta \vdash B
+$}
+\RightLabel{$I\times$}
+\BinaryInfC{$
+	\Delta,
+	(A \& B)  \vdash A \times B
+$}
+\end{prooftree}
 \subsection{${(A + B)}^* = {!}A^* \oplus {!B}^* $}
+\begin{prooftree}
+\AxiomC{$
+$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
+	A + B \vdash A + B
+$}
+\AxiomC{$
+$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
+	A \vdash A
+$}
+\RightLabel{$I{!}$}
+\UnaryInfC{$
+	A \vdash {!}A
+$}
+\RightLabel{$I\oplus$}
+\UnaryInfC{$
+	A \vdash {!}A \oplus {!}B
+$}
+\AxiomC{$
+$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
+	B \vdash B
+$}
+\RightLabel{$I{!}$}
+\UnaryInfC{$
+	B \vdash {!}B
+$}
+\RightLabel{$I\oplus$}
+\UnaryInfC{$
+	B \vdash {!}A \oplus {!}B
+$}
+\RightLabel{$E+$}
+\TrinaryInfC{$
+	A + B \vdash {!}A \oplus {!}B
+$}
+\end{prooftree}
+\begin{prooftree}
+\AxiomC{$
+$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
+{!}A \oplus {!}B \vdash A \oplus B
+$}
+\AxiomC{$
+$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
+	A \vdash A
+$}
+\RightLabel{$I+$}
+\UnaryInfC{$
+	A \vdash A + B
+$}
+\AxiomC{$
+$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
+	B \vdash B
+$}
+\RightLabel{$I+$}
+\UnaryInfC{$
+	B \vdash A + B
+$}
+\RightLabel{$E\oplus$}
+\TrinaryInfC{$
+	 {!}A \oplus {!}B  \vdash A + B
+$}
+\end{prooftree}
 
 \end{document}
