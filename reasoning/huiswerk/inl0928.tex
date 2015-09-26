@@ -174,11 +174,34 @@ $}
 \subsection{not}
 \begin{prooftree}
 \AxiomC{$
-	L
+	(A \otimes B)\oplus(A\otimes C)
+	\vdash
+	A \otimes B
 $}
 \AxiomC{$
 $}
-\RightLabel{$E\multimap$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
+	A \vdash A
+$}
+
+\AxiomC{$
+$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
+	B \vdash B
+$}
+\RightLabel{$I\oplus$}
+\UnaryInfC{$
+	B \vdash B \oplus C
+$}
+\RightLabel{$I\otimes$}
+\BinaryInfC{$
+	A, B
+	\vdash
+	A \otimes (B \oplus C)
+$}
+\RightLabel{$E\otimes$}
 \BinaryInfC{$
 	(A \otimes B)\oplus(A\otimes C)
 	\vdash
