@@ -305,53 +305,55 @@ $}
 \end{prooftree}
 \begin{prooftree}
 \AxiomC{$
-	\cdots
+$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
+	\langle {!}A \otimes {!}B\rangle
+	\vdash
+	A \otimes B
 $}
 \AxiomC{$
 $}
 \RightLabel{$Ax$}
 \UnaryInfC{$
-	\langle {!}A \otimes {!}B\rangle,
 	\langle A \rangle
-	\vdash
-	{!}(A\& B)
-$}
-\AxiomC{$
-$}
-\RightLabel{$Ax$}
-\UnaryInfC{$
-	\langle B \rangle \vdash B
-$}
-\AxiomC{$
-$}
-\RightLabel{$Ax$}
-\UnaryInfC{$
-	\langle {!}(A\& B) \rangle
-	\vdash
-	A \& B
-$}
-\RightLabel{$E\&$}
-\UnaryInfC{$
-	\langle {!}(A\& B) \rangle
 	\vdash
 	A
 $}
+\RightLabel{$Weakening$}
+\UnaryInfC{$
+	\langle A \rangle , B
+	\vdash
+	A
+$}
+\AxiomC{$
+$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
+	\langle B \rangle
+	\vdash
+	B
+$}
+\RightLabel{$Weakening$}
+\UnaryInfC{$
+	A, \langle B \rangle
+	\vdash
+	B
+$}
 \RightLabel{$I\&$}
 \BinaryInfC{$
-	\langle {!}A \otimes {!}B\rangle,
-	\langle B \rangle
+	\langle A \rangle , \langle B \rangle
+	\vdash
+	A\& B
+$}
+\RightLabel{$E\otimes$}
+\BinaryInfC{$
+	\langle {!}A \otimes {!}B\rangle
 	\vdash
 	A\& B
 $}
 \RightLabel{$I{!}$}
 \UnaryInfC{$
-	\langle {!}A \otimes {!}B\rangle,
-	\langle B \rangle
-	\vdash
-	{!}(A\& B)
-$}
-\RightLabel{$E\oplus$}
-\TrinaryInfC{$
 	\langle {!}A \otimes {!}B\rangle
 	\vdash
 	{!}(A\& B)
