@@ -305,9 +305,53 @@ $}
 \end{prooftree}
 \begin{prooftree}
 \AxiomC{$
+	\cdots
+$}
+\AxiomC{$
 $}
 \RightLabel{$Ax$}
 \UnaryInfC{$
+	\langle {!}A \otimes {!}B\rangle,
+	\langle A \rangle
+	\vdash
+	{!}(A\& B)
+$}
+\AxiomC{$
+$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
+	\langle B \rangle \vdash B
+$}
+\AxiomC{$
+$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
+	\langle {!}(A\& B) \rangle
+	\vdash
+	A \& B
+$}
+\RightLabel{$E\&$}
+\UnaryInfC{$
+	\langle {!}(A\& B) \rangle
+	\vdash
+	A
+$}
+\RightLabel{$I\&$}
+\BinaryInfC{$
+	\langle {!}A \otimes {!}B\rangle,
+	\langle B \rangle
+	\vdash
+	A\& B
+$}
+\RightLabel{$I{!}$}
+\UnaryInfC{$
+	\langle {!}A \otimes {!}B\rangle,
+	\langle B \rangle
+	\vdash
+	{!}(A\& B)
+$}
+\RightLabel{$E\oplus$}
+\TrinaryInfC{$
 	\langle {!}A \otimes {!}B\rangle
 	\vdash
 	{!}(A\& B)
