@@ -361,5 +361,28 @@ $}
 \end{prooftree}
 
 \section{embedding IL into ILL}
+\subsection{${(A \to B)}^* = {!}A^* \multimap B^*$}
+
+\begin{prooftree}
+\AxiomC{$
+$}
+\RightLabel{$\langle Id \rangle$}
+\UnaryInfC{$
+	\langle {!A} \rangle \vdash A
+$}
+\AxiomC{$
+	\Gamma, [A] \vdash B
+$}
+\RightLabel{$E{!}$}
+\BinaryInfC{$
+	\Gamma, \langle {!A} \rangle \vdash B
+$}
+\RightLabel{$I\multimap$}
+\UnaryInfC{$
+	\Gamma \vdash \langle {!A} \rangle \multimap B
+$}
+\end{prooftree}
+\subsection{${(A \times B)}^* = A^* \& B^*$}
+\subsection{${(A + B)}^* = {!}A^* \oplus {!B}^* $}
 
 \end{document}
