@@ -174,35 +174,39 @@ $}
 \subsection{not}
 \begin{prooftree}
 \AxiomC{$
+$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
 	(A \otimes B)\oplus(A\otimes C)
 	\vdash
-	A \otimes B
+	(A \otimes B)\oplus(A\otimes C)
 $}
 \AxiomC{$
 $}
 \RightLabel{$Ax$}
 \UnaryInfC{$
-	A \vdash A
+	L
 $}
-
 \AxiomC{$
 $}
 \RightLabel{$Ax$}
 \UnaryInfC{$
-	B \vdash B
-$}
-\RightLabel{$I\oplus$}
-\UnaryInfC{$
-	B \vdash B \oplus C
+	R
 $}
 \RightLabel{$I\otimes$}
 \BinaryInfC{$
-	A, B
-	\vdash
+	A \otimes B \vdash
 	A \otimes (B \oplus C)
 $}
-\RightLabel{$E\otimes$}
-\BinaryInfC{$
+\AxiomC{$
+$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
+	A \otimes C \vdash
+	A \otimes (B \oplus C)
+$}
+\RightLabel{$E\oplus$}
+\TrinaryInfC{$
 	(A \otimes B)\oplus(A\otimes C)
 	\vdash
 	A \otimes (B \oplus C)
