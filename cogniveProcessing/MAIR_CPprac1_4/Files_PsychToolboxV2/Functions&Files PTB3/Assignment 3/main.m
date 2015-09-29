@@ -14,8 +14,11 @@ screennr = 0;
 % stimulus computation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-M = concentricgrating(stimvhdim,ncycles, 50);
-
+load('picturemat.mat');
+stimvhdim = size(GrayM,2);
+MCo1(:,:,1) = RedM;
+MCo1(:,:,2) = GreenM;
+MCo1(:,:,3) = BlueM;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % screen presentation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -28,7 +31,7 @@ Screen('Flip', w);
 sr = [0 0 stimvhdim stimvhdim];
 dst = CenterRect(sr,screenrect);
 
-tex=Screen('MakeTexture', w, M);
+tex=Screen('MakeTexture', w, MCo1);
 
 Screen('DrawTexture', w, tex,sr,dst);
 Screen('Flip', w);
