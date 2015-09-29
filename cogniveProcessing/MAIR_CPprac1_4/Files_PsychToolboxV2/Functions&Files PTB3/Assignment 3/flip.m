@@ -1,0 +1,1 @@
+function [] = flip(w,screenrect)fixvhdim = 10;linewidth = 2;fixcrosspos1 = CenterRect([0 0 linewidth fixvhdim],screenrect);fixcrosspos2 = CenterRect([0 0 fixvhdim linewidth],screenrect);Screen(w,'fillrect',[0 0 0],fixcrosspos1);Screen(w,'fillrect',[0 0 0],fixcrosspos2);Screen('Flip', w);

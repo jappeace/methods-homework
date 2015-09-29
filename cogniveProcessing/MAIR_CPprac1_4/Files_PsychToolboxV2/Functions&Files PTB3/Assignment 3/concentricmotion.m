@@ -28,7 +28,7 @@ presentationframes = round(presentationduration*monitorfreq);
 [w,screenrect] = openwindow();
 
 Screen('fillrect',w,backgroundcolor);
-Screen('Flip', w);
+flip(w,screenrect);
 
 sr = [0 0 stimvhdim stimvhdim];
 dst = CenterRect(sr,screenrect);
@@ -41,7 +41,7 @@ donotstop = 1;
 teller = 0;
 for frame = 1:presentationframes;
     Screen('DrawTexture', w, tex(1+mod(frame,framestocycle)),sr,dst);
-    Screen('Flip', w);
+    flip(w,screenrect);
 end
 
 stationaryTex = Screen('MakeTexture', w, concentricgrating(stimvhdim,ncycles, 50));
@@ -51,12 +51,12 @@ for i = 1:3
     % blank first I guess
     for frame = 1:monitorfreq;
     Screen('fillrect',w,backgroundcolor);
-    Screen('Flip', w);
+    flip(w,screenrect);
     end
         
     % show how crazy he is
     Screen('DrawTexture', w, stationaryTex,sr,dst);
-    Screen('Flip', w);
+    flip(w,screenrect);
 
     waituntilspacepress;
     
