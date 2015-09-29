@@ -43,10 +43,23 @@ for frame = 1:presentationframes;
     Screen('DrawTexture', w, tex(1+mod(frame,framestocycle)),sr,dst);
     Screen('Flip', w);
 end
-stationaryTex = Screen('MakeTexture', w, concentricgrating(stimvhdim,ncycles, 50))
-for frame = 1:presentationframes;
+
+stationaryTex = Screen('MakeTexture', w, concentricgrating(stimvhdim,ncycles, 50));
+
+%fix up user part
+for i = 1:3
+    % blank first I guess
+    for frame = 1:monitorfreq;
+    Screen('fillrect',w,backgroundcolor);
+    Screen('Flip', w);
+    end
+        
+    % show how crazy he is
     Screen('DrawTexture', w, stationaryTex,sr,dst);
     Screen('Flip', w);
-end
 
+    waituntilspacepress;
+    
+
+end
 Screen closeall;
