@@ -38,13 +38,14 @@ for i = 1:3
         
     % show how crazy he is
     Screen('DrawTexture', w, stationaryTex,sr,dst);
+    
     onset = flips(w,screenrect);
-
+    
     waituntilspacepress;
     Screen('fillrect',w,backgroundcolor);
     offset = flips(w,screenrect);
-    
     duration(i) = offset - onset;
+    
     % blank first I guess
     for frame = 1:(monitorfreq - 1);
         Screen('fillrect',w,backgroundcolor);

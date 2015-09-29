@@ -1,0 +1,1 @@
+function [] = writetexttoscreen(text, y,w,screenrect)Screen('TextFont',w, 'Arial');Screen('TextSize',w, 20);Screen('TextStyle', w, 1+2);bbox=Screen('TextBounds', w, text);centtextrect = CenterRect(bbox,screenrect);x = centtextrect(1);y = centtextrect(2) + y;Screen('DrawText',w,text,[x],[y],0);
