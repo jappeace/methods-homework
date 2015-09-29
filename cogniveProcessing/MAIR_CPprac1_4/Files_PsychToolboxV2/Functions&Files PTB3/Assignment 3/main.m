@@ -4,10 +4,10 @@ clear all; commandwindow;
 % parameters
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-stimvhdim = 100;
+stimvhdim =  200;
 ncycles = 10;
 
-backgroundcolor = 0;
+backgroundcolor = [200, 200, 200];
 screennr = 0;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -20,7 +20,7 @@ M = sinewave(stimvhdim,ncycles);
 % screen presentation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-[w,screenrect] = Screen('Openwindow',screennr);
+[w,screenrect] = openwindow();
 
 Screen('fillrect',w,backgroundcolor);
 Screen('Flip', w);

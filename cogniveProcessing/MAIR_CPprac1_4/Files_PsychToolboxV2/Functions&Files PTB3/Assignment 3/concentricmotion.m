@@ -5,7 +5,7 @@ clear all; commandwindow;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 screennr = 0;
-monitorfreq = 85;
+monitorfreq = 60;
 
 presentationduration = 5;
 
@@ -25,7 +25,7 @@ presentationframes = round(presentationduration*monitorfreq);
 % screen presentation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-[w,screenrect] = Screen('Openwindow',screennr);
+[w,screenrect] = openwindow();
 
 Screen('fillrect',w,backgroundcolor);
 Screen('Flip', w);

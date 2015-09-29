@@ -90,3 +90,7 @@ Well yes, definitely, even while I tried to rig it to exit the experiments
 as quickly as possible, I had serious issues doing this with the oblique lines.
 
 # Moving & coloured stimuli
+## How long does a single frame last on your monitor?
+refresh rate is 60hz, this is the industry standard, so its 1/60 of a second.
+
+
