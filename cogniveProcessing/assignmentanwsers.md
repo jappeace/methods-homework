@@ -93,4 +93,17 @@ as quickly as possible, I had serious issues doing this with the oblique lines.
 ## How long does a single frame last on your monitor?
 refresh rate is 60hz, this is the industry standard, so its 1/60 of a second.
 
+## What does a for loop do?
+Iterate over the code inside it until a condition is no longer valid
 
+## Why is it preferable to decode stimulus as a number of frames?
+Time is very difficult to get right on computers, code doing
+stuff takes time and it takes quite some effort to measure this properly. So
+showing something for a number of frames rather than a number of seconds is
+much easier to code.
+
+## What did you perceive when viewing the stationary stimulus?
+Circles going outward
+
+## Do you know the name of this phenomenon?
+no...

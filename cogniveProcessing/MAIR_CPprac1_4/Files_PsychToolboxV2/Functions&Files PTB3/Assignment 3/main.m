@@ -14,7 +14,7 @@ screennr = 0;
 % stimulus computation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-M = sinewave(stimvhdim,ncycles);
+M = concentricgrating(stimvhdim,ncycles, 50);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % screen presentation

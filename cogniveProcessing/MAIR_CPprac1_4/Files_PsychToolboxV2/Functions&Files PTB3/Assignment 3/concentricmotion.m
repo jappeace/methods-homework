@@ -7,7 +7,7 @@ clear all; commandwindow;
 screennr = 0;
 monitorfreq = 60;
 
-presentationduration = 5;
+presentationduration = 20;
 
 stimvhdim = 300;
 ncycles = 5;
@@ -41,6 +41,11 @@ donotstop = 1;
 teller = 0;
 for frame = 1:presentationframes;
     Screen('DrawTexture', w, tex(1+mod(frame,framestocycle)),sr,dst);
+    Screen('Flip', w);
+end
+stationaryTex = Screen('MakeTexture', w, concentricgrating(stimvhdim,ncycles, 50))
+for frame = 1:presentationframes;
+    Screen('DrawTexture', w, stationaryTex,sr,dst);
     Screen('Flip', w);
 end
 
