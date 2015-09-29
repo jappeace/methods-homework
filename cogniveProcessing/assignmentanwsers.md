@@ -81,3 +81,12 @@ hold on always writing over the previous graph, hold off disables this again.
 ## Did the staircases converge well?
 No mainly because I didn't want to do the experiment and started rigging it
 based on output.
+
+## Do you see any difference between the thresholds?
+Oblique had horrible performance compared to the rest.
+
+## Google it, does your experiment confirm this?
+Well yes, definitely, even while I tried to rig it to exit the experiments
+as quickly as possible, I had serious issues doing this with the oblique lines.
+
+# Moving & coloured stimuli
