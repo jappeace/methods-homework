@@ -1,9 +1,9 @@
 include: person.2apl;
 
 beliefs:
-  trap(0, 0).
   clean( blockWorld ) :- not bomb(X,Y) , not carry(bomb).
   score(0).
+  knowtrap( blockWorld ) :- trap(X, Y).
 
 beliefupdates:
   { carry(bomb) }     Drop()   { not carry(bomb)}
@@ -16,13 +16,13 @@ goals:
   clean( blockWorld ).
 
 pgrules:
-  clean( blockWorld ) <- bomb( X, Y ) |
+  clean( blockWorld ) <- knowtrap(blockWorld) and bomb( X, Y ) and trap (Q, Z)|
   {
     goto( X, Y );
     @blockworld( pickup( ), _ );
 		PickUp();
 		-bomb( X, Y );
-    goto(0, 0);
+    goto(Q, Z);
 		@blockworld( drop( ), _ );
 		Drop();
   }
@@ -37,6 +37,12 @@ pcrules:
     else {
 			+bomb( X, Y );
 		}
+  }
+  message( sally, inform, La, On, trapAt( X, Y ) ) <- true |
+  {
+  	if B(not trap(A, B)){
+		+trap(X, Y);
+	}
   }
 
 prrules:

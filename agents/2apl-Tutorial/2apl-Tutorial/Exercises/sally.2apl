@@ -17,4 +17,9 @@ pgrules:
     {
       send( harry, inform, bombAt( X1, Y1 ) );
     }
+    @blockworld( senseTraps(), TRAPS);
+    if B( TRAPS = [[default,X1,Y1]|REST] )
+    {
+      send( harry, inform, trapAt( X1, Y1 ) );
+    }
   }
