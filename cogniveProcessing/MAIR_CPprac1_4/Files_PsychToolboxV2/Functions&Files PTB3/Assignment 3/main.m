@@ -1,6 +1,6 @@
 clear all; commandwindow;
 trialcount = 10;
-stimtime = 1;
+stimtime = 20;
 
 results = zeros(trialcount,3);
 [w,screenrect] = openwindow();
