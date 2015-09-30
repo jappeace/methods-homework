@@ -1,0 +1,108 @@
+\documentclass{article}
+\usepackage{txfonts}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{bussproofs}
+\newenvironment{scprooftree}[1]%
+{\gdef\scalefactor{#1}\begin{center}\proofSkipAmount \leavevmode}%
+{\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center} }
+
+\begin{document}
+\author{Jappie Klooster}
+\title{Excersizes of Linear Logic}
+\maketitle
+\section{Commutative conversions}
+\begin{center}
+\mbox{\AxiomC{$
+	\Gamma \vdash A \times B
+$}
+\AxiomC{$
+	\Delta, Q, Q, A, B \vdash C
+$}
+\RightLabel{$E\times$}
+\BinaryInfC{$
+	\Gamma, \Delta, Q, Q \vdash C
+$}
+\RightLabel{Cont}
+\UnaryInfC{$
+	\Gamma, \Delta, Q \vdash C
+$}
+\DisplayProof
+}
+$\Leftrightarrow$
+\mbox{\AxiomC{$
+	\Gamma \vdash A \times B
+$}
+\AxiomC{$
+	\Delta, Q, Q, A, B \vdash C
+$}
+\RightLabel{Cont}
+\UnaryInfC{$
+	\Delta, Q, A, B \vdash C
+$}
+\RightLabel{$E\times$}
+\BinaryInfC{$
+	\Gamma, \Delta, Q \vdash C
+$}
+
+\DisplayProof
+}
+\end{center}
+\begin{center}
+\mbox{\AxiomC{$
+	\Gamma, Q, Q \vdash A \times B
+$}
+\AxiomC{$
+	\Delta, A, B \vdash C
+$}
+\RightLabel{$E\times$}
+\BinaryInfC{$
+	\Gamma, \Delta, Q, Q \vdash C
+$}
+\RightLabel{Cont}
+\UnaryInfC{$
+	\Gamma, \Delta, Q \vdash C
+$}
+\DisplayProof
+}
+$\Leftrightarrow$
+\mbox{\AxiomC{$
+	\Gamma, Q, Q \vdash A \times B
+$}
+\RightLabel{Cont}
+\UnaryInfC{$
+	\Gamma, Q \vdash A \times B
+$}
+\AxiomC{$
+	\Delta, A, B \vdash C
+$}
+\RightLabel{$E\times$}
+\BinaryInfC{$
+	\Gamma, \Delta, Q \vdash C
+$}
+
+\DisplayProof
+}
+\end{center}
+\subsection{Where can cont not be pushed up?}
+If the Q is being split up on both sides of the proof, for example:
+\begin{prooftree}
+
+\AxiomC{$
+	\Gamma, Q \vdash A \times B
+$}
+\AxiomC{$
+	\Delta, Q, A, B \vdash C
+$}
+\RightLabel{$E\times$}
+\BinaryInfC{$
+	\Gamma, \Delta, Q, Q \vdash C
+$}
+\RightLabel{Cont}
+\UnaryInfC{$
+	\Gamma, \Delta, Q \vdash C
+$}
+\end{prooftree}
+
+Now cont can't be pushed up because one side would have nothing to cont.
+\end{document}
