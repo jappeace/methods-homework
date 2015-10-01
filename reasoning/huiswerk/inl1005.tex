@@ -105,4 +105,61 @@ $}
 \end{prooftree}
 
 Now cont can't be pushed up because one side would have nothing to cont.
+
+\section{Translate to ILL and show the translation is valid in ILL}
+$\Gamma \Rightarrow A$ is proofable in IL iff its translation
+${!}\Gamma^* \Rightarrow A^*$ is proofable in ILL
+
+Translations
+
+\begin{prooftree}
+\AxiomC{$
+	A^* \& ( {!}B^* \oplus {!}C^*)^*
+	\Rightarrow
+	{!}(A^* \& B^*)^* \oplus {!}(A^* \& B^*)^*
+$}
+\RightLabel{$(A + B)^* = {!}A^* \oplus {!}B^*$}
+\UnaryInfC{$
+	A^* \& ( B + C)^{**}
+	\Rightarrow
+	((A^* \& B^*) + (A^* \& B^*))^*
+$}
+\RightLabel{$(A \times B)^* = A^* \& B^*$}
+\UnaryInfC{$
+	(A \times ( B + C )^*)^*
+	\Rightarrow
+	(( A \times B )^* + ( A \times C )^*)^*
+$}
+\RightLabel{$X^*=X$}
+\UnaryInfC{$
+	A \times ( B + C )
+	\Rightarrow
+	( A \times B ) + ( A \times C )
+$}
+\end{prooftree}
+\begin{prooftree}
+\AxiomC{$
+	{!}(A^* \& B^*)^* \oplus {!}(A^* \& B^*)^*
+	\Rightarrow
+	A^* \& ( {!}B^* \oplus {!}C^*)^*
+$}
+\RightLabel{$(A + B)^* = {!}A^* \oplus {!}B^*$}
+\UnaryInfC{$
+	((A^* \& B^*) + (A^* \& B^*))^*
+	\Rightarrow
+	A^* \& ( B + C)^{**}
+$}
+\RightLabel{$(A \times B)^* = A^* \& B^*$}
+\UnaryInfC{$
+	(( A \times B )^* + ( A \times C )^*)^*
+	\Rightarrow
+	(A \times ( B + C )^*)^*
+$}
+\RightLabel{$X^*=X$}
+\UnaryInfC{$
+	( A \times B ) + ( A \times C )
+	\Rightarrow
+	A \times ( B + C )
+$}
+\end{prooftree}
 \end{document}
