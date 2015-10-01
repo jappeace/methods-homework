@@ -22,4 +22,5 @@ pgrules:
     {
       send( harry, inform, trapAt( X1, Y1 ) );
     }
+	send( harry, inform, sallyAt(X, Y))
   }

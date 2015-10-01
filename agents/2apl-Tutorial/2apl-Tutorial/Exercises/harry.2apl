@@ -4,16 +4,19 @@ beliefs:
   clean( blockWorld ) :- not bomb(X,Y) , not carry(bomb).
   score(0).
   knowtrap( blockWorld ) :- trap(X, Y).
+  sally(0, 0).
 
 beliefupdates:
   { carry(bomb) }     Drop()   { not carry(bomb)}
   { not carry(bomb) and score(N) } PickUp() { carry(bomb), score(N + 1), not score(N)}
+  { sally(X, Y)} locateSally(Z, Q) {not sally(X, Y), sally(Z, Q)}
 
 plans:
   startup(0, 1, blue);
 
 goals:
   clean( blockWorld ).
+  followSally( blockWorld ).
 
 pgrules:
   clean( blockWorld ) <- knowtrap(blockWorld) and bomb( X, Y ) and trap (Q, Z)|
@@ -25,6 +28,9 @@ pgrules:
     goto(Q, Z);
 		@blockworld( drop( ), _ );
 		Drop();
+  }
+  followSally( blockWorld ) <- knowtrap(blockWorld) and not bomb( X, Y)|
+  {
   }
 
 pcrules:
@@ -43,6 +49,9 @@ pcrules:
   	if B(not trap(A, B)){
 		+trap(X, Y);
 	}
+  }
+  message( sally, inform, La, On, sallyAt( X, Y ) ) <- true |
+  {
   }
 
 prrules:
