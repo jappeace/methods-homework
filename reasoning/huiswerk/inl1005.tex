@@ -3,6 +3,7 @@
 \usepackage{booktabs}
 \usepackage{color}
 \usepackage{bussproofs}
+\usepackage{graphicx}
 \newenvironment{scprooftree}[1]%
 {\gdef\scalefactor{#1}\begin{center}\proofSkipAmount \leavevmode}%
 {\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center} }
@@ -112,72 +113,209 @@ ${!}\Gamma^* \Rightarrow A^*$ is proofable in ILL
 
 Translations
 
-\begin{prooftree}
+\begin{scprooftree}{0.75}
 \AxiomC{$
 $}
+\RightLabel{$Ax$}
 \UnaryInfC{$
-	{!}B^*
+	A^*
 	\Rightarrow
-	{!}(A^* \& B^*)^*
-$}
-\RightLabel{$R\oplus$}
-\UnaryInfC{$
-	{!}B^*
-	\Rightarrow
-	{!}(A^* \& B^*)^*
-	\oplus
-	{!}(A^* \& C^*)^*
-$}
-\AxiomC{$
-$}
-\UnaryInfC{$
-	{!}C^*
-	\Rightarrow
-	{!}(A^* \& C^*)^*
-$}
-\RightLabel{$R\oplus$}
-\UnaryInfC{$
-	{!}C^*
-	\Rightarrow
-	{!}(A^* \& B^*)^*
-	\oplus
-	{!}(A^* \& C^*)^*
-$}
-\RightLabel{$L\oplus$}
-\BinaryInfC{$
-	{!}B^* \oplus {!}C^*
-	\Rightarrow
-	{!}(A^* \& B^*)^*
-	\oplus
-	{!}(A^* \& C^*)^*
+	A^*
 $}
 \RightLabel{$L\&$}
 \UnaryInfC{$
 	A^* \& ( {!}B^* \oplus {!}C^*)
 	\Rightarrow
-	{!}(A^* \& B^*)^*
-	\oplus
-	{!}(A^* \& C^*)^*
+	A^*
+$}
+\RightLabel{$L{!}$}
+\UnaryInfC{$
+	A^* \& ( {!}B^* \oplus {!}C^*)
+	\Rightarrow
+	A^*
+$}
+\RightLabel{$W{!}$}
+\UnaryInfC{$
+	{!}(A^* \& ( {!}B^* \oplus {!}C^*))
+	\Rightarrow
+	A^*
+$}
+\RightLabel{$W{!}$}
+\UnaryInfC{$
+	{!}(A^* \& ( {!}B^* \oplus {!}C^*)),
+	{!}B^*
+	\Rightarrow
+	A^*
+$}
+\AxiomC{$
+$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
+	B^*
+	\Rightarrow
+	B^*
+$}
+\RightLabel{$L{!}$}
+\UnaryInfC{$
+	{!}B^*
+	\Rightarrow
+	B^*
+$}
+\RightLabel{$W{!}$}
+\UnaryInfC{$
+	{!}(A^* \& ( {!}B^* \oplus {!}C^*)),
+	{!}B^*
+	\Rightarrow
+	B^*
+$}
+\RightLabel{$R\&$}
+\BinaryInfC{$
+	{!}(A^* \& ( {!}B^* \oplus {!}C^*)),
+	{!}B^*
+	\Rightarrow
+	A^* \& B^*
+$}
+\RightLabel{$R{!}$}
+\UnaryInfC{$
+	{!}(A^* \& ( {!}B^* \oplus {!}C^*)),
+	{!}B^*
+	\Rightarrow
+	{!}(A^* \& B^*)
+$}
+\RightLabel{$R\oplus$}
+\UnaryInfC{$
+	{!}(A^* \& ( {!}B^* \oplus {!}C^*)),
+	{!}B^*
+	\Rightarrow
+	{!}(A^* \& B^*) \oplus {!}(A^* \& C^*)
+$}
+\AxiomC{$
+$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
+	A^*
+	\Rightarrow
+	A^*
+$}
+\RightLabel{$L\&$}
+\UnaryInfC{$
+	A^* \& ( {!}B^* \oplus {!}C^*)
+	\Rightarrow
+	A^*
+$}
+\RightLabel{$L{!}$}
+\UnaryInfC{$
+	A^* \& ( {!}B^* \oplus {!}C^*)
+	\Rightarrow
+	A^*
+$}
+\RightLabel{$W{!}$}
+\UnaryInfC{$
+	{!}(A^* \& ( {!}B^* \oplus {!}C^*))
+	\Rightarrow
+	A^*
+$}
+\RightLabel{$W{!}$}
+\UnaryInfC{$
+	{!}(A^* \& ( {!}B^* \oplus {!}C^*)),
+	{!}C^*
+	\Rightarrow
+	A^*
+$}
+\AxiomC{$
+$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
+	C^*
+	\Rightarrow
+	C^*
+$}
+\RightLabel{$L{!}$}
+\UnaryInfC{$
+	{!}C^*
+	\Rightarrow
+	C^*
+$}
+\RightLabel{$W{!}$}
+\UnaryInfC{$
+	{!}(A^* \& ( {!}B^* \oplus {!}C^*)),
+	{!}C^*
+	\Rightarrow
+	C^*
+$}
+\RightLabel{$R\&$}
+\BinaryInfC{$
+	{!}(A^* \& ( {!}B^* \oplus {!}C^*)),
+	{!}C^*
+	\Rightarrow
+	A^* \& C^*
+$}
+\RightLabel{$R{!}$}
+\UnaryInfC{$
+	{!}(A^* \& ( {!}B^* \oplus {!}C^*)),
+	{!}C^*
+	\Rightarrow
+	{!}(A^* \& C^*)
+$}
+\RightLabel{$R\oplus$}
+\UnaryInfC{$
+	{!}(A^* \& ( {!}B^* \oplus {!}C^*)),
+	{!}C^*
+	\Rightarrow
+	{!}(A^* \& B^*) \oplus {!}(A^* \& C^*)
+$}
+\RightLabel{$L\oplus$}
+\BinaryInfC{$
+	{!}(A^* \& ( {!}B^* \oplus {!}C^*)),
+	{!}B^* \oplus {!}C^*
+	\Rightarrow
+	{!}(A^* \& B^*) \oplus {!}(A^* \& C^*)
+$}
+\RightLabel{$L\&$}
+\UnaryInfC{$
+	{!}(A^* \& ( {!}B^* \oplus {!}C^*)),
+	A^* \& ( {!}B^* \oplus {!}C^*)
+	\Rightarrow
+	{!}(A^* \& B^*) \oplus {!}(A^* \& C^*)
+$}
+\RightLabel{$L{!}$}
+\UnaryInfC{$
+	{!}(A^* \& ( {!}B^* \oplus {!}C^*)),
+	{!}(A^* \& ( {!}B^* \oplus {!}C^*))
+	\Rightarrow
+	{!}(A^* \& B^*) \oplus {!}(A^* \& C^*)
+$}
+\RightLabel{$C{!}$}
+\UnaryInfC{$
+	{!}(A^* \& ( {!}B^* \oplus {!}C^*))
+	\Rightarrow
+	{!}(A^* \& B^*) \oplus {!}(A^* \& C^*)
 $}
 \RightLabel{$(A + B)^* = {!}A^* \oplus {!}B^*$}
 \UnaryInfC{$
-	A^* \& ( B + C)^*
+	{!}(A^* \& ( B + C)^*)
 	\Rightarrow
-	((A^* \& B^*) + (A^* \& B^*))^*
+	{!}(A^* \& B^*) \oplus {!}(A^* \& C^*)
 $}
 \RightLabel{$(A \times B)^* = A^* \& B^*$}
 \UnaryInfC{$
-	(A \times ( B + C ))^*
+	{!}(A \times ( B + C ))^*
 	\Rightarrow
-	(( A \times B )^* + ( A \times C )^*)^*
+	{!}( A \times B )^* \oplus {!}(A \times C )^*
 $}
-\RightLabel{$X^*=X$}
+\RightLabel{$(A + B)^* = {!}A^* \oplus {!}B^*$}
+\UnaryInfC{$
+	{!}(A \times ( B + C ))^*
+	\Rightarrow
+	(( A \times B ) + ( A \times C ))^*
+$}
+\RightLabel{IL to ILL}
 \UnaryInfC{$
 	A \times ( B + C )
 	\Rightarrow
 	( A \times B ) + ( A \times C )
 $}
-\end{prooftree}
+\end{scprooftree}
 
 %\begin{prooftree}
 %\AxiomC{$
