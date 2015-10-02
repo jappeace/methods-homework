@@ -317,31 +317,166 @@ $}
 $}
 \end{scprooftree}
 
-%\begin{prooftree}
-%\AxiomC{$
-	%{!}(A^* \& B^*)^* \oplus {!}(A^* \& B^*)^*
-	%\Rightarrow
-	%A^* \& ( {!}B^* \oplus {!}C^*)^*
-%$}
-%\RightLabel{$(A + B)^* = {!}A^* \oplus {!}B^*$}
-%\UnaryInfC{$
-	%((A^* \& B^*) + (A^* \& B^*))^*
-	%\Rightarrow
-	%A^* \& ( B + C)^{**}
-%$}
-%\RightLabel{$(A \times B)^* = A^* \& B^*$}
-%\UnaryInfC{$
-	%(( A \times B )^* + ( A \times C )^*)^*
-	%\Rightarrow
-	%(A \times ( B + C )^*)^*
-%$}
-%\RightLabel{$X^*=X$}
-%\UnaryInfC{$
-	%( A \times B ) + ( A \times C )
-	%\Rightarrow
-	%A \times ( B + C )
-%$}
-%\end{prooftree}
+\begin{scprooftree}{1}
+\AxiomC{$
+$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
+	A^*
+	\Rightarrow
+	A^*
+$}
+\RightLabel{$L\&$}
+\UnaryInfC{$
+	A^* \& B^*
+	\Rightarrow
+	A^*
+$}
+\RightLabel{${!}L$}
+\UnaryInfC{$
+	{!}( A^* \& B^* )
+	\Rightarrow
+	A^*
+$}
+\AxiomC{$
+$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
+	A^*
+	\Rightarrow
+	A^*
+$}
+\RightLabel{$L\&$}
+\UnaryInfC{$
+	A^* \& C^*
+	\Rightarrow
+	A^*
+$}
+\RightLabel{$L{!}$}
+\UnaryInfC{$
+	{!}(A^* \& C^* )
+	\Rightarrow
+	A^*
+$}
+\RightLabel{$L\oplus$}
+\BinaryInfC{$
+	{!}( A^* \& B^* ) \oplus {!}( A^* \& C^* )
+	\Rightarrow
+	A^*
+$}
+\RightLabel{${!}L$}
+\UnaryInfC{$
+	{!}( {!}( A^* \& B^* ) \oplus {!}( A^* \& C^* ))
+	\Rightarrow
+	A^*
+$}
+\AxiomC{$
+$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
+	B^*
+	\Rightarrow
+	B^*
+$}
+\RightLabel{$L\&$}
+\UnaryInfC{$
+	A^* \& B^*
+	\Rightarrow
+	B^*
+$}
+\RightLabel{$L{!}$}
+\UnaryInfC{$
+	{!}( A^* \& B^* )
+	\Rightarrow
+	B^*
+$}
+\RightLabel{$R{!}$}
+\UnaryInfC{$
+	{!}( A^* \& B^* )
+	\Rightarrow
+	{!}B^*
+$}
+\RightLabel{$R\oplus$}
+\UnaryInfC{$
+	{!}( A^* \& B^* )
+	\Rightarrow
+	{!}B^* \oplus {!}C^*
+$}
+\AxiomC{$
+$}
+\RightLabel{$Ax$}
+\UnaryInfC{$
+	C^*
+	\Rightarrow
+	C^*
+$}
+\RightLabel{$L\&$}
+\UnaryInfC{$
+	A^* \& C^*
+	\Rightarrow
+	C^*
+$}
+\RightLabel{$L{!}$}
+\UnaryInfC{$
+	{!}( A^* \& C^* )
+	\Rightarrow
+	C^*
+$}
+\RightLabel{$R{!}$}
+\UnaryInfC{$
+	{!}( A^* \& C^* )
+	\Rightarrow
+	{!}C^*
+$}
+\RightLabel{$R\oplus$}
+\UnaryInfC{$
+	{!}( A^* \& C^* )
+	\Rightarrow
+	{!}B^* \oplus {!}C^*
+$}
+\RightLabel{$L\oplus$}
+\BinaryInfC{$
+	{!}( A^* \& B^* ) \oplus {!}( A^* \& C^* )
+	\Rightarrow
+	{!}B^* \oplus {!}C^*
+$}
+\RightLabel{$R{!}$}
+\UnaryInfC{$
+	{!}( {!}( A^* \& B^* ) \oplus {!}( A^* \& C^* ))
+	\Rightarrow
+	{!}B^* \oplus {!}C^*
+$}
+\RightLabel{$R\&$}
+\BinaryInfC{$
+	{!}( {!}( A^* \& B^* ) \oplus {!}( A^* \& C^* ))
+	\Rightarrow
+	A^* \& ( {!}B^* \oplus {!}C^* )
+$}
+\RightLabel{$(A + B)^* = {!}A^* \oplus {!}B^*$}
+\UnaryInfC{$
+	{!}( {!}( A^* \& B^* ) \oplus {!}( A^* \& C^* ))
+	\Rightarrow
+	A^* \& ( B + C )^*
+$}
+\RightLabel{$(A \times B)^* = A^* \& B^*$}
+\UnaryInfC{$
+	{!}(( A \times B )^* \oplus ( A \times C )^*)
+	\Rightarrow
+	(A \times ( B + C ))^*
+$}
+\RightLabel{$(A + B)^* = {!}A^* \oplus {!}B^*$}
+\UnaryInfC{$
+	{!}(( A \times B ) + ( A \times C ))^*
+	\Rightarrow
+	(A \times ( B + C ))^*
+$}
+\RightLabel{IL to ILL}
+\UnaryInfC{$
+	( A \times B ) + ( A \times C )
+	\Rightarrow
+	A \times ( B + C )
+$}
+\end{scprooftree}
 
 \section{No noun phrase}
 \begin{tabular}{@{}ll@{}}
@@ -355,8 +490,8 @@ $}
 \end{tabular}
 
 \begin{prooftree}
-	\AxiomC{$np/n \vdash np/n$}
-	\AxiomC{$n \vdash n$}
+	\AxiomC{$(np \setminus s)/np\vdash (np \setminus s)/np$}
+	\AxiomC{$s\setminus s \vdash s\setminus s$}
 	\BinaryInfC{}
 \end{prooftree}
 \end{document}
