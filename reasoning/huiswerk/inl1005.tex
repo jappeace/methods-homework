@@ -114,19 +114,60 @@ Translations
 
 \begin{prooftree}
 \AxiomC{$
-	A^* \& ( {!}B^* \oplus {!}C^*)^*
+$}
+\UnaryInfC{$
+	{!}B^*
 	\Rightarrow
-	{!}(A^* \& B^*)^* \oplus {!}(A^* \& B^*)^*
+	{!}(A^* \& B^*)^*
+$}
+\RightLabel{$R\oplus$}
+\UnaryInfC{$
+	{!}B^*
+	\Rightarrow
+	{!}(A^* \& B^*)^*
+	\oplus
+	{!}(A^* \& C^*)^*
+$}
+\AxiomC{$
+$}
+\UnaryInfC{$
+	{!}C^*
+	\Rightarrow
+	{!}(A^* \& C^*)^*
+$}
+\RightLabel{$R\oplus$}
+\UnaryInfC{$
+	{!}C^*
+	\Rightarrow
+	{!}(A^* \& B^*)^*
+	\oplus
+	{!}(A^* \& C^*)^*
+$}
+\RightLabel{$L\oplus$}
+\BinaryInfC{$
+	{!}B^* \oplus {!}C^*
+	\Rightarrow
+	{!}(A^* \& B^*)^*
+	\oplus
+	{!}(A^* \& C^*)^*
+$}
+\RightLabel{$L\&$}
+\UnaryInfC{$
+	A^* \& ( {!}B^* \oplus {!}C^*)
+	\Rightarrow
+	{!}(A^* \& B^*)^*
+	\oplus
+	{!}(A^* \& C^*)^*
 $}
 \RightLabel{$(A + B)^* = {!}A^* \oplus {!}B^*$}
 \UnaryInfC{$
-	A^* \& ( B + C)^{**}
+	A^* \& ( B + C)^*
 	\Rightarrow
 	((A^* \& B^*) + (A^* \& B^*))^*
 $}
 \RightLabel{$(A \times B)^* = A^* \& B^*$}
 \UnaryInfC{$
-	(A \times ( B + C )^*)^*
+	(A \times ( B + C ))^*
 	\Rightarrow
 	(( A \times B )^* + ( A \times C )^*)^*
 $}
@@ -137,29 +178,47 @@ $}
 	( A \times B ) + ( A \times C )
 $}
 \end{prooftree}
+
+%\begin{prooftree}
+%\AxiomC{$
+	%{!}(A^* \& B^*)^* \oplus {!}(A^* \& B^*)^*
+	%\Rightarrow
+	%A^* \& ( {!}B^* \oplus {!}C^*)^*
+%$}
+%\RightLabel{$(A + B)^* = {!}A^* \oplus {!}B^*$}
+%\UnaryInfC{$
+	%((A^* \& B^*) + (A^* \& B^*))^*
+	%\Rightarrow
+	%A^* \& ( B + C)^{**}
+%$}
+%\RightLabel{$(A \times B)^* = A^* \& B^*$}
+%\UnaryInfC{$
+	%(( A \times B )^* + ( A \times C )^*)^*
+	%\Rightarrow
+	%(A \times ( B + C )^*)^*
+%$}
+%\RightLabel{$X^*=X$}
+%\UnaryInfC{$
+	%( A \times B ) + ( A \times C )
+	%\Rightarrow
+	%A \times ( B + C )
+%$}
+%\end{prooftree}
+
+\section{No noun phrase}
+\begin{tabular}{@{}ll@{}}
+	word & type \\ \toprule
+	the & $np/n$ \\
+	book & $n$ \\
+	that & $(n\setminus n) /(s \setminus np)$ \\
+	Allice & $np$ \\
+	read & $(np \setminus s) / np$ \\
+	yesterday & $s \setminus s$ \\
+\end{tabular}
+
 \begin{prooftree}
-\AxiomC{$
-	{!}(A^* \& B^*)^* \oplus {!}(A^* \& B^*)^*
-	\Rightarrow
-	A^* \& ( {!}B^* \oplus {!}C^*)^*
-$}
-\RightLabel{$(A + B)^* = {!}A^* \oplus {!}B^*$}
-\UnaryInfC{$
-	((A^* \& B^*) + (A^* \& B^*))^*
-	\Rightarrow
-	A^* \& ( B + C)^{**}
-$}
-\RightLabel{$(A \times B)^* = A^* \& B^*$}
-\UnaryInfC{$
-	(( A \times B )^* + ( A \times C )^*)^*
-	\Rightarrow
-	(A \times ( B + C )^*)^*
-$}
-\RightLabel{$X^*=X$}
-\UnaryInfC{$
-	( A \times B ) + ( A \times C )
-	\Rightarrow
-	A \times ( B + C )
-$}
+	\AxiomC{$np/n \vdash np/n$}
+	\AxiomC{$n \vdash n$}
+	\BinaryInfC{}
 \end{prooftree}
 \end{document}
