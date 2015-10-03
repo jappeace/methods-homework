@@ -486,33 +486,63 @@ I begin with natural deduction. \\
 	word & type \\ \toprule
 	the & $np/n$ \\
 	book & $n$ \\
-	that & $(n\setminus n) /(s \setminus np)$ \\
+	that & $(n\setminus n) /(s / np)$ \\
 	Allice & $np$ \\
 	read & $(np \setminus s) / np$ \\
 	yesterday & $s \setminus s$ \\
 \end{tabular}
 
 \begin{prooftree}
-	\AxiomC{that}
+	\AxiomC{}
 	\UnaryInfC{$
-		(n\setminus n) /(s \setminus np) \Rightarrow
-		(n\setminus n) /(s \setminus np)
+		np, (np \setminus s) / np, s \setminus s
+		\Rightarrow
+		s \setminus np
 	$}
-	\AxiomC{book}
+	\AxiomC{}
 	\UnaryInfC{$
 		n \Rightarrow n
 	$}
-	\AxiomC{the}
+	\AxiomC{}
 	\UnaryInfC{$
-		np/n \Rightarrow np/n
+		n \Rightarrow n
+	$}
+	\AxiomC{}
+	\UnaryInfC{$
+		np \Rightarrow np
 	$}
 	\RightLabel{$L/$}
 	\BinaryInfC{$
-		[(np/n/n, n)] \Rightarrow np/n
+		np / n, n
+		\Rightarrow
+		np
+	$}
+	\RightLabel{$L\setminus$}
+	\BinaryInfC{$
+		np / n, 
+		[
+		n,
+		n \setminus n
+		]
+		\Rightarrow
+		np
 	$}
 	\RightLabel{$L/$}
 	\BinaryInfC{$
-		[(np/n/n/((n\setminus n) /(s \setminus np)), (n\setminus n) /(s \setminus np), n)] \Rightarrow np/n
+		np/n, n, 
+		[
+		(n \setminus n) / ( s \setminus np),
+		np, (np \setminus s) / np, s \setminus s
+		]
+		\Rightarrow
+		np
 	$}
+	\RightLabel{Words to types}
+	\UnaryInfC{The book that allice read yesterday.
+		$
+		\Rightarrow
+		np
+		$
+	}
 \end{prooftree}
 \end{document}
