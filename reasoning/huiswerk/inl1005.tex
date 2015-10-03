@@ -493,24 +493,22 @@ I begin with natural deduction. \\
 \end{tabular}
 
 \begin{prooftree}
-	\AxiomC{the book that Allice read}
+	\AxiomC{book}
+	\UnaryInfC{$
+		n \Rightarrow n
+	$}
+	\AxiomC{book}
+	\UnaryInfC{$
+		np,(n \setminus n) / (s \setminus np), np,
+		(np \setminus s) / np, s \setminus s
+		\Rightarrow s
+	$}
 	\RightLabel{$L/$}
-	\UnaryInfC{$
-		np/n, n, [((n \setminus n) / (s \setminus np), np,
-		(np \setminus s) / np )]
-		\vdash s
-	$}
-	\AxiomC{yesterday}
-	\UnaryInfC{$
-		[s] \vdash s
-	$}
-	\RightLabel{$L\setminus$}
 	\BinaryInfC{$
 		[(
-		np/n, n, [((n \setminus n) / (s \setminus np), np,
+		np/n, n )], (n \setminus n) / (s \setminus np), np,
 		(np \setminus s) / np, s \setminus s
-		)])]
-		\vdash s
+		\Rightarrow s
 	$}
 \end{prooftree}
 \end{document}
