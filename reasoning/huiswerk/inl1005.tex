@@ -495,11 +495,9 @@ I begin with natural deduction. \\
 \begin{prooftree}
 	\AxiomC{the}
 	\UnaryInfC{$np/n \vdash np/n$}
-	\RightLabel{$R/$}
-	\UnaryInfC{$np/n, n \vdash np$}
 	\AxiomC{book}
 	\UnaryInfC{$n \vdash n$}
-	\RightLabel{Cut}
+	\RightLabel{$L/$}
 	\BinaryInfC{$np/n, n \vdash np$}
 \end{prooftree}
 \end{document}
