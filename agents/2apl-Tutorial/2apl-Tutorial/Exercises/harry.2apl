@@ -9,13 +9,13 @@ beliefs:
 beliefupdates:
   { carry(bomb) }     Drop()   { not carry(bomb)}
   { not carry(bomb) and score(N) } PickUp() { carry(bomb), score(N + 1), not score(N)}
-  { sally(X, Y)} locateSally(Z, Q) {not sally(X, Y), sally(Z, Q)}
 
 plans:
   startup(0, 1, blue);
 
 goals:
   clean( blockWorld ).
+  findtrap ( blockWorld ).
   followSally( blockWorld ).
 
 pgrules:
@@ -31,6 +31,18 @@ pgrules:
   }
   followSally( blockWorld ) <- knowtrap(blockWorld) and not bomb( X, Y)|
   {
+    @blockworld( senseAllAgent(), AGENTS);
+  }
+  findtrap( blockWorld ) <- not knowtrap(blockWorld) and worldSize(W, H) |
+  {
+    B(is( X, int( random( W - 1 ) ) ));
+    B(is( Y, int( random( H - 1 ) ) ));
+    goto( X, Y );
+    @blockworld( senseTraps(), TRAPS);
+    if B( TRAPS = [[default,X1,Y1]|REST] )
+    {
+		+trap(X1, Y1);
+    }
   }
 
 pcrules:
@@ -44,16 +56,6 @@ pcrules:
 			+bomb( X, Y );
 		}
   }
-  message( sally, inform, La, On, trapAt( X, Y ) ) <- true |
-  {
-  	if B(not trap(A, B)){
-		+trap(X, Y);
-	}
-  }
-  message( sally, inform, La, On, sallyAt( X, Y ) ) <- true |
-  {
-  }
-
 prrules:
   @blockworld( pickup(), _ ); REST; <- true |
   {
