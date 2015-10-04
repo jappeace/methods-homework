@@ -480,8 +480,18 @@ $}
 \end{scprooftree}
 
 \section{No noun phrase}
-I don't know how to even begin with this using sequant calculi, so
-I begin with natural deduction. \\
+So for both 3 and 4 I created one giant proof tree,
+but even withthe forbidden rules I can't solve this one. \\
+
+The controled rules are only limited to that, but I found
+especially on the right side of the three that the positional
+part can quickly become irrelevant if you have only 1 formula
+(s in this case) that can move around. You can just swap positions
+with other formulas, however I may have interpeted the rule a bit
+to freely, it doesn't become clear from the symbols if you can
+swap both sides and or skip whole parts. I assume it is because
+the $\Delta$ stands for sequances.
+
 \begin{tabular}{@{}ll@{}}
 	word & type \\ \toprule
 	the & $np/n$ \\
@@ -495,27 +505,65 @@ I begin with natural deduction. \\
 \begin{prooftree}
 	\AxiomC{}
 	\UnaryInfC{$
+		np \Rightarrow np
 	$}
 	\AxiomC{}
 	\UnaryInfC{$
+		s \Rightarrow s
 	$}
-	\RightLabel{$L/$}
+	\AxiomC{??}
+	\UnaryInfC{$
+		s \Rightarrow np
+	$}
+	\AxiomC{??}
+	\UnaryInfC{$
+		s \Rightarrow np
+	$}
+	\RightLabel{$L\setminus$}
 	\BinaryInfC{$
-		s, np, (np \setminus s) / np, s \setminus s
+		s, np \setminus s \Rightarrow np
+	$}
+	\RightLabel{$L\setminus$}
+	\BinaryInfC{$
+		s, s \setminus s, np \setminus s
 		\Rightarrow
 		np
 	$}
 	\RightLabel{$C^*$}
 	\UnaryInfC{$
-		s, np, (np \setminus s) / np, s \setminus s
+		s \setminus s, s, np \setminus s
 		\Rightarrow
 		np
 	$}
-	\RightLabel{$R\setminus$}
+	\RightLabel{$L/$}
+	\BinaryInfC{$
+		s \setminus s, s, (np \setminus s) / np, np
+		\Rightarrow
+		np
+	$}
+	\RightLabel{$C^*$}
+	\UnaryInfC{$
+		s \setminus s, (np \setminus s) / np, s, np
+		\Rightarrow
+		np
+	$}
+	\RightLabel{$C^*$}
+	\UnaryInfC{$
+		s, (np \setminus s) / np, s \setminus s, np
+		\Rightarrow
+		np
+	$}
+	\RightLabel{$C^*$}
+	\UnaryInfC{$
+		np, (np \setminus s) / np, s \setminus s, s
+		\Rightarrow
+		np
+	$}
+	\RightLabel{$R/$}
 	\UnaryInfC{$
 		np, (np \setminus s) / np, s \setminus s
 		\Rightarrow
-		s \setminus np
+		s / np
 	$}
 	\AxiomC{}
 	\UnaryInfC{$
@@ -537,7 +585,7 @@ I begin with natural deduction. \\
 	$}
 	\RightLabel{$L\setminus$}
 	\BinaryInfC{$
-		np / n, 
+		np / n,
 		[
 		n,
 		n \setminus n
@@ -547,7 +595,7 @@ I begin with natural deduction. \\
 	$}
 	\RightLabel{$A^*$}
 	\UnaryInfC{$
-		np / n, 
+		np / n,
 		n,
 		[
 		n \setminus n
@@ -557,9 +605,9 @@ I begin with natural deduction. \\
 	$}
 	\RightLabel{$L/$}
 	\BinaryInfC{$
-		np/n, n, 
+		np/n, n,
 		[
-		(n \setminus n) / ( s \setminus np),
+		(n \setminus n) / ( s / np),
 		np, (np \setminus s) / np, s \setminus s
 		]
 		\Rightarrow
