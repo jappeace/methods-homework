@@ -29,9 +29,15 @@ pgrules:
 		@blockworld( drop( ), _ );
 		Drop();
   }
-  followSally( blockWorld ) <- knowtrap(blockWorld) and not bomb( X, Y)|
+  followSally( blockWorld ) <- knowtrap(blockWorld) and not bomb( X, Y) and sally(Q,Z)|
   {
+	goto(Q,Z);
     @blockworld( senseAllAgent(), AGENTS);
+	if B( AGENTS = [[default, X1, Y1]|REST]){
+		not sally(Q,Z);
+		+sally(X1, Y1);
+		goto(X1, Y1);
+	}
   }
   findtrap( blockWorld ) <- not knowtrap(blockWorld) and worldSize(W, H) |
   {
