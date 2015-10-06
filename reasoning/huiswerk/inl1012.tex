@@ -120,6 +120,22 @@ $}
 $}
 \end{scprooftree}
 \subsection{normal form}
+The proof reductions I used was removing the unnescesaryy adding of
+$A \otimes B$ via the $E \multimap$ operation.
+This made the proof significantly smaller.
+
+I found it by looking carefully at the proof and seeing that after the
+$ E \otimes$ operation the proof is at the same stage as it was in the
+beginning, so I just scrapped everything in between.
+
+Now to justify this proof with help of the waldars paper. There are only
+2 somewhat matching reductions applicble, the $E\otimes$ and the $E\multimap$
+reductions. The problem with the $E\otimes$ is that its split into seperate
+branches of the prooftree, so this would be impossible to apply without
+getting rid first of the $E\multimap$. I end up proofing the tree before
+even being able to apply the t part of the reduction.
+(because adding $A \otimes B$ is unesesarry). So I guess I used the $E\multimap$
+reduction of walders paper and that ends up being the following tree:
 \begin{prooftree}
 \RightLabel{Ax}
 \AxiomC{}
@@ -161,4 +177,145 @@ $}
 	C
 $}
 \end{prooftree}
+\subsection{term reductions}
+\begin{prooftree}
+\AxiomC{}
+\UnaryInfC{$
+	\langle c: A \rangle,
+	\langle b: B \rangle,
+	\langle x: A \multimap (B \multimap C) \rangle
+	\vdash
+	b\langle c\langle x\rangle\rangle
+	:
+	C
+$}
+\RightLabel{case $\langle t, u \rangle$ of $\langle x, y \rangle
+	\to v \Rightarrow v[t/x, u/y]
+$}
+\UnaryInfC{$
+	\langle c: A \rangle,
+	\langle b: B \rangle,
+	\langle x: A \multimap (B \multimap C) \rangle
+	\vdash
+	$ case $
+	\langle c,b \rangle
+	$ of $
+	\langle g,f \rangle \to
+	f\langle g\langle x\rangle\rangle
+	:
+	C
+$}
+\RightLabel{$
+	(\lambda \langle x \rangle {.} u ) \langle t \rangle \Rightarrow u[t/x]
+$}
+\UnaryInfC{$
+	\langle c: A \rangle,
+	\langle b: B \rangle,
+	\langle x: A \multimap (B \multimap C) \rangle
+	\vdash
+	(\lambda \langle d \rangle {.} ($ case $d$ of $
+	\langle g,f \rangle \to
+	f\langle g\langle x\rangle\rangle)) \langle
+	\langle c,b \rangle
+	\rangle
+	:
+	C
+$}
+\end{prooftree}
+
+\section{Find ILL proof}
+\begin{scprooftree}{0.9}
+\AxiomC{}
+\RightLabel{$
+	Ax
+$}
+\UnaryInfC{$
+	\langle y : {!}B \rangle
+	\vdash
+	y : {!}B
+$}
+\AxiomC{}
+\RightLabel{$
+	Ax
+$}
+\UnaryInfC{$
+	\langle x : B \multimap (B \multimap A) \rangle,
+	\vdash
+	x : B \multimap (B \multimap A)
+$}
+\AxiomC{}
+\RightLabel{$
+	Ax
+$}
+\UnaryInfC{$
+	[v:B]
+	\vdash
+	v : B
+$}
+\RightLabel{$
+	E \multimap
+$}
+\BinaryInfC{$
+	\langle x : B \multimap (B \multimap A) \rangle,
+	[ v:B ]
+	\vdash
+	x \langle v \rangle
+	: B \multimap A
+$}
+\AxiomC{}
+\RightLabel{$
+	Ax
+$}
+\UnaryInfC{$
+	[ w:B] \vdash
+	w:B
+$}
+\RightLabel{$
+	E \multimap
+$}
+\BinaryInfC{$
+	\langle x : B \multimap (B \multimap A) \rangle,
+	[ w:B ],
+	[ v:B ]
+	\vdash
+	x \langle v \rangle \langle w \rangle
+	: A
+$}
+\RightLabel{$
+	Cont
+$}
+\UnaryInfC{$
+	\langle x : B \multimap (B \multimap A) \rangle,
+	[ z:B ]
+	\vdash
+	x \langle z \rangle \langle z \rangle
+	: A
+$}
+\RightLabel{$
+	E{!}
+$}
+\BinaryInfC{$
+	\langle x : B \multimap (B \multimap A) \rangle,
+	\langle y : {!}B \rangle
+	\vdash
+	$case of $y$ of $!z \to x \langle z \rangle \langle z \rangle
+	: A
+$}
+\RightLabel{$I \multimap$}
+\UnaryInfC{$
+	\langle x :B \multimap (B \multimap A) \rangle
+	\vdash
+	\lambda \langle y \rangle {.} 
+	$case of $y$ of $!z \to x \langle z \rangle \langle z \rangle
+	: {!}B \multimap A
+$}
+\RightLabel{$I \multimap$}
+\UnaryInfC{$
+	\vdash
+	\lambda \langle x \rangle \lambda \langle y \rangle {.} 
+	$case of $y$ of $!z \to x \langle z \rangle \langle z \rangle
+	: (B \multimap (B \multimap A)) \multimap {!}B \multimap A
+$}
+
+\end{scprooftree}
 \end{document}
