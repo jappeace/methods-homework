@@ -4,11 +4,12 @@ beliefs:
   clean( blockWorld ) :- not bomb(X,Y) , not carry(bomb).
   score(0).
   knowtrap( blockWorld ) :- trap(X, Y).
-  sally(0, 0).
+  shouldFollowSally( blockWorld ) :- knowtrap( blockWorld ), not bomb( X, Y).
 
 beliefupdates:
   { carry(bomb) }     Drop()   { not carry(bomb)}
   { not carry(bomb) and score(N) } PickUp() { carry(bomb), score(N + 1), not score(N)}
+  { sally(Q, Z)} LocateSally(X1, Y1) { sally(X1, Y1), not sally(Q,Z)}
 
 plans:
   startup(0, 1, blue);
@@ -17,6 +18,7 @@ goals:
   clean( blockWorld ).
   findtrap ( blockWorld ).
   followSally( blockWorld ).
+  findSally ( blockWorld ).
 
 pgrules:
   clean( blockWorld ) <- knowtrap(blockWorld) and bomb( X, Y ) and trap (Q, Z)|
@@ -29,15 +31,20 @@ pgrules:
 		@blockworld( drop( ), _ );
 		Drop();
   }
-  followSally( blockWorld ) <- knowtrap(blockWorld) and not bomb( X, Y) and sally(Q,Z)|
+  findSally( blockWorld ) <- shouldFollowSally( blockWorld )|
   {
-	goto(Q,Z);
     @blockworld( senseAllAgent(), AGENTS);
-	if B( AGENTS = [[default, X1, Y1]|REST]){
-		not sally(Q,Z);
-		+sally(X1, Y1);
-		goto(X1, Y1);
+	if B( AGENTS = [[sally, X, Y]]){
+		if B(not sally(A, B)){
+			+sally(0,0);
+		}
+		LocateSally(X, Y);
 	}
+  }
+  followSally( blockWorld ) <-shouldFollowSally( blockWorld ) and sally(Q,Z)|
+  {
+    goto( Q, Z );
+
   }
   findtrap( blockWorld ) <- not knowtrap(blockWorld) and worldSize(W, H) |
   {
