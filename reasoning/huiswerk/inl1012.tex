@@ -1,0 +1,164 @@
+\documentclass{article}
+\usepackage{txfonts}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{bussproofs}
+\usepackage{graphicx}
+\usepackage{pifont}
+\newenvironment{scprooftree}[1]%
+{\gdef\scalefactor{#1}\begin{center}\proofSkipAmount \leavevmode}%
+{\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center} }
+
+\begin{document}
+\author{Jappie Klooster}
+\title{Excersizes of Linear Logic}
+\maketitle
+\section{Commutative conversions}
+\subsection{missing parts}
+\begin{scprooftree}{0.60}
+\AxiomC{}
+\RightLabel{Ax}
+\UnaryInfC{$
+	\langle d: (A \otimes B) \rangle
+	\vdash
+	d: A \otimes B
+$}
+\RightLabel{Ax}
+\AxiomC{}
+\UnaryInfC{$
+	\langle f:B \rangle
+	\vdash
+	f:
+	B
+$}
+\AxiomC{}
+\RightLabel{Ax}
+\UnaryInfC{$
+	\langle g:A \rangle
+	\vdash
+	g:A
+$}
+\AxiomC{}
+\RightLabel{Ax}
+\UnaryInfC{$
+	\langle x:A \multimap (B \multimap C) \rangle
+	\vdash
+	x:A \multimap (B \multimap C)
+$}
+\RightLabel{$E\multimap$}
+\BinaryInfC{$
+	\langle g: A \rangle,
+	\langle x: A \multimap (B \multimap C) \rangle
+	\vdash
+	g\langle x\rangle:
+	B \multimap C
+$}
+\RightLabel{$E\multimap$}
+\BinaryInfC{$
+	\langle g: A \rangle,
+	\langle f: B \rangle,
+	\langle x: A \multimap (B \multimap C) \rangle
+	\vdash
+	f\langle g\langle x\rangle\rangle:
+	C
+$}
+\RightLabel{$E\otimes$}
+\BinaryInfC{$
+	\langle x: A \multimap (B \multimap C) \rangle,
+	\langle d: (A \otimes B) \rangle
+	\vdash
+	$case $d$ of $ \langle g,f \rangle \to f\langle g\langle x\rangle\rangle:
+	C
+$}
+\RightLabel{$I\multimap$}
+\UnaryInfC{$
+	\langle x: A \multimap (B \multimap C) \rangle
+	\vdash
+	\lambda \langle d \rangle {.} ($ case $d$ of $
+	\langle g,f \rangle \to
+	f\langle g\langle x\rangle\rangle):
+	(A \otimes B) \multimap
+	C
+$}
+\AxiomC{}
+\RightLabel{Ax}
+\UnaryInfC{$
+	\langle c: A \rangle
+	\vdash
+	c:
+	A
+$}
+\AxiomC{}
+\RightLabel{Ax}
+\UnaryInfC{$
+	\langle b: B \rangle
+	\vdash
+	b:
+	B
+$}
+\RightLabel{$I\otimes$}
+\BinaryInfC{$
+	\langle c:A \rangle,
+	\langle b:B \rangle,
+	\vdash
+	\langle c,b \rangle :
+	(A \otimes B)
+$}
+\RightLabel{$E\multimap$}
+\BinaryInfC{$
+	\langle c: A \rangle,
+	\langle b: B \rangle,
+	\langle x: A \multimap (B \multimap C) \rangle
+	\vdash
+	(\lambda \langle d \rangle {.} ($ case $d$ of $
+	\langle g,f \rangle \to
+	f\langle g\langle x\rangle\rangle)) \langle
+	(\langle c,b \rangle )
+	\rangle
+	:
+	C
+$}
+\end{scprooftree}
+\subsection{normal form}
+\begin{prooftree}
+\RightLabel{Ax}
+\AxiomC{}
+\UnaryInfC{$
+	\langle f:B \rangle
+	\vdash
+	f:
+	B
+$}
+\AxiomC{}
+\RightLabel{Ax}
+\UnaryInfC{$
+	\langle g:A \rangle
+	\vdash
+	g:A
+$}
+\AxiomC{}
+\RightLabel{Ax}
+\UnaryInfC{$
+	\langle x:A \multimap (B \multimap C) \rangle
+	\vdash
+	x:A \multimap (B \multimap C)
+$}
+\RightLabel{$E\multimap$}
+\BinaryInfC{$
+	\langle g: A \rangle,
+	\langle x: A \multimap (B \multimap C) \rangle
+	\vdash
+	g\langle x\rangle:
+	B \multimap C
+$}
+\RightLabel{$E\multimap$}
+\BinaryInfC{$
+	\langle g: A \rangle,
+	\langle f: B \rangle,
+	\langle x: A \multimap (B \multimap C) \rangle
+	\vdash
+	f\langle g\langle x\rangle\rangle:
+	C
+$}
+\end{prooftree}
+\end{document}
