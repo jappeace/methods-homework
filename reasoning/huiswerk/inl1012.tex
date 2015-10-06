@@ -318,4 +318,112 @@ $}
 $}
 
 \end{scprooftree}
+
+\section{translations}
+\begin{scprooftree}{1}
+\AxiomC{}
+\UnaryInfC{$
+	\vdash
+	x: (C \multimap C) \multimap B \multimap X
+$}
+\AxiomC{}
+\RightLabel{$
+	Ax
+$}
+\UnaryInfC{$
+	\langle z:A \multimap C \rangle \vdash z:A \multimap C
+$}
+\AxiomC{}
+\RightLabel{$
+	Ax
+$}
+\UnaryInfC{$
+	\langle w:A \rangle
+	\vdash w : A
+$}
+\RightLabel{$
+	E\multimap
+$}
+\BinaryInfC{$
+	\langle w:A \rangle,
+	\langle z:C \rangle
+	\vdash
+	z \langle w \rangle
+	:C
+$}
+\RightLabel{$
+	I\multimap
+$}
+\UnaryInfC{$
+	\langle w:A \rangle
+	\vdash
+	\lambda \langle z \rangle
+	{.}z \langle w \rangle
+	: C \multimap C
+$}
+\RightLabel{$
+	E \multimap
+$}
+\BinaryInfC{$
+	\langle w:A \rangle
+	\vdash
+	x
+	\langle
+		\lambda \langle z \rangle
+		{.}z \langle w \rangle
+	\rangle
+	: B \multimap X
+$}
+\AxiomC{}
+\RightLabel{$
+	Ax
+$}
+\UnaryInfC{$
+	\langle y:B \rangle
+	\vdash
+	y:B
+$}
+\RightLabel{$
+	E \multimap
+$}
+\BinaryInfC{$
+	\langle w:A \rangle,
+	\langle y:B \rangle
+	\vdash
+	x
+	\langle
+		\lambda \langle z \rangle
+		{.}z \langle w \rangle
+	\rangle
+	\langle y \rangle
+	: X
+$}
+\RightLabel{$
+	I \multimap
+$}
+\UnaryInfC{$
+	\langle w:A \rangle
+	\vdash
+	\lambda \langle y \rangle{.}x
+	\langle
+		\lambda \langle z \rangle
+		{.}z \langle w \rangle
+	\rangle
+	\langle y \rangle
+	: B \multimap X
+$}
+\RightLabel{$
+	I \multimap
+$}
+\UnaryInfC{$
+	\vdash
+	\lambda \langle w \rangle \lambda \langle y \rangle{.}x
+	\langle
+		\lambda \langle z \rangle
+		{.}z \langle w \rangle
+	\rangle
+	\langle y \rangle
+	: A \multimap (B \multimap X)
+$}
+\end{scprooftree}
 \end{document}
