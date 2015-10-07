@@ -319,15 +319,18 @@ $}
 
 \end{scprooftree}
 \section{translations}
+I first made both proofs ILL because that is the most permisive system and
+thus the easiest one.
+This has the advantage that I already know the types.
 \begin{scprooftree}{0.8}
 \AxiomC{}
 \RightLabel{$
 	Ax
 $}
 \UnaryInfC{$
-	\langle x: (C \multimap C) \multimap B \multimap X \rangle
+	\langle x: (C \multimap C) \multimap B \multimap D \rangle
 	\vdash
-	x: (C \multimap C) \multimap B \multimap X
+	x: (C \multimap C) \multimap B \multimap D
 $}
 \AxiomC{}
 \RightLabel{$
@@ -368,7 +371,7 @@ $}
 	E \multimap
 $}
 \BinaryInfC{$
-	\langle x: (C \multimap C) \multimap B \multimap X \rangle,
+	\langle x: (C \multimap C) \multimap B \multimap D \rangle,
 	\langle w:A \rangle
 	\vdash
 	x
@@ -376,7 +379,7 @@ $}
 		\lambda \langle z \rangle
 		{.}z \langle w \rangle
 	\rangle
-	: B \multimap X
+	: B \multimap D
 $}
 \AxiomC{}
 \RightLabel{$
@@ -391,7 +394,7 @@ $}
 	E \multimap
 $}
 \BinaryInfC{$
-	\langle x: (C \multimap C) \multimap B \multimap X \rangle,
+	\langle x: (C \multimap C) \multimap B \multimap D \rangle,
 	\langle w:A \rangle,
 	\langle y:B \rangle
 	\vdash
@@ -401,13 +404,13 @@ $}
 		{.}z \langle w \rangle
 	\rangle
 	\langle y \rangle
-	: X
+	: D
 $}
 \RightLabel{$
 	I \multimap
 $}
 \UnaryInfC{$
-	\langle x: (C \multimap C) \multimap B \multimap X \rangle,
+	\langle x: (C \multimap C) \multimap B \multimap D \rangle,
 	\langle w:A \rangle
 	\vdash
 	\lambda \langle y \rangle{.}x
@@ -416,13 +419,13 @@ $}
 		{.}z \langle w \rangle
 	\rangle
 	\langle y \rangle
-	: B \multimap X
+	: B \multimap D
 $}
 \RightLabel{$
 	I \multimap
 $}
 \UnaryInfC{$
-	\langle x: (C \multimap C) \multimap B \multimap X \rangle
+	\langle x: (C \multimap C) \multimap B \multimap D \rangle
 	\vdash
 	\lambda \langle w \rangle \lambda \langle y \rangle{.}x
 	\langle
@@ -430,7 +433,7 @@ $}
 		{.}z \langle w \rangle
 	\rangle
 	\langle y \rangle
-	: A \multimap (B \multimap X)
+	: A \multimap (B \multimap D)
 $}
 \end{scprooftree}
 \begin{scprooftree}{0.8}
@@ -439,18 +442,18 @@ $}
 	Ax
 $}
 \UnaryInfC{$
-	\langle w:(C \multimap X) \multimap A \rangle
+	\langle w:(C \multimap D) \multimap A \rangle
 	\vdash
-	w:(C \multimap X) \multimap A
+	w:(C \multimap D) \multimap A
 $}
 \AxiomC {}
 \RightLabel{$
 	Ax
 $}
 \UnaryInfC{$
-	\langle x:C \multimap (B \multimap X) \rangle
+	\langle x:C \multimap (B \multimap D) \rangle
 	\vdash
-	x: C \multimap (B \multimap X)
+	x: C \multimap (B \multimap D)
 $}
 \AxiomC {}
 \RightLabel{$
@@ -465,11 +468,11 @@ $}
 	E \multimap
 $}
 \BinaryInfC{$
-	\langle x:C \multimap (B \multimap X) \rangle,
+	\langle x:C \multimap (B \multimap D) \rangle,
 	\langle z:C \rangle,
 	\vdash
 	x \langle z \rangle
-	: B \multimap X
+	: B \multimap D
 $}
 \AxiomC{}
 \RightLabel{$
@@ -481,44 +484,44 @@ $}
 	y:B
 $}
 \BinaryInfC{$
-	\langle x:C \multimap (B \multimap X) \rangle,
+	\langle x:C \multimap (B \multimap D) \rangle,
 	\langle z:C \rangle,
 	\langle y:B \rangle
 	\vdash
 	x \langle z \rangle
 	\langle y \rangle
-	: X
+	: D
 $}
 \RightLabel{$
 	Exchange
 $}
 \UnaryInfC{$
-	\langle x:C \multimap (B \multimap X) \rangle,
+	\langle x:C \multimap (B \multimap D) \rangle,
 	\langle y:B \rangle,
 	\langle z:C \rangle
 	\vdash
 		{.}x \langle z \rangle
 	\langle y \rangle
-	: X
+	: D
 $}
 \RightLabel{$
 	I \multimap
 $}
 \UnaryInfC{$
-	\langle x:C \multimap (B \multimap X) \rangle,
+	\langle x:C \multimap (B \multimap D) \rangle,
 	\langle y:B \rangle
 	\vdash
 		\lambda \langle z \rangle
 		{.}x \langle z \rangle
 	\langle y \rangle
-	: C \multimap X
+	: C \multimap D
 $}
 \RightLabel{$
 	E \multimap
 $}
 \BinaryInfC{$
-	\langle w:(C \multimap X) \multimap A \rangle,
-	\langle x:C \multimap (B \multimap X) \rangle,
+	\langle w:(C \multimap D) \multimap A \rangle,
+	\langle x:C \multimap (B \multimap D) \rangle,
 	\langle y:B \rangle
 	\vdash
 	w
@@ -533,8 +536,8 @@ $}
 	Exchange
 $}
 \UnaryInfC{$
-	\langle x:C \multimap (B \multimap X) \rangle,
-	\langle w:(C \multimap X) \multimap A \rangle,
+	\langle x:C \multimap (B \multimap D) \rangle,
+	\langle w:(C \multimap D) \multimap A \rangle,
 	\langle y:B \rangle
 	\vdash
 	w
@@ -549,8 +552,8 @@ $}
 	I \multimap
 $}
 \UnaryInfC{$
-	\langle x:C \multimap (B \multimap X) \rangle,
-	\langle w:(C \multimap X) \multimap A \rangle
+	\langle x:C \multimap (B \multimap D) \rangle,
+	\langle w:(C \multimap D) \multimap A \rangle
 	\vdash
 	\lambda \langle y \rangle
 	{.}w
@@ -565,7 +568,7 @@ $}
 	I \multimap
 $}
 \UnaryInfC{$
-	\langle x:C \multimap (B \multimap X) \rangle
+	\langle x:C \multimap (B \multimap D) \rangle
 	\vdash
 	\lambda \langle w \rangle \lambda \langle y \rangle
 	{.}w
@@ -574,7 +577,7 @@ $}
 		{.}x \langle z \rangle
 	\langle y \rangle
 	\rangle
-	: ((C \multimap X) \multimap A) \multimap (B \multimap A)
+	: ((C \multimap D) \multimap A) \multimap (B \multimap A)
 $}
 \end{scprooftree}
 \end{document}
