@@ -320,9 +320,13 @@ $}
 \end{scprooftree}
 
 \section{translations}
-\begin{scprooftree}{1}
+\begin{scprooftree}{0.8}
 \AxiomC{}
+\RightLabel{$
+	Ax
+$}
 \UnaryInfC{$
+	\langle x: (C \multimap C) \multimap B \multimap X \rangle
 	\vdash
 	x: (C \multimap C) \multimap B \multimap X
 $}
@@ -365,6 +369,7 @@ $}
 	E \multimap
 $}
 \BinaryInfC{$
+	\langle x: (C \multimap C) \multimap B \multimap X \rangle,
 	\langle w:A \rangle
 	\vdash
 	x
@@ -387,6 +392,7 @@ $}
 	E \multimap
 $}
 \BinaryInfC{$
+	\langle x: (C \multimap C) \multimap B \multimap X \rangle,
 	\langle w:A \rangle,
 	\langle y:B \rangle
 	\vdash
@@ -402,6 +408,7 @@ $}
 	I \multimap
 $}
 \UnaryInfC{$
+	\langle x: (C \multimap C) \multimap B \multimap X \rangle,
 	\langle w:A \rangle
 	\vdash
 	\lambda \langle y \rangle{.}x
@@ -416,6 +423,7 @@ $}
 	I \multimap
 $}
 \UnaryInfC{$
+	\langle x: (C \multimap C) \multimap B \multimap X \rangle
 	\vdash
 	\lambda \langle w \rangle \lambda \langle y \rangle{.}x
 	\langle
