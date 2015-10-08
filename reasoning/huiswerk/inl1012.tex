@@ -13,8 +13,9 @@
 \author{Jappie Klooster}
 \title{Excersizes of Linear Logic}
 \maketitle
+
 \section{Commutative conversions}
-\subsection{missing parts}
+\subsection{Missing parts}
 \begin{scprooftree}{0.60}
 \AxiomC{}
 \RightLabel{Ax}
@@ -119,7 +120,7 @@ $}
 	C
 $}
 \end{scprooftree}
-\subsection{normal form}
+\subsection{Normal form}
 The proof reductions I used was removing the unnescesaryy adding of
 $A \otimes B$ via the $E \multimap$ operation.
 This made the proof significantly smaller.
@@ -177,7 +178,7 @@ $}
 	C
 $}
 \end{prooftree}
-\subsection{term reductions}
+\subsection{Term reductions}
 \begin{prooftree}
 \AxiomC{}
 \UnaryInfC{$
@@ -319,12 +320,13 @@ $}
 
 \end{scprooftree}
 
-\section{translations}
+\section{Translations}
 I first made both proofs ILL because that is the most permisive system and
 thus the easiest one.
 This has the advantage that I already know the types.
+After doing this I only had to change the operators and translate the program.
 
-\subsection{\the\inputlineno}
+\subsection{Term one into ILL}
 \begin{scprooftree}{0.7}
 \AxiomC{}
 \RightLabel{$
@@ -449,7 +451,8 @@ $}
 	: A \multimap (B \multimap D)
 $}
 \end{scprooftree}
-\subsection{\the\inputlineno}
+
+\subsection{Term one into grammar}
 \begin{scprooftree}{0.7}
 \AxiomC{}
 \RightLabel{$
@@ -574,7 +577,8 @@ $}
 	: A/(B/D)
 $}
 \end{scprooftree}
-\subsection{\the\inputlineno}
+
+\subsection{Term two into ILL}
 \begin{scprooftree}{0.8}
 \AxiomC{}
 \RightLabel{$
@@ -719,4 +723,9 @@ $}
 	: ((C \multimap D) \multimap A) \multimap (B \multimap A)
 $}
 \end{scprooftree}
+
+\subsection{Term two into grammar}
+Term two can't be translated into grammar logic because the y can never find
+the right position. It will always be introduced to early to either become
+problematic for other terms later or it can't become an axiom itself.
 \end{document}
