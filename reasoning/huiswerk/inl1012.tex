@@ -456,9 +456,9 @@ $}
 	Ax
 $}
 \UnaryInfC{$
-	\langle x: (B / D) / ((A/ C)\setminus C) \rangle
+	\langle x: (D / B) / ((A/ C)\setminus C) \rangle
 	\vdash
-	x: (B / D) / ((A/ C)\setminus C)
+	x: (D / B) / ((A/ C)\setminus C)
 $}
 \AxiomC{}
 \RightLabel{$
@@ -484,7 +484,7 @@ $}
 	\langle z:A/C \rangle,
 	\langle w:A \rangle
 	\vdash
-	z \langle w \rangle
+	z \lhd w
 	:C
 $}
 \RightLabel{$
@@ -493,23 +493,22 @@ $}
 \UnaryInfC{$
 	\langle w:A \rangle
 	\vdash
-	\lambda \langle z \rangle
-	{.}z \langle w \rangle
+	\overleftarrow{\lambda} z{.}(z \lhd w )
 	: (A / C)\setminus C
 $}
 \RightLabel{$
 	E/
 $}
 \BinaryInfC{$
-	\langle x: (B / D) / ((A/ C)\setminus C) \rangle,
+	\langle x: (D / B) / ((A/ C)\setminus C) \rangle,
 	\langle w:A \rangle
 	\vdash
 	x
-	\langle
-		\lambda \langle z \rangle
-		{.}z \langle w \rangle
-	\rangle
-	: B/D
+	\lhd
+		( \overleftarrow{\lambda} z
+			{.}(z \lhd w )
+		)
+	: D/B
 $}
 \AxiomC{}
 \RightLabel{$
@@ -524,164 +523,57 @@ $}
 	E/
 $}
 \BinaryInfC{$
-	\langle x: (B / D) / ((A/ C)\setminus C) \rangle,
+	\langle x: (D / B) / ((A/ C)\setminus C) \rangle,
 	\langle w:A \rangle,
 	\langle y:B \rangle
 	\vdash
-	x
-	\langle
-		\lambda \langle z \rangle
-		{.}z \langle w \rangle
-	\rangle
-	\langle y \rangle
+	(x
+	\lhd
+		( \overleftarrow{\lambda} z
+			{.}(z \lhd w )
+		)
+	)
+	\lhd y
 	: D
 $}
 \RightLabel{$
 	I /
 $}
 \UnaryInfC{$
-	\langle x: (B / D) / ((A/ C)\setminus C) \rangle,
+	\langle x: (D / B) / ((A/ C)\setminus C) \rangle,
 	\langle w:A \rangle
 	\vdash
-	\lambda \langle y \rangle{.}x
-	\langle
-		\lambda \langle z \rangle
-		{.}z \langle w \rangle
-	\rangle
-	\langle y \rangle
+	\overrightarrow{\lambda} y{.}(
+		(x
+		\lhd
+			( \overleftarrow{\lambda} z
+				{.}(z \lhd w )
+			)
+		)
+		\lhd y
+	)
 	: B/D
 $}
 \RightLabel{$
 	I /
 $}
 \UnaryInfC{$
-	\langle x: (B / D) / ((A/ C)\setminus C) \rangle
+	\langle x: (D / B) / ((A/ C)\setminus C) \rangle
 	\vdash
-	\lambda \langle w \rangle \lambda \langle y \rangle{.}x
-	\langle
-		\lambda \langle z \rangle
-		{.}z \langle w \rangle
-	\rangle
-	\langle y \rangle
+	\overrightarrow{\lambda} w {.}(
+		\overrightarrow{\lambda} y{.}(
+			(x
+			\lhd
+				( \overleftarrow{\lambda} z
+					{.}(z \lhd w )
+				)
+			)
+			\lhd y
+		)
+	)
 	: A/(B/D)
 $}
 \end{scprooftree}
-\subsection{\the\inputlineno}
-\begin{scprooftree}{0.8}
-\AxiomC{}
-\RightLabel{$
-	Ax
-$}
-\UnaryInfC{$
-	\langle x: (C \multimap C) \multimap B \multimap D \rangle
-	\vdash
-	x: (C \multimap C) \multimap B \multimap D
-$}
-\AxiomC{}
-\RightLabel{$
-	Ax
-$}
-\UnaryInfC{$
-	\langle z:A \multimap C \rangle \vdash z:A \multimap C
-$}
-\AxiomC{}
-\RightLabel{$
-	Ax
-$}
-\UnaryInfC{$
-	\langle w:A \rangle
-	\vdash w: A
-$}
-\RightLabel{$
-	E\multimap
-$}
-\BinaryInfC{$
-	\langle w:A \rangle,
-	\langle z:C \rangle
-	\vdash
-	z \langle w \rangle
-	:C
-$}
-\RightLabel{$
-	I\multimap
-$}
-\UnaryInfC{$
-	\langle w:A \rangle
-	\vdash
-	\lambda \langle z \rangle
-	{.}z \langle w \rangle
-	: C \multimap C
-$}
-\RightLabel{$
-	E \multimap
-$}
-\BinaryInfC{$
-	\langle x: (C \multimap C) \multimap B \multimap D \rangle,
-	\langle w:A \rangle
-	\vdash
-	x
-	\langle
-		\lambda \langle z \rangle
-		{.}z \langle w \rangle
-	\rangle
-	: B \multimap D
-$}
-\AxiomC{}
-\RightLabel{$
-	Ax
-$}
-\UnaryInfC{$
-	\langle y:B \rangle
-	\vdash
-	y:B
-$}
-\RightLabel{$
-	E \multimap
-$}
-\BinaryInfC{$
-	\langle x: (C \multimap C) \multimap B \multimap D \rangle,
-	\langle w:A \rangle,
-	\langle y:B \rangle
-	\vdash
-	x
-	\langle
-		\lambda \langle z \rangle
-		{.}z \langle w \rangle
-	\rangle
-	\langle y \rangle
-	: D
-$}
-\RightLabel{$
-	I \multimap
-$}
-\UnaryInfC{$
-	\langle x: (C \multimap C) \multimap B \multimap D \rangle,
-	\langle w:A \rangle
-	\vdash
-	\lambda \langle y \rangle{.}x
-	\langle
-		\lambda \langle z \rangle
-		{.}z \langle w \rangle
-	\rangle
-	\langle y \rangle
-	: B \multimap D
-$}
-\RightLabel{$
-	I \multimap
-$}
-\UnaryInfC{$
-	\langle x: (C \multimap C) \multimap B \multimap D \rangle
-	\vdash
-	\lambda \langle w \rangle \lambda \langle y \rangle{.}x
-	\langle
-		\lambda \langle z \rangle
-		{.}z \langle w \rangle
-	\rangle
-	\langle y \rangle
-	: A \multimap (B \multimap D)
-$}
-\end{scprooftree}
-
 \subsection{\the\inputlineno}
 \begin{scprooftree}{0.8}
 \AxiomC{}
