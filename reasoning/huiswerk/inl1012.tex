@@ -318,10 +318,255 @@ $}
 $}
 
 \end{scprooftree}
+
 \section{translations}
 I first made both proofs ILL because that is the most permisive system and
 thus the easiest one.
 This has the advantage that I already know the types.
+
+\subsection{\the\inputlineno}
+\begin{scprooftree}{0.7}
+\AxiomC{}
+\RightLabel{$
+	Ax
+$}
+\UnaryInfC{$
+	\langle x: ((A \multimap C) \multimap C) \multimap B \multimap D \rangle
+	\vdash
+	x: ((A \multimap C) \multimap C) \multimap B \multimap D
+$}
+\AxiomC{}
+\RightLabel{$
+	Ax
+$}
+\UnaryInfC{$
+	\langle z:A \multimap C \rangle \vdash z:A \multimap C
+$}
+\AxiomC{}
+\RightLabel{$
+	Ax
+$}
+\UnaryInfC{$
+	\langle w:A \rangle
+	\vdash w: A
+$}
+\RightLabel{$
+	E\multimap
+$}
+\BinaryInfC{$
+	\langle z:A \multimap C \rangle,
+	\langle w:A \rangle
+	\vdash
+	z \langle w \rangle
+	:C
+$}
+\RightLabel{$
+	Exchange
+$}
+\UnaryInfC{$
+	\langle w:A \rangle,
+	\langle z:A \multimap C \rangle
+	\vdash
+	z \langle w \rangle
+	:C
+$}
+\RightLabel{$
+	I\multimap
+$}
+\UnaryInfC{$
+	\langle w:A \rangle
+	\vdash
+	\lambda \langle z \rangle
+	{.}z \langle w \rangle
+	: (A \multimap C) \multimap C
+$}
+\RightLabel{$
+	E \multimap
+$}
+\BinaryInfC{$
+	\langle x: ((A \multimap C) \multimap C) \multimap B \multimap D \rangle,
+	\langle w:A \rangle
+	\vdash
+	x
+	\langle
+		\lambda \langle z \rangle
+		{.}z \langle w \rangle
+	\rangle
+	: B \multimap D
+$}
+\AxiomC{}
+\RightLabel{$
+	Ax
+$}
+\UnaryInfC{$
+	\langle y:B \rangle
+	\vdash
+	y:B
+$}
+\RightLabel{$
+	E \multimap
+$}
+\BinaryInfC{$
+	\langle x: ((A \multimap C) \multimap C) \multimap B \multimap D \rangle,
+	\langle w:A \rangle,
+	\langle y:B \rangle
+	\vdash
+	x
+	\langle
+		\lambda \langle z \rangle
+		{.}z \langle w \rangle
+	\rangle
+	\langle y \rangle
+	: D
+$}
+\RightLabel{$
+	I \multimap
+$}
+\UnaryInfC{$
+	\langle x: ((A \multimap C) \multimap C) \multimap B \multimap D \rangle,
+	\langle w:A \rangle
+	\vdash
+	\lambda \langle y \rangle{.}x
+	\langle
+		\lambda \langle z \rangle
+		{.}z \langle w \rangle
+	\rangle
+	\langle y \rangle
+	: B \multimap D
+$}
+\RightLabel{$
+	I \multimap
+$}
+\UnaryInfC{$
+	\langle x: ((A \multimap C) \multimap C) \multimap B \multimap D \rangle
+	\vdash
+	\lambda \langle w \rangle \lambda \langle y \rangle{.}x
+	\langle
+		\lambda \langle z \rangle
+		{.}z \langle w \rangle
+	\rangle
+	\langle y \rangle
+	: A \multimap (B \multimap D)
+$}
+\end{scprooftree}
+\subsection{\the\inputlineno}
+\begin{scprooftree}{0.7}
+\AxiomC{}
+\RightLabel{$
+	Ax
+$}
+\UnaryInfC{$
+	\langle x: (B / D) / ((A/ C)\setminus C) \rangle
+	\vdash
+	x: (B / D) / ((A/ C)\setminus C)
+$}
+\AxiomC{}
+\RightLabel{$
+	Ax
+$}
+\UnaryInfC{$
+	\langle z:A/C \rangle
+	\vdash
+	z:A/C
+$}
+\AxiomC{}
+\RightLabel{$
+	Ax
+$}
+\UnaryInfC{$
+	\langle w:A \rangle
+	\vdash w: A
+$}
+\RightLabel{$
+	E/
+$}
+\BinaryInfC{$
+	\langle z:A/C \rangle,
+	\langle w:A \rangle
+	\vdash
+	z \langle w \rangle
+	:C
+$}
+\RightLabel{$
+	I\setminus
+$}
+\UnaryInfC{$
+	\langle w:A \rangle
+	\vdash
+	\lambda \langle z \rangle
+	{.}z \langle w \rangle
+	: (A / C)\setminus C
+$}
+\RightLabel{$
+	E/
+$}
+\BinaryInfC{$
+	\langle x: (B / D) / ((A/ C)\setminus C) \rangle,
+	\langle w:A \rangle
+	\vdash
+	x
+	\langle
+		\lambda \langle z \rangle
+		{.}z \langle w \rangle
+	\rangle
+	: B/D
+$}
+\AxiomC{}
+\RightLabel{$
+	Ax
+$}
+\UnaryInfC{$
+	\langle y:B \rangle
+	\vdash
+	y:B
+$}
+\RightLabel{$
+	E/
+$}
+\BinaryInfC{$
+	\langle x: (B / D) / ((A/ C)\setminus C) \rangle,
+	\langle w:A \rangle,
+	\langle y:B \rangle
+	\vdash
+	x
+	\langle
+		\lambda \langle z \rangle
+		{.}z \langle w \rangle
+	\rangle
+	\langle y \rangle
+	: D
+$}
+\RightLabel{$
+	I /
+$}
+\UnaryInfC{$
+	\langle x: (B / D) / ((A/ C)\setminus C) \rangle,
+	\langle w:A \rangle
+	\vdash
+	\lambda \langle y \rangle{.}x
+	\langle
+		\lambda \langle z \rangle
+		{.}z \langle w \rangle
+	\rangle
+	\langle y \rangle
+	: B/D
+$}
+\RightLabel{$
+	I /
+$}
+\UnaryInfC{$
+	\langle x: (B / D) / ((A/ C)\setminus C) \rangle
+	\vdash
+	\lambda \langle w \rangle \lambda \langle y \rangle{.}x
+	\langle
+		\lambda \langle z \rangle
+		{.}z \langle w \rangle
+	\rangle
+	\langle y \rangle
+	: A/(B/D)
+$}
+\end{scprooftree}
+\subsection{\the\inputlineno}
 \begin{scprooftree}{0.8}
 \AxiomC{}
 \RightLabel{$
@@ -436,6 +681,8 @@ $}
 	: A \multimap (B \multimap D)
 $}
 \end{scprooftree}
+
+\subsection{\the\inputlineno}
 \begin{scprooftree}{0.8}
 \AxiomC{}
 \RightLabel{$
