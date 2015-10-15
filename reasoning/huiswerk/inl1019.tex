@@ -27,14 +27,31 @@ The definition of $L\to$ in $GKC$:
 	\BinaryInfC{$\Gamma, A \to B \Rightarrow \Delta$}
 \end{scprooftree}
 
-Let $I(x)$ be the interpretation function that determines if sequent x
+Let $V(x)$ be the valuation function that determines if sequent x
 is true.
 
-Assume one of the premises is false while the conclusion remains true.
-So $I(\Gamma \Rightarrow A, \Delta) = 0$
-$I(\Gamma, A \to B \Rightarrow \Delta) = 1$ 
+Let $\Gamma \Rightarrow A, \Delta$ be $P_1$,
+let $\Gamma, B \Rightarrow \Delta$ be $P_2$ and
+let $\Gamma, A \to B \Rightarrow \Delta$ be $C$
 
-To get $I((\Gamma \Rightarrow A, \Delta) = 0$ if $\Gamma$ should have 
-the value of $\neg A$
+To proof $V(P_1) = 0$ or
+$V(P_2) = 0$ then
+$V(C) = 0$. We will try to proof this by searching for a case
+where one of the $P$'s is false and $C$ is true.
+
+Both $V(P_1)$ and $V(P_2)$ can only be 0 if the result of
+$V(\Gamma) \not= V(\Delta)$
+so we assume $V(\Gamma) = 1$ and $V(\Delta) = 0$.
+
+If $V(A) = 1$ in this case $V(P_1)$ becomes true so $V(P_2)$ should be false.
+The only way to make $P_2$ false is by having $V(B) = 1$.
+But once you do this $V(A \to B) = 1$ which means $V(C) = 0$
+
+The other option is to make $V(A) = 0$ Now $V(P_1)$ is false, so $V(P_2)$ can
+be true or false. The value of $B$ doesn't matter because in either case
+$V(A \to B) = 1$ which means $V(C)$ will be false.
+
+The same technique can be applied for so we assume $V(\Gamma) = 0$ and $V(\Delta) = 1$.
+
 \subsection{$R\to$}
 \end{document}
