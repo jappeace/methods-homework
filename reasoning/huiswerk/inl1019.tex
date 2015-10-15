@@ -24,12 +24,12 @@ The definition of $L\to$ in $GKC$:
 \begin{scprooftree}{1}
 	\AxiomC{$\Gamma \Rightarrow A, \Delta$}
 	\AxiomC{$\Gamma, B \Rightarrow \Delta$}
+	\RightLabel{$L\to$}
 	\BinaryInfC{$\Gamma, A \to B \Rightarrow \Delta$}
 \end{scprooftree}
 
 Let $V(x)$ be the valuation function that determines if sequent x
 is true.
-
 Let $\Gamma \Rightarrow A, \Delta$ be $P_1$,
 let $\Gamma, B \Rightarrow \Delta$ be $P_2$ and
 let $\Gamma, A \to B \Rightarrow \Delta$ be $C$
@@ -51,7 +51,56 @@ The other option is to make $V(A) = 0$ Now $V(P_1)$ is false, so $V(P_2)$ can
 be true or false. The value of $B$ doesn't matter because in either case
 $V(A \to B) = 1$ which means $V(C)$ will be false.
 
-The same technique can be applied for so we assume $V(\Gamma) = 0$ and $V(\Delta) = 1$.
+The same technique can be applied for $V(\Gamma) = 0$ and $V(\Delta) = 1$.
+
+There are no other valuations left, so if one of the premises of L $\to$ is
+false then so is the conclusion
 
 \subsection{$R\to$}
+To proof that if one of the premises of $R\to$ of $GKC$ is not true
+(under all valuations) than the conclusion not true either.
+
+The definition of $R\to$ in $GKC$:
+
+\begin{scprooftree}{1}
+	\AxiomC{$\Gamma, A \Rightarrow B, \Delta$}
+	\RightLabel{$R\to$}
+	\UnaryInfC{$\Gamma \Rightarrow A \to B, \Delta$}
+\end{scprooftree}
+Let $V(x)$ be the valuation function that determines if sequent x
+is true.
+Let $\Gamma, A \Rightarrow B, \Delta$ be $P$ and
+let $\Gamma \Rightarrow A \to B, \Delta$ be $C$
+
+
+$V(P)$ can only be 0 if the result of
+$V(\Gamma) \not= V(\Delta)$
+
+If $V(\Gamma) = 1$, $V(A)$ also has to be 1 otherwise the premise would be true.
+$V(B)$ has to be 0 because otherwise the premise would be true.
+
+With these valuation $V(C)$ will be false.
+
+The same result for $V(\Gamma) = 0$
+
+There are no other valuations left, so if one of the premises of R $\to$ is
+false then so is the conclusion
+
+
+\section{Positivity and negativity}
+\subsection{Prove C keeps occuring in premise and conclusion}
+To prove that if formula $C$ occurs positively in one of the premises of a rule,
+then the same formula occurs positively in the conclusion fro all rules of GKC
+
+This will be done on a rule by rule basis.
+\subsubsection{$R\wedge$}
+Suppose C occurs positively in one of the premisses
+($\Gamma \Rightarrow A, \Delta$) or ($\Gamma \Rightarrow B,\Delta$),
+say in the first one. Thus it occurs positively in a formula in $\Delta$ or
+$A$ or negatively in a formula in $\Gamma$. In the first and the last case,
+the same holds for the conclusion ($\Gamma \Rightarrow A \wedge B, \Delta)$.
+In case C occurs positively in $A$ then by definition it occurs positively
+in $A \wedge B$ (even in the case that $C = A$). Hence it occurs positively
+in ($\Gamma \Rightarrow A \wedge B, \Delta$). This is what had to be shown.
+
 \end{document}
