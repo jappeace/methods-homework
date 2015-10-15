@@ -1,0 +1,40 @@
+\documentclass{article}
+\usepackage{txfonts}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{bussproofs}
+\usepackage{graphicx}
+\usepackage{pifont}
+\newenvironment{scprooftree}[1]%
+{\gdef\scalefactor{#1}\begin{center}\proofSkipAmount \leavevmode}%
+{\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center} }
+
+\begin{document}
+\author{Jappie Klooster}
+\title{On proving things}
+\maketitle
+
+\section{Proof GKC rules}
+\subsection{$L\to$}
+To proof that if one of the premises of $L\to$ of $GKC$ is not true
+(under all valuations) than the conclusion not true either.
+
+The definition of $L\to$ in $GKC$:
+
+\begin{scprooftree}{1}
+	\AxiomC{$\Gamma \Rightarrow A, \Delta$}
+	\AxiomC{$\Gamma, B \Rightarrow \Delta$}
+	\BinaryInfC{$\Gamma, A \to B \Rightarrow \Delta$}
+\end{scprooftree}
+
+Let $I(x)$ be the interpretation function that determines if sequent x
+is true.
+
+Assume one of the premises is false while the conclusion remains true.
+So $I(\Gamma \Rightarrow A, \Delta) = 0$
+$I(\Gamma, A \to B \Rightarrow \Delta) = 1$ 
+
+To get $I((\Gamma \Rightarrow A, \Delta) = 0$ if $\Gamma$ should have 
+the value of $\neg A$
+\subsection{$R\to$}
+\end{document}
