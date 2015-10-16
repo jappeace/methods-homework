@@ -173,5 +173,73 @@ the same holds for the conclusion ($\Gamma \Rightarrow \neg A, \Delta$).
 In case C occurs negatively in $A$ then by definition it occurs negatively
 in $\neg A$ (even in the case that $C = A$). Hence it occurs negatively
 in ($\Gamma \Rightarrow \neg A, \Delta$). This is what had to be shown.
-\subsection{Proof introduction of $A\wedge B$ remains positive}
+
+\subsection{Proof introduction remains positive}
+
+\subsubsection{$A\wedge B$}
+To prove that in any proof in GKC of a sequent $S$, if the formula
+$A \wedge B$ is introduced in an application of the $R\wedge$ rule,
+then that $A \wedge B$ occurs positively in the endsequent $S$of the
+proof.
+
+Let $A \wedge B$ be C, as shown in 2.1 if formula C occurs positively in
+one of the premises of a rule, then the same formula occurs positively in
+the conclusion for all rules of GKC, now we have proven that C will
+occur in the endsequent.
+
+\subsubsection{$A\vee B$}
+To prove that in any proof in GKC of a sequent $S$, if the formula
+$A \vee B$ is introduced in an application of the $R\vee$ rule,
+then that $A \vee B$ occurs positively in the endsequent $S$of the
+proof.
+
+Let $A \vee B$ be C, as shown in 2.1 if formula C occurs positively in
+one of the premises of a rule, then the same formula occurs positively in
+the conclusion for all rules of GKC, now we have proven that C will
+occur in the endsequent.
+
+\subsection{Single branch}
+To prove that every provable sequent that does not contains negations and
+implications and in which every subformula of the form $A \wedge B$ occurs
+negatively and every subformula of the form $A \vee B$ occurs positively,
+has a proof in GKC that consists of a single branch.
+
+Because the sequent does not contain negations and implications the rules
+$R\to$, $L\to$, $R\neg$ and $L\neg$ can't be applied.
+$R\wedge$ can't be applied because $A \wedge B$ occurs negatively,
+which by definition means $A \wedge B$ occurs on the $L$ side of the
+$\wedge$ rules.
+$L\vee$ can't be
+applied because $A \vee B$ occurs positively, which by definition means
+that the $A \vee B$ formula is on the $R$ side of the $\vee$ rules.
+
+The only applicable rules left in GKC are the $L\wedge$ and $R\vee$ rules.
+These are single branch by definition. Thus this entire proof has a single
+branch, this is what had to be shown.
+
+\subsection{$S$ consists of \ldots}
+Supose that $S$ is a provable sequent that does not contain negations and
+implications and which every subformula of the form $A\wedge B$ occurs
+negatively and every subformula of the form $A \vee B$ occurs positively.
+Show that if the sum of all the occurrences of connectives in $S$ is $n$.
+then $S$ has a proof in $GKC$ that consists of at most $n + 1$ sequents.
+
+
+Because the sequent $S$ does not contain negations and implications the rules
+$R\to$, $L\to$, $R\neg$ and $L\neg$ can't be applied.
+$R\wedge$ can't be applied because $A \wedge B$ occurs negatively,
+which by definition means $A \wedge B$ occurs on the $L$ side of the
+$\wedge$ rules.
+$L\vee$ can't be
+applied because $A \vee B$ occurs positively, which by definition means
+that the $A \vee B$ formula is on the $R$ side of the $\vee$ rules.
+
+The only applicable rules left in GKC are the $L\wedge$ and $R\vee$ rules.
+Both the $L\wedge$ and $R\vee$ rules add only 1 connective to the conclusion
+once applied to the premise, creating a new sequent in the process. The proof
+of $S$ also has just a single branch, because $L\wedge$ and $R\vee$ only allow
+a single premise.
+So the
+sequent count in the proof of $S$ is at least $n$. It is $n$ + 1 because $S$ is also
+a sequent by definition. This is what had to be shown.
 \end{document}
