@@ -90,17 +90,88 @@ false then so is the conclusion
 \section{Positivity and negativity}
 \subsection{Prove C keeps occuring in premise and conclusion}
 To prove that if formula $C$ occurs positively in one of the premises of a rule,
-then the same formula occurs positively in the conclusion fro all rules of GKC
+then the same formula occurs positively in the conclusion for all rules of GKC
 
 This will be done on a rule by rule basis.
+
 \subsubsection{$R\wedge$}
 Suppose C occurs positively in one of the premisses
 ($\Gamma \Rightarrow A, \Delta$) or ($\Gamma \Rightarrow B,\Delta$),
 say in the first one. Thus it occurs positively in a formula in $\Delta$ or
 $A$ or negatively in a formula in $\Gamma$. In the first and the last case,
-the same holds for the conclusion ($\Gamma \Rightarrow A \wedge B, \Delta)$.
+the same holds for the conclusion ($\Gamma \Rightarrow A \wedge B, \Delta$).
 In case C occurs positively in $A$ then by definition it occurs positively
 in $A \wedge B$ (even in the case that $C = A$). Hence it occurs positively
 in ($\Gamma \Rightarrow A \wedge B, \Delta$). This is what had to be shown.
 
+\subsubsection{$L\vee$}
+Suppose C occurs positively in one of the premisses
+($\Gamma, A \Rightarrow \Delta$) or ($\Gamma, B \Rightarrow \Delta$),
+say in the first one. Thus it occurs positively in a formula in $\Delta$ or 
+negatively in a formula in $\Gamma$ or $A$. In the first and the last case,
+the same holds for the conclusion ($\Gamma, A \vee B \Rightarrow \Delta$).
+In case C occurs negatively in $A$ then by definition it occurs negatively
+in $A \vee B$ (even in the case that $C = A$). Hence it occurs negatively
+in ($\Gamma, A \vee B \Rightarrow \Delta$). This is what had to be shown.
+
+\subsubsection{$L\to$}
+Suppose C occurs positively in one of the premisses
+($\Gamma \Rightarrow A, \Delta$) or ($\Gamma, B \Rightarrow \Delta$),
+say in the first one. Thus it occurs positively in a formula in $\Delta$ or
+$A$ or negatively in a formula in $\Gamma$. In the first and the last case,
+the same holds for the conclusion ($\Gamma A \to B \Rightarrow \Delta$).
+In case C occurs positively in $A$ then by definition it occurs positively
+in $A \to B$ (even in the case that $C = A$). Hence it occurs positively
+in ($\Gamma A \to B \Rightarrow \Delta$). This is what had to be shown.
+
+\subsubsection{$L\wedge$}
+Suppose C occurs positively the premiss
+($\Gamma, A, B \Rightarrow \Delta$). Thus it occurs positively in a formula
+in $\Delta$ or negatively in a formula in $\Gamma$, $A$ or $B$.`
+In the first and the last case,
+the same holds for the conclusion ($\Gamma, A \wedge B \Rightarrow \Delta$).
+In case C occurs negatively in $A$ then by definition it occurs negatively
+in $A \wedge B$ (even in the case that $C = A$). Hence it occurs negatively
+in ($\Gamma, A \wedge B \Rightarrow \Delta$). This is what had to be shown.
+
+\subsubsection{$R\vee$}
+Suppose C occurs positively the premiss
+($\Gamma \Rightarrow A, B, \Delta$). Thus it occurs positively in a formula
+in $\Delta$, $A$ or $B$ or negatively in a formula in $\Gamma$.
+In the first and the last case,
+the same holds for the conclusion ($\Gamma \Rightarrow A \vee B, \Delta$).
+In case C occurs positively in $A$ then by definition it occurs positively
+in $A \vee B$ (even in the case that $C = A$). Hence it occurs positively
+in ($\Gamma, A \wedge B \Rightarrow \Delta$). This is what had to be shown.
+
+\subsubsection{$R\to$}
+Suppose C occurs positively the premiss
+($\Gamma, A \Rightarrow B, \Delta$). Thus it occurs positively in a formula
+in $\Delta$ or $B$ or negatively in a formula in $\Gamma$ or $A$.
+In the first and the last case,
+the same holds for the conclusion ($\Gamma \Rightarrow A \to B, \Delta$).
+In case C occurs negatively in $A$ then by definition it occurs negatively
+in $A \to B$ (even in the case that $C = A$). Hence it occurs negatively
+in ($\Gamma, A \to B \Rightarrow \Delta$). This is what had to be shown.
+
+\subsubsection{$L\neg$}
+Suppose C occurs positively the premiss
+($\Gamma \Rightarrow A, \Delta$). Thus it occurs positively in a formula
+in $\Delta$ or $A$ or negatively in a formula in $\Gamma$.
+In the first and the last case,
+the same holds for the conclusion ($\Gamma, \neg A \Rightarrow \Delta$).
+In case C occurs positively in $A$ then by definition it occurs positively
+in $\neg A$ (even in the case that $C = A$). Hence it occurs positively
+in ($\Gamma, \neg A \Rightarrow \Delta$). This is what had to be shown.
+
+\subsubsection{$R\neg$}
+Suppose C occurs positively the premiss
+($\Gamma, A \Rightarrow \Delta$). Thus it occurs positively in a formula
+in $\Delta$ or negatively in a formula in $\Gamma$ or $A$.
+In the first and the last case,
+the same holds for the conclusion ($\Gamma \Rightarrow \neg A, \Delta$).
+In case C occurs negatively in $A$ then by definition it occurs negatively
+in $\neg A$ (even in the case that $C = A$). Hence it occurs negatively
+in ($\Gamma \Rightarrow \neg A, \Delta$). This is what had to be shown.
+\subsection{Proof introduction of $A\wedge B$ remains positive}
 \end{document}
