@@ -5,6 +5,7 @@
 \usepackage{bussproofs}
 \usepackage{graphicx}
 \usepackage{pifont}
+\usepackage{qtree}
 \newenvironment{scprooftree}[1]%
 {\gdef\scalefactor{#1}\begin{center}\proofSkipAmount \leavevmode}%
 {\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center} }
@@ -93,6 +94,9 @@ To prove that if formula $C$ occurs positively in one of the premises of a rule,
 then the same formula occurs positively in the conclusion for all rules of GKC
 
 This will be done on a rule by rule basis.
+
+Everywhere where postive is used negative can also be used as long
+that everywhere where negative is used is replaced by positive.
 
 \subsubsection{$R\wedge$}
 Suppose C occurs positively in one of the premisses
@@ -242,4 +246,50 @@ a single premise.
 So the
 sequent count in the proof of $S$ is at least $n$. It is $n$ + 1 because $S$ is also
 a sequent by definition. This is what had to be shown.
+\section{Proof of $GK_{\{\neg, \wedge\}}$ is complete}
+Let $GK_{\{\neg, \wedge\}}$ be the calcules consisting of the axiom
+$(\Gamma, A \Rightarrow A, \Delta)$ where $A$ is an atom, and the rules:
+
+\begin{prooftree}
+	\AxiomC{$\Gamma \Rightarrow A, \Delta$}
+	\RightLabel{$L\neg$}
+	\UnaryInfC{$\Gamma, \neg A \Rightarrow \Delta$}
+\end{prooftree}
+\begin{prooftree}
+	\AxiomC{$\Gamma, A \Rightarrow \Delta$}
+	\RightLabel{$R\neg$}
+	\UnaryInfC{$\Gamma \Rightarrow \neg A, \Delta$}
+\end{prooftree}
+
+\begin{prooftree}
+	\AxiomC{$\Gamma, A, B \Rightarrow \Delta$}
+	\RightLabel{$L\wedge$}
+	\UnaryInfC{$\Gamma, A \wedge B \Rightarrow \Delta$}
+\end{prooftree}
+
+\begin{prooftree}
+	\AxiomC{$\Gamma \Rightarrow A, \Delta$}
+	\AxiomC{$\Gamma, \Rightarrow B, \Delta$}
+	\RightLabel{$R\wedge$}
+	\BinaryInfC{$\Gamma \Rightarrow A \wedge B, \Delta$}
+\end{prooftree}
+To prove that $GK_{\{\neg, \wedge\}}$ is complete with respect to
+$CPC_{\{\neg, \wedge\}}$.
+
+The completness of $GK_{\{\neg, \wedge\}}$ can be proven by showing
+that If $\nvdash S$, then $v(I(S)) = 0$
+
+$\Gamma \cup \Delta$  consists of atoms and $\Gamma \cap \Delta \not= \o$
+
+Valuation $v(p) = 1$  if $p \in \Gamma$ and $v(p) = 0$ if $p \in \Delta$
+
+$S$ should not be derivable, so there is a leaf that is not an axiom.
+This means $V(I(l)) = 0$ where l is the leaf.
+
+If the valuation of the premise is 0, then so is the conclusion for any of
+the rules in $GK_{\{\neg, \wedge\}}$. This is shown in 2.1.
+
+So $V(I(S))$ is also 0 because one of the leafs is 0, which eventually
+will find its way to the final conclusion.
+
 \end{document}
