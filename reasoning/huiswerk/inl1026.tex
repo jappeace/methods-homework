@@ -233,4 +233,17 @@ This is what thad to be shown.
 Prove that if $\vdash_{GKC_K}(\Rightarrow \Box A)$, then
 $\vdash_{GKC_K}(\Rightarrow A)$
 
+$(\Rightarrow \Box A)$ is derivable in $GKC_K$ this was given.
+To proof $(\Rightarrow A)$ is derivable in $GKC_K$, this can be done by
+tranforming $(\Rightarrow \Box A)$ with the rules of $GKC_K$ into 
+$(\Rightarrow A)$.
+
+\begin{prooftree}
+	\AxiomC{$\Rightarrow A$}
+	\RightLabel{$R_K$}
+	\UnaryInfC{$\Rightarrow \Box A$}
+\end{prooftree}
+
+This is what had to be shown.
+
 \end{document}
