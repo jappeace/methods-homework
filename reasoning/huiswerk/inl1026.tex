@@ -34,28 +34,35 @@ so does $I(\Pi, \Box \Gamma \Rightarrow \Box A, \Delta) = 0$ For example:
 \begin{tikzpicture}
 [scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
 \draw (3,3) circle (3.5);
-\node (n1) at (1,3) {$A \Rightarrow A$};
-\node (n2) at (3,5) {$B \Rightarrow A$};
-\node (n3) at (4,2)  {$C \wedge B, A \Rightarrow A$};
+\node (n1) at (1,3) {$A$};
+\node (n2) at (3,5) {$B$};
+\node (n3) at (4,2)  {$C \wedge B$};
 \foreach \from/\to in {n1/n2,n2/n3}
 \draw (\from) -- (\to);
-
 \end{tikzpicture}
 
+In this model you can see that the preceding sequant does not automaticly
+imply an A. So the premise ($\Gamma \Rightarrow A$) is false, 
+which means the conclusion is also false,
+there is no path available form every state to an A.
 
-, if
  If $C$ $I(\Gamma \Rightarrow A)=1$ then
 so does $I(\Pi, \Box \Gamma \Rightarrow \Box A, \Delta) = 1$ for example:
+\\
 \begin{tikzpicture}
 [scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
 \draw (3,3) circle (3.5);
-\node (n1) at (1,3) {$A \Rightarrow A$};
-\node (n2) at (3,5) {$B, A \Rightarrow A$};
-\node (n3) at (4,2)  {$C \wedge B, A \Rightarrow A$};
+\node (n1) at (1,3) {$A$};
+\node (n2) at (3,5) {$A \wedge B$};
+\node (n3) at (4,2)  {$A \wedge (C \vee B)$};
 \foreach \from/\to in {n1/n2,n2/n3}
 \draw (\from) -- (\to);
-
 \end{tikzpicture}
+\\
+In this model every state A holds at least.
+So there is also always a path available to a state were A holds.
+This means the premise ($\Gamma \Rightarrow A$) and conclusion
+($\Pi, \Box \Gamma \Rightarrow \Box A, \Delta$) are true.
 
 Therefore $R_k$ is sound.
 
@@ -193,14 +200,15 @@ $GKC_{K4}$ = GKC and:
 
 As an intial observation the rules of $GKC_{K4}$ and $G$ are functionally
 the same. They're both intendid to remove the box on the right side and to
-hide it away in the left side in one of the `garbage' spots $(\Pi$ and 
-$\Delta)$ of the axioms.
+hide it away in the left side in one of the `garbage' spot ($\Gamma$) of
+the axioms.
 
-However the $GKC_{K4}$ has also garbage spots in the conclusion. So to show
+However the $GKC_{K4}$ has also garbage spots $(\Pi$ and
+$\Delta)$ in the conclusion. So to show
 something is proofable in $GKC_{K4}$ and not in $G$ all you need to do is
 fill in one of those garbage spots. Consider the following sequant:
 
-\[A, \Box B \Rightarrow \Box B, A\]
+\[A, \Box B \Rightarrow \Box B\]
 
 This can be solved in $GKC_{K4}$ in the following way:
 
@@ -209,7 +217,7 @@ This can be solved in $GKC_{K4}$ in the following way:
 	\RightLabel{Ax}
 	\UnaryInfC{$\Box B, B \Rightarrow B$}
 	\RightLabel{$R$}
-	\UnaryInfC{$A, \Box B \Rightarrow \Box B, A$}
+	\UnaryInfC{$A, \Box B \Rightarrow \Box B$}
 \end{prooftree}
 
 However this sequant is not solvable in G, the rule for dealing with the 
