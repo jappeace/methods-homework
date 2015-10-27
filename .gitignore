@@ -5,6 +5,7 @@
 *.swp
 *.swo
 *.zip
+*.out
 cogniveProcessing/Psychotoolbox3
 #who cares about mac
 cogniveProcessing/MAIR_CPprac1_4/Files_PsychToolboxV2/__MACOSX
