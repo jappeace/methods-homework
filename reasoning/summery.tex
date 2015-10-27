@@ -1,0 +1,111 @@
+\documentclass{article}
+\usepackage{txfonts}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{bussproofs}
+\usepackage{graphicx}
+\usepackage{pifont}
+\usepackage{qtree}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{hyperref}
+\newenvironment{scprooftree}[1]%
+{\gdef\scalefactor{#1}\begin{center}\proofSkipAmount \leavevmode}%
+{\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center} }
+
+\begin{document}
+\lstset{language=Java}
+\author{Jappie Klooster}
+\title{A Summery about reasoning with logic}
+\maketitle
+
+\section{Introduction}
+This summery is written for people that try to understand logicians on a master
+level *but* they're comming from `hbo informatica'
+
+\section{On proofing things}
+If you were lucky like me you'll be asked to write a proof in the first week
+which will be graded. I got a terible grade, but learning I did.
+
+So there are 2 kinds of proving. The first one is writing a proof in the system
+this should be rather easy, although you have to be carefull to follow the
+rules to the letter. I'm going to ignore this one since its just using the
+rules, which you've done tons of times as a programmer, so it shouldn't be
+that strange.
+
+The second one is the more troublsome, its proving the system itself. This
+is also split up into 3 different aspects. They all have in commen that
+it should be done in natural langauge. But, there is a structure to it
+I'm going to try and give a complete overview of this structure.
+
+First you have soundness, then there is completness, and finally you can be
+asked to proof certain properties of a system.
+
+\subsection{functions}
+Proving things is sometimes done with a function,
+now you should be familiar with functions.
+But they are defined in natural langauge, which may seem a little starnge
+so as an example I'll define the valuation as first time I came accross it:
+
+\[v:\mathcal{F}_{prp} \to \{0,1\}\]
+
+the prototype in Java is like this (I assume you never can be sure of course,
+see \autoref{notations}):
+
+
+\begin{lstlisting}[frame=single] 
+	public boolean V(Formula f);
+\end{lstlisting}
+
+Now in logic you describe the datatypes in natural langauge, so first they will
+say `let', `define' or ` v is a function' \ldots
+
+The other function I came across was the I function. Which stands for 
+interpation, what it does is just replacing the commas for the propper
+connectives.
+
+\section{proving soundness}
+This basically means your system doesn't modify the value you put in.
+If you put in truth, apply a bunch of rules from your system, then you should
+get out truth.
+
+\subsection{Structure of your proof}
+First write down your overal strategy of the proof \autoref{strategies}. For
+soundness this is often `proof by induction' \autoref{induction}.
+
+Then write down the lemmas you're gonna use. A lemma is a little proof, often
+derived from the properties of the system you're proving. You could see it
+as a basic argument. When proving soundness you want to connect this to the
+semantics, for classical systems the semantics are truth tables, for kripke
+models it are kripke frames. The semantics are the thing your talking about
+in your logical system.
+%I can see how I dind't understand all this crap the first time I saw it,
+% its freaking packed with definitions, and even if you understand all the
+% definiontions, its still hard
+Make sure that you've proven the soundness of the axioms *and* of the rules
+with help of the semantics.
+
+Finally ty up the lemmas together in the conclusion, this is done with help
+of the proofing strategy.
+
+Finish with a sentence like: `This had to be shown'.
+
+\section{proving strategies}
+\label{strategies}
+There are many different ways of writing proofs, in here I'll sumerize the ones
+I came accross during the course.
+
+\subsection{Induction}
+\label{induction}
+
+
+\section{notations}
+\label{notations}
+There is no standart in notating things. Every logician seems to use a
+slightly different notations. Keep this in mind. But I think the connectives
+are mostly the same. You probably need to memorize these.
+
+\section{Systems}
+GKC, Gentzen sequent calculy.
+
+\end{document}
