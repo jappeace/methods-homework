@@ -31,15 +31,17 @@ So there are 2 kinds of proving. The first one is writing a proof in the system
 this should be rather easy, although you have to be carefull to follow the
 rules to the letter. I'm going to ignore this one since its just using the
 rules, which you've done tons of times as a programmer, so it shouldn't be
-that strange.
+that strange. Although I'm making an exception for Hilbert and Grammar,
+Hilbert isn't that obvious and Grammar isn't obvious either.
 
 The second one is the more troublsome, its proving the system itself. This
 is also split up into 3 different aspects. They all have in commen that
 it should be done in natural langauge. But, there is a structure to it
 I'm going to try and give a complete overview of this structure.
 
-First you have soundness, then there is completness, and finally you can be
-asked to proof certain properties of a system.
+First you have soundness, then there is completness, these are both just
+properties of a system, so there are many more things to proof, but these
+are some of the most important because they decide if a system is usable.
 
 \subsection{functions}
 Proving things is sometimes done with a function,
@@ -69,6 +71,11 @@ This basically means your system doesn't modify the value you put in.
 If you put in truth, apply a bunch of rules from your system, then you should
 get out truth.
 
+The technical defintion is: The argument should be valid and all
+its premisses are true. Premisses in a system are the axioms.
+So they should be valid (valution function returns 1). The arguments
+in a system are the rules, so they should at least preserve truth.
+
 \subsection{Structure of your proof}
 First write down your overal strategy of the proof \autoref{strategies}. For
 soundness this is often `proof by induction' \autoref{induction}.
@@ -90,6 +97,11 @@ of the proofing strategy.
 
 Finish with a sentence like: `This had to be shown'.
 
+\section{proving completeness}
+Every validity should be proofable in the system. So there is usually no 
+obvious way of proving this, but for the system treated in the course
+there are some 
+
 \section{proving strategies}
 \label{strategies}
 There are many different ways of writing proofs, in here I'll sumerize the ones
@@ -97,7 +109,66 @@ I came accross during the course.
 
 \subsection{Induction}
 \label{induction}
+In here you try to prove something by starting with a single case n.
 
+For all n (*), n=1, supose (*) for n, then show (*) for n+1.
+
+So you start with an assumption, usually based on the question.
+For example \emph{show that if $\vdash_x A$ then A is a bird.}
+
+So you start with the base case, ie: \emph{We assume that $\vdash_x A$}
+You can do this because of propositional logic, whenever you see
+if x then y or x implies y you can just assume x. Continuing:
+\emph{Which means there is a proof $A_1,\ldots,A_n$ of A}.
+Here you're just saying that because A is part of X, there consists
+a bunch of steps that lead to A. \emph{We prove$A_i$ is a
+`birdlike property' with induction to $i$} Here you're saying
+that the steps that lead to A have all `birdlike properties' (or whatever
+property you're using) and you're gonna use induction to show that.
+\emph{As $A_n = A$ this implies A is a `birdlike poperty'}
+
+Now you're using the properties of the system and you call them lemmas.
+These are the arguments and you connect them to the semantic.
+\emph{Lemma 1, we have to proof that all axioms are `birdlike properties'
+	This is done by showing with help of the semantics of x, in case of
+system x this is a sleeve.
+Bellow you can see the sleeve of axiom D which clearly indicates that
+axiom D is birdlike
+}
+
+\[sleevefigure\]
+
+\emph{For axiom Z you can also see its birdlike:}
+\[(slightly altered) sleevefigure\]
+
+You do this for all the axioms.
+
+The next lemma is about the rules, these also have to be shown to keep
+track of birdlikeness in system x:
+
+\emph{Lemma 2, all the rules of x preserve birdlikeness:
+	For the rule argument ad hominum, supose that the precedents
+	are bird like
+}
+Precedents are the stuff you put into the rule.
+You can supose this because you've already shown in lemma 1 all the axioms are
+birdlike, so for the induction step it can't be anything else.
+\emph{
+	With the following sleeve it is shown that not under all valuations 
+	birdlikeness is preserved, but only for the ones were birdlikeness was
+	already there
+}
+\[(uninteresting) sleevefigure\]
+
+\emph{this finises the proof for lemma 2}
+
+Now the final step of induction is doing the induction step with help of the
+just proven lemmas.
+
+\subsection{tabloo or truth tree}
+In this strategy you create a tree, starting from the axioms which is either
+true or false, you go down step by step and say what happens. In most systems
+if one of the axioms is false it means the conclusion is false to.
 
 \section{notations}
 \label{notations}
@@ -124,7 +195,7 @@ Then there are some other symbols used:
 \begin{tabular}{@{}ll@{}}
 Symbols&
 In natural language \\ \toprule
-$\vdash$ 					& Part of system \\
+$\vdash$ 					& Part of system, ie, is derivable \\
 $\vdash, \Rightarrow$ 		& Seperator between antecedent and succedent\\ \bottomrule
 \end{tabular}
 
@@ -136,7 +207,17 @@ $\vdash, \Rightarrow$ 		& Seperator between antecedent and succedent\\ \bottomru
 (tautologies)
 	\item $GKC$ Gentzen calculus, also called sequent calcules
 	\item $GKC_K$  Getnzen + R 
+	\item $GKP$ Genzen + structural rules.
 \end{itemize}
 
+\section{Proving in Hilbert}
+Hilbert is the most simple system. However because of its simplicity proving
+things in it isn't very obvious. There are multiple ways of writing proovs
+
+\section{Proving in Grammar Logic}
+Grammar logic is a (failed) attempt to make sense of natural langauge. It
+tries to organize words into types, and groups of those words into compositional
+types.
+Connection words such as ` that' will have complex types.
 
 \end{document}
