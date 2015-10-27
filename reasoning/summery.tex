@@ -76,7 +76,7 @@ soundness this is often `proof by induction' \autoref{induction}.
 Then write down the lemmas you're gonna use. A lemma is a little proof, often
 derived from the properties of the system you're proving. You could see it
 as a basic argument. When proving soundness you want to connect this to the
-semantics, for classical systems the semantics are truth tables, for kripke
+semantics, for propositional systems the semantics are truth tables, for kripke
 models it are kripke frames. The semantics are the thing your talking about
 in your logical system.
 %I can see how I dind't understand all this crap the first time I saw it,
@@ -105,7 +105,38 @@ There is no standart in notating things. Every logician seems to use a
 slightly different notations. Keep this in mind. But I think the connectives
 are mostly the same. You probably need to memorize these.
 
+\noindent
+\begin{tabular}{@{}lll@{}}
+Symbols&
+In natural language &
+Technical name \\ \toprule
+$\neg$ 			& not 				& negation \\
+$\wedge$,\& 	& and 				& conjunction \\
+$\vee$ 			& or 				& disjunction\\
+$\to$	& if \ldots then 	& implication\\
+$\leftrightarrow$	& if and only if 	& equivalent\\ \bottomrule
+\end{tabular}
+
+
+Then there are some other symbols used:
+
+\noindent
+\begin{tabular}{@{}ll@{}}
+Symbols&
+In natural language \\ \toprule
+$\vdash$ 					& Part of system \\
+$\vdash, \Rightarrow$ 		& Seperator between antecedent and succedent\\ \bottomrule
+\end{tabular}
+
+
 \section{Systems}
-GKC, Gentzen sequent calculy.
+\begin{itemize}
+	\item $H$  Hilbert, has a huge set of axioms, and only 1 rule. (also called fredge)
+	\item $CPC$ Clasicial Propositional logic, formulas in here are always true
+(tautologies)
+	\item $GKC$ Gentzen calculus, also called sequent calcules
+	\item $GKC_K$  Getnzen + R 
+\end{itemize}
+
 
 \end{document}
