@@ -1,0 +1,67 @@
+\documentclass{article}
+\usepackage{txfonts}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{bussproofs}
+\usepackage{graphicx}
+\usepackage{pifont}
+\usepackage{qtree}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{hyperref}
+\newenvironment{scprooftree}[1]%
+{\gdef\scalefactor{#1}\begin{center}\proofSkipAmount \leavevmode}%
+{\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center} }
+
+\begin{document}
+\lstset{language=Java}
+\author{Jappie Klooster}
+\title{Agents and you, a brief summary}
+\maketitle
+
+\section{Introduction}
+This will be an introduction to agents coming from someone who followed
+` hbo informatica' as pre study.
+
+In here I will write down the things I think are important.
+
+\section{Modal logic}
+
+\section{APL}
+Medhi dastani thought about the agent programming langauge (APL)
+
+\subsection{Agent data structure}
+This represents the mental state of a agent. \\
+\begin{tabular}{ll}
+	Name & Does what \\ \toprule
+	Beliefs & Information available to the agent \\
+	Goals & Objectives that the agent wants to achieve \\
+	Events & Obsevations of (environmental) changes \\
+	Capabilities & Actions that the agent can perform \\
+	Plans & Procedures to achieve objectives \\
+	Reasoning rules & Reason about goal and plans \\
+\end{tabular} \\
+
+\noindent
+The rules can be:
+
+\begin{itemize}
+	\item Planning rules (goal $\to$ plan)
+	\item Procedural rules (events $\to$ plan)
+	\item Plan repair rules (plan $\to$ plan)
+\end{itemize}
+
+\subsection{Processing mental states}
+
+\begin{itemize}
+	\item Generate plans for received events.
+	\item Generate plans for goals.
+	\item Process exceptions and handle failures.
+	\item Repair plans.
+	\item Select plans for execution.
+	\item Execute plans.
+\end{itemize}
+
+\section{Markov}
+
+\end{document}
