@@ -1,0 +1,39 @@
+What were your conclusions regarding relation types based on your own data?
+
+Collocation and coordination are by far the most common responses. I think
+this also holds true for the collective data but its difficult to say.
+
+Last week we said that synonyms have a stronger relation than
+coordinations - can this claim be made based on our data?
+
+No, because my data indicates that coordinations happen more often
+than synonyms. But it could be that the type of words that were
+chosen have to do with this. For example its difficult to say a
+synonym for red.
+
+Some researchers ask not only for the first association, but the first 5 for each word. Do
+you think this is a better method when our goal is to model the mental lexicon?
+
+Yes, because there is quite a good chance that multiple words are triggered.
+Asking to respond with multiple words gives a better indication of those which
+are popular.
+This way you could also rank second popular and third popular choices.
+It also makes people think better about the responses.
+
+Do you think free associations is a good method to model the mental lexicon? What are
+the advantages and disadvantages of this method?
+
+The advantage is that the test is rather quick and non invasive. You'll
+have very fast results.
+The disadvantage is that you
+require lots of subject and words to give a proper overview, creating a
+lexicon of an entire language would be a daunting task.
+
+How can we improve this task to make it more productive/educational/fun/interesting for
+next year?
+
+I thought the individual excel files would be publicized on black board rather
+than a merged file. Just putting the individual files online is a lot less
+word and has the advantage that the categories are already there. You could
+even do so shell magic to combine them rather easily.
+
