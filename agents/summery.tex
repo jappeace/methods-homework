@@ -62,6 +62,38 @@ The rules can be:
 	\item Execute plans.
 \end{itemize}
 
+\subsection{Operational semantics}
+Operational semantics defines the computation steps a program
+configuration may take. Operational semantics allows studying
+of programming constructs in a rigorous manner. It facilitates proving
+general properties about a language. It lies close to the implementation
+of an interpreter. It facilitates model checking.
+
+\subsubsection{Basic syntax}
+The configuration $C$ evolves into configuration $C'$:
+
+\[C \to C'\]
+
+If premise $P$ holds transition $C \to C'$ can be derived:
+
+\begin{prooftree}
+	\AxiomC{$P$}
+	\UnaryInfC{$C \to C'$}
+\end{prooftree}
+
+\subsection{Configuration}
+configurations only mention things that change.
+Multi-agent configuration where $A$ is an agent and $\chi$ is the
+environment:
+
+\[\langle \{A_1, \cdots, A_n\}, \chi\rangle \]
+
+Individual agent configuration where $i$ is the agent number, $\sigma$ the
+believes, $\gamma$ the goals, $\Pi$ the plans $\theta$ the assignments and
+$\xi$ the events:
+
+\[A_i = \langle i, \sigma_i, \gamma_i, \Pi_i, \theta_i, \xi_i \rangle \]
+
 \section{Markov}
 
 \end{document}
