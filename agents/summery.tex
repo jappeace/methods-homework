@@ -94,6 +94,19 @@ $\xi$ the events:
 
 \[A_i = \langle i, \sigma_i, \gamma_i, \Pi_i, \theta_i, \xi_i \rangle \]
 
+\subsection{Transitions}
+Execution of a belief update action $\alpha$ modifies the belief and goal
+bases. $Update$ is an update function that is specified by the believe
+update actions and $\gamma'=\gamma - \{\psi \in \gamma | \sigma' \vDash \psi\}$.
+Which basically says that $\gamma'$ is equal to $\gamma$ minus the update.
+
+\begin{prooftree}
+	\AxiomC{$Update(\sigma, \alpha\theta)=\sigma'$}
+	\UnaryInfC{$\langle i, \sigma, \gamma, \{(\alpha,id)\}, \theta, 
+		\xi\rangle \to 
+	\langle \langle i, \sigma', \gamma', \{\}, \theta, \xi\rangle$}
+
+\end{prooftree}
 \section{Markov}
 
 \end{document}
