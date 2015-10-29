@@ -178,11 +178,65 @@ state transitions.
 \section{Markov}
 Computerised decision makers must deal with an uncertain world.
 
-\subsection{Probablity}
+\subsection{Expectation}
+Excpectation is the average value you excpect to happen. For example if you
+throw a dice the average value you should get is 3.5. Because:
 
-\subsection{Markov processes}
+\[1 * 1/6 + 2 * 1/6 + 3 * 1/6 + 4 * 1/6 + 5 * 1/6 + 6 * 1/6 = 3.5\]
 
-\subsection{Markov reward processes}
+You multiple all possible values time the chance of them happening and then
+calculate the sum of them. Formally it is written like this:
+
+\[ E[X]=Def \sum_{all x} xP\{X=x\} \]
+
+So you can fill it in like:
+\[E[X]= 1 * P\{X=1\} + \cdots + 6 *P\{X=6\}\]
+\[E[X]= 1 * 1/6 + \cdots + 6 *1/6 = 3.5\]
+
+\subsubsection{Properties of expectation}
+
+\begin{itemize}
+	\item $E[c] = c$
+	\item $E[X+Y] = E[X] + E[Y]$
+	\item $E[cX] = cE[X]$
+	\item $E[XY] = E[X]E[Y]$ if and only if $X$ and $Y$ are independent.
+	\item $E[X] \le E[Y]$, if $X \le Y$ almost surely.
+\end{itemize}
+
+\paragraph{Law of the onconcious statistician}
+You have to prove this, its \emph{not} a property:
+
+\[E[g(X)]=\sum_{all x} g(x)P{X=x}\]
+
+where $g$ is any real-valued function. (It returns a value that is part
+of the real set of numbers).
+
+\subsection{Conditional expectation}
+The expectation of $X | Y = y$ is called the \emph{conditional expectation}
+of $X$ given $Y$, and is denoted by:
+
+\[E[X|Y=y]\]
+
+$E[X|Y=y]$ Is a number that depends on $y \in Y$. So you only get an
+expectation $X$ if you have an y that satisfies the condition.
+This yields a random variable $E[X|Y]$. Because of this it has all the
+properties of a random variable.
+
+\subsubsection{Probability mass functions}
+The standart notation for probability mass functions is:
+
+\[p_x(x): D(X) \to [0,1]: x \mapsto P\{X=x\} \]
+\[p_y(y): D(Y) \to [0,1]: y \mapsto P\{Y=y\} \]
+\[p_{xy}(x,y): D(X) \times D(Y) \to [0,1]: (x,y) \mapsto P\{X=x,Y=y\} \]
+\[p_{x|y}(x|y): D(X) \times D(Y) \to [0,1]: (x,y) \mapsto P\{X=x|Y=y\} \]
+
+For example:
+
+\[ P\{X=x|Y=y\}=\frac{P\{X=x,Y=y\}}{P\{Y=y\}}\]
+
+Is often written as:
+
+\[P_{x|y}(x|y)=\frac{P_{xy}(x,y)}{P_y(y)}\]
 
 \subsection{Exam}
  For a given decision problem with a certain
