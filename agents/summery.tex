@@ -95,6 +95,13 @@ $\xi$ the events:
 \[A_i = \langle i, \sigma_i, \gamma_i, \Pi_i, \theta_i, \xi_i \rangle \]
 
 \subsection{Transitions}
+The confiugrations described \emph{what} can change where transition
+will describe \emph{how} they can change.
+
+$\vDash$ Describes a first order entailment relation. As I understand
+this means $A \vDash B$ there exsits a $B$ in $A$ which has an entailment
+to $A$. So $A$ is a set of things and a $B$ like thing exists in $A$.
+\subsubsection{Belief update}
 Execution of a belief update action $\alpha$ modifies the belief and goal
 bases. $Update$ is an update function that is specified by the believe
 update actions and $\gamma'=\gamma - \{\psi \in \gamma | \sigma' \vDash \psi\}$.
@@ -107,6 +114,62 @@ Which basically says that $\gamma'$ is equal to $\gamma$ minus the update.
 	\langle \langle i, \sigma', \gamma', \{\}, \theta, \xi\rangle$}
 
 \end{prooftree}
+
+So on the left side of the arrow, the plan is to do a believeUpdate $\alpha$
+on the right side this is done so its removed from the plans and the believes
+\emph{and} goals are modified. The goals are modified to because if a believe
+with the same name as a goal becomes true than the goal is removed. (this is
+a design decision btw, its just how 2apl works).
+
+\subsubsection{Adopta goal}
+Execution of a goal adopt action adopta(g) adds the goal to the beginning of
+the goal base. If the goal $g$ trough assignment $\theta$ does not already
+exists in goalbase.
+
+\begin{prooftree}
+	\AxiomC{$\sigma \nvDash g\theta$}
+	\UnaryInfC{$\langle 
+		i, \sigma, [\gamma_1, \cdots, y_n], \{(adopta(g),id)\}, \theta, \xi, 
+	\rangle \to \langle 
+		i, \sigma, [g\theta,\gamma_1, \cdots, y_n], \{\}, \theta, \xi, 
+	\rangle$}
+\end{prooftree}
+
+So the agent comes accross a adopta method in the plan base $\Pi$, if
+the associated believe of the goal is not true then you can start adding
+it.
+
+Note that in the slides the environment was also part of this action. But I
+think this was a mistake, because in the paper of goaldynamic actions there
+isn't a mention of an environment. Besides it doesn't make sense to include
+the environment in an agent configuration.
+
+\subsubsection{Applying planning goal rules}
+The structure of a PG-rule in 2apl is as follows:
+
+\[\kappa <- \beta | \pi \]
+
+Where $\kappa$ is the name of the plan.
+$\beta$ is the condition that is applied before
+executing the plan (basically a big if around the plan). $\pi$ is
+the body of the plan, a set of instructions.
+
+\begin{prooftree}
+	\AxiomC{$\gamma \vDash \kappa \tau_1 \quad \& \quad
+	\sigma \vDash \beta \tau_1 \tau_2$}
+	\UnaryInfC{$\langle
+		i, \sigma, \gamma, \Pi, \theta, \xi
+	\rangle \to \langle
+	i, \sigma, \gamma, \Pi \cup \{ \pi \tau_1 \tau_2 \}, \theta, \xi
+	\rangle$}
+\end{prooftree}
+
+The transition can be executed if $\kappa$ is an active goal (this valuation
+is stored in $\tau_1$ \emph{and} $\beta$ is true according to the believe 
+base (this eveluation is stored in $\tau_2$). If all these things are true
+then $\pi$ is added to the plan base $\Pi$ \emph{but} it will only be executed
+if $\tau_1$ and $\tau_2$ return true.
+
 \section{Markov}
 
 \end{document}
