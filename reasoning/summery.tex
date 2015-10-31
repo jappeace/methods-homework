@@ -13,6 +13,10 @@
 {\gdef\scalefactor{#1}\begin{center}\proofSkipAmount \leavevmode}%
 {\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center} }
 
+
+\newcommand{\brcell}[2][l]{%
+	\begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
+
 \begin{document}
 \lstset{language=Java}
 \author{Jappie Klooster}
@@ -27,21 +31,31 @@ level *but* they're comming from `hbo informatica'
 If you were lucky like me you'll be asked to write a proof in the first week
 which will be graded. I got a terible grade, but learning I did.
 
-So there are 2 kinds of proving. The first one is writing a proof in the system
-this should be rather easy, although you have to be carefull to follow the
-rules to the letter. I'm going to ignore this one since its just using the
-rules, which you've done tons of times as a programmer, so it shouldn't be
-that strange. Although I'm making an exception for Hilbert and Grammar,
-Hilbert isn't that obvious and Grammar isn't obvious either.
+Proving is in meta space. Its a little like programming in that you have to
+be specific. There are lots of ways to prove things. In this report I will
+discuss a select few to give an idea about what is going on. But first
+I'll start covering with some basics.
 
-The second one is the more troublsome, its proving the system itself. This
-is also split up into 3 different aspects. They all have in commen that
-it should be done in natural langauge. But, there is a structure to it
-I'm going to try and give a complete overview of this structure.
+\subsection{Jargon}
+In here I will discuss some jargon logicians use. It may seem silly but knowing
+the precise defintion of these words makes understanding proofs a lot easier.
 
-First you have soundness, then there is completness, these are both just
-properties of a system, so there are many more things to proof, but these
-are some of the most important because they decide if a system is usable.
+\begin{tabular}{ll}
+	Word & definition \\ \toprule
+	Formula & The letters, but also letters combined with conectives (its
+	recursive) \\
+	Axiom & Something which is undoubtibly valid. proofs work from a
+	complex formula towards axioms. \\
+	Theorom & the thing you're trying to proof. \\
+	Lemma & \brcell{a hypothosis which you're trying to prove, you usually
+		define \\
+	a lemma to reference to later. Its like a little theorom} \\
+	Sequent & A thing with a sequent connective (in my case either
+	$\vdash$ or $\Rightarrow$) \\
+	Derivable & if X is derivable in system A, then you can proof x with
+	system A
+\end{tabular}
+
 
 \subsection{functions}
 Proving things is sometimes done with a function,
@@ -66,41 +80,31 @@ The other function I came across was the I function. Which stands for
 interpation, what it does is just replacing the commas for the propper
 connectives.
 
-\section{proving soundness}
-This basically means your system doesn't modify the value you put in.
-If you put in truth, apply a bunch of rules from your system, then you should
-get out truth.
+\section{Structure of proofs}
+\label{structure of proofs}
+Now of course different poeple have different kinds of notations. The logicians
+don't really seem to adhere to standarts. But that's fine, you just have to
+get used to conflicting symbols.
 
-The technical defintion is: The argument should be valid and all
-its premisses are true. Premisses in a system are the axioms.
-So they should be valid (valution function returns 1). The arguments
-in a system are the rules, so they should at least preserve truth.
+\subsection{Find references}
+Before you do anything check if you can't refer to any existing proofs.
+This saves a lot of time. You can just ignore writing a proof if you can
+write down a reference. (I bet this is allowed on the exam as long you
+can refer to the stuff you wrote down yourself).
 
-\subsection{Structure of your proof}
-First write down your overal strategy of the proof \autoref{strategies}. For
-soundness this is often `proof by induction' \autoref{induction}.
+\subsection{Head of a proof}
+In the head of the proof you don't do any work, you just state what we're
+talking about and what you're going to do. So you start with the definitions.
+Then you say what you're going to proof (by using the defintions), so here
+you just repeat the question. And finally you mention your strategy.
 
-Then write down the lemmas you're gonna use. A lemma is a little proof, often
-derived from the properties of the system you're proving. You could see it
-as a basic argument. When proving soundness you want to connect this to the
-semantics, for propositional systems the semantics are truth tables, for kripke
-models it are kripke frames. The semantics are the thing your talking about
-in your logical system.
-%I can see how I dind't understand all this crap the first time I saw it,
-% its freaking packed with definitions, and even if you understand all the
-% definiontions, its still hard
-Make sure that you've proven the soundness of the axioms *and* of the rules
-with help of the semantics.
+\subsection{Body of the proof}
+In here you work out the proof with help of the strategy.
+See the \autoref{strategies} section.
 
-Finally ty up the lemmas together in the conclusion, this is done with help
-of the proofing strategy.
-
-Finish with a sentence like: `This had to be shown'.
-
-\section{proving completeness}
-Every validity should be proofable in the system. So there is usually no 
-obvious way of proving this, but for the system treated in the course
-there are some 
+\subsection{End of the proof}
+Just write down ` QED' or ` this is what had to be shown' even if you're not
+certain what you're doing.
 
 \section{proving strategies}
 \label{strategies}
@@ -109,68 +113,47 @@ I came accross during the course.
 
 \subsection{Induction}
 \label{induction}
-In here you try to prove something by starting with a single case n.
+\subsubsection{When to use it?}
+You can use induction if you have to proof something for countibly infinite
+things, but there exists a base method that can validate if its true.
+So basically all thigns that can and make sense be resolved with a
+recursive function.
 
+\subsubsection{How to use it?}
+In here you try to prove something by starting with a single case n.
 For all n (*), n=1, supose (*) for n, then show (*) for n+1.
 
-So you start with an assumption, usually based on the question.
-For example \emph{show that if $\vdash_x A$ then A is a bird.}
+Fat chance you'll understand it based on that. Its way to abstract.
+But I'll show how to use it with help of several examples. \emph{cursive
+text will be comments}
 
-So you start with the base case, ie: \emph{We assume that $\vdash_x A$}
-You can do this because of propositional logic, whenever you see
-if x then y or x implies y you can just assume x. Continuing:
-\emph{Which means there is a proof $A_1,\ldots,A_n$ of A}.
-Here you're just saying that because A is part of X, there consists
-a bunch of steps that lead to A. \emph{We prove$A_i$ is a
-`birdlike property' with induction to $i$} Here you're saying
-that the steps that lead to A have all `birdlike properties' (or whatever
-property you're using) and you're gonna use induction to show that.
-\emph{As $A_n = A$ this implies A is a `birdlike poperty'}
+\paragraph{Proof that formulas always have an even number of brackets.}
+\emph{So space cowboy, we have to write a proof, before panicking remember
+	the boiler plate in \autoref{structure of proofs}, we may get some
+points for doing this, its at least polite}
 
-Now you're using the properties of the system and you call them lemmas.
-These are the arguments and you connect them to the semantic.
-\emph{Lemma 1, we have to proof that all axioms are `birdlike properties'
-	This is done by showing with help of the semantics of x, in case of
-system x this is a sleeve.
-Bellow you can see the sleeve of axiom D which clearly indicates that
-axiom D is birdlike
-}
+\subparagraph{Definitions}
+A formula can be a propositional variable, in which case it has zero brackets.
+A formula can also be multpile proporsitional variables, connected with connectives,
+in this case it has the connective count * 2 brackets, because for every connective
+2 brackets are added.
+\subparagraph{Strategy} Every formula has a even number of brackets, this will
+be proven with help of iniduction.
+\subparagraph{Proof}
 
-\[sleevefigure\]
 
-\emph{For axiom Z you can also see its birdlike:}
-\[(slightly altered) sleevefigure\]
+\subsection{Tabloo or truth tree}
+\subsubsection{When to use it?}
+The tabloo method comes to mind if you have to proof things about systems
+that use trees, and where the values of the leaves of the tree trincle down
+to the root of the tree.
 
-You do this for all the axioms.
-
-The next lemma is about the rules, these also have to be shown to keep
-track of birdlikeness in system x:
-
-\emph{Lemma 2, all the rules of x preserve birdlikeness:
-	For the rule argument ad hominum, supose that the precedents
-	are bird like
-}
-Precedents are the stuff you put into the rule.
-You can supose this because you've already shown in lemma 1 all the axioms are
-birdlike, so for the induction step it can't be anything else.
-\emph{
-	With the following sleeve it is shown that not under all valuations 
-	birdlikeness is preserved, but only for the ones were birdlikeness was
-	already there
-}
-\[(uninteresting) sleevefigure\]
-
-\emph{this finises the proof for lemma 2}
-
-Now the final step of induction is doing the induction step with help of the
-just proven lemmas.
-
-\subsection{tabloo or truth tree}
+\subsubsection{How to use it?}
 In this strategy you create a tree, starting from the axioms which is either
 true or false, you go down step by step and say what happens. In most systems
 if one of the axioms is false it means the conclusion is false to.
 
-\section{notations}
+\section{Notations}
 \label{notations}
 There is no standart in notating things. Every logician seems to use a
 slightly different notations. Keep this in mind. But I think the connectives
