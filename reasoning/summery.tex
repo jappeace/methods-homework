@@ -169,11 +169,65 @@ step, so I'll treat it here}
 
 \subparagraph{Definitions}
 Natural numbers are all integers bigger than 0.
-\[Even(n) = \left\{ \begin{matrix}
-	n=0 &\\ 
-	Even(n-2)& 
-	\end{matrix}
-\right \]
+
+\[
+Even(n) := \left\{
+	\begin{array}{l}
+		n= 0 \\
+		Even(n-2)
+	\end{array}
+\right.
+\]
+\[
+Odd(n) := \left\{
+	\begin{array}{l}
+		n= 1 \\
+		Odd(n-2)
+	\end{array}
+\right.
+\]
+
+\subparagraph{Strategy}
+All Natural numbers are either odd or even, this will be proven by induction.
+
+\subparagraph{Proof} \emph{In here we look at the definitions and try to see
+the base case(s)}. In case n=0, n is even according to the definition of
+even, so n is either postivie or negative. \emph{reflecting back on what
+we're trying to prove, saying its the case}
+
+In case n=1, n is odd according to the definition of odd. So n is either
+odd or even.
+
+\emph{After the base case, first assume, then push with help of the definition}
+Assume n is odd or even, then n+2 is also odd or even according to the
+definition of odd or even.
+
+QED
+
+\paragraph{Proof that $\vdash_{gkc} (\Gamma \Rightarrow \Delta)$ is
+closed under right weakening}
+\emph{I'll treat this one because its a rather simple case, but still
+touches the concepts of logic a bit deeper}
+
+\subparagraph{Definitions}
+$GKC$ is gentzen calulus. $\vdash_x$ means something is derivable in system x.
+We assume $\Gamma \Rightarrow \Delta$ is derivable in $GKC$. This means
+there exists an axiom in $\Gamma \Rightarrow \Delta$, for example
+$\Gamma', B \Rightarrow B, \Delta'$.
+Closed under right weakening means that it doesn't matter if
+$\Gamma', B \Rightarrow B, \Delta'$ or $\Gamma', B \Rightarrow B, \Delta', A$
+is used since they're both axioms.
+
+\subparagraph{Strategy} To proof for all sequents in $GKC$ right weakening
+is closed. To proof with iniduction.
+\subparagraph{Proof}
+Take an arbitrary proof $P$ that is derivable in $GKC$,
+this proof has several sequants $S$ to the depth $n$, such that $S_n = P$.
+
+on depth $n=0$ the sequent is an axiom, because $P$ is derivable in $GKC$.
+
+Assume $P_n$ is closed under right weakening. Then $P_n-1$ is closed under
+right weakening to
 
 \subsection{Tabloo or truth tree}
 \subsubsection{When to use it?}
