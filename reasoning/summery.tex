@@ -41,11 +41,11 @@ In here I will discuss some jargon logicians use. It may seem silly but knowing
 the precise defintion of these words makes understanding proofs a lot easier.
 
 \begin{tabular}{ll}
-	Word & definition \\ \toprule
+	Jargon & Meaning\\ \toprule
 	Formula & The letters, but also letters combined with conectives (its
 	recursive) \\
-	Axiom & Something which is undoubtibly valid. proofs work from a
-	complex formula towards axioms. \\
+	Axiom & \brcell{Something which is undoubtibly valid. Proofs work from a \\
+	complex formula towards axioms.} \\
 	Theorom & the thing you're trying to proof. \\
 	Lemma & \brcell{a hypothosis which you're trying to prove, you usually
 		define \\
@@ -127,20 +127,53 @@ Fat chance you'll understand it based on that. Its way to abstract.
 But I'll show how to use it with help of several examples. \emph{cursive
 text will be comments}
 
-\paragraph{Proof that formulas always have an even number of brackets.}
+\paragraph{Proof that propositional formulas always have an even number of brackets.}
 \emph{So space cowboy, we have to write a proof, before panicking remember
 	the boiler plate in \autoref{structure of proofs}, we may get some
 points for doing this, its at least polite}
 
 \subparagraph{Definitions}
-A formula can be a propositional variable, in which case it has zero brackets.
-A formula can also be multpile proporsitional variables, connected with connectives,
-in this case it has the connective count * 2 brackets, because for every connective
-2 brackets are added.
-\subparagraph{Strategy} Every formula has a even number of brackets, this will
-be proven with help of iniduction.
-\subparagraph{Proof}
+A propositional formula can be a propositional variable,
+in which case it has zero brackets.
+A propositional formula can also be multpile proporsitional variables,
+connected with connectives, in this case it has the connective count * 2
+brackets, because for every connective 2 brackets are added.
 
+\subparagraph{Strategy}
+For all propositional formula the number of brackets is even.
+This will be proven with help of iniduction.
+
+\subparagraph{Proof}
+\emph{So this is where the induction starts, first do the base case}
+The base case where n = 0,
+a propositional formula is a single propositional variable. This means
+it has 0 brackets according to definition 1, and 0 is an even number, so
+the amount of brackets in the base case is even.
+
+\emph{Induction step}
+For the case n+1, asume $A$ and $B$ have a even number of brackets,
+then $A$ connective $B$ has an even number of brackets to because you have
+to add an even number of brackets according to the definition of adding
+connectives.
+
+\emph{Because this can be used for the case of propositional variables,
+and all complexer formulas that can be constructed with connectives, you're
+done. All posibilities have been treated now.}
+
+QED
+
+
+\paragraph{Proof that all natural numbers are either odd or even}
+\emph{Another quite obvious prove, but this one has a more complex induction
+step, so I'll treat it here}
+
+\subparagraph{Definitions}
+Natural numbers are all integers bigger than 0.
+\[Even(n) = \left\{ \begin{matrix}
+	n=0 &\\ 
+	Even(n-2)& 
+	\end{matrix}
+\right \]
 
 \subsection{Tabloo or truth tree}
 \subsubsection{When to use it?}
