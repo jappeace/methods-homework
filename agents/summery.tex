@@ -1,4 +1,5 @@
 \documentclass{article}
+\usepackage{amsmath}
 \usepackage{txfonts}
 \usepackage{booktabs}
 \usepackage{color}
@@ -7,6 +8,7 @@
 \usepackage{pifont}
 \usepackage{qtree}
 \usepackage{tikz}
+\usetikzlibrary{automata,arrows,positioning,calc}
 \usepackage{listings}
 \usepackage{hyperref}
 \newenvironment{scprooftree}[1]%
@@ -240,6 +242,61 @@ Let $X$ and $Y$ be random variables then:
 \[ E[E[X|Y]] = E[X] \]
 
 The proof is in the slides.
+
+\subsection{Markov to matrix}
+A finite Markov process consisting of $n$ states can be represented by an 
+$n\times n$ \emph{probablity transition matrix}.
+
+Consider the following markov process:
+\begin{center}
+\begin{tikzpicture}[->, >=stealth', auto, semithick, node distance=3cm]
+\tikzstyle{every state}=[fill=white,draw=black,thick,text=black,scale=1]
+\node[state]    (A)                     {A};
+\node[state]    (B)[above right of=A]   {B};
+\node[state]    (C)[below right of=A]   {C};
+\path
+(A) edge[loop left]     node{0.5}         (A)
+    edge[bend left]     node{0.3}     (B)
+    edge[bend right, left]     node{0.2}      (C)
+(B) edge[bend left,right]    node{0.9}      (A)
+    edge[bend left,right]    node{0.1}      (C)
+(C) edge[bend right, right]    node{1}      (A);
+\end{tikzpicture}
+
+The probability matrix belonging to this process looks like the following:
+
+\[
+\begin{matrix}
+		& A		& B		& C \\
+	A	& 0.5	& 0.3	& 0.2 \\
+	B	& 0.9	& 0		& 0.1 \\
+	C	& 1		& 0		& 0 \\
+\end{matrix}
+\]
+
+\end{center}
+
+Adding the $A,B,C$ is optional, but I find it gives more overview. The first
+cell reads, the probobality of going from a to a.
+
+\subsubsection{Stochastic}
+A matrix where every row sums to1 is called a \emph{stochastic matrix}. Every
+transition matrix is a \emph{stochastic matrix}.
+
+\subsection{Sample path}
+A \emph{sample path} of a markov chain is a specific specific realistion of
+that chain.
+
+\[ X_0,X_1,X_2,\dots\]
+
+The $X_i$ are random variables.
+
+\subsubsection{Markov process}
+A \emph{Markov process} is a stochastic process $X_0, X_1, X_2, \dots$ such 
+that:
+
+\[ P\{ X_{n+1} X_n, X_{n-1}, \dots\}=P\{X_{n+1}|X_n\}\]
+for $n \ge 0$
 \subsection{Exam}
  For a given decision problem with a certain
 discount factor.A pure policy sufices.
