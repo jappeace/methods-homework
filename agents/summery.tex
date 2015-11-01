@@ -418,7 +418,7 @@ This system of linear equations enables us to compute state values in two
 ways, by using algebra or by using iteration. Iteration you just wait until
 convergence within a specified range. For this course iteration is enough.
 
-\subsection{Utility pump}
+\subsubsection{Utility pump}
 A utility pump is a MRP in which at least one recurrent state possesses a
 non-zero reward.
 \subsubsection{Discount factor}
@@ -456,6 +456,19 @@ The (vertical) vector of expected immediate rewards is denoted by $C$.
 \paragraph{definition} The \emph{Bellman operator}:
 
 \[B_p : \mathbb{R}^n \to \mathbb{R}^n : v \mapsto C + \gamma Pv \]
+
+\subsection{Fixed point}
+The value vector, $v^*$, of a discounted reward Markov process is a fixed
+point of the $B_p$ operator:
+
+\[ B_p(v)=v\]
+
+\[
+	v_0 \to B_p(v_0) \to B_p B_p (v_0) \to \dots \to B^n_P v_0
+	\to \dots \to v^*
+\]
+
+
 \subsection{Exam}
  For a given decision problem with a certain
 discount factor.A pure policy sufices.
