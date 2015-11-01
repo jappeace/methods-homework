@@ -8,6 +8,7 @@
 \usepackage{pifont}
 \usepackage{qtree}
 \usepackage{tikz}
+\usepackage{amssymb}
 \usetikzlibrary{automata,arrows,positioning,calc}
 \usepackage{listings}
 \usepackage{hyperref}
@@ -365,6 +366,96 @@ A closed class doesn't have to be recurrent if there are infinite cases.
 Otherwise a closed class is always recurrent.
 An openclass is always transient.
 
+\subsection{Markov reward}
+A \emph{Markov reward process} is a markov process with rewards on
+transitions. these rewards are real valued.
+
+Markov rewards processes are also known as \emph{markov reward chain} or
+\emph{valued Markov chains}.
+
+example
+
+\[
+	P =
+\begin{pmatrix}
+	0.2	& 0.8 & 0 	& \\
+	0.3	& 0	& 0.7	& \\
+	0	& 0 & 1	& \\
+\end{pmatrix}
+\]
+With reward matrix:
+\[
+	R =
+\begin{pmatrix}
+	1	& 2 & 0 	& \\
+	0	& 0	& 3	& \\
+	0	& 0 & 0	& \\
+\end{pmatrix}
+\]
+
+\subsubsection{Total reward}
+
+Let $\omega$ be a realisation of a Markov process:
+
+\[\omega = s_0, s_1, \dots\]
+
+where $s_0$ is a start state.
+The rewards that accumulate are $r_1, r_2, \dots$:
+
+\[ s_0 \xrightarrow[\mbox{reward } r_1]{} s_1 \xrightarrow[\mbox{reward } r_2]{} s_2\]
+
+\paragraph{Definition}
+
+$r_k | (s_0=1) : $ reward at kth step, given $s_0 = i$.
+$R|(s_0=i),$ the \emph{total reward} : $(r_1 + r_2 \dots)|s_0=i,$
+$V(i),$ the \emph{value} of state i : $E[R|s_0=i]$.
+
+\subsection{The bellman equation}
+
+\[V(i)=\sum_{all\mbox{\ }j} p_{ij}[r_{ij} + V(j)]\]
+
+This system of linear equations enables us to compute state values in two
+ways, by using algebra or by using iteration. Iteration you just wait until
+convergence within a specified range. For this course iteration is enough.
+
+\subsection{Utility pump}
+A utility pump is a MRP in which at least one recurrent state possesses a
+non-zero reward.
+\subsubsection{Discount factor}
+A \emph{dicsount factor} is a real number $0 \le \gamma < 1$. it represents
+the probability to survive from one state to the next.
+
+\paragraph{remarks} The discount factor is constant. The discount factor
+does not impose a fixed cuttoff bound. It is a probablistic concept.
+
+\subsubsection{Discounted reward}
+Suppose a discount factor $0 \le \gamma < 1$. Then
+
+\[V(i)=\sum_{all\mbox{\ }j} p_{ij}[r_{ij} + \gamma V(j)]\]
+
+for every state $i$.
+
+\paragraph{definition} A \emph{valuation} is a vector
+
+\[v=Def
+\begin{pmatrix}
+	v(1) \\
+	\vdots \\
+	v(n)
+\end{pmatrix}
+\in \mathbb{R}^n
+\]
+
+\paragraph{definition} The \emph{expected immediate reward} at state $i$ is
+the by $P_{ij}$ - probabilities weighted averaga of the $r_{ij}$ rewards:
+
+\[C(i)=Def\sum_{all \mbox{\ }j} p_{ij} r_{ij} \]
+
+The (vertical) vector of expected immediate rewards is denoted by $C$.
+
+\paragraph{definition} The \emph{Bellman operator}:
+
+\[B_p : \mathbb{R}^n \to \mathbb{R}^n : v \mapsto C + \gamma Pv \]
 \subsection{Exam}
  For a given decision problem with a certain
 discount factor.A pure policy sufices.
