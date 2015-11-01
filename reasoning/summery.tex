@@ -95,6 +95,8 @@ can refer to the stuff you wrote down yourself).
 \subsection{Head of a proof}
 In the head of the proof you don't do any work, you just state what we're
 talking about and what you're going to do. So you start with the definitions.
+Remeber the definitions should be stupid, only add obvious things, don't do
+deductions until the body of the proof.
 Then you say what you're going to proof (by using the defintions), so here
 you just repeat the question. And finally you mention your strategy.
 
@@ -210,10 +212,59 @@ The tabloo method comes to mind if you have to proof things about systems
 that use trees, and where the values of the leaves of the tree trincle down
 to the root of the tree.
 
+So for the base case the tabloo is method is used to show that the valuation
+trinceling down happens for the rules, then induction is used for the entire
+proof tree to show that it works for the entire system.
+
 \subsubsection{How to use it?}
 In this strategy you create a tree, starting from the axioms which is either
 true or false, you go down step by step and say what happens. In most systems
 if one of the axioms is false it means the conclusion is false to.
+
+
+\paragraph{Proof that for $L\to$ of GKC that if one of the premises is not
+true (under all valuations) than so is the conclusion}
+
+
+\subparagraph{Definitions} GKC is gentzen calculy, in which $L\to$ is defined
+as follows:
+
+\begin{prooftree}
+	\AxiomC{$\Gamma \Rightarrow  A, \Delta$}
+	\AxiomC{$\Gamma, B \Rightarrow \Delta$}
+	\RightLabel{$ L\to$ }
+	\BinaryInfC{$\Gamma, A \to B \Rightarrow \Delta$}
+\end{prooftree}
+
+Where $\Gamma$ is a collection of formulas connected by $\wedge$ and $\Delta$
+is a collection of formulas connected by $\vee$.
+A and B are singular formulas.
+I(x) is a function that changes the $,$ into proper connectives. So in case
+of the antecedent it will become a $\wedge$ and in the succedent a $\vee$.
+
+\subparagraph{Strategy} Under all valuations, if one of the premises is not
+true of $L\to$ then so is the conclusion. This will be proven with help
+of the tabloo method.
+\subparagraph{Proof}
+There are two cases to consider first $V(I(\Gamma \Rightarrow  A, \Delta))=0$
+and secondly $V(I(\Gamma, B \Rightarrow  \Delta))=0$
+
+$V(I(\Gamma \Rightarrow  A, \Delta))=0$ implies $V(A)=0$ and for all formulas
+where $C\in \Delta$ and $D \in \Gamma$, $V(C) = 0$ and $V(D)=1$. In this case
+$V(A \to B) = 1$ and thus $V(I(\Gamma, A \to B \Rightarrow \Delta))=0$.
+
+\emph{So here I say if the $A$ premise is false then the conclusion is false
+	because propositional logic, you need the $I$ function to deal with
+	commas. And you need the V function to execute a true false valuation
+(ergo execute propositional logic)}
+
+$V(I(\Gamma, B \Rightarrow \Delta))=0$ implies $V(B)=1$ and for all formulas
+where $C\in \Delta$ and $D \in \Gamma$, $V(C) = 0$ and $V(D)=1$. In this case
+$V(A \to B) = 1$ and thus $V(I(\Gamma, A \to B \Rightarrow \Delta))=0$.
+
+\emph{So step by step, say what the valuation for the premis implies for the
+	individual elements (if its a set of elements, just do it on a member of
+the set, then show it for the conclusion with help of propositional logic}
 
 \section{Notations}
 \label{notations}
