@@ -16,6 +16,9 @@
 {\gdef\scalefactor{#1}\begin{center}\proofSkipAmount \leavevmode}%
 {\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center} }
 
+\newcommand{\brcell}[2][l]{%
+	\begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
+
 \begin{document}
 \lstset{language=Java}
 \author{Jappie Klooster}
@@ -468,6 +471,174 @@ point of the $B_p$ operator:
 	\to \dots \to v^*
 \]
 
+\subsection{Example Markov reward process}
+Consider the following markov reard process. Suppose a discount factor
+$\gamma = 0.5$.
+
+\[ \left\{ \begin{matrix}
+		s: & s(r=1, p=0.4) & ; & a(r=4, p=0.6), \\
+		a: & s(r=3, p=0.3) & ; & a(r=8, p=0.7), \\
+		b: & s(r=2, p=0.5) & ; & b(r=5, p=0.5). \\
+	\end{matrix}
+\right. \]
+
+\subsubsection{Transition diagram}
+\begin{tikzpicture}[->, >=stealth', auto, semithick, node distance=3cm]
+\tikzstyle{every state}=[fill=white,draw=black,thick,text=black,scale=1]
+\node[state]    (S)                     {s};
+\node[state]    (A)[right of=S]   {a};
+\node[state]    (B)[left of=S]   {b};
+\path
+(S) edge[loop above]     	node{p=0.4, r=1}(S)
+    edge[above]     		node{p=0.6, r=4}(A)
+(A) edge[bend left,below]   node{p=0.3, r=3}(S)
+	edge[loop above]     	node{p=0.7, r=8}(A)
+(B) edge[above]    			node{p=0.5, r=2}(S)
+	edge[loop above]     	node{p=0.5, r=5}(B);
+\end{tikzpicture}
+\subsubsection{Matrici}
+\paragraph{Probability transition matrix}
+\[
+	P =
+\begin{pmatrix}
+	0.4	& 0.6 & 0 	& \\
+	0.3	& 0.7 & 0	& \\
+	0.5	& 0 & 0.5	& \\
+\end{pmatrix}
+\]
+\paragraph{Immediate reward matrix}
+\[
+	R =
+\begin{pmatrix}
+	1	& 4 & 0 	& \\
+	3	& 8	& 3	& \\
+	2	& 0 & 5	& \\
+\end{pmatrix}
+\]
+\subsubsection{Value evalutaion}
+apply:
+\[V(i)=\sum_{all\mbox{\ }j} p_{ij}[r_{ij} + V(j)]\]
+
+\[ \left\{ \begin{matrix}
+		V(s) = 0.4(1+\gamma V(s)) + 0.6(4+\gamma V(a)), \\
+		V(a) = 0.3(3+\gamma V(s)) + 0.7(8+\gamma V(a)), \\
+		V(b) = 0.5(2+\gamma V(s)) + 0.5(5+\gamma V(b)).
+	\end{matrix}
+\right. \]
+
+With abusing notation:
+
+\[ \left\{ \begin{matrix}
+		s = 0.4(1+\gamma s) + 0.6(4+\gamma a), \\
+		a = 0.3(3+\gamma s) + 0.7(8+\gamma a), \\
+		b = 0.5(2+\gamma s) + 0.5(5+\gamma b).
+	\end{matrix}
+\right. \]
+
+Just fill in the values recursevily to perform value iteration.
+
+\subsection{Decision processes}
+I'm gonna cover this subject poorly because its dead simple coming from an
+IT background.
+
+\begin{tabular}{ll}
+	word & definition \\ \toprule
+	decision tree & a simple directed tree stucture \\
+	states & represented by verticies.\\
+	Immediate rewards & represented by numbers along the edges. \\
+	Decision alternatives & the outgoing edges, also called possible actions. \\
+	Decision point & A state where a decision can be made. \\
+	Finite decision tree & \brcell{A tree with a finite number of states, \\
+		{\footnotesize Makes you wonder if there could be infinite number 
+		of decisions in such a tree.}} \\
+\end{tabular}
+\\
+The set of possible actions at state $i \in I$ is denoted by $A_i$.
+The immediate reward for action $j$ at $i$ is denoted by $r_{ij}$.
+
+
+\subsubsection{Policy}
+A \emph{policy} specifies for every decision point $s$ a probability
+distribution over $A_s$. A policy is typically denoted by $\pi, \tau\dots$.
+If at $s$ the probability distribution puts all weight on one choice, the
+policy is said to be \emph{pure} at $s$. Otherwise the policy is said to
+be \emph{mixed} at $s$.
+
+A \emph{run} of a policy is the \emph{actual execution} of that policy.
+An \emph{realisation}, or \emph{sample path} of a policy is the trace of
+that run.
+
+The \emph{payoff} or \emph{total reward} of a run is the total sum of rewards
+acuumulated in its realisation.
+
+\subsubsection{Value function}
+A \emph{value function} is any function $V: S \to \mathbb{R}$. The
+\emph{expected payoff of a policy $\pi$}, given a certain starting state $s$:
+	\[E[\pi|s_0=s]\]
+	is called the value of $s$ under $\pi$, and is denoted by $V^\pi(s)$.
+Value functions are compared in the following way:
+
+\[ V_1 \le V_2 \Leftrightarrow_{Def} V_1(s) \le V_2(s), \mbox{for all states } s.\]
+
+Policy $\pi$ is \emph{as good as} policy $\tau$ if $V^\tau \le V^\pi$. A policy
+is \emph{optimal} if it is as good as any other policy. A value function is
+\emph{optimal} if it is induced by a policy, and is as large as any other
+such value function.
+
+\subsubsection{Policy = strategy}
+% this is the first what came to mind when I saw the policies.
+In game theory, a policy is called a \emph{strategy} and a pure strategy is
+sometimes called \emph{stationary} or \emph{deterministic}. A mixed strategy
+is sometimes called \emph{probabilistic, non-stationary,} or
+\emph{non-deterministic}.
+% Imaginative with their non-*
+
+An example of a pure policy is
+\[ \tau = \{(r,b),(a,d),(b,e),(d,h),(f,i)\} \]
+
+All the decisions are made, even if you already cut them off.
+So you say (Start, End) for each node with choice.
+
+Mixed policy:
+\[ \tau = \{(r,\{(a, 0.2), (b,0.8)\}),(a,d),(b,\{(e, 0.7), (f,0.3)\}),
+(d,h),(f,i)\} \]
+% yes some really poor langauge design over here.
+
+\subsubsection{Expected payoff}
+$\pi$'s expected payoff, $E[\pi|s_0=r]$, can be computed recursivly with the
+law of total expectation.
+
+\subsubsection{Backward induction}
+A decision between alternatives that leads to certain outcomes, is a certainty
+itself.
+
+Backward induction is applicable in \emph{directed acyclic graphs}(DAGs).
+
+\subsubsection{Decision problem}
+A \emph{decision problem} amounts to determining the set $\Pi^*$, where:
+
+\[ \Pi = max_{\pi \in \Pi}(payoff(\pi))\]
+
+Where $\Pi$ is the set of all policies.
+
+For finite decision trees: Supppose at least one optimal policy exists.
+If this policy is mixed, it may be replaced by an optimal pure policy,
+such that, at every state, the payoff of the pure policy equals the expected
+payoff of the mixed policy.
+
+\subsubsection{Problems}
+\paragraph{infinite width} no best policy, because you're valuating forever.
+\paragraph{infinite depth} How to compare infinite total rewards (can't).
+\paragraph{discount factor} The right decision is very dependent on the
+discount factor. Counter intiuitive choices might be better for example.
+
+\subsection{Utility pumps}
+If there is no discount factor policy is irrelivant (the reward will be
+infinite no matter what you do). A tool is needed to kill infinity.
+For example a finiti horizon, discount factor, or long-run average
+payoffs.
+
+In this course we will just use discount factors.
 
 \subsection{Exam}
  For a given decision problem with a certain
