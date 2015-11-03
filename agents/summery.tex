@@ -33,7 +33,6 @@ In here I will write down the things I think are important.
 
 \section{Modal logic}
 
-
 \section{APL}
 Medhi dastani taught about the agent programming langauge (APL).
 \subsection{Agent data structure}
@@ -617,7 +616,7 @@ Backward induction is applicable in \emph{directed acyclic graphs}(DAGs).
 \subsubsection{Decision problem}
 A \emph{decision problem} amounts to determining the set $\Pi^*$, where:
 
-\[ \Pi = max_{\pi \in \Pi}(payoff(\pi))\]
+\[ \Pi = argmax_{\pi \in \Pi}(payoff(\pi))\]
 
 Where $\Pi$ is the set of all policies.
 
@@ -632,7 +631,7 @@ payoff of the mixed policy.
 \paragraph{discount factor} The right decision is very dependent on the
 discount factor. Counter intiuitive choices might be better for example.
 
-\subsection{Utility pumps}
+\paragraph{Utility pumps}
 If there is no discount factor policy is irrelivant (the reward will be
 infinite no matter what you do). A tool is needed to kill infinity.
 For example a finiti horizon, discount factor, or long-run average
@@ -640,10 +639,128 @@ payoffs.
 
 In this course we will just use discount factors.
 
+\paragraph{Investment} 
+At cycle $a$, it is possible to `pump' 1 utitlity per iteration for as
+long as a run lasts. At cycle $b$ it is possbile to `pump' $2$ utilities
+per iteration.
+In the long term it is better to be at $b$, but starting from $a$ this
+requires an investment of $K$ rewardless transitions to get there.
+
+\begin{center}
+\begin{tikzpicture}[->, >=stealth', auto, semithick, node distance=3cm]
+\tikzstyle{every state}=[fill=white,draw=black,thick,text=black,scale=1]
+\node[state]    (S)                     {s};
+\node[state]    (A)[right of=S]   {$b_1$};
+\node[state]    (B)[right of=A]   {$b_{k-1}$};
+\node[state]    (C)[right of=B]   {$b_k$};
+\path
+(S) edge[loop above]     	node{1}(S)
+    edge[above]     		node{0}(A)
+(A)    edge[above]    node{0}(B)
+(B)    edge[above]     		node{0}(C)
+(C)    edge[loop above]		node{1}(C);
+\end{tikzpicture}
+\end{center}
+
+If $K \ne 0$ it is best to stay left if $\gamma < 2^{-1/k}$. (for the
+proof see the slides, its to much math to copy in here).
+
+\subsection{Policy improvement}
+
+Recall the bellman equations for a Markov reward process:
+
+\[ v = C+\gamma P v\]
+
+To emphasise that $v$ depends on a probability transition matrix $P$:
+
+\[ v^P = C^P + \gamma P v^P\]
+
+In a \emph{decision problem}, $P$ is not chosen by nature, but by a 
+\emph{decision maker}. In that case, $P$ is called a \emph{ixed Markov
+policy}. and is denoted by $\pi$:
+
+\[ v^\pi = C^\pi + \gamma P^\pi v^\pi\]
+
+Each policy $\pi$ gives a value function $v^\pi$. THe objective is to find a
+policy $\pi$ that maximises the value function $v^\pi$.
+
+\subsubsection{First sketch}
+A first sketch of a policy iteration algorithm:
+\begin{enumerate}
+	\item Start with an arbitrary policy $\pi$
+	\item Compute $V_\pi$. (know as \emph{policy evaluation}).
+	\item Improve $\pi$ locally to $\tau$.
+	\item If $\tau \ne \pi$, then $\pi := \tau$, and go to 2.
+	\item $\pi$ is optimal.
+\end{enumerate}
+
+\paragraph{Problem} Therer are to many ways to improve a policy.
+For example if a state $s$ enables two actions, then any
+mixed policy $(p, 1-p)$ may be tried locally. This gives
+uncountably many (i.e., $|\mathbb{R}|$) alternatives!
+
+Fortunally for discounted decision problems, locl search can be
+restricted to pure policies only.
+
+Let $\pi$ be apossibly mixed policy. For each state choose a decision
+that is locally maximal:
+
+% I'm not sure where the J is supposed to go.
+\[M(i) \in argmax\{r_{ij} + \gamma V_\pi(j)\} \]
+
+Define the pure policy:
+
+\[ \tau_{ij} =_{Def} \delta_{M(i),j} \]
+
+Then $\tau$ is a global improvement of $\pi$.
+
+\subsubsection{Partial correctness}
+
+Correctness  partial correctness + termination.
+
+Partial correctness means: correct if the algrotihm terminates.
+\emph{Policy iteration is partially correct:} any strict
+local improvement induces a global improvment.
+\emph{Policy iteration terminates:} each time a policy is improved,
+the new policy is strictly better than the previous.
+
+\subsection{Bellman optimallity}
+
+If $\pi$ is optimal, it follows from the policy improvement thearom that
+
+\[ V^\pi(i) = \underset{all\mbox{\ }j}{max}[r_{ij} + \gamma V^\pi(j)] \]
+
+Removing explicit reference to the optimal policy automatically (more elegant).
+
+\subsubsection{operator}
+%seriously what is meant with operator?
+
+% I'm assuming he means with exact the algebraic method and
+% the aproximation is the itteration method.
+For both methods (the exact as well as the approximation method),
+a compacter notation is needed.
+
+\[B: \mathbb{R}^n \to \mathbb{R}^n : v \mapsto
+	\underset{all\mbox{\ }j}{max}[C_j + \gamma V(j)] \]
+
+Where $C_j$ is the vector of rewards that emanate from state $i$.
+Antoher way to write $B:$
+\[\underset{all\mbox{\ }j}{max}[r_{ij} + \gamma V(j)] \]
+
+$B$ does not depend on a policy or transition matrix. ($B_p$ does.)
+
+\subsubsection{Fixed point}
+The value-vector, $v^*$, of a decision problem is a fixed point of the
+$B$-operator:
+\[ B(v) = v\]
+
+
 \subsection{Exam}
  For a given decision problem with a certain
 discount factor.A pure policy sufices.
 Do policy iteration, (a single iteration), do value iteration
 (single iteration).
+
+% That's all she wrote.
 
 \end{document}
