@@ -81,9 +81,80 @@ model/frame $M=\langle S,\pi,R \rangle$
 	% off logics
 	$S$ & Is a set of \emph{states (or worlds)} \\
 	$\pi$ & Is a truth assignment function $\pi : S \times AT \to {tt, ff}$ \\
-	$R$	& $R \subseteq S \times S$ is an \emph{accesibility relation}
+	$R$	& $R \subseteq S \times S$ is an \emph{accesibility relation}\\
 \end{tabular}
 
+\subsubsection{Interpertation}
+
+\begin{center}
+\begin{tikzpicture}[auto, >=stealth', auto, semithick, node distance=3cm]
+\tikzstyle{every state}=[fill=white,draw=black,thick,text=black,scale=1]
+\node[state]    (S)            {$\neg p, q$};
+\node[state]    (A)[below of=S]{$p, \neg q$};
+\node[state]    (B)[right of=S]{$\neg p, \neg q$};
+\node[state]    (C)[right of=B]{$p, q$};
+\node[state]    (E)[below of=B]{$\neg p, q$};
+\path
+(S)   edge[above]     		(A)
+(S)   edge[above]     		(E)
+(S)   edge[above]     		(B)
+(B)    edge[above]     		(E)
+(E)    edge[above]     		(C);
+\end{tikzpicture}
+\end{center}
+
+Like classical propositional logic, but now realtive to a model and a state:
+
+\[ M,s \vDash \phi \]
+
+thus:
+
+\begin{tabular}{lll}
+	Modal & $\Leftrightarrow$ & Interpertation \\ \toprule
+$M,s \vDash p$ & $\Leftrightarrow$ & $\pi(s,p) = tt$ \\
+$M,s \vDash \phi \wedge \varphi $ & $\Leftrightarrow$ & $ M,s \vDash \phi
+\mbox{ and }M,s\vDash \varphi$ \\
+$M,s \vDash \Box \phi $ & $\Leftrightarrow$ & $ M,t \vDash \phi $ for 
+\emph{every} $t$ such that $R(s,t)$ \\
+$M,s \vDash \Diamond \phi $ & $\Leftrightarrow$ & $ M,t \vDash \phi $ for 
+\emph{some} $t$ such that $R(s,t)$ \\
+\end{tabular}
+
+\subsubsection{Validity}
+\begin{tabular}{llll}
+	Definition & Denotation & $\Leftrightarrow$ & Interpertation \\ \toprule
+
+$\phi$ is \emph{valid} in a model $M= \langle S, \pi, R \rangle$ &
+$M\vDash\phi$ & $\Leftrightarrow$ & $M,s \vDash \phi$ for all $s \in S$ \\
+
+$\phi$ is \emph{valid}  &
+$\vDash\phi$ & $\Leftrightarrow$ & $M\vDash\phi$ for all Kripke models $M$ \\
+
+$\phi$ is \emph{valid} wrt class $\zeta$ &
+$\zeta\vDash\phi$ & $\Leftrightarrow$ & $M\vDash\phi$ for all Kripke models
+$M \in \zeta$ \\
+\end{tabular}
+
+The last one doesn't occur often.
+
+\subsection{System K}
+We try to  axiomatize validities.
+
+\paragraph{Axioms} We import all (or enough) propositional tautologies.
+The K axiom ($(\Box\phi \wedge \Box (\phi \to \varphi))\to\Box\varphi$) is added.
+
+\paragraph{Rules} Modes ponens
+\begin{prooftree}
+	\AxiomC{$\phi$}
+	\AxiomC{$\phi \to \varphi$}
+	\BinaryInfC{$\varphi$}
+\end{prooftree}
+
+Necisitation rule:
+\begin{prooftree}
+	\AxiomC{$\phi$}
+	\UnaryInfC{$\Box\phi$}
+\end{prooftree}
 
 \section{APL}
 Medhi dastani taught about the agent programming langauge (APL).
