@@ -38,6 +38,53 @@ In here I will write down the things I think are important.
 % kripke, I imagine someone waving his arm and shouting KRIPKE in anger.
 % Not that anyone will ever read these comments but its a funny idea.
 
+This course was thought by John-Jules Meyer. The `theoretic' part focused
+on the ideas behind the logics, while the `practical' focussed on writing
+propper proofs. I guess I'll treat both in here.
+
+There are 2 main sources of information I'll use, the slides by John Jules
+and the modal logic paper for artificial intelligence by rosja mastop to help
+me with the practical part. 
+% In truth I didn't understand much of the practicals, just giving a bunch
+% of examples is not a good way of teaching how to write proofs.
+% This paper seems to explain it in a more structural way.
+
+\subsection{Basic modal logic}
+Express intensional (context/situation-sensitve) notations such as: 
+Knowledge, Belief, Obligation, Action and Time.
+
+\subsubsection{Modal langauge}
+
+Imports all the things from propositional logic and is extended
+with the modal operators ($\Box\phi,\Diamond\phi$) which can be read as:
+
+\begin{tabular}{ll}
+	Symbol & Definition \\ \toprule
+	$\Box\phi$ & It is \emph{necesarry} that $\phi$ \\
+	$\Diamond\phi$ & it is \emph{possible} that $\phi$
+
+\end{tabular}
+
+\noindent
+Also $\neg\Box\neg\phi = \Diamond\phi$ and
+$\neg\Diamond\neg\phi = \Box\phi$. So you could theoratically
+drop one to create the other.
+% where $\phi$ is an object I guess?
+
+\paragraph{Semantics} Kripke %KRIPKE, *waves arm*.
+model/frame $M=\langle S,\pi,R \rangle$
+
+\begin{tabular}{ll}
+	Symbol & Definition \\ \toprule
+	% worlds implies mutability, states, well a state is by definition 
+	% imutable. I'm pretty sure we want immutability in these kind 
+	% off logics
+	$S$ & Is a set of \emph{states (or worlds)} \\
+	$\pi$ & Is a truth assignment function $\pi : S \times AT \to {tt, ff}$ \\
+	$R$	& $R \subseteq S \times S$ is an \emph{accesibility relation}
+\end{tabular}
+
+
 \section{APL}
 Medhi dastani taught about the agent programming langauge (APL).
 \subsection{Agent data structure}
