@@ -117,7 +117,7 @@ $M,s \vDash \phi \wedge \varphi $ & $\Leftrightarrow$ & $ M,s \vDash \phi
 $M,s \vDash \Box \phi $ & $\Leftrightarrow$ & $ M,t \vDash \phi $ for 
 \emph{every} $t$ such that $R(s,t)$ \\
 $M,s \vDash \Diamond \phi $ & $\Leftrightarrow$ & $ M,t \vDash \phi $ for 
-\emph{some} $t$ such that $R(s,t)$ \\
+\emph{some} $t$ such that $R(s,t)$ \\\bottomrule
 \end{tabular}
 
 \subsubsection{Validity}
@@ -132,7 +132,7 @@ $\vDash\phi$ & $\Leftrightarrow$ & $M\vDash\phi$ for all Kripke models $M$ \\
 
 $\phi$ is \emph{valid} wrt class $\zeta$ &
 $\zeta\vDash\phi$ & $\Leftrightarrow$ & $M\vDash\phi$ for all Kripke models
-$M \in \zeta$ \\
+$M \in \zeta$ \\\bottomrule
 \end{tabular}
 
 The last one doesn't occur often.
@@ -156,6 +156,84 @@ Necisitation rule:
 	\UnaryInfC{$\Box\phi$}
 \end{prooftree}
 
+\subparagraph{Caution} the necisitation is different from the invalid
+assertion: $\phi \to \Box \phi$.
+
+\subsubsection{Derivability in K}
+A \emph{derivation} of a formula $\phi$ is a finite sequence of formulas
+$\phi_1, \dots \phi_n = \phi$. where each $\phi_i$ for $1 \ge i \ge n$
+is either an instance of the acioms (or rather axiom schemes), or the
+conclusion of one of the rules of which the premises have
+been derived already, i.e{.} appear as $\phi_j$ in the sequance with
+$j < i$.
+
+% sad thing is I understand this crap now.
+When we can derive an epistemic formula $\phi$ by using the axioms
+and rules of $K_{(m)}$ we write $K_{(m)} \vdash \phi$
+
+System $K_{(m)}$ is \emph{sound and complete}. This means
+that exactly ll valid modal assertions can be obtained by derivations in
+system $K_{(m)}$.
+
+\[\vDash \phi \Leftrightarrow K_{(m)} \vdash \phi\]
+
+% I leave out the (non) theoroms, it seems overkill.
+
+\subsection{Dynamic logic}
+An example of an (indexed) version of system $K$ is dynamic logic,
+wehre the $\Box$ modality is associated with the execution results of
+a program / action.
+
+$\Box_\alpha$, normally written $[\alpha]$ 
+with reading $[\alpha]\phi$: after exuction of $\alpha$ it holds that $\phi$
+
+\[<\alpha>\phi = \neg [\alpha] \neg \phi \]
+
+\subsubsection{Semantics}
+Accessibility relation $R_\alpha$ for every action $\alpha$
+
+\begin{tabular}{llll}
+	% I added the natural collumn, because otherwise I won't remember.
+	% Translating something in a different notation is stupid.
+	notation & = & definition & natural \\ \toprule
+	$R_{\alpha;\beta}$ & = & $R_\alpha \circ R_\beta$ &
+	execute from $R_\alpha$ until including $R_\beta$\\
+	$R_{\alpha+\beta}$ & = & $R_\alpha \cup R_\beta$ &
+	execute $R_\alpha$ or $R_\beta$\\
+	$R_{\alpha*}$ & = & $R_\alpha*$ &
+	Execute an arbitrary times \\ \bottomrule
+\end{tabular}
+
+\subsubsection{Interpertation}
+\begin{tabular}{lll}
+	Modal & $\Leftrightarrow$ & Interpertation \\ \toprule
+	$M,s \vDash [\alpha]\phi$ & $\Leftrightarrow$ &
+	for all $s'$ with $R_\alpha(s,s'): M,s' \vDash \phi$ \\
+	$M,s \vDash <\alpha>\phi$ & $\Leftrightarrow$ &
+	for some $s'$ with $R_\alpha(s,s'): M,s' \vDash \phi$ \\\bottomrule
+\end{tabular}
+
+\subsection{Special properties of accessibility relations}
+\begin{tabular}{lll}
+	R is \dots& if\dots & natural language \\ \toprule
+	reflexive & $\forall s \in S(s,s) \in R$ & all s are linked with 
+	themselves\\
+
+	transitive & $\forall s,t,u \in S:(s,t) \in R \& (t,u) \in R \Rightarrow
+	(s,u) \in R$ & \brcell{if s is related to t, and t is related to u,  \\
+		then s has a relation with u, \\ in other words, you can make shortcuts}\\
+
+	symmetrical &$\forall s,t \in S:(s,t) \in R \Rightarrow (t,s) \in R$ &
+	undirected, can go back and forth\\
+	euclidiean & $\forall s,t,u \in S:(s,t) \in R \& (s,u) \in R \Rightarrow
+	(t,u) \in R$ & \brcell{if s has a relation with t and u, then u and t \\
+	have a relation to, you can make triangles.} \\
+	serial & $\forall s \in S \exists t \in S (s,t) \in R$&
+	\brcell{All states in S are connected to \\ at least one other state in S}\\
+	an equivalance relation& R is \emph{reflexive, transitive and 
+	symetrical}& \brcell{the states R links to have something in \\ 
+	common (not equal?)} \\ \bottomrule
+\end{tabular}
 \section{APL}
 Medhi dastani taught about the agent programming langauge (APL).
 \subsection{Agent data structure}
