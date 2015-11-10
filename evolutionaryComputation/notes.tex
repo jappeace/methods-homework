@@ -1,0 +1,110 @@
+# seminars
+
+talk about it half an hour
+discuss 15 minutes after it.
+
+Slides should be good enough.
+
+First come first serve, pick top 3
+In groups of ~3
+
+# Practical assignments
+Artifical benchmarks.
+... next thursday, groups 1 or 2 students
+Not very complicated, can use any programing langauge.
+
+prefered to do it in groups.
+
+Link, can download C code.
+
+
+# What is it?
+No domain knowlegde of your problem.
+Black box algorithms,
+	good thing, it works on a lot of problems
+	bad thing its slow.
+
+There exists hybred form which combines evolutionary
+with specialised local algrotims.
+	These are good at jumping out of local optimums
+
+# Key concepts of darwanian system
+Vaiation should exists in the copies, not to much not to little
+Can add a little change or combine a solutions.
+
+Inheritance, if the parents are good, then the childrens are to probably.
+
+You have to destroy things. otherwise you never end up with something new.
+
+Compitition, there should be competition otherwise there is no evolution.
+
+# Evolutionary algoritm
+1. Generate purly randomly or get a good start solution.
+2. if you start with a 'good start' then you isolate your searchspace. if the
+population stay similiar.
+
+hybred no mutation, only selection compitition and inheritance.
+
+while Not terminated do:
+	1. select mates(T)
+	2. x= generate offspring (T)
+	3. evaluate population (x)
+	4. T = select fittest.
+return T
+
+Don't select to *hard*, then after x generation your population will converge.
+
+These algoritms can be very creative.
+
+#Selection
+##Tournamnet selection:
+	S1 f1
+	s2 f2 <- third
+	s3 f3 <- best one
+	s4 f4 <- second
+
+	$p(t) -> p^s(t)$
+
+	s3 f3
+	s4 f3
+	s3 f3
+	s2 f2
+
+The best will have 2, the wors 0, and the medium 1.
+selection based on a grid, only compete against those next to you.
+
+##Truncation selection:
+Sort on fitness, take the top 1/x, and give them x copies for the new
+population.
+
+##Proportional select
+
+$P^{select}(s_1) = frac{F_i}{\sum_{j=1}F_j}$
+
+The next generation will be proportionally filled with how good the previous
+was. This has the problem that the population will converge very fast.
+
+Its not really for pragmatics, but better for theorticall analises.
+So you should always use tournament or truncation.
+
+You don't need to have all darwenin properties,
+Inheritance, representation, compitition.
+
+IRL function evaluation is usually expensive.
+
+#Varation
+The closer you can stay to your representation, then the crosover operators
+preservers it. So binary representation is bad.
+
+## MUtation
+Just pick something and change it.
+
+## crosover
+The child inherints what the parents agree on,
+where not the child can use random.
+### uniform
+flip a coin for every position
+
+### 2point
+pick 2 random points and cross them over.
+positionally biased.
