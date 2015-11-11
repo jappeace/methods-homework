@@ -72,7 +72,8 @@ drop one to create the other.
 % where $\phi$ is an object I guess?
 
 \paragraph{Semantics} Kripke %KRIPKE, *waves arm*.
-model/frame $M=\langle S,\pi,R \rangle$
+model $M=\langle S,\pi,R \rangle$, kripke frame $M=\langle S,\pi,R \rangle$
+(truth assignment function is abstracted away)
 
 \begin{tabular}{ll}
 	Symbol & Definition \\ \toprule
@@ -199,7 +200,7 @@ Accessibility relation $R_\alpha$ for every action $\alpha$
 	$R_{\alpha;\beta}$ & = & $R_\alpha \circ R_\beta$ &
 	execute from $R_\alpha$ until including $R_\beta$\\
 	$R_{\alpha+\beta}$ & = & $R_\alpha \cup R_\beta$ &
-	execute $R_\alpha$ or $R_\beta$\\
+	execute $R_\alpha$ or $R_\beta$ or both\\
 	$R_{\alpha*}$ & = & $R_\alpha*$ &
 	Execute an arbitrary times \\ \bottomrule
 \end{tabular}
@@ -234,6 +235,87 @@ Accessibility relation $R_\alpha$ for every action $\alpha$
 	symetrical}& \brcell{the states R links to have something in \\ 
 	common (not equal?)} \\ \bottomrule
 \end{tabular}
+\subsection{Classes of models}
+\begin{tabular}{lll}
+	Class & properties & axioms \\ \toprule
+	$K$	& No constraints & All propositional +
+	$\{(\Box\phi \wedge \Box(\phi \to \psi)) \to \Box \phi\}$ \\
+	$T$	& reflexive	& K + $\{\Box \phi \to \phi\}$ \\
+	$S4$	& reflexive transative	& T + $\{\Box \Box \phi \to \Box \phi\}$ \\
+	$S5$	& equivalence & S4 + $\{\neg \Box \phi \to \Box\neg\Box \phi\}$ \\
+	$KD$	& serial & K + $\{\neg \Box \bot\}$ \\
+	$KD45$	& serial, transitive and euclidean & S5 + $\{\neg \Box \bot\}$ \\
+\end{tabular}
+Alternative formulation of the 5-axiom:
+
+\begin{prooftree}
+	\AxiomC{$\neg \Box \phi \to \Box\neg\Box \phi$}
+	\RightLabel{$\Box \phi = \neg\Diamond\neg\phi$}
+	\UnaryInfC{$\Diamond \neg \phi \to \Box\Diamond \neg \phi$}
+	\RightLabel{Substitute $\neg \phi$ for $\psi$}
+	\UnaryInfC{$\Diamond \psi \to \Box\Diamond \psi$}
+	\RightLabel{Substitute $\psi$ for $\phi$}
+	\UnaryInfC{$\Diamond \phi \to \Box\Diamond \phi$}
+\end{prooftree}
+
+\subsection{Deontic logic}
+The system $KD$ is also known as $SDL$ (standart deontic logic)
+% sdl = standart library as everyone knows.
+Deontic logic is the logic of \emph{obligation, prohibition and permission}
+or rather: the logic of \emph{ideal vs actual sistuations}
+
+\subsubsection{Rules}
+\begin{itemize}
+	\item Propositional calculus (including modus ponens)
+	\item $(O\phi \wedge O(\phi \to \psi)) \to O \phi$ (K axiom)
+	\item $\frac{\phi}{O\phi}$ (necisitation rule)
+	\item $\neg O \top $ (D-axiom: obligation is consistent)
+	\item $F\phi \leftrightarrow O\neg \phi$ (forbidden is obliged to not)
+	\item $P\phi \leftrightarrow \neg F \phi$ (permitted is not forbidden)
+\end{itemize}
+
+\subsection{Temporal Logic}
+Basic linear time logic (LTL), Time as accisibility relation, its reflexive
+and transitive.
+
+Viewed in this way: LTL= S4, $\Box$ stands for `always in the future'.
+By convention the present is included in the future.
+
+\subsubsection{Rules}
+\begin{itemize}
+	\item Propositional calculus (including modus ponens)
+	\item $(\Box\phi \wedge \Box(\phi \to \psi)) \to \Box \phi$ (K axiom)
+	\item $\frac{\phi}{\Box\phi}$ (necisitation rule)
+	\item $\Box \phi \to \phi$ (always implies now)
+	\item $\Box \phi \to \Box\Box\phi$ (always implies always)
+\end{itemize}
+
+\subsection{Epistemic \& doxastic logic}
+For \emph{knowledge} we take the relation $R_i$: reflexive, (transative) and
+eculidean, i.e. An equivalance relation.
+
+For \emph{believe} we take the relation $R_i$: serial, transitive and 
+euclidean.
+
+\subsubsection{Epistemic rules}
+\begin{itemize}
+	\item Propositional calculus (including modus ponens)
+	\item $(K\phi \wedge K(\phi \to \psi)) \to K \phi$ (K axiom)
+	\item $\frac{\phi}{K\phi}$ (necisitation rule)
+	\item $K \phi \to \phi$ (knowledge is true)
+	\item $K \phi \to KK\phi$ (positive introspection)
+	\item $\neg K \phi \to K\neg K\phi$ (negative introspection)
+\end{itemize}
+
+\subsubsection{Doxastic rules}
+\begin{itemize}
+	\item Propositional calculus (including modus ponens)
+	\item $(B\phi \wedge B(\phi \to \psi)) \to B \phi$ (B axiom)
+	\item $\frac{\phi}{B\phi}$ (necisitation rule)
+	\item $\neg B \bot$ (belief is consistent)
+	\item $B \phi \to BB\phi$ (positive introspection)
+	\item $\neg B \phi \to B\neg B\phi$ (negative introspection)
+\end{itemize}
 \section{APL}
 Medhi dastani taught about the agent programming langauge (APL).
 \subsection{Agent data structure}
