@@ -1,0 +1,128 @@
+#Bratman
+
+Commitment, if you have a real intention, you want to go for it.
+intentions should be consistent, otherwise you do something which could be
+impossible
+But this is debatable...
+
+
+## Intentions
+Screen of admissibility, filter maybe later intentions that could be
+conflicitng
+
+
+# Cohen& levesque
+tried to formalise Bratman.
+
+## Intention = choice + commitment
+try to stretch it to formal logic.
+
+##
+agent beleives P is possible : a sort of self conficience of the agent
+
+## side effects
+agnets need not intend all the expected side effects of their intentions.
+Going to the dentist implies pain.
+then going to the dentist should be that you intend to have pain.
+
+$\vDash \phi \to \psi \to \vDash \Box \phi \to \Box \psi$
+
+#Rao & Georgeff BDI theory
+Not only proposed a logic, but also the first implementation of an agent and
+also the first application.
+
+#Rodney Brooks anti-cogn.robotics
+subsumption architecture: no cognition, just a reactive system.
+Should be emergent behaviour rather than modeling.
+
+# Aaron Sloman: How to build emotional agents
+Looks at properties of humans, such as emotions, and tries to put it into an
+AI.
+
+20 years ago, there are patiens that don't have emotions, expect: in problem
+solving such as puzzels. They go depth first, so they go on, and on and fail
+misserably.
+
+Archicterus of him are not the most enlighted, "messy".
+
+# Towards social agents/robots
+also research goes to sociology.
+
+Oppertunisitic behavior, sellar buying a cup, but cup is broken,
+the seller wants to sell it, but the buyer wants to use it. How
+to moddel this in Agents
+
+## Normative systems
+the way of societies. you shouldn't violate the norm, but sometimes it can
+be usefull to.
+
+### Asimov
+Laws of him. 4th one is stupid
+
+# Theory of mind
+The psycology one.
+The false believe test.
+
+
+# Logial foundations of actions
+
+The terminology is not stabels.
+desires and goals may be differetn or mean the same.
+
+Agenda -> latin things that should happen.
+
+# Modal logic
+Logic of $\Box$ and $\Diamond$
+
+## K axiom
+true for any modal logic
+
+## R
+means its accesible. No restriction on R in arbitrary Kripke
+
+
+### Constraints
+you can add constraints on R, but with restrictions things certain
+things become true.
+
+serial you can go on.
+
+## Frames
+Models where the true assignment functions are abstracted from.
+
+#naive BDI logic
+seperate blocks, it misses connections.
+No dymancis, changes of BDI in time.
+
+# Cohen & levesque : langauge
+$\alpha$ are complex actions and a's are primitive actions
+We can't say multiple agents do the same action at the same time.
+
+a is interpeted as a sequance of primitive events even though a is
+atomic.
+
+atomic action is a special class, which depends on the domain.
+
+; = sequence
+? = test if its true (groovy truth)
++ = is a non detrmenistic choice, collect them in an autcome set.
+* = is done a finite but arbitrary number of times, including 0
+
+if $\phi$ then $\alpha_1$ else
+$\alpha_2$ = ($\phi? ; \alpha_1) + (\neg \phi?;\alpha)$
+
+while $\phi$ do $\alpha$ = $(\phi?;\alpha)^*;\neg\phi?$
+
+Pz = z has property P, a predicate attom
+
+
+# Semantics
+\omega = variables assginemnts
+P = is the set of omega \in \omega
+E = is a set of primitive events
+Agt = Agt \in [E \to p] specifies the agent of an event [E \to P] is a
+function that takes an E that gives a P.
+T \subset [Z \to E]; a set of possible worlds, give a time number and get
+an event
+
+
