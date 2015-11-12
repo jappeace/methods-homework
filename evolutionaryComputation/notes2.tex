@@ -1,0 +1,123 @@
+#dominio convergence...
+
+linear function = no interaction between the bits.
+
+functions with nonlinear interaction are problematic, because
+you can't do bitlfips to see if the situation improves.
+
+If a GA wants to be better than a bit flipper it has to be able to
+interact with higher order blocks.
+
+# Schemata
+is a  Similirarity subset
+
+Look at schemata to see how a GA works
+
+$m(h, t)$, m counts the number of instances that start with h, t is the
+generations.
+
+## schema growth by selection
+### Porpotionselect
+DOn't use proportion select!
+
+### tournement select
+don't have nice forumula
+
+### Schema distruption by mutation
+Mutation is destructive on schemata
+h=1xx0xx1xxx
+with probability P I'm gonna flip one of h's bits
+
+the survival probaility of a schemata is the probaility of not flipping
+those bits
+
+A schema with a higher order can be distrupted more easily
+
+#### 1 point crosover
+worst case definition.
+
+
+#### uniform crosover
+Again worst case, assume if its touched its destroyed.
+so either touch them all or don't touch them all.
+
+order should be small to survive in the schema
+
+## Schema theorom
+m(h,t+1), the next generation
+
+if the net growth factor is bigger then 1, it'll grow
+selection = important for growth factor
+destruction is also important, ie mutation
+
+# Holland
+proposed genetical algoritms.
+Schematas are S curves, after a while the strongest 'genes'/bits will converge
+and compete with each other, so you'll have a domino effect.
+
+## Bandit problem
+two normal distribution in which you can sample but you want to reduce
+the sample size of the wrong distribution.
+
+GA will figure out the best normal, but it doesn't maximise the sum
+so there is some debate going on about holland's method.
+
+# Building blocks
+any search algorithm has a bias.
+small population size with high selection presure won't work.
+
+
+in a GA you don't want to rely on mutation
+# loose & thight
+thight things that are close are importent ie (bit form an integer)
+loose the order of the bits doesn't matter (I imagine some sort of bit mask)
+
+# deceptive vs non deciptive
+has to do with the schema's. If you look of the schema averages of all the
+schama's of the blocks. and ignore the optimum, you'll drift to the wrong
+side, with non-deceptive trap functions you won't.
+
+with non-deceptive you'll drift towards the optimum instead of the local
+optimum.
+
+# practical
+
+## Why do we do this?
+
+Understand about what things we're talking about. get an understanding of
+the basic concepts.
+
+## assignments
+
+### uniformly scaled counting ones function
+Count the number of ones. Its easy to model
+### linearly scaled counting ones function
+first has fitness of 1, the second of 2 times 1 etc...
+
+### trap functions
+it uses blocks to get trapped in a local optimum.
+
+#### Deceptive
+it will probably get stuck in a local optimum
+
+#### non deciptive
+should drift towards the optimum
+
+### randomly linked
+randomly linked that the bits are placed at random position on the binary
+string.
+
+random, at the beginning. Not for the contest, but just for the creation of
+new ones?
+two possible methods:
+	* For the creation of all subject create 1 global random mapping
+	* For each instance create his own random mapping, this has the
+	problem however of deciding which random mapping to use for the child:
+		Father, mother or another new random.
+This wasn't discussed in class SO I asume a global mapping has to be used.
+But here I assume so maybe an email to the teacher could help, or just do
+both methods and discuss them in the report.
+
+### selection
+You can play with it, crank it up untill you cancel all the deciptiveness is
+fine.
