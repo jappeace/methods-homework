@@ -28,6 +28,10 @@ methods/cogniveProcessing/MAIR_CPprac1_4/Files_PsychToolboxV2/__MACOSX
 *.swp
 *.swo
 
+#idea
+.idea/
+*.iml
+
 #gradle
 taskArtifacts/
 
