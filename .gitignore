@@ -23,8 +23,14 @@ methods/cogniveProcessing/MAIR_CPprac1_4/Files_PsychToolboxV2/__MACOSX
 
 #archives
 *.zip
-*.jar
 
 #vim
 *.swp
 *.swo
+
+#gradle
+taskArtifacts/
+
+#java binaries
+*.jar
+*.class
