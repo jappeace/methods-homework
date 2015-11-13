@@ -9,7 +9,7 @@ object Main{
 			println(member)
 			println("uniform:" + Valuation.uniformlyScaledCountOnes(member))
 			println("linear:" + Valuation.linearlyScaledCountOnes(member))
-			println("trap:" + Valuation.blockValuation(member, List(3,2,1,4)))
+			println("trap:" + Valuation.blockValuation(List(3,2,1,4))(member))
 
 			println("--")
 		}

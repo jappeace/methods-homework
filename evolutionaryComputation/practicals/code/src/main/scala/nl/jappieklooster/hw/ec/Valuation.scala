@@ -3,6 +3,7 @@ package nl.jappieklooster.hw.ec
 trait Valuable{
 	def getGenes:String
 }
+
 object Valuation {
 	def uniformlyScaledCountOnes(s:Valuable) = s.getGenes.count(c => c == '1')
 
@@ -15,7 +16,7 @@ object Valuation {
 			map(_._2).
 			// result
 			sum
-	def blockValuation(s:Valuable, block:Seq[Float]) = s.getGenes.
+	def blockValuation(block:Seq[Float])(s:Valuable) = s.getGenes.
 			// make a map like thing of it where the index is the key
 			zipWithIndex.
 			// select the elements where 1
