@@ -1,17 +1,23 @@
 package nl.jappieklooster.hw.ec
 
+import scala.util.Random
+
 object Main{
 
+	val random = Random
 	def main(args:Array[String]){
 		println("scala!")
 		val population = Population.createOneZeros(20,40)
-		for(member <- population.members){
-			println(member)
-			println("uniform:" + Valuation.uniformlyScaledCountOnes(member))
-			println("linear:" + Valuation.linearlyScaledCountOnes(member))
-			println("trap:" + Valuation.blockValuation(List(3,2,1,4))(member))
+		val evolution = new Evolution(
+			Valuation.uniformlyScaledCountOnes,
+			MateSelection.tournamentWinIsParent,
+			OffspringGenerator.uniformCross,
+			FittestFilter.killParents
+		)
 
-			println("--")
+		for(pop <- evolution.startGenetic(population, 10)){
+			println(pop)
 		}
 	}
+	def randomGene = s"${random.nextInt(2)}"
 }

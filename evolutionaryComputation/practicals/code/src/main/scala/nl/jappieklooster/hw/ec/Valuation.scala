@@ -1,13 +1,13 @@
 package nl.jappieklooster.hw.ec
 
 trait Valuable{
-	def getGenes:String
+	def getValuation:String
 }
 
 object Valuation {
-	def uniformlyScaledCountOnes(s:Valuable) = s.getGenes.count(c => c == '1')
+	def uniformlyScaledCountOnes(s:Valuable) = s.getValuation.count(c => c == '1')
 
-	def linearlyScaledCountOnes(s:Valuable) = s.getGenes.
+	def linearlyScaledCountOnes(s:Valuable) = s.getValuation.
 			// make a map like thing of it where the index is the key
 			zipWithIndex.
 			// select the elements where 1
@@ -16,7 +16,7 @@ object Valuation {
 			map(_._2).
 			// result
 			sum
-	def blockValuation(block:Seq[Float])(s:Valuable) = s.getGenes.
+	def blockValuation(block:Seq[Float])(s:Valuable) = s.getValuation.
 			// make a map like thing of it where the index is the key
 			zipWithIndex.
 			// select the elements where 1
