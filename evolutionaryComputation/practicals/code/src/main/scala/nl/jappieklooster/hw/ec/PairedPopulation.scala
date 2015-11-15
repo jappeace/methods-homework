@@ -4,7 +4,7 @@ trait Genetic{
 	def getGenes:String
 }
 case class Pair(father:Genetic, mother:Genetic)
-case class PairedPopulation(members:Seq[Pair]){
+case class PairedPopulation(members:Seq[Pair], memberFactory:String => IMember){
 	/**
 	 * The surounding function, it will map two members of a population
 	 * to one to create a new population, it will be done by sending the
@@ -32,9 +32,10 @@ case class PairedPopulation(members:Seq[Pair]){
 					builder.clear()
 					// just make key value like structure of the indiviudal genes
 					// for comparison
-					Member(result)
+					memberFactory(result)
 				}
-			)
+			),
+			memberFactory
 		)
 	}
 	/**

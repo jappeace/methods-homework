@@ -5,7 +5,7 @@ object MateSelection {
 	def tournamentWinIsParent(
 		valuator : Valuable => Int, bachelors: Population
 	) : PairedPopulation = {
-		def tournement(contender:(Member, Member, Member, Member)):Pair = {
+		def tournement(contender:(IMember, IMember, IMember, IMember)):Pair = {
 			val mother = if (
 				valuator(contender._1) > valuator(contender._2)
 			) contender._1 else contender._2
@@ -39,6 +39,6 @@ object MateSelection {
 		})
 
 		// the actuall tournement
-		return PairedPopulation(sisters ++ brothers)
+		return PairedPopulation(sisters ++ brothers, bachelors.memberFactory)
 	}
 }

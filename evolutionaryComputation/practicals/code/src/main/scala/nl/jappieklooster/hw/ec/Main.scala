@@ -7,11 +7,13 @@ object Main{
 	val random = Random
 	def main(args:Array[String]){
 		println("scala!")
-		val population = Population.createOneZeros(20,40)
+
+		val length = 20
+		val population = Population.createOneZeros(MemberFactories.globalRandomizedGenes(random.shuffle(0.to(length))), length,40)
 		val evolution = new Evolution(
 			Valuation.uniformlyScaledCountOnes,
 			MateSelection.tournamentWinIsParent,
-			OffspringGenerator.singlePointCross,
+			OffspringGenerator.uniformCross,
 			FittestFilter.killParents
 		)
 
