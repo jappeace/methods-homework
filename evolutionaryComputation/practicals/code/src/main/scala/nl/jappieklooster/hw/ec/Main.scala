@@ -11,15 +11,15 @@ object Main{
 		val evolution = new Evolution(
 			Valuation.uniformlyScaledCountOnes,
 			MateSelection.tournamentWinIsParent,
-			OffspringGenerator.twoPointCross,
+			OffspringGenerator.singlePointCross,
 			FittestFilter.killParents
 		)
 
 		val startTime = System.currentTimeMillis()
 		val results = evolution.startGenetic(population, 10)
 		val runtime = System.currentTimeMillis() - startTime
-		for(pop <- results){
-			println(pop)
+		for((pop, index) <- results.zipWithIndex){
+			println(s"generation $index: $pop")
 		}
 		println(s"time in ms: $runtime")
 	}

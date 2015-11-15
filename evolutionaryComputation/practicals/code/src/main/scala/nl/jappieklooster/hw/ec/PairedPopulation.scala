@@ -14,19 +14,29 @@ case class PairedPopulation(members:Seq[Pair]){
 	 */
 	def pairedToPop(
 		how:(IndexedSeq[(Char, Char)]) => IndexedSeq[Any]
-	):Population =  Population(
-		members.map(fumu =>
-			// just make key value like structure of the indiviudal genes
-			// for comparison
-			Member(
-				how(
-					fumu.father.getGenes.zip(fumu.mother.getGenes)
-				)
-						// the map created a char array, fold it back into a string
-						.foldLeft("")((x, b) => x + b)
+	):Population =  {
+		val builder = new StringBuilder
+		Population(
+			members.map(
+				fumu => {
+					val child = how(
+						fumu.father.getGenes.zip(fumu.mother.getGenes)
+					)
+					// a small speed improvement
+					// better than foldRight because it avoids
+					// a lot of string concatination
+					for(char <- child){
+						builder.append(char)
+					}
+					val result = builder.mkString
+					builder.clear()
+					// just make key value like structure of the indiviudal genes
+					// for comparison
+					Member(result)
+				}
 			)
 		)
-	)
+	}
 	/**
 	 * @param parents
 	 * @return
