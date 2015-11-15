@@ -4,7 +4,6 @@ import scala.util.Random
 
 case class Population(members:Seq[Member]) {
 }
-case class PairedPopulation(members:Seq[(Member, Member)])
 object Population{
 	def createOneZeros(length:Int, count:Int):Population =  Population(
 		0.to(count).map(x => Member(

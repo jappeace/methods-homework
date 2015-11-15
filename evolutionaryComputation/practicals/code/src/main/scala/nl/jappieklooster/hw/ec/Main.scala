@@ -11,13 +11,17 @@ object Main{
 		val evolution = new Evolution(
 			Valuation.uniformlyScaledCountOnes,
 			MateSelection.tournamentWinIsParent,
-			OffspringGenerator.uniformCross,
+			OffspringGenerator.twoPointCross,
 			FittestFilter.killParents
 		)
 
-		for(pop <- evolution.startGenetic(population, 10)){
+		val startTime = System.currentTimeMillis()
+		val results = evolution.startGenetic(population, 10)
+		val runtime = System.currentTimeMillis() - startTime
+		for(pop <- results){
 			println(pop)
 		}
+		println(s"time in ms: $runtime")
 	}
 	def randomGene = s"${random.nextInt(2)}"
 }
