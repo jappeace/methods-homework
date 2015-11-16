@@ -29,8 +29,10 @@ dependencies {
 	def scalaVersion = '2.11'
 	//main code base in scala
 	compile "org.scala-lang:scala-library-all:${scalaVersion}.5"
-	//client scripts in groovy
 
+	// slf4j
+	compile "org.slf4j:slf4j-simple:1.7.13"
+	//client scripts in groovy
 	testCompile "org.scalatest:scalatest_${scalaVersion}:2.2.4"
 
 	//minor library for mardown being parsed in javadoc
