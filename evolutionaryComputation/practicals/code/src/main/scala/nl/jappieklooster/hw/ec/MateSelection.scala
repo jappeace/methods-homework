@@ -14,26 +14,31 @@ object MateSelection {
 			) contender._3 else contender._4
 			Pair(mother, father)
 		}
-		def matching(a:Seq[IMember], b:Seq[IMember]) = a.zip(b.reverse).grouped(2)
 		val mem = bachelors.members
-		val half = Math.floor(mem.length/2).toInt
-		val revmem = mem.take(half) ++ mem.drop(half).reverse
-
-		val matchup = matching(mem,mem) ++ matching(revmem, revmem)
+		val matchup = mem
+		// first matchup the members into a tournement
+		// to fill 1 pair we need 4 contestents (as 2 will lose)
+		.zip(
+			mem.slice(1, mem.length) :+ mem.head
+		).zip(
+			mem.reverse
+		).zip(
+			(mem.slice(1, mem.length) :+ mem.head).reverse
+		)
 		// because we used reverse half can be dropped
+		.drop(Math.floor(mem.length/2).toInt)
 
 		// creating the final structure
 		val brothers = matchup.map(x => {
-
 			// flatten the thing to give myself not a headache later
-			tournement((x.head._1, x.head._1, x.last._1, x.last._2))
+			tournement((x._1._1._1, x._1._1._2, x._1._2, x._2))
 		})
 		val sisters = matchup.map(x => {
 			// flatten the thing to give myself not a headache later
-			tournement((x.head._1, x.last._1, x.last._1, x.head._2))
+			tournement((x._1._1._1, x._2, x._1._1._2, x._2))
 		})
 
 		// the actuall tournement
-		return PairedPopulation(sisters.toSeq ++ brothers, bachelors.memberFactory)
+		return PairedPopulation(sisters ++ brothers, bachelors.memberFactory)
 	}
 }
