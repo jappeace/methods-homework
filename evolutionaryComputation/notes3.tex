@@ -1,0 +1,154 @@
+\documentclass{article}
+\usepackage{txfonts}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{bussproofs}
+\usepackage{graphicx}
+\usepackage{pifont}
+\usepackage{qtree}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{hyperref}
+\newenvironment{scprooftree}[1]%
+{\gdef\scalefactor{#1}\begin{center}\proofSkipAmount \leavevmode}%
+{\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center} }
+
+
+\newcommand{\brcell}[2][l]{%
+	\begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
+\begin{document}
+\author{Jappie Klooster}
+\title{Mutable gene possibilities}
+\maketitle
+#Permutation problems
+
+Clasical example is traveling salesman.
+non-banary strings, will generate many illegal soltions.
+possible solutions:
+	Alternative search space representation.
+
+# Mutation operators
+best one depends on the problem.
+
+\begin{itemize}
+	\item absolute position
+	\item adjencency
+	\item relative ordering
+\end{itemize}
+
+## Swap and insert
+ABCDEFGH
+	insert: ABDEFCGH
+	swap:	ABGDEFCH
+
+## Two opt
+Randomly select two points along the sequance and invort one of the
+subsequences.
+
+\begin{prooftree}
+	\AxiomC{AB|CDE|FG}
+	\UnariInfC{AB|EDC|FG}
+\end{prooftree}
+
+Adjencency is importent
+
+## Recombination
+Capital and lower laters are the same elements.
+
+### Order crossover
+Select 2 random crosspoints
+Copy the subseqent croproints from p1
+after the second crosspoints try to fill in the missing elements
+form p2 in relative order
+
+### Partially mapped crossofer
+Select 2 random crosspoints
+Copy p2 to child
+Copy elements between random points to p2, for each element
+copied between random points replace the crossed out point
+with the newly coppied element
+
+### Position crossover
+
+### Maximal preservative crossover
+Use a lot of adjencency information, fallback to mapped crosver if it doesn't
+work??
+
+### Cycle crossover
+Check which elements are connected to each other like a binary tree in a
+int array
+
+ABCDEFGHI
+fcdaebhig
+111121333
+
+1: A->f->F->b->B->c->C->d->A->a->A
+2: E->e
+3: G->h->H->i->I->g
+
+cross the full cycles, so choose between any of the 1,2 or 3
+
+## Edge recombination
+Parent tours...
+
+City	Edges
+A		B F C E
+B		A C D F
+C 	 	B D A
+D 	 	C E B
+E 	 	D F A
+F 	 	A E B
+
+Random choice => B
+next candiadates: ACDF
+
+count remaining options, pick the lowest C
+Next choose D because only 1
+E -> A -> F
+
+child: B -> C -> D -> E -> A -> F
+
+But the child has the problem that it didn't inherit D->F
+
+# Fitness correlation coefficients
+(S_1, F_1) \to (S_1, F_1)
+(S_2, F_2) \to (S_2, F_2)
+\vdots
+(S_{n-2}, F_{n-2}) \to (S_{n-2}, F_{n-2})
+(S_{n-1}, F_{n-1}) \to (S_{n-1}, F_{n-1})
+
+##crossover
+(S_1, F_1) \cross (S_1, F_1)
+(S_2, F_2) \cross (S_2, F_2)
+\vdots
+(S_{n-2}, F_{n-2}) \cross (S_{n-2}, F_{n-2})
+(S_{n-1}, F_{n-1}) \cross (S_{n-1}, F_{n-1})
+
+##Corolotion coefition $\rho$
+0 = a cloud
+-1 = anti evolution, natural deselection
+1 = evolution, natural selection
+
+$-1 \steq \rho \bteq 1$
+
+### Traveling salesman TSP
+Edge crossover was made for TSP
+it has .9, which is very high.
+
+### Alternative
+Just run the thing and see which one is faster.
+
+# Evolutionary strategies (ES)
+ES use an advanced mutation operator which controls its own mutability
+self adaptation.
+
+This works by using gausion distrobutions, it should adapt to the topology
+of the landscape. If its to big then its like random search. If its to
+small it can get stuck at a local optimum.
+
+This gausian uses more information about the problem, you know information
+so you can reduce the search space.
+
+## ES representation
+
+\end{document}
