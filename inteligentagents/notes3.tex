@@ -1,0 +1,82 @@
+\documentclass{article}
+\begin{document}
+\author{Jappie Klooster}
+\title{Cohen \& Levesque}
+\maketitle
+\section{Langauge}
+DONE = just done
+; = sequence
+? = test if its true (groovy truth)
++ = is a non detrmenistic choice, collect them in an autcome set.
+* = is done a finite but arbitrary number of times, including 0
+
+if $\phi$ then $\alpha_1$ else
+$\alpha_2$ = ($\phi? ; \alpha_1) + (\neg \phi?;\alpha)$
+
+while $\phi$ do $\alpha$ = $(\phi?;\alpha)^*;\neg\phi?$
+
+Pz = z has property P, a predicate attom
+
+
+\subsection{Semantics}
+$\omega$ = variables assginemnts
+$P$ = is the set of omega $\in \omega$
+$E$ = is a set of primitive events
+$Agt = Agt \in [E \to p]$ specifies the agent of an event $[E \to P]$ is a
+function that takes an E that gives a P.
+$T \subset [Z \to E];$ a set of possible worlds, give a time number and get
+
+i = agent
+n = time
+
+\subsubsection{Predicate}
+c constants
+f functions
+Q predicate smbols
+
+
+$\phi$ interperts predicate symbols
+
+\[\phi(c) = d \in \Theta\]
+\[\phi(f) = f D_1x\dots D_l \to D_h\]
+\[\phi(Q^{n,x,ne}) = R \subseteq D_1x\dots D_l \]
+
+\subsubsection{satisfaction}
+
+\[M,\sigma,v,n[\alpha] m\]
+In the model `$M,\sigma,v,n$', $\alpha$ lies betweeen n and m.
+
+B = `normal` modal accesibility relation indexed by the time $n$
+and the agent $v(i)$. they write it like:
+
+\[<\sigma, n>B[v(i)] \sigma\]
+
+Better would be:
+\[\sigma B_{v(i)}^n \sigma\]
+
+\subsection{Constraints}
+\subsubsection{Believes/Goals}
+KD45.
+
+\[G\subseteq B\]
+means $\vdash {Bel}_i \phi \to {Goal}_i\phi$, but not the otherway around
+
+\subsection{Achievement goal}
+Doesn't believe $\phi$ is true yet, but believes it could be true later.
+There exists some action to make $\phi$ true.
+
+\subsubsection{Asumption}
+Goals will end some time in the future
+
+\subsection{Persistent goals}
+Drop the goal if its true, or its impossible.
+
+Competence means that if he believes it then its true.
+
+\section{Rao Georgeff}
+\subsection{Time logics}
+Brancing vs linear, points vs intervals,
+discrete (real numbers) vs continues (complex number)
+We'll only look into the future.
+\end{document}
+
