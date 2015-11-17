@@ -107,7 +107,29 @@ Because the assignment has very well defined behavior. I thought it was
 a very wise Idea to use unit tests. To do this I use a library called
 Scala test.
 
+\paragraph{Bugs found}
+Linearly scaled reported the wrong value because it used indeci, so it
+gave the first 1 a value of 0, and the second a value of 1 etc.
+
+Trap functions were simply wrongly implemented, instead of counting the
+ones they gave positional values of the ones in the block and used the
+block as a lookup value for that.
 \section{Execution}
+%TODO:
+% 1. Tournement selection is now implemented wrongly
+%	* group(2) to select the first half off the parents
+%	* randomly shuffle and group(2) again to select the second half
+% 2. Mutation, should be trivial with help of the members factory, decide how
+	% many bits will be mutated and then mutate those.
+% 3. Offspring generation should create 2 instead of one.
+% 4. Experiments
+%	Create tables % including:
+%		* min pop size for 29 out of 30 runs successful.
+%		* The average number of generations
+%		* The average CPU time required for running the GA with minimal pop size
+%		* average should be over 30 runs
+%	Draw a graph from the experiments
+%		* pop size on x, # succes on Y
 
 \section{Conclusion}
 %What did I learn from my observation?
