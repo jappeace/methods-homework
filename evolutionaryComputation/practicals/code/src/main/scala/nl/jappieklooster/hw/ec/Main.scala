@@ -14,16 +14,18 @@ object Main{
 		val stringLength = 20
 		val populationSize = 20
 		val population = Population.createOneZeros(
-			MemberFactories.globalRandomizedGenes(
-				random.shuffle(0.to(stringLength))),
-				stringLength,
-				populationSize
+			MemberFactories.withCoinfliptimesMutation(
+				MemberFactories.simpleMember,
+				random
+			),
+			stringLength,
+			populationSize
 		)
 		val evolution = new Evolution(
 			Fitness.uniformlyScaledCountOnes,
-			MateSelection.tournamentWinIsParent,
+			MateSelection.createCompeteWithRandomTournement(random),
 			OffspringGenerator.uniformCross,
-			FittestFilter.killParents
+			FittestFilter.elitism
 		)
 
 		val startTime = System.currentTimeMillis()

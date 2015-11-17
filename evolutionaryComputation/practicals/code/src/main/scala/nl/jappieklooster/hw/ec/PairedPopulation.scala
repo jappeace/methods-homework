@@ -16,14 +16,18 @@ case class PairedPopulation(members:Seq[Pair], memberFactory:String => IMember){
 		how:(IndexedSeq[(Char, Char)]) => IndexedSeq[Any]
 	):Population =  {
 		Population(
-			members.map(
+			members.flatMap(
 				fumu => {
-					val child = how(
+					def createGenes = how(
+						// just make key value like structure of the indiviudal genes
+						// for comparison
 						fumu.father.getGenes.zip(fumu.mother.getGenes)
-					)
-					// just make key value like structure of the indiviudal genes
-					// for comparison
-					memberFactory(child.mkString)
+					// mkstring uses a builder to avoid ridiculous concatination problems
+					).mkString
+
+					// we need two children so we return a list, flatmap will
+					// flatten that list again later
+					List(memberFactory(createGenes), memberFactory(createGenes))
 				}
 			),
 			memberFactory

@@ -2,19 +2,19 @@ package nl.jappieklooster.hw.ec
 
 class Evolution(
 	valuation: IHasFitness => Int,
-	mateSelector: (IHasFitness => Int, Population) => PairedPopulation,
+	mateSelectorFactory:(IHasFitness => Int)=>IMateSelector,
 	offSpringGenerator: PairedPopulation => Population,
 	/**
 	 * fittest filter, (valuation, parents, children) => fittestpop
 	 */
 	fittestFilter: (IHasFitness => Int, Population, Population) => Population
 ) {
+	val mateSelector = mateSelectorFactory(valuation)
 	private def step(parents:Population):Population = fittestFilter(
 			valuation,
 			parents,
 			offSpringGenerator(
-				mateSelector(
-					valuation,
+				mateSelector.selectFrom(
 					parents
 				)
 			)
