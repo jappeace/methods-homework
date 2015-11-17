@@ -3,7 +3,7 @@ package nl.jappieklooster.hw.ec
 object MateSelection {
 
 	def tournamentWinIsParent(
-		valuator : Valuable => Int, bachelors: Population
+		valuator : IHasFitness => Int, bachelors: Population
 	) : PairedPopulation = {
 		def tournement(contender:(IMember, IMember, IMember, IMember)):Pair = {
 			val mother = if (

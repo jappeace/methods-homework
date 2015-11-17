@@ -2,14 +2,14 @@ package nl.jappieklooster.hw.ec
 
 import scala.util.Random
 
-trait IMember extends Valuable with Genetic
+trait IMember extends IHasFitness with Genetic
 /** a member of the population */
 case class SinglyMember(genes:String) extends IMember{
-	override def getValuation = genes
+	override def getFitness = genes
 	override def getGenes = genes
 }
 case class ValGeneDecoupledMember(valuation:String, genes:String) extends IMember{
-	override def getValuation = valuation
+	override def getFitness = valuation
 	override def getGenes = genes
 }
 

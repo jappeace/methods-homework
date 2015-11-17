@@ -20,7 +20,7 @@ object Main{
 				populationSize
 		)
 		val evolution = new Evolution(
-			Valuation.uniformlyScaledCountOnes,
+			Fitness.uniformlyScaledCountOnes,
 			MateSelection.tournamentWinIsParent,
 			OffspringGenerator.uniformCross,
 			FittestFilter.killParents
