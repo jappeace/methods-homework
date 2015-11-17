@@ -13,8 +13,8 @@ class FitnessTests extends FlatSpec with Matchers{
 		val str = "1111" + "0111" + "1010" + "1000" + "0000"
 		//		   1234     5678     9012     3
 		// so linearly scaled = 1+2+3+4 + 6+7+8 + 9+ 11+ 13 = 64
-		// decept: 4	+	0	+ 	1	+	2	+ 3
-		// non: 	4	+	0	+ 	0.5	+	1	+ 1.5
+		// decept: 4	+	0	+ 	1	+	2	+ 3 = 10
+		// non: 	4	+	0	+ 	0.5	+	1	+ 1.5 = 7
 
 		override def getFitness: String = str
 	}
