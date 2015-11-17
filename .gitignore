@@ -20,6 +20,7 @@ methods/cogniveProcessing/MAIR_CPprac1_4/Files_PsychToolboxV2/__MACOSX
 *.PDF
 *.pdf
 *.odg
+*.bin
 
 #archives
 *.zip
@@ -31,6 +32,7 @@ methods/cogniveProcessing/MAIR_CPprac1_4/Files_PsychToolboxV2/__MACOSX
 #idea
 .idea/
 *.iml
+*.idx
 
 #gradle
 taskArtifacts/
@@ -38,3 +40,4 @@ taskArtifacts/
 #java binaries
 *.jar
 *.class
+
