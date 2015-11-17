@@ -34,4 +34,10 @@ class FitnessTests extends FlatSpec with Matchers{
 	"nondeceptive trap fitness" should "count subject as 7" in {
 		Fitness.blockValuation(nondecept)(subject) should be (7)
 	}
+
+	"trap function" should "have no trouble with wrongly block sized input " in {
+		Fitness.blockValuation(deciptive)(new IHasFitness {
+			override def getFitness: String = "1111" + "0111" + "1010" + "1000" + "00"
+		}) should be (10)  // because it should count the ones
+	}
 }
