@@ -1,0 +1,24 @@
+\documentclass{article}
+\usepackage{txfonts}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{bussproofs}
+\usepackage{graphicx}
+\usepackage{pifont}
+\usepackage{qtree}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{hyperref}
+\newenvironment{scprooftree}[1]%
+{\gdef\scalefactor{#1}\begin{center}\proofSkipAmount \leavevmode}%
+{\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center} }
+
+
+\newcommand{\brcell}[2][l]{%
+	\begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
+\begin{document}
+\author{Jappie Klooster}
+\title{A praktical look at genetic algorithms}
+\maketitle
+
+\end{document}
