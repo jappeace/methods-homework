@@ -1,4 +1,5 @@
 \documentclass{article}
+\usepackage{amsmath}
 \usepackage{txfonts}
 \usepackage{booktabs}
 \usepackage{color}
@@ -18,7 +19,91 @@
 	\begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
 \begin{document}
 \author{Jappie Klooster}
-\title{A praktical look at genetic algorithms}
+\title{A practical look at genetic algorithms}
 \maketitle
 
+\section{Introduction}
+This is a report of the evolutionary practical assigment 1.
+In here I will discuss what this assignment contained, which
+methodology I used to execute the assignemnt and how the execution
+went.
+
+The intended audiance is people familiar with programming.
+
+\section{Assignment}
+The assignment was to implement the following functions and algorithms and
+then do experimentation with help of these.
+
+\subsection{Functions}
+\subsubsection{Counting functions}
+\[x_i \in \{0,1\}:CO(x_1\dots x_l)=\sum^l_{i=1}x_i\]
+\[x_i \in \{0,1\}:CO(x_1\dots x_l)=\sum^l_{i=1}i x_i\]
+\subsubsection{Trap function}
+\[TF(x_1\dots x_l) = \sum^{\frac{l}{k}-1}_{j=0}B(x_{jk_1}\dots x_{jk+k})\]
+
+with:
+
+\[B(x_1\dots x_k)=\left\{
+	\begin{matrix}
+		k & \mbox{ if } &   CO(x_1\dots x_k) = k \\
+		k - d - \frac{k-d}{k-1} CO(x) & \mbox{ if } & CO(x_1\dots x_k) < k \\
+	\end{matrix}
+\right. \]
+\section{Methodology}
+\subsection{Build tool}
+I use Gradle for building the project. Its the most advanced build platform
+available and makes it easy to add dependencies to the project.
+For example I use slf4j for logging.
+
+Its also handy in that it comes with a self installing script that can be run
+from any platform, Gradlew. So running the code I wrote on a different machine
+becomes a trivial task, Gradle makes sure the right dependencies are fetched.
+
+\subsubsection{Run guide}
+As said before its a trivial task to run the code. Downloading and installing
+of dependencies and even gradle happens automatically with help of gradlew.
+So the first run is slower, depending on your internet speed.
+
+\subsubsection{Libraries used}
+
+\subsection{Language choice}
+I chose to use Scala to implement this project. The main reason being that I've
+played with Scala before but never have done anything constructive with it.
+
+Scala is both a functional and an object orientated program that runs on the JVM
+It compiles to byte-code and is statically typed.
+
+It also can use any Java library and integrates seamlessly with Java, (although
+calling methods the methods of a Scala project from a Java project can be
+a little clumsy sometimes, because Scala supports operator overloading in
+a strange way).
+
+Other options I considered were:
+\begin{itemize}
+	\item Java, which I'm very familiar with but I find quite boring to use.
+		Its very verbose.
+	\item C\#, the language is good but setting it up is difficult since I
+		use Linux, it also has no Gradle support which makes it clunky,
+		you'd have to rely on .net libraries only which is limited. It
+		also prefers object orientated  rather than functional programming,
+		Scala prefers functional over object orientated.
+		Scala's syntax is also more concise.
+	\item Rust/Go, I'm curious about both these languages, but I'm not at
+		all familiar with them, so I probably should do first a little
+		hobby project with them before starting doing something serious like
+		this, I've already done this with scala before.
+\end{itemize}
+\subsection{Architecture}
+The architecture was created incrementally, I just implemented the functions
+without thinking much about how to combine them.  I first started with the
+fittest functions. Then I went on with selection, and finally I did the
+crossover.
+I just implemented one or 2 options of these and then created an evolution
+class that accepted functions with the right prototype. So now you can
+create an evolution by giving it functions.
+
+\section{Execution}
+
+\section{Conclusion}
+%What did I learn from my observation?
 \end{document}
