@@ -20,6 +20,7 @@ class CompeteWithRandomTournement(random:Random, valuator : IHasFitness => Int)
 			x=> tournement(x._1.head, x._1.last, x._2.head, x._2.last)
 		).toSeq
 	}
+
 }
 class CompeteWithReversedTournement(valuator : IHasFitness => Int)
 		extends TournamentSelector(valuator){

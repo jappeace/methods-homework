@@ -30,8 +30,12 @@ dependencies {
 	//main code base in scala
 	compile "org.scala-lang:scala-library-all:${scalaVersion}.5"
 
-	// slf4j
+	// simple log facade (easily swap the logging backend with this)
 	compile "org.slf4j:slf4j-simple:1.7.13"
+
+	// plot lib:
+	compile "org.sameersingh.scalaplot:scalaplot:0.1"
+
 	//client scripts in groovy
 	testCompile "org.scalatest:scalatest_${scalaVersion}:2.2.4"
 

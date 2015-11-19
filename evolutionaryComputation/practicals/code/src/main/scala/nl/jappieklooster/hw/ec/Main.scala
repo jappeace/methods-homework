@@ -35,6 +35,10 @@ object Main{
 			println(s"generation $index: $pop")
 		}
 		log.info(s"time in ms: $runtime")
+		import org.sameersingh.scalaplot.Implicits._
+
+		val x = 0.0 until 2.0 * math.Pi by 0.1
+		val out = output(ASCII, xyChart(x ->(math.sin(_), math.cos(_))))
 	}
 	def randomGene = s"${random.nextInt(2)}"
 }
