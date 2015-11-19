@@ -1,0 +1,147 @@
+\documentclass{article}
+\begin{document}
+\author{Jappie Klooster}
+\title{Temporal magick or logic}
+\maketitle
+\section{Linear temporal magick}
+
+$\phi_1\cup\phi_2$ = $\phi_1$ holds until $\phi_2$ becomes true.
+$\Diamond\phi$ = sometimes
+$O\phi$ = next time
+
+$M=(S,\sigma, \pi)$ where $S$ is a set of states, $\sigma: N \to S$ is an
+infinte seqence of states
+
+\subsection{Semantics}
+$\vdots$
+$M,\sigma\vDash O\phi \LeftRightArrow M, \sigma^1 \vDash \phi$ next time
+$M,\sigma\vDash \Diamond\phi \LeftRightArrow M, \sigma^n \vDash \phi$
+invention, there is some time where $\phi$ is gonna hold.
+
+\subsubsection{untill}
+if $\phi_2$ holds somewhere it does not mean it holds everywhere after that
+point
+
+$\phi_1$ holds until $\phi_2$ holds.
+
+weak untill = where $\phi_1$ holds everywhere because there is no
+$\phi_2$, for example $\phi_1^{\bot}$
+
+\section{Branching temproal magick}
+
+Two kinds of formulas, state formulas, path formulas.
+Any state formula can also act as a path formula.
+
+\subsection{Models}
+serial, any point has a continuation, time never stops.
+$S \times S$ = cartesian product of S.
+
+Fullpath is a ninfinite seq of states more or less true the tree.
+These are more or less the lines of linear logic.
+Fullpaths can start anywhere, not necisarly at the root.
+
+$\sigma_1$ = already a choice of the branch, so no need for no trees.
+
+\section{Combination of BDI}
+E = optional
+A = inevitable
+
+\section{Operators magick}
+$\Diamond\Diamond\phi=\Diamond\phi$
+$\Box\Box\phi=\Box\phi$
+$\Box\Diamond\phi$=Infenitly often there is a point where $\phi$ holds.
+$\Diamond\Box\phi=$Some point in the future $\phi$ will hold indevinitly
+
+\subsection{BDI}
+Optionally $\Diamond p$ = there is a choice where p is gonna hold
+Optionally $\Box r$= there is a timline where r is gonna hold
+Inevitiably $\Diamond s$=  ???
+Inevitiably $\Box b$=  b always holds
+
+\section{BDI sementics}
+s.t. = such that.
+
+From t1 to t2, the agent has a memory, but he can doubt about the future.
+There is the hidden asumption that agents have memory.
+
+success = there exist some period in wehre the even was succesfull
+
+\subsection{Axiom}
+written like $GOAL(\alpha) \subset BEL(\alpha)$, but russel notation :s so
+$\subset = \to$
+$GOAL(\alpha) \to BEL(\alpha)$ = believe-goal compatibility
+different from cohon and laveque, $BEL \alpha \to GOAL \alpha$, because
+its a different framework, but the reason behind it is the same strangely
+enough.
+
+$INTEND(does(e))\to does(e)$ intention leads to action, which is controversial
+
+\subsection{compatibility}
+Sinning = ???, something with cutting of branches.
+
+\section{CTD}
+\subsection{Axioms}
+$done(e) \to BEL(done(e))$,  you're awere that you've done something
+
+
+\section{Praktical}
+The general strategy is to write down what you have to proof and then to
+read with help of the definitions.
+
+Don't be sloppy and take an arbitrary M with for all's
+\subsction{3.16}
+\[\vDash \alpha \Rightarrow \vDash BEL x \alpha\]
+Assume $\Vdash \alpha$, so $M,\sigma,v,n\vDash \alpha$ for all $M,\sigma,v,n$(*)
+To prove $\vDash BEL x \alpha$, 
+	ie $M,\sigma,v,n\vDash BEL x \alpha$ for all $M,\sigma,v,n\vDash$
+	ie $M,\sigma,v,n\vDash\alpha$ for all $\sigma'$ with (\sigma,n)B[v(x)]
+	\sigma' done by (*).
+
+\subsection{3.26}
+	To prove: $M,\sigma,v,n\vDash BEL x \alpha \to Goal x \alpha$ for all 
+	$M,\sigma,v,n$.
+	ie $M,\sigma,v,n\vDash BEL x \alpha \Rightarrow M,\sigma,v,n\vDash$ Goal
+		$x \alpha$ for all $M,\sigma,v,n$
+		ie $M,\sigma',v,n\vDash \alpha$ for all $\sigma'$ with $\sigma,n)
+		B[v(x)]\sigam'\RIghtarrow M,\sigma'',v,n\vDash \alpha$ for all
+		$\sigma''$ with $(\sigma,n)G[v(x)]\sigma''$
+
+		Given:
+		$(\sigma,n)G[v(x)]\sigma''\Rightarrow(\sigma,n)B[v(x)]\sigma''$
+		$\vdots$
+
+		Take arb $\sigma''$ with $(\sigma,n)G[v(s)]\sigam''$ then also 
+		$(\sigma,n)B[v(x)]\sigma''$ so $M,\sigma,v,n\vDash \alpha$
+\subsection(3.11)
+Proof
+\begin{prooftree}
+	\AxiomC{}
+	\UnaryinfC{}
+\[ \vDash \neg LATER(\Diamond p) \neg LATER(\Diamond p) \LeftRightarrow 
+\neg(\neg\Diamond p) \Leftrightarrow \neg(\neg\Diamond p \wedge 
+\Diamond\Diamond p) \Leftrightarrow \neg(\neg\Diamond p \wedge 
+\Diamond p)\]
+
+\end{prooftree}
+
+\subsection{3.13}
+\begin{prooftree}
+	\AxiomC{$\vDash \Diamond q \wedge BEFORE pq \to \Diamond p$}
+	\UnaryInfC{To prove $M,\sigma,v,n\vDash \Diamond q \wedge BEFORE pq \to \Diamond p$ for all $M,\sigma,v,n$}
+	\UnaryInfC{Take arbitrary $M,\sigma,v,n$ to prove $M,\sigma,v,n\vDash \vDash \Diamond q \wedge BEFORE pq \to \Diamond p$ for all $M,\sigma,v,n$}
+	\Rightlabel{ie}
+	\UnaryInfC{To prove if $M,\sigma,v,n\vDash \Diamond q$ and 
+	$M,\sigma,v,n\vDash BEFORE pq$ then $M,\sigma,v,n\vDash Diamond p$ for all $M,\sigma,v,n$}
+	\UnaryInfC{Supose $M,\sigma,v,n\vDash \vDash \Diamond q$ and 
+	$M,\sigma,v,n\vDash BEFORE pq$}
+	\Rightlabel{ie}
+	\UnaryInfC{Supose $M,\sigma,v,n\vDash \exists x HAPPENS x;q?$ and 
+		$M,\sigma,v,n\vDash \exists \forall c (HAPPENS c;q{?}) \to \exists q$ 
+	$q\se c \wedge HAPPENS a;p{?}$}
+	\Rightlabel{ie}
+	\UnaryInfC{Supose $M,\sigma,v,n\vDash \exists x HAPPENS x;q?$ and 
+		$M,\sigma,v,n\vDash \exists \forall c (HAPPENS c;q{?}) \to \exists q$ 
+	$q\se c \wedge HAPPENS a;p{?}$}
+\end{prooftree}
+
+\end{document}
