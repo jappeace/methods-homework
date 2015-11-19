@@ -1,0 +1,53 @@
+\documentclass{article}
+\usepackage{txfonts}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{bussproofs}
+\usepackage{graphicx}
+\usepackage{pifont}
+\usepackage{qtree}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{hyperref}
+\newenvironment{scprooftree}[1]%
+{\gdef\scalefactor{#1}\begin{center}\proofSkipAmount \leavevmode}%
+{\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center} }
+
+
+\newcommand{\brcell}[2][l]{%
+	\begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
+\begin{document}
+\author{Jappie Klooster}
+\title{Evolutionary stretegies}
+\maketitle
+
+\section{difference from GA}
+GA's are local searches, while ES are global searches.
+\section{Comenly used settings}
+Coveriance = the angle, no coveriance means semetrical
+
+The closer to the optimum the smaller your variance should be. This reduces
+the chance of jumping over the optimum.
+
+Normally distributed = gausian
+
+\section{mutation}
+
+\section{reccombination}
+the parents is the entire population
+
+\section{selection}
+ methods $(u,\lambda)$ and $(u+\lambda)$, $(u+\lambda)$ appears better from
+ an optimization standpoint but self adoptation works worse with this one.
+
+feet4, each edge = a weight, every neuron is a function.
+
+\section{Combinatorial}
+is a finite set of solutions and you have to optimize it.
+
+\subsection{Local search}
+always try to improve the current solution by applying small changes.
+
+Meta heuristics, for example taboo list
+
+\end{document}
