@@ -24,5 +24,5 @@ object Fitness {
 			map(
 				// get the value specified in the block
 				str => block.apply(str.count(whereCharIsOne))
-			).sum
+			).sum.toInt
 }

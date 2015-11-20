@@ -10,12 +10,12 @@ case class Population(members:Seq[IMember], memberFactory:String => IMember) ext
 object Population{
 	def createOneZeros(
 			memberFactory:String => IMember,
-			length:Int,
-			count:Int):Population =  Population(
-		0.to(count).map(
+			geneLength:Int,
+			popCount:Int):Population =  Population(
+		0.to(popCount).map(
 			x => memberFactory(
 				// it says, from 1 to length concat 1 or 0.
-				0.to(length).foldLeft(""){(b, x) => b + Main.randomGene}
+				0.to(geneLength).foldLeft(""){(b, x) => b + Main.randomGene}
 			)
 		),
 		memberFactory

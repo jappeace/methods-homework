@@ -114,6 +114,23 @@ gave the first 1 a value of 0, and the second a value of 1 etc.
 Trap functions were simply wrongly implemented, instead of counting the
 ones they gave positional values of the ones in the block and used the
 block as a lookup value for that.
+\subsection{Uncertainties}
+Should the elitism selection use tournement selection?
+When precisly do we find the optimal solution?
+	Should I wait for convergence or just say a string
+	of all ones is good enough?
+	Is 1 solution good enough or should all members have
+	that solution
+	I'm assuming 1 solution and that I can give a string
+	of just ones.
+How many generations to consider. I chose arbitrarly 10.
+
+About randomly linked:
+	There is another way to do it: for every member randomly link
+	differently, and randomly pick 1 randomly linked instructionset
+	for offspring generation (or do the strongest).
+	Currently I do the global randomly linked, every run will however
+	have the same randomly linked value, I'm aware of this.
 \section{Execution}
 %TODO:
 % 1. Experiments

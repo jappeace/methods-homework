@@ -16,8 +16,8 @@ case class ValGeneDecoupledMember(valuation:String, genes:String) extends IMembe
 }
 
 object MemberFactories{
-	def simpleMember(str:String):IMember = SinglyMember(str)
-	def globalRandomizedGenes(instructions:TraversableOnce[Int])(str:String):IMember = {
+	def tightlyLinked(str:String):IMember = SinglyMember(str)
+	def randomlyLinked(instructions:TraversableOnce[Int])(str:String):IMember = {
 		val genes = instructions.map(inx => str.charAt(inx)).mkString
 		ValGeneDecoupledMember(str,genes)
 	}

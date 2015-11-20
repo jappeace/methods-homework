@@ -7,7 +7,8 @@ class Evolution(
 	/**
 	 * fittest filter, (valuation, parents, children) => fittestpop
 	 */
-	fittestFilter: (IHasFitness => Int, Population, Population) => Population
+	fittestFilter: (IHasFitness => Int, Population, Population) => Population,
+	hasGoodEnoughSolution: Population => Boolean
 ) {
 	val mateSelector = mateSelectorFactory(valuation)
 	private def step(parents:Population):Population = fittestFilter(
@@ -19,9 +20,17 @@ class Evolution(
 				)
 			)
 		)
-	def startGenetic(seed:Population, times:Int): Array[Population]= 0.to(times)
-		.foldLeft(Array[Population]()){
-			case (Array(), i) => Array(seed)
-			case(e, i) => e :+ step(e.last)
+	def startGenetic(seed:Population, times:Int): Array[Population]= genetic(
+		Array(seed), Math.abs(times)
+	)
+	private def genetic(prev:Array[Population], times:Int): Array[Population]={
+		if (times <= 0) prev else{
+			val last = prev.last
+			if(hasGoodEnoughSolution(last)){
+				return prev
+			}
+			return genetic(prev :+ step(last),times-1)
 		}
+	}
 }
+
