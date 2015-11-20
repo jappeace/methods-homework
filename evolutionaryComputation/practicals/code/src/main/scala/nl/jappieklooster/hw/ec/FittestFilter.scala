@@ -25,7 +25,7 @@ object FittestFilter {
 		val combined = parents ++ children
 		// end up sorting anyways, no idea why you would do tournement selection
 		val sorted = combined.sortWith((x, y) => valuation(x) > valuation(y))
-		parents.copy(members = sorted.take(parents.members.length).par)
+		parents.copy(members = sorted.take(parents.members.length))
 	}
 	def tournementElitism(
 		valuation : IHasFitness => Int,
@@ -37,7 +37,7 @@ object FittestFilter {
 		val combined = parents.members.zip(children.members)
 
 		Population(
-			combined.par.map(x=> tournement(x._1, x._2)),
+			combined.map(x=> tournement(x._1, x._2)),
 			parents.memberFactory
 		)
 	}

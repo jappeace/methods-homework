@@ -4,7 +4,8 @@ trait Genetic{
 	def getGenes:String
 }
 case class Pair(father:Genetic, mother:Genetic)
-case class PairedPopulation(members:Seq[Pair], memberFactory:String => IMember){
+case class PairedPopulation(members:Seq[Pair], memberFactory:String => IMember) extends EmulateSeq[Pair]{
+	override def baseSeq = members
 	/**
 	 * The surounding function, it will map two members of a population
 	 * to one to create a new population, it will be done by sending the
@@ -29,7 +30,7 @@ case class PairedPopulation(members:Seq[Pair], memberFactory:String => IMember){
 					// flatten that list again later
 					List(memberFactory(createGenes), memberFactory(createGenes))
 				}
-			).par,
+			),
 			memberFactory
 		)
 	}
