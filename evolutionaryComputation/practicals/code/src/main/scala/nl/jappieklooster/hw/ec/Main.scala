@@ -25,7 +25,7 @@ object Main{
 			Fitness.uniformlyScaledCountOnes,
 			MateSelection.createCompeteWithRandomTournement(random),
 			OffspringGenerator.uniformCross,
-			FittestFilter.elitism
+			FittestFilter.tournementElitism
 		)
 
 		val startTime = System.currentTimeMillis()

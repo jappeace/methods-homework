@@ -29,7 +29,7 @@ case class PairedPopulation(members:Seq[Pair], memberFactory:String => IMember){
 					// flatten that list again later
 					List(memberFactory(createGenes), memberFactory(createGenes))
 				}
-			),
+			).par,
 			memberFactory
 		)
 	}
