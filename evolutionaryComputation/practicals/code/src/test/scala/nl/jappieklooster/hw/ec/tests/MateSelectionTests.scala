@@ -19,7 +19,7 @@ class MateSelectionTests extends FlatSpec with Matchers{
 		val two = SinglyMember("2")
 		val three = SinglyMember("3")
 		val four = SinglyMember("4")
-		subject.tournement(one,two,three,four) should be (Pair(two,four))
+		subject.tournement(one,two) should be (two)
 	}
 	"the random turnement when rigged " should "produce the following sequent " in {
 		val subject = createSubject

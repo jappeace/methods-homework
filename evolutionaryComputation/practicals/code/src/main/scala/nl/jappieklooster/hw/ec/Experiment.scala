@@ -1,5 +1,7 @@
 package nl.jappieklooster.hw.ec
 
+import com.itextpdf.text.log.LoggerFactory
+
 import scala.util.Random
 /**
  * This expirement tries to find the optemal number of population for a specific
@@ -8,41 +10,42 @@ import scala.util.Random
  */
 class Experiment(evolution: Evolution, memberFactory:String => IMember) {
 	import Experiment._
+	val log = LoggerFactory.getLogger(this.getClass)
 	private def createPopulation(size:Int) = {
 		Population.createOneZeros(memberFactory, geneLength, size)
 	}
-	def run():Seq[RunResult]= {
-		def findOptimumPopsize(consideringSize:Int, difference:Int): Seq[RunResult] = {
-			def expiriment(): Seq[RunResult]={
-				val population = createPopulation(consideringSize)
+	private def findOptimumPopsize(consideringSize:Int, difference:Int): Seq[RunResult] = {
+		def expiriment(): Seq[RunResult]={
+			val population = createPopulation(consideringSize)
 
-				val startTime = System.currentTimeMillis()
-				val evolutionResult = evolution.startGenetic(population, generationCount)
-				val runtime = System.currentTimeMillis() - startTime
+			val startTime = System.currentTimeMillis()
+			val evolutionResult = evolution.startGenetic(population, generationCount)
+			val runtime = System.currentTimeMillis() - startTime
 
-				// sucesfull if early termination or the last population is good enough
-				val success = evolutionResult.length != generationCount || hasGoodEnoughSolution(evolutionResult.last)
-				Seq(RunResult(consideringSize, success, runtime))
-			}
-			if(consideringSize > maxPopSize){
-				// we went to deep so we failed
-				return Seq(RunResult(consideringSize, false, 0))
-			}
-
-			val result = expiriment()
-			// 10, 20, 40, 80, 160, 320, 240, 280, 260, 250.
-			val hadSuccess = consideringSize != difference*2
-
-			val newDiff = if(hadSuccess) difference/2 else difference*2
-
-			if(newDiff < minPopSize){
-				return result
-			}
-			if(!result.head.success){
-				return result ++ findOptimumPopsize(consideringSize+newDiff,newDiff)
-			}
-			return result ++ findOptimumPopsize(consideringSize-difference/2, difference/2)
+			// sucesfull if early termination or the last population is good enough
+			val success = hasGoodEnoughSolution(evolutionResult.last)
+			Seq(RunResult(consideringSize, success, runtime))
 		}
+		if(consideringSize > maxPopSize){
+			// we went to deep so we failed
+			return Seq(RunResult(consideringSize, false, 0))
+		}
+
+		val result = expiriment()
+		// 10, 20, 40, 80, 160, 320, 240, 280, 260, 250.
+		val hadSuccess = consideringSize != difference*2
+
+		val newDiff = if(hadSuccess) difference/2 else difference*2
+
+		if(newDiff < minPopSize){
+			return result
+		}
+		if(!result.head.success){
+			return result ++ findOptimumPopsize(consideringSize+newDiff,newDiff)
+		}
+		return result ++ findOptimumPopsize(consideringSize-difference/2, difference/2)
+	}
+	def run():Seq[RunResult]= {
 		findOptimumPopsize(minPopSize,minPopSize/2)
 	}
 }

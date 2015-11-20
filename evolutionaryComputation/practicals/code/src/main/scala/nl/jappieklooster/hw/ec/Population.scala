@@ -12,7 +12,7 @@ object Population{
 			memberFactory:String => IMember,
 			geneLength:Int,
 			popCount:Int):Population =  Population(
-		0.to(popCount).map(
+		0.to(popCount-1).map(
 			x => memberFactory(
 				// it says, from 1 to length concat 1 or 0.
 				0.to(geneLength).foldLeft(""){(b, x) => b + Main.randomGene}

@@ -35,12 +35,11 @@ object Main{
 		Experiment.create(random, blockValuation(deciptive), crossMethodsRandom) ++
 		Experiment.create(random, blockValuation(nonDeciptive), crossMethodsRandom)
 
-		val results = expirements.map(exp => 0.to(30).map(x=>{
-			log.info(s"running $x")
-			val result = exp.run
-			log.info(s"result: $result")
-			(x, result)
-		} ))
+		val results = expirements.par.flatMap(exp => 0.to(30).par.map(x=> (x,exp.run)))
+		for(result <- results){
+			log.info(s"result: ${result._1}")
+			log.info(s"${result._2}")
+		}
 
 		import org.sameersingh.scalaplot.Implicits._
 
