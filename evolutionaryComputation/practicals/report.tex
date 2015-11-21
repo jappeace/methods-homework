@@ -135,6 +135,15 @@ About randomly linked:
 I'm not quite sure about the graphs. I have to show the number of successes
 out of the 30 runs, but this is already set in stone, because its either
 29 or 30, or its no successes.
+
+The stocastic ensursance wants to make sure that 29 out of 30 runs are
+'good enough', but combining this with the bidisectional search is difficult.
+because the bidisectional search may happen to end up just higher than possible.
+
+I considered to combine the bidisectional search with the stocastic ensurance.
+But that would be way slower, and it won't be much better (or even worse depending
+on how you do it) then my current implementation.
+
 \section{Execution}
 %TODO:
 % 1. Experiments

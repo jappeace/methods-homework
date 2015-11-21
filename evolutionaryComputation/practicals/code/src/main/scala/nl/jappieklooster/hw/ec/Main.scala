@@ -37,11 +37,10 @@ object Main{
 		//Experiment.create(random, blockValuation(nonDeciptive), crossMethodsRandom) ++
 		Nil
 
-		val runCount = 4
-		val results = expirements.flatMap(exp => 1.to(runCount).map(x=> (x,exp.run(10))))
+
+		val results = expirements.map(ex => new StoasticExperiment(ex)).map(ex => ex.stoasticEnsurance(30,1))
 		for(result <- results){
-			log.info(s"result: ${result._1}")
-			log.info(s"${result._2}")
+			log.info(s"result: $result")
 		}
 
 		import org.sameersingh.scalaplot.Implicits._

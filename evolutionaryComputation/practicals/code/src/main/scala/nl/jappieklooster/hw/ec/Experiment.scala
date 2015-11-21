@@ -42,9 +42,9 @@ class Experiment(evolution: Evolution, memberFactory:String => IMember) {
 			return Seq(result)
 		}
 		if(!result.success){
-			return result ++ findOptimumPopsize(consideringSize+newDiff,newDiff)
+			return result +: findOptimumPopsize(consideringSize+newDiff,newDiff)
 		}
-		return result ++ findOptimumPopsize(consideringSize-difference/2, difference/2)
+		return result +: findOptimumPopsize(consideringSize-difference/2, difference/2)
 	}
 	def bisectionalSearch() = findOptimumPopsize(popUnit ,popUnit/2)
 }

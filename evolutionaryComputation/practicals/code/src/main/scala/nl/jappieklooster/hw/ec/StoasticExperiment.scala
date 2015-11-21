@@ -8,7 +8,7 @@ class StoasticExperiment(experiment: Experiment) {
 		val peekResult = 0.to(3).flatMap(x=>experiment.bisectionalSearch)
 		peekResult.foldLeft(RunResult(Int.MaxValue,false,Int.MaxValue,Int.MinValue))(
 			(cur,elem)=> cur match{
-				case RunResult(_,false,_) => elem
+				case RunResult(_,false,_,_) => elem
 				case s if elem.success => if(s.popSize < elem.popSize) s else elem
 				case s => s
 			}
