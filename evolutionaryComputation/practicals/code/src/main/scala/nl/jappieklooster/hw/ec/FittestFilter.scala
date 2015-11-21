@@ -20,7 +20,7 @@ object FittestFilter {
 		val combined = parents.members.zip(children.members)
 
 		Population(
-			combined.par.map(x=> tournement(x._1, x._2)).seq,
+			combined.map(x=> tournement(x._1, x._2)),
 			parents.memberFactory
 		)
 	}
