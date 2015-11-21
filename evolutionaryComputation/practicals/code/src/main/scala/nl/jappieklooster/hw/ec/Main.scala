@@ -16,8 +16,8 @@ object Main{
 
 		
 		val crossMethodsTight = Seq(
-	//		(twoPointCross _, tightlyLinked _, " Tight 2x"),
-	//		(uniformCross _, tightlyLinked _, " Tight ux"),
+			(twoPointCross _, tightlyLinked _, " Tight 2x"),
+			(uniformCross _, tightlyLinked _, " Tight ux"),
 			(uniformCross _, withCoinfliptimesMutation(tightlyLinked, random) _, " Tight ux, R")
 		)
 		val crossMethodsRandom = Seq(
@@ -37,7 +37,9 @@ object Main{
 		Nil
 
 
-		val results = expirements.map(ex => new StoasticExperiment(ex)).map(ex => (ex, ex.stoasticEnsurance(2,1)))
+		val runCount = 8
+		val results = expirements.map(ex => new StoasticExperiment(ex)).map(ex => (ex, ex.stoasticEnsurance(runCount,1)))
+		log.info(s"doing stoastic with $runCount runs")
 		for(tuple <- results){
 			import util.Properties.lineSeparator
 			log.info(s"${tuple._1.experiment.name}:$lineSeparator${tuple._2.toTable()}")

@@ -13,7 +13,7 @@ abstract class TournamentSelector(valuator : IHasFitness => Int) extends IMateSe
 
 class CompeteWithRandomTournement(random:Random, valuator : IHasFitness => Int)
 		extends TournamentSelector(valuator){
-	override protected def tournementSelect(bachelors: Population): Seq[Pair] = {
+	override protected def tournementSelect(bachelors: Population) = {
 		val potentialFathers = bachelors.grouped(2)
 		val potentialMothers = random.shuffle(bachelors.members).grouped(2)
 		potentialFathers.zip(potentialMothers).map(
