@@ -8,7 +8,7 @@ import scala.util.Random
  * evolution.
  * @param evolution
  */
-class Experiment(evolution: Evolution, memberFactory:String => IMember) {
+class Experiment(val name:String, evolution: Evolution, memberFactory:String => IMember) {
 	import Experiment._
 	val log = LoggerFactory.getLogger(this.getClass)
 	private def createPopulation(size:Int) = {
@@ -18,18 +18,18 @@ class Experiment(evolution: Evolution, memberFactory:String => IMember) {
 		val population = createPopulation(consideringSize)
 
 		val startTime = System.currentTimeMillis()
-		val evolutionResult = evolution.startGenetic(population, generationCount)
+		val evolutionResult = evolution.startGenetic(population)
 		val runtime = System.currentTimeMillis() - startTime
 
 		// sucesfull if early termination or the last population is good enough
 		val success = hasGoodEnoughSolution(evolutionResult.last)
-		RunResult(consideringSize, success, runtime, evolutionResult.length)
+		RunResult(consideringSize, success, runtime, evolutionResult.length,evolution.valuation.countCalls())
 	}
 
 	private def findOptimumPopsize(consideringSize:Int, difference:Int): Seq[RunResult] = {
 		if(consideringSize > maxPopSize){
 			// we went to deep so we failed
-			return Seq(RunResult(consideringSize, false, 0,0))
+			return Seq(RunResult.createFailed(consideringSize))
 		}
 
 		val result = run(consideringSize)
@@ -49,15 +49,17 @@ class Experiment(evolution: Evolution, memberFactory:String => IMember) {
 	def bisectionalSearch() = findOptimumPopsize(popUnit ,popUnit/2)
 }
 
-case class RunResult(popSize:Int, success:Boolean, runtime:Long, generationCount:Int){
+case class RunResult(popSize:Int, success:Boolean, runtime:Long, generationCount:Int, fitnessCallCount:Int){
 	override def toString() :String = {
 		s"Run(pop#=$popSize, success=$success, time=$runtime, gen#=$generationCount)"
 	}
 }
 
+object RunResult{
+	def createFailed(size: Int) = RunResult(size,false,0,0,0)
+}
 object Experiment{
 
-	val generationCount = 30
 	/**
 	 * Don't consider pop diferences smaller than this unit
 	 */
@@ -66,12 +68,15 @@ object Experiment{
 	val geneLength = 100
 
 	def create(
+		name:String,
 		random:Random,
-		valuationFunction:IHasFitness => Int,
-		variationOperators:Seq[(PairedPopulation => Population, String => IMember)]
+		valuationFunction:IHasFitness=>Int,
+		variationOperators:Seq[(PairedPopulation => Population, String => IMember, String)]
 	):Seq[Experiment] = variationOperators.map(
-		variation => new Experiment(new Evolution(
-			valuationFunction,
+		variation => new Experiment(
+			name + variation._3,
+			new Evolution(
+			Fitness.createProbe(valuationFunction),
 			MateSelection.createCompeteWithRandomTournement(random),
 			variation._1,
 			FittestFilter.tournementElitism,

@@ -1,7 +1,7 @@
 package nl.jappieklooster.hw.ec
 
 class Evolution(
-	valuation: IHasFitness => Int,
+	val valuation: FitnessEvaluator,
 	mateSelectorFactory:(IHasFitness => Int)=>IMateSelector,
 	offSpringGenerator: PairedPopulation => Population,
 	/**
@@ -10,9 +10,9 @@ class Evolution(
 	fittestFilter: (IHasFitness => Int, Population, Population) => Population,
 	hasGoodEnoughSolution: Population => Boolean
 ) {
-	val mateSelector = mateSelectorFactory(valuation)
+	val mateSelector = mateSelectorFactory(valuation.valuate)
 	private def step(parents:Population):Population = fittestFilter(
-			valuation,
+			valuation.valuate,
 			parents,
 			offSpringGenerator(
 				mateSelector.selectFrom(
@@ -20,17 +20,19 @@ class Evolution(
 				)
 			)
 		)
-	def startGenetic(seed:Population, times:Int): Seq[Population]= genetic(
-		Seq(seed), Math.abs(times)
+	def startGenetic(seed:Population): Seq[Population]= genetic(
+		Seq(seed)
 	)
-	private def genetic(prev:Seq[Population], times:Int): Seq[Population]={
-		if (times <= 0) prev else{
-			val last = prev.last
-			if(hasGoodEnoughSolution(last)){
-				return prev
-			}
-			return genetic(prev :+ step(last),times-1)
+	private def genetic(prev:Seq[Population]): Seq[Population]={
+		val parents = prev.last
+		if(hasGoodEnoughSolution(parents)){
+			return prev
 		}
+		val children = step(parents)
+		if(children == parents){
+			return prev
+		}
+		genetic(prev :+ children)
 	}
 }
 

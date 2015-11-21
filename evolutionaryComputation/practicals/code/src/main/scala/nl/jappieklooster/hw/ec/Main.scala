@@ -15,32 +15,32 @@ object Main{
 		log.info("starting ea")
 
 		
-		val crossMethodsTight:Seq[(PairedPopulation => Population, String => IMember)] = Seq(
-			(twoPointCross _, tightlyLinked _),
-			(uniformCross _, tightlyLinked _),
-			(uniformCross _, withCoinfliptimesMutation(tightlyLinked, random) _)
+		val crossMethodsTight = Seq(
+	//		(twoPointCross _, tightlyLinked _, " Tight 2x"),
+	//		(uniformCross _, tightlyLinked _, " Tight ux"),
+			(uniformCross _, withCoinfliptimesMutation(tightlyLinked, random) _, " Tight ux, R")
 		)
-		val crossMethodsRandom:Seq[(PairedPopulation => Population, String => IMember)] = Seq(
-			(twoPointCross _, createRandomlyLinked),
-			(uniformCross _, createRandomlyLinked),
-			(uniformCross _, withCoinfliptimesMutation(createRandomlyLinked, random) _)
+		val crossMethodsRandom = Seq(
+			(twoPointCross _, createRandomlyLinked, " Random 2x, "),
+			(uniformCross _, createRandomlyLinked, " Random ux"),
+			(uniformCross _, withCoinfliptimesMutation(createRandomlyLinked, random) _, " Random ux, R")
 		)
 		val deciptive:Seq[Float] = Seq(4,0,1,2,3)
 		val nonDeciptive:Seq[Float] = Seq(4,0,0.5f,1,1.5f)
 		val expirements =
-		Experiment.create(random, uniformlyScaledCountOnes, Seq((uniformCross _, tightlyLinked _))) ++
-		//Experiment.create(random, uniformlyScaledCountOnes, crossMethodsTight) ++
-		//Experiment.create(random, linearlyScaledCountOnes, crossMethodsTight) ++
+		Experiment.create("uni scaled - ", random, uniformlyScaledCountOnes, crossMethodsTight) ++
+		//Experiment.create("linearly scaled - ", random, linearlyScaledCountOnes, crossMethodsTight) ++
 		//Experiment.create(random, blockValuation(deciptive), crossMethodsTight) ++
 		//Experiment.create(random, blockValuation(nonDeciptive), crossMethodsTight) ++
 		//Experiment.create(random, blockValuation(deciptive), crossMethodsRandom) ++
-		//Experiment.create(random, blockValuation(nonDeciptive), crossMethodsRandom) ++
+		//Experiment.create(random, blockValuatio(nonDeciptive), crossMethodsRandom) ++
 		Nil
 
 
-		val results = expirements.map(ex => new StoasticExperiment(ex)).map(ex => ex.stoasticEnsurance(30,1))
-		for(result <- results){
-			log.info(s"result: $result")
+		val results = expirements.map(ex => new StoasticExperiment(ex)).map(ex => (ex, ex.stoasticEnsurance(2,1)))
+		for(tuple <- results){
+			import util.Properties.lineSeparator
+			log.info(s"${tuple._1.experiment.name}:$lineSeparator${tuple._2.toTable()}")
 		}
 
 		import org.sameersingh.scalaplot.Implicits._

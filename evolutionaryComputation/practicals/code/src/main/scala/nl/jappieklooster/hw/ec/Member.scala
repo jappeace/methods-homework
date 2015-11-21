@@ -29,7 +29,7 @@ object MemberFactories{
 			}
 			integer
 		}
-		val flipCount = countFlips(0)
+		val flipCount = countFlips(-1)
 		val mutated = 0.to(flipCount).foldLeft(str)((str, modficationCount) => {
 			def decideIndex(prev:Int):Int = if((prev == 0) || (prev == str.length))
 				decideIndex(random.nextInt(str.length)) else prev
