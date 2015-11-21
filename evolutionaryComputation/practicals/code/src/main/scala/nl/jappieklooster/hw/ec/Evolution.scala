@@ -20,10 +20,10 @@ class Evolution(
 				)
 			)
 		)
-	def startGenetic(seed:Population, times:Int): Array[Population]= genetic(
-		Array(seed), Math.abs(times)
+	def startGenetic(seed:Population, times:Int): Seq[Population]= genetic(
+		Seq(seed), Math.abs(times)
 	)
-	private def genetic(prev:Array[Population], times:Int): Array[Population]={
+	private def genetic(prev:Seq[Population], times:Int): Seq[Population]={
 		if (times <= 0) prev else{
 			val last = prev.last
 			if(hasGoodEnoughSolution(last)){

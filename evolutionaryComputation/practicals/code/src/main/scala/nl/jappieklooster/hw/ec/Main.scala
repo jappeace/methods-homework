@@ -28,14 +28,17 @@ object Main{
 		val deciptive:Seq[Float] = Seq(4,0,1,2,3)
 		val nonDeciptive:Seq[Float] = Seq(4,0,0.5f,1,1.5f)
 		val expirements =
-		Experiment.create(random, uniformlyScaledCountOnes, crossMethodsTight) ++
-		Experiment.create(random, linearlyScaledCountOnes, crossMethodsTight) ++
-		Experiment.create(random, blockValuation(deciptive), crossMethodsTight) ++
-		Experiment.create(random, blockValuation(nonDeciptive), crossMethodsTight) ++
-		Experiment.create(random, blockValuation(deciptive), crossMethodsRandom) ++
-		Experiment.create(random, blockValuation(nonDeciptive), crossMethodsRandom)
+		Experiment.create(random, uniformlyScaledCountOnes, Seq((uniformCross _, tightlyLinked _))) ++
+		//Experiment.create(random, uniformlyScaledCountOnes, crossMethodsTight) ++
+		//Experiment.create(random, linearlyScaledCountOnes, crossMethodsTight) ++
+		//Experiment.create(random, blockValuation(deciptive), crossMethodsTight) ++
+		//Experiment.create(random, blockValuation(nonDeciptive), crossMethodsTight) ++
+		//Experiment.create(random, blockValuation(deciptive), crossMethodsRandom) ++
+		//Experiment.create(random, blockValuation(nonDeciptive), crossMethodsRandom) ++
+		Nil
 
-		val results = expirements.par.flatMap(exp => 0.to(30).par.map(x=> (x,exp.run)))
+		val runCount = 4
+		val results = expirements.flatMap(exp => 1.to(runCount).map(x=> (x,exp.run(10))))
 		for(result <- results){
 			log.info(s"result: ${result._1}")
 			log.info(s"${result._2}")
