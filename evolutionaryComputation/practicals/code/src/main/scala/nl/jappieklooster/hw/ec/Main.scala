@@ -29,7 +29,7 @@ object Main{
 		val nonDeciptive:Seq[Float] = Seq(4,0,0.5f,1,1.5f)
 		val expirements =
 		Experiment.create("uni scaled - ", random, uniformlyScaledCountOnes, crossMethodsTight) ++
-		//Experiment.create("linearly scaled - ", random, linearlyScaledCountOnes, crossMethodsTight) ++
+		Experiment.create("linearly scaled - ", random, linearlyScaledCountOnes, crossMethodsTight) ++
 		//Experiment.create("block decpt", random, blockValuation(deciptive), crossMethodsTight) ++
 		//Experiment.create("block non", random, blockValuation(nonDeciptive), crossMethodsTight) ++
 		//Experiment.create("block decpt", random, blockValuation(deciptive), crossMethodsRandom) ++

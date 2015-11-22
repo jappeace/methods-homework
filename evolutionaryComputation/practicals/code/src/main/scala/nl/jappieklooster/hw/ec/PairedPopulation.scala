@@ -3,7 +3,7 @@ package nl.jappieklooster.hw.ec
 trait Genetic{
 	def genes:String
 }
-case class Pair(father:Genetic, mother:Genetic)
+case class Pair(father:IMember, mother:IMember)
 case class PairedPopulation(members:Seq[Pair], memberFactory:String => IMember) extends EmulateSeq[Pair]{
 	override def baseSeq = members
 	/**
@@ -19,16 +19,28 @@ case class PairedPopulation(members:Seq[Pair], memberFactory:String => IMember) 
 		Population(
 			members.flatMap(
 				fumu => {
+					val genesF = fumu.father.genes
+					val genesM = fumu.mother.genes
 					def createGenes = how(
 						// just make key value like structure of the indiviudal genes
 						// for comparison
-						fumu.father.genes.zip(fumu.mother.genes)
+						genesF.zip(genesM)
 					// mkstring uses a builder to avoid ridiculous concatination problems
 					).mkString
+					def createIfNew(child:String):IMember ={
+						import OffspringGenerator._
+						if(strEq(child,genesF)){
+							return fumu.father
+						}
+						if(strEq(child,genesM)){
+							return fumu.mother
+						}
+						memberFactory(child)
+					}
 
 					// we need two children so we return a list, flatmap will
 					// flatten that list again later
-					List(memberFactory(createGenes), memberFactory(createGenes))
+					List(createIfNew(createGenes), createIfNew(createGenes))
 				}
 			),
 			memberFactory
@@ -36,6 +48,12 @@ case class PairedPopulation(members:Seq[Pair], memberFactory:String => IMember) 
 	}
 }
 object OffspringGenerator{
+	def strEq(one:String,two:String): Boolean={
+		if(one.hashCode != two.hashCode){
+			return false
+		}
+		one.equals(two)
+	}
 	def uniformCross(x:PairedPopulation) : Population = x.pairedToPop(
 		/* kindoff a weird implementation, but it works because
 		 1==1V0==0, then the selection is irrelevant

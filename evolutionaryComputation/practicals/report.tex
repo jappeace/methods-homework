@@ -161,6 +161,12 @@ is the parilization of the expiriments. This reduced total runtime
 significantly. however this is not seen in the statistics.
 
 \subsubsection{Evaluate each member on creation}
+Members are going to be evaluated always, initially I would evaluate the member
+everytime it needed to be evaluated, but in later version I just aded the
+evaluation to the case class. Its not going to change anyways.
+
+\subsubsection{Only create children if the genes are new}
+If the genes are new then create the children otherwise return the parent.
 \section{Execution}
 %TODO:
 % 1. Experiments
