@@ -30,15 +30,18 @@ object Main{
 		val expirements =
 		Experiment.create("uni scaled - ", random, uniformlyScaledCountOnes, crossMethodsTight) ++
 		//Experiment.create("linearly scaled - ", random, linearlyScaledCountOnes, crossMethodsTight) ++
-		//Experiment.create(random, blockValuation(deciptive), crossMethodsTight) ++
-		//Experiment.create(random, blockValuation(nonDeciptive), crossMethodsTight) ++
-		//Experiment.create(random, blockValuation(deciptive), crossMethodsRandom) ++
-		//Experiment.create(random, blockValuatio(nonDeciptive), crossMethodsRandom) ++
+		//Experiment.create("block decpt", random, blockValuation(deciptive), crossMethodsTight) ++
+		//Experiment.create("block non", random, blockValuation(nonDeciptive), crossMethodsTight) ++
+		//Experiment.create("block decpt", random, blockValuation(deciptive), crossMethodsRandom) ++
+		//Experiment.create("block non", random, blockValuation(nonDeciptive), crossMethodsRandom) ++
 		Nil
 
 
-		val runCount = 8
-		val results = expirements.map(ex => new StoasticExperiment(ex)).map(ex => (ex, ex.stoasticEnsurance(runCount,1)))
+		val runCount = 30
+		val results = expirements.par.map(x => {
+			val ex = new StoasticExperiment(x)
+			(ex, ex.stoasticEnsurance(runCount,1))
+		}).seq
 		log.info(s"doing stoastic with $runCount runs")
 		for(tuple <- results){
 			import util.Properties.lineSeparator

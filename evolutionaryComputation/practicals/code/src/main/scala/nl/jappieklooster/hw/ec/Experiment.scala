@@ -29,7 +29,7 @@ class Experiment(val name:String, evolution: Evolution, memberFactory:String => 
 	private def findOptimumPopsize(consideringSize:Int, difference:Int): Seq[RunResult] = {
 		if(consideringSize > maxPopSize){
 			// we went to deep so we failed
-			return Seq(RunResult.createFailed(consideringSize))
+			return Nil
 		}
 
 		val result = run(consideringSize)
@@ -70,24 +70,27 @@ object Experiment{
 	def create(
 		name:String,
 		random:Random,
-		valuationFunction:IHasFitness=>Int,
-		variationOperators:Seq[(PairedPopulation => Population, String => IMember, String)]
+		valuationFunction:String=>Int,
+		variationOperators:Seq[(PairedPopulation => Population, (String=>Int) => String => IMember, String)]
 	):Seq[Experiment] = variationOperators.map(
-		variation => new Experiment(
+		variation => {
+			val probe = Fitness.createProbe(valuationFunction)
+		 new Experiment(
 			name + variation._3,
 			new Evolution(
-			Fitness.createProbe(valuationFunction),
-			MateSelection.createCompeteWithRandomTournement(random),
-			variation._1,
-			FittestFilter.tournementElitism,
-			hasGoodEnoughSolution
-		),
-		variation._2
-		)
+				probe,
+				MateSelection.createCompeteWithRandomTournement(random),
+				variation._1,
+				FittestFilter.tournementElitism,
+				hasGoodEnoughSolution
+			),
+			variation._2(probe.valuate)
+			)
+		}
 	)
 	def hasGoodEnoughSolution(population: Population):Boolean = {
 		// if there exists a member in a population that only contains 1's.
-		population.exists(member => !member.getFitness.exists(c => c == '0'))
+		population.exists(member => !member.genes.exists(c => c == '0'))
 	}
 
 }

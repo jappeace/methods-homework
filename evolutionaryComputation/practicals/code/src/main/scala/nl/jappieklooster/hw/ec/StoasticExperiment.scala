@@ -1,8 +1,11 @@
 package nl.jappieklooster.hw.ec
 
 import Experiment._
+import com.itextpdf.text.log.LoggerFactory
+
 class StoasticExperiment(val experiment: Experiment) {
 
+	val log = LoggerFactory.getLogger(getClass)
 	private def geussLowest={
 		// run it four times
 		val peekResult = 0.to(3).flatMap(x=>experiment.bisectionalSearch)
@@ -16,11 +19,12 @@ class StoasticExperiment(val experiment: Experiment) {
 	}
 	def stoasticEnsurance(required:Int, tolerance:Int):StoasticRun ={
 		val smallest = geussLowest
+		log.info(s"found $smallest")
 		if(!smallest.success){
 			return StoasticRun(Seq(smallest), required)
 		}
 		def verifyLowest(currentPop:Int, faults:Int, index:Int) : Seq[RunResult] = {
-			def failed = Seq(RunResult.createFailed(currentPop))
+			def failed = Nil
 			if(index >= required){
 				return Nil
 			}
@@ -55,6 +59,7 @@ case class StoasticRun(runs:Seq[RunResult], required:Int) {
 	lazy val bestRunAverageTime = bestRun.map(x=>x.runtime).sum/bestRun.length
 
 	def toTable():String ={
+		s"success:			$isSuccesfull" + lineSeparator +
 		s"minimumPop: 		$bigestPopcount	" +lineSeparator+
 		s"avgGeneration:		$avergeGeneration" +lineSeparator+
 		s"avgFitness:			$averageFitnessCount" +lineSeparator+

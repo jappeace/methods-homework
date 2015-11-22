@@ -9,15 +9,13 @@ class FitnessTests extends FlatSpec with Matchers{
 	/**
 	 * create a known subject which we can count manually
 	 */
-	val subject = new IHasFitness {
-		val str = "1111" + "0111" + "1010" + "1000" + "0000"
+	val subject =
+		"1111" + "0111" + "1010" + "1000" + "0000"
 		//		   1234     5678     9012     3
 		// so linearly scaled = 1+2+3+4 + 6+7+8 + 9+ 11+ 13 = 64
 		// decept: 4	+	0	+ 	1	+	2	+ 3 = 10
 		// non: 	4	+	0	+ 	0.5	+	1	+ 1.5 = 7
 
-		override def getFitness: String = str
-	}
 
 	"Linearly counting fitness " should "count subject as 10" in {
 		Fitness.uniformlyScaledCountOnes(subject) should be (10)
@@ -36,8 +34,7 @@ class FitnessTests extends FlatSpec with Matchers{
 	}
 
 	"trap function" should "have no trouble with wrongly block sized input " in {
-		Fitness.blockValuation(deciptive)(new IHasFitness {
-			override def getFitness: String = "1111" + "0111" + "1010" + "1000" + "00"
-		}) should be (10)  // because it should count the ones
+		Fitness.blockValuation(deciptive)("1111" + "0111" + "1010" + "1000" + "00"
+		) should be (10)  // because it should count the ones
 	}
 }

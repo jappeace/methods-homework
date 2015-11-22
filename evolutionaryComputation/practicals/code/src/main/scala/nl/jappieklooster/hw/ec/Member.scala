@@ -5,24 +5,19 @@ import org.slf4j.LoggerFactory
 import scala.util.Random
 
 trait IMember extends IHasFitness with Genetic
-/** a member of the population */
-case class SinglyMember(genes:String) extends IMember{
-	override def getFitness = genes
-	override def getGenes = genes
-}
-case class ValGeneDecoupledMember(valuation:String, genes:String) extends IMember{
-	override def getFitness = valuation
-	override def getGenes = genes
+case class Member(valuation:Int, gen:String) extends IMember{
+	override def fitness = valuation
+	override def genes = gen
 }
 
 object MemberFactories{
-	def tightlyLinked(str:String):IMember = SinglyMember(str)
-	def randomlyLinked(instructions:TraversableOnce[Int])(str:String):IMember = {
+	def tightlyLinked(func:String=>Int)(str:String):IMember = Member(func(str), str)
+	def randomlyLinked(instructions:TraversableOnce[Int])(func:String=>Int)(str:String):IMember = {
 		val genes = instructions.map(inx => str.charAt(inx)).mkString
-		ValGeneDecoupledMember(str,genes)
+		Member(func(str), str)
 	}
 	val log = LoggerFactory.getLogger(this.getClass)
-	def withCoinfliptimesMutation(creationFunc:String => IMember, random:Random)(str:String):IMember = {
+	def withCoinfliptimesMutation(creationFunc:(String=>Int) => String => IMember, random:Random)(func:String=>Int)(str:String):IMember = {
 		def countFlips(integer:Integer):Integer = {
 			if(random.nextBoolean()){
 				return countFlips(integer+1)
@@ -40,6 +35,6 @@ object MemberFactories{
 			val end = str.drop(index)
 			begin + mutation + end
 		})
-		creationFunc(mutated)
+		creationFunc(func)(mutated)
 	}
 }

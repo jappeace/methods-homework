@@ -3,7 +3,6 @@ package nl.jappieklooster.hw.ec
 object FittestFilter {
 	/** drop the parents */
 	def killParents(
-		valuation : IHasFitness => Int,
 		parents : Population,
 		children : Population
 	) : Population = {
@@ -11,16 +10,12 @@ object FittestFilter {
 	}
 
 	def tournementElitism(
-		valuation : IHasFitness => Int,
 		parents : Population,
 		children : Population
 	): Population={
-		val tournement = MateSelection.pickBestWith(valuation)_
-
 		val combined = parents.members.zip(children.members)
-
 		Population(
-			combined.map(x=> tournement(x._1, x._2)),
+			combined.map(x=> MateSelection.pickBest(x._1, x._2)),
 			parents.memberFactory
 		)
 	}

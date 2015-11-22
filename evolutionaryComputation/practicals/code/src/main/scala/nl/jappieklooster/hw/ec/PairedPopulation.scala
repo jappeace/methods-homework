@@ -1,7 +1,7 @@
 package nl.jappieklooster.hw.ec
 
 trait Genetic{
-	def getGenes:String
+	def genes:String
 }
 case class Pair(father:Genetic, mother:Genetic)
 case class PairedPopulation(members:Seq[Pair], memberFactory:String => IMember) extends EmulateSeq[Pair]{
@@ -22,7 +22,7 @@ case class PairedPopulation(members:Seq[Pair], memberFactory:String => IMember) 
 					def createGenes = how(
 						// just make key value like structure of the indiviudal genes
 						// for comparison
-						fumu.father.getGenes.zip(fumu.mother.getGenes)
+						fumu.father.genes.zip(fumu.mother.genes)
 					// mkstring uses a builder to avoid ridiculous concatination problems
 					).mkString
 
