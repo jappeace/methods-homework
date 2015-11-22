@@ -144,6 +144,23 @@ I considered to combine the bidisectional search with the stocastic ensurance.
 But that would be way slower, and it won't be much better (or even worse depending
 on how you do it) then my current implementation.
 
+
+\subsection{Speed up attempts}
+\subsubsection{Paralization}
+Since were doing string comparisons I had the idea of ussing parlization to
+speed up the algoritm by doing paralization. This can be done very easily
+in scala with par collections (and the fact that imutibility is default).
+
+However once I implemented this, I came to the conclusion it was not faster.
+The overhead for delegating and creating threads was more than the parilization
+gained.
+
+The problem is that the evaluation function, even with gene length of 100, is
+to cheap to make any reasonable paralization effecitve. However what was effictive
+is the parilization of the expiriments. This reduced total runtime 
+significantly. however this is not seen in the statistics.
+
+\subsubsection{Evaluate each member on creation}
 \section{Execution}
 %TODO:
 % 1. Experiments
