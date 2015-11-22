@@ -24,17 +24,36 @@ class FitnessTests extends FlatSpec with Matchers{
 		Fitness.linearlyScaledCountOnes(subject) should be (64)
 	}
 
-	val deciptive = List(4f,0f,1f,2f,3f)
+	val deceptive = Fitness.blockValuation(List(4f,0f,1f,2f,3f)) _
 	"deceptive trap fitness" should "count subject as 10" in {
-		Fitness.blockValuation(deciptive)(subject) should be (10)
+		deceptive(subject) should be (10)
 	}
-	val nondecept = List(4f, 0f, 0.5f, 1f, 1.5f)
+	"decipte trap fitness " should "count these infividual elements correctly " in{
+		/*
+		* I suepected something was wrong with the trap function because all trap
+		* GA's failed to find solution wich didn't make much sense (wouldn't learn
+		* much from a function that doesn't work).
+		* These tests proove that
+		 */
+		deceptive("1111") should be (4)
+		deceptive("0111") should be (0)
+		deceptive("0011") should be (1f)
+		deceptive("0001") should be (2f)
+		deceptive("0000") should be (3f)
+	}
+	"trap function" should "have no trouble with wrongly block sized input " in {
+		deceptive("1111" + "0111" + "1010" + "1000" + "00") should be (10)  // because it should count the ones
+	}
+	val nondecept = Fitness.blockValuation(List(4f, 0f, 0.5f, 1f, 1.5f)) _
 	"nondeceptive trap fitness" should "count subject as 7" in {
-		Fitness.blockValuation(nondecept)(subject) should be (7)
+		nondecept(subject) should be (7)
+	}
+	"nondecipte trap fitness " should "count these infividual elements correctly " in{
+		nondecept("1111") should be (4)
+		nondecept("1110") should be (0)
+		nondecept("1100") should be (0.5f)
+		nondecept("1000") should be (1f)
+		nondecept("0000") should be (1.5f)
 	}
 
-	"trap function" should "have no trouble with wrongly block sized input " in {
-		Fitness.blockValuation(deciptive)("1111" + "0111" + "1010" + "1000" + "00"
-		) should be (10)  // because it should count the ones
-	}
 }

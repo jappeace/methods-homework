@@ -26,32 +26,66 @@ class Experiment(val name:String, evolution: Evolution, memberFactory:String => 
 		RunResult(consideringSize, success, runtime, evolutionResult.length,evolution.valuation.countCalls())
 	}
 
+	def verifyLowest(currentPop:Int, faults:Int, index:Int) : Seq[RunResult] = {
+		def failed = Nil
+		if(index >= requiredRuns){
+			return Nil
+		}
+		if(faults > faultTolerance){
+			return failed
+		}
+		val exp = run(currentPop)
+		val newFaults = if (exp.success) faults else faults+1
+		Seq(exp) ++ verifyLowest(currentPop, newFaults,index+1)
+	}
 	private def findOptimumPopsize(consideringSize:Int, difference:Int): Seq[RunResult] = {
 		if(consideringSize > maxPopSize){
 			// we went to deep so we failed
 			return Nil
 		}
 
-		val result = run(consideringSize)
+		val result = verifyLowest(consideringSize,0,0)
 		// 10, 20, 40, 80, 160, 320, 240, 280, 260, 250.
 		val hadSuccess = consideringSize != difference*2
 
 		val newDiff = if(hadSuccess) difference/2 else difference*2
 
-		if(newDiff < popUnit){
-			return Seq(result)
+		if(newDiff < popUnit){ // steps becoming to small, bort
+			return result
 		}
-		if(!result.success){
-			return result +: findOptimumPopsize(consideringSize+newDiff,newDiff)
+		if(result.last.success){
+			// if we had success, zoom in
+			return result ++ findOptimumPopsize(consideringSize-difference/2, difference/2)
 		}
-		return result +: findOptimumPopsize(consideringSize-difference/2, difference/2)
+		result ++ findOptimumPopsize(consideringSize+newDiff,newDiff)
 	}
-	def bisectionalSearch() = findOptimumPopsize(popUnit ,popUnit/2)
+	def bisectionalSearch() = StoasticRun(findOptimumPopsize(popUnit ,popUnit/2), requiredRuns)
 }
 
 case class RunResult(popSize:Int, success:Boolean, runtime:Long, generationCount:Int, fitnessCallCount:Int){
 	override def toString() :String = {
 		s"Run(pop#=$popSize, success=$success, time=$runtime, gen#=$generationCount)"
+	}
+}
+import util.Properties.lineSeparator
+case class StoasticRun(runs:Seq[RunResult], required:Int) {
+	lazy val byPopSize = runs.groupBy(x=>x.popSize)
+	lazy val bestRun = byPopSize.get(bigestPopcount).getOrElse(Nil)
+	lazy val isSuccesfull = bestRun.size == required
+	override def toString(): String = {
+		byPopSize.mkString(lineSeparator)
+	}
+	lazy val bigestPopcount = runs.sortWith((a,b)=>a.popSize > b.popSize).head.popSize
+	lazy val avergeGeneration = bestRun.map(x=>x.generationCount).sum/bestRun.length
+	lazy val averageFitnessCount = bestRun.map(x=>x.fitnessCallCount).sum/bestRun.length
+	lazy val bestRunAverageTime = bestRun.map(x=>x.runtime).sum/bestRun.length
+
+	def toTable():String ={
+		s"success:			$isSuccesfull" + lineSeparator +
+		s"minimumPop: 		$bigestPopcount	" +lineSeparator+
+		s"avgGeneration:		$avergeGeneration" +lineSeparator+
+		s"avgFitness:			$averageFitnessCount" +lineSeparator+
+		s"avgTime:			$bestRunAverageTime " +lineSeparator
 	}
 }
 
@@ -66,12 +100,14 @@ object Experiment{
 	val popUnit = 10
 	val maxPopSize = 1280
 	val geneLength = 100
+	val requiredRuns = 30
+	val faultTolerance = 1
 
 	def create(
 		name:String,
 		random:Random,
-		valuationFunction:String=>Int,
-		variationOperators:Seq[(PairedPopulation => Population, (String=>Int) => String => IMember, String)]
+		valuationFunction:String=>Float,
+		variationOperators:Seq[(PairedPopulation => Population, (String=>Float) => String => IMember, String)]
 	):Seq[Experiment] = variationOperators.map(
 		variation => {
 			val probe = Fitness.createProbe(valuationFunction)

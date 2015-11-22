@@ -114,6 +114,19 @@ gave the first 1 a value of 0, and the second a value of 1 etc.
 Trap functions were simply wrongly implemented, instead of counting the
 ones they gave positional values of the ones in the block and used the
 block as a lookup value for that.
+
+Trap function actually reversed the output. I suspected the trap function
+was doing it wrong because all the GA's kept failing, so I added a bunch
+of very specific test for each block result which confirmend my suspicion.
+The actuall bug was a simple reverse, which meant  the population, slowly
+leaned towards 0's instead of 1's. and since my 'solution' is a string
+of only ones, the end result is that the bisectional search kept increasing
+the population size since now anwser was found and the algoritm wasn't happy.
+
+All valuation functions should return a float instead of an Int.
+I don't even understan how I could make such a stupid mistake until the
+unit test pointed it out to me. (programming for 6+ years..)
+
 \subsection{Uncertainties}
 Should the elitism selection use tournement selection?
 When precisly do we find the optimal solution?

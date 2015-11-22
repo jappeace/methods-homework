@@ -25,8 +25,8 @@ object Main{
 			(uniformCross _, createRandomlyLinked, " Random ux"),
 			(uniformCross _, withCoinfliptimesMutation(createRandomlyLinked, random) _, " Random ux, R")
 		)
-		val deciptive:Seq[Float] = Seq(4,0,1,2,3)
-		val nonDeciptive:Seq[Float] = Seq(4,0,0.5f,1,1.5f)
+		val deciptive:Seq[Float] = List(4,0,1,2,3)
+		val nonDeciptive:Seq[Float] = List(4,0,0.5f,1,1.5f)
 		val expirements =
 		Experiment.create("uni scaled - ", random, uniformlyScaledCountOnes, crossMethodsTight) ++
 		Experiment.create("linearly scaled - ", random, linearlyScaledCountOnes, crossMethodsTight) ++
@@ -37,15 +37,13 @@ object Main{
 		Nil
 
 
-		val runCount = 30
 		val results = expirements.par.map(x => {
-			val ex = new StoasticExperiment(x)
-			(ex, ex.stoasticEnsurance(runCount,1))
+			(x, x.bisectionalSearch())
 		}).seq
-		log.info(s"doing stoastic with $runCount runs")
+		log.info(s"doing stoastic with ${Experiment.requiredRuns} runs")
 		for(tuple <- results){
 			import util.Properties.lineSeparator
-			log.info(s"${tuple._1.experiment.name}:$lineSeparator${tuple._2.toTable()}")
+			log.info(s"${tuple._1.name}:$lineSeparator${tuple._2.toTable()}")
 		}
 
 		import org.sameersingh.scalaplot.Implicits._

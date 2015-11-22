@@ -1,12 +1,12 @@
 package nl.jappieklooster.hw.ec
 
 trait IHasFitness{
-	def fitness:Int
+	def fitness:Float
 }
 trait FitnessEvaluator{
 	private var calls = 0
-	protected def getFunction:String => Int
-	def valuate(x:String):Int ={
+	protected def getFunction:String => Float
+	def valuate(x:String):Float ={
 		calls += 1
 		getFunction(x)
 	}
@@ -19,9 +19,9 @@ trait FitnessEvaluator{
 
 object Fitness {
 	private def whereCharIsOne(c:Char) = c == '1'
-	def uniformlyScaledCountOnes(s:String) = s.count(whereCharIsOne)
+	def uniformlyScaledCountOnes(s:String):Float = s.count(whereCharIsOne)
 
-	def linearlyScaledCountOnes(s:String) = s.
+	def linearlyScaledCountOnes(s:String):Float = s.
 			// make a map like thing of it where the index is the key
 			zipWithIndex.
 			// select the elements where 1
@@ -31,14 +31,15 @@ object Fitness {
 			map(_._2+1).
 			// result
 			sum
-	def blockValuation(block:Seq[Float])(s:String) = s.
-			// make blocks of the string
-			grouped(block.size-1).
-			map(
-				// get the value specified in the block
-				str => block.apply(str.count(whereCharIsOne))
-			).sum.toInt
-	def createProbe(f:String=>Int):FitnessEvaluator = new FitnessEvaluator {
-		protected override def getFunction: (String) => Int = f
+	def blockValuation(block:Seq[Float])(s:String):Float = {
+		val size = block.size-1
+		// make blocks of the string
+		s.grouped(size).map(
+			// get the value specified in the block
+			str => block(size - uniformlyScaledCountOnes(str).toInt)
+		).sum
+	}
+	def createProbe(f:String=>Float):FitnessEvaluator = new FitnessEvaluator {
+		protected override def getFunction: (String) => Float = f
 	}
 }
