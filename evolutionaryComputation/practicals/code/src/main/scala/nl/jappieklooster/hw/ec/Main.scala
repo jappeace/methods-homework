@@ -30,10 +30,10 @@ object Main{
 		val expirements =
 		Experiment.create("uni scaled - ", random, uniformlyScaledCountOnes, crossMethodsTight) ++
 		Experiment.create("linearly scaled - ", random, linearlyScaledCountOnes, crossMethodsTight) ++
-		//Experiment.create("block decpt", random, blockValuation(deciptive), crossMethodsTight) ++
-		//Experiment.create("block non", random, blockValuation(nonDeciptive), crossMethodsTight) ++
-		//Experiment.create("block decpt", random, blockValuation(deciptive), crossMethodsRandom) ++
-		//Experiment.create("block non", random, blockValuation(nonDeciptive), crossMethodsRandom) ++
+		Experiment.create("block decpt", random, blockValuation(deciptive), crossMethodsTight) ++
+		Experiment.create("block non", random, blockValuation(nonDeciptive), crossMethodsTight) ++
+		Experiment.create("block decpt", random, blockValuation(deciptive), crossMethodsRandom) ++
+		Experiment.create("block non", random, blockValuation(nonDeciptive), crossMethodsRandom) ++
 		Nil
 
 

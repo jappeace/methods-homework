@@ -167,6 +167,16 @@ evaluation to the case class. Its not going to change anyways.
 
 \subsubsection{Only create children if the genes are new}
 If the genes are new then create the children otherwise return the parent.
+This reduces evaluations and object creations. Its becomes more effective
+at deeper generation, it even slows down the fastest GA's by a few miliseconds
+but the deeper GA are lots faster.
+
+This can be done safely because strings are immutable and so are the members.
+So I can reuse them whenever its needed.
+
+To reduce the amount of string comparisons, first the hascode function is called
+This will cache itself, I know this because I inspected the source code of the
+String class in Java.
 \section{Execution}
 %TODO:
 % 1. Experiments
