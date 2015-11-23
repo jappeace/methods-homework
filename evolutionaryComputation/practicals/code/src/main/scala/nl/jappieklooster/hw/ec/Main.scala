@@ -43,10 +43,11 @@ object Main{
 		log.info(s"doing stoastic with ${Experiment.requiredRuns} runs")
 		for(tuple <- results){
 			import util.Properties.lineSeparator
-			val e = tuple._1
-			log.info(s"${e.name} (${e.variation}}):$lineSeparator${tuple._2.toTable()}")
+			val ex = tuple._1
+			val re = tuple._2
+			log.info(s"${ex.name} (${ex.variation}}):$lineSeparator${re.toTable()}")
 		}
-
+		
 	}
 	def createRandomlyLinked = randomlyLinked(random.shuffle(0.to(Experiment.geneLength))) _
 }
