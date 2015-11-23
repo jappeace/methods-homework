@@ -49,5 +49,4 @@ object Main{
 
 	}
 	def createRandomlyLinked = randomlyLinked(random.shuffle(0.to(Experiment.geneLength))) _
-	def randomGene = s"${random.nextInt(2)}"
 }

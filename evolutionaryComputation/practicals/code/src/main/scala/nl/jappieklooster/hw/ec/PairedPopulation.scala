@@ -1,5 +1,7 @@
 package nl.jappieklooster.hw.ec
 
+import scala.util.Random
+
 trait Genetic{
 	def genes:String
 }
@@ -56,7 +58,7 @@ object OffspringGenerator{
 		*/
 		genes =>
 			// where the genes are equal will keep the same, else random
-			genes.map(fm => if (fm._1 == fm._2) fm._1 else Main.randomGene)
+			genes.map(fm => if (fm._1 == fm._2) fm._1 else randomGene)
 	)
 	def singlePointCross(x:PairedPopulation) : Population = x.pairedToPop(
 		genes => {
@@ -81,4 +83,6 @@ object OffspringGenerator{
 			})
 		}
 	)
+	val random = Random
+	def randomGene = s"${random.nextInt(2)}"
 }
