@@ -29,10 +29,10 @@ case class PairedPopulation(members:Seq[Pair], memberFactory:String => IMember) 
 					).mkString
 					def createIfNew(child:String):IMember ={
 						import OffspringGenerator._
-						if(strEq(child,genesF)){
+						if(child == genesF){
 							return fumu.father
 						}
-						if(strEq(child,genesM)){
+						if(child == genesM){
 							return fumu.mother
 						}
 						memberFactory(child)
@@ -48,12 +48,6 @@ case class PairedPopulation(members:Seq[Pair], memberFactory:String => IMember) 
 	}
 }
 object OffspringGenerator{
-	def strEq(one:String,two:String): Boolean={
-		if(one.hashCode != two.hashCode){
-			return false
-		}
-		one.equals(two)
-	}
 	def uniformCross(x:PairedPopulation) : Population = x.pairedToPop(
 		/* kindoff a weird implementation, but it works because
 		 1==1V0==0, then the selection is irrelevant

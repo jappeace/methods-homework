@@ -43,7 +43,8 @@ object Main{
 		log.info(s"doing stoastic with ${Experiment.requiredRuns} runs")
 		for(tuple <- results){
 			import util.Properties.lineSeparator
-			log.info(s"${tuple._1.name}:$lineSeparator${tuple._2.toTable()}")
+			val e = tuple._1
+			log.info(s"${e.name} (${e.variation}}):$lineSeparator${tuple._2.toTable()}")
 		}
 
 	}

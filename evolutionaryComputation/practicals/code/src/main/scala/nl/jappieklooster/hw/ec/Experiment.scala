@@ -51,6 +51,7 @@ class Experiment(val name:String, val variation:String, evolution: Evolution, me
 		val newDiff = if(hadSuccess) difference/2 else difference*2
 
 		if(newDiff < popUnit){ // steps becoming to small, bort return result
+			return result
 		}
 		if(result.last.success){
 			// if we had success, zoom in
@@ -69,12 +70,16 @@ case class RunResult(popSize:Int, success:Boolean, runtime:Long, generationCount
 import util.Properties.lineSeparator
 case class StoasticRun(runs:Seq[RunResult], required:Int) {
 	lazy val byPopSize = runs.groupBy(x=>x.popSize)
-	lazy val bestRun = byPopSize.get(bigestPopcount).getOrElse(Nil)
+	lazy val bestRun = byPopSize.getOrElse(bigestPopcount, Nil)
 	lazy val isSuccesfull = bestRun.size == required
 	override def toString(): String = {
 		byPopSize.mkString(lineSeparator)
 	}
-	lazy val bigestPopcount = runs.sortWith((a,b)=>a.popSize > b.popSize).head.popSize
+	lazy val bigestPopcount = {
+	 	val successes = byPopSize.filter(p => p._2.count(r=> r.success) == Experiment.requiredRuns)
+		// do the highest so its obvious its a lot
+		if(successes.isEmpty) runs.last.popSize else successes.minBy(x=>x._1)._1
+	}
 	lazy val avergeGeneration = bestRun.map(x=>x.generationCount).sum/bestRun.length
 	lazy val averageFitnessCount = bestRun.map(x=>x.fitnessCallCount).sum/bestRun.length
 	lazy val bestRunAverageTime = bestRun.map(x=>x.runtime).sum/bestRun.length
@@ -99,7 +104,7 @@ object Experiment{
 	val popUnit = 10
 	val maxPopSize = 1280
 	val geneLength = 100
-	val requiredRuns = 30
+	val requiredRuns = 4
 	val faultTolerance = 1
 
 	def create(
