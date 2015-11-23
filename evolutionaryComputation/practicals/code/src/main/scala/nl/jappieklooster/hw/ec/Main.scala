@@ -46,14 +46,6 @@ object Main{
 			log.info(s"${tuple._1.name}:$lineSeparator${tuple._2.toTable()}")
 		}
 
-		import org.sameersingh.scalaplot.Implicits._
-
-		val graphGrouped = results.groupBy(x=>x._1.name)
-		for(graphData <- graphGrouped){
-			graphData.
-		}
-		val x = 0.0 until 2.0 * math.Pi by 0.1
-		val out =output(ASCII, xyChart(x ->(math.sin(_), math.cos(_))))
 	}
 	def createRandomlyLinked = randomlyLinked(random.shuffle(0.to(Experiment.geneLength))) _
 	def randomGene = s"${random.nextInt(2)}"

@@ -10,7 +10,6 @@ object FittestFilter {
 	}
 
 	def truncateElitism(
-			valuation : IHasFitness => Int,
 			parents : Population,
 			children : Population
 			) : Population = {

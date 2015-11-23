@@ -117,7 +117,7 @@ object Experiment{
 				probe,
 				MateSelection.createCompeteWithRandomTournement(random),
 				variation._1,
-				FittestFilter.tournementElitism,
+				FittestFilter.truncateElitism,
 				hasGoodEnoughSolution
 			),
 			variation._2(probe.valuate)
