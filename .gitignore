@@ -41,3 +41,6 @@ taskArtifacts/
 *.jar
 *.class
 
+# meshing around with graphs....
+*.svg
+*.pdf_tex
