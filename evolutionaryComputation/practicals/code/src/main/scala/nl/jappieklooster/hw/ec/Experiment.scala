@@ -8,7 +8,7 @@ import scala.util.Random
  * evolution.
  * @param evolution
  */
-class Experiment(val name:String, evolution: Evolution, memberFactory:String => IMember) {
+class Experiment(val name:String, val variation:String, evolution: Evolution, memberFactory:String => IMember) {
 	import Experiment._
 	val log = LoggerFactory.getLogger(this.getClass)
 	private def createPopulation(size:Int) = {
@@ -50,8 +50,7 @@ class Experiment(val name:String, evolution: Evolution, memberFactory:String => 
 
 		val newDiff = if(hadSuccess) difference/2 else difference*2
 
-		if(newDiff < popUnit){ // steps becoming to small, bort
-			return result
+		if(newDiff < popUnit){ // steps becoming to small, bort return result
 		}
 		if(result.last.success){
 			// if we had success, zoom in
@@ -112,7 +111,8 @@ object Experiment{
 		variation => {
 			val probe = Fitness.createProbe(valuationFunction)
 		 new Experiment(
-			name + variation._3,
+			name,
+			variation._3,
 			new Evolution(
 				probe,
 				MateSelection.createCompeteWithRandomTournement(random),

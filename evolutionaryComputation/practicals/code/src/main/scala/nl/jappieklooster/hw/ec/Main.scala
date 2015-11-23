@@ -28,8 +28,8 @@ object Main{
 		val deciptive:Seq[Float] = List(4,0,1,2,3)
 		val nonDeciptive:Seq[Float] = List(4,0,0.5f,1,1.5f)
 		val expirements =
-		Experiment.create("uni scaled - ", random, uniformlyScaledCountOnes, crossMethodsTight) ++
-		Experiment.create("linearly scaled - ", random, linearlyScaledCountOnes, crossMethodsTight) ++
+		Experiment.create("uni scaled", random, uniformlyScaledCountOnes, crossMethodsTight) ++
+		Experiment.create("linearly scaled", random, linearlyScaledCountOnes, crossMethodsTight) ++
 		Experiment.create("block decpt", random, blockValuation(deciptive), crossMethodsTight) ++
 		Experiment.create("block non", random, blockValuation(nonDeciptive), crossMethodsTight) ++
 		Experiment.create("block decpt", random, blockValuation(deciptive), crossMethodsRandom) ++
@@ -48,8 +48,12 @@ object Main{
 
 		import org.sameersingh.scalaplot.Implicits._
 
+		val graphGrouped = results.groupBy(x=>x._1.name)
+		for(graphData <- graphGrouped){
+			graphData.
+		}
 		val x = 0.0 until 2.0 * math.Pi by 0.1
-		val out = output(ASCII, xyChart(x ->(math.sin(_), math.cos(_))))
+		val out =output(ASCII, xyChart(x ->(math.sin(_), math.cos(_))))
 	}
 	def createRandomlyLinked = randomlyLinked(random.shuffle(0.to(Experiment.geneLength))) _
 	def randomGene = s"${random.nextInt(2)}"
