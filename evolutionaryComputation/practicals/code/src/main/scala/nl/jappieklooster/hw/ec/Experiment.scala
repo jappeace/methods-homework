@@ -83,14 +83,6 @@ case class StoasticRun(runs:Seq[RunResult], required:Int) {
 	lazy val avergeGeneration = bestRun.map(x=>x.generationCount).sum/bestRun.length
 	lazy val averageFitnessCount = bestRun.map(x=>x.fitnessCallCount).sum/bestRun.length
 	lazy val bestRunAverageTime = bestRun.map(x=>x.runtime).sum/bestRun.length
-
-	def toTable():String ={
-		s"success:			$isSuccesfull" + lineSeparator +
-		s"minimumPop: 		$bigestPopcount	" +lineSeparator+
-		s"avgGeneration:		$avergeGeneration" +lineSeparator+
-		s"avgFitness:			$averageFitnessCount" +lineSeparator+
-		s"avgTime:			$bestRunAverageTime " +lineSeparator
-	}
 }
 
 object RunResult{
@@ -98,14 +90,33 @@ object RunResult{
 }
 object Experiment{
 
+	def stoasticsToLatex(runs:Seq[(String, StoasticRun)]) = {
+		// did some html in my youth
+		val td = "&"
+		runs.foldLeft(
+			s"$lineSeparator" + // the structure becomes clearer on a new line
+			s"\\begin{tabular}{llllll}$lineSeparator" +
+			s"Variation $td Success $td Minimum population $td Average generation "+
+			s"$td Average fitness call-count $td Average time \\\\ \\toprule $lineSeparator"
+		)((a,tupple) => {
+			val r = tupple._2
+			s"$a" +
+			s"${tupple._1} $td" +
+			s"${r.isSuccesfull} $td ${r.bigestPopcount} $td" +
+			s"${r.avergeGeneration} $td ${r.averageFitnessCount} $td" +
+			s"${r.bestRunAverageTime} \\\\$lineSeparator"
+		}
+		) +
+		s"\\end{tabular}$lineSeparator"
+	}
 	/**
 	 * Don't consider pop diferences smaller than this unit
 	 */
 	val popUnit = 10
 	val maxPopSize = 1280
 	val geneLength = 100
-	val requiredRuns = 30
-	val faultTolerance = 1
+	val requiredRuns = 5
+	val faultTolerance = 0
 
 	def create(
 		name:String,

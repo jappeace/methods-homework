@@ -44,3 +44,5 @@ taskArtifacts/
 # meshing around with graphs....
 *.svg
 *.pdf_tex
+# generated file
+evolutionaryComputation/practicals/code/result.tex
