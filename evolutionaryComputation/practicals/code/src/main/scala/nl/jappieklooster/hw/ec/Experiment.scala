@@ -115,7 +115,7 @@ object Experiment{
 	val popUnit = 10
 	val maxPopSize = 1280
 	val geneLength = 100
-	val requiredRuns = 5
+	val requiredRuns = 4
 	val faultTolerance = 0
 
 	def create(

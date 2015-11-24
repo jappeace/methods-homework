@@ -16,6 +16,10 @@ object Main{
 	case class Configurations(strLength:Int,popSize:Int,genCount:Int, evolution:Evolution)
 	val log = LoggerFactory.getLogger(Main.getClass)
 	val random = Random
+	val br = lineSeparator
+	val folder = "../"
+	type GraphData = (String,Seq[Seq[(Double,Double)]])
+
 	def main(args:Array[String]){
 		log.info("starting ea")
 
@@ -47,36 +51,11 @@ object Main{
 		}).seq
 		log.info(s"doing stoastic with ${Experiment.requiredRuns} runs")
 
-		import org.sameersingh.scalaplot.Implicits._
-
 		val values = toPlotableStructure(results)
 
-		val br = lineSeparator
-		val latex = values.foldLeft(s"$br\\subsection{Data}")((str,duo) => {
-			var result = s"$str $br"
-			result += s"\\subsubsection{${duo._1}} $br"
-			result += s"\\begin{figure}[ht!] $br"
-			result += s"\\begin{verbatim} $br"
+		log.info(toLatexWith(asciiGraph)(values))
 
-			val xy = duo._2
-			val weirdAddedChar = 12.toChar.toString
-			result += output(ASCII, xyChart(new XYData(xy(0), xy(1), xy(2)))).replaceAll(weirdAddedChar, "")
-			result += s"\\end{verbatim} $br"
-			result += s"\\caption{${duo._1}}"
-			result += s"\\end{figure}\\clearpage $br"
-
-			result += Experiment.stoasticsToLatex(duo._3)
-			result
-		})
-		log.info(latex)
-
-		val outputFile = new File("result.tex")
-		outputFile.delete()
-		outputFile.createNewFile()
-		new PrintWriter(outputFile){
-			write(latex)
-			close()
-		}
+		write("result.tex", toLatexWith(svgGraph)(values))
 
 		val file = java.io.File.createTempFile("evolutionaryComputing", "dir")
 		file.delete()
@@ -88,6 +67,15 @@ object Main{
 			close()
 		}
 		*/
+	}
+	def write(filename:String, content:String) = {
+		val outputFile = new File(folder+filename)
+		outputFile.delete()
+		outputFile.createNewFile()
+		new PrintWriter(outputFile){
+			write(content)
+			close()
+		}
 	}
 
 	def toPlotableStructure(results:Seq[(Experiment, StoasticRun)]) =
@@ -101,5 +89,43 @@ object Main{
 		// the tables with the graphs, just flatten it
 		a._2.map(ab => (s"${ab._1.variation}", ab._2))
 		))
+	def asciiGraph(data:GraphData) = {
+		val xy = data._2
+		val weirdAddedChar = 12.toChar.toString
+		import org.sameersingh.scalaplot.Implicits._
+		var result = s"\\begin{verbatim} $br"
+		result += output(ASCII, xyChart(new XYData(xy(0), xy(1), xy(2)))).replaceAll(weirdAddedChar, "")
+		result += s"\\end{verbatim} $br"
+		result
+	}
+	def svgGraph(data:GraphData):String = {
+		val name = data._1.replace(' ','_')
+		val xy = data._2
+		import org.sameersingh.scalaplot.Implicits._
+		val svgName=name+".svg"
+		write(svgName, output(SVG, xyChart(new XYData(xy(0), xy(1), xy(2)))))
+		import sys.process._
+		// try to 'compile' the new svg files, should crass gracfully
+		s"inkscape -D -z --file=$folder$svgName --export-pdf=$folder$name.pdf --export-latex" !
+
+		// we just assume the 'compiling' worked
+		return  s"\\def\\svgwidth{\\columnwidth} $br"+
+				s"\\input{$name.pdf_tex}$br"
+	}
+	def toLatexWith(graphMethod:GraphData => String)
+	(values:Iterable[(String, Seq[Seq[(Double, Double)]],Seq[(String,StoasticRun)])]) = values.foldLeft(s"$br\\subsection{Data}")((str,duo) => {
+			var result = s"$str $br"
+			result += s"\\subsubsection{${duo._1}} $br"
+			result += s"\\begin{figure}[ht!] $br"
+			result += graphMethod(duo._1, duo._2)
+			result += s"\\caption{${duo._1}}"
+			result += s"\\end{figure} $br"
+
+			result += Experiment.stoasticsToLatex(duo._3)
+			result += s"$br\\clearpage"
+			result
+		})
+
+
 	def createRandomlyLinked = randomlyLinked(random.shuffle(0.to(Experiment.geneLength))) _
 }
