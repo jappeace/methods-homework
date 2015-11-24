@@ -94,7 +94,7 @@ object Main{
 		results.groupBy(x=>x._1.name).map(a=> (a._1, a._2.map(
 			// map population size/callcount to points
 			xy =>xy._2.byPopSize.map(
-				pop=> (pop._1.toDouble,pop._2.length.toDouble)
+				pop=> (pop._1.toDouble,pop._2.count(_.success).toDouble)
 			// I think the data points weren't sorted, which is logical considiring it was a map
 			).toSeq.sortBy(_._1)
 		),
