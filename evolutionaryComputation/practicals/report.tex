@@ -10,6 +10,7 @@
 \usepackage{tikz}
 \usepackage{listings}
 \usepackage{hyperref}
+\usepackage{svg}
 \newenvironment{scprooftree}[1]%
 {\gdef\scalefactor{#1}\begin{center}\proofSkipAmount \leavevmode}%
 {\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center} }
@@ -201,6 +202,12 @@ String class in Java.
 % also try to implement a threading scheme??
 
 \subsection{Graphs}
+
+\begin{figure}[htbp]
+  \centering
+  \input{ec.pdf_tex}
+  \caption{svg ec}
+\end{figure}
 
 \section{Conclusion}
 %What did I learn from my observation?

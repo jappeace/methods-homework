@@ -1,5 +1,8 @@
 package nl.jappieklooster.hw.ec
 
+import java.io.PrintWriter
+
+import org.sameersingh.scalaplot.XYData
 import org.slf4j.LoggerFactory
 
 import scala.util.Random
@@ -30,10 +33,10 @@ object Main{
 		val expirements =
 		Experiment.create("uni scaled", random, uniformlyScaledCountOnes, crossMethodsTight) ++
 		Experiment.create("linearly scaled", random, linearlyScaledCountOnes, crossMethodsTight) ++
-		Experiment.create("block decpt", random, blockValuation(deciptive), crossMethodsTight) ++
-		Experiment.create("block non", random, blockValuation(nonDeciptive), crossMethodsTight) ++
-		Experiment.create("block decpt", random, blockValuation(deciptive), crossMethodsRandom) ++
-		Experiment.create("block non", random, blockValuation(nonDeciptive), crossMethodsRandom) ++
+		//Experiment.create("block decpt", random, blockValuation(deciptive), crossMethodsTight) ++
+		//Experiment.create("block non", random, blockValuation(nonDeciptive), crossMethodsTight) ++
+		//Experiment.create("block decpt", random, blockValuation(deciptive), crossMethodsRandom) ++
+		//Experiment.create("block non", random, blockValuation(nonDeciptive), crossMethodsRandom) ++
 		Nil
 
 
@@ -47,7 +50,25 @@ object Main{
 			val re = tuple._2
 			log.info(s"${ex.name} (${ex.variation}}):$lineSeparator${re.toTable()}")
 		}
-		
+		import org.sameersingh.scalaplot.Implicits._
+
+		val values = results.groupBy(x=>x._1.name).map(_._2.map(
+			// map population size/callcount to points
+			xy => xy._2.byPopSize.map(
+				pop=> (pop._1.toDouble,pop._2.length.toDouble)
+			// I think the data points weren't sorted, which is logical considiring it was a map
+			).toSeq.sortBy(_._1)
+		))
+
+		val file = java.io.File.createTempFile("evolutionaryComputing", ""+values.hashCode())
+		file.delete()
+		file.createNewFile()
+		new PrintWriter(file.getCanonicalFile){
+			for(exp <- values){
+				write(output(SVG, xyChart(new XYData(exp(0), exp(1), exp(2)))))
+			}
+			close()
+		}
 	}
 	def createRandomlyLinked = randomlyLinked(random.shuffle(0.to(Experiment.geneLength))) _
 }
