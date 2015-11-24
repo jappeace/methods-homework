@@ -2,7 +2,7 @@ package nl.jappieklooster.hw.ec
 
 import java.io.{File, PrintWriter}
 
-import org.sameersingh.scalaplot.XYData
+import org.sameersingh.scalaplot._
 import org.slf4j.LoggerFactory
 
 import scala.reflect.io.Path
@@ -10,7 +10,7 @@ import scala.util.Random
 import OffspringGenerator._
 import MemberFactories._
 import Fitness._
-import util.Properties.lineSeparator
+import scala.util.Properties.lineSeparator
 
 object Main{
 	case class Configurations(strLength:Int,popSize:Int,genCount:Int, evolution:Evolution)
@@ -89,21 +89,37 @@ object Main{
 		// the tables with the graphs, just flatten it
 		a._2.map(ab => (s"${ab._1.variation}", ab._2))
 		))
+	import org.sameersingh.scalaplot.Implicits._
 	def asciiGraph(data:GraphData) = {
-		val xy = data._2
 		val weirdAddedChar = 12.toChar.toString
-		import org.sameersingh.scalaplot.Implicits._
 		var result = s"\\begin{verbatim} $br"
-		result += output(ASCII, xyChart(new XYData(xy(0), xy(1), xy(2)))).replaceAll(weirdAddedChar, "")
+		result += output(ASCII, createPlot(data._2)).replaceAll(weirdAddedChar, "")
 		result += s"\\end{verbatim} $br"
 		result
 	}
+	def createPlot(xy: Seq[Seq[(Double, Double)]]) = {
+		val xAxis = new NumericAxis
+		xAxis.label = "population size"
+		xAxis.range_= (0.0, Experiment.maxPopSize+Experiment.maxPopSize/Experiment.popUnit)
+		val yAxis = new NumericAxis
+		yAxis.label = "succeses"
+		yAxis.range_= (0.0, Experiment.requiredRuns + Experiment.faultTolerance + 1)
+		xyChart(
+			data = new XYData(
+				new MemXYSeries(xy(0), "2UX"),
+				new MemXYSeries(xy(1), "UX"),
+				new MemXYSeries(xy(2), "UXM")
+			),
+			x=xAxis,
+			y=yAxis,
+			showLegend=true,
+			legendPosY = LegendPosY.Bottom
+		)
+	}
 	def svgGraph(data:GraphData):String = {
 		val name = data._1.replace(' ','_')
-		val xy = data._2
-		import org.sameersingh.scalaplot.Implicits._
 		val svgName=name+".svg"
-		write(svgName, output(SVG, xyChart(new XYData(xy(0), xy(1), xy(2)))))
+		write(svgName, output(SVG, createPlot(data._2)))
 		import sys.process._
 		// try to 'compile' the new svg files, should crass gracfully
 		s"inkscape -D -z --file=$folder$svgName --export-pdf=$folder$name.pdf --export-latex" !
