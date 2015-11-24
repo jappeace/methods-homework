@@ -76,7 +76,11 @@ case class StoasticRun(runs:Seq[RunResult], required:Int) {
 		byPopSize.mkString(lineSeparator)
 	}
 	lazy val bigestPopcount = {
-	 	val successes = byPopSize.filter(p => p._2.count(r=> r.success) == Experiment.requiredRuns)
+	 	val successes = byPopSize.filter(p =>
+			p._2.count(r=> r.success) >= (
+				Experiment.requiredRuns - Experiment.faultTolerance
+			)
+		)
 		// do the highest so its obvious its a lot
 		if(successes.isEmpty) runs.last.popSize else successes.minBy(x=>x._1)._1
 	}
