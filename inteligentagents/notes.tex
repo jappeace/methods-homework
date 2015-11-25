@@ -1,3 +1,8 @@
+\documentclass{article}
+\begin{document}
+\author{Jappie Klooster}
+\title{Temporal magick or logic}
+\maketitle
 
 #Exam
 
@@ -253,13 +258,6 @@ Agt = Agt \in [E \to p] specifies the agent of an event [E \to P] is a
 function that takes an E that gives a P.
 T \subset [Z \to E]; a set of possible worlds, give a time number and get
 
-
-
-\documentclass{article}
-\begin{document}
-\author{Jappie Klooster}
-\title{Cohen \& Levesque}
-\maketitle
 \section{Langauge}
 DONE = just done
 ; = sequence
@@ -335,13 +333,6 @@ Competence means that if he believes it then its true.
 Brancing vs linear, points vs intervals,
 discrete (real numbers) vs continues (complex number)
 We'll only look into the future.
-\end{document}
-
-\documentclass{article}
-\begin{document}
-\author{Jappie Klooster}
-\title{Temporal magick or logic}
-\maketitle
 \section{Linear temporal magick}
 
 $\phi_1\cup\phi_2$ = $\phi_1$ holds until $\phi_2$ becomes true.
@@ -483,12 +474,6 @@ Proof
 	$q\se c \wedge HAPPENS a;p{?}$}
 \end{prooftree}
 
-\end{document}
-\documentclass{article}
-\begin{document}
-\author{Jappie Klooster}
-\title{KARO logic}
-\maketitle
 
 There are indeed unkown unkowns. But not if you have
 $\neg K \phi \to K \neg K \phi$
@@ -580,4 +565,28 @@ about the commitments.
 you can only commit possible intents
 
 You can only uncommit commited actions.
+
+\section{practical}
+\begin{prooftree}
+	\AxiomC{$\vDash \Diamond (p\vee q)\wedge \Box \neg q)\to \Diamond p$}
+	\UnaryInfC{To proof $m,\sigma \vDash \Diamond (p\vee q)\wedge \Box \neg q)\to \Diamond p$}
+	\UnaryInfC{To proof $m,\sigma \vDash \Diamond (p\vee q)\wedge \Box \neg q)\Rightarrow m,\sigma \vDash \Diamond p$}
+	\UnaryInfC{To proof $m,\sigma \vDash \Diamond (p\vee q)$ and $\Box \neg q)\Rightarrow m,\sigma \vDash \Diamond p$}
+	\UnaryInfC{To proof exists $m,\sigma^n \vDash p$ or $m,\sigma^n \vDash q$
+	and for all $m,\sigma^m \vDash \neg q$ then exists $m,\sigma^k \vDash p$}
+\end{prooftree}
+
+\begin{prooftree}
+	\AxiomC{$\vDash A \phi \to \phi$}
+	\UnariyInfC{To prove: for all $M,v,w_t \vDash A \phi \to \phi$}
+	\UnariyInfC{Take arbitrary $M,v,w_t$ to prove: for all $M,v,w_t \vDash A \phi \to \vDash \phi$}
+	\UnariyInfC{To prove: for all $M,v,w_t \vDash A \phi \Rightarrow m,\sigma \vDashM,v,w_t \vDashM,v,w_tM,v,w_t \vDash \phi$}
+	\UnariyInfC{Assume $M,v,w_t \vDash A \phi$ ie  
+	$M,v,w_1, w_2, \ldots \vDash \phi$ for all 
+	$w_1, w_2, \cdots$ with $t_1 =t$
+	}
+\end{prooftree}
+\begin{prooftree}
+\end{prooftree}
+	\AxiomC{$\neg\vDash A\Diamond \phi \to E\Box \phi$}
 \end{document}
