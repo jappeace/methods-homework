@@ -17,3 +17,7 @@ you can use GA to play the game and see what are the outliers, from
 this you can construct an algortim that balances the current setup
 automaticly, of course the valuation function is key, but since in
 games you create your own systems this should not be impossible.
+
+#KARO
+believes only go to you believe it your you don't. You can try to extend it
+with using a gradient.
