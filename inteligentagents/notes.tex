@@ -127,3 +127,457 @@ Frame problem, implementation of actions does not change much, but the rest does
 Situation calculus, <- to controll robots
 
 ##Agent architectures
+#Bratman
+
+Commitment, if you have a real intention, you want to go for it.
+intentions should be consistent, otherwise you do something which could be
+impossible
+But this is debatable...
+
+
+## Intentions
+Screen of admissibility, filter maybe later intentions that could be
+conflicitng
+
+
+# Cohen& levesque
+tried to formalise Bratman.
+
+## Intention = choice + commitment
+try to stretch it to formal logic.
+
+##
+agent beleives P is possible : a sort of self conficience of the agent
+
+## side effects
+agnets need not intend all the expected side effects of their intentions.
+Going to the dentist implies pain.
+then going to the dentist should be that you intend to have pain.
+
+$\vDash \phi \to \psi \to \vDash \Box \phi \to \Box \psi$
+
+#Rao & Georgeff BDI theory
+Not only proposed a logic, but also the first implementation of an agent and
+also the first application.
+
+#Rodney Brooks anti-cogn.robotics
+subsumption architecture: no cognition, just a reactive system.
+Should be emergent behaviour rather than modeling.
+
+# Aaron Sloman: How to build emotional agents
+Looks at properties of humans, such as emotions, and tries to put it into an
+AI.
+
+20 years ago, there are patiens that don't have emotions, expect: in problem
+solving such as puzzels. They go depth first, so they go on, and on and fail
+misserably.
+
+Archicterus of him are not the most enlighted, "messy".
+
+# Towards social agents/robots
+also research goes to sociology.
+
+Oppertunisitic behavior, sellar buying a cup, but cup is broken,
+the seller wants to sell it, but the buyer wants to use it. How
+to moddel this in Agents
+
+## Normative systems
+the way of societies. you shouldn't violate the norm, but sometimes it can
+be usefull to.
+
+### Asimov
+Laws of him. 4th one is stupid
+
+# Theory of mind
+The psycology one.
+The false believe test.
+
+
+# Logial foundations of actions
+
+The terminology is not stabels.
+desires and goals may be differetn or mean the same.
+
+Agenda -> latin things that should happen.
+
+# Modal logic
+Logic of $\Box$ and $\Diamond$
+
+## K axiom
+true for any modal logic
+
+## R
+means its accesible. No restriction on R in arbitrary Kripke
+
+
+### Constraints
+you can add constraints on R, but with restrictions things certain
+things become true.
+
+serial you can go on.
+
+## Frames
+Models where the true assignment functions are abstracted from.
+
+#naive BDI logic
+seperate blocks, it misses connections.
+No dymancis, changes of BDI in time.
+
+# Cohen & levesque : langauge
+$\alpha$ are complex actions and a's are primitive actions
+We can't say multiple agents do the same action at the same time.
+
+a is interpeted as a sequance of primitive events even though a is
+atomic.
+
+atomic action is a special class, which depends on the domain.
+
+; = sequence
+? = test if its true (groovy truth)
++ = is a non detrmenistic choice, collect them in an autcome set.
+* = is done a finite but arbitrary number of times, including 0
+
+if $\phi$ then $\alpha_1$ else
+$\alpha_2$ = ($\phi? ; \alpha_1) + (\neg \phi?;\alpha)$
+
+while $\phi$ do $\alpha$ = $(\phi?;\alpha)^*;\neg\phi?$
+
+Pz = z has property P, a predicate attom
+
+
+# Semantics
+\omega = variables assginemnts
+P = is the set of omega \in \omega
+E = is a set of primitive events
+Agt = Agt \in [E \to p] specifies the agent of an event [E \to P] is a
+function that takes an E that gives a P.
+T \subset [Z \to E]; a set of possible worlds, give a time number and get
+
+
+
+\documentclass{article}
+\begin{document}
+\author{Jappie Klooster}
+\title{Cohen \& Levesque}
+\maketitle
+\section{Langauge}
+DONE = just done
+; = sequence
+? = test if its true (groovy truth)
++ = is a non detrmenistic choice, collect them in an autcome set.
+* = is done a finite but arbitrary number of times, including 0
+
+if $\phi$ then $\alpha_1$ else
+$\alpha_2$ = ($\phi? ; \alpha_1) + (\neg \phi?;\alpha)$
+
+while $\phi$ do $\alpha$ = $(\phi?;\alpha)^*;\neg\phi?$
+
+Pz = z has property P, a predicate attom
+
+
+\subsection{Semantics}
+$\omega$ = variables assginemnts
+$P$ = is the set of omega $\in \omega$
+$E$ = is a set of primitive events
+$Agt = Agt \in [E \to p]$ specifies the agent of an event $[E \to P]$ is a
+function that takes an E that gives a P.
+$T \subset [Z \to E];$ a set of possible worlds, give a time number and get
+
+i = agent
+n = time
+
+\subsubsection{Predicate}
+c constants
+f functions
+Q predicate smbols
+
+
+$\phi$ interperts predicate symbols
+
+\[\phi(c) = d \in \Theta\]
+\[\phi(f) = f D_1x\dots D_l \to D_h\]
+\[\phi(Q^{n,x,ne}) = R \subseteq D_1x\dots D_l \]
+
+\subsubsection{satisfaction}
+
+\[M,\sigma,v,n[\alpha] m\]
+In the model `$M,\sigma,v,n$', $\alpha$ lies betweeen n and m.
+
+B = `normal` modal accesibility relation indexed by the time $n$
+and the agent $v(i)$. they write it like:
+
+\[<\sigma, n>B[v(i)] \sigma\]
+
+Better would be:
+\[\sigma B_{v(i)}^n \sigma\]
+
+\subsection{Constraints}
+\subsubsection{Believes/Goals}
+KD45.
+
+\[G\subseteq B\]
+means $\vdash {Bel}_i \phi \to {Goal}_i\phi$, but not the otherway around
+
+\subsection{Achievement goal}
+Doesn't believe $\phi$ is true yet, but believes it could be true later.
+There exists some action to make $\phi$ true.
+
+\subsubsection{Asumption}
+Goals will end some time in the future
+
+\subsection{Persistent goals}
+Drop the goal if its true, or its impossible.
+
+Competence means that if he believes it then its true.
+
+\section{Rao Georgeff}
+\subsection{Time logics}
+Brancing vs linear, points vs intervals,
+discrete (real numbers) vs continues (complex number)
+We'll only look into the future.
+\end{document}
+
+\documentclass{article}
+\begin{document}
+\author{Jappie Klooster}
+\title{Temporal magick or logic}
+\maketitle
+\section{Linear temporal magick}
+
+$\phi_1\cup\phi_2$ = $\phi_1$ holds until $\phi_2$ becomes true.
+$\Diamond\phi$ = sometimes
+$O\phi$ = next time
+
+$M=(S,\sigma, \pi)$ where $S$ is a set of states, $\sigma: N \to S$ is an
+infinte seqence of states
+
+\subsection{Semantics}
+$\vdots$
+$M,\sigma\vDash O\phi \LeftRightArrow M, \sigma^1 \vDash \phi$ next time
+$M,\sigma\vDash \Diamond\phi \LeftRightArrow M, \sigma^n \vDash \phi$
+invention, there is some time where $\phi$ is gonna hold.
+
+\subsubsection{untill}
+if $\phi_2$ holds somewhere it does not mean it holds everywhere after that
+point
+
+$\phi_1$ holds until $\phi_2$ holds.
+
+weak untill = where $\phi_1$ holds everywhere because there is no
+$\phi_2$, for example $\phi_1^{\bot}$
+
+\section{Branching temproal magick}
+
+Two kinds of formulas, state formulas, path formulas.
+Any state formula can also act as a path formula.
+
+\subsection{Models}
+serial, any point has a continuation, time never stops.
+$S \times S$ = cartesian product of S.
+
+Fullpath is a ninfinite seq of states more or less true the tree.
+These are more or less the lines of linear logic.
+Fullpaths can start anywhere, not necisarly at the root.
+
+$\sigma_1$ = already a choice of the branch, so no need for no trees.
+
+\section{Combination of BDI}
+E = optional
+A = inevitable
+
+\section{Operators magick}
+$\Diamond\Diamond\phi=\Diamond\phi$
+$\Box\Box\phi=\Box\phi$
+$\Box\Diamond\phi$=Infenitly often there is a point where $\phi$ holds.
+$\Diamond\Box\phi=$Some point in the future $\phi$ will hold indevinitly
+
+\subsection{BDI}
+Optionally $\Diamond p$ = there is a choice where p is gonna hold
+Optionally $\Box r$= there is a timline where r is gonna hold
+Inevitiably $\Diamond s$=  ???
+Inevitiably $\Box b$=  b always holds
+
+\section{BDI sementics}
+s.t. = such that.
+
+From t1 to t2, the agent has a memory, but he can doubt about the future.
+There is the hidden asumption that agents have memory.
+
+success = there exist some period in wehre the even was succesfull
+
+\subsection{Axiom}
+written like $GOAL(\alpha) \subset BEL(\alpha)$, but russel notation :s so
+$\subset = \to$
+$GOAL(\alpha) \to BEL(\alpha)$ = believe-goal compatibility
+different from cohon and laveque, $BEL \alpha \to GOAL \alpha$, because
+its a different framework, but the reason behind it is the same strangely
+enough.
+
+$INTEND(does(e))\to does(e)$ intention leads to action, which is controversial
+
+\subsection{compatibility}
+Sinning = ???, something with cutting of branches.
+
+\section{CTD}
+\subsection{Axioms}
+$done(e) \to BEL(done(e))$,  you're awere that you've done something
+
+
+\section{Praktical}
+The general strategy is to write down what you have to proof and then to
+read with help of the definitions.
+
+Don't be sloppy and take an arbitrary M with for all's
+\subsction{3.16}
+\[\vDash \alpha \Rightarrow \vDash BEL x \alpha\]
+Assume $\Vdash \alpha$, so $M,\sigma,v,n\vDash \alpha$ for all $M,\sigma,v,n$(*)
+To prove $\vDash BEL x \alpha$, 
+	ie $M,\sigma,v,n\vDash BEL x \alpha$ for all $M,\sigma,v,n\vDash$
+	ie $M,\sigma,v,n\vDash\alpha$ for all $\sigma'$ with (\sigma,n)B[v(x)]
+	\sigma' done by (*).
+
+\subsection{3.26}
+	To prove: $M,\sigma,v,n\vDash BEL x \alpha \to Goal x \alpha$ for all 
+	$M,\sigma,v,n$.
+	ie $M,\sigma,v,n\vDash BEL x \alpha \Rightarrow M,\sigma,v,n\vDash$ Goal
+		$x \alpha$ for all $M,\sigma,v,n$
+		ie $M,\sigma',v,n\vDash \alpha$ for all $\sigma'$ with $\sigma,n)
+		B[v(x)]\sigam'\RIghtarrow M,\sigma'',v,n\vDash \alpha$ for all
+		$\sigma''$ with $(\sigma,n)G[v(x)]\sigma''$
+
+		Given:
+		$(\sigma,n)G[v(x)]\sigma''\Rightarrow(\sigma,n)B[v(x)]\sigma''$
+		$\vdots$
+
+		Take arb $\sigma''$ with $(\sigma,n)G[v(s)]\sigam''$ then also 
+		$(\sigma,n)B[v(x)]\sigma''$ so $M,\sigma,v,n\vDash \alpha$
+\subsection(3.11)
+Proof
+\begin{prooftree}
+	\AxiomC{}
+	\UnaryinfC{}
+\[ \vDash \neg LATER(\Diamond p) \neg LATER(\Diamond p) \LeftRightarrow 
+\neg(\neg\Diamond p) \Leftrightarrow \neg(\neg\Diamond p \wedge 
+\Diamond\Diamond p) \Leftrightarrow \neg(\neg\Diamond p \wedge 
+\Diamond p)\]
+
+\end{prooftree}
+
+\subsection{3.13}
+\begin{prooftree}
+	\AxiomC{$\vDash \Diamond q \wedge BEFORE pq \to \Diamond p$}
+	\UnaryInfC{To prove $M,\sigma,v,n\vDash \Diamond q \wedge BEFORE pq \to \Diamond p$ for all $M,\sigma,v,n$}
+	\UnaryInfC{Take arbitrary $M,\sigma,v,n$ to prove $M,\sigma,v,n\vDash \vDash \Diamond q \wedge BEFORE pq \to \Diamond p$ for all $M,\sigma,v,n$}
+	\Rightlabel{ie}
+	\UnaryInfC{To prove if $M,\sigma,v,n\vDash \Diamond q$ and 
+	$M,\sigma,v,n\vDash BEFORE pq$ then $M,\sigma,v,n\vDash Diamond p$ for all $M,\sigma,v,n$}
+	\UnaryInfC{Supose $M,\sigma,v,n\vDash \vDash \Diamond q$ and 
+	$M,\sigma,v,n\vDash BEFORE pq$}
+	\Rightlabel{ie}
+	\UnaryInfC{Supose $M,\sigma,v,n\vDash \exists x HAPPENS x;q?$ and 
+		$M,\sigma,v,n\vDash \exists \forall c (HAPPENS c;q{?}) \to \exists q$ 
+	$q\se c \wedge HAPPENS a;p{?}$}
+	\Rightlabel{ie}
+	\UnaryInfC{Supose $M,\sigma,v,n\vDash \exists x HAPPENS x;q?$ and 
+		$M,\sigma,v,n\vDash \exists \forall c (HAPPENS c;q{?}) \to \exists q$ 
+	$q\se c \wedge HAPPENS a;p{?}$}
+\end{prooftree}
+
+\end{document}
+\documentclass{article}
+\begin{document}
+\author{Jappie Klooster}
+\title{KARO logic}
+\maketitle
+
+There are indeed unkown unkowns. But not if you have
+$\neg K \phi \to K \neg K \phi$
+
+\section{the names are just the axioms}
+jjK = ??
+D = $\neg B \bot$
+4 = $B\phi \to BB \phi$
+5 = $\neg B \phi \to B\neg B \phi$
+
+\section{Dynamic logics}
+these actions can be non deterministic\ldots
+
+Accessibility relation
+
+$\alpha;\beta$ = sequentu\alphal compisition
+$\alpha+\beta$ = nondeterministic choice
+$\alpha*$ = execute \alphar\betaitr\alphary num\betaer of times
+
+s' = a different variable to s, so instead of s' you can use [a-z].
+
+Dynamic logic is complete!
+
+does $[\alpha] ( \phi \to \varphi) \to ([\alpha] \phi \to [\alpha] \varphi)$
+mean I can subtitute  $[\alpha] ( \phi \to \varphi)$ with
+$([\alpha] \phi \to [\alpha] \varphi)$
+
+$[\alpha*]\phi\to\phi$ do nothing its true
+$[\alpha*]\phi\to[\alpha][\alpha*]\phi$ do once and it becomes true
+\subsection{with induction}
+$[\alpha*](\phi \to [\alpha]\phi)\to(\phi\to[\alpha*]\phi)$ 
+$\phi\to[\alpha]\phi$
+$[\alpha](\phi\to[\alpha]\phi)$
+$[\alpha, \alpha](\phi\to[\alpha]\phi)$
+$\vdots$
+
+\section{Karo}
+Opertunity vs capability: I have the opertunity to climb the dom tower\ldots
+
+\subsection{KBD}
+Knowledge Believe Desires.
+
+$R_K = S5$
+$R_B = KD45$
+$R_B \subset \R_K = \vDash K\phi \to B\phi$
+$R_D =$ no constraints, so sytem K.
+
+infinite computation = $\nill$???
+
+$R_\alpha(\nill)=\nill$ {divergence failure, or abort}
+
+A = Agent is able to
+$A\alpha \LeftRightarrow C(M,w)$
+
+$<\phi?>\psi \LeftRightarrow (\psi \wedge \phi)$, if there is an accassible world
+were $\psi$ holds and $\phi$ can be tested then in the world $\phi$ and $\psi$ hold.
+
+Holds in general:
+
+\[[\alpha]\phi \wedge <\alpha>\top\to <\alpha>\phi\]
+
+If $\alpha$ is deterministic.
+
+\[ <\alpha>\phi \to [\alpha]\phi \wedge <\alpha>\top\]
+
+\section{KARO}
+\subsection{Default}
+
+\subsection{Goal}
+implementable = a posibility to reach $\phi$
+
+A goal is a achievement goal, something which is not true
+has to become true.
+
+Maintanence goals want to keep something true.
+
+PossIntend = a very important one. An agent can
+transform a possible intent into an commitment.
+
+\subsection{Update agenda}
+\[Ag(M',w') = Ag(M,w)\cup\alpha\]
+for all $m',w'$ with $R(w',w'')$ 
+\[Ag(M',w'') = Ag(M',w')\cup\alpha\]
+\vdots
+
+The agent is awere off what is going on. It knows
+about the commitments.
+
+you can only commit possible intents
+
+You can only uncommit commited actions.
+\end{document}
