@@ -15,6 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/\>.
 package nl.jappieklooster.hw.ec
 
+import com.itextpdf.text.log.LoggerFactory
+
 import scala.util.Random
 
 trait Genetic{
@@ -75,25 +77,34 @@ object OffspringGenerator{
 			// where the genes are equal will keep the same, else random
 			genes.map(fm => if (fm._1 == fm._2) fm._1 else randomGene)
 	)
-	def singlePointCross(x:PairedPopulation) : Population = x.pairedToPop(
+	def singlePointCross(rand:Random)(x:PairedPopulation) : Population = x.pairedToPop(
 		genes => {
-			val point = Main.random.nextInt(genes.length)
+			val point = rand.nextInt(genes.length)
 			// where the genes are equal will keep the same, else random
 			genes.zipWithIndex.map(fm => {
 				if (point < fm._2) fm._1._1 else fm._1._2
 			})
 		}
 	)
-	def twoPointCross(x:PairedPopulation) : Population = x.pairedToPop(
+	val log = LoggerFactory.getLogger("offspringernerator")
+	def twoPointCross(rand:Random)(x:PairedPopulation) : Population = x.pairedToPop(
 		genes => {
-			val end = Main.random.nextInt(genes.length)
-			val start = Main.random.nextInt(genes.length - end)
+			val first = rand.nextInt(genes.length)
+			val second = rand.nextInt(genes.length)
+			log.debug(s"crossing with $first and $second")
 			// where the genes are equal will keep the same, else random
 			genes.zipWithIndex.map(fm => {
-				if(fm._2 < start) fm._1._1 else{
-					if(fm._2 < end){
-						fm._1._2
-					}else fm._1._1
+				def select(start:Int, end:Int):Char = {
+					if(fm._2 < start) fm._1._1 else{
+						if(fm._2 < end){
+							fm._1._2
+						}else fm._1._1
+					}
+				}
+				if(first < second){
+					select(first,second)
+				}else{
+					select(second, first)
 				}
 			})
 		}

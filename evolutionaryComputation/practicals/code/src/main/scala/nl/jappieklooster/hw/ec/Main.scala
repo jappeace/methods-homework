@@ -36,8 +36,8 @@ object Main{
 	type GraphData = (String,Seq[Seq[(Double,Double)]])
 
 	val crossMethodsTight = Seq(
-		(twoPointCross _, tightlyLinked _, "2X"),
-		(twoPointCross _, WithCoinFlipTimesMutation(random,tightlyLinked), "2XM"),
+		(twoPointCross(random) _, tightlyLinked _, "2X"),
+		(twoPointCross(random) _, WithCoinFlipTimesMutation(random,tightlyLinked), "2XM"),
 		(uniformCross _, tightlyLinked _, "UX"),
 		(uniformCross _, WithCoinFlipTimesMutation(random, tightlyLinked), " UXM")
 	)
@@ -79,10 +79,10 @@ object Main{
 
 		val results = expirements.par.map(x => {
 			(x, x.bisectionalSearch())
-		}).seq.sortBy(x=>x._1.name + x._1.variation)
+		}).seq
 		log.info(s"doing stoastic with ${Experiment.requiredRuns} runs")
 
-		val values = toPlotableStructure(results)
+		val values = toPlotableStructure(results).toSeq.sortBy(x=>x._1)
 
 		log.info(toLatexWith(asciiGraph)(values))
 
