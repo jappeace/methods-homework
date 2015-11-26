@@ -7,7 +7,7 @@
 \usepackage{graphicx}
 \usepackage{pifont}
 \usepackage{qtree}
-\usepackage{tikz}
+\usepackage{tikz-uml}
 \usepackage{listings}
 \usepackage{hyperref}
 \usepackage{svg}
@@ -51,22 +51,6 @@ with:
 	\end{matrix}
 \right. \]
 \section{Methodology}
-\subsection{Build tool}
-I use Gradle for building the project. Its the most advanced build platform
-available and makes it easy to add dependencies to the project.
-For example I use slf4j for logging.
-
-Its also handy in that it comes with a self installing script that can be run
-from any platform, Gradlew. So running the code I wrote on a different machine
-becomes easy, Gradle makes sure the right dependencies are fetched.
-
-\subsubsection{Run guide}
-As said before its a trivial task to run the code. Downloading and installing
-of dependencies and even gradle happens automatically with help of gradlew.
-So the first run is slower, depending on your internet speed.
-
-\subsubsection{Libraries used}
-
 \subsection{Language choice}
 I chose to use Scala to implement this project. The main reason being that I've
 played with Scala before but never have done anything constructive with it.
@@ -94,14 +78,31 @@ Other options I considered were:
 		hobby project with them before starting doing something serious like
 		this, I've already done this with Scala before.
 \end{itemize}
+
 \subsection{Architecture}
 The architecture was created incrementally, I just implemented the functions
 without thinking much about how to combine them.  I first started with the
 fittest functions. Then I went on with selection, and finally I did the
 crossover.
+
+\begin{tikzpicture}
+\begin{umlpackage}[x=0,y=0]{ec}
+	\umlemptyclass[x=3]{Member}
+\umlemptyclass{Population}
+\umlemptyclass[x=6]{PairedPopulation}
+%\umluniassoc[geometry=-|,arg1=x,mult1=1,pos1=1.9,arg2=y,mult2=*,pos2=0.2]{Population}{Member}
+\end{umlpackage}
+\end{tikzpicture} 
+
 I just implemented one or 2 options of these and then created an evolution
 class that accepted functions with the right prototype. So now you can
 create an evolution by giving it functions.
+
+Most of the GA architecture was already in place before the assingment became
+available. I did this based on the notes I took in class. When the assignment
+became available I was almost completly done with the GA. There were some bugs
+in my code however and I interperted some things wrong. I also didn't write
+anything for an experiment. So I still needed to do that.
 
 \subsubsection{Unit tests}
 Because the assignment has very well defined behavior. I thought it was
@@ -128,27 +129,54 @@ All valuation functions should return a float instead of an Int.
 I don't even understan how I could make such a stupid mistake until the
 unit test pointed it out to me. (programming for 6+ years..)
 
-\subsection{Uncertainties}
-Should the elitism selection use tournement selection?
-When precisly do we find the optimal solution?
-	Should I wait for convergence or just say a string
-	of all ones is good enough?
-	Is 1 solution good enough or should all members have
-	that solution
-	I'm assuming 1 solution and that I can give a string
-	of just ones.
-How many generations to consider. I chose arbitrarly 10.
+\subsubsection{Build tool}
+I use Gradle for building the project. Its the most advanced build platform
+available and makes it easy to add dependencies to the project.
+For example I use slf4j for logging.
 
+Its also handy in that it comes with a self installing script that can be run
+from any platform, Gradlew. So running the code I wrote on a different machine
+becomes easy, Gradle makes sure the right dependencies are fetched.
+
+\paragraph{Running it}
+
+Open a shell and move to the project folder then type:
+
+\lstset{language=Bash}
+\begin{lstlisting}[frame=single]
+	./gradlew run
+\end{lstlisting}
+
+\subsubsection{Libraries used}
+In here I will describe why I chose to use these libraries
+The details of the libraries can be found in the gradle file (which
+version and what maven group):
+
+\begin{lstlisting}[frame=single]
+	cat code/build.gradle
+\end{lstlisting}
+
+
+\begin{itemize}
+	\item The scala standart library, because I have to when using scala.
+	\item slf4j, a simple logging facade, this allows runtime switching of
+		logging schemes, for example if you want to log into a database or
+		a file instead of stdout you can do this relativly easy with slf4j
+		This is not necisary right now but the api is simple enough to use
+		everywhere.
+	\item scalaplot. A graph plotting library for scala. I didn't want to
+		do this myself, and this library supports svg plotting and ascii
+		plotting.
+	\item scalatest. A testing library for scala, it has some pretty advanced
+		features but I use it mostly like JUnit.
+\end{itemize}
+\subsection{Uncertainties}
 About randomly linked:
 	There is another way to do it: for every member randomly link
 	differently, and randomly pick 1 randomly linked instructionset
 	for offspring generation (or do the strongest).
 	Currently I do the global randomly linked, every run will however
 	have the same randomly linked value, I'm aware of this.
-
-I'm not quite sure about the graphs. I have to show the number of successes
-out of the 30 runs, but this is already set in stone, because its either
-29 or 30, or its no successes.
 
 The stocastic ensursance wants to make sure that 29 out of 30 runs are
 'good enough', but combining this with the bidisectional search is difficult.
@@ -167,17 +195,31 @@ in scala with par collections (and the fact that imutibility is default).
 
 However once I implemented this, I came to the conclusion it was not faster.
 The overhead for delegating and creating threads was more than the parilization
-gained.
+gained.  After 10 minutes of waiting I decided to drop this idea 
+since without parilization it took about 2 minutes (I tried this
+on just one run, so it shouldn't take that long).
 
 The problem is that the evaluation function, even with gene length of 100, is
 to cheap to make any reasonable paralization effecitve. However what was effictive
 is the parilization of the expiriments. This reduced total runtime 
 significantly. however this is not seen in the statistics.
 
+So now all expiriments are run at the same time. This probably increases the
+average time of each 'run' somewhat (not that much because the concurent
+collection does \href{http://docs.scala-lang.org/overviews/parallel-collections/configuration.html}{load balancing})
+It alo drasticly decreases the amount of time I have to wait. Which is quite
+important, especially in the development phase. (although I also used
+other tricks, such as instead of 30, just doing 3 runs)
+
+The paralization of experiments can be removed by deleting `par' on line 64
+of Main.scala
+
 \subsubsection{Evaluate each member on creation}
-Members are going to be evaluated always, initially I would evaluate the member
-everytime it needed to be evaluated, but in later version I just aded the
-evaluation to the case class. Its not going to change anyways.
+Initially my members just contained the string with the `genes'. This I passed
+around and would eveulate when needed. However I realized that I could do this
+evaluation eagerly on creation, to reduce the evaluation calls. A member has
+to be eveluated anyways, so doing this on creation and just putting in the
+evaluation saves some heavy evaluation operations.
 
 \subsubsection{Only create children if the genes are new}
 If the genes are new then create the children otherwise return the parent.
@@ -191,7 +233,14 @@ So I can reuse them whenever its needed.
 To reduce the amount of string comparisons, first the hascode function is called
 This will cache itself, I know this because I inspected the source code of the
 String class in Java.
+
+I was very proud for coming up with  this idea, but when I ran the expirment with
+and without hascode I came to the conclusion that first doing a hascode operation
+significantly *slows* execution. This becomes worse as population size increases.
+
 \section{Execution}
+So I can execute in parralel, I can easily add whatever function I want, so
+I decided to just run a whole bunch of experiments and see what comes out.
 
 \input{result.tex}
 
