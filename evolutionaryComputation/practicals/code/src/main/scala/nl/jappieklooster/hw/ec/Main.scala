@@ -35,19 +35,29 @@ object Main{
 	val folder = "../"
 	type GraphData = (String,Seq[Seq[(Double,Double)]])
 
+	val crossMethodsTight = Seq(
+		(twoPointCross _, tightlyLinked _, "2X"),
+		(twoPointCross _, WithCoinFlipTimesMutation(random,tightlyLinked), "2XM"),
+		(uniformCross _, tightlyLinked _, "UX"),
+		(uniformCross _, WithCoinFlipTimesMutation(random, tightlyLinked), " UXM")
+	)
 	def main(args:Array[String]){
 		log.info("starting ea")
 
 		
-		val crossMethodsTight = Seq(
-			(twoPointCross _, tightlyLinked _, "2X"),
-			(uniformCross _, tightlyLinked _, "UX"),
-			(uniformCross _, withCoinfliptimesMutation(tightlyLinked, random) _, " UX, Mutation")
-		)
-		val crossMethodsRandom = Seq(
-			(twoPointCross _, createRandomlyLinked, "2X"),
-			(uniformCross _, createRandomlyLinked, "UX"),
-			(uniformCross _, withCoinfliptimesMutation(createRandomlyLinked, random) _, " UX, Mutation")
+		val crossMethodsRandom = crossMethodsTight.map(a=>{
+				val method = a._2 match{
+					case WithCoinFlipTimesMutation(_,_) => {
+						log.trace(s"${a._3} is flipped")
+						WithCoinFlipTimesMutation(random, createRandomlyLinked)
+					}
+					case _ => {
+						log.trace(s"${a._3} is normal")
+						createRandomlyLinked
+					}
+				}
+				(a._1, method, a._3)
+			}
 		)
 		val deciptive:Seq[Float] = List(4,0,1,2,3)
 		val nonDeciptive:Seq[Float] = List(4,0,0.5f,1,1.5f)
@@ -58,12 +68,18 @@ object Main{
 		Experiment.create("Block non-deceptive tight", random, blockValuation(nonDeciptive), crossMethodsTight) ++
 		Experiment.create("Block deceptive random", random, blockValuation(deciptive), crossMethodsRandom) ++
 		Experiment.create("Block non-deceptive random", random, blockValuation(nonDeciptive), crossMethodsRandom) ++
+		Experiment.create("Uniformly scaled, tournement elitism", random, uniformlyScaledCountOnes, crossMethodsTight, FittestFilter.tournementElitism) ++
+		Experiment.create("Linearly scaled, tournement elitism", random, linearlyScaledCountOnes, crossMethodsTight, FittestFilter.tournementElitism) ++
+		Experiment.create("Block deceptive tight, tournement elitism", random, blockValuation(deciptive), crossMethodsTight, FittestFilter.tournementElitism) ++
+		Experiment.create("Block non-deceptive tight, tournement elitism", random, blockValuation(nonDeciptive), crossMethodsTight, FittestFilter.tournementElitism) ++
+		Experiment.create("Block deceptive random, tournement elitism", random, blockValuation(deciptive), crossMethodsRandom, FittestFilter.tournementElitism) ++
+		Experiment.create("Block non-deceptive random, tournement elitism", random, blockValuation(nonDeciptive), crossMethodsRandom, FittestFilter.tournementElitism) ++
 		Nil
 
 
 		val results = expirements.par.map(x => {
 			(x, x.bisectionalSearch())
-		}).seq
+		}).seq.sortBy(x=>x._1.name + x._1.variation)
 		log.info(s"doing stoastic with ${Experiment.requiredRuns} runs")
 
 		val values = toPlotableStructure(results)
@@ -119,11 +135,10 @@ object Main{
 		val yAxis = new NumericAxis
 		yAxis.label = "succeses"
 		yAxis.range_= (0.0, Experiment.requiredRuns + Experiment.faultTolerance + 1)
+
 		xyChart(
-			data = new XYData(
-				new MemXYSeries(xy(0), "2UX"),
-				new MemXYSeries(xy(1), "UX"),
-				new MemXYSeries(xy(2), "UXM")
+			data = xy.zipWithIndex.map(
+				x=> new MemXYSeries(x._1, crossMethodsTight.apply(x._2)._3)
 			),
 			x=xAxis,
 			y=yAxis,
@@ -152,11 +167,31 @@ object Main{
 			result += s"\\caption{${duo._1}}"
 			result += s"\\end{figure} $br"
 
-			result += Experiment.stoasticsToLatex(duo._3)
+			result += stoasticsToLatex(duo._3)
 			result += s"$br\\clearpage"
 			result
 		})
 
 
 	def createRandomlyLinked = randomlyLinked(random.shuffle(0.to(Experiment.geneLength))) _
+
+	def stoasticsToLatex(runs:Seq[(String, StoasticRun)]) = {
+		// did some html in my youth
+		val td = "&"
+		runs.foldLeft(
+			s"$lineSeparator" + // the structure becomes clearer on a new line
+			s"\\begin{tabular}{llllll}$lineSeparator" +
+			s"Variation $td Success $td Min. population $td Avg. generation "+
+			s"$td Avg. fitness call-count $td Avg. time \\\\ \\toprule $lineSeparator"
+		)((a,tupple) => {
+			val r = tupple._2
+			s"$a" +
+			s"${tupple._1} $td" +
+			s"${r.isSuccesfull} $td ${r.bigestPopcount} $td" +
+			s"${r.avergeGeneration} $td ${r.averageFitnessCount} $td" +
+			s"${r.bestRunAverageTime} \\\\$lineSeparator"
+		}
+				) +
+		s"\\end{tabular}$lineSeparator"
+	}
 }

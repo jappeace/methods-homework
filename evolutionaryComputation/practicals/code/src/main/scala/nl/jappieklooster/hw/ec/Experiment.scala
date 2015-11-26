@@ -109,25 +109,6 @@ object RunResult{
 }
 object Experiment{
 
-	def stoasticsToLatex(runs:Seq[(String, StoasticRun)]) = {
-		// did some html in my youth
-		val td = "&"
-		runs.foldLeft(
-			s"$lineSeparator" + // the structure becomes clearer on a new line
-			s"\\begin{tabular}{llllll}$lineSeparator" +
-			s"Variation $td Success $td Minimum population $td Average generation "+
-			s"$td Average fitness call-count $td Average time \\\\ \\toprule $lineSeparator"
-		)((a,tupple) => {
-			val r = tupple._2
-			s"$a" +
-			s"${tupple._1} $td" +
-			s"${r.isSuccesfull} $td ${r.bigestPopcount} $td" +
-			s"${r.avergeGeneration} $td ${r.averageFitnessCount} $td" +
-			s"${r.bestRunAverageTime} \\\\$lineSeparator"
-		}
-		) +
-		s"\\end{tabular}$lineSeparator"
-	}
 	/**
 	 * Don't consider pop diferences smaller than this unit
 	 */
@@ -141,7 +122,8 @@ object Experiment{
 		name:String,
 		random:Random,
 		valuationFunction:String=>Float,
-		variationOperators:Seq[(PairedPopulation => Population, (String=>Float) => String => IMember, String)]
+		variationOperators:Seq[(PairedPopulation => Population, (String=>Float) => String => IMember, String)],
+		filter:(Population, Population) => Population = FittestFilter.truncateElitism
 	):Seq[Experiment] = variationOperators.map(
 		variation => {
 			val probe = Fitness.createProbe(valuationFunction)
@@ -152,7 +134,7 @@ object Experiment{
 				probe,
 				MateSelection.createCompeteWithRandomTournement(random),
 				variation._1,
-				FittestFilter.truncateElitism,
+				filter,
 				hasGoodEnoughSolution
 			),
 			variation._2(probe.valuate)
