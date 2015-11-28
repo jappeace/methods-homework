@@ -85,6 +85,17 @@ without thinking much about how to combine them.  I first started with the
 fittest functions. Then I went on with selection, and finally I did the
 crossover.
 
+\begin{tikzpicture}
+\begin{umlpackage}[x=0,y=0]{ec}
+	\umlemptyclass[x=3]{Member}
+\umlemptyclass{Population}
+\umluniassoc[geometry=-|,arg1=,mult1=*,pos1=0.45,arg2=,mult2=0,pos2=0.1]{Population}{Member}
+\umlemptyclass[x=6,y=2]{PairedPopulation}
+\umlemptyclass[x=6,y=0]{Pair}
+\umluniassoc[geometry=-|,arg1=,mult1=*,pos1=0.0,arg2=,mult2=0,pos2=0.0]{PairedPopulation}{Pair}
+\end{umlpackage}
+\end{tikzpicture} 
+
 I just implemented one or 2 options of these and then created an evolution
 class that accepted functions with the right prototype. So now you can
 create an evolution by giving it functions.
