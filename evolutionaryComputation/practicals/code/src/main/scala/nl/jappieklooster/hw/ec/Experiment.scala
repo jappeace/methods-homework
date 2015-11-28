@@ -42,12 +42,11 @@ class Experiment(val name:String, val variation:String, evolution: Evolution, me
 	}
 
 	def verifyLowest(currentPop:Int, faults:Int, index:Int) : Seq[RunResult] = {
-		def failed = Nil
 		if(index >= requiredRuns){
 			return Nil
 		}
 		if(faults > faultTolerance){
-			return failed
+			return Nil
 		}
 		val exp = run(currentPop)
 		val newFaults = if (exp.success) faults else faults+1
@@ -68,7 +67,7 @@ class Experiment(val name:String, val variation:String, evolution: Evolution, me
 		if(newDiff < popUnit){ // steps becoming to small, bort return result
 			return result
 		}
-		if(result.last.success){
+		if(StoasticRun.isSucces(result)){
 			// if we had success, zoom in
 			return result ++ findOptimumPopsize(consideringSize-difference/2, difference/2)
 		}
@@ -92,9 +91,7 @@ case class StoasticRun(runs:Seq[RunResult], required:Int) {
 	}
 	lazy val bigestPopcount = {
 	 	val successes = byPopSize.filter(p =>
-			p._2.count(r=> r.success) >= (
-				Experiment.requiredRuns - Experiment.faultTolerance
-			)
+			StoasticRun.isSucces(p._2)
 		)
 		// do the highest so its obvious its a lot
 		if(successes.isEmpty) runs.last.popSize else successes.minBy(x=>x._1)._1
@@ -104,11 +101,12 @@ case class StoasticRun(runs:Seq[RunResult], required:Int) {
 	lazy val bestRunAverageTime = bestRun.map(x=>x.runtime).sum/bestRun.length
 }
 
-object RunResult{
-	def createFailed(size: Int) = RunResult(size,false,0,0,0)
+object StoasticRun{
+	def isSucces(results:Seq[RunResult]) =  results.count(r=> r.success) >= (
+		Experiment.requiredRuns - Experiment.faultTolerance
+	)
 }
 object Experiment{
-
 	/**
 	 * Don't consider pop diferences smaller than this unit
 	 */
