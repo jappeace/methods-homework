@@ -4,10 +4,11 @@
 \usepackage{booktabs}
 \usepackage{color}
 \usepackage{bussproofs}
-\usepackage{graphicx}
+\usepackage[pdftex]{graphicx}
+\DeclareGraphicsRule{*}{mps}{*}{}
 \usepackage{pifont}
 \usepackage{qtree}
-\usepackage{tikz-uml}
+\usepackage{emp}
 \usepackage{listings}
 \usepackage{hyperref}
 \usepackage{svg}
@@ -19,6 +20,10 @@
 \newcommand{\brcell}[2][l]{%
 	\begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
 \begin{document}
+\begin{empfile}
+\begin{empcmds}
+input metauml;
+\end{empcmds}
 \author{Jappie Klooster}
 \title{A practical look at genetic algorithms}
 \maketitle
@@ -80,21 +85,108 @@ Other options I considered were:
 \end{itemize}
 
 \subsection{Architecture}
+\begin{figure}[ht!]
+\centering
+\begin{emp}[classdiag](20,20)
+Class.mem("Member")("+Fitness:Int", "+genes:String")();
+Class.pop("Population")("+members:Seq[Member]", "+factory:String=>Member")();
+Class.pairedPop("PairedPopulation")("+members:Seq[Pair]","+factory:String=>Member")(
+"+pairedToPop(how):Population");
+Class.pai("Pair")("+father:Member","+mother:Member")();
+
+leftToRight.top(20)(pop,pairedPop);
+topToBottom.left(60)(pop,mem);
+leftToRight.top(80)(mem, pai);
+
+drawObjects(mem,pop,pairedPop,pai);
+link(association)(pai.n -- pairedPop.s);
+item(iAssoc)("*")(obj.se = pai.n);
+link(association)(mem.e -- pai.w);
+item(iAssoc)("2")(obj.sw = mem.e);
+
+link(association)(mem.n -- pop.s);
+item(iAssoc)("*")(obj.se = mem.n);
+\end{emp}
+\caption{Case classes}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+\begin{emp}[classdiag](20,20)
+Class.evo("Evolution")(
+"+valuation: FitnessEvaluator",
+"mateSelector:IMateSelector",
+"offSpringGenerator: PairedPopulation => Population",
+"fittestFilter: (Population, Population) => Population",
+"hasGoodEnoughSolution: Population => Boolean")(
+"startGenetic(seed:Population): Seq[Population]",
+"genetic(prev:Seq[Population]): Seq[Population]",
+"step(parents:Population): Population",
+);
+Instance.fit("Fitness")(
+	"uniformlyScaled()",
+	"linearlyScaled()",
+	"blockValuation(block:Seq[Float])"
+);
+Instance.filt("FittestFilter")(
+	"killParents()",
+	"truncateElitism()",
+	"tournementElitism()"
+	);
+Instance.select("MateSelection")(
+	"tournementSelect()"
+);
+Instance.factor("MemberFactories")(
+	"tightlyLinkded()",
+	"randomlyLinked()",
+	"withCoinflipMutation(function):function",
+);
+Instance.off("OffspringGenerator")(
+	"uniformCross()",
+	"singlePointCross()",
+	"twoPointCross()"
+);
+
+topToBottom.left(20)(evo,fit,filt,factor);
+leftToRight.top(20)(fit,off);
+leftToRight.top(20)(filt,select);
+
+drawObjects(evo,fit,factor,filt,select,off);
+\end{emp}
+\caption{Algoritm}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+\begin{emp}[classdiag](20,20)
+Class.ex("Experiment")(
+	"+name:String",
+	"+variation:String",
+	"evolution: Evolution",
+	"factory:String => IMember"
+)();
+Class.result("RunResult")(
+	"popSize:Int",
+	"success:Boolean",
+	"runtime:Long",
+	"generationCount:Int",
+	"fitnessCallCount:Int"
+	)();
+Class.stoastic("StoasticRun")(
+	"runs:Seq[RunResult]",
+	"required:Int",
+	)();
+topToBottom.left(20)(ex,result,stoastic);
+drawObjects(ex,result,stoastic);
+\end{emp}
+\caption{Experiment}
+\end{figure}
+
+\clearpage
 The architecture was created incrementally, I just implemented the functions
 without thinking much about how to combine them.  I first started with the
 fittest functions. Then I went on with selection, and finally I did the
 crossover.
-
-\begin{tikzpicture}
-\begin{umlpackage}[x=0,y=0]{ec}
-	\umlemptyclass[x=3]{Member}
-\umlemptyclass{Population}
-\umluniassoc[geometry=-|,arg1=,mult1=*,pos1=0.45,arg2=,mult2=0,pos2=0.1]{Population}{Member}
-\umlemptyclass[x=6,y=2]{PairedPopulation}
-\umlemptyclass[x=6,y=0]{Pair}
-\umluniassoc[geometry=-|,arg1=,mult1=*,pos1=0.0,arg2=,mult2=0,pos2=0.0]{PairedPopulation}{Pair}
-\end{umlpackage}
-\end{tikzpicture} 
 
 I just implemented one or 2 options of these and then created an evolution
 class that accepted functions with the right prototype. So now you can
@@ -271,4 +363,5 @@ random tournement elitism.
 
 \section{Conclusion}
 %What did I learn from my observation?
+\end{empfile}
 \end{document}
