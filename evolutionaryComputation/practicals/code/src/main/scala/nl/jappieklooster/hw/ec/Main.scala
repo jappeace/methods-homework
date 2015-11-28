@@ -39,7 +39,8 @@ object Main{
 		(twoPointCross(random) _, tightlyLinked _, "2X"),
 		(twoPointCross(random) _, WithCoinFlipTimesMutation(random,tightlyLinked), "2XM"),
 		(uniformCross _, tightlyLinked _, "UX"),
-		(uniformCross _, WithCoinFlipTimesMutation(random, tightlyLinked), " UXM")
+		(uniformCross _, WithCoinFlipTimesMutation(random, tightlyLinked), " UXM"),
+		(singlePointCross(random) _, tightlyLinked _, "1X")
 	)
 	def main(args:Array[String]){
 		log.info("starting ea")
@@ -62,18 +63,24 @@ object Main{
 		val deciptive:Seq[Float] = List(4,0,1,2,3)
 		val nonDeciptive:Seq[Float] = List(4,0,0.5f,1,1.5f)
 		val expirements =
-		Experiment.create("Uniformly scaled", random, uniformlyScaledCountOnes, crossMethodsTight) ++
-		Experiment.create("Linearly scaled", random, linearlyScaledCountOnes, crossMethodsTight) ++
-		Experiment.create("Block deceptive tight", random, blockValuation(deciptive), crossMethodsTight) ++
-		Experiment.create("Block non-deceptive tight", random, blockValuation(nonDeciptive), crossMethodsTight) ++
-		Experiment.create("Block deceptive random", random, blockValuation(deciptive), crossMethodsRandom) ++
-		Experiment.create("Block non-deceptive random", random, blockValuation(nonDeciptive), crossMethodsRandom) ++
+		Experiment.create("Uniformly scaled truncate elitism", random, uniformlyScaledCountOnes, crossMethodsTight) ++
+		Experiment.create("Linearly scaled truncate elitism", random, linearlyScaledCountOnes, crossMethodsTight) ++
+		Experiment.create("Block deceptive tight truncate elitism", random, blockValuation(deciptive), crossMethodsTight) ++
+		Experiment.create("Block non-deceptive tight truncate elitism", random, blockValuation(nonDeciptive), crossMethodsTight) ++
+		Experiment.create("Block deceptive random truncate elitism", random, blockValuation(deciptive), crossMethodsRandom) ++
+		Experiment.create("Block non-deceptive random truncate elitism", random, blockValuation(nonDeciptive), crossMethodsRandom) ++
 		Experiment.create("Uniformly scaled, tournement elitism", random, uniformlyScaledCountOnes, crossMethodsTight, FittestFilter.tournementElitism) ++
 		Experiment.create("Linearly scaled, tournement elitism", random, linearlyScaledCountOnes, crossMethodsTight, FittestFilter.tournementElitism) ++
 		Experiment.create("Block deceptive tight, tournement elitism", random, blockValuation(deciptive), crossMethodsTight, FittestFilter.tournementElitism) ++
 		Experiment.create("Block non-deceptive tight, tournement elitism", random, blockValuation(nonDeciptive), crossMethodsTight, FittestFilter.tournementElitism) ++
 		Experiment.create("Block deceptive random, tournement elitism", random, blockValuation(deciptive), crossMethodsRandom, FittestFilter.tournementElitism) ++
 		Experiment.create("Block non-deceptive random, tournement elitism", random, blockValuation(nonDeciptive), crossMethodsRandom, FittestFilter.tournementElitism) ++
+		Experiment.create("Uniformly scaled, kill parents", random, uniformlyScaledCountOnes, crossMethodsTight, FittestFilter.killParents) ++
+		Experiment.create("Linearly scaled, kill parents", random, linearlyScaledCountOnes, crossMethodsTight, FittestFilter.killParents) ++
+		Experiment.create("Block deceptive tight, kill parents", random, blockValuation(deciptive), crossMethodsTight, FittestFilter.killParents) ++
+		Experiment.create("Block non-deceptive tight, kill parents", random, blockValuation(nonDeciptive), crossMethodsTight, FittestFilter.killParents) ++
+		Experiment.create("Block deceptive random, kill parents", random, blockValuation(deciptive), crossMethodsRandom, FittestFilter.killParents) ++
+		Experiment.create("Block non-deceptive random, kill parents", random, blockValuation(nonDeciptive), crossMethodsRandom, FittestFilter.killParents) ++
 		Nil
 
 
