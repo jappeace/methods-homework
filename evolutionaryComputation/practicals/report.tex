@@ -85,15 +85,6 @@ without thinking much about how to combine them.  I first started with the
 fittest functions. Then I went on with selection, and finally I did the
 crossover.
 
-\begin{tikzpicture}
-\begin{umlpackage}[x=0,y=0]{ec}
-	\umlemptyclass[x=3]{Member}
-\umlemptyclass{Population}
-\umlemptyclass[x=6]{PairedPopulation}
-%\umluniassoc[geometry=-|,arg1=x,mult1=1,pos1=1.9,arg2=y,mult2=*,pos2=0.2]{Population}{Member}
-\end{umlpackage}
-\end{tikzpicture} 
-
 I just implemented one or 2 options of these and then created an evolution
 class that accepted functions with the right prototype. So now you can
 create an evolution by giving it functions.
@@ -188,6 +179,13 @@ on how you do it) then my current implementation.
 
 
 \subsection{Speed up attempts}
+I wanted my implementation to be fast, preferably faster than any other
+implementation, now I think I didn't succeed in this because I used a
+lot of slow mechanisms, such as functional combinators, and although
+they don't increase the computational complexity, they do cerainly increase
+the minimum required runtime, I'm quite sure that every combinator in sequance
+is implemented as just another loop. However because I
+run all expirments in paralel the total time may be faster.
 \subsubsection{Paralization}
 Since were doing string comparisons I had the idea of ussing parlization to
 speed up the algoritm by doing paralization. This can be done very easily
@@ -242,6 +240,22 @@ significantly *slows* execution. This becomes worse as population size increases
 So I can execute in parralel, I can easily add whatever function I want, so
 I decided to just run a whole bunch of experiments and see what comes out.
 
+Something to note is that my made up tournement elitism is actually in most
+cases better, or at least equal to the truncate elitism. So when I saw
+this I tried using my other initially used algorithm where I would completly
+ignore the parents (kill the parents). However it appears this does not 
+perform better.
+
+I also added two point cross with mutation and 1 point cross to see how 
+those fair, running the code now takes about 40 minutes in total with the
+entire thing diveded over 8 threads (quad core + hyperthreading). The only
+other improvement I could think of is running it on the GPU, but I think
+the algortim is to complex for that.
+
+Two point cross and single cross both seem to find results in deciptive 
+random tournement elitism.
+
+\newpage
 \input{result.tex}
 
 \section{Conclusion}
