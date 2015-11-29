@@ -17,6 +17,7 @@ package nl.jappieklooster.hw.ec
 
 import org.slf4j.LoggerFactory
 
+import scala.collection.GenTraversableOnce
 import scala.util.Random
 
 trait IMember extends IHasFitness with Genetic

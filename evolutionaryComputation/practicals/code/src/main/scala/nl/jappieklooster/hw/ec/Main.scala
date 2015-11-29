@@ -98,14 +98,13 @@ object Main{
 		val file = java.io.File.createTempFile("evolutionaryComputing", "dir")
 		file.delete()
 		file.createNewFile()
-
-		/*
-		new PrintWriter(file.getCanonicalFile){
-			write(result)
-			close()
-		}
-		*/
 	}
+	/**
+	 * write to file
+	 * @param filename
+	 * @param content
+	 * @return
+	 */
 	def write(filename:String, content:String) = {
 		val outputFile = new File(folder+filename)
 		outputFile.delete()
@@ -116,6 +115,12 @@ object Main{
 		}
 	}
 
+	/**
+	 * change the result structure of the experiments into a structure the
+	 * graph drawing library can use
+	 * @param results
+	 * @return
+	 */
 	def toPlotableStructure(results:Seq[(Experiment, StoasticRun)]) =
 		results.groupBy(x=>x._1.name).map(a=> (a._1, a._2.map(
 			// map population size/callcount to points
@@ -165,6 +170,7 @@ object Main{
 		return  s"\\def\\svgwidth{\\columnwidth} $br"+
 				s"\\input{$name.pdf_tex}$br"
 	}
+
 	def toLatexWith(graphMethod:GraphData => String)
 	(values:Iterable[(String, Seq[Seq[(Double, Double)]],Seq[(String,StoasticRun)])]) = values.foldLeft(s"$br\\subsection{Data}")((str,duo) => {
 			var result = s"$str $br"
@@ -180,7 +186,7 @@ object Main{
 		})
 
 
-	def createRandomlyLinked = randomlyLinked(random.shuffle(0.to(Experiment.geneLength))) _
+	def createRandomlyLinked = randomlyLinked(random.shuffle(0.to(Experiment.geneLength).seq)) _
 
 	def stoasticsToLatex(runs:Seq[(String, StoasticRun)]) = {
 		// did some html in my youth

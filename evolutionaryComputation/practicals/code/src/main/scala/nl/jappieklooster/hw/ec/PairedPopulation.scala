@@ -87,7 +87,7 @@ object OffspringGenerator{
 		}
 	)
 	val log = LoggerFactory.getLogger("offspringernerator")
-	def twoPointCross(genes:Seq[(Char,Char)], first:Int, second:Int):IndexedSeq[Char] = {
+	def twoPointCross(genes:IndexedSeq[(Char,Char)], first:Int, second:Int):IndexedSeq[Char] = {
 		genes.zipWithIndex.map(fm => {
 			def select(start:Int, end:Int):Char = {
 				if(fm._2 < start) fm._1._1 else{
