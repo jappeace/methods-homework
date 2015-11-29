@@ -85,6 +85,14 @@ Other options I considered were:
 \end{itemize}
 
 \subsection{Architecture}
+The code is split up into 4 parts I'll go trough them in the rough order
+they were implemented. First there are the case classes. These are
+imutable classes that hold the domain information (Java pojos).
+Then there are the algoritm classes and objects. These are pretty straight
+forward logical structures. After that comes the expirment and the result
+classes. And finally there is the presentation object Main. the only thing it does
+is interpit the experiment in this case into a latex structure.
+
 \begin{figure}[ht!]
 \centering
 \begin{emp}[classdiag](20,20)
@@ -109,6 +117,26 @@ item(iAssoc)("*")(obj.se = mem.n);
 \end{emp}
 \caption{Case classes}
 \end{figure}
+
+The case classses add meaning to the structures. They also provide an API.
+A case class is a scala concept were you just define the atributes and
+equals, hascode and tostring methods are generated for you. They're also
+by default imutable, which is something I kept intact.
+
+The member is something with a gene.
+These are generated in batches into a population,
+a population will also have a function with it to generate new members.
+The population class doesn't use it itself, but when its members are paired
+up into \emph{Pair}'s. A \emph{PairedPopulation} can use the creation function
+of the original population to create new members. The PairedPopulation has
+also a utitity function pairedToPop, this receives a how, in which it can
+insert zipped genes (char by char paired up strings) and from which comes
+a charsequence. This how is usually implemented by one of the crossing methods.
+But the code around this 'how' was always the same, so paired population
+abstracted it away. The resulting string is then inserted into a member
+factory to create a new member (the member factory then allows mutation
+or obfuscation of the genes).
+
 
 \begin{figure}[ht!]
 \centering
@@ -156,6 +184,36 @@ drawObjects(evo,fit,factor,filt,select,off);
 \caption{Algoritm}
 \end{figure}
 
+The evolution class is the general stucture of a GA{.} It's very simple and
+basically follows the steps from the slides:
+\begin{enumerate}
+	\item Select mates.
+	\item Generate offspring.
+	\item Select the fittests.
+\end{enumerate}
+
+To construct an Evolution you need to pass a valuation function, a mateselector.
+An offspring gnerator, a fittestfilter. And a function that determines if there
+is a good enough solution in the current population.
+
+The step calls almost all given functions in above order except for has good
+enough solution. This function is called in genitic, which will continue
+calling steps until the population is good enough, or until parents
+and children are equal. The population is a case class, so
+the generated comperison method is used to check if the children and parents
+are equal. Startgenetic makes a seq of population and calls genetic.
+
+The objects defined above all have functions with the types same named evolution
+atributes. So the functions are just basically options you can use to create an
+evolution from. The only exception is the withCoinFlipMutation function in
+memberFactories. This function acts as a decorating function. So you can wrap
+it around another function to create a new function.
+Objects are just singletons, or Java static space. Allmost all the functions
+in these objects are `pure', this means they get some input and create some
+output without any side effects. This is not true for the factories, which
+use random, and the offspring generators, which also use random. It's also
+not true for tournement elitism, this suffles randomly.
+
 \begin{figure}[ht!]
 \centering
 \begin{emp}[classdiag](20,20)
@@ -164,20 +222,29 @@ Class.ex("Experiment")(
 	"+variation:String",
 	"evolution: Evolution",
 	"factory:String => IMember"
-)();
+)(
+	"+bisectionalSearch():StoasticRun",
+	"verifyLowest(currentPop:Int,faults:Int,index:Int):Seq[RunResult]",
+	"findOptimum(consideringSize:Int,difference:Int):Seq[RunResult]",
+	"run(consideringSize:Int):RunResult"
+);
 Class.result("RunResult")(
-	"popSize:Int",
-	"success:Boolean",
-	"runtime:Long",
-	"generationCount:Int",
-	"fitnessCallCount:Int"
+	"+popSize:Int",
+	"+success:Boolean",
+	"+runtime:Long",
+	"+generationCount:Int",
+	"+fitnessCallCount:Int"
 	)();
 Class.stoastic("StoasticRun")(
-	"runs:Seq[RunResult]",
-	"required:Int",
+	"+runs:Seq[RunResult]",
+	"+required:Int",
 	)();
-topToBottom.left(20)(ex,result,stoastic);
+topToBottom.left(20)(ex,stoastic);
+leftToRight.top(20)(stoastic,result);
 drawObjects(ex,result,stoastic);
+
+link(association)(stoastic.e -- result.w);
+item(iAssoc)("*")(obj.ne = result.w);
 \end{emp}
 \caption{Experiment}
 \end{figure}
