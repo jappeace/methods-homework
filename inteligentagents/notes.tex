@@ -682,4 +682,11 @@ R_{\alpha_2}(t,s') \Rightarrow m,s' \vDash\phi]$}
 	\UnaryInfC{$m,s \vDash A\alpha_1 \& m,s\vDash [\alpha_1]A\alpha_2 \LeftRightarrow$}
 	\UnaryInfC{$m,s \vDash A\alpha_1 \& \wedge [\alpha_1]A\alpha_2 \LeftRightarrow$}
 \end{prooftree}
+
+$\alpha$ is det & nonfailing: $[\alpha]\phi\LeftRightarrow<\alpha>\phi$
+\begin{prooftree}
+	\AxiomC{To proof: $m,s\vDash Can(\alpha_1;\alpha_2,\phi)\LeftRightArrow$}
+	\UnaryInfC{$m,s\vDash K(PracPoss(\alpha_1;\alpha_2,\phi))\LeftRightArrow$}
+	\UnaryInfC{$m,s\vDash K(PracPoss(\alpha_1;\alpha_2,\phi))\LeftRightArrow$}
+\end{prooftree}
 \end{document}
