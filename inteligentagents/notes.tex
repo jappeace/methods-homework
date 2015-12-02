@@ -589,4 +589,97 @@ You can only uncommit commited actions.
 \begin{prooftree}
 \end{prooftree}
 	\AxiomC{$\neg\vDash A\Diamond \phi \to E\Box \phi$}
+
+\section{Persistance problem}
+Closed world assumption = In databases, everything that is not in the
+database is not true.
+
+If I describe an action I want a minimal description of what change
+and what does not.
+
+\section{Situational calculus Macarty}
+calculus framework, not a logic proper.
+
+$Result(A,s)$ or do. Normally its written like $s\vDash p$
+
+\subsection{Sidenote}
+There is a big difference between european AI and american.
+American AI is much more applied. And McCarthy is more like a `god'.
+In europe modal logic is much more used.
+
+\subsection{Calculus}
+\subsubsection{Herbrand situation}
+A situation is always a sequance of actions performed on the initial situation
+
+positive effects starts to hold after the action, and negative it doesn't.
+
+Also describe the things that don't change. These are the 'axioms'.
+
+\subsubsection{The frame problem}
+You need a pair of axioms is needed for every fluent and action. This will
+result in way to many axioms.
+
+This is solved with default reasoning. Altough writer gave it up eventually.
+You need to do a consisty check, this is in modal logic already NP-hard.
+
+\section{Planning}
+GPS = General planning system
+this has to do with program syntesis
+
+STRIPS, depth first.
+
+\subsection{The susman anomaly}
+This can go into a loop, because focusing on one of these goals can
+make the other one false.
+
+\subsection{start backwards}
+Breadtfirst is then more feasible because there are fewer brances.
+\[[\alpha] = wp(\alpha,\gamma)\]
+
+\section{practical X}
+i.e = $\RightLeftarrow$
+\subsection{9A}
+\begin{prooftree}
+	\AxiomC{To prove $(m,s)$ $\vDash [\alpha_1;\alpha_2]\phi\LeftRightarrow
+[\alpha_1][\alpha_2]\phi$ for all $m,s$}
+
+\UnaryInfC{Suppose $(m,s)$ $\vDash [\alpha_1;\alpha_2]\phi$}
+\UnaryInfC{ie for all s': $R_{\alpha_1;\alpha_2}(s,s')\Rightarrow m,s$}
+\UnaryInfC{ie for all s': $(\exists t: R_{\alpha_1}(s,t)$ and
+$R_{\alpha_2}(t,s') \Rightarrow m,s' \vDash\phi$}
+\UnaryInfC{ie for all s': $\forall t[ : R_{\alpha_1}(s,t)$ and
+$R_{\alpha_2}(t,s') \Rightarrow m,s' \vDash\phi]$}
+
+\UnaryInfC{$\forall s': \forall t[ : R_{\alpha_1}(s,t)$ and
+$R_{\alpha_2}(t,s') \Rightarrow m,s' \vDash\phi]$}
+\UnaryInfC{$\forall t: \forall s[ : R_{\alpha_1}(s,t)$ and
+$R_{\alpha_2}(t,s') \Rightarrow m,s' \vDash\phi]$}
+
+\UnaryInfC{$\forall t: R_{\alpha_1}(s,t) \Rightarrow [\forall S'
+R_{\alpha_2}(t,s') \Rightarrow m,s' \vDash\phi]$}
+
+\UnaryInfC{$\forall t: R_{\alpha_1}(s,t) \Rightarrow m,t\vDash[\alpha_2]
+\vDash\phi]$}
+\UnaryInfC{m,s$\vDash[\alpha_1][\alpha_2]\phi$}
+\end{prooftree}
+
+\begin{prooftree}
+	\AxiomC{To prove $m,s\vDash <\alpha>(\phi\wedge
+	\varphi)\LeftRightarrow(<\alpha>\phi\wedge<\alpha>\varphi)$, for all m,s}
+	\UnaryInfC{$m,s\vDash<\alpha>(\phi\wedge\varphi)\LeftRightarrow$}
+	\UnaryInfC{$\exists: R_\alpha(s,t)&m,t\vDash\phi\wedge\varphi\LeftRightarrow$}
+\end{prooftree}
+\begin{prooftree}
+	\AxiomC{To proof: $m,s \vDash A\alpha;\alpha_2\LeftRightarrow 
+		(A_{\alpha_1}\wedge[\alpha_1]A_{\alpha_2})$}
+	\UnaryInfC{Assume arb. $m,s \vDash A\alpha_1;\alpha_2\LeftRightarrow$}
+	\UnaryInfC{$\alpha_1;\alpha_2 \exists C (m,s) \LeftRightarrow$}
+	\UnaryInfC{$\alpha_1 \exists C (m,s) \& \alpha_2 \exists C (m,s)\LeftRightarrow$}
+	\UnaryInfC{$m,s \vDash A\alpha_1 \exists C (m,s) \& R_{\alpha_1}(mcs)
+	\vDash A\alpha_2 \LeftRightarrow$}
+	\UnaryInfC{$m,s \vDash A\alpha_1 \& \forall(m',s'):R_\alpha_1
+	(m,s)(m',s')\rightarrow m',s')\vDash A\alpha_2 \LeftRightarrow$}
+	\UnaryInfC{$m,s \vDash A\alpha_1 \& m,s\vDash [\alpha_1]A\alpha_2 \LeftRightarrow$}
+	\UnaryInfC{$m,s \vDash A\alpha_1 \& \wedge [\alpha_1]A\alpha_2 \LeftRightarrow$}
+\end{prooftree}
 \end{document}
