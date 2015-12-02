@@ -67,13 +67,13 @@ class Experiment(val name:String, val variation:String, evolution: Evolution, me
 		if(newDiff < popUnit){ // steps becoming to small, bort return result
 			return result
 		}
-		if(StoasticRun.isSucces(result)){
+		if(StochasticRun.isSucces(result)){
 			// if we had success, zoom in
 			return result ++ findOptimumPopsize(consideringSize-difference/2, difference/2)
 		}
 		result ++ findOptimumPopsize(consideringSize+newDiff,newDiff)
 	}
-	def bisectionalSearch() = StoasticRun(findOptimumPopsize(popUnit ,popUnit/2), requiredRuns)
+	def bisectionalSearch() = StochasticRun(findOptimumPopsize(popUnit ,popUnit/2), requiredRuns)
 }
 
 case class RunResult(popSize:Int, success:Boolean, runtime:Long, generationCount:Int, fitnessCallCount:Int){
@@ -82,7 +82,7 @@ case class RunResult(popSize:Int, success:Boolean, runtime:Long, generationCount
 	}
 }
 import util.Properties.lineSeparator
-case class StoasticRun(runs:Seq[RunResult], required:Int) {
+case class StochasticRun(runs:Seq[RunResult], required:Int) {
 	lazy val byPopSize = runs.groupBy(x=>x.popSize)
 	lazy val bestRun = byPopSize.getOrElse(bigestPopcount, Nil)
 	lazy val isSuccesfull = bestRun.size == required
@@ -91,7 +91,7 @@ case class StoasticRun(runs:Seq[RunResult], required:Int) {
 	}
 	lazy val bigestPopcount = {
 	 	val successes = byPopSize.filter(p =>
-			StoasticRun.isSucces(p._2)
+			StochasticRun.isSucces(p._2)
 		)
 		// do the highest so its obvious its a lot
 		if(successes.isEmpty) runs.last.popSize else successes.minBy(x=>x._1)._1
@@ -101,7 +101,7 @@ case class StoasticRun(runs:Seq[RunResult], required:Int) {
 	lazy val bestRunAverageTime = bestRun.map(x=>x.runtime).sum/bestRun.length
 }
 
-object StoasticRun{
+object StochasticRun{
 	def isSucces(results:Seq[RunResult]) =  results.count(r=> r.success) >= (
 		Experiment.requiredRuns - Experiment.faultTolerance
 	)
@@ -116,6 +116,11 @@ object Experiment{
 	val requiredRuns = 30
 	val faultTolerance = 1
 
+	def measureRuntime(function:Function0):Long = {
+		val startTime = System.currentTimeMillis()
+		function.apply()
+		System.currentTimeMillis() - startTime
+	}
 	def create(
 		name:String,
 		random:Random,

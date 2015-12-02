@@ -63,18 +63,18 @@ object Main{
 		val deciptive:Seq[Float] = List(4,0,1,2,3)
 		val nonDeciptive:Seq[Float] = List(4,0,0.5f,1,1.5f)
 		val expirements =
-		Experiment.create("Uniformly scaled truncate elitism", random, uniformlyScaledCountOnes, crossMethodsTight) ++
-		Experiment.create("Linearly scaled truncate elitism", random, linearlyScaledCountOnes, crossMethodsTight) ++
-		Experiment.create("Block deceptive tight truncate elitism", random, blockValuation(deciptive), crossMethodsTight) ++
-		Experiment.create("Block non-deceptive tight truncate elitism", random, blockValuation(nonDeciptive), crossMethodsTight) ++
-		Experiment.create("Block deceptive random truncate elitism", random, blockValuation(deciptive), crossMethodsRandom) ++
-		Experiment.create("Block non-deceptive random truncate elitism", random, blockValuation(nonDeciptive), crossMethodsRandom) ++
-		Experiment.create("Uniformly scaled, tournement elitism", random, uniformlyScaledCountOnes, crossMethodsTight, FittestFilter.tournementElitism) ++
-		Experiment.create("Linearly scaled, tournement elitism", random, linearlyScaledCountOnes, crossMethodsTight, FittestFilter.tournementElitism) ++
-		Experiment.create("Block deceptive tight, tournement elitism", random, blockValuation(deciptive), crossMethodsTight, FittestFilter.tournementElitism) ++
-		Experiment.create("Block non-deceptive tight, tournement elitism", random, blockValuation(nonDeciptive), crossMethodsTight, FittestFilter.tournementElitism) ++
-		Experiment.create("Block deceptive random, tournement elitism", random, blockValuation(deciptive), crossMethodsRandom, FittestFilter.tournementElitism) ++
-		Experiment.create("Block non-deceptive random, tournement elitism", random, blockValuation(nonDeciptive), crossMethodsRandom, FittestFilter.tournementElitism) ++
+		Experiment.create("Uniformly scaled, truncate elitism", random, uniformlyScaledCountOnes, crossMethodsTight) ++
+		Experiment.create("Linearly scaled, truncate elitism", random, linearlyScaledCountOnes, crossMethodsTight) ++
+		Experiment.create("Block deceptive tight, truncate elitism", random, blockValuation(deciptive), crossMethodsTight) ++
+		Experiment.create("Block non-deceptive tight, truncate elitism", random, blockValuation(nonDeciptive), crossMethodsTight) ++
+		Experiment.create("Block deceptive random, truncate elitism", random, blockValuation(deciptive), crossMethodsRandom) ++
+		Experiment.create("Block non-deceptive random, truncate elitism", random, blockValuation(nonDeciptive), crossMethodsRandom) ++
+		Experiment.create("Uniformly scaled, tournament elitism", random, uniformlyScaledCountOnes, crossMethodsTight, FittestFilter.tournementElitism) ++
+		Experiment.create("Linearly scaled, tournament elitism", random, linearlyScaledCountOnes, crossMethodsTight, FittestFilter.tournementElitism) ++
+		Experiment.create("Block deceptive tight, tournament elitism", random, blockValuation(deciptive), crossMethodsTight, FittestFilter.tournementElitism) ++
+		Experiment.create("Block non-deceptive tight, tournament elitism", random, blockValuation(nonDeciptive), crossMethodsTight, FittestFilter.tournementElitism) ++
+		Experiment.create("Block deceptive random, tournament elitism", random, blockValuation(deciptive), crossMethodsRandom, FittestFilter.tournementElitism) ++
+		Experiment.create("Block non-deceptive random, tournament elitism", random, blockValuation(nonDeciptive), crossMethodsRandom, FittestFilter.tournementElitism) ++
 		Experiment.create("Uniformly scaled, kill parents", random, uniformlyScaledCountOnes, crossMethodsTight, FittestFilter.killParents) ++
 		Experiment.create("Linearly scaled, kill parents", random, linearlyScaledCountOnes, crossMethodsTight, FittestFilter.killParents) ++
 		Experiment.create("Block deceptive tight, kill parents", random, blockValuation(deciptive), crossMethodsTight, FittestFilter.killParents) ++
@@ -84,10 +84,15 @@ object Main{
 		Nil
 
 
+		log.info(s"doing stoastic with ${Experiment.requiredRuns} runs")
+		val startTime = System.currentTimeMillis()
+
 		val results = expirements.par.map(x => {
 			(x, x.bisectionalSearch())
 		}).seq
-		log.info(s"doing stoastic with ${Experiment.requiredRuns} runs")
+
+		val runtime = System.currentTimeMillis() - startTime
+		log.info(s"experiment runtime ${(runtime/1000)} seconds")
 
 		val values = toPlotableStructure(results).toSeq.sortBy(x=>x._1)
 
@@ -121,7 +126,7 @@ object Main{
 	 * @param results
 	 * @return
 	 */
-	def toPlotableStructure(results:Seq[(Experiment, StoasticRun)]) =
+	def toPlotableStructure(results:Seq[(Experiment, StochasticRun)]) =
 		results.groupBy(x=>x._1.name).map(a=> (a._1, a._2.map(
 			// map population size/callcount to points
 			xy =>xy._2.byPopSize.map(
@@ -172,7 +177,7 @@ object Main{
 	}
 
 	def toLatexWith(graphMethod:GraphData => String)
-	(values:Iterable[(String, Seq[Seq[(Double, Double)]],Seq[(String,StoasticRun)])]) = values.foldLeft(s"$br\\subsection{Data}")((str,duo) => {
+	(values:Iterable[(String, Seq[Seq[(Double, Double)]],Seq[(String,StochasticRun)])]) = values.foldLeft(s"$br\\subsection{Data}")((str,duo) => {
 			var result = s"$str $br"
 			result += s"\\subsubsection{${duo._1}} $br"
 			result += s"\\begin{figure}[ht!] $br"
@@ -188,14 +193,14 @@ object Main{
 
 	def createRandomlyLinked = randomlyLinked(random.shuffle(0.to(Experiment.geneLength).seq)) _
 
-	def stoasticsToLatex(runs:Seq[(String, StoasticRun)]) = {
+	def stoasticsToLatex(runs:Seq[(String, StochasticRun)]) = {
 		// did some html in my youth
 		val td = "&"
 		runs.foldLeft(
 			s"$lineSeparator" + // the structure becomes clearer on a new line
 			s"\\begin{tabular}{llllll}$lineSeparator" +
 			s"Variation $td Success $td Min. population $td Avg. generation "+
-			s"$td Avg. fitness call-count $td Avg. time \\\\ \\toprule $lineSeparator"
+			s"$td Avg. fitness call-count $td Avg. time ms \\\\ \\toprule $lineSeparator"
 		)((a,tupple) => {
 			val r = tupple._2
 			s"$a" +
