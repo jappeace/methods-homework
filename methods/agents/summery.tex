@@ -316,6 +316,48 @@ euclidean.
 	\item $B \phi \to BB\phi$ (positive introspection)
 	\item $\neg B \phi \to B\neg B\phi$ (negative introspection)
 \end{itemize}
+
+\subsection{ContextLogic: $S5P,K45^{ij}$}
+
+\paragraph{Universal modality $\Box$} Based on S5(equivalence relation).
+\paragraph{Cluster modality [i]} referring to subrelations ('clusters') of
+universal relation. Its Transative, euclidean $K45$
+
+\subsubsection{S5P Models}
+\[M (S,\pi, S_1, S_2, \dots, S_n\]
+\begin{tikzpicture}
+    \draw (0,0) ellipse (5cm and 3cm);
+	\draw[color=red] (1,1) ellipse (2cm and 1cm);
+    \draw[color=red] (0,1) ellipse (2cm and 1cm);
+    \draw[color=red] (0,0) ellipse (2cm and 1cm);
+    \draw[color=red] (-1,-2) ellipse (2cm and 0.5cm);
+\end{tikzpicture}
+
+\subsubsection{Semantics}
+\begin{tabular}{lll}
+	Modal & $\Leftrightarrow$ & Interpertation \\ \toprule
+	$M,s \vDash \Box\phi$ & $\Leftrightarrow$ &
+	$M,s' \vDash \phi$ for all $s'$ $\in S$ \\
+
+	$M,s \vDash [i]\phi$ & $\Leftrightarrow$ &
+	$M,s' \vDash \phi $ for all $s'$ $\in S_i$ \\
+
+	$M,s \vDash \Box\phi$ & $\Leftrightarrow$ &
+	$M,s' \vDash \phi $ for all $s'$ $\in S$ such that $R(s,s')$ \\
+
+	$M,s \vDash [i]\phi$ & $\Leftrightarrow$ &
+	$M,s' \vDash \phi $ for all $s'$ $\in S_i$ such that $R_i(s,s')$ \\
+\end{tabular}
+
+\paragraph{Accessibility relations}
+\[R(s,s') \mbox{ for all } s,s' \in S\]
+\[R_i(s,s') \mbox{ for all } s,s' \in S_i\]
+
+$R$ is equivalance and $R_i$ is transative and euclidean.
+
+
+\[S5P = K45^{ij}_{(m)} + \Box\]
+
 \section{APL}
 Medhi dastani taught about the agent programming langauge (APL).
 \subsection{Agent data structure}
