@@ -1,0 +1,67 @@
+
+#Evolv multimod
+mode = mode of behavior
+neuroevolution = evolution of artifical neural networks... <- define
+	RL = policy based reinforcement learning
+	neur.. is an example of RL
+POMDP = Paritally observable markov decision processes <- define
+
+This paper shows how the performance of neuroevolution
+can be improved in multi-modal domains.
+It does this by having several different sets of output neurons.
+Each individual set completly defines a potential mode
+of behavior for the agent.
+
+
+.. so the solution is the behaviour or output set?
+
+A game is being used as competition.
+
+Maximize time alive, Why?
+
+MOEA = Pareto-based Multi-Objective Evulationary Algoritms
+
+a modified form of NSGA-II is used for the GA.
+
+Definition of dominitaion: a.forall(b >= a) && a.exists(b>a), there is at
+least one element bigger in b then in a and all other elements are at
+least equal or bigger.
+
+pareto optimal = non dominated collection.
+
+offspring = clone + mutation.
+
+truncte elitism is used.
+
+Important, the objectives are ranked, if there is an equilibrem called a
+pareto front which is to big for the next generation than objectives that
+are less important are dropped. Until there is just one left, then random.
+
+After cloning mutations are applied. What mutation occurs is probabiliscly
+selected (similiarly to NEAT <-- look this up) this paper introduces also
+a reduce operator, simaraly to a remove in a linked list. Its purpouse
+is a cleanup. doing it this way is aperantly new in this paper...
+Experimients indicate this is *also* an improvment... <- what?
+
+Why the hell don't these guys just make a network for every possible mode?
+	to help discovery of hidden features in the environment and share it?
+
+Homogenous teams is a team where each member uses the same neural network.
+
+Didn't the average scoring system mess up the 1Mode mutation?
+
+He ask the question, why do I have to many output nodes? Well you never specified
+a delete mutation for output nodes (I think)
+
+He also gets overly philosopical about them. `its not certain wether these nodes
+are never used or once were usefull`.
+Why doesn't he just keep track of them ?? Its a relativley minor change,
+if he provided the source I could've done it for him.
+
+There are many arbitrary numbers involved coming forth out of perliminary
+expirements without a source. for example the generation cap of 300 is just...
+
+The conclusion sais there is just one operator being added. But I count 2.
+The linked list one and the output operator. Its a little misleading
+
+Crosover is not used, WHY?
