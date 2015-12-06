@@ -1,7 +1,7 @@
 package nl.jappieklooster.hw.ec.tests
 
 import nl.jappieklooster.hw.ec.IHasFitness
-import nl.jappieklooster.hw.ec.Fitness
+import nl.jappieklooster.hw.ec.Evaluation._
 import org.scalatest.{Matchers, FlatSpec}
 
 class FitnessTests extends FlatSpec with Matchers{
@@ -18,13 +18,13 @@ class FitnessTests extends FlatSpec with Matchers{
 
 
 	"Linearly counting fitness " should "count subject as 10" in {
-		Fitness.uniformlyScaledCountOnes(subject) should be (10)
+		uniformlyScaledCountOnes(subject) should be (10)
 	}
 	"Linearly scaled fitness " should "count subject as 64" in {
-		Fitness.linearlyScaledCountOnes(subject) should be (64)
+		linearlyScaledCountOnes(subject) should be (64)
 	}
 
-	val deceptive = Fitness.blockValuation(List(4f,0f,1f,2f,3f)) _
+	val deceptive = blockValuation(List(4f,0f,1f,2f,3f)) _
 	"deceptive trap fitness" should "count subject as 10" in {
 		deceptive(subject) should be (10)
 	}
@@ -44,7 +44,7 @@ class FitnessTests extends FlatSpec with Matchers{
 	"trap function" should "have no trouble with wrongly block sized input " in {
 		deceptive("1111" + "0111" + "1010" + "1000" + "00") should be (10)  // because it should count the ones
 	}
-	val nondecept = Fitness.blockValuation(List(4f, 0f, 0.5f, 1f, 1.5f)) _
+	val nondecept = blockValuation(List(4f, 0f, 0.5f, 1f, 1.5f)) _
 	"nondeceptive trap fitness" should "count subject as 7" in {
 		nondecept(subject) should be (7)
 	}

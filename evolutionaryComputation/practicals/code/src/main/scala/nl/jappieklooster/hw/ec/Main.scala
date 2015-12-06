@@ -24,7 +24,7 @@ import scala.reflect.io.Path
 import scala.util.Random
 import OffspringGenerator._
 import MemberFactories._
-import Fitness._
+import Evaluation._
 import scala.util.Properties.lineSeparator
 
 object Main{
@@ -36,8 +36,9 @@ object Main{
 	type GraphData = (String,Seq[Seq[(Double,Double)]])
 
 	val crossMethodsTight = Seq(
-		(twoPointCross(random) _, tightlyLinked _, "2X"),
-		(twoPointCross(random) _, WithCoinFlipTimesMutation(random,tightlyLinked), "2XM"),
+		(twoPointCross(random,inverResult) _, tightlyLinked _, "2X"),
+		(twoPointCross(random,keepSelected) _, tightlyLinked _, "2XB"),
+		(twoPointCross(random,inverResult) _, WithCoinFlipTimesMutation(random,tightlyLinked), "2XM"),
 		(uniformCross _, tightlyLinked _, "UX"),
 		(uniformCross _, WithCoinFlipTimesMutation(random, tightlyLinked), " UXM"),
 		(singlePointCross(random) _, tightlyLinked _, "1X")

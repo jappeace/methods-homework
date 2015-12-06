@@ -38,7 +38,7 @@ class Experiment(val name:String, val variation:String, evolution: Evolution, me
 
 		// sucesfull if early termination or the last population is good enough
 		val success = hasGoodEnoughSolution(evolutionResult.last)
-		RunResult(consideringSize, success, runtime, evolutionResult.length,evolution.valuation.countCalls())
+		RunResult(consideringSize, success, runtime, evolutionResult.length,evolution.evaluation.countCalls())
 	}
 
 	def verifyLowest(currentPop:Int, faults:Int, index:Int) : Seq[RunResult] = {
@@ -116,11 +116,6 @@ object Experiment{
 	val requiredRuns = 30
 	val faultTolerance = 1
 
-	def measureRuntime(function:Function0):Long = {
-		val startTime = System.currentTimeMillis()
-		function.apply()
-		System.currentTimeMillis() - startTime
-	}
 	def create(
 		name:String,
 		random:Random,
@@ -129,7 +124,7 @@ object Experiment{
 		filter:(Population, Population) => Population = FittestFilter.truncateElitism
 	):Seq[Experiment] = variationOperators.map(
 		variation => {
-			val probe = Fitness.createProbe(valuationFunction)
+			val probe = Evaluation.createProbe(valuationFunction)
 		 new Experiment(
 			name,
 			variation._3,

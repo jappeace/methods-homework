@@ -32,7 +32,8 @@ trait FitnessEvaluator{
 	}
 }
 
-object Fitness {
+object Evaluation{
+
 	private def whereCharIsOne(c:Char) = c == '1'
 	def uniformlyScaledCountOnes(s:String):Float = s.count(whereCharIsOne)
 

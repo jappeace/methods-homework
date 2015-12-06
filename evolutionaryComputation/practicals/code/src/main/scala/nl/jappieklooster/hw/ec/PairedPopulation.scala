@@ -87,8 +87,11 @@ object OffspringGenerator{
 		}
 	)
 	val log = LoggerFactory.getLogger("offspringernerator")
-	def twoPointCross(genes:IndexedSeq[(Char,Char)], first:Int, second:Int):IndexedSeq[Char] = {
-		genes.zipWithIndex.map(fm => {
+	def inverResult(selected:Char, one:Char, two:Char) = if(selected == one) two else one
+	def keepSelected(selected:Char, one:Char, two:Char) = selected
+	def twoPointCross(onFirstBig:(Char,Char,Char)=>Char, genes:IndexedSeq[(Char,Char)], first:Int, second:Int):IndexedSeq[Char] = {
+		val isFirstSmall = first < second
+		val result = genes.zipWithIndex.map(fm => {
 			def select(start:Int, end:Int):Char = {
 				if(fm._2 < start) fm._1._1 else{
 					if(fm._2 < end){
@@ -96,20 +99,21 @@ object OffspringGenerator{
 					}else fm._1._1
 				}
 			}
-			if(first < second){
+			if(isFirstSmall){
 				select(first,second)
 			}else{
-				select(second, first)
+				onFirstBig(select(second,first),fm._1._1,fm._1._2)
 			}
 		})
+		result
 	}
-	def twoPointCross(rand:Random)(x:PairedPopulation) : Population = x.pairedToPop(
+	def twoPointCross(rand:Random, onFirstBig:(Char,Char,Char)=>Char)(x:PairedPopulation) : Population = x.pairedToPop(
 		genes => {
 			val first = rand.nextInt(genes.length)
 			val second = rand.nextInt(genes.length)
 			log.debug(s"crossing with $first and $second")
 			// where the genes are equal will keep the same, else random
-			twoPointCross(genes,first,second)
+			twoPointCross(onFirstBig, genes,first,second)
 		}
 	)
 	val random = Random

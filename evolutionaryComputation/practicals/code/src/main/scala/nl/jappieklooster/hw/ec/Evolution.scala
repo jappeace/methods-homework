@@ -16,7 +16,7 @@
 package nl.jappieklooster.hw.ec
 
 class Evolution(
-	val valuation: FitnessEvaluator,
+	val evaluation: FitnessEvaluator,
 	mateSelector:IMateSelector,
 	offSpringGenerator: PairedPopulation => Population,
 	/**
