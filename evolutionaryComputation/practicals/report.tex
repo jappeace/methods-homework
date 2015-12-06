@@ -333,11 +333,12 @@ and decide which one is best. There is no kill children implementation
 because nothing would ever change.
 
 \paragraph{Mate selection} MateSelection implements tournament select.
-This is the only mate selection algorithm implemented currently.
+This is the only mate selection algorithm implemented.
 
 \paragraph{Member factories} The member factories are able to create
 members from strings. These are either the tightly linked or randomly
-linked. Then the tightly or randomly linked
+linked. 
+\subparagraph{Mutation} Then the tightly or randomly linked
 functions can also be wrapped in a mutation function,
 which will mutate the string before passing it to the factory.
 Its an decorator idea, only with functions.
