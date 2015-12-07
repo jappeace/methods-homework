@@ -24,6 +24,8 @@ methods/cogniveProcessing/MAIR_CPprac1_4/Files_PsychToolboxV2/__MACOSX
 
 #archives
 *.zip
+*.tar
+*.tar.gz
 
 #vim
 *.swp
