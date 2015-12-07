@@ -51,7 +51,7 @@ case class PairedPopulation(members:Seq[Pair], memberFactory:String => IMember) 
 						if(child == genesF){
 							return fumu.father
 						}
-						if(child == genesM){
+						if (child == genesM) {
 							return fumu.mother
 						}
 						memberFactory(child)

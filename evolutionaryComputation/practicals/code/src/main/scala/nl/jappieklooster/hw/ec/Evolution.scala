@@ -42,9 +42,10 @@ class Evolution(
 			return prev
 		}
 		val children = step(parents)
+
 		if (children == parents) {
 			return prev
-			}
+		}
 		genetic(prev :+ children)
 	}
 }

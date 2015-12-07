@@ -38,7 +38,6 @@ object Main{
 	val crossMethodsTight = Seq(
 		(twoPointCross(random,inverResult) _, tightlyLinked _, "2X"),
 		(twoPointCross(random,keepSelected) _, tightlyLinked _, "2XB"),
-		(twoPointCross(random,inverResult) _, WithCoinFlipTimesMutation(random,tightlyLinked), "2XM"),
 		(uniformCross _, tightlyLinked _, "UX"),
 		(uniformCross _, WithCoinFlipTimesMutation(random, tightlyLinked), " UXM"),
 		(singlePointCross(random) _, tightlyLinked _, "1X")
@@ -100,10 +99,6 @@ object Main{
 		log.info(toLatexWith(asciiGraph)(values))
 
 		write("result.tex", toLatexWith(svgGraph)(values))
-
-		val file = java.io.File.createTempFile("evolutionaryComputing", "dir")
-		file.delete()
-		file.createNewFile()
 	}
 	/**
 	 * write to file

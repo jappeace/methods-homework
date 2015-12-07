@@ -324,6 +324,7 @@ Mutation isn't part of the offspringGenerator
 because this is done by the member factory. It was easier to implement
 in the member factory due to the architecture choices.
 
+\label{paragraph:Fittest filter}
 \paragraph{Fittest filter} The fittest filter decides how which of both
 the parents and children continues.
 The most simple implementation is the \emph{Killparents}, which
@@ -337,11 +338,16 @@ This is the only mate selection algorithm implemented.
 
 \paragraph{Member factories} The member factories are able to create
 members from strings. These are either the tightly linked or randomly
-linked. 
+linked.
+
 \subparagraph{Mutation} Then the tightly or randomly linked
 functions can also be wrapped in a mutation function,
 which will mutate the string before passing it to the factory.
 Its an decorator idea, only with functions.
+\newpage
+
+\subsubsection{Experiment}
+
 
 \begin{figure}[ht!]
 \centering
@@ -384,24 +390,28 @@ function will wrap the result of \emph{findOptimum} in a \emph{StochasticRun}.
 collection of runResults. This is used to determine if the population size
 should be increased or decreased like a bisection search.
 \emph{verifyLowest} will try to run a population size 30 times, if the faults
-limit is exceeded or the index exceeds the required runs limit it will quit.
-In the latter case the run is considered to be successful.
-The run will execute the GA search according to the configuration of the 
-experiment, so this function will call startGenetic, and put the results
-of the run into a RunResult. The RunResult will actually truncate a lot of
-information. Not the entire resulting population is stored. It wasn't
-necessary for the experiment and I was concerned about memory. Or rather
-I didn't want to be too wasteful, especially considering that the JVM
-reserves big blocks of memory.
+limit is exceeded or the index exceeds the required run limit it will quit.
+The run is considered to be successful if the count of successful run >= 
+run limit - faults.
 
-\subsubsection{Unit tests}
+The run will execute the \emph{Evolution} that has been passed into this
+experiment.  so this function will call startGenetic on the Evolution object, 
+and put the results of the run into a \emph{RunResult}.
+
+\subsection{Unit tests}
 Because the assignment has very well defined behavior. I thought it was
-a very wise Idea to use unit tests. To do this I use a library called
+a good Idea to use unit tests. To do this I use a library called
 Scala test.
 
-I found about 6 different bugs alone in the valuation functions by using 
-unit-testing, so I think this saved me considerable time.
-\subsubsection{Build tool}
+I found about 6 different bugs alone in the valuation functions by using
+unit-testing, so I think this saved me considerable time. I also used this
+to precisely define the behavior of 2 point cross.
+
+By using unit tests I became very certain about the execution of my code.
+It does precisely what its supposed to do even though I use functional
+programming and it may look somewhat foreign.
+
+\subsection{Build tool}
 I use Gradle for building the project. Its the most advanced build platform
 available and makes it easy to add dependencies to the project.
 For example I use slf4j for logging.
@@ -419,9 +429,9 @@ Open a shell and move to the project folder then type:
 	./gradlew run
 \end{lstlisting}
 
-\subsubsection{Libraries used}
+\subsection{Libraries used}
 In here I will describe why I chose to use these libraries
-The details of the libraries can be found in the gradle file (which
+The details of the libraries can be found in the Gradle file (which
 version and what maven group):
 
 \begin{lstlisting}[frame=single]
@@ -445,12 +455,15 @@ version and what maven group):
 
 \subsection{Speed up attempts}
 I wanted my implementation to be fast, preferably faster than any other
-implementation, now I think I didn't succeed in this because I used a
-lot of slow mechanisms, such as functional combinators, and although
-they don't increase the computational complexity, they do certainly increase
-the minimum required runtime, I'm quite sure that every combinator in sequence
+implementation. I think I didn't succeed in this for the algorithm part
+because I used a lot of slow mechanisms, such as functional combinators.
+Although they don't increase the computational complexity,
+they do certainly increase
+the minimum required runtime. I'm quite sure that every combinator in sequence
 is implemented as just another loop. However because I
-run all experiments in parallel the total time may be faster.
+run all experiments in parallel the total time may be faster. So in a way
+I did succeed.
+
 \subsubsection{Parallelization}
 Since were doing string comparisons I had the idea of using parallelization to
 speed up the algorithm by doing parallelization. This can be done very easily
@@ -459,20 +472,15 @@ in Scala with par collections (and the fact that immutability is default).
 However once I implemented this, I came to the conclusion it was not faster.
 The overhead for delegating and creating threads was more than the parallelization
 gained.  After 10 minutes of waiting I decided to drop this idea
-since without parallelization it took about 2 minutes (I tried this
-on just one run, so it shouldn't take that long).
-
+since without parallelization it took about 2 minutes.
 The problem is that the evaluation function, even with gene length of 100, is
-to cheap to make any reasonable parallelization effective. However what was effictive
-is the parallelization of the experiments. This reduced total runtime
-significantly. However this is not seen in the statistics.
+to cheap to make any reasonable parallelization effective.
 
 So now all experiments are run at the same time. This probably increases the
 average time of each `run' somewhat (not that much because the concurrent
 collection does \href{http://docs.scala-lang.org/overviews/parallel-collections/configuration.html}{load balancing}).
 It also drastically decreases the amount of time I have to wait. Which is quite
-important, especially in the development phase. (although I also used
-other tricks, such as instead of 30, just doing 3 runs)
+important, especially in the development phase.
 
 The parallelization of experiments can be removed by deleting `par' on line 64
 of Main.scala
@@ -485,61 +493,36 @@ to be evaluated anyways, so doing this on creation and just putting in the
 evaluation saves some heavy evaluation operations.
 
 \subsubsection{Only create children if the genes are new}
-If the genes are new then create the children otherwise return the parent.
-This reduces evaluations and object creations. Its becomes more effective
-at deeper generation, it even slows down the fastest GA's by a few milliseconds
-but the deeper GA are lots faster.
+This optimization reduces the amount of evaluations required.  It becomes 
+more effective at deeper generations, however it slows down the fastest 
+GA's by a few milliseconds but the slower GA's  are quite a bit faster.
 
 This can be done safely because strings are immutable and so are the members.
 So I can reuse them whenever its needed.
 
-To reduce the amount of string comparisons, first the hash code function is called
-This will cache itself, I know this because I inspected the source code of the
-String class in Java.
-
-I was very proud for coming up with  this idea, but when I ran the experiment with
-and without hash code I came to the conclusion that first doing a hash code operation
-significantly *slows* execution. This becomes worse as population size increases.
+I also had an idea of using hash-codes to reduce the amount of comparisons.
+But it turns out that this increases the running time, so I quickly removed
+this optimization again.
 
 \section{Experiment}
-Something to note is that my made up tournament elitism is actually in most
-cases better, or at least equal to the truncate elitism. So when I saw
-this I tried using my other initially used algorithm where I would completely
-ignore the parents (kill the parents). However it appears this does not
-perform better.
+In here I will discuss how the experiments ran and the thoughts I
+above about the results.
+First the setup will be discussed, since I added to the
+original assignment out of curiosity. Then the hypothesis
+will be discussed. After that the results will be shown
+and finally I will discuss the conclusions I draw from the experiments.
 
-I also added two point cross with mutation and 1 point cross to see how
-those fair, running the code now takes about 40 minutes in total with the
-entire thing divided over 8 threads (quad core + hyper-threading). The only
-other improvement I could think of is running it on the GPU, but I think
-the algorithm is to complex for that and I don't know how to do that,
-especially considering I'm using the JVM.
+\subsection{Experiment titles}
+The experiment titles all follow the same structure:
 
-Two point cross and single cross both seem to find results in deceptive
-random tournament elitism.
-\subsection{Hypothesis}
-The deceptive trap function will not be solved by any algorithm for
-the population sizes. I think this because its to desirable to have
-at least one 0000 block in the 100 string length.
-Non-deceptive will be more successful. The others will be solved.
-I also think mutation will have an important effect and may even
-allow deceptive to be solved.
+\[F\mbox{ }L, E\]
+Where F is the fitness function, L is the linkage and E is the elitism type.
+The experiment results are grouped by this structure alphabetically.
+The elitism types are discussed in the fittest fileter paragraph \ref{paragraph:Fittest filter}
 
-I also think that the provided selection pressure would be about
-average. It will probably always find a result.
-\subsection{Execution}
-I added extra selection methods and crossing strategies to
-the final experiment. I did this because I was curious how they would
-compete with the original assignment.
+Block is the trap function.
 
-After doing some sample experiments I found for example that 2x was going
-up with number of successes in the biggest population size. So I wondered 
-if doing my original interpretation of the select would work better.
-I found that in almost every case this original interpretation is at least as
-good or better. On both runtime and successes required population for success.
-
-
-\paragraph{Abreviations}
+\subsection{Abbreviations}
 \begin{tabular}{ll}
 	Abrivation & Full name \\ \toprule
 	2X & 2 Point cross \\
@@ -551,47 +534,92 @@ good or better. On both runtime and successes required population for success.
 	1X & 1 Point cross \\ \bottomrule
 \end{tabular}
 
+\subsection{Setup}
+I added extra selection methods and crossing strategies to
+the final experiment. I did this because I was curious how they would
+compete with the original assignment.
+
+After doing some sample experiments I found for example that 2x was going
+up with number of successes in the biggest population size. So I wondered 
+if doing my original interpretation of the select would work better.
+I found that in almost every case this original interpretation is at least as
+good or better. On both runtime and successes required population for success.
+
 The biased two point cross will make 2 random values and use the lowest as
 the base crossing for the same parent. The ` normal' 2 point cross will make
 2 random values. If the first one generated is higher than the other one it
 will make the father the mother.
 
 It turns out however that the biased uniform cross is much more effective.
-As it solves the deciptive trap function and leaves the `normal' one in
-the dust. I actually excpected an improvement when changing the biased
-variant into the current vairant. To my shock it did major damage to the
-algoritm. To show this I decided to include both.
+As it solves the deceptive trap function and leaves the `normal' one in
+the dust. I actually expected an improvement when changing the biased
+variant into the current variant. It was significantly worse however.
+To show this I decided to include both.
 
-\subsubsection{Graph observations}
-The major drops are caused by an optimization I implemented. After 2 failed
-run the stocastic ensurance function will stop. Often this happens when
-zooming in, this makes it appear as if there is a local gap, but its just
-random chanche and the fact that the bisectional search is zooming in.
+1 point cross was added to see how that competes with 2 point cross.
+I also used to have 2 point cross with
+mutation but it wasn't significantly different then the normal 2X
+and the graphs started to get cluttered so I decided to drop that in
+favour of discussing the biased crossover.
+
+Running the code now takes about 26 minutes in total with the
+entire thing divided over 8 threads (quad core + hyper-threading). 
+
+\subsection{Hypothesis}
+The deceptive trap function will not be solved by any algorithm for
+the population sizes. I think this because its to desirable to have
+at least one 0000 block in the 100 string length.
+Non-deceptive will be more successful. The others will definitively be solved.
+I also think mutation will have an important effect and may even
+allow deceptive to be solved.
+
+The provided selection pressure would be about average.
+It will probably always find a result.
 
 \newpage
 \input{result.tex}
 
-\section{Conclusion}
-%What did I learn from my observation?
-My conclusion is that using both tournament selection and truncate elitism
-is to harsh. It will slow down the GA and often not find a solution at all
-(in case of deceptive trap, 2x should've come up with something). the 
-time vs population found ratio is also much better for just using tournament
-select.
+\subsubsection{Graph observations}
+The major drops are caused by an optimization I implemented. After 2 failed
+run the stochastic insurance function will stop.
 
-Whats also interesting is that if you just throw away the parents and use 
+Often this happens when the bisectional search hones in on the optimum
+This makes it appear as if there is a local gap, but its just
+random chance.
+
+\section{Conclusion}
+My conclusion is that using both tournament selection and truncate elitism
+is to harsh. It will slow down the GA and often not find a solution at all.
+This happens for example with the deceptive trap function, randomly and
+tightly linked.
+
+The time vs population found ratio is also much better for using 
+tournament select on both the elitism and selection.
+
+Whats also interesting is that if you just throw away the parents and use
 the children (kill parents), then you still will often perform better than
-using tournament selection and truncate elitism, although not as 
-consistently as tournament elitism.
+using tournament selection and truncate elitism (this is how the original
+assignment was), although not as consistently as tournament elitism.
 
 To my surprise deceptive trap was solved with decreased selection pressure
-by both 2x and 1x, although 1x did worse. Also adding mutation doesn't do
-the algorithm much good. 2XM and UXM consistently find worse minimum populations
-than respectively 2X and UX{.}
-This probably means the mutation is too disruptive.
+by both 2x and 1x, although 1x did worse. 
 
-Mutation turned out to have no significant effect other than just slowing
-things down.
+Mutation doesn't seem to have much effect UXM sometimes finds a better
+solution but usually this is not the case. I initially thought mutation
+would be very important but its just sort off random.  Mutation turned out
+to have no significant effect other than just slowing things down.
+
+Something to note is that my made up tournament elitism is actually in most
+cases better, or at least equal to the truncate elitism. So when I saw
+this I tried using my other initially used algorithm where I would completely
+ignore the parents (kill the parents). However it appears this does not
+perform better.
+
+Two point cross and single cross both seem to find results in deceptive
+random tournament elitism.
+
+Linearly scaled and uniformly scaled are very easy to solve for almost all
+algorithms. Although the 2x and 1x are at a big disadvantage compared to UX.
 
 \end{empfile}
 \end{document}
