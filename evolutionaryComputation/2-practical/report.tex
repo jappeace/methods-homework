@@ -40,6 +40,15 @@ Graphbipartitioning is dividing a graph into 2, with as little edges between
 both graphs as possible.
 
 \section{Methodology}
+I coppied all the code from the previous practical into this new folder.
+Then I went onto a delete rage. Most code was deleted except the Expirment
+class, this will probably still be usefull.
+
+I use git, so it doens't really matter to accidently delete to much. After
+that I changed the data, I removed everything which was useless. Now the file
+only contains the connection numbers. This makes parsing the file a lot
+easier. I don't want to do advanced pattern matching when I can quickly modfy
+the file with a few vim macros. (in this case I just did a `30x').
 
 \subsection{Language choice}
 I chose to use Scala to implement this project. The main reason being that I've
@@ -432,57 +441,6 @@ version and what maven group):
 	\item Scalatest. A testing library for Scala, it has some pretty advanced
 		features but I use it mostly like JUnit.
 \end{itemize}
-
-\subsection{Speed up attempts}
-I wanted my implementation to be fast, preferably faster than any other
-implementation. I think I didn't succeed in this for the algorithm part
-because I used a lot of slow mechanisms, such as functional combinators.
-Although they don't increase the computational complexity,
-they do certainly increase
-the minimum required runtime. I'm quite sure that every combinator in sequence
-is implemented as just another loop. However because I
-run all experiments in parallel the total time may be faster. So in a way
-I did succeed.
-
-\subsubsection{Parallelization}
-Since were doing string comparisons I had the idea of using parallelization to
-speed up the algorithm by doing parallelization. This can be done very easily
-in Scala with par collections (and the fact that immutability is default).
-
-However once I implemented this, I came to the conclusion it was not faster.
-The overhead for delegating and creating threads was more than the parallelization
-gained.  After 10 minutes of waiting I decided to drop this idea
-since without parallelization it took about 2 minutes.
-The problem is that the evaluation function, even with gene length of 100, is
-to cheap to make any reasonable parallelization effective.
-
-So now all experiments are run at the same time. This probably increases the
-average time of each `run' somewhat (not that much because the concurrent
-collection does \href{http://docs.scala-lang.org/overviews/parallel-collections/configuration.html}{load balancing}).
-It also drastically decreases the amount of time I have to wait. Which is quite
-important, especially in the development phase.
-
-The parallelization of experiments can be removed by deleting `par' on line 64
-of Main.scala
-
-\subsubsection{Evaluate each member on creation}
-Initially my members just contained the string with the `genes'. This I passed
-around and would evaluate when needed. However I realized that I could do this
-evaluation eagerly on creation, to reduce the evaluation calls. A member has
-to be evaluated anyways, so doing this on creation and just putting in the
-evaluation saves some heavy evaluation operations.
-
-\subsubsection{Only create children if the genes are new}
-This optimization reduces the amount of evaluations required.  It becomes 
-more effective at deeper generations, however it slows down the fastest 
-GA's by a few milliseconds but the slower GA's  are quite a bit faster.
-
-This can be done safely because strings are immutable and so are the members.
-So I can reuse them whenever its needed.
-
-I also had an idea of using hash-codes to reduce the amount of comparisons.
-But it turns out that this increases the running time, so I quickly removed
-this optimization again.
 
 \section{Experiment}
 In here I will discuss how the experiments ran and the thoughts I
