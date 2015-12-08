@@ -35,8 +35,9 @@ object Main{
 		log.info("starting graph bipartitioning")
 		val verteci = Source.fromFile("src/main/resources/data.txt").getLines().zipWithIndex.map((elem) => {
 			val id = elem._2 + 1
-			val line = elem._1
-			Vertex(id, xy._1,xy._2,Nil)
+
+			val connections:Seq[Int] = if(elem._1.length > 0) elem._1.split(" ").map(_.toInt) else Nil
+			Vertex(id, connections)
 		})
 		for (vertex <- verteci){
 			log.info(vertex.toString)
