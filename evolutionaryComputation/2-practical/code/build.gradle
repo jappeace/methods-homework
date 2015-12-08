@@ -1,0 +1,38 @@
+apply plugin: 'scala'
+apply plugin: 'idea'
+apply plugin: 'application'
+
+mainClassName = "nl.jappieklooster.hw.ec.Main"
+
+def javaVersion = 1.7
+sourceCompatibility = javaVersion
+targetCompatibility = javaVersion
+version = '1'
+jar {
+    manifest {
+		attributes 'Implementation-Title': 'Evulutionary Computing',
+	   'Implementation-Version':version
+   }
+}
+
+repositories {
+    mavenCentral()
+	mavenLocal()
+}
+
+dependencies {
+
+	def scalaVersion = '2.11'
+	//main code base in scala
+	compile "org.scala-lang:scala-library-all:${scalaVersion}.5"
+
+	// simple log facade (easily swap the logging backend with this)
+	compile "org.slf4j:slf4j-simple:1.7.13"
+
+	// plot lib:
+	compile "org.sameersingh.scalaplot:scalaplot:0.1"
+
+	//client scripts in groovy
+	testCompile "org.scalatest:scalatest_${scalaVersion}:2.2.4"
+
+}

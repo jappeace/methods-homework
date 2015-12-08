@@ -1,0 +1,627 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{txfonts}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{bussproofs}
+\usepackage[pdftex]{graphicx}
+\DeclareGraphicsRule{*}{mps}{*}{}
+\usepackage{pifont}
+\usepackage{qtree}
+\usepackage{emp}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{svg}
+\newenvironment{scprooftree}[1]%
+{\gdef\scalefactor{#1}\begin{center}\proofSkipAmount \leavevmode}%
+{\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center} }
+
+
+\newcommand{\brcell}[2][l]{%
+	\begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
+\begin{document}
+\begin{empfile}
+\begin{empcmds}
+input metauml;
+\end{empcmds}
+\author{Jappie Klooster}
+\title{A practical look at genetic algorithms}
+\maketitle
+
+\section{Introduction}
+This is a report of the evolutionary practical assignment 1.
+In here I will discuss the execution of the assignment, what it was, which
+methodology was used to execute the assignment.
+
+The intended audience is people familiar with programming.
+
+\section{Assignment}
+The assignment was to implement the following functions and algorithms and
+then do experimentation with help of these.
+
+\subsection{Functions}
+\subsubsection{Counting functions}
+\[x_i \in \{0,1\}:CO(x_1\dots x_l)=\sum^l_{i=1}x_i\]
+\[x_i \in \{0,1\}:CO(x_1\dots x_l)=\sum^l_{i=1}i x_i\]
+\subsubsection{Trap function}
+\[TF(x_1\dots x_l) = \sum^{\frac{l}{k}-1}_{j=0}B(x_{jk_1}\dots x_{jk+k})\]
+
+with:
+
+\[B(x_1\dots x_k)=\left\{
+	\begin{matrix}
+		k & \mbox{ if } &   CO(x_1\dots x_k) = k \\
+		k - d - \frac{k-d}{k-1} CO(x) & \mbox{ if } & CO(x_1\dots x_k) < k \\
+	\end{matrix}
+\right. \]
+
+\subsection{Experiment}
+After implementing these functions we were tasked to make an experiment of it
+and make some graphs of the results and make a conclusion based on the results.
+
+\section{Methodology}
+
+\subsection{Language choice}
+I chose to use Scala to implement this project. The main reason being that I've
+played with Scala before but never have done anything constructive with it.
+
+Scala is both a functional and an object orientated program that runs on the JVM
+It compiles to byte-code and is statically typed.
+
+It also can use any Java library and integrates seamlessly with Java, (although
+calling methods the methods of a Scala project from a Java project can be
+a little clumsy sometimes, because Scala supports operator overloading in
+a strange way, but its possible).
+
+Other options I considered were:
+\begin{itemize}
+	\item Java, Java is an industry standard language, but the syntax of
+		Java is very verbose. So when I have the choice I try to avoid it.
+		I've also used a lot of Java when I was younger so I won't learn
+		much by using it.
+	\item C\#, the language is good, a lot less verbose then Java
+		but setting it up is difficult since I use Linux.
+		It also prefers object orientated rather than
+		functional programming. Scala's type system is also more advanced than
+		C\#'s, so its in a way more object orientated.
+	\item Rust/Go, I'm curious about both these languages, but I'm not at
+		all familiar with them, so I probably should do first a little
+		hobby project with them before starting doing something serious like
+		this, this is in contrast to Scala, with which I already played before.
+	\item Python, I think the project is in that grey area where weakly
+		typed languages become less powerful in use. Especially considering
+		the fact how quickly these algorithms blow up in runtime. Static type
+		checking then helps solving a big part of the bugs before execution
+		and since execution will be slow, this saves a lot of time.
+	\item C++, C++ is extremely fast in execution times. However implementation
+		time is quite long compared to almost everything else.
+		Errors are for example reported poorly and
+		the syntax is inconsistent. Since execution speed isn't a top priority
+		I decided to not use C++.
+\end{itemize}
+
+\subsection{Architecture}
+The code is split up into 4 parts, first there are the case classes. These are
+immutable classes that hold the domain information (Java beans).
+Then there are the algorithm classes and objects. These are pretty straight
+forward logical structures. They implement the atoms of possible GA's, such
+as for example uniform crossover. After that comes the experiment and the result
+classes, the experiment just uses the GA in a specific way.
+Finally there is the presentation object \emph{Main}. The only thing it does
+is interpret the experiment into a latex structure. There is no
+diagram discussing Main, because there is little architecture involved.
+
+\subsubsection{Case classes}
+The case classes add meaning to the structures.
+A case class is a Scala concept were you just define the attributes. Then
+Scala generates the `equals', `hashCode' and `toString' methods for you.
+They're also by default immutable, which is something I like using. You
+can make mutations by using the generated copy function, in which you can
+specify what is changed to create a new copy with the change.
+
+\begin{figure}[ht!]
+\centering
+\begin{emp}[classdiag](20,20)
+Class.mem("Member")("+Fitness:Int", "+genes:String")();
+Class.pop("Population")("+members:Seq[Member]", "+factory:String=>Member")();
+Class.pairedPop("PairedPopulation")("+members:Seq[Pair]","+factory:String=>Member")(
+"+pairedToPop(how):Population");
+Class.pai("Pair")("+father:Member","+mother:Member")();
+
+Instance.population("Population")(
+"createOnesAndZeros(factory:String=>Member,popCount:Int,geneLength:Int):Population"
+);
+
+leftToRight.top(20)(pop,pairedPop);
+topToBottom.left(20)(population, pop);
+topToBottom.left(60)(pop,mem);
+leftToRight.top(80)(mem, pai);
+
+drawObjects(mem,pop,pairedPop,pai,population);
+link(association)(pai.n -- pairedPop.s);
+item(iAssoc)("*")(obj.se = pai.n);
+link(association)(mem.e -- pai.w);
+item(iAssoc)("2")(obj.sw = mem.e);
+
+link(association)(mem.n -- pop.s);
+item(iAssoc)("*")(obj.se = mem.n);
+\end{emp}
+\caption{Case classes}
+\end{figure}
+
+\paragraph{Member} A \emph{Member} is something with a gene. The fitness value gets pre calculated by
+the factory, so that every members' fitness is only calculated once. This can
+be done reliably because the member is immutable. There is no way to modify
+the genes so the fintness value does not have to change.
+
+\paragraph{Population} The members are generated in batches and stored into a
+\emph{Population}, either by the paired
+population or by the Population companion object which provides a
+`createOnesAndZeros' function.
+A population will also have a function with it to generate new members as
+data in this case, it drags the specified function along, its like a
+function pointer.
+The population class doesn't use it itself, but when its members are paired
+up into \emph{Pair}s. A \emph{PairedPopulation} can use the creation function
+of the original population to create new members.
+
+\paragraph{PairedPopulation}
+The \emph{PairedPopulation} has also a utility function pairedToPop,
+this receives a how, in which it can
+insert zipped genes (char by char paired up strings) and from which comes
+a char sequence. This how is implemented by one of the crossing methods.
+This abstraction was added because the code around the cross function was
+always the same.
+The resulting string from `how' is then inserted into a member
+factory to create a new member (the member factory then allows mutation
+or obfuscation of the new genes).
+
+I've thought about merging PairedPopulation and population into
+one class. However doing that will probably not make things more obvious.
+Although it does makes sense in that the population would actually use
+the function it drags along.
+
+\newpage
+\subsubsection{Algorithm}
+The objects defined above all have functions with the types
+same named evolution attributes. So the functions are just basically
+options you can use to create an
+evolution from. There are some exceptions which allow wrapping is the
+withCoinFlipMutation function in
+memberFactories. This function acts as a decorating function. So you can wrap
+it around another function to create a new function.
+
+Objects are just singletons, or Java static space. I use the object keyword in
+Scala instead of class So I chose also to use an object in the UML
+representation. Scala seems to stick pretty close to UML notation anyways.
+The objects don't have types however, because they are the types. They're
+language enforced singletons.
+
+\begin{figure}[ht!]
+\centering
+\begin{emp}[classdiag](20,20)
+Class.evo("Evolution")(
+"+evaluation: FitnessEvaluator",
+"mateSelector:IMateSelector",
+"offSpringGenerator: PairedPopulation => Population",
+"fittestFilter: (Population, Population) => Population",
+"hasGoodEnoughSolution: Population => Boolean")(
+"startGenetic(seed:Population): Seq[Population]",
+"genetic(prev:Seq[Population]): Seq[Population]",
+"step(parents:Population): Population",
+);
+Instance.fit("Evaluation")(
+	"uniformlyScaled()",
+	"linearlyScaled()",
+	"blockValuation(block:Seq[Float])",
+	"createProbe(function):FitnessEvaluator"
+);
+Instance.filt("FittestFilter")(
+	"killParents()",
+	"truncateElitism()",
+	"tournementElitism()"
+	);
+Instance.select("MateSelection")(
+	"tournementSelect()"
+);
+Instance.factor("MemberFactories")(
+	"tightlyLinkded()",
+	"randomlyLinked()",
+	"withCoinflipMutation(function):function",
+);
+Instance.off("OffspringGenerator")(
+	"uniformCross()",
+	"singlePointCross()",
+	"twoPointCross()"
+);
+
+topToBottom.left(20)(evo,fit,filt,factor);
+leftToRight.top(20)(fit,off);
+leftToRight.top(20)(filt,select);
+
+drawObjects(evo,fit,factor,filt,select,off);
+\end{emp}
+\caption{Algorithm}
+\end{figure}
+
+\paragraph{Evolution}The evolution class is the common structure of a GA(Gentic algorithm){.} 
+So creating an instance of Evolution is like creating a new GA{.}
+
+To construct an Evolution you need to pass a \emph{valuation function},
+a \emph{mateselector}, An \emph{offspring generator},
+a \emph{fittestFilter}. And a function that determines if there
+is a good enough solution in the current population. The last one was added
+because I wasn't quite sure when the GA needed to stop in the beginning.
+
+Some of these functions are abstracted away by traits, but still can be seen
+as just fucntions.
+\subparagraph{Step method}
+The step method calls almost all given functions in the follwoing order:
+
+\begin{enumerate}
+	\item Select mates.
+	\item Generate offspring.
+	\item Select the fittest.
+\end{enumerate}
+
+\subparagraph{Genetic} hasGoodEnoughSolution is called in genetic,
+which will continue calling steps until the population has a good enough
+solution, or until parents and children are equal.
+The population is a case class, so the generated comparison method is used
+to check if the children and parents are equal.
+The result of this function is a sequance of population. The first element
+is te first generation and the last is the last generation.
+
+\subparagraph{Start genetic} Start genetic makes a seq of the seed population and
+calls genetic.
+
+
+\paragraph{Evaluation} The evaluation object
+contains the evaluation functions. The assignment asked to define four.
+However the block evaluation (trap functions) can be implemented as the
+same function with different values for the indices. This is done by
+blockvaluation.
+
+The create probe function is a utility function that allows the counting of
+the fitness calls. The initial design didn't have a \emph{FitnessEvaluator},
+but the assignment desired the counting of calls so I just wrapped the
+function in a object that increases the count on every call. I had to
+replace the function prototype in evolution with a trait because coutning
+the calls of a function requires some form of state (an increasing variable)
+I didn't know how to do that properly with just functions in scala yet,
+so I just used a trait instead (trait = interface + state).
+
+\paragraph{Offspring generator} The offspringGenerator implements the `how'
+part of the pairedPopulations.  In there are three crossover functions
+uniform, single point and two point crossover.
+
+\subparagraph{Uniform crossover}
+Uniform crossover checks character by character if they're equal
+If not then a random one or zero is used. This is a strange
+implementation, but its valid in this case because the only choice is
+between 1 and 0, unequal means that there exist in both the father and
+mother a one or zero. But not both. So we can just choose one.
+
+\subparagraph{1 point crossover}
+Generates a random number between zero and gene length. On the left side 
+the father is used and on the right side the mother.
+
+\subparagraph{2 point crossover}
+Two point crossover was initially implemented
+as first selecting a random value from 0 to gene length. The second would
+be from first to gene length. However this is a biased method in that
+on of the parents has more chance to be inherited. So
+later I would just generate two random values. Between 0 and gene length
+Then if the first that was generated is smaller then the second we use
+the father as a base string and the mother as the other sequence. Otherwise
+the other way around.
+
+However the unbiased method performs structurally worse as can bee seen
+in the experiment.
+
+\subparagraph{Mutation}
+Mutation isn't part of the offspringGenerator
+because this is done by the member factory. It was easier to implement
+in the member factory due to the architecture choices.
+
+\label{paragraph:Fittest filter}
+\paragraph{Fittest filter} The fittest filter decides how which of both
+the parents and children continues.
+The most simple implementation is the \emph{Killparents}, which
+returns the children. \emph{Truncate elitism} selects the best of both parents
+and children. \emph{Tournament elitism} matches child next to each parent
+and decide which one is best. There is no kill children implementation
+because nothing would ever change.
+
+\paragraph{Mate selection} MateSelection implements tournament select.
+This is the only mate selection algorithm implemented.
+
+\paragraph{Member factories} The member factories are able to create
+members from strings. These are either the tightly linked or randomly
+linked.
+
+\subparagraph{Mutation} Then the tightly or randomly linked
+functions can also be wrapped in a mutation function,
+which will mutate the string before passing it to the factory.
+Its an decorator idea, only with functions.
+\newpage
+
+\subsubsection{Experiment}
+
+
+\begin{figure}[ht!]
+\centering
+\begin{emp}[classdiag](20,20)
+Class.ex("Experiment")(
+	"+name:String",
+	"+variation:String",
+	"evolution: Evolution",
+	"factory:String => IMember"
+)(
+	"+bisectionalSearch():StochasticRun",
+	"verifyLowest(currentPop:Int,faults:Int,index:Int):Seq[RunResult]",
+	"findOptimum(consideringSize:Int,difference:Int):Seq[RunResult]",
+	"run(consideringSize:Int):RunResult"
+);
+Class.result("RunResult")(
+	"+popSize:Int",
+	"+success:Boolean",
+	"+runtime:Long",
+	"+generationCount:Int",
+	"+fitnessCallCount:Int"
+	)();
+Class.stoch("StochasticRun")(
+	"+runs:Seq[RunResult]",
+	"+required:Int",
+	)();
+topToBottom.left(20)(ex,stoch);
+leftToRight.top(20)(stoch,result);
+drawObjects(ex,result,stoch);
+
+link(association)(stoch.e -- result.w);
+item(iAssoc)("*")(obj.ne = result.w);
+\end{emp}
+\caption{Experiment}
+\end{figure}
+
+The experiment is setup to do the bisectional search. The bisectional search
+function will wrap the result of \emph{findOptimum} in a \emph{StochasticRun}.
+\emph{findOptimum} is a recursive function that calls verify lowest to get a
+collection of runResults. This is used to determine if the population size
+should be increased or decreased like a bisection search.
+\emph{verifyLowest} will try to run a population size 30 times, if the faults
+limit is exceeded or the index exceeds the required run limit it will quit.
+The run is considered to be successful if the count of successful run >= 
+run limit - faults.
+
+The run will execute the \emph{Evolution} that has been passed into this
+experiment.  so this function will call startGenetic on the Evolution object, 
+and put the results of the run into a \emph{RunResult}.
+
+\subsection{Unit tests}
+Because the assignment has very well defined behavior. I thought it was
+a good Idea to use unit tests. To do this I use a library called
+Scala test.
+
+I found about 6 different bugs alone in the valuation functions by using
+unit-testing, so I think this saved me considerable time. I also used this
+to precisely define the behavior of 2 point cross.
+
+By using unit tests I became very certain about the execution of my code.
+It does precisely what its supposed to do even though I use functional
+programming and it may look somewhat foreign.
+
+\subsection{Build tool}
+I use Gradle for building the project. Its the most advanced build platform
+available and makes it easy to add dependencies to the project.
+For example I use slf4j for logging.
+
+Its also handy in that it comes with a self installing script that can be run
+from any platform, Gradlew. So running the code I wrote on a different machine
+becomes easy, Gradle makes sure the right dependencies are fetched.
+
+\paragraph{Running it}
+
+Open a shell and move to the project folder then type:
+
+\lstset{language=Bash}
+\begin{lstlisting}[frame=single]
+	./gradlew run
+\end{lstlisting}
+
+\subsection{Libraries used}
+In here I will describe why I chose to use these libraries
+The details of the libraries can be found in the Gradle file (which
+version and what maven group):
+
+\begin{lstlisting}[frame=single]
+	cat code/build.gradle
+\end{lstlisting}
+
+
+\begin{itemize}
+	\item The Scala standard library, because I have to when using Scala.
+	\item slf4j, a simple logging facade, this allows runtime switching of
+		logging schemes, for example if you want to log into a database or
+		a file instead of stdout you can do this relatively easy with slf4j
+		This is not necessary right now but the API is simple enough to use
+		everywhere.
+	\item Scalaplot. A graph plotting library for Scala. I didn't want to
+		do this myself, and this library supports SVG plotting and ASCII
+		plotting.
+	\item Scalatest. A testing library for Scala, it has some pretty advanced
+		features but I use it mostly like JUnit.
+\end{itemize}
+
+\subsection{Speed up attempts}
+I wanted my implementation to be fast, preferably faster than any other
+implementation. I think I didn't succeed in this for the algorithm part
+because I used a lot of slow mechanisms, such as functional combinators.
+Although they don't increase the computational complexity,
+they do certainly increase
+the minimum required runtime. I'm quite sure that every combinator in sequence
+is implemented as just another loop. However because I
+run all experiments in parallel the total time may be faster. So in a way
+I did succeed.
+
+\subsubsection{Parallelization}
+Since were doing string comparisons I had the idea of using parallelization to
+speed up the algorithm by doing parallelization. This can be done very easily
+in Scala with par collections (and the fact that immutability is default).
+
+However once I implemented this, I came to the conclusion it was not faster.
+The overhead for delegating and creating threads was more than the parallelization
+gained.  After 10 minutes of waiting I decided to drop this idea
+since without parallelization it took about 2 minutes.
+The problem is that the evaluation function, even with gene length of 100, is
+to cheap to make any reasonable parallelization effective.
+
+So now all experiments are run at the same time. This probably increases the
+average time of each `run' somewhat (not that much because the concurrent
+collection does \href{http://docs.scala-lang.org/overviews/parallel-collections/configuration.html}{load balancing}).
+It also drastically decreases the amount of time I have to wait. Which is quite
+important, especially in the development phase.
+
+The parallelization of experiments can be removed by deleting `par' on line 64
+of Main.scala
+
+\subsubsection{Evaluate each member on creation}
+Initially my members just contained the string with the `genes'. This I passed
+around and would evaluate when needed. However I realized that I could do this
+evaluation eagerly on creation, to reduce the evaluation calls. A member has
+to be evaluated anyways, so doing this on creation and just putting in the
+evaluation saves some heavy evaluation operations.
+
+\subsubsection{Only create children if the genes are new}
+This optimization reduces the amount of evaluations required.  It becomes 
+more effective at deeper generations, however it slows down the fastest 
+GA's by a few milliseconds but the slower GA's  are quite a bit faster.
+
+This can be done safely because strings are immutable and so are the members.
+So I can reuse them whenever its needed.
+
+I also had an idea of using hash-codes to reduce the amount of comparisons.
+But it turns out that this increases the running time, so I quickly removed
+this optimization again.
+
+\section{Experiment}
+In here I will discuss how the experiments ran and the thoughts I
+above about the results.
+First the setup will be discussed, since I added to the
+original assignment out of curiosity. Then the hypothesis
+will be discussed. After that the results will be shown
+and finally I will discuss the conclusions I draw from the experiments.
+
+\subsection{Experiment titles}
+The experiment titles all follow the same structure:
+
+\[F\mbox{ }L, E\]
+Where F is the fitness function, L is the linkage and E is the elitism type.
+The experiment results are grouped by this structure alphabetically.
+The elitism types are discussed in the fittest fileter paragraph \ref{paragraph:Fittest filter}
+
+Block is the trap function.
+
+\subsection{Abbreviations}
+\begin{tabular}{ll}
+	Abrivation & Full name \\ \toprule
+	2X & 2 Point cross \\
+	2XB & 2 Point cross biased \\
+	2XM & 2 Point cross mutated \\
+	2XM & 2 Point cross mutated \\
+	UX & uniform cross \\
+	UXM & uniform cross mutated \\
+	1X & 1 Point cross \\ \bottomrule
+\end{tabular}
+
+\subsection{Setup}
+I added extra selection methods and crossing strategies to
+the final experiment. I did this because I was curious how they would
+compete with the original assignment.
+
+After doing some sample experiments I found for example that 2x was going
+up with number of successes in the biggest population size. So I wondered 
+if doing my original interpretation of the select would work better.
+I found that in almost every case this original interpretation is at least as
+good or better. On both runtime and successes required population for success.
+
+The biased two point cross will make 2 random values and use the lowest as
+the base crossing for the same parent. The ` normal' 2 point cross will make
+2 random values. If the first one generated is higher than the other one it
+will make the father the mother.
+
+It turns out however that the biased uniform cross is much more effective.
+As it solves the deceptive trap function and leaves the `normal' one in
+the dust. I actually expected an improvement when changing the biased
+variant into the current variant. It was significantly worse however.
+To show this I decided to include both.
+
+1 point cross was added to see how that competes with 2 point cross.
+I also used to have 2 point cross with
+mutation but it wasn't significantly different then the normal 2X
+and the graphs started to get cluttered so I decided to drop that in
+favour of discussing the biased crossover.
+
+Running the code now takes about 26 minutes in total with the
+entire thing divided over 8 threads (quad core + hyper-threading). 
+
+\subsection{Hypothesis}
+The deceptive trap function will not be solved by any algorithm for
+the population sizes. I think this because its to desirable to have
+at least one 0000 block in the 100 string length.
+Non-deceptive will be more successful. The others will definitively be solved.
+I also think mutation will have an important effect and may even
+allow deceptive to be solved.
+
+The provided selection pressure would be about average.
+It will probably always find a result.
+
+\newpage
+\input{result.tex}
+
+\subsubsection{Graph observations}
+The major drops are caused by an optimization I implemented. After 2 failed
+run the stochastic insurance function will stop.
+
+Often this happens when the bisectional search hones in on the optimum
+This makes it appear as if there is a local gap, but its just
+random chance.
+
+\section{Conclusion}
+My conclusion is that using both tournament selection and truncate elitism
+is to harsh. It will slow down the GA and often not find a solution at all.
+This happens for example with the deceptive trap function, randomly and
+tightly linked.
+
+The time vs population found ratio is also much better for using 
+tournament select on both the elitism and selection.
+
+Whats also interesting is that if you just throw away the parents and use
+the children (kill parents), then you still will often perform better than
+using tournament selection and truncate elitism (this is how the original
+assignment was), although not as consistently as tournament elitism.
+
+To my surprise deceptive trap was solved with decreased selection pressure
+by both 2x and 1x, although 1x did worse. 
+
+Mutation doesn't seem to have much effect UXM sometimes finds a better
+solution but usually this is not the case. I initially thought mutation
+would be very important but its just sort off random.  Mutation turned out
+to have no significant effect other than just slowing things down.
+
+Something to note is that my made up tournament elitism is actually in most
+cases better, or at least equal to the truncate elitism. So when I saw
+this I tried using my other initially used algorithm where I would completely
+ignore the parents (kill the parents). However it appears this does not
+perform better.
+
+Two point cross and single cross both seem to find results in deceptive
+random tournament elitism.
+
+Linearly scaled and uniformly scaled are very easy to solve for almost all
+algorithms. Although the 2x and 1x are at a big disadvantage compared to UX.
+
+\end{empfile}
+\end{document}
+
+
