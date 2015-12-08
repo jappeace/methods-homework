@@ -25,39 +25,19 @@
 input metauml;
 \end{empcmds}
 \author{Jappie Klooster}
-\title{A practical look at genetic algorithms}
+\title{Graph bipartitioning and you}
 \maketitle
 
 \section{Introduction}
-This is a report of the evolutionary practical assignment 1.
+This is a report of the evolutionary practical assignment 2.
 In here I will discuss the execution of the assignment, what it was, which
 methodology was used to execute the assignment.
 
 The intended audience is people familiar with programming.
 
 \section{Assignment}
-The assignment was to implement the following functions and algorithms and
-then do experimentation with help of these.
-
-\subsection{Functions}
-\subsubsection{Counting functions}
-\[x_i \in \{0,1\}:CO(x_1\dots x_l)=\sum^l_{i=1}x_i\]
-\[x_i \in \{0,1\}:CO(x_1\dots x_l)=\sum^l_{i=1}i x_i\]
-\subsubsection{Trap function}
-\[TF(x_1\dots x_l) = \sum^{\frac{l}{k}-1}_{j=0}B(x_{jk_1}\dots x_{jk+k})\]
-
-with:
-
-\[B(x_1\dots x_k)=\left\{
-	\begin{matrix}
-		k & \mbox{ if } &   CO(x_1\dots x_k) = k \\
-		k - d - \frac{k-d}{k-1} CO(x) & \mbox{ if } & CO(x_1\dots x_k) < k \\
-	\end{matrix}
-\right. \]
-
-\subsection{Experiment}
-After implementing these functions we were tasked to make an experiment of it
-and make some graphs of the results and make a conclusion based on the results.
+Graphbipartitioning is dividing a graph into 2, with as little edges between
+both graphs as possible.
 
 \section{Methodology}
 
