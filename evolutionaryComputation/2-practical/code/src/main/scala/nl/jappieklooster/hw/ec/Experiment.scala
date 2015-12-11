@@ -23,11 +23,22 @@ import scala.util.Random
  * evolution.
  * @param evolution
  */
-class Experiment(val name:String) {
+class Experiment(val name:String, val variation:String, evolution: Evolution, memberFactory:String => IMember) {
 	import Experiment._
 	val log = LoggerFactory.getLogger(this.getClass)
+	private def createPopulation(size:Int) = {
+		Population.createOneZeros(memberFactory, geneLength, size)
+	}
 	def run(consideringSize:Int): RunResult={
-		RunResult(consideringSize,false, 4,4,4)
+		val population = createPopulation(consideringSize)
+
+		val startTime = System.currentTimeMillis()
+		val evolutionResult = evolution.startGenetic(population)
+		val runtime = System.currentTimeMillis() - startTime
+
+		// sucesfull if early termination or the last population is good enough
+		val success = hasGoodEnoughSolution(evolutionResult.last)
+		RunResult(consideringSize, success, runtime, evolutionResult.length,evolution.evaluation.countCalls())
 	}
 
 	def verifyLowest(currentPop:Int, faults:Int, index:Int) : Seq[RunResult] = {
@@ -106,6 +117,31 @@ object Experiment{
 	val faultTolerance = 1
 
 	def create(
-		name:String
-	):Seq[Experiment] = Seq(new Experiment(name))
+		name:String,
+		random:Random,
+		valuationFunction:String=>Float,
+		variationOperators:Seq[(PairedPopulation => Population, (String=>Float) => String => IMember, String)],
+		filter:(Population, Population) => Population = FittestFilter.truncateElitism
+	):Seq[Experiment] = variationOperators.map(
+		variation => {
+			val probe = Evaluation.createProbe(valuationFunction)
+		 new Experiment(
+			name,
+			variation._3,
+			new Evolution(
+				probe,
+				MateSelection.createCompeteWithRandomTournement(random),
+				variation._1,
+				filter,
+				hasGoodEnoughSolution
+			),
+			variation._2(probe.valuate)
+			)
+		}
+	)
+	def hasGoodEnoughSolution(population: Population):Boolean = {
+		// if there exists a member in a population that only contains 1's.
+		population.exists(member => !member.genes.exists(c => c == '0'))
+	}
+
 }
