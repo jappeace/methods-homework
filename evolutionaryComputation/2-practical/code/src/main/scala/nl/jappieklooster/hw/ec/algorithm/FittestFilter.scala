@@ -13,7 +13,9 @@
 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/\>.
-package nl.jappieklooster.hw.ec
+package nl.jappieklooster.hw.ec.algorithm
+
+import nl.jappieklooster.hw.ec.model.Population
 
 object FittestFilter {
 	/** drop the parents */

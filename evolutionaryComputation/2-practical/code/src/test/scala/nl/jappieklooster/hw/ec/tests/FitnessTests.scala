@@ -1,7 +1,8 @@
 package nl.jappieklooster.hw.ec.tests
 
-import nl.jappieklooster.hw.ec.IHasFitness
-import nl.jappieklooster.hw.ec.Evaluation._
+import nl.jappieklooster.hw.ec.algorithm.{Evaluation, IHasFitness}
+import Evaluation._
+import nl.jappieklooster.hw.ec.algorithm.IHasFitness
 import org.scalatest.{Matchers, FlatSpec}
 
 class FitnessTests extends FlatSpec with Matchers{

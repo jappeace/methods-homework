@@ -13,7 +13,7 @@
 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/\>.
-package nl.jappieklooster.hw.ec
+package nl.jappieklooster.hw.ec.model
 
 import com.itextpdf.text.log.LoggerFactory
 
@@ -47,7 +47,6 @@ case class PairedPopulation(members:Seq[Pair], memberFactory:String => IMember) 
 					// mkstring uses a builder to avoid ridiculous concatination problems
 					).mkString
 					def createIfNew(child:String):IMember ={
-						import OffspringGenerator._
 						if(child == genesF){
 							return fumu.father
 						}

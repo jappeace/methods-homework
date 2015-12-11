@@ -13,12 +13,12 @@
 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/\>.
-package nl.jappieklooster.hw.ec
+package nl.jappieklooster.hw.ec.model
 
 import org.slf4j.LoggerFactory
 
-import scala.collection.GenTraversableOnce
 import scala.util.Random
+import nl.jappieklooster.hw.ec.algorithm.IHasFitness
 
 trait IMember extends IHasFitness with Genetic
 case class Member(valuation:Float, gen:String) extends IMember{

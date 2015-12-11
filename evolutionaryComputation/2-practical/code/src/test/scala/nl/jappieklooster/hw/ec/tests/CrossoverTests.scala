@@ -1,6 +1,7 @@
 package nl.jappieklooster.hw.ec.tests
 
-import nl.jappieklooster.hw.ec.OffspringGenerator._
+import nl.jappieklooster.hw.ec.model.OffspringGenerator
+import OffspringGenerator._
 import org.scalatest.{Matchers, FlatSpec}
 
 import scala.util.Random

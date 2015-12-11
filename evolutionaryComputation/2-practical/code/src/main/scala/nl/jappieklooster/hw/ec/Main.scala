@@ -17,6 +17,7 @@ package nl.jappieklooster.hw.ec
 
 import java.io.{File, PrintWriter}
 
+import nl.jappieklooster.hw.ec.model.Vertex
 import org.sameersingh.scalaplot._
 import org.slf4j.LoggerFactory
 

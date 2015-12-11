@@ -1,4 +1,4 @@
-package nl.jappieklooster.hw.ec
+package nl.jappieklooster.hw.ec.model
 
 case class Vertex(id:Int, connections:Seq[Int]) {
 }

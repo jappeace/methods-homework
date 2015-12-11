@@ -1,6 +1,7 @@
 package nl.jappieklooster.hw.ec.tests
 
-import nl.jappieklooster.hw.ec.{Member, Population}
+import nl.jappieklooster.hw.ec.model.Member
+import nl.jappieklooster.hw.ec.model.{Member, Population}
 import org.scalatest.{Matchers, FlatSpec}
 import nl.jappieklooster.hw.ec.Experiment._
 

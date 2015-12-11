@@ -1,9 +1,11 @@
 package nl.jappieklooster.hw.ec.tests
 
-import nl.jappieklooster.hw.ec.{IMember, Member, Population}
+import nl.jappieklooster.hw.ec.algorithm.FittestFilter
+import nl.jappieklooster.hw.ec.model.{IMember, Member, Population}
+import nl.jappieklooster.hw.ec.model.IMember
 import org.scalatest.{Matchers, FlatSpec}
 
-import nl.jappieklooster.hw.ec.FittestFilter._
+import FittestFilter._
 
 class FilterTests extends FlatSpec with Matchers{
 	def createPop(people:Seq[IMember]) = Population(people,null)

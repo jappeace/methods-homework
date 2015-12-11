@@ -16,6 +16,8 @@
 package nl.jappieklooster.hw.ec
 
 import com.itextpdf.text.log.LoggerFactory
+import nl.jappieklooster.hw.ec.algorithm.{FittestFilter, MateSelection, Evolution, Evaluation}
+import nl.jappieklooster.hw.ec.model.{IMember, PairedPopulation, Population}
 
 import scala.util.Random
 /**

@@ -1,6 +1,8 @@
 package nl.jappieklooster.hw.ec.tests
 
 import nl.jappieklooster.hw.ec._
+import nl.jappieklooster.hw.ec.algorithm.{MateSelection, CompeteWithRandomTournement}
+import nl.jappieklooster.hw.ec.model.{Member, PairedPopulation, Population}
 import org.scalatest.{Matchers, FlatSpec}
 import org.slf4j.LoggerFactory
 import util.Random
@@ -28,7 +30,7 @@ class MateSelectionTests extends FlatSpec with Matchers{
 		// with the rigging of this rand, the shuffle will produce List(4,1,2,3)
 		// as can been seen from the other test the right side will always win.
 		// so expected is:
-		val expected = PairedPopulation(List(Pair(two, one), Pair(four, three)), null)
+		val expected = PairedPopulation(List(model.Pair(two, one), model.Pair(four, three)), null)
 		subject.selectFrom(Population(List(one,two,three,four), null)) should be (expected)
 	}
 	"the random turnement when rigged " should "produce the best two as winners " in {
@@ -40,7 +42,7 @@ class MateSelectionTests extends FlatSpec with Matchers{
 		// with the rigging of this rand, the shuffle will produce List(4,1,2,3)
 		// as can been seen from the other test the right side will always win.
 		// so expected is:
-		val expected = PairedPopulation(List(Pair(two, one), Pair(three, three)), null)
+		val expected = PairedPopulation(List(model.Pair(two, one), model.Pair(three, three)), null)
 		subject.selectFrom(Population(List(one,two,three,four), null)) should be (expected)
 	}
 

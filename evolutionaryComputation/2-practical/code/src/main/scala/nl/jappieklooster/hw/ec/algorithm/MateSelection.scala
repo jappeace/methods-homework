@@ -13,7 +13,10 @@
 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/\>.
-package nl.jappieklooster.hw.ec
+package nl.jappieklooster.hw.ec.algorithm
+
+import nl.jappieklooster.hw.ec.model
+import nl.jappieklooster.hw.ec.model.{IMember, PairedPopulation, Population}
 
 import scala.util.Random
 trait IMateSelector{
@@ -22,7 +25,7 @@ trait IMateSelector{
 abstract class TournamentSelector extends IMateSelector{
 	override def selectFrom(bachelors: Population): PairedPopulation =
 		PairedPopulation(tournementSelect(bachelors), bachelors.memberFactory)
-	protected def tournementSelect(bachelors:Population):Seq[Pair]
+	protected def tournementSelect(bachelors:Population):Seq[model.Pair]
 }
 
 class CompeteWithRandomTournement(random:Random)
@@ -31,7 +34,7 @@ class CompeteWithRandomTournement(random:Random)
 		val potentialFathers = bachelors.grouped(2)
 		val potentialMothers = random.shuffle(bachelors.members).grouped(2)
 		potentialFathers.zip(potentialMothers).map(
-			x=> Pair(
+			x=> model.Pair(
 				MateSelection.pickBest(x._1.head, x._1.last),
 				MateSelection.pickBest(x._2.head, x._2.last)
 			)

@@ -13,11 +13,7 @@
 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/\>.
-package nl.jappieklooster.hw.ec
-
-import scala.collection.{SeqLike, GenSeq}
-import scala.collection.parallel.{SeqSplitter, ParSeq}
-import scala.util.Random
+package nl.jappieklooster.hw.ec.model
 
 case class Population(members:Seq[IMember], memberFactory:String => IMember) extends EmulateSeq[IMember]{
 	override def baseSeq: Seq[IMember] = members
