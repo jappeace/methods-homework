@@ -15,52 +15,19 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/\>.
 package nl.jappieklooster.hw.ec.model
 
-case class Population[T <: Seq[IMember]](members:Seq[T], memberFactory:String => T) extends EmulateSeq[T]{
-	override def baseSeq: Seq[T] = members
-	def pairedToPop(
-			how:(IndexedSeq[(Char, Char)]) => IndexedSeq[Any]
-			):Population =  {
-		Population[T](
-			members.flatMap(
-				fumu => {
+case class Population(members:Seq[IMember], memberFactory:String => IMember) extends EmulateSeq[IMember]{
+	override def baseSeq: Seq[IMember] = members
 
-					val genesF = fumu.head.genes
-					val genesM = fumu.last.genes
-					def createGenes = how(
-						// just make key value like structure of the indiviudal genes
-						// for comparison
-						genesF.zip(genesM)
-						// mkstring uses a builder to avoid ridiculous concatination problems
-					).mkString
-					def createIfNew(child:String):IMember ={
-						if(child == genesF){
-							return fumu.head
-						}
-						if (child == genesM) {
-							return fumu.last
-						}
-						memberFactory(child)
-					}
-
-					// we need two children so we return a list, flatmap will
-					// flatten that list again later
-					List(createIfNew(createGenes), createIfNew(createGenes))
-				}
-			),
-			memberFactory
-		)
-	}
 }
 object Population{
-	def createOneZeros[T](
-			memberFactory:String => T,
+	def createOneZeros(
+			memberFactory:String => IMember,
 			geneLength:Int,
-			popCount:Int
-	):Population[T] =  Population(
-		1.to(popCount).par.map(
+			popCount:Int):Population =  Population(
+		0.to(popCount-1).par.map(
 			x => memberFactory(
 				// it says, from 1 to length concat 1 or 0.
-				1.to(geneLength).foldLeft(""){(b, x) => b + OffspringGenerator.randomGene}
+				0.to(geneLength).foldLeft(""){(b, x) => b + OffspringGenerator.randomGene}
 			)
 		).seq,
 		memberFactory
