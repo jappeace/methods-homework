@@ -25,6 +25,12 @@ class Evolution(
 	 * fittest filter, (valuation, parents, children) => fittestpop
 	 */
 	fittestFilter: (Population, Population) => Population,
+
+	/**
+	 * If there already exists a really good solution you're
+	 * happy with you can use this so you don't have to wait untill
+	 * convergence
+	 */
 	hasGoodEnoughSolution: Population => Boolean
 ) {
 	private def step(parents:Population):Population = fittestFilter(
