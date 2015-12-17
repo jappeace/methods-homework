@@ -26,7 +26,7 @@ case class Pair(father:IMember, mother:IMember)
 case class PairedPopulation(members:Seq[Pair], memberFactory:String => IMember) extends EmulateSeq[Pair]{
 	override def baseSeq = members
 	/**
-	 * The surounding function, it will map two members of a population
+	 * The surrounding function, it will map two members of a population
 	 * to one to create a new population, it will be done by sending the
 	 * zipped genes to the how function which will figure out the details
 	 * @param how

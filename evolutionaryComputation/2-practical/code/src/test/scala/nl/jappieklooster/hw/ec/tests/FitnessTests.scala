@@ -3,6 +3,7 @@ package nl.jappieklooster.hw.ec.tests
 import nl.jappieklooster.hw.ec.algorithm.{Evaluation, IHasFitness}
 import Evaluation._
 import nl.jappieklooster.hw.ec.algorithm.IHasFitness
+import nl.jappieklooster.hw.ec.model.{Vertex, Graph}
 import org.scalatest.{Matchers, FlatSpec}
 
 class FitnessTests extends FlatSpec with Matchers{
@@ -57,4 +58,18 @@ class FitnessTests extends FlatSpec with Matchers{
 		nondecept("0000") should be (1.5f)
 	}
 
+	val graph = graphValuation(Graph.create(
+		Seq(2),
+		Seq(0),
+		Nil,
+		Seq(0,1)
+		)
+	) _
+	"graph valuation " should "count these individual partitions correctly" in {
+		graph("0001") should be(2)
+		graph("1001") should be(1)
+		graph("0000") should be(4)
+		graph("1111") should be(4)
+		graph("abcd") should be(0) // if all are different there can't be sameness
+	}
 }

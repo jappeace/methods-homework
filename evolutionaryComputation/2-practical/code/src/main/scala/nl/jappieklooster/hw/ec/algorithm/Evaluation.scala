@@ -15,6 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/\>.
 package nl.jappieklooster.hw.ec.algorithm
 
+import nl.jappieklooster.hw.ec.model.Graph
+
 trait IHasFitness{
 	def fitness:Float
 }
@@ -54,6 +56,13 @@ object Evaluation{
 			// get the value specified in the block
 			str => block(size - uniformlyScaledCountOnes(str).toInt)
 		).sum
+	}
+	def graphValuation(graph: Graph)(s:String):Float = {
+		graph.verteci.foldLeft(0f)((prev, data) =>
+			prev + data.connections.count(
+				index => s.charAt(graph.verteci(index).id) == s.charAt(data.id)
+			)
+		)
 	}
 	def createProbe(f:String=>Float):FitnessEvaluator = new FitnessEvaluator {
 		protected override def getFunction: (String) => Float = f

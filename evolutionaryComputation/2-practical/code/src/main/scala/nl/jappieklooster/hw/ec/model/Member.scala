@@ -28,13 +28,21 @@ case class Member(valuation:Float, gen:String) extends IMember{
 
 
 object MemberFactories{
-	def tightlyLinked(func:String=>Float)(str:String):IMember = Member(func(str), str)
-	def randomlyLinked(instructions:TraversableOnce[Int])(func:String=>Float)(str:String):IMember = {
+	def tightlyLinked(func:String=>Float)(str:String):IMember =
+		Member(func(str), str)
+	def randomlyLinked
+	(instructions:TraversableOnce[Int])
+	(func:String=>Float)
+	(str:String):IMember = {
 		val genes = instructions.map(inx => str.charAt(inx)).mkString
 		Member(func(str), str)
 	}
 	val log = LoggerFactory.getLogger(this.getClass)
-	case class WithCoinFlipTimesMutation(random:Random, creationFunc:(String=>Float) => String => IMember) extends ((String=>Float)=>(String) => IMember){
+	case class WithCoinFlipTimesMutation(
+		random:Random,
+		creationFunc:(String=>Float) => String => IMember
+	) extends ((String=>Float)=>(String) => IMember){
+
 		def apply(func:String=>Float) = (str:String) => {
 			val flipCount = countFlips(-1)
 			val mutated = 0.to(flipCount).foldLeft(str)((str, modficationCount) => {
