@@ -1,0 +1,60 @@
+\documentclass{article}
+% I just added all the things, if you have problems build, try deleting the
+% naggin packages, fat chance I don't even use it.
+\usepackage{amsmath}
+\usepackage{txfonts}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{bussproofs}
+\usepackage{graphicx}
+\usepackage{pifont}
+\usepackage{qtree}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usetikzlibrary{automata,arrows,positioning,calc}
+\usepackage{listings}
+\usepackage{hyperref}
+\newenvironment{scprooftree}[1]%
+{\gdef\scalefactor{#1}\begin{center}\proofSkipAmount \leavevmode}%
+{\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center} }
+
+\newcommand{\brcell}[2][l]{%
+	\begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
+
+\begin{document}
+
+\author{Jappie Klooster}
+\title{Trees and epistemic logic, you know.}
+\maketitle
+\begin{scprooftree}{0.4}
+\AxiomC{}
+\RightLabel{$A1$}
+\UnaryInfC{$(\phi \wedge\psi)\to\phi $}
+\RightLabel{$KD$}
+\UnaryInfC{$K(\phi \wedge\psi)\to K\phi$}
+\AxiomC{}
+\RightLabel{$A1$}
+\UnaryInfC{$(\phi \wedge\psi)\to\psi$}
+\RightLabel{$KD$}
+\UnaryInfC{$K(\phi \wedge\psi)\to K\psi$}
+\AxiomC{}
+\RightLabel{$A1$}
+\UnaryInfC{$(K(\phi\wedge\psi)\to(K\phi))\to((K(\phi \wedge\psi)\to K\psi)\to(K (\phi\wedge\psi)\to(K\phi\wedge\psi)))$}
+\BinaryInfC{$(K(\phi \wedge\psi)\to K\psi)\to(K (\phi\wedge\psi)\to(K\phi\wedge\psi))$}
+\BinaryInfC{$K (\phi\wedge\psi)\to(K\phi\wedge\psi)$}
+\AxiomC{}
+\RightLabel{$A1$}
+\UnaryInfC{$\phi \to (\psi \to (\psi \wedge \phi))$}
+\RightLabel{$KD$}
+\BinaryInfC{$K\phi \to K(\psi \to (\psi \wedge \phi))$}
+\AxiomC{}
+\RightLabel{$A2$}
+\UnaryInfC{$K(\phi\to(\psi\wedge\phi)) \to K(\phi \to K(\psi \wedge \phi))$}
+\RightLabel{$HS$}
+\AxiomC{}
+\RightLabel{$A1$}
+\UnaryInfC{$K\phi \to(K\psi\to K(\phi \wedge \psi) $}
+\BinaryInfC{$(K\phi \wedge K\psi) \to K(\phi \wedge \psi)$}
+\BinaryInfC{$(K\phi \wedge K\psi) \leftrightarrow K(\phi \wedge \psi)$}
+\end{scprooftree}
+\end{document}
