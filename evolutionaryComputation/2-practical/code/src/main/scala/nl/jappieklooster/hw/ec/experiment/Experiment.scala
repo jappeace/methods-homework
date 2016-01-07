@@ -13,10 +13,10 @@
 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/\>.
-package nl.jappieklooster.hw.ec
+package nl.jappieklooster.hw.ec.experiment
 
 import com.itextpdf.text.log.LoggerFactory
-import nl.jappieklooster.hw.ec.algorithm.{FittestFilter, MateSelection, Evolution, Evaluation}
+import nl.jappieklooster.hw.ec.algorithm.{Evaluation, Evolution, FittestFilter, MateSelection}
 import nl.jappieklooster.hw.ec.model.{IMember, PairedPopulation, Population}
 
 import scala.util.Random
@@ -83,7 +83,7 @@ case class RunResult(popSize:Int, success:Boolean, runtime:Long, generationCount
 		s"Run(pop#=$popSize, success=$success, time=$runtime, gen#=$generationCount)"
 	}
 }
-import util.Properties.lineSeparator
+import scala.util.Properties.lineSeparator
 case class StochasticRun(runs:Seq[RunResult], required:Int) {
 	lazy val byPopSize = runs.groupBy(x=>x.popSize)
 	lazy val bestRun = byPopSize.getOrElse(bigestPopcount, Nil)

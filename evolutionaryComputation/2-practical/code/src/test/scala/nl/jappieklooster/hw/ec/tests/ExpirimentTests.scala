@@ -1,9 +1,9 @@
 package nl.jappieklooster.hw.ec.tests
 
+import nl.jappieklooster.hw.ec.experiment.Experiment
 import nl.jappieklooster.hw.ec.model.Member
 import nl.jappieklooster.hw.ec.model.{Member, Population}
 import org.scalatest.{Matchers, FlatSpec}
-import nl.jappieklooster.hw.ec.Experiment
 
 class ExpirimentTests extends FlatSpec with Matchers{
 

@@ -53,7 +53,7 @@ object Population{
 		if(geneLength % 2 == 1){
 			throw new Exception("Doesn't work with odd genelength")
 		}
-		val initial = createOneZeros(memberFactory, geneLength/2, popCount)
+		val initial = createOneZeros((s) => Member(0,s), geneLength/2, popCount)
 		Population(
 			initial.map(x=> memberFactory(
 				// we need to shuffle the inverse mirror, because otherwise

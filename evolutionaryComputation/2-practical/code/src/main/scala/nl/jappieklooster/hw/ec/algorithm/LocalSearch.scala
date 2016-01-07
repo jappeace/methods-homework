@@ -4,19 +4,49 @@ import nl.jappieklooster.hw.ec.model.{Population, IMember, Graph}
 import scala.annotation.tailrec
 import scala.util.Random
 
-class LocalSearch(method:IMember => IMember, stopCondition:(IMember, IMember)=>Boolean = (a,b)=> a==b){
+import LocalSearch._
+class LocalSearch(
+		method:IMember => IMember,
+		stopCondition:(IMember, IMember)=>Boolean = StopConditions.onEqual,
+		decideResult:(IMember, IMember) => IMember = ResultDecision.current
+	){
 	@tailrec
-	final def search(member: IMember):IMember = {
-		val result = method(member)
-		if(stopCondition(result,member)){
-			return result
+	final def search(previous: IMember):IMember = {
+		val result = method(previous)
+		if(stopCondition(result,previous)){
+			return decideResult(result, previous)
 		}else{
 			return search(result)
 		}
 	}
 }
 object LocalSearch {
+	object StopConditions{
+		def onEqual(a:IMember, b:IMember):Boolean = a==b
+		def isWorse(a:IMember, b:IMember):Boolean = a.fitness < b.fitness
+	}
+	object ResultDecision{
+		def current(cur:IMember, prev:IMember) = cur
+		def previous(cur:IMember, prev:IMember) = prev
+	}
 
+	object Iterative{
+		def swapMutation(times:Int, random:Random, memberFactory:String => IMember)(member:IMember):IMember ={
+			val gen = member.genes
+			def randomGenePoint = random.nextInt(gen.length)
+			def create(prev:String, x:Int):String = {
+				val one = randomGenePoint
+				val two = randomGenePoint
+				if(prev(one) == prev(two)){
+					create(prev,x)
+				}else{
+					swapChar(prev)(one, two)
+				}
+			}
+
+			return memberFactory(1.to(times).foldLeft(gen)(create))
+		}
+	}
 	/**
 	* Swap characters at specified positions.
 	*/
@@ -38,7 +68,7 @@ object LocalSearch {
 		val swapVertex = swapChar(member.genes) _
 
 		// I just don't know a good way to do this with recursion or combbinators
-		for(index <- 0.to(graph.verteci.length)){
+		for(index <- 0.to(graph.verteci.length-1)){
 
 			val vert = graph.verteci(index)
 			val options = vert.connections.filter(conindx => partitioning(index) != partitioning(conindx))
