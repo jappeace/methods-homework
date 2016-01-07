@@ -68,6 +68,7 @@ class FitnessTests extends FlatSpec with Matchers{
 	"graph valuation " should "count these individual partitions correctly" in {
 		graph("0001") should be(2)
 		graph("1001") should be(1)
+		graph("0101") should be(2)
 		graph("0000") should be(4)
 		graph("1111") should be(4)
 		graph("abcd") should be(0) // if all are different there can't be sameness

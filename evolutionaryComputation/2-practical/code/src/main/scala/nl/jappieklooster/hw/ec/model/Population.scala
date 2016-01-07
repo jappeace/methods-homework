@@ -17,7 +17,7 @@ package nl.jappieklooster.hw.ec.model
 
 import scala.util.Random
 
-case class Population(members:Seq[IMember], memberFactory:String => IMember) extends EmulateSeq[IMember] with Generational{
+case class Population(members:Seq[IMember], memberFactory:String => IMember) extends EmulateSeq[IMember] {
 	override def baseSeq: Seq[IMember] = members
 
 }
