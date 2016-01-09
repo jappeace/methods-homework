@@ -50,6 +50,26 @@ only contains the connection numbers. This makes parsing the file a lot
 easier. I don't want to do advanced pattern matching when I can quickly modfy
 the file with a few vim macros. (in this case I just did a `30x').
 
+While implementing ILS, I had it turn out results much worse than MLS.
+The initial implmentation would just stop if it found a worse local optimum.
+The description sais it should go back to the previous optimum. So I guess
+that you should try again after that? But then I wonder how often you should
+try again.
+
+I got much better results with a system where the local search got several chances.
+If it failed it would fallback, and then try again. 
+With chances around 30 I managed to get up and around 1900.
+When I reset the chance counter on a succesfull find
+I managed to get consistently 2200, one result was as high as 2310.
+
+I don't think there is a way to do it any better without drastically making
+the algorithm more complex.
+This current search for improvement was just based on the fact that ILS was
+underperforming to MLS, which shouldn't be the case according to my memory
+from the classes. Now its overperforming quite drastically so I'm happy.
+
+I implemented GLS with the evolution class. The only thing I had to do really
+was write the crossover method, the rest was already functional.
 \section{TODO}
 MLS with several results
 \end{document}

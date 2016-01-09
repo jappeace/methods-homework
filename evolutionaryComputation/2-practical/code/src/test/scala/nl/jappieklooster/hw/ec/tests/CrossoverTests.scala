@@ -1,13 +1,14 @@
 package nl.jappieklooster.hw.ec.tests
 
-import nl.jappieklooster.hw.ec.model.OffspringGenerator
+import nl.jappieklooster.hw.ec.algorithm.OffspringGenerator
 import OffspringGenerator._
+import nl.jappieklooster.hw.ec.algorithm.OffspringGenerator
 import org.scalatest.{Matchers, FlatSpec}
 
 import scala.util.Random
 
 class CrossoverTests extends FlatSpec with Matchers{
-	def invertCross(a:IndexedSeq[(Char,Char)],b:Int,c:Int) = twoPointCross(inverResult, a,b,c).mkString
+	def invertCross(a:IndexedSeq[(Char,Char)],b:Int,c:Int) = twoPointCross(inverseResult, a,b,c).mkString
 	"2 point cross " should " work unbiased" in{
 		val parents = "abcdefg".zip("1234567")
 		// normal crosses...

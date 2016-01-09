@@ -6,9 +6,9 @@ import scala.util.Random
 
 import LocalSearch._
 class LocalSearch(
-		method:IMember => IMember,
-		stopCondition:(IMember, IMember)=>Boolean = StopConditions.onEqual,
-		decideResult:(IMember, IMember) => IMember = ResultDecision.current
+		method:SearchMethod,
+		stopCondition:StopCondition = StopCondition.onEqual,
+		decideResult:ResultDecision = ResultDecision.current
 	){
 	@tailrec
 	final def search(previous: IMember):IMember = {
@@ -21,10 +21,20 @@ class LocalSearch(
 	}
 }
 object LocalSearch {
-	object StopConditions{
+	type SearchMethod = IMember => IMember
+	type StopCondition = (IMember, IMember)=>Boolean
+	object StopCondition{
 		def onEqual(a:IMember, b:IMember):Boolean = a==b
 		def isWorse(a:IMember, b:IMember):Boolean = a.fitness < b.fitness
+		def resetRetryOnBetter(which:RetryOnResult, stopCondition: StopCondition)(current: IMember, previous: IMember): Boolean = {
+			val result = stopCondition(current,previous)
+			if(!result){
+				which.reset
+			}
+			result
+		}
 	}
+	type ResultDecision = (IMember, IMember) => IMember
 	object ResultDecision{
 		def current(cur:IMember, prev:IMember) = cur
 		def previous(cur:IMember, prev:IMember) = prev
@@ -37,10 +47,13 @@ object LocalSearch {
 			def create(prev:String, x:Int):String = {
 				val one = randomGenePoint
 				val two = randomGenePoint
-				if(prev(one) == prev(two)){
+				val acmp = prev(one)
+				val bcmp = prev(two)
+				if(acmp == bcmp){
 					create(prev,x)
 				}else{
-					swapChar(prev)(one, two)
+					val result = swapChar(prev)(one, two)
+					result
 				}
 			}
 
@@ -85,5 +98,25 @@ object LocalSearch {
 			}
 		}
 		member
+	}
+
+	class Probe extends SearchMethod{
+		var tracked = List[IMember]()
+		override def apply(member: IMember): IMember = {
+			tracked = tracked :+ member
+			member
+		}
+	}
+	class RetryOnResult(repitions:Int, var method: SearchMethod) extends ResultDecision{
+		val resetvalue = 0
+		private var current = resetvalue
+		override def apply(result: IMember, previous: IMember): IMember = {
+			current += 1
+			if(current < repitions){
+				method(previous)
+			}
+			result
+		}
+		def reset = current = resetvalue
 	}
 }

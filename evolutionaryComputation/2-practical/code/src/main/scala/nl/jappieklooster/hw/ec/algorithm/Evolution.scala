@@ -17,21 +17,24 @@ package nl.jappieklooster.hw.ec.algorithm
 
 import nl.jappieklooster.hw.ec.model.{PairedPopulation, Population}
 
+import Evolution._
+
+import scala.annotation.tailrec
+
 class Evolution(
-	val evaluation: FitnessEvaluator,
 	mateSelector:IMateSelector,
-	offSpringGenerator: PairedPopulation => Population,
+	offSpringGenerator: OffspringGenerator,
 	/**
 	 * fittest filter, (valuation, parents, children) => fittestpop
 	 */
-	fittestFilter: (Population, Population) => Population,
+	fittestFilter: FittestFilter,
 
 	/**
 	 * If there already exists a really good solution you're
 	 * happy with you can use this so you don't have to wait untill
 	 * convergence
 	 */
-	hasGoodEnoughSolution: Population => Boolean
+	hasGoodEnoughSolution: SolutionJudge = SolutionJudge.badSolution
 ) {
 	private def step(parents:Population):Population = fittestFilter(
 			parents,
@@ -44,6 +47,7 @@ class Evolution(
 	def startGenetic(seed:Population): Seq[Population]= genetic(
 		Seq(seed)
 	)
+	@tailrec
 	private def genetic(prev:Seq[Population]): Seq[Population]={
 		val parents = prev.last
 		if(hasGoodEnoughSolution(parents)){
@@ -58,3 +62,11 @@ class Evolution(
 	}
 }
 
+object Evolution{
+	type OffspringGenerator = PairedPopulation => Population
+	type FittestFilter = (Population, Population) => Population
+	type SolutionJudge = Population => Boolean
+	object SolutionJudge{
+		def badSolution(x:Population) = false
+	}
+}

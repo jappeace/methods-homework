@@ -40,7 +40,7 @@ class Experiment(val name:String, val variation:String, evolution: Evolution, me
 
 		// sucesfull if early termination or the last population is good enough
 		val success = hasGoodEnoughSolution(evolutionResult.last)
-		RunResult(consideringSize, success, runtime, evolutionResult.length,evolution.evaluation.countCalls())
+		RunResult(consideringSize, success, runtime, evolutionResult.length,0)
 	}
 
 	def verifyLowest(currentPop:Int, faults:Int, index:Int) : Seq[RunResult] = {
@@ -131,7 +131,6 @@ object Experiment{
 			name,
 			variation._3,
 			new Evolution(
-				probe,
 				MateSelection.createCompeteWithRandomTournement(random),
 				variation._1,
 				filter,

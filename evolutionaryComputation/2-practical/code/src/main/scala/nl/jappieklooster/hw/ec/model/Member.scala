@@ -18,7 +18,7 @@ package nl.jappieklooster.hw.ec.model
 import org.slf4j.LoggerFactory
 
 import scala.util.Random
-import nl.jappieklooster.hw.ec.algorithm.IHasFitness
+import nl.jappieklooster.hw.ec.algorithm.{LocalSearch, IHasFitness}
 
 trait IMember extends IHasFitness with Genetic
 case class Member(valuation:Float, gen:String) extends IMember{
@@ -28,6 +28,7 @@ case class Member(valuation:Float, gen:String) extends IMember{
 
 
 object MemberFactories{
+	type MemberFactory = (String=>Float) => String => IMember
 	def tightlyLinked(func:String=>Float)(str:String):IMember =
 		Member(func(str), str)
 	def randomlyLinked
@@ -40,8 +41,8 @@ object MemberFactories{
 	val log = LoggerFactory.getLogger(this.getClass)
 	case class WithCoinFlipTimesMutation(
 		random:Random,
-		creationFunc:(String=>Float) => String => IMember
-	) extends ((String=>Float)=>(String) => IMember){
+		creationFunc:MemberFactory
+	) extends MemberFactory {
 
 		def apply(func:String=>Float) = (str:String) => {
 			val flipCount = countFlips(-1)
@@ -63,5 +64,10 @@ object MemberFactories{
 			}
 			integer
 		}
+	}
+
+	def withLocalSearch(localSearch:LocalSearch, creationFunction: MemberFactory)(func:String=>Float)(str:String):IMember ={
+		val result = creationFunction(func)(str)
+		localSearch.search(result)
 	}
 }

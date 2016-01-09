@@ -17,7 +17,8 @@ package nl.jappieklooster.hw.ec
 
 import java.io.{File, PrintWriter}
 
-import nl.jappieklooster.hw.ec.algorithm.{LocalSearch, Evaluation}
+import nl.jappieklooster.hw.ec.algorithm.LocalSearch.{RetryOnResult, Probe}
+import nl.jappieklooster.hw.ec.algorithm._
 import nl.jappieklooster.hw.ec.experiment.Timer
 import nl.jappieklooster.hw.ec.model._
 import org.sameersingh.scalaplot._
@@ -52,11 +53,14 @@ object Main{
 		 */
 		val factory = MemberFactories.tightlyLinked(Evaluation.graphValuation(graph)) _
 		val localSearch = new LocalSearch(LocalSearch.vertexSwapFirstImprovement(graph, factory))
-		val starts = Population.createEqualOnesZeros(random, factory, graph.verteci.length, 1000)
-		var timer = Timer()
-		//val localOptima = starts.par.map(localSearch.search).toArray.sortBy(-_.fitness)
-		//log.info(s"runtime: ${timer.timeSinceCreation}")
-		//log.info("{"+localOptima.foldLeft("")((a,b) => s"$a, ${b.fitness}") + "}")
+		val starts = Population.createEqualOnesZeros(factory, graph.verteci.length, 1000)
+		val timer = Timer()
+		/*val localOptima = timer.time{
+			starts.par.map(localSearch.search).toArray.sortBy(-_.fitness)
+		}
+		log.info(s"runtime: ${timer.seconds}")
+		log.info("{"+localOptima.foldLeft("")((a,b) => s"$a, ${b.fitness}") + "}")
+		*/
 
 		//  1862.0, 1842.0, 1798.0, 1792.0
 		/*
@@ -68,17 +72,59 @@ object Main{
 		 Are the results obtained with the different mutation/perturbation sizes statistically
 		 different from each other ?
 		 */
-		log.info(starts.head + "")
-		for(size <- 1.to(20)){
+		//  1 fitness {2310.0,
+		/*log.info(starts.head + "")
+		for(size <- 1.to(5).par){
+			val probe = new Probe
+			val resultplexer = new RetryOnResult(30, null)
+			import LocalSearch._
 			val iterativeLocalsearch = new LocalSearch(
-				(localSearch.search _ ).compose(LocalSearch.Iterative.swapMutation(size,random,factory)),
-				stopCondition = LocalSearch.StopConditions.isWorse,
-				decideResult = LocalSearch.ResultDecision.previous
+				(localSearch.search _ ).compose((Iterative.swapMutation(size,random,factory) _ ).compose(probe)),
+				stopCondition = StopCondition.resetRetryOnBetter(resultplexer, StopCondition.isWorse),
+				decideResult = resultplexer
 			)
-			timer = Timer()
-			log.info(s"$size: ${iterativeLocalsearch.search(starts.head)}")
-			log.info(s"runtime: ${timer.timeSinceCreation}")
+			resultplexer.method = iterativeLocalsearch.search
+			timer.time{
+				iterativeLocalsearch.search(starts.head)
+			}
+			log.info(s"runtime: ${timer.seconds}")
+			val results = probe.tracked.sortBy(_.fitness)
+			log.info(s"$size fitness {${results.foldLeft("")((a,b) => s"${b.fitness}, $a")}}")
 		}
+		*/
+
+		val selectMethods = List(
+			("Kill", FittestFilter.killParents _),
+			("Tournement", FittestFilter.tournementElitism _),
+			("Truncate", FittestFilter.truncateElitism _))
+
+		for(method <- selectMethods.par){
+			val gls = new Evolution(
+				MateSelection.createCompeteWithRandomTournement(random),
+				OffspringGenerator.balancedUniformCross,
+				method._2
+			)
+			val result = timer.time{
+				gls.startGenetic(
+					Population.createEqualOnesZeros(
+						MemberFactories.withLocalSearch(
+							localSearch,
+							MemberFactories.tightlyLinked
+						)(Evaluation.graphValuation(graph)),
+						graph.verteci.length,
+						50
+					)
+				)
+			}
+
+
+			log.info(s"GLS ${method._1} selection")
+			log.info(s"runtime: ${timer.seconds}")
+			log.info(s"gls avg. fitness {${result.reverseMap{pop => pop.foldLeft(0f)((a,b)=>a+b.fitness)/pop.size}}}")
+			log.info("---")
+		}
+
+
 
 	}
 	/**
