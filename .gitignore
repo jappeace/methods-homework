@@ -44,5 +44,4 @@ taskArtifacts/
 *.class
 
 # meshing around with graphs....
-*.svg
 *.pdf_tex
