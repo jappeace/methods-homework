@@ -70,8 +70,24 @@ from the classes. Now its overperforming quite drastically so I'm happy.
 
 I implemented GLS with the evolution class. The only thing I had to do really
 was write the crossover method, the rest was already functional.
+
+I wanted to see if the GLS popsize and selection pressure would have any
+effect on the average fitness found. I suspect that a bigger population size
+would find better results and that weaker selection would find better
+average scores.
+
+I chose to investigate with population sizes of 25, 50 and 75. I didn't want
+to wait to long on this and the runtime for 50 was approaching ~10 minutes
+for the slowest. Luckily I have a powerfull laptop and can use paralization.
+
+Doing this 30 times to cancel the staostic effect would result into ~5 hours.
 \section{TODO}
 MLS with several results
+GLS -> I think the localsearch will recursively unecesrly decend into its members
+because the local search is packed in the member factory. Maybe remove the
+local search from the memberfactory?
+
+Use original file by doing a substr(30)
 \end{document}
 
 

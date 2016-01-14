@@ -18,7 +18,7 @@ package nl.jappieklooster.hw.ec.model
 import org.slf4j.LoggerFactory
 
 import scala.util.Random
-import nl.jappieklooster.hw.ec.algorithm.{LocalSearch, IHasFitness}
+import nl.jappieklooster.hw.ec.algorithm.{Search, Search$, IHasFitness}
 
 trait IMember extends IHasFitness with Genetic
 case class Member(valuation:Float, gen:String) extends IMember{
@@ -66,7 +66,7 @@ object MemberFactories{
 		}
 	}
 
-	def withLocalSearch(localSearch:LocalSearch, creationFunction: MemberFactory)(func:String=>Float)(str:String):IMember ={
+	def withLocalSearch(localSearch:Search, creationFunction: MemberFactory)(func:String=>Float)(str:String):IMember ={
 		val result = creationFunction(func)(str)
 		localSearch.search(result)
 	}

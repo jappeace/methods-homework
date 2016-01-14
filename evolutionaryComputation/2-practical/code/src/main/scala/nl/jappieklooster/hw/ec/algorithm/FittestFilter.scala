@@ -18,6 +18,7 @@ package nl.jappieklooster.hw.ec.algorithm
 import nl.jappieklooster.hw.ec.model.Population
 
 object FittestFilter {
+	type FittestFilter = (Population, Population) => Population
 	/** drop the parents */
 	def killParents(
 		parents : Population,

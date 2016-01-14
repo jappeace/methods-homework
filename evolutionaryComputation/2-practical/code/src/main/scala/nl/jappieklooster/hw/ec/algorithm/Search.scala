@@ -1,11 +1,21 @@
 package nl.jappieklooster.hw.ec.algorithm
 
 import nl.jappieklooster.hw.ec.model.{Population, IMember, Graph}
+
 import scala.annotation.tailrec
 import scala.util.Random
 
-import LocalSearch._
-class LocalSearch(
+import Search._
+
+/**
+ * Search, it depends on how you configure it if its global or local.
+ * it executes the search method, then checks if its happy, if not it'll
+ * try again, if so the decideResult is called
+ * @param method
+ * @param stopCondition
+ * @param decideResult
+ */
+class Search(
 		method:SearchMethod,
 		stopCondition:StopCondition = StopCondition.onEqual,
 		decideResult:ResultDecision = ResultDecision.current
@@ -20,7 +30,7 @@ class LocalSearch(
 		}
 	}
 }
-object LocalSearch {
+object Search {
 	type SearchMethod = IMember => IMember
 	type StopCondition = (IMember, IMember)=>Boolean
 	object StopCondition{

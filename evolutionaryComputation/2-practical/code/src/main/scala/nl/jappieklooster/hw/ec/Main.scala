@@ -17,9 +17,9 @@ package nl.jappieklooster.hw.ec
 
 import java.io.{File, PrintWriter}
 
-import nl.jappieklooster.hw.ec.algorithm.LocalSearch.{RetryOnResult, Probe}
+import nl.jappieklooster.hw.ec.algorithm.Search.{RetryOnResult, Probe}
 import nl.jappieklooster.hw.ec.algorithm._
-import nl.jappieklooster.hw.ec.experiment.Timer
+import nl.jappieklooster.hw.ec.experiment.{Experiment, Timer}
 import nl.jappieklooster.hw.ec.model._
 import org.sameersingh.scalaplot._
 import org.slf4j.LoggerFactory
@@ -39,11 +39,21 @@ object Main{
 	def main(args:Array[String]){
 		log.info("starting graph bipartitioning")
 
-		def strToInts(str:String):Seq[Int] = if(str.length > 0) str.split(" ").map(
-			// they have 1 based index
-			_.toInt-1
-		) else Nil
+		def strToInts(str:String):Seq[Int] = {
+			if(str.length <= 30){
+				return Nil
+			}
+			val sub = str.substring(30)
+			if(sub.length > 0) sub.split(" ").map(
+				// they have 1 based index
+				_.toInt-1
+			) else Nil
+		}
 		val graph = Graph.create(Source.fromFile("src/main/resources/data.txt").getLines().map(strToInts).toSeq:_*)
+		def printResults(members:Seq[IMember]) = {
+			val results = members.foldLeft("")((a,b) => s"$a, ${graph.edgeCount-b.fitness}").substring(2)
+			log.info(s"{$results}")
+		}
 		log.info(graph.toString)
 
 		/*
@@ -52,15 +62,18 @@ object Main{
 		computational time required.
 		 */
 		val factory = MemberFactories.tightlyLinked(Evaluation.graphValuation(graph)) _
-		val localSearch = new LocalSearch(LocalSearch.vertexSwapFirstImprovement(graph, factory))
-		val starts = Population.createEqualOnesZeros(factory, graph.verteci.length, 1000)
+		val localSearch = new Search(Search.vertexSwapFirstImprovement(graph, factory))
+		val starts = Population.createEqualOnesZeros(factory, graph.verteci.length, 100)
 		val timer = Timer()
-		/*val localOptima = timer.time{
+		val localOptima = timer.time{
 			starts.par.map(localSearch.search).toArray.sortBy(-_.fitness)
 		}
+		val expirement = new Experiment({
+			starts.par.map(localSearch.search).toArray.sortBy(-_.fitness)
+		}).run
 		log.info(s"runtime: ${timer.seconds}")
-		log.info("{"+localOptima.foldLeft("")((a,b) => s"$a, ${b.fitness}") + "}")
-		*/
+		printResults(localOptima)
+
 
 		//  1862.0, 1842.0, 1798.0, 1792.0
 		/*
@@ -73,12 +86,12 @@ object Main{
 		 different from each other ?
 		 */
 		//  1 fitness {2310.0,
-		/*log.info(starts.head + "")
-		for(size <- 1.to(5).par){
+		log.info(starts.head + "")
+		for(size <- 1.to(10).par){
 			val probe = new Probe
 			val resultplexer = new RetryOnResult(30, null)
-			import LocalSearch._
-			val iterativeLocalsearch = new LocalSearch(
+			import Search._
+			val iterativeLocalsearch = new Search(
 				(localSearch.search _ ).compose((Iterative.swapMutation(size,random,factory) _ ).compose(probe)),
 				stopCondition = StopCondition.resetRetryOnBetter(resultplexer, StopCondition.isWorse),
 				decideResult = resultplexer
@@ -87,17 +100,21 @@ object Main{
 			timer.time{
 				iterativeLocalsearch.search(starts.head)
 			}
-			log.info(s"runtime: ${timer.seconds}")
-			val results = probe.tracked.sortBy(_.fitness)
-			log.info(s"$size fitness {${results.foldLeft("")((a,b) => s"${b.fitness}, $a")}}")
+			log.info(s"size $size - runtime: ${timer.seconds}")
+			val results = probe.tracked.sortBy(-_.fitness)
+			printResults(results)
+			log.info("--")
 		}
-		*/
 
+
+		/*
+		val popSizes = List(25,50,75)
 		val selectMethods = List(
-			("Kill", FittestFilter.killParents _),
-			("Tournement", FittestFilter.tournementElitism _),
-			("Truncate", FittestFilter.truncateElitism _))
-
+			("Kill parents", FittestFilter.killParents _),
+			("Tournament", FittestFilter.tournementElitism _),
+			("Truncate", FittestFilter.truncateElitism _)).foldRight(List[(String, FittestFilter.FittestFilter, Int)]())((a,b)=> {
+			b ++ popSizes.map(x=>(a._1, a._2, x))
+		})
 		for(method <- selectMethods.par){
 			val gls = new Evolution(
 				MateSelection.createCompeteWithRandomTournement(random),
@@ -112,18 +129,18 @@ object Main{
 							MemberFactories.tightlyLinked
 						)(Evaluation.graphValuation(graph)),
 						graph.verteci.length,
-						50
+						method._3
 					)
 				)
 			}
 
-
-			log.info(s"GLS ${method._1} selection")
-			log.info(s"runtime: ${timer.seconds}")
-			log.info(s"gls avg. fitness {${result.reverseMap{pop => pop.foldLeft(0f)((a,b)=>a+b.fitness)/pop.size}}}")
+			log.info(s"GLS ${method._1} selection popsize ${method._3}")
+			log.info(s"Runtime: ${timer.seconds}")
+			log.info(s"GLS avg. fitness {${result.reverseMap{pop => pop.foldLeft(0f)((a,b)=>a+b.fitness)/pop.size}}}")
 			log.info("---")
 		}
 
+		*/
 
 
 	}

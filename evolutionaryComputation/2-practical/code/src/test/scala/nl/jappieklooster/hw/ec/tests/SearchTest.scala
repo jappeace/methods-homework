@@ -3,9 +3,9 @@ package nl.jappieklooster.hw.ec.tests
 import nl.jappieklooster.hw.ec.algorithm.Evaluation
 import org.scalatest.{Matchers, FlatSpec}
 import nl.jappieklooster.hw.ec.model.{Member, Graph}
-import nl.jappieklooster.hw.ec.algorithm.LocalSearch._
+import nl.jappieklooster.hw.ec.algorithm.Search._
 
-class LocalSearchTest extends FlatSpec with Matchers{
+class SearchTest extends FlatSpec with Matchers{
 
 	val graph = Graph.create(
 		Seq(2),
