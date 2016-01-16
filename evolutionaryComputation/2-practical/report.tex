@@ -12,6 +12,22 @@
 \usepackage{listings}
 \usepackage{hyperref}
 \usepackage{svg}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+
+\pgfplotsset{
+    compat=1.9,
+    compat/bar nodes=1.8
+}
+
+
+\begin{filecontents*}{dataTable.txt}
+zero 	xpos 		firsty 		secondy		errbotstart		errbotend 		errtopstart			errtopend
+0 		1           0         	1			0.1				0.2				0.1	               0.2
+0 		2           1         	2			0.3				0.1             1.5               0.4
+0 		3           2         	3.5			0.5				0.2             0.3               0.4
+\end{filecontents*}
+
 \newenvironment{scprooftree}[1]%
 {\gdef\scalefactor{#1}\begin{center}\proofSkipAmount \leavevmode}%
 {\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center} }
@@ -87,7 +103,27 @@ GLS -> I think the localsearch will recursively unecesrly decend into its member
 because the local search is packed in the member factory. Maybe remove the
 local search from the memberfactory?
 
-Use original file by doing a substr(30)
+
+\pgfplotstableread{dataTable.txt}\dataTable
+\begin{tikzpicture}
+\pgfplotsset{set layers}
+\begin{axis}[ybar stacked]
+
+% Layers needed to get error bars on top of lower blue rectangle
+\addplot[color=white]
+table[on layer=axis grid, x=xpos, y=firsty]{\dataTable};
+
+\addplot[color=red] plot[on layer=axis lines,error bars/.cd, y dir=both, y explicit] 
+table[x=xpos, y=zero, y error minus=errbotstart, y error plus=errbotend]{\dataTable};
+
+\addplot[color=red] plot[on layer=axis lines,error bars/.cd, y dir=both, y explicit] 
+table[x=xpos, y=secondy, y error minus=errtopstart, y error plus=errtopend]{\dataTable};
+
+\end{axis}
+
+\end{tikzpicture}
+
+\end{empfile}
 \end{document}
 
 
