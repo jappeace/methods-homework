@@ -19,22 +19,25 @@ import java.io.{File, PrintWriter}
 
 import nl.jappieklooster.hw.ec.algorithm.Search.{RetryOnResult, Probe}
 import nl.jappieklooster.hw.ec.algorithm._
-import nl.jappieklooster.hw.ec.experiment.{Experiment, Timer}
+import nl.jappieklooster.hw.ec.experiment._
 import nl.jappieklooster.hw.ec.model._
-import org.sameersingh.scalaplot._
+import org.jfree.chart.renderer.category.IntervalBarRenderer
+import org.jfree.chart.renderer.xy.XYErrorRenderer
+import org.jfree.chart.{ChartFrame, ChartFactory}
+import org.jfree.chart.plot.{CategoryPlot, PlotOrientation}
+import org.jfree.data.category.{DefaultIntervalCategoryDataset, DefaultCategoryDataset}
+import org.jfree.data.xy.{YIntervalSeriesCollection, YIntervalSeries}
+import org.sameersingh.scalaplot.jfreegraph.JFGraphPlotter
 import org.slf4j.LoggerFactory
 
 import scala.io.Source
 import scala.util.Random
-import scala.util.Properties.lineSeparator
 
 
 object Main{
 	val log = LoggerFactory.getLogger(Main.getClass)
 	val random = Random
-	val br = lineSeparator
 	val folder = "../"
-	type GraphData = (String,Seq[Seq[(Double,Double)]])
 
 	def main(args:Array[String]){
 		log.info("starting graph bipartitioning")
@@ -63,18 +66,55 @@ object Main{
 		 */
 		val factory = MemberFactories.tightlyLinked(Evaluation.graphValuation(graph)) _
 		val localSearch = new Search(Search.vertexSwapFirstImprovement(graph, factory))
-		val starts = Population.createEqualOnesZeros(factory, graph.verteci.length, 100)
-		val timer = Timer()
-		val localOptima = timer.time{
-			starts.par.map(localSearch.search).toArray.sortBy(-_.fitness)
-		}
+		val starts = Population.createEqualOnesZeros(factory, graph.verteci.length, 10)
 		val expirement = new Experiment({
-			starts.par.map(localSearch.search).toArray.sortBy(-_.fitness)
-		}).run
-		log.info(s"runtime: ${timer.seconds}")
-		printResults(localOptima)
+			starts.map(localSearch.search).toArray.sortBy(-_.fitness)
+		})
 
+		// 84.731329205
+		val first = Timer.measure({expirement.run(Experiment.Parralel)(8)})
 
+		println(s"total time ${first.seconds}")
+		println(Plot.asciiGraph(("blah", first.result.map( x=> x.seconds.toDouble))))
+
+		val times = first.result.map( x=> x.seconds.toDouble).sorted
+		println(times)
+		val dataset = new ErrorCatogoryDataset(
+			Array(
+				Array(
+					times.head,
+					1D
+				),
+				Array(
+					2.0D,
+					4)
+				),
+			Array(
+				Array(
+					times.last,
+					3D
+				),
+				Array(
+					5.0D,
+					6D
+				)
+			),
+			Array(
+				Array(
+					Line(9, 3),
+					Line(4, 10)
+				),
+				Array(
+					Line(10, 20),
+					Line(44, 23)
+				)
+			)
+		)
+		val chart = ChartFactory.createBarChart("Time results", "method", "time", dataset, PlotOrientation.VERTICAL, true, true, false)
+		chart.getPlot.asInstanceOf[CategoryPlot].setRenderer(new ErroredIntervalBarRenderer)
+		val frame = new ChartFrame("uh",chart)
+		frame.setSize(500,400)
+		frame.setVisible(true)
 		//  1862.0, 1842.0, 1798.0, 1792.0
 		/*
 		 Investigate the impact of different mutation/perturbation sizes for ILS with the VSN
@@ -84,7 +124,6 @@ object Main{
 		 2, 3, 4 and 5 times). Are the ILS versions statistically better/worse than MLS ?
 		 Are the results obtained with the different mutation/perturbation sizes statistically
 		 different from each other ?
-		 */
 		//  1 fitness {2310.0,
 		log.info(starts.head + "")
 		for(size <- 1.to(10).par){
@@ -100,13 +139,13 @@ object Main{
 			timer.time{
 				iterativeLocalsearch.search(starts.head)
 			}
-			log.info(s"size $size - runtime: ${timer.seconds}")
 			val results = probe.tracked.sortBy(-_.fitness)
 			printResults(results)
 			log.info("--")
 		}
 
 
+		*/
 		/*
 		val popSizes = List(25,50,75)
 		val selectMethods = List(
@@ -144,19 +183,5 @@ object Main{
 
 
 	}
-	/**
-	 * write to file
-	 * @param filename
-	 * @param content
-	 * @return
-	 */
-	def write(filename:String, content:String) = {
-		val outputFile = new File(folder+filename)
-		outputFile.delete()
-		outputFile.createNewFile()
-		new PrintWriter(outputFile){
-			write(content)
-			close()
-		}
-	}
+
 }
