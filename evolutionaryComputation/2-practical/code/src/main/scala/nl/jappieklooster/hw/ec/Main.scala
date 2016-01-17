@@ -75,46 +75,14 @@ object Main{
 		val first = Timer.measure({expirement.run(Experiment.Parralel)(8)})
 
 		println(s"total time ${first.seconds}")
+		val times = first.result.map( x=> x.seconds.toDouble).sorted
+		val error = times.length/10
+		val top = times.take(error).sum/error
+		val topError = times.take(error).head - top
+		val botError = top - times.take(error).last
 		println(Plot.asciiGraph(("blah", first.result.map( x=> x.seconds.toDouble))))
 
-		val times = first.result.map( x=> x.seconds.toDouble).sorted
 		println(times)
-		val dataset = new ErrorCatogoryDataset(
-			Array(
-				Array(
-					times.head,
-					1D
-				),
-				Array(
-					2.0D,
-					4)
-				),
-			Array(
-				Array(
-					times.last,
-					3D
-				),
-				Array(
-					5.0D,
-					6D
-				)
-			),
-			Array(
-				Array(
-					Line(9, 3),
-					Line(4, 10)
-				),
-				Array(
-					Line(10, 20),
-					Line(44, 23)
-				)
-			)
-		)
-		val chart = ChartFactory.createBarChart("Time results", "method", "time", dataset, PlotOrientation.VERTICAL, true, true, false)
-		chart.getPlot.asInstanceOf[CategoryPlot].setRenderer(new ErroredIntervalBarRenderer)
-		val frame = new ChartFrame("uh",chart)
-		frame.setSize(500,400)
-		frame.setVisible(true)
 		//  1862.0, 1842.0, 1798.0, 1792.0
 		/*
 		 Investigate the impact of different mutation/perturbation sizes for ILS with the VSN
