@@ -1,0 +1,139 @@
+\documentclass[10pt,landscape]{article}
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{color,graphicx,overpic}
+\usepackage{hyperref}
+
+
+\pdfinfo{
+  /Title (example.pdf)
+  /Creator (TeX)
+  /Producer (pdfTeX 1.40.0)
+  /Author (Seamus)
+  /Subject (Example)
+  /Keywords (pdflatex, latex,pdftex,tex)}
+
+% This sets page margins to .5 inch if using letter paper, and to 1cm
+% if using A4 paper. (This probably isn't strictly necessary.)
+% If using another size paper, use default 1cm margins.
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+    { \geometry{top=.5in,left=.5in,right=.5in,bottom=.5in} }
+    {\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+        {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+        {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+    }
+
+% Turn off header and footer
+\pagestyle{empty}
+
+% Redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\makeatother
+
+% Define BibTeX command
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+%My Environments
+\newtheorem{example}[section]{Example}
+% -----------------------------------------------------------------------
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{multicols}{3}
+
+
+% multicol parameters
+% These lengths are set only within the two main columns
+%\setlength{\columnseprule}{0.25pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\begin{center}
+     \Large{\underline{Evolutionary Computing}} \\
+\end{center}
+
+\section{Genetic algorithms}
+\subsection{Schema}
+$o(h)$: schema order $o(11\#\#0)$ ie nonwildcard \# elements.
+$\delta(h)$: schema defining length, maximum distance between two defining
+symbols. $m(h,t)$: number of schema h instances at generation t.
+$f(h,t)=\sum_{i\in P}f_i$ schema fitness is average fitness of members.
+\subsubsection{Growth by selection}
+reproduction ratio $\phi(h,t)=\frac{m(h,t^s)}{m(h,t)}$.
+\paragraph{Proportionate selection}
+$f_i$ fitness ind i. Probability individiual i selected: $\frac{f_i}{\sum f_i}$.
+$N$ pop size. Expected number of copies
+$\frac{f_i}{\sum f_i} \cdot N = \frac{f_i}{f(t)}$.
+Expected number of copies of schema $h$ members:
+$m(h,t^s) = m(h,t)\phi(h,t)=m(h,t)\frac{f(h,t)}{f(t)}$.
+\paragraph{Tournament selction}
+tournament size $s: 0 \leq \phi(h,t) \leq s$.
+
+\subsubsection{Distruption by mutation}
+probability bit flipped: $p_m$.
+schema $h$ survives iff all the bit values are \emph{not} mutated
+$p_{survival}=(1-P_m)^{o(h)}$. for small values $p_m << 1$,
+$(1-p_m)^{o(h)}\approx 1 - o(h)\cdot p_m$.
+disruption factor $\epsilon(h,t)$ by mutation: $\epsilon(h,t)=o(h)\cdot P_m$.
+
+\subsubsection{Distruption by mutation}
+Probablity crossover applied $P_c$. Bit swap probability: $p_x$.
+\paragraph{1-point crossover} schema $h$ survives iff cutpoint \emph{not}
+withing defining length $\delta$: $p_{survival} = 1-\frac{\delta(h,t)}{l-1}$
+\paragraph{Uniform crossover} Schema $h$ survives iff none or all bits
+swapped together. $p_{survival}=p^{o(h)}_x + (1-p_x)^{o(h)}$.
+
+\paragraph{Distruption factor} $\epsilon(h,t)$ by recombination:
+$\epsilon(h,t)=P_c\cdot(1-p_{survival})$
+
+\subsubsection{Theorom}
+Selection mutation and recombination combined:
+$m(h,t+1)\leq m(h,t)\phi(h,t)[1-\epsilon(h,t)]$.
+Net growth factor: $\gamma(h,t)=\frac{m(h,t+1)}{m(h,t)}$.
+
+\subsection{Fitness Correlation coefficents}
+$F_p$: mean fitness of the parents. $F_c$: mean fitness of the children.
+$\sigma(F_p) =$ standard deviation of fitness parents
+$\sigma(F_c) =$ std. dev. of children. coveriance fitness between parents and children:
+$cov(F_p,F_c)=\sum^n_{i=1}\frac{(f(p_{gi})-F_p)(f(c_{gi})-f_c)}{n}$.
+Operator fitness correlation coeficient
+$\rho_{op}=\frac{cov(F_p,F_c)}{sigma(F_p)\sigma(F_c)}$.
+
+\section{ES representation}
+Fitness function: $f(x_1,\dots,x_n):\mathbb{R}^n\to \mathbb{R}$.
+Genotype representation of an individual solution:
+$(x_1,\dots,x_n,\sigma^2_1,\dots,\sigma^2_n, c_{12},\dots,c_{n-1,n})$,
+paremeters $(x_1, \dots,x_n)$ need to be optimized.
+Individiual solution consists of 3 parts: $\vec{x}$: problem vairables
+$\Rightarrow$ Fitness $f(\vec{x})$. $\vec{sigma}$: standard deviations
+$\Rightarrow$ variances. $\vec{\alpha}$: rotation angles $\Rightarrow$
+covariances.
+
+\end{multicols}
+\end{document}
