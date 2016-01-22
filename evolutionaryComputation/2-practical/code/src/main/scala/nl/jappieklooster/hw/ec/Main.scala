@@ -66,23 +66,25 @@ object Main{
 		 */
 		val factory = MemberFactories.tightlyLinked(Evaluation.graphValuation(graph)) _
 		val localSearch = new Search(Search.vertexSwapFirstImprovement(graph, factory))
-		val starts = Population.createEqualOnesZeros(factory, graph.verteci.length, 10)
+		val starts = Population.createEqualOnesZeros(factory, graph.verteci.length, 100)
 		val expirement = new Experiment({
-			starts.map(localSearch.search).toArray.sortBy(-_.fitness)
+			starts.map(x=>localSearch.search(x)).toArray.sortBy(-_.fitness)
 		})
 
 		// 84.731329205
-		val first = Timer.measure({expirement.run(Experiment.Parralel)(8)})
+		val first = Timer.measure({expirement.run(Experiment.Parralel)(30)})
 
 		println(s"total time ${first.seconds}")
 		val times = first.result.map( x=> x.seconds.toDouble).sorted
 		val error = times.length/10
 		val top = times.take(error).sum/error
-		val topError = times.take(error).head - top
+		println(first.result.flatMap(x=>x.result).map(x=>graph.edgeCount-x.fitness).sorted)
+		/*val topError = times.take(error).head - top
 		val botError = top - times.take(error).last
 		println(Plot.asciiGraph(("blah", first.result.map( x=> x.seconds.toDouble))))
 
 		println(times)
+		*/
 		//  1862.0, 1842.0, 1798.0, 1792.0
 		/*
 		 Investigate the impact of different mutation/perturbation sizes for ILS with the VSN

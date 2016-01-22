@@ -18,6 +18,11 @@ class SearchTest extends FlatSpec with Matchers{
 	"swapChar " should " swap chars " in {
 		swapChar("jappie")(1,4) should be("jippae")
 		swapChar("1001")(0,1) should be("0101")
+
+		val function = swapChar("jappie") _
+
+		function(1,4) should be ("jippae")
+		function(0,1) should be ("ajppie")
 	}
 
 	val testingString = "1001"

@@ -52,14 +52,3 @@ object Plot {
 		}
 	}
 }
-case class TTestBarValue(values:Seq[Numeric], errorMarginPercent:Int){
-	private val sorted = values.sorted
-	val errorCount = values.length/errorMarginPercent
-	val top = ErrorMargin(sorted.take(errorCount), errorCount)
-	val bot = ErrorMargin(sorted.drop(errorCount), errorCount)
-}
-case class ErrorMargin(errorValues:Seq[Numeric], errorCount:Int){
-	val mid = errorValues.sum/errorCount
-	val top = errorValues.head - mid
-	val bot = mid - errorValues.last
-}

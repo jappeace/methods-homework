@@ -92,7 +92,6 @@ object Search {
 
 		// I just don't know a good way to do this with recursion or combbinators
 		for(index <- 0.to(graph.verteci.length-1)){
-
 			val vert = graph.verteci(index)
 			val options = vert.connections.filter(conindx => partitioning(index) != partitioning(conindx))
 
@@ -106,6 +105,7 @@ object Search {
 			if(!result.isEmpty){
 				return lastMember
 			}
+
 		}
 		member
 	}

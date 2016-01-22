@@ -2,8 +2,7 @@ package nl.jappieklooster.hw.ec.tests
 
 import nl.jappieklooster.hw.ec.model.MemberFactories
 import org.scalatest.{Matchers, FlatSpec}
-import nl.jappieklooster.hw.ec.model.Population._
-
+import nl.jappieklooster.hw.ec.algorithm.OffspringGenerator._
 class CreationTests extends FlatSpec with Matchers{
 
 	"inverse mirror " should "create an equal amount of ones and zeros" in{
