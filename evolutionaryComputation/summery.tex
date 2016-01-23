@@ -1,4 +1,4 @@
-\documentclass[10pt,landscape]{article}
+\documentclass[8pt,landscape]{extarticle}
 \usepackage{multicol}
 \usepackage{calc}
 \usepackage{ifthen}
@@ -9,12 +9,12 @@
 
 
 \pdfinfo{
-  /Title (example.pdf)
+  /Title (EC cheatsheet)
   /Creator (TeX)
   /Producer (pdfTeX 1.40.0)
-  /Author (Seamus)
-  /Subject (Example)
-  /Keywords (pdflatex, latex,pdftex,tex)}
+  /Author (Jappie Klooster)
+  /Subject (Evulotionary computing)
+  /Keywords (Evolutionary, Computing, Gentic, Algorithm, Heuristics, Strategy)}
 
 % This sets page margins to .5 inch if using letter paper, and to 1cm
 % if using A4 paper. (This probably isn't strictly necessary.)
@@ -332,6 +332,84 @@ population - correspons the the particle reaching the $x=0$ boundary.
 $P[OptConv]=\frac{1-(\frac{P[SellErr]}{1-P[SellErr]})^{N/2}}{1-(\frac{P[SellErr]}{1-P[SellErr]})^N}
 \approx 1-(\frac{\sqrt{\pi l}-2}{\sqrt{\pi l}+2})^{N/2}$
 Critical pop size: $N \approx ln(1-P[OptConv]\frac{\sqrt{pi l}}{-2}$
+
+\section{Multi objective EA's}
+\subsection{Pareto}
+\emph{Dominance} A solution $x^0$ is said to (Paretor) \emph{dominate} a
+solution $x^1$ (denoted $x^0\succ x^1$) iff
+$(\forall i \in \{0,1,\dots,m-1\}:f_i(x^0)\leq f_i(x^1))\wedge
+ (\exists i \in \{0,1,\dots,m-1\}:f_i(x^0)< f_i(x^1))$.
+A solution is pareto optimal iff $\neg\exists x^1:x^1\succ x^0$.
+The parote optimall set: $P_s=\{x^0|\neg\exists x^1:x^1\succ x^0\}$.
+The paroto optimal front is the $P_f$ of all objective function values
+correspoinding to the solutions in $P_s$: $P_F=\{f(x)=(f_0(x),f_1(x),\dots,
+	f_{m-1}(x))|x\in P_s$
+\subsection{Weighted aggregation}
+The graphs with the linerider lines. It doesn't work with bowl
+like objectives because only the edges are found.
+\subsection{Evolutionary Multi-objective Optimization}
+Desired result: representative subset of $P_s$.
+\emph{Domination count}
+For each solution count how many times
+its dominatad. Then use one-dimensional selection (truncate or tournament).
+\emph{Domination rank} solutions of rank 0 have domination count 0, solutions
+of rank i are solutions of rank 0 when solutions of lower ranks are disregarded.
+
+\subsection{Elitism}
+What if number of rank 0 solutions is bigger than the next generation?
+Must diregard some of the rank 0 solutions. The space dominated by
+elitist solutions changes, this can cause the elitist solutions/front to
+become \emph{worse}. This isn't true eltism!
+For this reason an elitistarchive is often used. Current best solutions
+are stored in the archive if they dominate at least one solution in the
+archive or if they are not dominated by any solution in the archive.
+Dominated solutions are removed from the archive. It can grow exponentially
+large. Pruning the archive causes the same problems again. One solution:
+discretize objective space, store at most one solution per
+discretization box. Typically for better convergence also select
+solutions from archive.
+\subsection{Performance indicators}
+Performance indicator is a function: Input approximation set, output: single
+value representing a certaing goodnes. However no single or combination of
+performance indiciators taht compare approximation sets can always tell wether
+one approximation set is better than another.
+
+\section{Model-based EAs: Est. of dist. algorithms}
+Model based evolutionary algorthms: Population based stochastic search
+algorithms. Exploitation: selection, Exploration: Learn model from selected
+solutions, generate new solutions from the model (\&pop).
+\subsection{Univariate PMBGA}
+No statistical interaction between variables considered.
+Model: probability vector $[p_1,\dots,P_l]$($l$:string length).
+$p_i$: probability of value 1 at string position $i$.
+$p(x)=\Pi^l_{i=1}p(x_i) \quad$ ($p(x_i)$: univariate marginal distribution).
+Learn modal: count proportions of 1 in selected population. Sample model:
+Generate new solutions with specified probabilities.
+
+%TODO: lack of space remove variants
+\subsubsection{Variants}
+PBIL: Prob. vector incrementally updated over successive generations.
+UMDA: No incremental updates. Compact GA: Models steady-state GA with
+tournament selection. DEUM: Uses markov random field modeling.
+
+\subsection{Bivariate PMBGA}
+Need more than just probabilities of bit values, model pairwise interactions:
+conditional probablities.
+
+\subsubsection{Ntropy}
+Random variable $X$ with probability istrubtion function $p(X)$. Entropy
+$H(X$ is a measure of unceartainty about a random variable $X$:
+$H(X) =\sum_{x\in X}-p(x)\mbox{log }p(x)$. Conditionaly entropy $H(Y|X)$ is
+a measure of uncertainty remianing about $Y$ after $X$ is known (what $X$
+does not say about $Y$):
+$H(Y|X) =\sum\limits_{x\in X}\sum\limits_{y\in Y}p(x,y)\mbox{log }
+\frac{p(x)}{p(x,y)}$. The mutual information $I(X,Y)$ of two random variables
+is a measure of the variables' mutual dependence. Mutual information determines
+how similiar the joint distribution $P(X,Y)$ is to the products of factored
+marginal distribution $p(X)p(Y)$:
+$I(Y,X) =\sum\limits_{x\in X}\sum\limits_{y\in Y}p(x,y)\mbox{log }
+\frac{p(x,y)}{p(x)p(y)}$. Mutual information in relation to Ntropy:
+$I(X,Y) = H(Y)-H(Y|X)=H(X)+H(Y)-H(X,Y)$.
 
 \end{multicols}
 \end{document}
