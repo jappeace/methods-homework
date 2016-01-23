@@ -79,6 +79,8 @@
 \end{center}
 
 \section{Genetic algorithms}
+%TODO: crossover methods I don't understand
+%TODO: schemas, buidling block theory
 \subsection{Schema}
 $o(h)$: schema order $o(11\#\#0)$ ie nonwildcard \# elements.
 $\delta(h)$: schema defining length, maximum distance between two defining
@@ -102,14 +104,16 @@ $p_{survival}=(1-P_m)^{o(h)}$. for small values $p_m << 1$,
 $(1-p_m)^{o(h)}\approx 1 - o(h)\cdot p_m$.
 disruption factor $\epsilon(h,t)$ by mutation: $\epsilon(h,t)=o(h)\cdot P_m$.
 
-\subsubsection{Distruption by mutation}
+\subsubsection{Distruption by recombination}
 Probablity crossover applied $P_c$. Bit swap probability: $p_x$.
-\paragraph{1-point crossover} schema $h$ survives iff cutpoint \emph{not}
+
+\emph{1-point crossover} schema $h$ survives iff cutpoint \emph{not}
 withing defining length $\delta$: $p_{survival} = 1-\frac{\delta(h,t)}{l-1}$
-\paragraph{Uniform crossover} Schema $h$ survives iff none or all bits
+
+\emph{Uniform crossover} Schema $h$ survives iff none or all bits
 swapped together. $p_{survival}=p^{o(h)}_x + (1-p_x)^{o(h)}$.
 
-\paragraph{Distruption factor} $\epsilon(h,t)$ by recombination:
+\emph{Distruption factor} $\epsilon(h,t)$ by recombination:
 $\epsilon(h,t)=P_c\cdot(1-p_{survival})$
 
 \subsubsection{Theorom}
@@ -163,6 +167,86 @@ ES applies a high selection pressure: from $\mu$ parents $\lambda$ offspring
 are generated with $\lambda >> \mu$ (~5 to 10 times). The best $\mu$ solutions
 of the $\lambda$ offspring are selected, (or from both offspring and parents,
 but experiments show just offspring has better selfadaptation).
+\section{Ada pursuit}
+Given: Set of $K$ \emph{operators} $A=\{a_1,\dots,a_k\}$. 
+\emph{Probability vector} $P(t) = \{P_1(t),\dots,P_k(t)\}$. operator $a_i$ 
+applied at time t in proportion to probability $P_i(t)$. env. returns rewards
+$R_i(t) \geq 0$. Goal: Adapt $P(t)$ so that expected value of cumalitive
+reward $\varepsilon[R]=\sum^T_{t=1}R_i(t)$ is maximized.
+
+\subsection{Probabilty matching}
+update $P(t)$ so probability of applying operator $a_i$ matches
+the proportion of the estimated reward $Q_i(t)$ to the sum of all reward 
+estimates $\sum^K_{a=1} Q_a(t)$
+\subsubsection{PM: Reward estimate}
+compute an estimate of the rewards, and older rewards should be less
+influantial in non-stationary envs:
+$Q_a(t+1)=Q_a(t)+\alpha[R_a(t)-Q_a(t)]$
+
+\subsubsection{PM: Probability adaptation}
+In non-stationary envs the probabilty of applying
+any operator should never be less than some minmal \emph{thershold} $P_{min} > 0$.
+For $K$ operators maximal probablity $P_{max} = 1-(K-1)P_{min}$. updating rule
+for $P(t)$: $P_a(t+1)=P_{min}+(1-K\cdot P_{min})\frac{Q_a(t)}{\sum^K_{i=1}Q_i(t)}$.
+\subsubsection{PM: Problem}
+If one operator is consistently better probablity will still converge to average.
+
+\subsection{Adaptive Pursuit strategy}
+Update $P(t)$ so \emph{operator} $a^*$ that currently has the max estimated
+reward $Q_{a^*}(t)$ is \emph{persued}. To achieve this the pursuit method
+\emph{increases} selection probability $P_{a^*}$ and decreases all other
+probabilities $P_a(t),\forall a\neq a^*$. So here it can deal with non-static envs.
+\subsubsection{APS: Adaptive method}
+Similiar to probability matching:
+$Q_a(t+1)=Q_a(t)+\alpha[R_a(t)-Q_a(t)]$. Different from probablity matching:
+Selection probability $P(t)$ is adapted in a greedy way.
+\subsubsection{APS: Probability adoptation}
+The selection probability of the current best operator
+$a^*=argmax_a[Q_a(t+1)]$ is \emph{increased} $(0<\beta<1)$:
+$P_{a^*}(t+1)=P_{a^*}(t)+\beta[P_{max}-P_{a^*}(t)]$.
+The others are \emph{decreased}: 
+$\forall a\neq a^*: P_a(t+1)=P_a(t)+\beta[P_{min}-P_a(t)]$
+
+%TODO: the psuedo code??
+
+\section{Convergence models}
+Number of fitness function evaluations is proportional to the
+number of generations run and pop size $FitFunc.count = Gen.count * Popsize$.
+Selection algorithm and variation operators can be ignored.
+
+\emph{Convergence speed:}
+High selection presure is faster covnergence. Bigger popsize give better solutions.
+Minimal fitness function evals is a tradeoff between selection presure and popsize.
+\subsection{Selection Intensity}
+Quantifies the speed of convergence. $I$ selection intensity. Response to
+selection $R(t)$ is difference between mean fitness of generation $t+1$ and fitness
+of generation $t$. Selection differential $S(t)$ is the diff between parent pop
+at generation $t$ and mean fitness of generation $t$. 
+$S(t)=\overline{f(t^s)}-\overline{f(t)}$. Assuming the pop fitness is normally
+distributed $N(\overline(f),\sigma^2)$ we can scale the selection differential
+by thestandard deiation $\sigma(t)$. This scaled selection differential is 
+called selection intensity $I(t)$. This is a dimensionless number since 
+the std deiation has the same units as the selection response:
+$I(t)=\frac{S(t)}{\sigma(t)}=\frac{\overline{f(t^s)}-\overline{f(t)}}{\sigma(t)}$.
+Standerdizing the normal distribution $(\overline(f)=0,\sigma=1)$ shows that
+selection intensity $I$ is simply the epected average fitness
+of the population after applying the selection scheme to a population
+with standardized normal distibuted fitness $(N(0,1))$.
+The relation between the response to selection $R$ and the selection
+differential $S$ is given by the heritability $h^2$: $R(t)=h^2S(t)$ or
+$R(t)=h^2\sigma(t)I(t)$.
+
+\subsection{Proportionate selection}
+$P_i(t)$ the proportion of occurences of individual $i$ at generation $t$.
+$i$ has fitness $f_i$ and the mean fitness of generation $t$ is $\overline{f(t)}$.
+$P_i(t^s)$ the proportion of individual $i$ in the parent pool
+after applying proportionate selection: $P_(t^s)=P_i(t)\frac{f_i}{\overline{f(t)}}$.
+The selection differential of proportiaonate selection is: 
+$S(t)=\overline{f(t^s)}-\overline{f(t)}=\frac{\sigma^2(t)}{\overline{f(t)}}$
+The selection intensity $I(t)=\frac{S(t)}{\sigma(t)}$ is tus eaual
+to the ratio of the std devation of the fitness and the pop mean fitness:
+$I(t)=\frac{\sigma(t)}{\overline{f(t)}}$
+
 
 \end{multicols}
 \end{document}
