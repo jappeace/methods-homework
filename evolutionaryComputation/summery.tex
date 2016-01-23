@@ -133,9 +133,36 @@ paremeters $(x_1, \dots,x_n)$ need to be optimized.
 Individiual solution consists of 3 parts: $\vec{x}$: problem vairables
 $\Rightarrow$ Fitness $f(\vec{x})$. $\vec{sigma}$: standard deviations
 $\Rightarrow$ variances. $\vec{\alpha}$: rotation angles $\Rightarrow$
-covariances.
-
-
+covariances. The $n$-dimensional normal probability density function:
+$p(X=x_1,\dots,x_n)=\frac{exp(-\frac{1}{2}X^TC^{-1}X)}{\sqrt{(2\pi)^n|C|}}$.
+$C$: correlation matrix ($c_{ij}$; $|C|$ determinant $\Rightarrow$ rotation 
+angles $\alpha_{ij}$: tan $2\alpha_{ij}=2c_{ij}/(\sigma^2_i-\sigma^2_j)$.
+1-dimensional gaussian function:
+$f(x)=\frac{1}{\sqrt{2\pi \sigma^2}}exp\frac{(x-\mu)^2}{2\sigma^2}$
+\subsection{Mutation}
+Complete covairance matrix: $\sigma_1,\dots,\sigma_n$; $c_{ij}\neq 0 (i\neq j)$.
+The strategy paremeters are mutated:
+$\sigma'_i=\sigma_ie^{
+	\frac{\mathbb{N}(0,1)}{\sqrt{2n}}+
+	\frac{\mathbb{N}_i(0,1)}{\sqrt{2\sqrt{n}}}
+}$
+$\alpha'_j=\alpha_j+\beta\mathbb{N}_j(0,1)$.
+$\beta = 5$ degree in radians. $\mathbb{N}(0,1)$: standard normal
+distribution. Then the problem paremeters are mutated with the new
+strategy: $\vec{x}'=\vec{x}+\vec{N}(\vec{0},\vec{\sigma},\vec{\alpha}')$.
+$\vec{N}$: n-dimensional normal distribution.
+Often this is simplified by not doing angles or even just having a single
+standard deviation (ie no index at $\sigma$ and nothing after the + 
+in the power $e$).
+\subsection{Recombination}
+create one offspring from several parents selected randomly. Problem parameters
+are averaged. The std devation is selected from one of the parents. Rotation
+angles are not recombined
+\subsection{Selection}
+ES applies a high selection pressure: from $\mu$ parents $\lambda$ offspring
+are generated with $\lambda >> \mu$ (~5 to 10 times). The best $\mu$ solutions
+of the $\lambda$ offspring are selected, (or from both offspring and parents,
+but experiments show just offspring has better selfadaptation).
 
 \end{multicols}
 \end{document}
