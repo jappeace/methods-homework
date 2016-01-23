@@ -292,6 +292,46 @@ The selection intensity $I(t)=\frac{S(t)}{\sigma(t)}$ is tus eaual
 to the ratio of the std devation of the fitness and the pop mean fitness:
 $I(t)=\frac{\sigma(t)}{\overline{f(t)}}$
 
+\subsection{Rank based selection}
+Proporitionate selection has not a constant selection pressure.
+
+\section{Population sizing}
+Selection viewed as descision making proscess withing partitions:
+schama competition. When best schema looses comptetition we have a 
+selection descision error. The amount of decision errors that
+can be afforded at a given pop size can be explained by random walks.
+\subsection{Selection error}
+Probablity selection error is equal to the probablity that the best schema is represented
+by a string with fitness less than the representative worst schema. wich is also equal
+to the probability that the fitness difference is nagative.
+%TODO: add fancy pants maths.
+
+\subsection{Random walks}
+One dim space of size $N + 1$. A particle in above
+space in postition $x\in \{0,\dots,N\}$. The particle can move
+left with probability $p$ and right with probability $1-p$.
+when the particle reaches the boundries the walk ends.
+$P_N(x)$ the probability that the particle is absorbed
+by boundry $N$. When it currently is at pos $x$.
+Diff equation:
+$P_N(x)=pP_N(x+1)+(1-p)P_N(x-1)$
+
+\subsection{Population sizing \& gambler's ruin}
+The number of optimal bit values `1' in the population at a certain
+position. - this is, for the partition considered - corresponds
+to the position $x$ in the gambler's ruin model.
+The boundries correspond to all bit vlaues in the population being
+equal to a bit value. WHen the boudaries are reached the random walk
+ends. The proba bility that the amount of optoimal string values in the
+population at the partition is increased by one is equal to the probability
+that the selection decision making is correct for that partition. This
+corresponds to the probability that the particle moves to the right(p).
+Desired convergence corresponds to the particle reaching the $x=N$ boundary.
+Premature convergence - this is, loosing the optimal bit value in the
+population - correspons the the particle reaching the $x=0$ boundary.
+$P[OptConv]=\frac{1-(\frac{P[SellErr]}{1-P[SellErr]})^{N/2}}{1-(\frac{P[SellErr]}{1-P[SellErr]})^N}
+\approx 1-(\frac{\sqrt{\pi l}-2}{\sqrt{\pi l}+2})^{N/2}$
+Critical pop size: $N \approx ln(1-P[OptConv]\frac{\sqrt{pi l}}{-2}$
 
 \end{multicols}
 \end{document}
