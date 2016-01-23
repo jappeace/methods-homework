@@ -22,8 +22,8 @@
 \ifthenelse{\lengthtest { \paperwidth = 11in}}
     { \geometry{top=.5in,left=.5in,right=.5in,bottom=.5in} }
     {\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
-        {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
-        {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+        {\geometry{top=0.5cm,left=0.5cm,right=0.5cm,bottom=0.5cm} }
+        {\geometry{top=0.5cm,left=0.5cm,right=0.5cm,bottom=0.5cm} }
     }
 
 % Turn off header and footer
@@ -86,15 +86,21 @@ $o(h)$: schema order $o(11\#\#0)$ ie nonwildcard \# elements.
 $\delta(h)$: schema defining length, maximum distance between two defining
 symbols. $m(h,t)$: number of schema h instances at generation t.
 $f(h,t)=\sum_{i\in P}f_i$ schema fitness is average fitness of members.
+
+\emph{Buidling blocks} low order high performance schemate receive exponentiaonally
+(geometrically) increasing trials.
+
 \subsubsection{Growth by selection}
 reproduction ratio $\phi(h,t)=\frac{m(h,t^s)}{m(h,t)}$.
-\paragraph{Proportionate selection}
+
+\emph{Proportionate selection}
 $f_i$ fitness ind i. Probability individiual i selected: $\frac{f_i}{\sum f_i}$.
 $N$ pop size. Expected number of copies
 $\frac{f_i}{\sum f_i} \cdot N = \frac{f_i}{f(t)}$.
 Expected number of copies of schema $h$ members:
 $m(h,t^s) = m(h,t)\phi(h,t)=m(h,t)\frac{f(h,t)}{f(t)}$.
-\paragraph{Tournament selction}
+
+\emph{Tournament selction}
 tournament size $s: 0 \leq \phi(h,t) \leq s$.
 
 \subsubsection{Distruption by mutation}
@@ -116,12 +122,32 @@ swapped together. $p_{survival}=p^{o(h)}_x + (1-p_x)^{o(h)}$.
 \emph{Distruption factor} $\epsilon(h,t)$ by recombination:
 $\epsilon(h,t)=P_c\cdot(1-p_{survival})$
 
-\subsubsection{Theorom}
+\subsubsection{Theorem}
 Selection mutation and recombination combined:
 $m(h,t+1)\leq m(h,t)\phi(h,t)[1-\epsilon(h,t)]$.
 Net growth factor: $\gamma(h,t)=\frac{m(h,t+1)}{m(h,t)}$.
+\subsection{Permutation problems}
+2-opt m, select 2 points and reverse a subsequance.
+adjacency of elements is important, 2-opt has minimal change.
+relative ordering is important: 2-opt large change.
+\subsubsection{Crossover}
+std. crosover won't work cause they can make invalid solution.
+ie : $abcd+CBDA\to Cbcd$. Order crossover: rnd select 2 points,
+copy subseq between crosspoints from p1, starting at 2nd crosspoint
+fill in missing elements retaining order from p2. partially
+mapped crosover: rnd select 2 points, copy p2 to child, copy
+elements between crospoint from p1 to childe while placing
+the replaced element from p2 at the location where the replacer is.
+Position crossover: rnd select k postitions, copy unmarked elements from
+p1 to child, scan p2 from lft to rght and fill in missing elemnts. Max 
+preservative cross: rnd select two points, copy subseq between crospoints
+from p1, add succesivily an adjecent element from p2 starting at
+last element in child, if already placed take and adjecent elemnt form
+p1. Cycle crossover: mark cycles, cross full cycles.
 
 \subsection{Fitness Correlation coefficents}
+Genetic operators should perserve usefull fitness characaristics.
+Calcualte the fitness coorlation coeficient to quantify this.
 $F_p$: mean fitness of the parents. $F_c$: mean fitness of the children.
 $\sigma(F_p) =$ standard deviation of fitness parents
 $\sigma(F_c) =$ std. dev. of children. coveriance fitness between parents and children:
@@ -129,6 +155,25 @@ $cov(F_p,F_c)=\sum^n_{i=1}\frac{(f(p_{gi})-F_p)(f(c_{gi})-f_c)}{n}$.
 Operator fitness correlation coeficient
 $\rho_{op}=\frac{cov(F_p,F_c)}{sigma(F_p)\sigma(F_c)}$.
 
+\section{Metaheursitics}
+Crossover can have mutliple search biases:
+1. Random sampling witin a specific subspace. 2. place together for contrast
+partial solutions from two parent solutions.
+
+\subsection{PBMS}
+Probablistic Modal Building: Probability distributions model dependencies 
+between variables present in good solutions. sSelection makes these fitness 
+based dependencies stand out. Estimating a probablity modal over the selected
+solutions identifies these dependencies. Drawing new samples form the probability
+modal will respect the dependencies.
+PMBLS = PBM + LS. Bivariate probalbistic modal learns the pairwise dependencies
+between problem dependencies. Buildign a dependency tree=maximum spanning tree
+over the dependency graph. New solutions obtained by sampling from the dependency
+tree.
+For graphbipartitioning. Probablistic model: count the frequnceis that two
+verticies are in the same parition. Dep tree build over most extreme frequency
+values. reduce computational complexity by only considering the
+pairwise interactions between connected vertices
 \section{ES representation}
 Fitness function: $f(x_1,\dots,x_n):\mathbb{R}^n\to \mathbb{R}$.
 Genotype representation of an individual solution:
