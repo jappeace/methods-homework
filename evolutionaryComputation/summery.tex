@@ -36,12 +36,12 @@
                                 {0.5ex plus .2ex}%x
                                 {\normalfont\large\bfseries}}
 \renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
-                                {-1explus -.5ex minus -.2ex}%
-                                {0.5ex plus .2ex}%
+                                {-0.8ex plus -.5ex minus -.2ex}%
+                                {0.2ex plus .2ex}%
                                 {\normalfont\normalsize\bfseries}}
 \renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
-                                {-1ex plus -.5ex minus -.2ex}%
-                                {1ex plus .2ex}%
+                                {-0ex plus -.5ex minus -.2ex}%
+                                {0.1ex plus .2ex}%
                                 {\normalfont\small\bfseries}}
 \makeatother
 
@@ -63,7 +63,7 @@
 \begin{document}
 \raggedright
 \footnotesize
-\begin{multicols}{3}
+\begin{multicols}{4}
 
 
 % multicol parameters
@@ -79,8 +79,13 @@
 \end{center}
 
 \section{Genetic algorithms}
-%TODO: crossover methods I don't understand
-%TODO: schemas, buidling block theory
+Darwinian system $\Rightarrow$ GA: 
+Information structures $\Rightarrow$ binary strings, real-valued vectors,
+programs etc. Structures are copied $\Rightarrow$ Selection algorithm.
+Copies partially vary from original $\Rightarrow$ mutation \& crosover
+operators. Structures are competing for a limited resource $\Rightarrow$
+selecting fixed size parent pool. Reproductive succes depends on env
+$\Rightarrow$ user defined fitness function.
 \subsection{Schema}
 $o(h)$: schema order $o(11\#\#0)$ ie nonwildcard \# elements.
 $\delta(h)$: schema defining length, maximum distance between two defining
@@ -88,7 +93,8 @@ symbols. $m(h,t)$: number of schema h instances at generation t.
 $f(h,t)=\sum_{i\in P}f_i$ schema fitness is average fitness of members.
 
 \emph{Buidling blocks} low order high performance schemate receive exponentiaonally
-(geometrically) increasing trials.
+(geometrically) increasing trials. ie there exists some schemas that when combined
+will produce a near optimal solution, the building blocks.
 
 \subsubsection{Growth by selection}
 reproduction ratio $\phi(h,t)=\frac{m(h,t^s)}{m(h,t)}$.
@@ -347,7 +353,7 @@ correspoinding to the solutions in $P_s$: $P_F=\{f(x)=(f_0(x),f_1(x),\dots,
 \subsection{Weighted aggregation}
 The graphs with the linerider lines. It doesn't work with bowl
 like objectives because only the edges are found.
-\subsection{Evolutionary Multi-objective Optimization}
+\subsection{Multi-objective Optimization}
 Desired result: representative subset of $P_s$.
 \emph{Domination count}
 For each solution count how many times
@@ -374,7 +380,7 @@ value representing a certaing goodnes. However no single or combination of
 performance indiciators taht compare approximation sets can always tell wether
 one approximation set is better than another.
 
-\section{Model-based EAs: Est. of dist. algorithms}
+\section{Model EAs: Est. dist. algorithms}
 Model based evolutionary algorthms: Population based stochastic search
 algorithms. Exploitation: selection, Exploration: Learn model from selected
 solutions, generate new solutions from the model (\&pop).
@@ -411,5 +417,141 @@ $I(Y,X) =\sum\limits_{x\in X}\sum\limits_{y\in Y}p(x,y)\mbox{log }
 \frac{p(x,y)}{p(x)p(y)}$. Mutual information in relation to Ntropy:
 $I(X,Y) = H(Y)-H(Y|X)=H(X)+H(Y)-H(X,Y)$.
 
+\subsubsection{COMIT}
+Optimal dependency tree. Compute fully connected weighted graph between problem
+variables. Weights are the mutual infromation $I(X,Y)$ between the variables.
+Commit computes the maximam spanning treee of the weighted graph. The approximating
+probability model is restricted to factorization in which the conditional
+probabilty distribtuion for any random vraiable depends on the value of at
+most one other random variable
+$p(x)=\overset{n}{\underset{i=1}{\Pi}}p(X_i|X_{parent(i)})$.
+$p(X)$ is the class of distubtions with a tree as graphical model.
+The optimal tree model: Create a fully connected weighed graph $G$,
+each vertix $V_i$ corresponds to randome variable $X_i$ each weight $W_{ij}$
+for the edge betweeen $V_i$ and $V_j$ is equal to the mutal information
+$I(X_i, X_j)$. The edges in the maximum spanning tree of $G$ determine an
+optimal set $n-1$ conditional probabilites with which to aproximate the joint
+probability distribution. Note that all ordered trees conforming the unorderd
+spanning tree model identical distributions.
+\emph{Algorithm} Calculate unconditional and conditinoal probabilties
+$p(X_i)$ and $p(X_i,X_j)$, and the mutual information $I(X_i,X_j)$.
+Select arbitrary random variable $X_r$ as root of the tree. Finda the
+pair of variables $X_{in}$ and $X_{out}$ where $X_{in}$ is already in the
+tree and $X_{out}$ is not, with the maximum mutual information
+$I(X_{in}, X_{out})$. Add $X_{out}$ to the tree with $X_{in}$ as parent,
+reapeat untill all variables are in the tree.
+
+\subsection{Multivariate PMBGA}
+MDL is a measure of complexity (Information Theroy).
+$MDL(M,D)=D_{Model}+D_{Data}$ Model complexity $D_{Model}$:
+complexity of describing the model. Compressed population complexity
+$D_{Data}$: complexity of describing the data within the model (=measure
+of goodness of the probability distribution estimation).
+Best model = the one with the lowest MDL score.
+$D_{Model}=log_2(N+1)\sum_i(2^{s_i}-1)$. Compressed pop complexity
+$D_{Data}=N\sum_i H(M_i)$. $N$ pop size. $S_i$ size of partition $i$.
+$M_i$ marginal distribution of the partition $i$. $H(M_i)$ entropy of the
+marginal distribution of the partition i.
+
+\subsubsection{Extended compact GA}
+Greedily searches for the marginal product model that minzimizes the MDL.
+$p(X)=\Pi^G_{g=1}p(x_g)$ Choose the probability distribution with the lowest
+MDL score. Start from the simplest model: the univariate factorization.
+Join two grousp that result in the largest improvemnt in the used scoring
+measure. Stop when no jioning of two groups impvoes the score further.
+\section{Model EAs: Linkage Tree GA}
+Identify groups of problem variables that together make an important
+contribution to the quality of solutions.
+These variable groups are interacting in a non-linear way and should
+be processed as a block = \emph{building block} the dependency struct
+is a set of subsets of the problem.
+\subsection{Family of subsets (dep struct)}
+Let there be $l$ problem vars $x_0,\dots,x_{l-1}$. Let $S$ be a set of all
+variable indecies $\{0,\dots,l-1\}$. A FOS $F$ is a set of subsets of the
+set $S$. FOS $F$ i a subset of the powerset of $S(F\subseteq P(S))$.
+FOS can be written more specifically as $F=\{F^0,\dots,F^{|F|-1}\}$. where
+$F^i \subseteq \{0,\dots,l-1\}, i\in\{0,\dots,|F|-1\}$. Every var is
+in at least one subset in the FOS: $\forall i \in \{0,\dots,l-1\}:(
+\exists j \in \{0,\dots,|F|-1\}:i\in F^j)$.
+\subsection{Linkage tree learning}
+start from univariate structure (ie all vars in independent sets). Build
+linkage tree using bottum-up hierarchial clustering algortim.
+Similiartiy measuer: Between individual vairables X and Y: Mutual
+informaiton I(X,Y).  Between clusture groups $X_{F^i}$ and $X_{F^j}$:
+average pairwise linkage clustering (=unweighted pair group method
+with arithmic mean).
+$I^{UPGMA}(X_{F^i}, X_{F^j} = \frac{1}{|X_{F^i}||X_{F^j}|}
+\sum\limits_{X\in X_{F^i}}\sum\limits_{Y\in X_{F^i}} I(X,Y)$
+\subsubsection{Reciprocal nearest neighbor chain clustering}
+Construct a nearsest neighbor chian: start from an arbitrary
+start cluster which is followed by its nearest neigbro, which
+again is followed by its nearest neigbor from among the remaining
+points and so on.
+When the nearest neigbor for the last chain element $n$ is the elements
+$n-1$ we stop with the generation with the NNchan, we have found
+a $RNN$ pair and can agglomerate it.
+The nearest neigbor assignment stay valid for the remaining chain members,
+which can thus be reused for the next iteration of agglomeration. If
+we do not find any more RNN pairs in the remaining NN chain we create a new one
+starting from a random start point.
+\subsection{Optimal Mixing Evolutionary Algorhms}
+OMEA is a model building EA that uses a FOS as its linkage model.
+It uses intermediate function evalutations (inside variation).
+Can be regarded as greedy improvment of exisiting solutions.
+Coined ``optimal'' mixing because better instances for substructures
+are imediatly accepted and not dependent on noise coming form other parts
+of te solution.
+\subsection{GOMEA}
+FOS liknage models to specify the linked vars. A subset of the fos is used
+as crosover mask. Crosover is greedy: only improvments (or equal) are accepted.
+Each generation a new FOS model is build from selected solutions. For each solution
+in the population all subsets of the FOS are treid with a donor solution
+randomly picked fro mthe population. Recombainative OM is GA-like: select single
+donor solution to perform OM with. GOM is EDA-like: select donor solution for each
+subset in OM.
+\subsection{Linkage Tree genetic algorithm.}
+The LTGA is an instance of GOMEA that uses a linkage tree as fos model. Each
+generation a new hierechial cluster tree is build. For each solution in
+population, traverse tree starting at the top. Node (=clusters) in the linkage
+tree used as crosover masks. Select random donor solution and its values at
+the crossover mask replace the variable values from the current solution.
+Evaluate new solution and accept if better/equal, otherwise reject.
+\section{Seminars}
+\subsection{ILS for Qaudratic assignment problem}
+Population based extension work by replacing the worst. Using evolution
+strategies. and don't do recombination?
+\subsection{GA with ILS for solving location routing}
+Assignment Configuration $A(x)$: location. Permutation vector $P(x)$: routing.
+\emph{crossover} $A(x)$ one point cross. $P(x)$ focus on relative ordering.
+\subsection{GASAT}
+\emph{Corrective clause crossover} set all the bits of the child to undefined.
+Go over all false clauses of both parents (and child), find the best to flip,
+keep the sum of parents' fitness the lowest, flip this bit in the child.
+End step: all undefined bits of the child are uniformly crossed over.
+\emph{Corrective clause and truth maintance crossover} Obvious problem
+with CC: Child may make clause false that is true for both parents. A possible
+olution: CCTM. DO CC except for end step. Go over all clauses that are true
+for parents, false for child. Look at the bits of the clause but only those
+different from the child and at least one parent. Find the best bit to flip,
+keep the sum of the parents' fitness the lowest. Flip this bit in the cild.
+End step of CC.
+\emph{Fleuent and ferland's crossover} Go over all clauses true for one parent
+and false for another. Copy all of the former's bits for that clause. End
+step of CC.
+\emph{Also uniform crossover} copy a bit of x or y with equal probablity.
+\subsection{Fitness landscapes in graphbitpart}
+Researh suggest that the optimal soution is often found near the
+center of local-optimum space. Thus a good idea for a search
+tactic is to find a way to get near this center and use a lcoal
+optimization function to try and get near the global optimum.
+\subsection{Solving bus terminal problems}
+Standar rollete wheel with linear ranking is assigning fitness to
+possible solutions. The higher the fitness the more chance of being
+selected.
+\subsection{GLS w. dist preserv recombo}
+Order crossover (see earlier). single parent cross, select with probability 0.5
+from the parent for customers not inserted pick one at random and insert at the
+best position. Convert into chromosone.
+String cross
 \end{multicols}
 \end{document}
