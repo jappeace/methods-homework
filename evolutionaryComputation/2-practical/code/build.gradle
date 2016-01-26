@@ -32,6 +32,8 @@ dependencies {
 	// plot lib:
 	compile "org.sameersingh.scalaplot:scalaplot:0.1"
 
+	compile "org.apache.commons:commons-math3:3.0"
+
 	//client scripts in groovy
 	testCompile "org.scalatest:scalatest_${scalaVersion}:2.2.4"
 

@@ -66,7 +66,7 @@ object Main{
 		 */
 		val factory = MemberFactories.tightlyLinked(Evaluation.graphValuation(graph)) _
 		val localSearch = new Search(Search.vertexSwapFirstImprovement(graph, factory))
-		val starts = Population.createEqualOnesZeros(factory, graph.verteci.length, 100)
+		val starts = Population.createEqualOnesZeros(factory, graph.verteci.length, 10)
 		val expirement = new Experiment({
 			starts.map(x=>localSearch.search(x)).toArray.sortBy(-_.fitness)
 		})
@@ -76,6 +76,9 @@ object Main{
 
 		println(s"total time ${first.seconds}")
 		val times = first.result.map( x=> x.seconds.toDouble).sorted
+		Plot.write("runtimes.table", DataTable.createTable(
+			TableRow("MLS", times.head, times.last,0.1,0.1)
+		))
 		val error = times.length/10
 		val top = times.take(error).sum/error
 		println(first.result.flatMap(x=>x.result).map(x=>graph.edgeCount-x.fitness).sorted)
