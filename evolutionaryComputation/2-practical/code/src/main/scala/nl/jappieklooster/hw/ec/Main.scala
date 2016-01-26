@@ -77,17 +77,12 @@ object Main{
 		println(s"total time ${first.seconds}")
 		val times = first.result.map( x=> x.seconds.toDouble).sorted
 		Plot.write("runtimes.table", DataTable.createTable(
-			TableRow("MLS", times.head, times.last,0.1,0.1)
+			DataTable.createRow("MLS", times)
 		))
 		val error = times.length/10
 		val top = times.take(error).sum/error
 		println(first.result.flatMap(x=>x.result).map(x=>graph.edgeCount-x.fitness).sorted)
-		/*val topError = times.take(error).head - top
-		val botError = top - times.take(error).last
-		println(Plot.asciiGraph(("blah", first.result.map( x=> x.seconds.toDouble))))
 
-		println(times)
-		*/
 		//  1862.0, 1842.0, 1798.0, 1792.0
 		/*
 		 Investigate the impact of different mutation/perturbation sizes for ILS with the VSN
@@ -99,7 +94,7 @@ object Main{
 		 different from each other ?
 		//  1 fitness {2310.0,
 		log.info(starts.head + "")
-		for(size <- 1.to(10).par){
+		for(size <- 1.to(5).par){
 			val probe = new Probe
 			val resultplexer = new RetryOnResult(30, null)
 			import Search._
@@ -109,7 +104,7 @@ object Main{
 				decideResult = resultplexer
 			)
 			resultplexer.method = iterativeLocalsearch.search
-			timer.time{
+			val runtime = Timer.measure{
 				iterativeLocalsearch.search(starts.head)
 			}
 			val results = probe.tracked.sortBy(-_.fitness)
@@ -118,9 +113,7 @@ object Main{
 		}
 
 
-		*/
-		/*
-		val popSizes = List(25,50,75)
+		val popSizes = List(5,10,20)
 		val selectMethods = List(
 			("Kill parents", FittestFilter.killParents _),
 			("Tournament", FittestFilter.tournementElitism _),
@@ -133,7 +126,7 @@ object Main{
 				OffspringGenerator.balancedUniformCross,
 				method._2
 			)
-			val result = timer.time{
+			val result = Timer.measure{
 				gls.startGenetic(
 					Population.createEqualOnesZeros(
 						MemberFactories.withLocalSearch(
@@ -147,13 +140,12 @@ object Main{
 			}
 
 			log.info(s"GLS ${method._1} selection popsize ${method._3}")
-			log.info(s"Runtime: ${timer.seconds}")
-			log.info(s"GLS avg. fitness {${result.reverseMap{pop => pop.foldLeft(0f)((a,b)=>a+b.fitness)/pop.size}}}")
+			log.info(s"Runtime: ${result.seconds}")
+			log.info(s"GLS avg. fitness {${result.result.reverseMap{pop => pop.foldLeft(0f)((a,b)=>a+b.fitness)/pop.size}}}")
 			log.info("---")
 		}
 
-		*/
-
+*/
 
 	}
 
