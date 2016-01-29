@@ -17,7 +17,7 @@ package nl.jappieklooster.hw.ec
 
 import java.io.{File, PrintWriter}
 
-import nl.jappieklooster.hw.ec.algorithm.search.{VertexSwapFirstImprovement, Search}
+import nl.jappieklooster.hw.ec.algorithm.search.{FidduciaMathesisSearch, VertexSwapFirstImprovement, Search}
 import Search.{RetryOnResult, Probe}
 import nl.jappieklooster.hw.ec.algorithm._
 import nl.jappieklooster.hw.ec.experiment._
@@ -77,17 +77,18 @@ object Main{
 		computational time required.
 		 */
 		val factory = MemberFactories.tightlyLinked(Evaluation.graphValuation(graph)) _
-		val localSearch = new Search(new VertexSwapFirstImprovement(graph, factory))
+		val localSearch = new Search(new FidduciaMathesisSearch(graph, factory))
 
 		def runMLS(times: Int) = {
 			log.info("mls")
 			val expirement = new Experiment({
+				log.info("experiment-mls")
 				val starts = Population.createEqualOnesZeros(factory, graph.verteci.length, mlsStartsize)
 				starts.map(x => localSearch.search(x)).toArray
 			})
 
 			val first = Timer.measure({
-				expirement.run(Experiment.Parralel)(times)
+				expirement.run(Experiment.Serial)(times)
 			})
 
 			println(s"total time ${first.seconds}")

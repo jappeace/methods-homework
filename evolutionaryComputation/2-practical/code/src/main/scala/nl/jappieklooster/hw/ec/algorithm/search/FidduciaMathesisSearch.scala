@@ -34,33 +34,36 @@ class Cell(val item:Vertex, var gain:Int, var next:Option[Cell]=None, var previo
  * @return
  */
 class Bucket(
-		//TODO: replace with array
-		private var cellMap:Map[Int,Cell]
+		private var cellMap:Array[Option[Cell]],
+		private val lowOffset:Int,
+		private var maxGain:Int
 	) {
-	private var maxGain = cellMap.keySet.max
+	var cellMapElements = cellMap.length - Bucket.margin
 	def gain = maxGain
-	@tailrec
+	def offset(gain:Int):Int = gain-lowOffset
 	final def pop:Option[Cell] = {
-		if(cellMap.isEmpty){
+		if(isEmpty){
 			return None
 		}
-		if(!cellMap.contains(maxGain)){
+		if(cellMap(offset(maxGain)).isEmpty){
 			maxGain = maxGain -1
 			return pop
 		}
 		remove(maxGain)
 	}
-	def remove(gain:Int):Option[Cell]={
-		val result = cellMap(gain)
-		cellMap -= gain
-		for(next <- result.next){
+	final def remove(gain:Int):Option[Cell]={
+		val result = cellMap(offset(gain))
+		cellMap(offset(gain)) = None
+		cellMapElements -= 1
+		for(cell <- result; next <- cell.next){
+			cellMapElements += 1
 			next.previous = None
-			cellMap += (gain -> next)
+			cellMap(offset(gain)) = cell.next
 		}
-		Some(result)
+		result
 
 	}
-	def isEmpty = cellMap.isEmpty
+	def isEmpty = cellMapElements == 0
 	def insert(cell: Cell) = {
 		// Important, for the pop operation to be constant
 		if(cell.gain > maxGain){
@@ -70,7 +73,7 @@ class Bucket(
 		cell.previous = None
 
 		// cell may or may not have a next
-		cell.next = cellMap.get(cell.gain)
+		cell.next = cellMap(offset(cell.gain))
 
 		// we don't care, the for will only be executed if there is a next
 		for(existing <- cell.next){
@@ -78,24 +81,30 @@ class Bucket(
 		}
 
 		// finally update the map (its a var so += is allowed).
-		cellMap += (cell.gain -> cell)
+		cellMap(offset(cell.gain)) = Some(cell)
 	}
 }
 object Bucket{
+	val margin = 4
 	def apply(partitioning:String, cells:Array[Cell], as:Char):Bucket = {
+		val filtered = cells.filter(x => partitioning(x.item.id) == as).groupBy(_.gain).
+				mapValues(
+					_.foldLeft[Cell](null)((a,b)=>{
+						if(a==null){
+							b
+						}else{
+							a.previous = Some(b)
+							b.next = Some(a)
+							b
+						}
+					})
+				)
+		val min = filtered.keySet.min - (margin/2)
+		val max = filtered.keySet.max + (margin/2)
 		new Bucket(
-			cells.filter(x => partitioning(x.item.id) == as).groupBy(_.gain).
-			mapValues(
-				_.foldLeft[Cell](null)((a,b)=>{
-					if(a==null){
-						b
-					}else{
-						a.next = Some(b)
-						b.previous = Some(a)
-						b
-					}
-				})
-			)
+			min.to(max).map(x=>filtered.get(x)).toArray,
+			min,
+			max
 		)
 	}
 }
@@ -132,19 +141,15 @@ class FidduciaMathesisSearch(graph:Graph, memberFactory:String => IMember) exten
 		def getbucket(char:Char) = if(char=='1') bucketOne else bucketZero
 		val freeCells:Array[Option[Cell]] = cells.map(Some(_))
 
-		// it all ends with a fold where we find the best mutation
-		return algorithm(new StringBuilder(partitioning)).foldLeft(member)(
-			(prevBest, considering)=> if(prevBest.fitness < considering.fitness){
-				considering
-			}else{
-				prevBest
-			}
-		)
+		// we wil store the best found in here, we just assume we already have the
+		// best as comparison
+		var best = member
+		algorithm(new StringBuilder(partitioning))
 		@tailrec
-		def algorithm(part:StringBuilder, result:IndexedSeq[IMember] = IndexedSeq()):Seq[IMember] = {
+		def algorithm(part:StringBuilder):Unit = {
 			// assuming the buckets remain balanced, we can do this
 			if(bucketOne.isEmpty){
-				return result
+				return
 			}
 
 			// best first, but we do both to keep balance
@@ -172,7 +177,13 @@ class FidduciaMathesisSearch(graph:Graph, memberFactory:String => IMember) exten
 				freeCells(cell.item.id) = None
 			}
 			buckets.foreach(b=>for(cell <- b.pop){cross(cell)})
-			algorithm(part,  memberFactory(part.mkString) +: result)
+			val contester = memberFactory(part.mkString)
+
+			if(contester.fitness > best.fitness){
+				// ding ding ding, we have a new champion.
+				best = contester
+			}
+			algorithm(part)
 		}
 		def updateModifiedCell(modPart:Char, currentPart:Char, modcell: Cell):Unit ={
 			val change = if(modPart == currentPart) 1 else -1
@@ -199,5 +210,6 @@ class FidduciaMathesisSearch(graph:Graph, memberFactory:String => IMember) exten
 			// the modcell links will be updated by the insert operation
 			bucket.insert(modcell)
 		}
+		return best
 	}
 }
