@@ -15,10 +15,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/\>.
 package nl.jappieklooster.hw.ec.model
 
+import nl.jappieklooster.hw.ec.algorithm.search.Search
 import org.slf4j.LoggerFactory
 
 import scala.util.Random
-import nl.jappieklooster.hw.ec.algorithm.{Search, Search$, IHasFitness}
+import nl.jappieklooster.hw.ec.algorithm.IHasFitness
 
 trait IMember extends IHasFitness with Genetic
 case class Member(valuation:Float, gen:String) extends IMember{

@@ -97,6 +97,18 @@ to wait to long on this and the runtime for 50 was approaching ~10 minutes
 for the slowest. Luckily I have a powerfull laptop and can use paralization.
 
 Doing this 30 times to cancel the staostic effect would result into ~5 hours.
+
+\subsection{Counting double}
+I had an issue in which my classmates would get much better results than me.
+After discussing it for a while it turned out that I was counting double. However
+This didn't make sense because I just used scala combinators to count the 
+elements. Basically this means that there would have to be a bug in the std
+Scala library which would seem highly unlikely. I knew I was counting double
+because all my results where even numbers. After thinking about it for a while
+I decided to investigate the graph file, it turns out that every connection
+is made double, so the double counting was in fact correct.
+
+
 \section{TODO}
 MLS with several results
 GLS -> I think the localsearch will recursively unecesrly decend into its members
@@ -104,14 +116,17 @@ because the local search is packed in the member factory. Maybe remove the
 local search from the memberfactory?
 
 
+\section{Results}
+\subsection{Time}
 \pgfplotstableread{runtimes.table}\dataTable
 \begin{tikzpicture}
 \pgfplotsset{set layers}
 \begin{axis}[
 	ybar stacked,
 	xlabel={Algorithm},
-	xticklabels from table={dataTable.txt}{name},
+	xticklabels from table={runtimes.table}{name},
 	xtick=data,
+	x tick label style={rotate=90,anchor=east},
 	ylabel={Time}
 ]
 
@@ -129,7 +144,36 @@ table[x expr=\coordindex, y=secondy, y error minus=errtopstart, y error plus=err
 
 \end{tikzpicture}
 
+
+\input{runtimes.textable}
+
+\subsection{Optima}
+\pgfplotstableread{results.table}\dataTable
+\begin{tikzpicture}
+\pgfplotsset{set layers}
+\begin{axis}[
+	ybar stacked,
+	xlabel={Algorithm},
+	xticklabels from table={results.table}{name},
+	xtick=data,
+	x tick label style={rotate=90,anchor=east},
+	ylabel={Fitness (less is better)}
+]
+% Layers needed to get error bars on top of lower blue rectangle
+\addplot[color=white]
+table[on layer=axis grid, x expr=\coordindex, y=firsty]{\dataTable};
+
+\addplot[color=red] plot[on layer=axis lines,error bars/.cd, y dir=both, y explicit] 
+table[x expr=\coordindex, y=zero, y error minus=errbotstart, y error plus=errbotend]{\dataTable};
+
+\addplot[color=red] plot[on layer=axis lines,error bars/.cd, y dir=both, y explicit] 
+table[x expr=\coordindex, y=secondy, y error minus=errtopstart, y error plus=errtopend]{\dataTable};
+
+\end{axis}
+
+\end{tikzpicture}
+\\
+\input{results.textable}
 \end{empfile}
 \end{document}
-
 

@@ -1,9 +1,10 @@
 package nl.jappieklooster.hw.ec.tests
 
 import nl.jappieklooster.hw.ec.algorithm.Evaluation
+import nl.jappieklooster.hw.ec.algorithm.search.Search
 import org.scalatest.{Matchers, FlatSpec}
 import nl.jappieklooster.hw.ec.model.{Member, Graph}
-import nl.jappieklooster.hw.ec.algorithm.Search._
+import Search._
 
 class SearchTest extends FlatSpec with Matchers{
 

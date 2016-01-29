@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/\>.
 package nl.jappieklooster.hw.ec.algorithm
 
+import nl.jappieklooster.hw.ec.experiment.Timer
 import nl.jappieklooster.hw.ec.model.Graph
 
 trait IHasFitness{
