@@ -1,7 +1,10 @@
 package nl.jappieklooster.hw.ec.algorithm.search
 
 import Search._
+import nl.jappieklooster.hw.ec.algorithm.OffspringGenerator
 import nl.jappieklooster.hw.ec.model.{IMember, Graph, Vertex}
+
+import scala.annotation.tailrec
 
 /**
  * Used as a link list like structure in the map.
@@ -30,10 +33,14 @@ class Cell(val item:Vertex, var gain:Int, var next:Option[Cell]=None, var previo
  * @param as
  * @return
  */
-class Bucket(private var cellMap:Map[Int,Cell]) {
+class Bucket(
+		//TODO: replace with array
+		private var cellMap:Map[Int,Cell]
+	) {
 	private var maxGain = cellMap.keySet.max
 	def gain = maxGain
-	def pop:Option[Cell] = {
+	@tailrec
+	final def pop:Option[Cell] = {
 		if(cellMap.isEmpty){
 			return None
 		}
@@ -41,15 +48,38 @@ class Bucket(private var cellMap:Map[Int,Cell]) {
 			maxGain = maxGain -1
 			return pop
 		}
-		val result = cellMap(maxGain)
-		cellMap -= maxGain
+		remove(maxGain)
+	}
+	def remove(gain:Int):Option[Cell]={
+		val result = cellMap(gain)
+		cellMap -= gain
 		for(next <- result.next){
 			next.previous = None
-			cellMap += (maxGain -> next)
+			cellMap += (gain -> next)
 		}
 		Some(result)
+
 	}
 	def isEmpty = cellMap.isEmpty
+	def insert(cell: Cell) = {
+		// Important, for the pop operation to be constant
+		if(cell.gain > maxGain){
+			maxGain = cell.gain
+		}
+		// first element has no previous
+		cell.previous = None
+
+		// cell may or may not have a next
+		cell.next = cellMap.get(cell.gain)
+
+		// we don't care, the for will only be executed if there is a next
+		for(existing <- cell.next){
+			existing.previous = Some(cell)
+		}
+
+		// finally update the map (its a var so += is allowed).
+		cellMap += (cell.gain -> cell)
+	}
 }
 object Bucket{
 	def apply(partitioning:String, cells:Array[Cell], as:Char):Bucket = {
@@ -99,35 +129,75 @@ class FidduciaMathesisSearch(graph:Graph, memberFactory:String => IMember) exten
 		})
 		val bucketZero = Bucket(partitioning, cells, '0')
 		val bucketOne = Bucket(partitioning, cells, '1')
-		val freeCells = cells.map(Some(_))
+		def getbucket(char:Char) = if(char=='1') bucketOne else bucketZero
+		val freeCells:Array[Option[Cell]] = cells.map(Some(_))
 
-		def move(part:String):Seq[IMember] = {
-			if(bucketOne.isEmpty){
-				return Nil
-			}
-			val buckets = if(bucketZero.gain > bucketOne.gain){
-				(bucketZero, bucketOne)
+		// it all ends with a fold where we find the best mutation
+		return algorithm(new StringBuilder(partitioning)).foldLeft(member)(
+			(prevBest, considering)=> if(prevBest.fitness < considering.fitness){
+				considering
 			}else{
-				(bucketOne, bucketZero)
+				prevBest
 			}
-			for(cell <- buckets._1.pop){
+		)
+		@tailrec
+		def algorithm(part:StringBuilder, result:IndexedSeq[IMember] = IndexedSeq()):Seq[IMember] = {
+			// assuming the buckets remain balanced, we can do this
+			if(bucketOne.isEmpty){
+				return result
+			}
+
+			// best first, but we do both to keep balance
+			// (if we don't the algorithm will move everything to one parition)
+			val buckets = if(bucketZero.gain > bucketOne.gain){
+				Seq(bucketZero, bucketOne)
+			}else{
+				Seq(bucketOne, bucketZero)
+			}
+
+			// crossing involves a lot of adminstration
+			def cross(cell:Cell) = {
 				val current = part(cell.item.id)
-				val modified = cell.item.connections.filter(freeCells(_).isDefined).map(freeCells(_).get)
-				for(modcell <- modified){
-					val change = if(part(modcell.item.id) == current) 1 else -1
-					modcell.gain += change
-					for(prev <- modcell.previous){
-						prev.next = modcell.next
-					}
-					for(next <- modcell.next){
-						next.previous = modcell.previous
-					}
-					modcell.previous = None
-					modcell.next = None
+
+				// because of the cross the vertex connections' gain will change
+				// we need to update this
+				val modified = cell.item.connections.filter(
+					freeCells(_).isDefined
+				).map(freeCells(_).get)
+
+				modified.foreach(mdcl=>updateModifiedCell(part(mdcl.item.id), current, mdcl))
+				part.setCharAt(cell.item.id, OffspringGenerator.flipBit(current))
+
+				// makes the filter seen earlier more powerfull
+				freeCells(cell.item.id) = None
+			}
+			buckets.foreach(b=>for(cell <- b.pop){cross(cell)})
+			algorithm(part,  memberFactory(part.mkString) +: result)
+		}
+		def updateModifiedCell(modPart:Char, currentPart:Char, modcell: Cell):Unit ={
+			val change = if(modPart == currentPart) 1 else -1
+			modcell.gain += change
+			val bucket = getbucket(modPart)
+			if(modcell.previous.isEmpty){
+				//first is being tracked in the buckets themselves.
+				//so the bucket keeps a refernce to this modcell, so we need
+				//to remove this modcell
+				bucket.remove(modcell.gain - change)
+				//and re-add the "next"
+				for(next <- modcell.next){
+					bucket.insert(next)
 				}
 			}
-			Nil
+			// in either case we need to fix the linklist like cellstructure
+			// ie reatach the cells in a way so that the current cell is no more
+			for(prev <- modcell.previous){
+				prev.next = modcell.next
+			}
+			for(next <- modcell.next){
+				next.previous = modcell.previous
+			}
+			// the modcell links will be updated by the insert operation
+			bucket.insert(modcell)
 		}
-		member
 	}
 }
