@@ -3,6 +3,7 @@ package nl.jappieklooster.hw.ec.experiment
 import org.apache.commons.math3.distribution.TDistribution
 import org.apache.commons.math3.exception.MathIllegalArgumentException
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics
+import org.apache.commons.math3.stat.inference.TTest
 
 
 object DataTable {
@@ -20,18 +21,33 @@ object DataTable {
 
 		tableRow.foldLeft(toprow)((a,b)=> a + br +
 		  f"${b.name}%s & ${b.firstY}%4.2f & ${b.secondY}%4.2f & ${b.firstErr}%4.2f & ${b.secondErr}%4.2f \\\\") +
-		"\\\\bottomrule" + br + "\\end{tabular}"
+		"\\\\ \\bottomrule" + br + "\\end{tabular}"
 	}
 	def createLatexTTestTable(tableRow: TableRow*): String ={
 
 		val toprow = s"\\begin{tabular}{${
 			tableRow.foldLeft("l")((a,b)=> a+"l")
-		}}$br ttests & ${
-			val r = tableRow.foldLeft("")((a,b)=>a+b.name+" &")
+		}}$br tTests & ${
+			val r = tableRow.foldLeft("")((a,b)=>s"$a {\\small ${b.name}} &")
 			r.substring(0,r.length-1)
-		} \\\\ \\toprule"
+		} \\\\ \\toprule" + br
 
-		toprow + "\\end{tabular}"
+		val tester = new TTest
+		val rows = tableRow.foldLeft("")((prevRows,currentRow)=>{
+			val td = " & "
+			val varColls = tableRow.foldLeft(td)((prevCells,currentCell)=>{
+				val cell = if(currentCell == currentRow){"x"}else{
+					if(tester.tTest(currentRow.data.map(_.toDouble).toArray, currentCell.data.map(_.toDouble).toArray, 1- significance)){
+						"T"
+					}else{
+						"F"
+					}
+				}
+				prevCells + cell+  td
+			})
+			prevRows+currentRow.name+varColls.substring(0,varColls.length-td.length) + "\\\\" + br
+		})
+		toprow + rows + "\\end{tabular}"
 	}
 
 	def createRow(name:String, data:Seq[Float]):TableRow ={
@@ -53,11 +69,11 @@ object DataTable {
 		val lower = (stats.getMean - ci).toFloat
 		val upper = (stats.getMean + ci).toFloat
 		val sorted = data.sorted
-		val result = TableRow(name, lower, upper,Math.abs(sorted.head-lower),Math.abs(sorted.last - upper))
+		val result = TableRow(name, lower, upper,Math.abs(sorted.head-lower),Math.abs(sorted.last - upper),data)
 
 		result
 	}
 }
 
-case class TableRow(name:String, firstY:Float, secondY:Float, firstErr:Float, secondErr:Float){
+case class TableRow(name:String, firstY:Float, secondY:Float, firstErr:Float, secondErr:Float, data:Seq[Float]){
 }

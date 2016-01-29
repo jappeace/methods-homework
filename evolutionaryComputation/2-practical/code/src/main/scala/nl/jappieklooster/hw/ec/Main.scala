@@ -42,6 +42,9 @@ object Main{
 
 	val glsPopSizes = List(5)
 	val mlsStartsize = 10
+	val ilsUntill = 3
+
+	val experimentCount = 8
 
 	def main(args:Array[String]) {
 		log.info("starting graph bipartitioning")
@@ -98,7 +101,7 @@ object Main{
 		def runILS(times: Int) = {
 			val starts = Population.createEqualOnesZeros(factory, graph.verteci.length, 1)
 			log.info(s"ils start with: ${starts.head}")
-			val results = 1.to(5).map { x =>
+			val results = 1.to(ilsUntill).map { x =>
 				val experiment = new Experiment({
 					// can't do this outside of the experiment, because the probe
 					// needs to be added per experiment.
@@ -156,17 +159,24 @@ object Main{
 				(createRow(results.map(_.seconds.toFloat)), createRow(parseResults(results)))
 			})
 		}
-		val runtimes = 8
-		val result =  List(runMLS(runtimes)) ::: runILS(runtimes).toList ::: runGLS(runtimes)
+		val result =  List(runMLS(experimentCount)) ::: runILS(experimentCount).toList ::: runGLS(experimentCount)
 
-		Plot.write("runtimes.table", DataTable.createPgfPlotTable(
+		import DataTable._
+		Plot.write("runtimes.table", createPgfPlotTable(
 			result.map(x => x._1): _*
-		))
-		Plot.write("runtimes.textable", DataTable.createLatexResultTable(result.map(x=>x._1):_*))
-		Plot.write("results.table", DataTable.createPgfPlotTable(
+		)
+		)
+		Plot.write("runtimes.textable",
+			createLatexResultTable(result.map(_._1):_*)+ br + br +
+			createLatexTTestTable(result.map(_._1):_*)
+		)
+		Plot.write("results.table", createPgfPlotTable(
 			result.map(x => x._2): _*
 		))
-		Plot.write("results.textable", DataTable.createLatexResultTable(result.map(x=>x._2):_*))
+		Plot.write("results.textable",
+			createLatexResultTable(result.map(_._2):_*)+ br+ br +
+			createLatexTTestTable(result.map(_._2):_*)
+		)
 	}
 
 }
