@@ -76,12 +76,6 @@ object Main{
 		val factory = MemberFactories.tightlyLinked(Evaluation.graphValuation(graph)) _
 		val localSearch = new Search(new VertexSwapFirstImprovement(graph, factory))
 
-		val ecpirement = new Experiment({
-			val starts = Population.createEqualOnesZeros(factory, graph.verteci.length, 1)
-			starts.map(x => localSearch.search(x)).toArray
-		})
-		val res = ecpirement.run(Experiment.Serial)(1)
-		log.info(s"m=1: ${res.head.seconds} fitness: ${(graph.edgeCount - res.head.result(0).fitness)/2}")
 		def runMLS(times: Int) = {
 			log.info("mls")
 			val expirement = new Experiment({
