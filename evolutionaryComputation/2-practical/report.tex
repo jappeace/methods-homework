@@ -66,6 +66,14 @@ only contains the connection numbers. This makes parsing the file a lot
 easier. I don't want to do advanced pattern matching when I can quickly modfy
 the file with a few vim macros. (in this case I just did a `30x').
 
+\subsection{MLS}
+MLS basically involved implementing the initial vertex swap first improvement
+local search and tying it into the existing framework. I did this by just
+using the existing createPopMethods with a new solution generator. Then
+I just mapped this population with the local search (so the type is
+$IMember \to IMember$, but the solution changes).
+
+\subsection{ILS}
 While implementing ILS, I had it turn out results much worse than MLS.
 The initial implmentation would just stop if it found a worse local optimum.
 The description sais it should go back to the previous optimum. So I guess
@@ -82,8 +90,9 @@ I don't think there is a way to do it any better without drastically making
 the algorithm more complex.
 This current search for improvement was just based on the fact that ILS was
 underperforming to MLS, which shouldn't be the case according to my memory
-from the classes. Now its overperforming quite drastically so I'm happy.
+from class. Now its overperforming quite drastically so I'm happy.
 
+\subsection{GLS}
 I implemented GLS with the evolution class. The only thing I had to do really
 was write the crossover method, the rest was already functional.
 
@@ -91,6 +100,12 @@ I wanted to see if the GLS popsize and selection pressure would have any
 effect on the average fitness found. I suspect that a bigger population size
 would find better results and that weaker selection would find better
 average scores.
+
+Here I also started to think about my own topic to investigate, at first
+I just wanted to do varying population sizes and varying selection methods.
+But I thinks this takes a little to much time and it doesn't quite fit
+on the tTest table so I decided the varying popsizes (spoilers: it produces
+better solution at the cost of exponentially more time).
 
 I chose to investigate with population sizes of 25, 50 and 75. I didn't want
 to wait to long on this and the runtime for 50 was approaching ~10 minutes
@@ -108,6 +123,31 @@ because all my results where even numbers. After thinking about it for a while
 I decided to investigate the graph file, it turns out that every connection
 is made double, so the double counting was in fact correct.
 
+\subsubsection{Graph pruning}
+I decided to use a prune graph to speed up the algortihm. In the beginning I
+create 2 graphs. One normal and one pruned, The pruning works by selecting
+comparing all connections against the id, if lower we ignore the connection.
+To make sure we only do this on doubly linked graphs 2 graphs are created.
+If the prune graph has exactly half the score of a random solution we assume
+its a doubly linked graph so we can prune it.
+The pruning effectivally halfs the ammount of connections that need to be
+checked by each itteration (this happens in the evaluation). The
+FidduciaMathesis has even more gain because it has a lot of book keeping to
+do with the connections (although it tries to reduce this with the freecell
+array, having a smaller initial graph is even better).
+
+\subsection{Fidducia Mathesis}
+I was somewhat sceptical of my local search implementation. I had quite 
+different results from my classmates so to compare I decided to implement
+the fidducia mathesis local search to. It was quite a lot of work but it
+truly is significantly faster.
+
+Finding the paper was somewhat difficult as the original was behind a paywal.
+But somoene put a copy on github so I just used that one. The algorithm 
+involves a lot of cleaver book keeping:
+
+
+
 
 \section{TODO}
 MLS with several results
@@ -117,14 +157,15 @@ local search from the memberfactory?
 
 
 \section{Results}
-\subsection{Time}
-\pgfplotstableread{runtimes.table}\dataTable
+\subsection{Fiduccia Mathesis}
+\subsubsection{Time}
+\pgfplotstableread{fidRuntimes.table}\dataTable
 \begin{tikzpicture}
 \pgfplotsset{set layers}
 \begin{axis}[
 	ybar stacked,
 	xlabel={Algorithm},
-	xticklabels from table={runtimes.table}{name},
+	xticklabels from table={fidRuntimes.table}{name},
 	xtick=data,
 	x tick label style={rotate=90,anchor=east},
 	ylabel={Time}
@@ -144,16 +185,16 @@ table[x expr=\coordindex, y=secondy, y error minus=errtopstart, y error plus=err
 \end{tikzpicture}
 
 
-\input{runtimes.textable}
+\input{fidRuntimes.textable}
 
-\subsection{Optima}
-\pgfplotstableread{results.table}\dataTable
+\subsubsection{Optima}
+\pgfplotstableread{fidResults.table}\dataTable
 \begin{tikzpicture}
 \pgfplotsset{set layers}
 \begin{axis}[
 	ybar stacked,
 	xlabel={Algorithm},
-	xticklabels from table={results.table}{name},
+	xticklabels from table={fidResults.table}{name},
 	xtick=data,
 	x tick label style={rotate=90,anchor=east},
 	ylabel={Fitness (less is better)}
@@ -172,7 +213,65 @@ table[x expr=\coordindex, y=secondy, y error minus=errtopstart, y error plus=err
 
 \end{tikzpicture}
 \\
-\input{results.textable}
+\input{fidResults.textable}
+
+\subsection{Vertex swap first improvemnt}
+\subsubsection{Time}
+\pgfplotstableread{vertRuntimes.table}\dataTable
+\begin{tikzpicture}
+\pgfplotsset{set layers}
+\begin{axis}[
+	ybar stacked,
+	xlabel={Algorithm},
+	xticklabels from table={vertRuntimes.table}{name},
+	xtick=data,
+	x tick label style={rotate=90,anchor=east},
+	ylabel={Time}
+]
+% Layers needed to get error bars on top of lower blue rectangle
+\addplot[color=white]
+table[on layer=axis grid, x expr=\coordindex, y=firsty]{\dataTable};
+
+\addplot[color=red] plot[on layer=axis lines,error bars/.cd, y dir=both, y explicit] 
+table[x expr=\coordindex, y=zero, y error minus=errbotstart, y error plus=errbotend]{\dataTable};
+
+\addplot[color=red] plot[on layer=axis lines,error bars/.cd, y dir=both, y explicit] 
+table[x expr=\coordindex, y=secondy, y error minus=errtopstart, y error plus=errtopend]{\dataTable};
+
+\end{axis}
+
+\end{tikzpicture}
+
+
+\input{vertRuntimes.textable}
+
+\subsubsection{Optima}
+\pgfplotstableread{vertResults.table}\dataTable
+\begin{tikzpicture}
+\pgfplotsset{set layers}
+\begin{axis}[
+	ybar stacked,
+	xlabel={Algorithm},
+	xticklabels from table={vertResults.table}{name},
+	xtick=data,
+	x tick label style={rotate=90,anchor=east},
+	ylabel={Fitness (less is better)}
+]
+% Layers needed to get error bars on top of lower blue rectangle
+\addplot[color=white]
+table[on layer=axis grid, x expr=\coordindex, y=firsty]{\dataTable};
+
+\addplot[color=red] plot[on layer=axis lines,error bars/.cd, y dir=both, y explicit] 
+table[x expr=\coordindex, y=zero, y error minus=errbotstart, y error plus=errbotend]{\dataTable};
+
+\addplot[color=red] plot[on layer=axis lines,error bars/.cd, y dir=both, y explicit] 
+table[x expr=\coordindex, y=secondy, y error minus=errtopstart, y error plus=errtopend]{\dataTable};
+
+\end{axis}
+
+\end{tikzpicture}
+\\
+\input{vertResults.textable}
 \end{empfile}
 \end{document}
 
