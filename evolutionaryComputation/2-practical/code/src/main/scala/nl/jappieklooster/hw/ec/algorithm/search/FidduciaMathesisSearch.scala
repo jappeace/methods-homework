@@ -17,7 +17,18 @@ import scala.annotation.tailrec
  * @param next next cell
  * @param previous previous cell
  */
-class Cell(val item:Vertex, var gain:Int, var next:Option[Cell]=None, var previous:Option[Cell]=None){}
+class Cell(val item:Vertex, var gain:Int, private var _next:Option[Cell]=None, var previous:Option[Cell]=None){
+
+	def next = _next
+	def next_=(option: Option[Cell]) = {
+		_next = option
+		for(opt <- option){
+			if(item == opt.item){
+				throw new IllegalArgumentException("Can't say next is yourself, thats stupid")
+			}
+		}
+	}
+}
 
 /**
  * In the original paper the bucket was an array indicate the gain that could be
@@ -45,8 +56,8 @@ class Bucket(
 		if(isEmpty){
 			return None
 		}
-		if(cellMap(offset(maxGain)).isEmpty){
-			maxGain = maxGain -1
+		if (cellMap(offset(maxGain)).isEmpty) {
+			maxGain = maxGain - 1
 			return pop
 		}
 		remove(maxGain)
@@ -75,9 +86,14 @@ class Bucket(
 		// cell may or may not have a next
 		cell.next = cellMap(offset(cell.gain))
 
+		// we assume we added a new mapping
+		cellMapElements += 1
 		// we don't care, the for will only be executed if there is a next
 		for(existing <- cell.next){
 			existing.previous = Some(cell)
+
+			// oops we didn't add a new mapping
+			cellMapElements -= 1
 		}
 
 		// finally update the map (its a var so += is allowed).
@@ -85,7 +101,7 @@ class Bucket(
 	}
 }
 object Bucket{
-	val margin = 4
+	val margin = 6
 	def apply(partitioning:String, cells:Array[Cell], as:Char):Bucket = {
 		val filtered = cells.filter(x => partitioning(x.item.id) == as).groupBy(_.gain).
 				mapValues(
@@ -176,7 +192,9 @@ class FidduciaMathesisSearch(graph:Graph, memberFactory:String => IMember) exten
 				// makes the filter seen earlier more powerfull
 				freeCells(cell.item.id) = None
 			}
-			buckets.foreach(b=>for(cell <- b.pop){cross(cell)})
+			buckets.foreach(b=>for(cell <- b.pop){
+				cross(cell)
+			})
 			val contester = memberFactory(part.mkString)
 
 			if(contester.fitness > best.fitness){
@@ -194,10 +212,6 @@ class FidduciaMathesisSearch(graph:Graph, memberFactory:String => IMember) exten
 				//so the bucket keeps a refernce to this modcell, so we need
 				//to remove this modcell
 				bucket.remove(modcell.gain - change)
-				//and re-add the "next"
-				for(next <- modcell.next){
-					bucket.insert(next)
-				}
 			}
 			// in either case we need to fix the linklist like cellstructure
 			// ie reatach the cells in a way so that the current cell is no more
