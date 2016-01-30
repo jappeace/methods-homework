@@ -64,7 +64,25 @@ object Main{
 			)
 			else Nil
 		}
-		val graph = Graph.create(Source.fromFile("src/main/resources/data.txt").getLines().map(strToInts).toSeq: _*)
+		var divesion = 2
+		val graph:Graph = {
+			val orignal = Graph.create(Vertex.create)(Source.fromFile("src/main/resources/data.txt").getLines().map(strToInts).toSeq: _*)
+			val pruned = Graph.create(Vertex.pruned)(Source.fromFile("src/main/resources/data.txt").getLines().map(strToInts).toSeq: _*)
+
+			val genes = OffspringGenerator.randomBalancedGenes(orignal.verteci.length)
+			def createMember(graph:Graph) = MemberFactories.tightlyLinked(Evaluation.graphValuation(graph))(genes)
+
+			// if its a doubly linked graph the pruned variant will have half
+			// fitness of the not pruned variant
+			if(createMember(orignal).fitness == createMember(pruned).fitness*2){
+				log.info("choosing pruned graph")
+				divesion = 1
+				pruned
+			}else{
+				log.info("original graph")
+				orignal
+			}
+		}
 		def printResults(members: Seq[IMember]) = {
 			val results = members.foldLeft("")((a, b) => s"$a, ${graph.edgeCount - b.fitness}").substring(2)
 			log.info(s"{$results}")
@@ -72,7 +90,7 @@ object Main{
 		log.info(graph.toString)
 
 		def parseResults(results: Seq[Computation[Array[IMember]]]) = {
-			results.flatMap(x => x.result).map(x => (graph.edgeCount - x.fitness)/2).sorted
+			results.flatMap(x => x.result).map(x => (graph.edgeCount - x.fitness)/divesion).sorted
 		}
 		/*
 		Implement MLS with the VSN local search. Use the first improvement version of
@@ -159,7 +177,7 @@ object Main{
 						result.last.head.fitness
 					} from ${
 						result.head.head.fitness
-					} with 0-count: ${result.head.head.genes.count(_=='1')}")
+					}")
 					Array(result.last.head)
 				})
 				val results = experiment.run(experimentExecutionMethod)(times)
