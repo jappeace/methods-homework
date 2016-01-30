@@ -40,7 +40,7 @@ object Main{
 	val random = Random
 	val folder = "../"
 
-	val glsPopSizes = List(10, 25, 50)
+	val glsPopSizes = List(50)
 	val mlsStartsize = 1000
 	val ilsUntill = 5
 	val ilsValidation = 30
@@ -98,9 +98,8 @@ object Main{
 		computational time required.
 		 */
 		val factory = MemberFactories.tightlyLinked(Evaluation.graphValuation(graph)) _
-		val localSearch = new Search(new FidduciaMathesisSearch(graph, factory))
 
-		def runMLS(times: Int) = {
+		def runMLS(times: Int, localSearch: Search) = {
 			log.info("mls")
 			val expirement = new Experiment({
 				log.info("experiment-mls")
@@ -120,7 +119,7 @@ object Main{
 
 		}
 
-		def runILS(times: Int) = {
+		def runILS(times: Int, localSearch: Search) = {
 			val starts = Population.createEqualOnesZeros(factory, graph.verteci.length, 1)
 			log.info(s"ils start with: ${starts.head}")
 			val results = 1.to(ilsUntill).map { x =>
@@ -149,7 +148,7 @@ object Main{
 			})
 		}
 
-		def runGLS(times:Int) = {
+		def runGLS(times:Int, localSearch: Search) = {
 			log.info("gls")
 			val selectMethods = List(
 				("KillParents", FittestFilter.killParents _),
@@ -186,21 +185,32 @@ object Main{
 				(createRow(results.map(_.seconds.toFloat)), createRow(parseResults(results)))
 			})
 		}
-		val result =  List(runMLS(experimentCount)) ::: runILS(experimentCount).toList ::: runGLS(experimentCount)
-
+		val fidducia = new Search(new FidduciaMathesisSearch(graph, factory))
+		val vertfirst = new Search(new VertexSwapFirstImprovement(graph, factory))
+		output("fid", List(runMLS(experimentCount, fidducia)) ::: runILS(experimentCount, fidducia).toList ::: runGLS(experimentCount, fidducia))
+		log.info("----")
+		log.info("----")
+		log.info("----")
+		log.info("VERT NOW")
+		log.info("----")
+		log.info("----")
+		log.info("----")
+		output("vert", List(runMLS(experimentCount, vertfirst)) ::: runILS(experimentCount, vertfirst).toList ::: runGLS(experimentCount, vertfirst))
+	}
+	def output(name:String, result:List[(TableRow,TableRow)]):Unit = {
 		import DataTable._
-		Plot.write("runtimes.table", createPgfPlotTable(
+		Plot.write(name+"Runtimes.table", createPgfPlotTable(
 			result.map(x => x._1): _*
 		)
 		)
-		Plot.write("runtimes.textable",
+		Plot.write(name+"Runtimes.textable",
 			createLatexResultTable(result.map(_._1):_*)+ br + br +
 			createLatexTTestTable(result.map(_._1):_*)
 		)
-		Plot.write("results.table", createPgfPlotTable(
+		Plot.write(name+"Results.table", createPgfPlotTable(
 			result.map(x => x._2): _*
 		))
-		Plot.write("results.textable",
+		Plot.write(name+"Results.textable",
 			createLatexResultTable(result.map(_._2):_*)+ br+ br +
 			createLatexTTestTable(result.map(_._2):_*)
 		)
