@@ -47,6 +47,7 @@ case class PairedPopulation(members:Seq[Pair], memberFactory:String => IMember) 
 					// mkstring uses a builder to avoid ridiculous concatination problems
 					).mkString
 					def createIfNew(child:String):IMember ={
+
 						if(child == genesF){
 							return fumu.father
 						}

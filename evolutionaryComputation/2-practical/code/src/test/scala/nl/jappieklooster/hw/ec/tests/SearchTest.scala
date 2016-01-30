@@ -1,7 +1,7 @@
 package nl.jappieklooster.hw.ec.tests
 
 import nl.jappieklooster.hw.ec.algorithm.Evaluation
-import nl.jappieklooster.hw.ec.algorithm.search.Search
+import nl.jappieklooster.hw.ec.algorithm.search.{VertexSwapFirstImprovement, Search}
 import org.scalatest.{Matchers, FlatSpec}
 import nl.jappieklooster.hw.ec.model.{Member, Graph}
 import Search._
@@ -35,7 +35,7 @@ class SearchTest extends FlatSpec with Matchers{
 
 	"firstVertexSwap" should "find a better solution" in {
 		val memberfactory = (str:String) => Member(valuation(str), str)
-		val localsearch = vertexSwapFirstImprovement(graph, memberfactory) _
+		val localsearch = new VertexSwapFirstImprovement(graph, memberfactory)
 
 		val testingMember = memberfactory(testingString)
 		val searchResult = localsearch(testingMember)

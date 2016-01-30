@@ -1,5 +1,7 @@
 package nl.jappieklooster.hw.ec.algorithm.search
 
+import com.itextpdf.text.log.LoggerFactory
+import nl.jappieklooster.hw.ec.Main
 import nl.jappieklooster.hw.ec.algorithm.search.Search._
 import nl.jappieklooster.hw.ec.model.{Graph, IMember, Vertex}
 
@@ -33,8 +35,9 @@ object Search {
 	type SearchMethod = IMember => IMember
 	type StopCondition = (IMember, IMember)=>Boolean
 	object StopCondition{
-		def onEqual(a:IMember, b:IMember):Boolean = a==b
+		def onEqual(a:IMember, b:IMember):Boolean = a.fitness == b.fitness
 		def isWorse(a:IMember, b:IMember):Boolean = a.fitness < b.fitness
+		def isWorseEq(a:IMember, b:IMember):Boolean = a.fitness <= b.fitness
 		def resetRetryOnBetter(which:RetryOnResult, stopCondition: StopCondition)(current: IMember, previous: IMember): Boolean = {
 			val result = stopCondition(current,previous)
 			if(!result){
@@ -83,15 +86,17 @@ object Search {
 			member
 		}
 	}
+	val log = Main.log
 	class RetryOnResult(repitions:Int, var method: SearchMethod) extends ResultDecision{
 		val resetvalue = 0
 		private var current = resetvalue
 		override def apply(result: IMember, previous: IMember): IMember = {
 			current += 1
+			log.info(s"current = $current")
 			if(current < repitions){
 				method(previous)
 			}
-			result
+			previous
 		}
 		def reset = current = resetvalue
 	}

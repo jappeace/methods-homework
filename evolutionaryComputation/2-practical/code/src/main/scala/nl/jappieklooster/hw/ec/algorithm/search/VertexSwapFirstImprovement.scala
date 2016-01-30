@@ -17,7 +17,7 @@ class VertexSwapFirstImprovement(graph:Graph, memberFactory:String => IMember) e
 		val swapVertex = swapChar(member.genes) _
 
 		// I just don't know a good way to do this with recursion or combbinators
-		for(index <- 0.to(graph.verteci.length-1)){
+		for(index <- 0.until(graph.verteci.length)){
 			val vert = graph.verteci(index)
 			val options = vert.connections.filter(conindx => partitioning(index) != partitioning(conindx))
 

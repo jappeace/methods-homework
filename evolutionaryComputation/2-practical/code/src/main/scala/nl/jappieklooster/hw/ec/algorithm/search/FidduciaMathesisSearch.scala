@@ -49,9 +49,11 @@ class Bucket(
 		private val lowOffset:Int,
 		private var maxGain:Int
 	) {
-	var cellMapElements = cellMap.length - Bucket.margin
 	def gain = maxGain
-	def offset(gain:Int):Int = gain-lowOffset
+	def offset(gain:Int):Int = {
+		val result = gain-lowOffset
+		result
+	}
 	final def pop:Option[Cell] = {
 		if(isEmpty){
 			return None
@@ -65,16 +67,14 @@ class Bucket(
 	final def remove(gain:Int):Option[Cell]={
 		val result = cellMap(offset(gain))
 		cellMap(offset(gain)) = None
-		cellMapElements -= 1
 		for(cell <- result; next <- cell.next){
-			cellMapElements += 1
 			next.previous = None
 			cellMap(offset(gain)) = cell.next
 		}
 		result
 
 	}
-	def isEmpty = cellMapElements == 0
+	def isEmpty = offset(maxGain) == -1
 	def insert(cell: Cell) = {
 		// Important, for the pop operation to be constant
 		if(cell.gain > maxGain){
@@ -83,17 +83,16 @@ class Bucket(
 		// first element has no previous
 		cell.previous = None
 
+		val index = offset(cell.gain)
+		if(index < 0){
+			println("ohoh")
+		}
 		// cell may or may not have a next
-		cell.next = cellMap(offset(cell.gain))
+		cell.next = cellMap(index)
 
-		// we assume we added a new mapping
-		cellMapElements += 1
 		// we don't care, the for will only be executed if there is a next
 		for(existing <- cell.next){
 			existing.previous = Some(cell)
-
-			// oops we didn't add a new mapping
-			cellMapElements -= 1
 		}
 
 		// finally update the map (its a var so += is allowed).
@@ -101,7 +100,7 @@ class Bucket(
 	}
 }
 object Bucket{
-	val margin = 6
+	val margin = 50 // just costs more memory nothing else
 	def apply(partitioning:String, cells:Array[Cell], as:Char):Bucket = {
 		val filtered = cells.filter(x => partitioning(x.item.id) == as).groupBy(_.gain).
 				mapValues(

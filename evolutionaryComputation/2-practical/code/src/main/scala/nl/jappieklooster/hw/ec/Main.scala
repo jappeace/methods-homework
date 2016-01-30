@@ -18,7 +18,7 @@ package nl.jappieklooster.hw.ec
 import java.io.{File, PrintWriter}
 
 import nl.jappieklooster.hw.ec.algorithm.search.{FidduciaMathesisSearch, VertexSwapFirstImprovement, Search}
-import Search.{RetryOnResult, Probe}
+import nl.jappieklooster.hw.ec.algorithm.search.Search.{StopCondition, RetryOnResult, Probe}
 import nl.jappieklooster.hw.ec.algorithm._
 import nl.jappieklooster.hw.ec.experiment._
 import nl.jappieklooster.hw.ec.model._
@@ -40,11 +40,14 @@ object Main{
 	val random = Random
 	val folder = "../"
 
-	val glsPopSizes = List(5)
-	val mlsStartsize = 10
-	val ilsUntill = 3
+	val glsPopSizes = List(10, 25, 50)
+	val mlsStartsize = 1000
+	val ilsUntill = 5
+	val ilsValidation = 30
+	val ilsStopCondition = StopCondition.isWorseEq _
 
-	val experimentCount = 8
+	val experimentCount = 30
+	val experimentExecutionMethod = Experiment.Parralel _
 
 	def main(args:Array[String]) {
 		log.info("starting graph bipartitioning")
@@ -88,7 +91,7 @@ object Main{
 			})
 
 			val first = Timer.measure({
-				expirement.run(Experiment.Serial)(times)
+				expirement.run(experimentExecutionMethod)(times)
 			})
 
 			println(s"total time ${first.seconds}")
@@ -103,22 +106,23 @@ object Main{
 			val starts = Population.createEqualOnesZeros(factory, graph.verteci.length, 1)
 			log.info(s"ils start with: ${starts.head}")
 			val results = 1.to(ilsUntill).map { x =>
+				log.info(s"running $x")
 				val experiment = new Experiment({
 					// can't do this outside of the experiment, because the probe
 					// needs to be added per experiment.
 					val probe = new Probe
-					val resultplexer = new RetryOnResult(30, null)
+					val resultplexer = new RetryOnResult(ilsValidation, null)
 					import Search._
 					val iterativeLocalsearch = new Search(
 						(localSearch.search _).compose((Iterative.swapMutation(x, random, factory) _).compose(probe)),
-						stopCondition = StopCondition.resetRetryOnBetter(resultplexer, StopCondition.isWorse),
+						stopCondition = StopCondition.resetRetryOnBetter(resultplexer, ilsStopCondition),
 						decideResult = resultplexer
 					)
 					resultplexer.method = iterativeLocalsearch.search
 					val search = iterativeLocalsearch.search(starts.head)
 					Array(probe.tracked.maxBy(a => a.fitness))
 				})
-				val experiments = experiment.run(Experiment.Parralel)(times)
+				val experiments = experiment.run(experimentExecutionMethod)(times)
 				(x, experiments.map(x => x.seconds.toFloat), parseResults(experiments))
 			}
 			results.map(x => {
@@ -151,10 +155,14 @@ object Main{
 							method._3
 						)
 					)
-					log.info(s"${method._1}-${method._3} found ${result.last.head.fitness} from ${result.head.head.fitness}")
+					log.info(s"${method._1}-${method._3} found ${
+						result.last.head.fitness
+					} from ${
+						result.head.head.fitness
+					} with 0-count: ${result.head.head.genes.count(_=='1')}")
 					Array(result.last.head)
 				})
-				val results = experiment.run(Experiment.Parralel)(times)
+				val results = experiment.run(experimentExecutionMethod)(times)
 
 				def createRow(doubles: Seq[Float]) = DataTable.createRow(s"GLS:${method._1}-${method._3}", doubles)
 				(createRow(results.map(_.seconds.toFloat)), createRow(parseResults(results)))
