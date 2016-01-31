@@ -66,6 +66,7 @@ object DataTable {
 	}
 
 	def createRow(name:String, data:Seq[Float]):TableRow ={
+		// stolen from https://gist.github.com/gcardone/5536578
 		// Build summary statistics of the dataset "data"
 		val stats = new SummaryStatistics()
 		data.foreach(stats.addValue(_))

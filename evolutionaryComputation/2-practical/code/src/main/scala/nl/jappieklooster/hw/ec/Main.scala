@@ -42,8 +42,8 @@ object Main{
 
 	val glsPopSizes = List(50)
 	val mlsStartsize = 1000
-	val ilsUntill = 5
-	val ilsValidation = 30
+	val ilsUntill = 7
+	val ilsValidation = 100
 	val ilsStopCondition = StopCondition.isWorseEq _
 
 	val experimentCount = 30

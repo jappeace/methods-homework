@@ -107,7 +107,10 @@ object Search {
 		private var current = resetvalue
 		override def apply(result: IMember, previous: IMember): IMember = {
 			current += 1
-			log.info(s"current = $current")
+
+			if(current > repitions*0.5 && current%(repitions/10)== 0){
+				log.info(s"current retry = $current")
+			}
 			if(current < repitions){
 				method(previous)
 			}
