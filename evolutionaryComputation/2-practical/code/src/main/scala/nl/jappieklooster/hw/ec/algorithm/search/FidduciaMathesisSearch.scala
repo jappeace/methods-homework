@@ -47,14 +47,9 @@ class Cell(val item:Vertex, var gain:Int, private var _next:Option[Cell]=None, v
 }
 
 /**
- * In the original paper the bucket was an array indicate the gain that could be
- * gotten. However I take enough with a map because it is constant-ish and I
- * can generate it with std scala methods (although I could fold the map again into
- * an array I don't think I'll save time by doing that)
- *
- * This bucket class serves as an encapusaltion of several related mutable fields
- * Its a mutable sturcture based on the imutable map, however it encapsulates this
- * in combination of the maxgain variable and a more usefull (for this algorithm atleast) pop method
+ * This bucket class serves as an encapsulation of several related mutable fields
+ * Its a mutable structure based on the immutable map, however it encapsulates this
+ * in combination of the max-gain variable and a more useful (for this algorithm at least) pop method
  * @param partitioning
  * @param cells
  * @param as
@@ -118,12 +113,21 @@ class Bucket(
 object Bucket{
 	val margin = 50 // just costs more memory nothing else
 	def apply(partitioning:String, cells:Array[Cell], as:Char):Bucket = {
-		val filtered = cells.filter(x => partitioning(x.item.id) == as).groupBy(_.gain).
+		val filtered = cells.
+				// select only the elements of a certain partition
+				filter(x => partitioning(x.item.id) == as).
+				// we just make a map off it for now and arrayifie that later
+				groupBy(_.gain).
+				// group by creates a map with arrays of elements, we remove the
+				// array with mapvalues into the linked list structure of cell
 				mapValues(
 					_.foldLeft[Cell](null)((a,b)=>{
+						// easy hack to avoid an "empty" head, doing an empty
+						// head just makes things more complicated
 						if(a==null){
 							b
 						}else{
+							// it goes right to left? Testing shows it does.
 							a.previous = Some(b)
 							b.next = Some(a)
 							b
@@ -133,6 +137,8 @@ object Bucket{
 		val min = filtered.keySet.min - (margin/2)
 		val max = filtered.keySet.max + (margin/2)
 		new Bucket(
+			// map the map to an array, get will return none if there is no
+			// element, this is what we want.
 			min.to(max).map(x=>filtered.get(x)).toArray,
 			min,
 			max
@@ -145,6 +151,8 @@ object Bucket{
  *
  * Paper: https://github.com/tomek82/EPPart_Pub/blob/master/Printed/Fiduccia,%20Mattheyses%20-%20A%20Linear-Time%20Heuristic%20for%20Improving%20Network%20Partitions.pdf
  *
+ * Test show that it takes about ~5 ish passes to find the local optimum
+ * Combined with GLS it performs extremely well. (although GLS is slow).
  * @param graph
  * @param memberFactory
  */
@@ -162,6 +170,7 @@ class FidduciaMathesisSearch(graph:Graph, memberFactory:String => IMember) exten
 
 		// for this to work all the cells need to be the same. ie we can use a cell instead
 		// of a vertex. So we can manipulate the buckets without knowing the gain.
+		// we can find the proper cell of a vertex by calling this array by vertex.id
 		val cells = graph.verteci.map(x=> {
 			val part = partitioning(x.id)
 			val gain = x.connections.count(p => partitioning(p) != part) - x.connections.count(p => partitioning(p) == part)
@@ -176,6 +185,7 @@ class FidduciaMathesisSearch(graph:Graph, memberFactory:String => IMember) exten
 		// best as comparison
 		var best = member
 		algorithm(new StringBuilder(partitioning))
+
 		@tailrec
 		def algorithm(part:StringBuilder):Unit = {
 			// assuming the buckets remain balanced, we can do this
