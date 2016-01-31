@@ -28,7 +28,7 @@ object DataTable {
 		val toprow = s"\\begin{tabular}{${
 			tableRow.foldLeft("l")((a,b)=> a+"l")
 		}}$br tTests & ${
-			val r = tableRow.foldLeft("")((a,b)=>s"$a {\\small ${b.name}} &")
+			val r = tableRow.foldLeft("")((a,b)=>s"$a \\rotatebox[origin=br]{-90}{${b.name}} &")
 			r.substring(0,r.length-1)
 		} \\\\ \\toprule" + br
 
