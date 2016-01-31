@@ -36,13 +36,31 @@ zero 	name 		firsty 		secondy		errbotstart		errbotend 		errtopstart			errtopend
 
 \newcommand{\brcell}[2][l]{%
 	\begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
+
+% "define" Scala
+\lstdefinelanguage{scala}{
+  morekeywords={abstract,case,catch,class,def,%
+    do,else,extends,false,final,finally,%
+    for,if,implicit,import,match,mixin,%
+    new,null,object,override,package,%
+    private,protected,requires,return,sealed,%
+    super,this,throw,trait,true,try,%
+    type,val,var,while,with,yield},
+  otherkeywords={=>,<-,<\%,<:,>:,\#,@},
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[n]{/*}{*/},
+  morestring=[b]",
+  morestring=[b]',
+  morestring=[b]"""
+}
 \begin{document}
 \begin{empfile}
 \begin{empcmds}
 input metauml;
 \end{empcmds}
 \author{Jappie Klooster}
-\title{Graph bipartitioning and you}
+\title{Graphs, partitioning and you}
 \maketitle
 
 \section{Introduction}
@@ -53,8 +71,12 @@ methodology was used to execute the assignment.
 The intended audience is people familiar with programming.
 
 \section{Assignment}
-Graph bi-partitioning is dividing a graph into 2, with as little edges between
-both graphs as possible.
+Graph bi-partitioning is dividing a graph into 2 partitions, 
+with as little crossings between both partitionings as possible.
+
+So we try to reduce the amount of crossing by modifiying which vertex resides
+in what partition. The graph itself is however not modified. The amount of
+vertexes that reside in on partition should also be even to the other partition.
 
 \section{Methodology}
 I copied all the code from the previous practical into this new folder.
@@ -74,6 +96,98 @@ using the existing createPopMethods with a new solution generator. Then
 I just mapped this population with the local search (so the type is
 $IMember \to IMember$, but the solution changes).
 
+\newpage
+\subsubsection{Reading the graph}
+The first thing I did was reading the graph into a memory structure. That 
+looks like this:
+
+\begin{figure}[ht!]
+\centering
+\begin{emp}[classdiag](20,20)
+Class.graph("Graph")("+verteci:Array[Vertex]", "+edgeCount:Int")();
+Class.vertex("Vertex")("+id:Int", "+connections:Seq[Int]")();
+
+leftToRight.top(30)(graph,vertex);
+
+
+drawObjects(graph,vertex);
+
+link(association)(graph.e -- vertex.w);
+item(iAssoc)("*")(obj.se = vertex.w);
+
+\end{emp}
+\caption{Case classes}
+\end{figure}
+
+So the file is stored in an imutable memory structure. This is possible
+because the connections are just the number that essently work as pointers
+if you have the graph at hand.
+
+\subsubsection{Solution generation}
+Then I went on doing the generation of the solutions. I did this by creating
+a random string of half the graph length, then copying this string and invert
+it. This ensured there were as many ones as zeros. Then I combined these
+two strings and randomly shuffled them:
+
+\lstset{language=scala}
+\begin{lstlisting}
+	val random = Random
+	def randomGene = random.nextInt(2).toString
+	def randomGenes(geneLength:Int) = 1.to(geneLength).
+		foldLeft(""){(b, x) => b + OffspringGenerator.randomGene}
+	def randomBalancedGenes(geneLength:Int):String = {
+		if(geneLength % 2 == 1){
+			throw new Exception("Doesn't work with odd genelength")
+		}
+		val initial = randomGenes(geneLength/2)
+		random.shuffle(
+			inverseMirror(initial).toCharArray.toSeq
+		).mkString
+	}
+	def flipBit(c:Char):Char = inverseResult(c,'1','0')
+	def inverseMirror(input:String):String ={
+		input + input.map(flipBit)
+	}
+\end{lstlisting}
+
+\subsubsection{Valuation}
+After that I did the evaluation function. Which was just folding the vertexes
+into a float and then counting the string indexes that did match. I think
+I did this wrong by mistake at first, but I realized it was advantageous to
+count the connections that are the same instead of different. Because now
+we want to maximize again as in the previous assignment, which made it
+possible to leave the selection as is (so I don't have to modify that when
+implementing GLS). To represent the internal valuation 
+(which is trying to be maximized) as the minimizing
+problem I simply do $graph.edgecount-valuation$.
+
+\subsubsection{Local search}
+Finally I designed the search class, which was first called LocalSearch but
+was later generalized to Search:
+
+\begin{figure}
+\begin{emp}[classdiag](20,20)
+Class.search("Search")(
+	"-method:IMember=>IMember", 
+	"-stopCondition:(IMember, IMember)=>Boolean",
+	"-decideResult:(IMember, IMember)=>IMember"
+	)(
+	"+search(previous:IMember):IMember"
+	);
+
+drawObjects(search);
+\end{emp}
+\caption{Search}
+\end{figure}
+
+A very compact class indeed, we execute method on previous, check the
+stopcondition if true we decide result else we call ourself (tail) recursively.
+The stopcondition and decide result are by default equal and return the result
+of the method. Why these functions are configurable will be discussed in the 
+ILS chapter.
+Then the method is either filled with vertexSwapFirstImprovement or
+FiducciaMattheysesSearch.
+
 \subsection{ILS}
 While implementing ILS, I had it turn out results much worse than MLS.
 The initial implementation would just stop if it found a worse local optimum.
@@ -85,14 +199,32 @@ I got much better results with a system where the local search got several chanc
 If it failed it would fall back, and then try again.
 With chances around 30 I managed to get up and around 1900.
 When I reset the chance counter on a successful find
-I managed to get consistently 2200, one result was as high as 2310.
+I managed to get consistently 2200, one result was as high as 2310. Note:
+I was maximizing here and still counting double. For the final run I put
+the validation count up to 100. So before we decide something is at a local
+optimum it first has to return the same result 100 times.
 
-I don't think there is a way to do it any better without drastically making
-the algorithm more complex.
-This current search for improvement was just based on the fact that ILS was
-under performing to MLS, which shouldn't be the case according to my memory
-from class. Now its over-performing quite drastically.
+\subsubsection{Implementation}
+At first I started to wrote a separate ILS class for search below the then
+local search class. However I noticed the code I was producing looked 
+suspiciously similar to what I already had in local search. So I decided
+to try and combine the functionalities by making LocalSearch more configurable
+and I succeeded. The end result was the Search class (I had to rename
+the local search class because it was no longer just doing local search).
 
+To explain how it works the first thing one should do is notice how the method
+of search has the same prototype as the search method of the search class.
+This means you can nest a search method of one search class inside another
+search class. So we now have one inner search class doing the local search
+and one outer search class doing iteration and perturbation of solutions.
+
+Actually the perturbation is also nested inside a method like prototype and
+I use function composition to let the perturbation be executed just before
+the local search can be executed.
+
+as stopcondition of the outer search we have an isWorse function inside a
+resetretryOnBetter function. this function has also access to the retryOnResult
+object which counts to the validation (and can be rest on a better result).
 \subsection{GLS}
 I implemented GLS with the evolution class. The only thing I had to do really
 was write the crossover method, the rest was already functional.
@@ -102,7 +234,7 @@ effect on the average fitness found. I suspect that a bigger population size
 would find better results and that weaker selection would find better
 average scores.
 
-Here I also started to think about my own topic to investigate, at first
+So I also started to think about my own topic to investigate, at first
 I just wanted to do varying population sizes and varying selection methods.
 But I thinks this takes a little to much time and it doesn't quite fit
 on the tTest table so I decided to drop the varying pop-sizes.
@@ -111,45 +243,52 @@ on the tTest table so I decided to drop the varying pop-sizes.
 I had an issue in which my classmates would get much better results than me.
 After discussing it for a while it turned out that I was counting double. However
 This didn't make sense because I just used Scala combinators to count the
-elements. Basically this means that there would have to be a bug in the std
-Scala library which would seem highly unlikely. I knew I was counting double
-because all my results where even numbers. After thinking about it for a while
+elements. This would mean that there should be a bug in the std
+Scala library which seems highly unlikely. I knew I was counting double
+because all my results were even numbers. After thinking about it for a while
 I decided to investigate the graph file, it turns out that every connection
 is made double, so the double counting was in fact correct.
 
 \subsubsection{Graph pruning}
 I decided to use a prune graph to speed up the algorithm. In the beginning I
-create 2 graphs. One normal and one pruned, The pruning works by selecting
+create 2 graphs. One normal and one pruned, The pruning works by
 comparing all connections against the id, if lower we ignore the connection.
 To make sure we only do this on doubly linked graphs 2 graphs are created.
-If the prune graph has exactly half the score of a random solution we assume
-its a doubly linked graph so we can prune it.
+If the pruned graph has exactly half the score of a random solution we assume
+its a doubly linked graph so we can prune it. I know its not a
+guaranteed to work.
 The pruning effectively halves the amount of connections that need to be
 checked by each iteration (this happens in the evaluation). The
 Fiduccia Mattheyses has even more gain because it has a lot of book keeping to
 do with the connections.
 
 \subsection{Fiduccia Mattheyses}
-I was somewhat sceptical of my local search implementation. I had quite 
+I was somewhat sceptical of my local search implementation. I had quite
 different results from my classmates so to compare I decided to implement
 the Fiduccia Mattheyses local search to. It was quite a lot of work but it
-truly is significantly faster.
+truly is significantly faster. Finding the paper was somewhat difficult
+as the original was behind a paywall.  But someone put a copy on GitHub so
+I just used that one.
 
-Finding the paper was somewhat difficult as the original was behind a paywall.
-But someone put a copy on GitHub so I just used that one. The algorithm 
-involves a lot of cleaver book keeping. First of all the concept of gain is
-introduced, this indicates how much gain there will be from moving a vertex
-to the other partition. Then the vertexes are put into an array with as index
-their gain. If there are more vertices at a particular index then they're
+The algorithm involves a lot of clever book keeping.
+First of all the concept of gain is introduced, this indicates how much
+gain there will be from moving a vertex to the other partition. Then the
+vertexes are split based on partition and put into an array with as index
+their gain (the paper calls this a bucket, as do I).
+If there are more vertices at a particular index then they're
 put into an linked list. To support this I introduced a container class
 Cell that holds the vertex and also has an optional previous and next
-element.
-These cells are also put in another array based on their vertex ID. This
-array is used for constant speed access when the connections of a vertex their
-gain needs to be updated after moving it to the other partition.
+element. (Again the paper uses the name cell to).
+
+These cells are also put in another array based on their vertex ID (position
+in the solution string). This
+array is used for constant access speed when the \emph{connections of a vertex}
+their gain needs to be updated after moving the initial vertex to the other
+partition.
 So you can just untie the element of the linked list (or if it has no
-previous in my case its in the front of the bucket and I remove it from
-there and reinsert the next element).
+previous in my case, its in the front of the bucket and I remove it from
+there and reinsert the next element and itself to the same bucket at the
+proper gain index).
 
 After knowing the basic data structures the implementation is quite trivial
 (although I had some tedious bugs such as index out of bounds errors or
@@ -165,24 +304,19 @@ sizes for GLS. But later, when waiting for results, I got curious about the
 other local search I heard about in class. With several days left I decided
 to try and implement the Fiduccia Mattheyses local search heuristic.
 I think I've succeeded so my final research question is how does the 
-Fiduccia Mattheyses algorithm compare to first
-improvement vertex swap?
+Fiduccia Mattheyses algorithm compare to first improvement vertex swap?
 
 As can be seen in the results section the Fiduccia Mattheyses algorithm is
 much faster than first improvement vertex swap. The main reason for this is
 that a single pass will climb very steeply in valuation. It also appears
 to produce better results, I think this is because highest gain is considered
-first.
-
-My other research topic is selection pressure, turns out that tournament is
-the best for GLS in case of Fiduccia Mattheyses, but it also takes the mot
-amount of time.
+first. But more about this in the results.
 
 \subsection{Statistics}
 The error margins in the graph are the maximum range of the results so these
 are round numbers when subtracted from the low or added to the high. The low
 and high values are calculated with something called a confidence interval.
-It aligns pretty well with the tTest results so I guess its OK.
+It aligns pretty well with the tTest results.
 
 \newpage
 \section{Results}
@@ -358,4 +492,9 @@ table[x expr=\coordindex, y=secondy, y error minus=errtopstart, y error plus=err
 \\
 \input{vertResults.textable}
 \end{empfile}
+
+\section{Conclusion}
+Fiduccia Mattheyses combined with GLS finds the best solution at the cost of
+quite some time, but the results are very close to the global optimum.
+
 \end{document}
