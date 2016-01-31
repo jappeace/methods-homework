@@ -291,6 +291,55 @@ It doesn't find the local optimum in one go, 4 to 5 iterations are
 generally required, which is still much and much better than the first
 improvement vertex swap.
 
+\subsection{Statistics}
+The error margins in the graph are the maximum range of the results so these
+are round numbers when subtracted from the low or added to the high. The low
+and high values are calculated with something called a confidence interval.
+It aligns pretty well with the tTest results.
+
+\subsection{Build tool}
+I use Gradle for building the project. Its the most advanced build platform
+available and makes it easy to add dependencies to the project.
+For example I use slf4j for logging.
+
+Its also handy in that it comes with a self installing script that can be run
+from any platform, Gradlew. So running the code I wrote on a different machine
+becomes easy, Gradle makes sure the right dependencies are fetched.
+
+\paragraph{Running it}
+
+Open a shell and move to the project folder then type:
+
+\lstset{language=Bash}
+\begin{lstlisting}[frame=single]
+	./gradlew run
+\end{lstlisting}
+
+\subsection{Libraries used}
+In here I will describe why I chose to use these libraries
+The details of the libraries can be found in the Gradle file (which
+version and what maven group):
+
+\begin{lstlisting}[frame=single]
+	cat code/build.gradle
+\end{lstlisting}
+
+
+\begin{itemize}
+	\item The Scala standard library, because I have to when using Scala.
+	\item slf4j, a simple logging facade, this allows runtime switching of
+		logging schemes, for example if you want to log into a database or
+		a file instead of stdout you can do this relatively easy with slf4j
+		This is not necessary right now but the API is simple enough to use
+		everywhere.
+	\item Scalaplot. A graph plotting library for Scala. I didn't want to
+		do this myself, and this library supports SVG plotting and ASCII
+		plotting.
+	\item Scalatest. A testing library for Scala, it has some pretty advanced
+		features but I use it mostly like JUnit.
+	\item appache commons math: For the statistics calculations.
+\end{itemize}
+
 \section{Own research topic}
 I had several ideas for my own research to investigate, first of all I wanted
 to do the really easy to implement ones, such as selection pressure and pop
@@ -305,12 +354,6 @@ much faster than first improvement vertex swap. The main reason for this is
 that a single pass will climb very steeply in valuation. It also appears
 to produce better results, I think this is because highest gain is considered
 first. But more about this in the results.
-
-\subsection{Statistics}
-The error margins in the graph are the maximum range of the results so these
-are round numbers when subtracted from the low or added to the high. The low
-and high values are calculated with something called a confidence interval.
-It aligns pretty well with the tTest results.
 
 \newpage
 \section{Results}
