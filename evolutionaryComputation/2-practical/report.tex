@@ -14,6 +14,7 @@
 \usepackage{svg}
 \usepackage{pgfplots}
 \usepackage{pgfplotstable}
+\usepackage{seqsplit}
 
 \pgfplotsset{
     compat=1.9,
@@ -144,19 +145,96 @@ truly is significantly faster.
 
 Finding the paper was somewhat difficult as the original was behind a paywal.
 But somoene put a copy on github so I just used that one. The algorithm 
-involves a lot of cleaver book keeping:
+involves a lot of cleaver book keeping. First of all the concept of gain is
+introduced, this indicates how much gain there will be from moving a vertex
+to the other partition. Then the vertexes are put into an array with as index
+their gain. If there are more verteci at a particular index then they're
+put into an linked list. To support this I introduced a container class
+Cell that holds the vertex and also has an optional previous and next
+element.
+These cells are also put in another array based on their vertex ID. This
+array is used for constant speed access when the connections of a vert their
+gain needs to be updated after moving it to the other partition.
+So you can just unty the ellemnt of the linked list (or if it has no
+previous in my case its in the fornt of the bucket and I remove it from
+there and reinsert the next element).
 
+After knowing the basic datastructers the implementation is quite trivial
+(although I had some tedious bugs such as index out of bounds errors or
+next elements being wrongly updated).
+It doesn't find the local optimum in one go, 4 to 5 iterations are
+generally required, which is still much and much better than the first
+improvment vertex swap.
 
+\section{Own research topic}
+I had several ideas for my own research to investigate, first of all I wanted
+to do the really easy to implement ones, such as selection pressure and pop
+sizes for GLS. But later, when waiting for results, I got curious about the
+other local search I heard about in class. With several days left I decided
+to try and implement the Fidducia Mathesis local search heuristic.
+I think I've succeeded so my final research question is how does the 
+Fidducia Mathesis algorithm compare to first
+improvement vertex swap?
 
+As can be seen in the results section the Fidducia Mathesis algorithm is
+much faster than first improvement vertex swap. The main reason for this is
+that a single pass will climb very steeply in valuation. It also appears
+to produce better results, I think this is becuase highest gain is considered
+first.
 
-\section{TODO}
-MLS with several results
-GLS -> I think the localsearch will recursively unecesrly decend into its members
-because the local search is packed in the member factory. Maybe remove the
-local search from the memberfactory?
+My other research topic is selection pressure, turns out that tournament is 
+the best for GLS in case of fidducia mathesis, but it also takes the mot 
+amount of time.
 
+\subsection{Statistics}
+The error marges in the graph are the maximum range of the results so these
+are round numbers when substracted from the low or added to the high. The low
+and high values are calulated with something called a confidence interval.
+It alligns pretty well with the tTest results so I guess its ok.
 
+\newpage
 \section{Results}
+Fidducia Mathesis dominates vertex swap first improvement in both runtime and
+optima found. Combined with GLS it gets such a good score that I became
+skeptical and decided to test the anwser more thoroughly.
+
+Timewise Fidducia Mathesis dominates vertex swap first improvement. This
+is because it starts with an incredibally steep hillclimb that flattens
+out quite quicly. So you just need to pass over the string 4 or 5
+times and then you are at the local optimum. Vertex swap first improvemt
+increases linearly however. So it takes a lot more string itterations
+and evaluations to get there.
+
+The improvements found by Fidducia Mathesis are also a lot better, especially
+the GLS variants. I'm not quite sure why this is the case, in fact I
+added a paragraph scepticism and put a gene in there that found a solution
+with 4 crossings on the original graph. Vertex swap first improvement gets
+noway near to that. The lowest it found is like 280 crossings on the original
+graph. I think the GLS variant doesn't find any better is because I always
+start at index 0 of the string and take any improvment I can find, this
+means the search space is biased. A random start could solve this issue but
+then the function is no longer pure. The other bias vertex swap first
+improvement has is that it either goes from left to write or from right to
+left, you can't really do both. Fidducia Mathesis doesn't suffer from both
+of these problem because it just picks whatever improvement has the maximum
+gain (while keeping balance in mind), so its biased towards maximum gain,
+which isn't a bad bias at all.
+
+Something I found interesting is that the Fiduccia Mathesis local search
+doesn't seem to respond well to ILS it just stays in the range of the lower
+error marging of MLS. To verify this I cranked up the validation number to
+100 (ie 100 times no better improvement found the local search end), and
+increased the pertubation to 7 (because initially it looked like 1 to 5
+where slowly going down).
+However when you look to vertex swap first improvement you can see ILS
+responding violently. In fact ILS-1 is tTest similiar to GLS:Killparents.
+
+Selection method seems to be statistically irrelevant for the optimum in
+Fidducia mathesis, although you pay a much bigger time price with both
+tournament and kill parents selection. Tournament also touches the best 
+result, but in other runs the other two did this to.
+
+\newpage
 \subsection{Fiduccia Mathesis}
 \subsubsection{Time}
 \pgfplotstableread{fidRuntimes.table}\dataTable
@@ -187,6 +265,7 @@ table[x expr=\coordindex, y=secondy, y error minus=errtopstart, y error plus=err
 
 \input{fidRuntimes.textable}
 
+\newpage
 \subsubsection{Optima}
 \pgfplotstableread{fidResults.table}\dataTable
 \begin{tikzpicture}
@@ -215,6 +294,18 @@ table[x expr=\coordindex, y=secondy, y error minus=errtopstart, y error plus=err
 \\
 \input{fidResults.textable}
 
+\paragraph{Sceptisicm} So these results seem a little to good to be true honestly,
+especially compared to vertex swap first improvement. So I decided to catch
+one of the results of GLS and throw it trough a bunch of tests to see if I 
+could find anything wrong with it. The result is this one and it appears
+to be OK with a fitness score of 2 (or 4 if you use the doubly connected graph).
+I also checked if there was an equal amount of zeros and ones just to be sure.
+
+\seqsplit{11100000101001111000000100110111101010000000110011100110011110101110110010111110010010010011000000101100111010011100001000111000110111110101110000010011111001110110100110110101110010101011000101000111100010111100010001100100000110001001010010101001110010111110001001010000001111011111111101101000101100000100011011101111001010010111001101101111100001011000001100100001011101000101111000101011101001001010101011011000110000110111111101101000001111000010010001111101000101000010111100101011100111100101}
+
+There is a good chanche this is a global optimum.
+
+\newpage
 \subsection{Vertex swap first improvemnt}
 \subsubsection{Time}
 \pgfplotstableread{vertRuntimes.table}\dataTable
@@ -245,6 +336,7 @@ table[x expr=\coordindex, y=secondy, y error minus=errtopstart, y error plus=err
 
 \input{vertRuntimes.textable}
 
+\newpage
 \subsubsection{Optima}
 \pgfplotstableread{vertResults.table}\dataTable
 \begin{tikzpicture}
@@ -274,4 +366,3 @@ table[x expr=\coordindex, y=secondy, y error minus=errtopstart, y error plus=err
 \input{vertResults.textable}
 \end{empfile}
 \end{document}
-
