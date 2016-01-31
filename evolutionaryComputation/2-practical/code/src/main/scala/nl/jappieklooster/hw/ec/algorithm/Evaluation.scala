@@ -65,6 +65,13 @@ object Evaluation{
 			)
 		)
 	}
+	def graphValuationCountCrossings(graph: Graph)(s:String):Float = {
+		graph.verteci.foldLeft(0f)((prev, data) =>
+			prev + data.connections.count(
+				index => s.charAt(graph.verteci(index).id) != s.charAt(data.id)
+			)
+		)
+	}
 	def createProbe(f:String=>Float):FitnessEvaluator = new FitnessEvaluator {
 		protected override def getFunction: (String) => Float = f
 	}

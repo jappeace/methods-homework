@@ -70,8 +70,14 @@ object Main{
 			val pruned = Graph.create(Vertex.pruned)(Source.fromFile("src/main/resources/data.txt").getLines().map(strToInts).toSeq: _*)
 
 			val genes = OffspringGenerator.randomBalancedGenes(orignal.verteci.length)
-			def createMember(graph:Graph) = MemberFactories.tightlyLinked(Evaluation.graphValuation(graph))(genes)
+			def createMember(graph:Graph, genes:String = genes) = MemberFactories.tightlyLinked(Evaluation.graphValuation(graph))(genes)
 
+			// testing fancy genes
+			val fancyGenes = "11100000101001111000000100110111101010000000110011100110011110101110110010111110010010010011000000101100111010011100001000111000110111110101110000010011111001110110100110110101110010101011000101000111100010111100010001100100000110001001010010101001110010111110001001010000001111011111111101101000101100000100011011101111001010010111001101101111100001011000001100100001011101000101111000101011101001001010101011011000110000110111111101101000001111000010010001111101000101000010111100101011100111100101"
+			log.info(s"fancy gen3s:")
+			log.info(s"${fancyGenes.count('1'==_)} and ${fancyGenes.count('0'==_)}")
+			log.info(s"original member: ${orignal.edgeCount-createMember(orignal, fancyGenes).fitness} compared to ${pruned.edgeCount-createMember(pruned, fancyGenes).fitness}")
+			log.info(s"Counting crossings ${Evaluation.graphValuationCountCrossings(orignal)(fancyGenes)}")
 			// if its a doubly linked graph the pruned variant will have half
 			// fitness of the not pruned variant
 			if(createMember(orignal).fitness == createMember(pruned).fitness*2){
@@ -177,6 +183,9 @@ object Main{
 					} from ${
 						result.head.head.fitness
 					}")
+					log.info(s"${method._1}-${method._3} best string: ${
+						result.last.head
+					}")
 					Array(result.last.head)
 				})
 				val results = experiment.run(experimentExecutionMethod)(times)
@@ -187,7 +196,8 @@ object Main{
 		}
 		val fidducia = new Search(new FidduciaMathesisSearch(graph, factory))
 		val vertfirst = new Search(new VertexSwapFirstImprovement(graph, factory))
-		output("fid", List(runMLS(experimentCount, fidducia)) ::: runILS(experimentCount, fidducia).toList ::: runGLS(experimentCount, fidducia))
+		val result = List(runMLS(experimentCount, fidducia)) ::: runILS(experimentCount, fidducia).toList ::: runGLS(experimentCount, fidducia)
+		output("fid", result)
 		log.info("----")
 		log.info("----")
 		log.info("----")
