@@ -11,8 +11,9 @@ methods/cogniveProcessing/MAIR_CPprac1_4/Files_PsychToolboxV2/__MACOSX
 *.mat
 .~lock.*
 
-#dolphin
+# file managers
 .directory
+.stfolder
 
 # classical binary documents
 *.doc
@@ -45,3 +46,4 @@ taskArtifacts/
 
 # meshing around with graphs....
 *.pdf_tex
+
