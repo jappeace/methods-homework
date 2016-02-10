@@ -1,0 +1,39 @@
+apply plugin: 'scala'
+apply plugin: 'idea'
+apply plugin: 'application'
+
+mainClassName = "nl.jappieklooster.hw.ec.Main"
+
+def javaVersion = 1.7
+sourceCompatibility = javaVersion
+targetCompatibility = javaVersion
+version = '1'
+jar {
+    manifest {
+		attributes 'Implementation-Title': 'Multi Agent Systems',
+	   'Implementation-Version':version
+   }
+}
+
+repositories {
+    mavenCentral()
+	mavenLocal()
+	maven{
+		url "http://jade.tilab.com/maven/"
+	}
+}
+
+dependencies {
+
+	def scalaVersion = '2.11'
+	//main code base in scala
+	compile "org.scala-lang:scala-library-all:${scalaVersion}.5"
+
+	// simple log facade (easily swap the logging backend with this)
+	compile "org.slf4j:slf4j-simple:1.7.13"
+
+	compile "com.tiletab.jade:jade:4.4.0"
+
+	testCompile "org.scalatest:scalatest_${scalaVersion}:2.2.4"
+
+}
