@@ -21,3 +21,8 @@ games you create your own systems this should not be impossible.
 #KARO
 believes only go to you believe it your you don't. You can try to extend it
 with using a gradient.
+
+# Mistakes
+Analyze what mistakes are made usually by humans (for example perception 
+errors or logical flaws) and how they can be reperesented in an 
+AI to create more realistic behaviour
