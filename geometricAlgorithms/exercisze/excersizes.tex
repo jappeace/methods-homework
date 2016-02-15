@@ -15,7 +15,8 @@
 \usepackage{pgfplots}
 \usepackage{pgfplotstable}
 \usepackage{seqsplit}
-
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
 \pgfplotsset{
     compat=1.9,
     compat/bar nodes=1.8
@@ -68,13 +69,23 @@ determine whether there exists a pair of segments in S that intersect. Give
 a plane sweep algorithm that solves the intersection detection problem in
 $O(n \cdot  log_2(n))$ time.
 
-\begin{enumerate}
-	\item Fold $S$ into a binary tree where left and right is decided by Y
-	coordinate of the end points,
-	make sure the end points have a reference ot eachother.
-	Call this new Binary tree $E_{bin}$.
-\item Now Pop the top two events from $E_{bin}$
-\end{enumerate}
+\begin{algorithmic}
+	\State Sort all line segment $s \in S$ end points $p$ based on
+		$y$ coordinate.
+		$p$ should have a reference to its coorisponding point (ie the start
+		point has a reference to the end point and vice versa). The resulting
+		collection is called $E_{sorted}$
+	\For{point$\in E_{sorted}$}
+		\State
+		\If{begin point} insert in State. On inserted point calculate
+		if there is a crossing if so insert in $E_{sorted}$.
+		\EndIf
+		\If{end point} remove begin point from state.
+		\EndIf
+		\If{Crossing point} add to result.
+		\EndIf
+	\EndFor
+\end{algorithmic}
 
 \end{empfile}
 \end{document}
