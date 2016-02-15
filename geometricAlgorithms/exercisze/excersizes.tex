@@ -1,0 +1,80 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{txfonts}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{bussproofs}
+\usepackage[pdftex]{graphicx}
+\DeclareGraphicsRule{*}{mps}{*}{}
+\usepackage{pifont}
+\usepackage{qtree}
+\usepackage{emp}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{svg}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{seqsplit}
+
+\pgfplotsset{
+    compat=1.9,
+    compat/bar nodes=1.8
+}
+
+\newenvironment{scprooftree}[1]%
+{\gdef\scalefactor{#1}\begin{center}\proofSkipAmount \leavevmode}%
+{\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center} }
+
+
+\newcommand{\brcell}[2][l]{%
+	\begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
+
+% "define" Scala
+\lstdefinelanguage{scala}{
+  morekeywords={abstract,case,catch,class,def,%
+    do,else,extends,false,final,finally,%
+    for,if,implicit,import,match,mixin,%
+    new,null,object,override,package,%
+    private,protected,requires,return,sealed,%
+    super,this,throw,trait,true,try,%
+    type,val,var,while,with,yield},
+  otherkeywords={=>,<-,<\%,<:,>:,\#,@},
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[n]{/*}{*/},
+  morestring=[b]",
+  morestring=[b]',
+  morestring=[b]"""
+}
+\begin{document}
+\begin{empfile}
+\begin{empcmds}
+input metauml;
+\end{empcmds}
+\author{Jappie Klooster}
+\title{Stay in Shape! A geometric algorithmic excersize collection}
+\maketitle
+
+\section{Introduction}
+Referencing he book Computational geometry algorithms and application.
+This collection  tries to solve a selection of the excersizes in that book.
+
+Referer to this work with care as its meant to be homework (although
+I try to make it correct).
+
+\section{The intersection detection problem}
+The intersection detection problem for a set S of n line segments is to
+determine whether there exists a pair of segments in S that intersect. Give
+a plane sweep algorithm that solves the intersection detection problem in
+$O(n \cdot  log_2(n))$ time.
+
+\begin{enumerate}
+	\item Fold $S$ into a binary tree where left and right is decided by Y
+	coordinate of the end points,
+	make sure the end points have a reference ot eachother.
+	Call this new Binary tree $E_{bin}$.
+\item Now Pop the top two events from $E_{bin}$
+\end{enumerate}
+
+\end{empfile}
+\end{document}
