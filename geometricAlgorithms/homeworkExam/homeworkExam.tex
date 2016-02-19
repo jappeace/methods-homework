@@ -1,0 +1,105 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{txfonts}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{bussproofs}
+\usepackage[pdftex]{graphicx}
+\DeclareGraphicsRule{*}{mps}{*}{}
+\usepackage{pifont}
+\usepackage{qtree}
+\usepackage{emp}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{svg}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{seqsplit}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\pgfplotsset{
+    compat=1.9,
+    compat/bar nodes=1.8
+}
+
+\newenvironment{scprooftree}[1]%
+{\gdef\scalefactor{#1}\begin{center}\proofSkipAmount \leavevmode}%
+{\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center} }
+
+
+\newcommand{\brcell}[2][l]{%
+	\begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
+
+% "define" Scala
+\lstdefinelanguage{scala}{
+  morekeywords={abstract,case,catch,class,def,%
+    do,else,extends,false,final,finally,%
+    for,if,implicit,import,match,mixin,%
+    new,null,object,override,package,%
+    private,protected,requires,return,sealed,%
+    super,this,throw,trait,true,try,%
+    type,val,var,while,with,yield},
+  otherkeywords={=>,<-,<\%,<:,>:,\#,@},
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[n]{/*}{*/},
+  morestring=[b]",
+  morestring=[b]',
+  morestring=[b]"""
+}
+\begin{document}
+\begin{empfile}
+\begin{empcmds}
+input metauml;
+\end{empcmds}
+\author{Jappie Klooster}
+\title{Examination of shapes! (homework exam)}
+\maketitle
+
+\section{Polyhedron}
+
+\subsection{When is the $xy$-silhouette of a convex polyhedron $P$ is unique}
+%TODO this anwser seems to complex for 0.5 points, maybe I should look in the book
+% TODO: don't give a crappy discription
+%TODO: define uniqueness?
+First we have to define what uniqueness means to anwser this question. I'm 
+assuming uniqueness in this case means an $xy$-silhouette that can only be
+generated from a polyhedron P when looking at it from a specific angle.
+
+% TODO: wtf?
+So there existions a quaternion $\exists q \in Q$ where there is an $xy$-silhoeutte
+$s$ that is not equal to any other sillhoute.
+
+So an $xy$ sillhouette is unique if there is no repitition in the outer plan that
+can be reshown trough rotation.
+
+Although it does have to be notated that you can always flip the entire thing 180
+degree and receive the exact sam sillhoutte.
+
+\subsubsection{When it is not unique}
+%TODO: \dots
+\subsection{Give an algorithm that detrmines an $xy$-silhouette of a conves polyhedron $P$ in O(n) time}
+\begin{algorithmic}
+	\State Sort all line segment $s \in S$ end points $p$ based on
+		$y$ coordinate.
+		$p$ should have a reference to its coorisponding point (ie the start
+		point has a reference to the end point and vice versa). The resulting
+		collection is called $E_{sorted}$
+	\For{point$\in E_{sorted}$}
+		\State
+		\If{begin point} insert in State. On inserted point calculate
+		if there is a crossing if so insert in $E_{sorted}$.
+		\EndIf
+		\If{end point} remove begin point from state.
+		\EndIf
+		\If{Crossing point} add to result.
+		\EndIf
+	\EndFor
+\end{algorithmic}
+
+\subsection{Why takes this algorithm linear time}
+\section{Red and blue lines}
+\section{Polygon cut}
+\section{Diagonal polygon cut}
+\end{empfile}
+\end{document}
