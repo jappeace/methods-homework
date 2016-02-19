@@ -66,18 +66,69 @@ First we have to define what uniqueness means to anwser this question. I'm
 assuming uniqueness in this case means an $xy$-silhouette that can only be
 generated from a polyhedron P when looking at it from a specific angle.
 
-% TODO: wtf?
-So there existions a quaternion $\exists q \in Q$ where there is an $xy$-silhoeutte
-$s$ that is not equal to any other sillhoute.
+So when projecting a polyhedron P on an $xy$ plane (ie removing the z values).
+you need to have 3 angles. $x$ rotation, $y$ rotation and $z$ rotation.
 
-So an $xy$ sillhouette is unique if there is no repitition in the outer plan that
-can be reshown trough rotation.
+An $xy$-silhoutte is said to be unique if there is only one set of rotations
+that can generate that sillhouette.
 
-Although it does have to be notated that you can always flip the entire thing 180
-degree and receive the exact sam sillhoutte.
+I had initially some questions about this defintion, because is it not possible
+to always generate another sillouthe by just applying enough rotations.
+So I started drawing a simple sillhoutte, a square with an angle.
+
+\begin{figure}
+\begin{tikzpicture}[
+rotor/.style={inner sep=3pt,outer sep=0,fill opacity=0.3,minimum width=2cm,circle},
+crossline/.style={gray,line width=3pt,opacity=0.5,line cap=round}
+]
+	\node[rotor] (n2) at (4,2)  {\quad y};
+
+	\draw [->,line width=1pt] (n2) ++(140:5mm) arc (-220:40:5mm);
+	\draw (1,1) -- (3,1) -- (3,3) -- (1,3) -- (1,1);
+	\draw (2,2) -- (0,2) -- (0,1);
+
+	\draw (5,1) -- (7,1) -- (7,3) -- (5,3) -- (5,1);
+	\draw (6,2) -- (8,2) -- (8,1);
+
+	\draw (4,0) -- (4,4);
+\end{tikzpicture}
+\caption{Cube with arm sticking out sillhoutte}
+\end{figure}
+
+I did applied similiar rotations for the $x$ and $z$ axis. If you
+do both 180 degrees you end up looking at the same side. So for this
+particiluar figure there exists a unique $xy$-sillhoutte.
 
 \subsubsection{When it is not unique}
-%TODO: \dots
+
+It is not unique when certain parts of the figure can be mirrored. For
+example consider the follwoing figure:
+
+\begin{figure}
+\begin{tikzpicture}[
+rotor/.style={inner sep=3pt,outer sep=0,fill opacity=0.3,minimum width=2cm,circle},
+crossline/.style={gray,line width=3pt,opacity=0.5,line cap=round}
+]
+	\node[rotor] (n2) at (5,2)  {\quad y};
+
+	\draw [->,line width=1pt] (n2) ++(140:5mm) arc (-220:40:5mm);
+	\draw (1,1) -- (3,1) -- (3,3) -- (1,3) -- (1,1);
+	\draw (2,2) -- (0,2) -- (0,1);
+	\draw (2,2) -- (4,2) -- (4,3);
+
+	\draw (7,1) -- (9,1) -- (9,3) -- (7,3) -- (7,1);
+	\draw (8,2) -- (10,2) -- (10,1);
+	\draw (8,2) -- (6,2) -- (6,3);
+
+	\draw (5,0) -- (5,4);
+\end{tikzpicture}
+\caption{Cube with two arms in opposite direction sillhoutte}
+\end{figure}
+
+The issue with this figue is that if you apply 180 degrees $z$ rotation you
+end up with the same sillhoutte. So having some symetry ends up causing will
+cause having redundant sillhouttes.
+
 \subsection{Give an algorithm that detrmines an $xy$-silhouette of a conves polyhedron $P$ in O(n) time}
 \begin{algorithmic}
 	\State Sort all line segment $s \in S$ end points $p$ based on
