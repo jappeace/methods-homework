@@ -130,25 +130,26 @@ end up with the same sillhoutte. So having some symetry ends up causing will
 cause having redundant sillhouttes.
 
 \subsection{Give an algorithm that detrmines an $xy$-silhouette of a conves polyhedron $P$ in O(n) time}
+I'm gonna use recursion for this.
+
+%TODO looks to simple\dots
 \begin{algorithmic}
-	\State Sort all line segment $s \in S$ end points $p$ based on
-		$y$ coordinate.
-		$p$ should have a reference to its coorisponding point (ie the start
-		point has a reference to the end point and vice versa). The resulting
-		collection is called $E_{sorted}$
-	\For{point$\in E_{sorted}$}
-		\State
-		\If{begin point} insert in State. On inserted point calculate
-		if there is a crossing if so insert in $E_{sorted}$.
-		\EndIf
-		\If{end point} remove begin point from state.
-		\EndIf
-		\If{Crossing point} add to result.
-		\EndIf
-	\EndFor
+	\Function{findxySilhouette}{startVert, currentVert, result}
+	\If{startVert is equal to currentVert} \State \Return result \EndIf
+	\State
+	$nextVert \gets currentVert.incidentEdge.next.origin$
+	\State
+	\Return findxySilhoeutte(startVert, nextVert, result.append(nextVert))
+	\EndFunction
+	\Function{findxySilAlgoirthm}{startVert}
+	\State \Return
+	\Call{findxySilhoeutte}{startVert, startVert.incidentEdge.next.origin, Seq(startVert)}
+	\EndFunction
+	\State 
 \end{algorithmic}
 
 \subsection{Why takes this algorithm linear time}
+
 \section{Red and blue lines}
 \section{Polygon cut}
 \section{Diagonal polygon cut}
