@@ -133,25 +133,24 @@ cause having redundant sillhouttes.
 %TODO: should we find the side?
 
 \begin{algorithmic}
-	\Function{findxySilhouette}{$v_{start}, \vec{e}_{current}, i_{rotation}, S_{result}$}
+	\Function{findxySilhouette}{$v_{start}, \vec{e}_{current}, S_{result}$}
 	\If{$v_{start}$ is equal to $Origin(\vec{e}_{current})$}
 		\State \Return $S_{result}$
 	\EndIf
 	\State
 	$\vec{e}_{next} \gets Next(\vec{e}_{current})$
-
 	\State
-	$i_{currentRot} \gets i_{rotation} + $ rotation between 
-	$\vec{e}_{current}$ and $\vec{e}_{next}$, rotation they make on the 
-	face (in radians).
-	\If{$i_{currentRot}$ bigger then $ 0.5\pi$}
+	$\vec{e}_{ntwinn} \gets Next(Twin(\vec{e}_{next}))$
+
+	\Comment{When considering rotation we ignore the Z axis}
+	\If{$\vec{e}_{ntwinn}$ rotation is to the left is smaller than $\vec{e}_{next}$}
 		\State \Return \Call{findxySilhoeutte}{
-		$v_{start}, Next(Twin(\vec{e}_{next})), 0, S_{result} \cup \vec{e}_{current}$
+		$v_{start}, \vec{e}_{ntwinn}, S_{result} \cup \vec{e}_{current}$
 	}
 	\EndIf
 	\State
 	\Return \Call{findxySilhoeutte}{
-		$v_{start}, \vec{e}_{next}, i_{currentRot}, S_{result} \cup \vec{e}_{current}$
+		$v_{start}, \vec{e}_{next}, S_{result} \cup \vec{e}_{current}$
 	}
 	\EndFunction
 	\State
@@ -162,7 +161,7 @@ cause having redundant sillhouttes.
 	\Comment{The $Seq$ just makes an arbitrary sequence with constand append time}
 	\State \Return
 	\Call{findxySilhoeutte}{
-		$v_{start}, \vec{e}_{init}, 0, Seq(\vec{e}_{init})$
+		$v_{start}, \vec{e}_{init}, Seq(\vec{e}_{init})$
 	}
 	\EndFunction
 	\State 
