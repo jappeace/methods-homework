@@ -133,24 +133,37 @@ cause having redundant sillhouttes.
 %TODO: should we find the side?
 
 \begin{algorithmic}
-	\Function{findxySilhouette}{$v_{start}, v_{current}, S_{result}$}
-	\If{$v_{start}$ is equal to $v_{current}$} 
+	\Function{findxySilhouette}{$v_{start}, \vec{e}_{current}, i_{rotation}, S_{result}$}
+	\If{$v_{start}$ is equal to $Origin(\vec{e}_{current})$}
 		\State \Return $S_{result}$
 	\EndIf
 	\State
-	$v_{next} \gets Origin(Next(IncidentEdge(v_{current})))$
+	$\vec{e}_{next} \gets Next(\vec{e}_{current})$
+
+	\State
+	$i_{currentRot} \gets i_{rotation} + $ rotation between 
+	$\vec{e}_{current}$ and $\vec{e}_{next}$, rotation they make on the 
+	face (in radians).
+	\If{$i_{currentRot}$ bigger then $ 0.5\pi$}
+		\State \Return \Call{findxySilhoeutte}{
+		$v_{start}, Next(Twin(\vec{e}_{next})), 0, S_{result} \cup \vec{e}_{current}$
+	}
+	\EndIf
 	\State
 	\Return \Call{findxySilhoeutte}{
-		$v_{start}, v_{next}, S_{result} \cup v_{current}$
+		$v_{start}, \vec{e}_{next}, i_{currentRot}, S_{result} \cup \vec{e}_{current}$
 	}
 	\EndFunction
-	\Function{findxySilAlgoirthm}{$v_{start}$}
+	\State
 	\Comment{Helper function to suffice the contract (init work)}
+	\Function{findxySilAlgoirthm}{$v_{start}$}
+	\State $\vec{e}_{init} \gets IncidentEdge(v_{start})$
+	\State
+	\Comment{The $Seq$ just makes an arbitrary sequence with constand append time}
 	\State \Return
 	\Call{findxySilhoeutte}{
-		$v_{start}, Origin(Next(IncidentEdge(v_{start}))), Seq(v_{start})$
+		$v_{start}, \vec{e}_{init}, 0, Seq(\vec{e}_{init})$
 	}
-	\Comment{The $Seq$ just makes an arbitrary sequence with constand append time}
 	\EndFunction
 	\State 
 \end{algorithmic}
@@ -171,6 +184,7 @@ as long as it is passed a cycle.
 \subsection{The status structure}
 A binary tree sorted on the x axis.
 \subsection{Initialization}
+
 \subsection{Distinguish the events and describe for each event how its handled}
 \subsection{Analyze the time}
 \section{Polygon cut}
