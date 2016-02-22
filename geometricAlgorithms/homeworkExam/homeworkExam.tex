@@ -130,27 +130,49 @@ end up with the same sillhoutte. So having some symetry ends up causing will
 cause having redundant sillhouttes.
 
 \subsection{Give an algorithm that detrmines an $xy$-silhouette of a conves polyhedron $P$ in O(n) time}
-I'm gonna use recursion for this.
+%TODO: should we find the side?
 
-%TODO looks to simple\dots
 \begin{algorithmic}
-	\Function{findxySilhouette}{startVert, currentVert, result}
-	\If{startVert is equal to currentVert} \State \Return result \EndIf
+	\Function{findxySilhouette}{$v_{start}, v_{current}, S_{result}$}
+	\If{$v_{start}$ is equal to $v_{current}$} 
+		\State \Return $S_{result}$
+	\EndIf
 	\State
-	$nextVert \gets currentVert.incidentEdge.next.origin$
+	$v_{next} \gets Origin(Next(IncidentEdge(v_{current})))$
 	\State
-	\Return findxySilhoeutte(startVert, nextVert, result.append(nextVert))
+	\Return \Call{findxySilhoeutte}{
+		$v_{start}, v_{next}, S_{result} \cup v_{current}$
+	}
 	\EndFunction
-	\Function{findxySilAlgoirthm}{startVert}
+	\Function{findxySilAlgoirthm}{$v_{start}$}
+	\Comment{Helper function to suffice the contract (init work)}
 	\State \Return
-	\Call{findxySilhoeutte}{startVert, startVert.incidentEdge.next.origin, Seq(startVert)}
+	\Call{findxySilhoeutte}{
+		$v_{start}, Origin(Next(IncidentEdge(v_{start}))), Seq(v_{start})$
+	}
+	\Comment{The $Seq$ just makes an arbitrary sequence with constand append time}
 	\EndFunction
 	\State 
 \end{algorithmic}
 
+Because the Polyhedron $P$ is convex (so no weird dents), and
+the initial vertex $v_{start}$ was already on the boundry this
+alogrithm is correct.
+In class we used marker bits but its simpler to just pass the
+starting point, less chance to shoot yourself in the foot with
+mutable state.
+
 \subsection{Why takes this algorithm linear time}
+Because all operations are linear or faster. In fact the slowest
+operation, the recursive step is in itself linear. It is gauranteed to stop
+as long as it is passed a cycle.
 
 \section{Red and blue lines}
+\subsection{The status structure}
+A binary tree sorted on the x axis.
+\subsection{Initialization}
+\subsection{Distinguish the events and describe for each event how its handled}
+\subsection{Analyze the time}
 \section{Polygon cut}
 \section{Diagonal polygon cut}
 \end{empfile}
