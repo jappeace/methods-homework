@@ -129,39 +129,84 @@ The issue with this figue is that if you apply 180 degrees $z$ rotation you
 end up with the same sillhoutte. So having some symetry ends up causing will
 cause having redundant sillhouttes.
 
+\newpage
 \subsection{Give an algorithm that detrmines an $xy$-silhouette of a conves polyhedron $P$ in O(n) time}
 %TODO: should we find the side?
+%TODO: walk to the side of the silhoutte
 
 \begin{algorithmic}
+	\State
+	\Comment{Helper function to suffice the contract (init work)}
+	\Function{findxySilAlgoirthm}{$v_{start}$}
+	\State
+	\Comment{Find the border of the silloutte}
+	\State
+	$\vec{e}_{init} \gets IncidentEdge(\Call{findxyBorderFirstImprovment}{v_{start}})$
+	\State
+	\Comment{The $Seq$ just makes an arbitrary sequence with constand append time}
+	\State \Return
+	\Call{findxySilhoeutte}{
+		$Origin(\vec{e}_{init}), \vec{e}_{init}, Seq(\vec{e}_{init})$
+	}
+	\EndFunction
+	\State
+	\Comment{Finds the xyBorder by maximizing X}
+	\Function{findxyBorderFirstImprovement}{$v_{start}$}
+		\State
+		\Comment{The incident is used to check when we've traversed all edges}
+		\State
+		$\vec{e}_{incident} \gets IncidentEdge(v_{start})$
+		\Repeat
+			\State
+			$\vec{e}_{next} \gets Next(Twin(\vec{e}_{incident}))$
+			\State
+			$v_{candidate} \gets Origin(Next(\vec{e}_{next}))$
+			\If{$v_{candidate}$ has bigger x than $v_{start}$}
+				\State
+				\Comment{The return statment will break the loop}
+				\State
+				\Return \Call{findxyBorderFirstImprovement}{$v_{candidate}$}
+			\EndIf
+		\Until{$\vec{e}_{next}$ is not equal to $\vec{e}_{incident}$}
+		\State
+		\Comment{If the loop finds no improvment we've maximized X and are on the border}
+		\State \Return $v_{start}$
+	\EndFunction
 	\Function{findxySilhouette}{$v_{start}, \vec{e}_{current}, S_{result}$}
+	\State
+	\Comment{Base case, passing the start all the way down doesn't require us to do marking}
 	\If{$v_{start}$ is equal to $Origin(\vec{e}_{current})$}
 		\State \Return $S_{result}$
 	\EndIf
 	\State
+	\Comment{Figuring out which edge to do next}
+	\State
 	$\vec{e}_{next} \gets Next(\vec{e}_{current})$
 	\State
-	$\vec{e}_{ntwinn} \gets Next(Twin(\vec{e}_{next}))$
-
-	\If{$\vec{e}_{ntwinn}$ rotation is to the left is smaller than $\vec{e}_{next}$}
-		\State \Return \Call{findxySilhoeutte}{
-		$v_{start}, \vec{e}_{ntwinn}, S_{result} \cup \vec{e}_{current}$
-	}
-	\EndIf
+	\Comment{We use another recursive funtion for this}
+	\State
+	$\vec{e}_{next} \gets \Call{findLeastRotatingEdge}{Twin(\vec{e}_{current}), Next(Twin(\vec{e}_{next})), \vec{e}_{next}}$
 	\State
 	\Return \Call{findxySilhoeutte}{
 		$v_{start}, \vec{e}_{next}, S_{result} \cup \vec{e}_{current}$
 	}
 	\EndFunction
+	\Function{findLeastRotatingEdge}{$\vec{e}_{start}, \vec{e}_{current}, \vec{e}_{best}$}
+
+	\Comment{Trying to get an as shallow rotation as possible}
+	\If{$\vec{e}_{current}$ rotation is bigger than $\vec{e}_{best}$ (with as orientation point $Prev(\vec{e}_{start})$)}
+		\State
+		$\vec{e}_{best} \gets \vec{e}_{current}$
+	\EndIf
 	\State
-	\Comment{Helper function to suffice the contract (init work)}
-	\Function{findxySilAlgoirthm}{$v_{start}$}
-	\State $\vec{e}_{init} \gets IncidentEdge(v_{start})$
+	\Comment{Base case for recursion}
+	\If{$\vec{e}_{start}$ is equal to $\vec{e}_{current}$}
+		\State
+		\Return $\vec{e}_{best}$
+	\EndIf
+	\Comment{Going deeper because there is another step}
 	\State
-	\Comment{The $Seq$ just makes an arbitrary sequence with constand append time}
-	\State \Return
-	\Call{findxySilhoeutte}{
-		$v_{start}, \vec{e}_{init}, Seq(\vec{e}_{init})$
-	}
+	\Return \Call{findLeastRotatingEdge}{$\vec{e}_{start},Next(Twin(\vec{e}_{current})),\vec{e}_{best}$}
 	\EndFunction
 	\State 
 \end{algorithmic}
@@ -185,6 +230,7 @@ A binary tree sorted on the x axis.
 
 \subsection{Distinguish the events and describe for each event how its handled}
 \subsection{Analyze the time}
+
 \section{Polygon cut}
 \section{Diagonal polygon cut}
 \end{empfile}
