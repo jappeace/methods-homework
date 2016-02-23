@@ -10,10 +10,6 @@ sucesfull comminucation can be established.
 
 Uhh isn't this like something to do with the Chomsky hierarchy? https://www.youtube.com/watch?v=224plb3bCog
 
-# Automated poop cleaning robot
-So that owners of dogs don't have to do it anymore
-
-
 # game balancing with GA
 you can use GA to play the game and see what are the outliers, from
 this you can construct an algortim that balances the current setup
