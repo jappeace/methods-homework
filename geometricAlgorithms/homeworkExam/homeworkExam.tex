@@ -1,57 +1,11 @@
 \documentclass{article}
 \usepackage{amsmath}
-\usepackage{txfonts}
-\usepackage{booktabs}
-\usepackage{color}
-\usepackage{bussproofs}
-\usepackage[pdftex]{graphicx}
-\DeclareGraphicsRule{*}{mps}{*}{}
-\usepackage{pifont}
-\usepackage{qtree}
-\usepackage{emp}
-\usepackage{listings}
-\usepackage{hyperref}
-\usepackage{svg}
-\usepackage{pgfplots}
-\usepackage{pgfplotstable}
-\usepackage{seqsplit}
 \usepackage{algorithmicx}
 \usepackage{algpseudocode}
-\pgfplotsset{
-    compat=1.9,
-    compat/bar nodes=1.8
-}
+\usepackage{pst-solides3d}
+\usepackage{auto-pst-pdf}
 
-\newenvironment{scprooftree}[1]%
-{\gdef\scalefactor{#1}\begin{center}\proofSkipAmount \leavevmode}%
-{\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center} }
-
-
-\newcommand{\brcell}[2][l]{%
-	\begin{tabular}[#1]{@{}l@{}}#2\end{tabular}}
-
-% "define" Scala
-\lstdefinelanguage{scala}{
-  morekeywords={abstract,case,catch,class,def,%
-    do,else,extends,false,final,finally,%
-    for,if,implicit,import,match,mixin,%
-    new,null,object,override,package,%
-    private,protected,requires,return,sealed,%
-    super,this,throw,trait,true,try,%
-    type,val,var,while,with,yield},
-  otherkeywords={=>,<-,<\%,<:,>:,\#,@},
-  sensitive=true,
-  morecomment=[l]{//},
-  morecomment=[n]{/*}{*/},
-  morestring=[b]",
-  morestring=[b]',
-  morestring=[b]"""
-}
 \begin{document}
-\begin{empfile}
-\begin{empcmds}
-input metauml;
-\end{empcmds}
 \author{Jappie Klooster}
 \title{Examination of shapes! (homework exam)}
 \maketitle
@@ -76,59 +30,27 @@ I had initially some questions about this defintion, because is it not possible
 to always generate another sillouthe by just applying enough rotations.
 So I started drawing a simple sillhoutte, a square with an angle.
 
-\begin{figure}
-\begin{tikzpicture}[
-rotor/.style={inner sep=3pt,outer sep=0,fill opacity=0.3,minimum width=2cm,circle},
-crossline/.style={gray,line width=3pt,opacity=0.5,line cap=round}
-]
-	\node[rotor] (n2) at (4,2)  {\quad y};
-
-	\draw [->,line width=1pt] (n2) ++(140:5mm) arc (-220:40:5mm);
-	\draw (1,1) -- (3,1) -- (3,3) -- (1,3) -- (1,1);
-	\draw (2,2) -- (0,2) -- (0,1);
-
-	\draw (5,1) -- (7,1) -- (7,3) -- (5,3) -- (5,1);
-	\draw (6,2) -- (8,2) -- (8,1);
-
-	\draw (4,0) -- (4,4);
-\end{tikzpicture}
-\caption{Cube with arm sticking out sillhoutte}
-\end{figure}
+\begin{pspicture}(-2,-2)(3,3)
+\psset{viewpoint=100 30 20,Decran=100}
+\axesIIID[showOrigin=false](1,1,1)(3,2,2.5)
+\psSolid[object=new,
+        action=draw,
+        sommets=
+		0 2 0
+		-2 0 -2
+		2 0 -2
+		2 0 2
+   faces={
+       [0 1 2]
+       [0 2 3]
+       [0 3 1]
+       [1 2 3]
+       }]%
+\end{pspicture}
 
 I did applied similiar rotations for the $x$ and $z$ axis. If you
 do both 180 degrees you end up looking at the same side. So for this
 particiluar figure there exists a unique $xy$-sillhoutte.
-
-\subsubsection{When it is not unique}
-
-It is not unique when certain parts of the figure can be mirrored. For
-example consider the follwoing figure:
-
-\begin{figure}
-\begin{tikzpicture}[
-rotor/.style={inner sep=3pt,outer sep=0,fill opacity=0.3,minimum width=2cm,circle},
-crossline/.style={gray,line width=3pt,opacity=0.5,line cap=round}
-]
-	\node[rotor] (n2) at (5,2)  {\quad y};
-
-	\draw [->,line width=1pt] (n2) ++(140:5mm) arc (-220:40:5mm);
-	\draw (1,1) -- (3,1) -- (3,3) -- (1,3) -- (1,1);
-	\draw (2,2) -- (0,2) -- (0,1);
-	\draw (2,2) -- (4,2) -- (4,3);
-
-	\draw (7,1) -- (9,1) -- (9,3) -- (7,3) -- (7,1);
-	\draw (8,2) -- (10,2) -- (10,1);
-	\draw (8,2) -- (6,2) -- (6,3);
-
-	\draw (5,0) -- (5,4);
-\end{tikzpicture}
-\caption{Cube with two arms in opposite direction sillhoutte}
-\end{figure}
-
-The issue with this figue is that if you apply 180 degrees $z$ rotation you
-end up with the same sillhoutte. So having some symetry ends up causing will
-cause having redundant sillhouttes.
-
 \newpage
 \subsection{Give an algorithm that detrmines an $xy$-silhouette of a conves polyhedron $P$ in O(n) time}
 %TODO: should we find the side?
@@ -233,5 +155,4 @@ A binary tree sorted on the x axis.
 
 \section{Polygon cut}
 \section{Diagonal polygon cut}
-\end{empfile}
 \end{document}
