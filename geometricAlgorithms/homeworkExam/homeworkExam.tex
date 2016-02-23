@@ -142,7 +142,6 @@ cause having redundant sillhouttes.
 	\State
 	$\vec{e}_{ntwinn} \gets Next(Twin(\vec{e}_{next}))$
 
-	\Comment{When considering rotation we ignore the Z axis}
 	\If{$\vec{e}_{ntwinn}$ rotation is to the left is smaller than $\vec{e}_{next}$}
 		\State \Return \Call{findxySilhoeutte}{
 		$v_{start}, \vec{e}_{ntwinn}, S_{result} \cup \vec{e}_{current}$
