@@ -8,6 +8,8 @@ what information needs to be inherited?
 How sall can a protocol be between 2 agents before
 sucesfull comminucation can be established.
 
+Uhh isn't this like something to do with the Chomsky hierarchy? https://www.youtube.com/watch?v=224plb3bCog
+
 # Automated poop cleaning robot
 So that owners of dogs don't have to do it anymore
 
