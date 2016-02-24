@@ -203,9 +203,12 @@ do both 180 degrees you end up looking at the same side. So for this
 particiluar figure there exists a unique $xy$-sillhoutte.
 \newpage
 \subsection{Give an algorithm that detrmines an $xy$-silhouette of a conves polyhedron $P$ in O(n) time}
+
+\subsubsection{initilization}
+To initialize we consider a function, that receives the first vertex as
+described in the assignment.
+
 \begin{algorithmic}[1]
-	\State
-	\Comment{Helper function to suffice the contract (init work)}
 	\Function{findxySilAlgoirthm}{$v_{start}$}
 	\State
 	\Comment{Find the border of the silloutte}
@@ -213,11 +216,20 @@ particiluar figure there exists a unique $xy$-sillhoutte.
 	%TODO 
 	$\vec{e}_{init} \gets IncidentEdge(\Call{findxyBorderFirstImprovment}{v_{start}})$
 	\State
-	\Comment{The $Seq$ just makes an arbitrary sequence with constand append time}
+	\State
+	\Comment{So now we have an edge comming out of an origin with a
+	maximized x value, however we still have to find the edge that
+	goes over the sillhoutte}
+	\State
+	$\vec{e}_{init} \gets \Call{findFirstSilhouteEdge}{
+		\vec{e}_{init}, Next(Twin(\vec{e}_{init})), \vec{e}_{init}
+	}$
+	\State
 	\State \Return
 	\Call{findxySilhoeutte}{
 		$Origin(\vec{e}_{init}), \vec{e}_{init}, Seq(\vec{e}_{init})$
 	}
+	\Comment{The $Seq$ just makes an arbitrary sequence with constand append time}
 	\EndFunction
 	\State
 	\Comment{Finds the xyBorder by maximizing X}
@@ -242,6 +254,25 @@ particiluar figure there exists a unique $xy$-sillhoutte.
 		\Comment{If the loop finds no improvment we've maximized X and are on the border}
 		\State \Return $v_{start}$
 	\EndFunction
+	\Function{findFirstSilhoutteEdge}{$\vec{e}_{start}, \vec{e}_{current}, \vec{e}_{best}$}
+	\If{$\vec{e}_{current}$ is equal to $\vec{e}_{start}$}
+		\State
+		\Return $\vec{e}_{best}$
+	\EndIf
+	\If{$\vec{e}_{current}$ angle compared to the x axis is more shallow than $\vec{e}_{best}$}
+		\State
+		$\vec{e}_{best} \gets \vec{e}_{current}$
+	\EndIf
+	\State
+	\Return \Call{findFirstSilhouteEdge}{$\vec{e}_{start}, Next(Twin(\vec{e}_{current})), \vec{e}_{best}$}
+	\EndFunction
+\end{algorithmic}
+
+\subsubsection{Algorithm}
+Ones initilization is done and we have the first edge that is on the xy
+sillhoutte the findxySilhoutte function is called.
+This is the heart of the algorithm.
+\begin{algorithmic}[1]
 	\Function{findxySilhouette}{$v_{start}, \vec{e}_{current}, S_{result}$}
 	\State
 	\Comment{Base case, passing the start all the way down doesn't require us to do marking}
