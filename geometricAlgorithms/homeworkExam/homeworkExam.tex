@@ -203,16 +203,14 @@ do both 180 degrees you end up looking at the same side. So for this
 particiluar figure there exists a unique $xy$-sillhoutte.
 \newpage
 \subsection{Give an algorithm that detrmines an $xy$-silhouette of a conves polyhedron $P$ in O(n) time}
-%TODO: should we find the side?
-%TODO: walk to the side of the silhoutte
-
-\begin{algorithmic}
+\begin{algorithmic}[1]
 	\State
 	\Comment{Helper function to suffice the contract (init work)}
 	\Function{findxySilAlgoirthm}{$v_{start}$}
 	\State
 	\Comment{Find the border of the silloutte}
 	\State
+	%TODO 
 	$\vec{e}_{init} \gets IncidentEdge(\Call{findxyBorderFirstImprovment}{v_{start}})$
 	\State
 	\Comment{The $Seq$ just makes an arbitrary sequence with constand append time}
@@ -239,7 +237,7 @@ particiluar figure there exists a unique $xy$-sillhoutte.
 				\State
 				\Return \Call{findxyBorderFirstImprovement}{$v_{candidate}$}
 			\EndIf
-		\Until{$\vec{e}_{next}$ is not equal to $\vec{e}_{incident}$}
+		\Until{$\vec{e}_{next}$ is equal to $\vec{e}_{incident}$}
 		\State
 		\Comment{If the loop finds no improvment we've maximized X and are on the border}
 		\State \Return $v_{start}$
@@ -280,7 +278,6 @@ particiluar figure there exists a unique $xy$-sillhoutte.
 	\State
 	\Return \Call{findLeastRotatingEdge}{$\vec{e}_{start},Next(Twin(\vec{e}_{current})),\vec{e}_{best}$}
 	\EndFunction
-	\State 
 \end{algorithmic}
 
 Because the Polyhedron $P$ is convex (so no weird dents), and
@@ -291,18 +288,29 @@ starting point, less chance to shoot yourself in the foot with
 mutable state.
 
 \subsection{Why takes this algorithm linear time}
-Because all operations are linear or faster. In fact the slowest
-operation, the recursive step is in itself linear. It is gauranteed to stop
-as long as it is passed a cycle.
+To determin this lets go over the function and see how much time they each
+maximally can take.
+To start the algorithm you call FindXYSilAlgorithm and pass it a starting
+vertex. Then to find a boundary of the XYsillhoute the
+FindBorderFirstImprovement is used. This tries to maximize X to ensure we
+are on the border of the sillhoutte. It takes any improvement, so it may
+not take the shortest path, but at most it will take $O(N)$ time.
 
+After the border is found we pass it 
 \section{Red and blue lines}
-\subsection{The status structure}
-A binary tree sorted on the x axis.
-The event list is a structure of 
-\subsection{Initialization}
+\begin{algorithmic}[1]
+	\State
+	$P_{ends} \gets R \cup B$ (flat) Mapped to endpoints where each segment
+	produces two end points, the endpoints contain a reference to eachother
+	and they aslo contain which color they are.
+	\State
+	$P_{sorted} \gets P_{ends}$ sorted on Y coordinate.
+	\ForAll{$p_{current} \gets Next(P_{sorted})$}
+	\EndFor
+\end{algorithmic}
 
-\subsection{Distinguish the events and describe for each event how its handled}
-\subsection{Analyze the time}
+The status of the sweep line is a set of linesegments intersecting it at
+its current position. ordered from left to right (x axis).
 
 \section{Polygon cut}
 \section{Diagonal polygon cut}
