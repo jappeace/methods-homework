@@ -327,7 +327,10 @@ FindBorderFirstImprovement is used. This tries to maximize X to ensure we
 are on the border of the sillhoutte. It takes any improvement, so it may
 not take the shortest path, but at most it will take $O(N)$ time.
 
-After the border is found we pass it 
+After the border is found we pass it to the FindXYSilhouette function.
+This funtion will take at most $O(N)$ time, because the function
+istelf will always try to stay at much on the border as possible with help
+of the least rotating edge function. This function traverses
 \section{Red and blue lines}
 \begin{algorithmic}[1]
 	\State
