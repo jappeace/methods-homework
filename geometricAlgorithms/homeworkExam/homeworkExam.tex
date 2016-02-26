@@ -330,22 +330,89 @@ not take the shortest path, but at most it will take $O(N)$ time.
 After the border is found we pass it to the FindXYSilhouette function.
 This funtion will take at most $O(N)$ time, because the function
 istelf will always try to stay at much on the border as possible with help
-of the least rotating edge function. This function traverses
+of the least rotating edge function. This function traverses all connecting
+edges. This sounds like a loop in a loop but it isn't really, because the
+first loop doesn't consider all elements (only the outer ring) and the second
+loop considers the connection in the outer rings. So some elements may be
+considered dubble but this is just one element (the least rotating edge).
+Its also worth noting that the ``inside'' edges may never be considered by
+either of these functions because they try to stay on the outside.
 \section{Red and blue lines}
 \begin{algorithmic}[1]
 	\State
 	$P_{ends} \gets R \cup B$ (flat) Mapped to endpoints where each segment
 	produces two end points, the endpoints contain a reference to eachother
-	and they aslo contain which color they are.
+	and they aslo contain which color they are and are also marked
+	valid.
 	\State
 	$P_{sorted} \gets P_{ends}$ sorted on Y coordinate.
+	\State
+	$S_{tatus} \gets $ empty binary tree that sorts on X axis
+	$S_{result} \gets $ empty list
 	\ForAll{$p_{current} \gets Next(P_{sorted})$}
+		\If{$p_{current}$ is a start point of a blue line}
+			Insert $p_{current}$ into $S_{tatus}$
+		\State
+		\ElsIf{$p_{current}$ is a start point of a red line}
+			\State
+			$t_{neigbours} \gets $ Insert $p_{current}$ into
+			$S_{tatus}$ which returns the left and right neigbours
+			in a tupple
+			\If{$t_{neigbours}$ are not both blue lines}
+				\State
+				$p_{current}$ gets marked invalid.
+			\EndIf
+		\State
+		\ElsIf{$p_{current}$ is an end point of a blue line}
+			\State
+			$t_{neigbours} \gets $ Insert $p_{current}$ into
+			$S_{tatus}$ which returns the left and right neigbours
+			in a tupple
+			\If{$t_{neigbours}$ a red line}
+				\State
+				mark that line invalid if $t_{neigbours}$ does
+				not contain a blue line.
+			\EndIf
+			\State
+			Remove $p_{current}$ and its twin (so the start point) from$S_{tatus}$
+		\State
+		\ElsIf{$p_{current}$ is an end point of a red line}
+			\State
+			$t_{neigbours} \gets $ Insert $p_{current}$ into
+			$S_{tatus}$ which returns the left and right neigbours
+			in a tupple
+			\If{both $t_{neigbours}$ are blue and the twin of $p_{current}$ was still marked valid}
+				Add $p_{current}$ to $S_{result}$
+			\EndIf
+			\State
+			Remove $p_{current}$ and its twin (so the start point) from$S_{tatus}$
+		\EndIf
 	\EndFor
 \end{algorithmic}
 
 The status of the sweep line is a set of linesegments intersecting it at
 its current position. ordered from left to right (x axis).
 
+The events are the beginning of either a red or blue line and the ending of
+a red or blue line.
+
+If the beginning of a blue line is encoutnered it gets inserted into the
+status structure.
+
+If the beginning of a red line is encountered it gets also
+inserted into the status structure, Once inserted we check if the line left
+and right are blue lines, if not we mark it invalid.
+
+If the ending of a blue line is encoured we check its neighbours. If either
+of them are red we make sure the other neigbor is blue, if not we mark the red line as invalid.
+Then we remove the blue line from the status structure.
+
+If the ending of a red line is encounred we check if its invalid,
+if so we remove it from the structure and continue.
+If its not invalid we insert the ending into the status structure.
+If this ending is has a blue two blue lines as neigbors we add it
+to the result set.
+Finally we remove it and continue.
 \section{Polygon cut}
 \section{Diagonal polygon cut}
 \end{document}
