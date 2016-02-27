@@ -4,6 +4,7 @@
 \usepackage{algpseudocode}
 \usepackage{pst-solides3d}
 \usepackage{auto-pst-pdf}
+\usepackage{tikz}
 
 \begin{document}
 \author{Jappie Klooster}
@@ -491,5 +492,40 @@ Plus the initilization:
 \[O((n+m)log(n+m)+2(n+m) 2log(k))\]
 
 \section{Polygon cut}
+Consider the following polygon:
+
+\begin{tikzpicture}
+	\draw (0,1.25) -- (2,1.25) -- (2,0) --
+	 (1,1) -- (0,0) -- cycle;
+\end{tikzpicture}
+
+The best horizontal cut in this case is a cut that looks like so:
+
+\begin{tikzpicture}
+	\draw (0,1.25) -- (2,1.25) -- (2,0) --
+	 (1,1) -- (0,0) -- cycle;
+	 \draw [dotted] (0,1) -- (1,1);
+\end{tikzpicture}
+
+The reason for this is that the two triangles are bigger in area than
+the connecting rectangle. But if we try to cut the entire figure we
+end up with 3 different areas instead of 2. So the best cut we can
+make will end up to  the depth of the trianlge enclave.
+
+Now if you make the rectangle bigger something funny happens:
+
+\begin{tikzpicture}
+	\draw (0,2) -- (2,2) -- (2,0) --
+	 (1,1) -- (0,0) -- cycle;
+	 \draw [dotted] (0,1.25) -- (2,1.25);
+\end{tikzpicture}
+
+The best cut moves up to devide everything perfectly.
+So we get an imperfect cut that *has* to end on a vertex according to
+the lemma. Or we ge a perfect cut that may or may not end on a vertex.
+
 \section{Diagonal polygon cut}
+The most obvious solution is the brute force solution, which involves
+having two loops that compare every possible cut from every vertex.
+and just keep track of the best cut. this will take $O(n^2)$ time.
 \end{document}
