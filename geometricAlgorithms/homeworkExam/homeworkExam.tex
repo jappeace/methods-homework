@@ -14,24 +14,21 @@
 \section{Polyhedron}
 
 \subsection{When is the $xy$-silhouette of a convex polyhedron $P$ is unique}
-%TODO this anwser seems to complex for 0.5 points, maybe I should look in the book
-% TODO: don't give a crappy discription
-%TODO: define uniqueness?
-First we have to define what uniqueness means to anwser this question. I'm 
-assuming uniqueness in this case means an $xy$-silhouette that can only be
+
+Assuming uniqueness in this case means an $xy$-silhouette that can only be
 generated from a polyhedron P when looking at it from a specific angle.
 
 So when projecting a polyhedron P on an $xy$ plane (ie removing the z values).
-you need to have 3 angles. $x$ rotation, $y$ rotation and $z$ rotation.
+You need to have 3 angles. $x$ rotation, $y$ rotation and $z$ rotation.
 
-An $xy$-silhoutte is said to be unique if there is only one set of rotations
-that can generate that sillhouette.
+An $xy$-silhouette is said to be unique if there is only one set of rotations
+that can generate that silhouette.
 
-I had initially some questions about this defintion, because is it not possible
-to always generate another sillouthe by just applying enough rotations.
-So I started drawing a simple sillhoutte, a square with an angle.
+\subsubsection{Not unique}
+A good and simple example of not unique can be seen in figure
+\ref{fig:Not unique} a tetrahedron.
 
-\begin{figure}
+\begin{figure}[h]
 \begin{pspicture}(-2,-2)(3,3)
 \psset{viewpoint=100 0 30,Decran=100}
 \psSolid[object=tetrahedron,
@@ -54,11 +51,23 @@ So I started drawing a simple sillhoutte, a square with an angle.
 		numfaces=all](0, 8, 0)%
 \end{pspicture}
 
+
+\label{fig:Not unique}
 \caption{Not unique}
 \end{figure}
 \newpage
 
-\begin{figure}
+\subsubsection{Unique}
+From the unique tetrahedron I tried making a not unique one, I did
+this initially with blender but later recreated it with the pst-solides3d
+latex package as can be seen in figure \ref{fig:Unique} a malformed
+tetrahedron. The figure will always start from the same side and apply
+rotation on different axis.
+No matter how you rotate the tetrahedron the xy-silhoutte will look
+different until you finish the full rotation.
+
+
+\begin{figure}[h]
 \begin{pspicture}(-2,-2)(3,3)
 \psset{viewpoint=100 0 0,Decran=100}
 \psSolid[object=new,
@@ -196,44 +205,39 @@ So I started drawing a simple sillhoutte, a square with an angle.
        [0 3 1]
        [1 3 2]}](0,9,-8)%
 \end{pspicture}
+\label{fig:Unique}
 \caption{Unique}
 \end{figure}
 
-I did applied similiar rotations for the $x$ and $z$ axis. If you
-do both 180 degrees you end up looking at the same side. So for this
-particiluar figure there exists a unique $xy$-sillhoutte.
+So a polyhedron is xy-axis will be unique trough rotation if there
+exists symmetry in the polyhedron.
 \newpage
-\subsection{Give an algorithm that detrmines an $xy$-silhouette of a conves polyhedron $P$ in O(n) time}
+\subsection{Give an algorithm that determines an $xy$-silhouette of a convex polyhedron $P$ in O(n) time}
 
-\subsubsection{initilization}
-To initialize we consider a function, that receives the first vertex as
+\subsubsection{initialization}
+To initialize we use a function that receives the first vertex as
 described in the assignment.
 
 \begin{algorithmic}[1]
-	\Function{findxySilAlgoirthm}{$v_{start}$}
+	\Function{findxySilAlgorithm}{$v_{start}$}
 	\State
-	\Comment{Find the border of the silloutte}
-	\State
-	%TODO 
 	$\vec{e}_{init} \gets IncidentEdge(\Call{findxyBorderFirstImprovment}{v_{start}})$
 	\State
-	\State
-	\Comment{So now we have an edge comming out of an origin with a
+	\Comment{So now we have an edge coming out of an origin with a
 	maximized x value, however we still have to find the edge that
-	goes over the sillhoutte}
+	goes over the silhouette}
 	\State
 	$\vec{e}_{init} \gets \Call{findFirstSilhouteEdge}{
 		\vec{e}_{init}, Next(Twin(\vec{e}_{init})), \vec{e}_{init}
 	}$
 	\State
 	\State \Return
-	\Call{findxySilhoeutte}{
-		$Origin(\vec{e}_{init}), \vec{e}_{init}, Seq(\vec{e}_{init})$
+	\Call{findxySilhouette}{
+		$Origin(\vec{e}_{init}), \vec{e}_{init}, Seq(Origin(\vec{e}_{init}))$
 	}
-	\Comment{The $Seq$ just makes an arbitrary sequence with constand append time}
 	\EndFunction
 	\State
-	\Comment{Finds the xyBorder by maximizing X}
+	\Comment{Finds the xy-border by maximizing X}
 	\Function{findxyBorderFirstImprovement}{$v_{start}$}
 		\State
 		\Comment{The incident is used to check when we've traversed all edges}
@@ -246,16 +250,16 @@ described in the assignment.
 			$v_{candidate} \gets Origin(Next(\vec{e}_{next}))$
 			\If{$v_{candidate}$ has bigger x than $v_{start}$}
 				\State
-				\Comment{The return statment will break the loop}
+				\Comment{The return statement will break the loop}
 				\State
 				\Return \Call{findxyBorderFirstImprovement}{$v_{candidate}$}
 			\EndIf
 		\Until{$\vec{e}_{next}$ is equal to $\vec{e}_{incident}$}
 		\State
-		\Comment{If the loop finds no improvment we've maximized X and are on the border}
+		\Comment{If the loop finds no improvement we've maximized X and are on the border}
 		\State \Return $v_{start}$
 	\EndFunction
-	\Function{findFirstSilhoutteEdge}{$\vec{e}_{start}, \vec{e}_{current}, \vec{e}_{best}$}
+	\Function{findFirstSilhouetteEdge}{$\vec{e}_{start}, \vec{e}_{current}, \vec{e}_{best}$}
 	\If{$\vec{e}_{current}$ is equal to $\vec{e}_{start}$}
 		\State
 		\Return $\vec{e}_{best}$
@@ -265,13 +269,14 @@ described in the assignment.
 		$\vec{e}_{best} \gets \vec{e}_{current}$
 	\EndIf
 	\State
-	\Return \Call{findFirstSilhouteEdge}{$\vec{e}_{start}, Next(Twin(\vec{e}_{current})), \vec{e}_{best}$}
+	\Return \Call{findFirstSilhouetteEdge}{$\vec{e}_{start}, Next(Twin(\vec{e}_{current})), \vec{e}_{best}$}
 	\EndFunction
 \end{algorithmic}
 
+\newpage
 \subsubsection{Algorithm}
-Ones initilization is done and we have the first edge that is on the xy
-sillhoutte the findxySilhoutte function is called.
+Ones initialization is done and we have the first edge that is on the xy
+silhouette the findxySilhouette function is called.
 This is the heart of the algorithm.
 \begin{algorithmic}[1]
 	\Function{findxySilhouette}{$v_{start}, \vec{e}_{current}, S_{result}$}
@@ -285,11 +290,11 @@ This is the heart of the algorithm.
 	\State
 	$\vec{e}_{next} \gets Next(\vec{e}_{current})$
 	\State
-	\Comment{We use another recursive funtion for this}
+	\Comment{We use another recursive function for this}
 	\State
 	$\vec{e}_{next} \gets \Call{findLeastRotatingEdge}{Twin(\vec{e}_{current}), Next(Twin(\vec{e}_{next})), \vec{e}_{next}}$
 	\State
-	\Return \Call{findxySilhoeutte}{
+	\Return \Call{findxySilhouette}{
 		$v_{start}, \vec{e}_{next}, S_{result} \cup \vec{e}_{current}$
 	}
 	\EndFunction
@@ -312,46 +317,53 @@ This is the heart of the algorithm.
 	\EndFunction
 \end{algorithmic}
 
-Because the Polyhedron $P$ is convex (so no weird dents), and
-the initial vertex $v_{start}$ was already on the boundry this
-alogrithm is correct.
-In class we used marker bits but its simpler to just pass the
-starting point, less chance to shoot yourself in the foot with
-mutable state.
+Because the Polyhedron $P$ is convex  and
+the initial vertex $v_{start}$ was already on the boundary this
+algorithm is correct.
 
 \subsection{Why takes this algorithm linear time}
-To determin this lets go over the function and see how much time they each
+To determine this lets go over the function and see how much time they each
 maximally can take.
-To start the algorithm you call FindXYSilAlgorithm and pass it a starting
-vertex. Then to find a boundary of the XYsillhoute the
+To start the algorithm you call findxySilAlgorithm and pass it a starting
+vertex. Then to find a boundary of the xy-silhouette the
 FindBorderFirstImprovement is used. This tries to maximize X to ensure we
-are on the border of the sillhoutte. It takes any improvement, so it may
+are on the border of the silhouette. It takes any improvement, so it may
 not take the shortest path, but at most it will take $O(N)$ time.
 
-After the border is found we pass it to the FindXYSilhouette function.
-This funtion will take at most $O(N)$ time, because the function
-istelf will always try to stay at much on the border as possible with help
-of the least rotating edge function. This function traverses all connecting
-edges. This sounds like a loop in a loop but it isn't really, because the
-first loop doesn't consider all elements (only the outer ring) and the second
-loop considers the connection in the outer rings. So some elements may be
-considered dubble but this is just one element (the least rotating edge).
-Its also worth noting that the ``inside'' edges may never be considered by
-either of these functions because they try to stay on the outside.
+After the border is found we pass it to the findxySilhouette function.
+This function will take at most $O(N)$ time, this function will always
+tries to stay on the least xy rotation as possible.
+
+This function traverses all connecting edges of the current edge's endpoint,
+so it sounds like we're having an $O(N^2)$ function here, but this isn't the
+case because the outer function doesn't consider all elements
+(only the outer ring) and the second function only considers the local
+connections of the current edge. Because this is a local consideration
+and most of these edges don't overlap (in fact only 2 do per consideration,
+the starting on and the answer), it takes $O(N)$ running time.
+
+So the total running time of this algorithm is:
+
+\[ O(N+N) \]
+
+Which simplifies to:
+
+\[ O(N)\]
+
 \section{Red and blue lines}
-\subsection{algoirthm}
-To design the algorithm I wrote it down in psuedo code:
+\subsection{algorithm}
+To design the algorithm I wrote it down in pseudo code:
 \begin{algorithmic}[1]
 	\State
 	$P_{ends} \gets R \cup B$ (flat) Mapped to endpoints where each segment
-	produces two end points, the endpoints contain a reference to eachother
-	and they aslo contain which color they are and are also marked
+	produces two end points, the endpoints contain a reference to each other
+	and they also contain which color they are and are also marked
 	valid.
 	\State
 	$P_{sorted} \gets P_{ends}$ sorted on Y coordinate.
 	\State
 	$S_{tatus} \gets $ empty binary tree that sorts on X axis, it also
-	returns the two direct neigbours on insert.
+	returns the two direct neighbours on insert.
 	\State
 	$S_{result} \gets $ empty list
 	\For{$p_{current} \gets Next(P_{sorted})$}
@@ -395,11 +407,11 @@ To design the algorithm I wrote it down in psuedo code:
 \end{algorithmic}
 
 \subsection{Status}
-The status of the sweep line is a set of linesegments intersecting it at
+The status of the sweep line is a set of line segments intersecting it at
 its current position. ordered from left to right (x axis).
 
 The status is a binary tree with a special insert operation that also
-returns the neigbours of the inserted element.
+returns the neighbours of the inserted element.
 
 \subsubsection{Structure}
 A node in the binary tree has a reference to a parent, and a left and right child.
@@ -418,24 +430,24 @@ The parent node gets updated to let the right child point at the new
 connection node and the new connection node has as children the old bottom
 element and the newly inserted element.
 
-\paragraph{Neigbours on insert}
-But we defined a special binary tree that will return the neigbours upon
-insertion. So at this point we already found one of the neigbours, to find
-the other one we have to go up again until we can go into the neigbour
+\paragraph{Neighbours on insert}
+But we defined a special binary tree that will return the neighbours upon
+insertion. So at this point we already found one of the neighbours, to find
+the other one we have to go up again until we can go into the neighbour
 direction and this direction is not equal to where we cam from and then go
 all the way in the other direction.
-So if we try to find the right neigbour we go up and try to go to the right
+So if we try to find the right neighbour we go up and try to go to the right
 child, if this is the child where we came from we go up further and try again.
-Until we find the root, which means there is no right neigbor, or until
+Until we find the root, which means there is no right neighbour, or until
 we find a child that is not the direction where we came from, which means
 we have to go left all the way down in the tree.
 
 \subsubsection{Removal}
 Removal is done by finding the node we want to remove, then going to its
-parent parent and saying one the child you came from is equal to its neigbor
+parent parent and saying one the child you came from is equal to its neighbour
 
 \subsubsection{Balancing}
-To ensure $O(log N)$ acces time an AVL implementation
+To ensure $O(log N)$ access time an AVL implementation
 can be used. But I think describing that is somewhat out of the scope
 of this assignment.
 
@@ -443,19 +455,19 @@ of this assignment.
 The events are the beginning of either a red or blue line and the ending of
 a red or blue line.
 
-If the beginning of a blue line is encoutnered it gets inserted into the
+If the beginning of a blue line is encountered it gets inserted into the
 status structure.
 
 If the beginning of a red line is encountered it gets also
 inserted into the status structure, Once inserted we check if the line left
 and right are blue lines, if not we mark it invalid.
 
-If the ending of a blue line is encoured we check its neighbours. If either
-of them are red we make sure the other neigbor is blue, if not we mark the red line as invalid.
+If the ending of a blue line is encountered we check its neighbours. If either
+of them are red we make sure the other neighbour is blue, if not we mark the red line as invalid.
 Then we remove the blue line from the status structure.
 
 If the ending of a red line is encountered we insert the ending into the status structure.
-If this ending has two blue lines as neigbors and its twin point wasn't marked invalid.
+If this ending has two blue lines as neighbours and its twin point wasn't marked invalid.
 to the result set.
 Finally we remove it and continue.
 
@@ -470,24 +482,24 @@ For the algorithm we consider all events which can be expressed as:
 
 \[ 2(n+m) \]
 
-Because for every red $n$ line there are two events, namely the beginpoint and
+Because for every red $n$ line there are two events, namely the begin point and
 end point of that line.
-So we loop trough this and use a binary tree to detirmin if there are neigbours
+So we loop trough this and use a binary tree to determine if there are neigbours
 or not.
 let $k$ be the size of $S_{tatus}$.
-Doing the test for neigbours takes at most:
+Doing the test for neighbours takes at most:
 
 \[2 log(k)\]
 
 Assuming its a balanced tree. Its times 2 because one neigbour is found for
-free on insertion, but for the other neigbor in worst case we have to
+free on insertion, but for the other neighbour in worst case we have to
 consider the entire tree.
 
 So the final running time for the algorithm is:
 
 \[O(2(n+m) 2log(k))\]
 
-Plus the initilization:
+Plus the initialization:
 
 \[O((n+m)log(n+m)+2(n+m) 2log(k))\]
 
@@ -510,7 +522,7 @@ The best horizontal cut in this case is a cut that looks like so:
 The reason for this is that the two triangles are bigger in area than
 the connecting rectangle. But if we try to cut the entire figure we
 end up with 3 different areas instead of 2. So the best cut we can
-make will end up to  the depth of the trianlge enclave.
+make will end up to  the depth of the triangle enclave.
 
 Now if you make the rectangle bigger something funny happens:
 
@@ -520,10 +532,16 @@ Now if you make the rectangle bigger something funny happens:
 	 \draw [dotted] (0,1.25) -- (2,1.25);
 \end{tikzpicture}
 
-The best cut moves up to devide everything perfectly.
+The best cut moves up to divide everything perfectly.
 So we get an imperfect cut that *has* to end on a vertex according to
-the lemma. Or we ge a perfect cut that may or may not end on a vertex.
+the lemma. Or we get a perfect cut that may or may not end on a vertex.
 
+In case we can do a perfect cut, do that.
+If we can't do a perfect cut we have to minimize the largest area,
+so start
+
+\subsection{Vertex types}
+Merge and split by definition, but on occasion a regular may happen to.
 \section{Diagonal polygon cut}
 The most obvious solution is the brute force solution, which involves
 having two loops that compare every possible cut from every vertex.
