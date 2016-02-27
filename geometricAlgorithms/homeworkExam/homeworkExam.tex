@@ -338,6 +338,8 @@ considered dubble but this is just one element (the least rotating edge).
 Its also worth noting that the ``inside'' edges may never be considered by
 either of these functions because they try to stay on the outside.
 \section{Red and blue lines}
+\subsection{algoirthm}
+To design the algorithm I wrote it down in psuedo code:
 \begin{algorithmic}[1]
 	\State
 	$P_{ends} \gets R \cup B$ (flat) Mapped to endpoints where each segment
@@ -347,17 +349,18 @@ either of these functions because they try to stay on the outside.
 	\State
 	$P_{sorted} \gets P_{ends}$ sorted on Y coordinate.
 	\State
-	$S_{tatus} \gets $ empty binary tree that sorts on X axis
+	$S_{tatus} \gets $ empty binary tree that sorts on X axis, it also
+	returns the two direct neigbours on insert.
+	\State
 	$S_{result} \gets $ empty list
-	\ForAll{$p_{current} \gets Next(P_{sorted})$}
+	\For{$p_{current} \gets Next(P_{sorted})$}
 		\If{$p_{current}$ is a start point of a blue line}
 			Insert $p_{current}$ into $S_{tatus}$
 		\State
 		\ElsIf{$p_{current}$ is a start point of a red line}
 			\State
-			$t_{neigbours} \gets $ Insert $p_{current}$ into
-			$S_{tatus}$ which returns the left and right neigbours
-			in a tupple
+			$t_{neigbours} \gets $ Insert $p_{current}$ into $S_{tatus}$
+
 			\If{$t_{neigbours}$ are not both blue lines}
 				\State
 				$p_{current}$ gets marked invalid.
@@ -366,8 +369,7 @@ either of these functions because they try to stay on the outside.
 		\ElsIf{$p_{current}$ is an end point of a blue line}
 			\State
 			$t_{neigbours} \gets $ Insert $p_{current}$ into
-			$S_{tatus}$ which returns the left and right neigbours
-			in a tupple
+			$S_{tatus}$
 			\If{$t_{neigbours}$ a red line}
 				\State
 				mark that line invalid if $t_{neigbours}$ does
@@ -379,8 +381,7 @@ either of these functions because they try to stay on the outside.
 		\ElsIf{$p_{current}$ is an end point of a red line}
 			\State
 			$t_{neigbours} \gets $ Insert $p_{current}$ into
-			$S_{tatus}$ which returns the left and right neigbours
-			in a tupple
+			$S_{tatus}$
 			\If{both $t_{neigbours}$ are blue and the twin of $p_{current}$ was still marked valid}
 				Add $p_{current}$ to $S_{result}$
 			\EndIf
@@ -388,11 +389,56 @@ either of these functions because they try to stay on the outside.
 			Remove $p_{current}$ and its twin (so the start point) from$S_{tatus}$
 		\EndIf
 	\EndFor
+	\State
+	\Return $S_{result}$
 \end{algorithmic}
 
+\subsection{Status}
 The status of the sweep line is a set of linesegments intersecting it at
 its current position. ordered from left to right (x axis).
 
+The status is a binary tree with a special insert operation that also
+returns the neigbours of the inserted element.
+
+\subsubsection{Structure}
+A node in the binary tree has a reference to a parent, and a left and right child.
+A node has a value, which will be used to decide if you have to go left or right.
+The initials node value is just the x coordinate.
+
+\subsubsection{Insertion}
+If another element gets
+inserted we compare its x coordinate with that of the current node. If its
+smaller we go left otherwise right. If x coordinate is equal we use the other
+endpoint's X coordinate as a tie breaker, if that is equal to we look at
+Y coordinate.
+In case we are at the bottom of the tree we create a new connection node
+and take the average of the old bottom element and the inserted element.
+The parent node gets updated to let the right child point at the new
+connection node and the new connection node has as children the old bottom
+element and the newly inserted element.
+
+\paragraph{Neigbours on insert}
+But we defined a special binary tree that will return the neigbours upon
+insertion. So at this point we already found one of the neigbours, to find
+the other one we have to go up again until we can go into the neigbour
+direction and this direction is not equal to where we cam from and then go
+all the way in the other direction.
+So if we try to find the right neigbour we go up and try to go to the right
+child, if this is the child where we came from we go up further and try again.
+Until we find the root, which means there is no right neigbor, or until
+we find a child that is not the direction where we came from, which means
+we have to go left all the way down in the tree.
+
+\subsubsection{Removal}
+Removal is done by finding the node we want to remove, then going to its
+parent parent and saying one the child you came from is equal to its neigbor
+
+\subsubsection{Balancing}
+To ensure $O(log N)$ acces time an AVL implementation
+can be used. But I think describing that is somewhat out of the scope
+of this assignment.
+
+\subsection{Events}
 The events are the beginning of either a red or blue line and the ending of
 a red or blue line.
 
@@ -407,12 +453,43 @@ If the ending of a blue line is encoured we check its neighbours. If either
 of them are red we make sure the other neigbor is blue, if not we mark the red line as invalid.
 Then we remove the blue line from the status structure.
 
-If the ending of a red line is encounred we check if its invalid,
-if so we remove it from the structure and continue.
-If its not invalid we insert the ending into the status structure.
-If this ending is has a blue two blue lines as neigbors we add it
+If the ending of a red line is encountered we insert the ending into the status structure.
+If this ending has two blue lines as neigbors and its twin point wasn't marked invalid.
 to the result set.
 Finally we remove it and continue.
+
+\subsection{Running time}
+To do the plane sweep we first sort the points on Y access. This means
+we have at least already a running time of:
+
+\[ O((n+m) log (n+m))\]
+
+Now the question is can we stay below this for the rest of the algorithm?
+For the algorithm we consider all events which can be expressed as:
+
+\[ 2(n+m) \]
+
+Because for every red $n$ line there are two events, namely the beginpoint and
+end point of that line.
+So we loop trough this and use a binary tree to detirmin if there are neigbours
+or not.
+let $k$ be the size of $S_{tatus}$.
+Doing the test for neigbours takes at most:
+
+\[2 log(k)\]
+
+Assuming its a balanced tree. Its times 2 because one neigbour is found for
+free on insertion, but for the other neigbor in worst case we have to
+consider the entire tree.
+
+So the final running time for the algorithm is:
+
+\[O(2(n+m) 2log(k))\]
+
+Plus the initilization:
+
+\[O((n+m)log(n+m)+2(n+m) 2log(k))\]
+
 \section{Polygon cut}
 \section{Diagonal polygon cut}
 \end{document}
