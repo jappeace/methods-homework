@@ -28,3 +28,16 @@ So in the 3T architecture the reactive skills sortoff work like reflexes?
 They do something and then inform the rest of the architecture they're doing that,
 or do they work more like "autopilot", where it gets assigned a task and the rest
 of the agent can go on and think about other things?
+
+#Understanding each other
+Are programming languages ontologies? Could you use these for agent to
+agent communication? I mean what they describe with OWL looks a lot
+like a type system.
+
+What is the difference between an instance and a class in an ontology?
+#Communication
+What is the difference between language and ontology?
+
+So if you can reduce agent communication to a conventional program
+verification problem, (end of 7.2.2) why is it not clear how to
+do this verification with an agent implemented in Java?
