@@ -524,7 +524,7 @@ the connecting rectangle. But if we try to cut the entire figure we
 end up with 3 different areas instead of 2. So the best cut we can
 make will end up to  the depth of the triangle enclave.
 
-Now if you make the rectangle bigger something funny happens:
+Now if you make the rectangle bigger something happens:
 
 \begin{tikzpicture}
 	\draw (0,2) -- (2,2) -- (2,0) --
@@ -536,14 +536,37 @@ The best cut moves up to divide everything perfectly.
 So we get an imperfect cut that *has* to end on a vertex according to
 the lemma. Or we get a perfect cut that may or may not end on a vertex.
 
-In case we can do a perfect cut, do that.
-If we can't do a perfect cut we have to minimize the largest area,
-so start
+\paragraph{To proof} Given a simple polygon $P$, the best horizontal cut
+has at least one endpoint on a vertex of $P$, or it cuts $P$ into two pieces
+with equal area (or both).
+
+\paragraph{Proof} There are two cases to be proven:
+	In case we can best horizontal cut a polygon $P$ into two equal areas
+	we're done (since in this case there are no restrictions on the best
+	horizontal cut line).
+	In case we can't best horizontal cut polygon $P$ into two equal areas,
+	the best horizontal cut has to minimise the larger area. In this case
+	the best horizontal cut has to end on a vertex of $P$ according to
+	the lemma. To prove this lets assume its not the case we end up of a
+	vertex of $P$.
+	However because the best horizontal cut has to minimize the larger
+	area it will always end up on some sort of angle of the polygon, which
+	is defined by a vertex and it can't equally divide the polygon because
+	that was already handled
+	by case one. So this shows that you end up with a contradiction.
+	This is what had to be shown.
 
 \subsection{Vertex types}
 Merge and split by definition, but on occasion a regular may happen to.
 \section{Diagonal polygon cut}
 The most obvious solution is the brute force solution, which involves
-having two loops that compare every possible cut from every vertex.
-and just keep track of the best cut. this will take $O(n^2)$ time.
+having two loops that compare every possible cut from every vertex,
+while keeping track of the best cut. This will take $O(n^2)$ time.
+
+A faster method is just finding all the merge and split vertexes. Which takes
+$O(n)$ time, and then comparing each of these with all other vertexes and keeping
+track of the best area. This will take at most $O(n+(m+s)n)$
+with $m$ as merge vertexes and $s$ as split vertexes. This is correct because in
+exercise 3.b we determined that the vertexes a best horizontal cut intersects
+with either a merge or split vertex, so the best diagonal cut will to.
 \end{document}
