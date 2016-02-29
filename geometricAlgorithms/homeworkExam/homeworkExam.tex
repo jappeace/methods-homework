@@ -544,17 +544,20 @@ with equal area (or both).
 	In case we can best horizontal cut a polygon $P$ into two equal areas
 	we're done (since in this case there are no restrictions on the best
 	horizontal cut line).
+
 	In case we can't best horizontal cut polygon $P$ into two equal areas,
 	the best horizontal cut has to minimise the larger area. In this case
 	the best horizontal cut has to end on a vertex of $P$ according to
-	the lemma. To prove this lets assume its not the case we end up of a
-	vertex of $P$.
+	the lemma.
+
+	To prove this lets assume its not the case a best horizontal cut's endpoint
+	ends lies on a vertex of $P$ if dividing into two equal areas is impossible.
 	However because the best horizontal cut has to minimize the larger
 	area it will always end up on some sort of angle of the polygon, which
-	is defined by a vertex and it can't equally divide the polygon because
-	that was already handled
-	by case one. So this shows that you end up with a contradiction.
-	This is what had to be shown.
+	is defined by a vertex. It can't equally divide the polygon because
+	that was already handled by case one.
+	So it can't be the case that the best horizontal cut does not
+	end up on a vertex of $P$. This is what had to be shown.
 
 \subsection{Vertex types}
 Merge and split by definition, but on occasion a regular may happen to.
