@@ -41,3 +41,13 @@ What is the difference between language and ontology?
 So if you can reduce agent communication to a conventional program
 verification problem, (end of 7.2.2) why is it not clear how to
 do this verification with an agent implemented in Java?
+
+#Working together
+Can you give examples of problems that can't be solved by homogeneous
+parallelization but still can be solved by agent based parallelization?
+I find it hard to imagine these kind of problems.
+
+Could you also use coordination trough joint intentions with help of Rao and
+Georgeff, or alternatively Karo logic? How would these implementations from CDS or ARCHON.
+Are there any real world examples that do this? (I thought that both Rao 
+and Georgeff and Karo surpassed Cohen and Levesque, remembering the intelligent agents course)
