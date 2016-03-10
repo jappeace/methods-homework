@@ -36,3 +36,6 @@ O(sqrt(n)) O(n^e)
 
 # Composite numbers
 
+
+# TO proof
+word uitgelegd in datastructuren?? miss ff spioneren?
