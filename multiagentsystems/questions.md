@@ -51,3 +51,23 @@ Could you also use coordination trough joint intentions with help of Rao and
 Georgeff, or alternatively Karo logic? How would these implementations from CDS or ARCHON.
 Are there any real world examples that do this? (I thought that both Rao 
 and Georgeff and Karo surpassed Cohen and Levesque, remembering the intelligent agents course)
+
+#Bargaining
+Would it be possible to send a strategy as a message? If so would it be possible
+for agents to lie about these strategies? So in essence create a strategy
+that involves lying about what you're going to do. And then also make it possible
+to send that strategy but then use the initial strategy. So you send a 
+strategy in which you say you're gonna send a strategy which won't be your
+real strategy. But then you go on and using that not real strategy.
+How could you analyse such a strategy?
+
+At 15.3, I don't quite see how this will scale up to more than 2 agents?
+Would it just be a tree like form of sharing? or will there be one task manager?
+How does the flowchart go, for example: some tasks arrive at an agent. Then
+that agent will start negotating with all other agents?
+
+At 15.3.3 Could you give a better example of how hidden tasks work? I mean 
+I understand decoy tasks, the agent just sais he has something else to do
+because he's lazy. But I don't understand where the utility comes from
+in the hidden taks example
+#Arguing
