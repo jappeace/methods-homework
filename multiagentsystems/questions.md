@@ -53,21 +53,23 @@ Are there any real world examples that do this? (I thought that both Rao
 and Georgeff and Karo surpassed Cohen and Levesque, remembering the intelligent agents course)
 
 #Bargaining
-Would it be possible to send a strategy as a message? If so would it be possible
-for agents to lie about these strategies? So in essence create a strategy
-that involves lying about what you're going to do. And then also make it possible
-to send that strategy but then use the initial strategy. So you send a 
-strategy in which you say you're gonna send a strategy which won't be your
-real strategy. But then you go on and using that not real strategy.
-How could you analyse such a strategy?
-
 At 15.3, I don't quite see how this will scale up to more than 2 agents?
 Would it just be a tree like form of sharing? or will there be one task manager?
 How does the flowchart go, for example: some tasks arrive at an agent. Then
-that agent will start negotating with all other agents?
+that agent will start negotiating with all other agents?
 
-At 15.3.3 Could you give a better example of how hidden tasks work? I mean 
-I understand decoy tasks, the agent just sais he has something else to do
+At 15.3.3 Could you give a better example of how hidden tasks work? I mean
+I understand decoy tasks, the agent just says he has something else to do
 because he's lazy. But I don't understand where the utility comes from
-in the hidden taks example
+in the hidden tasks example
+
 #Arguing
+Stamping ones feet seems like a rather ineffective method of argumentation.
+Can you give me some examples of how this would be effective (the visceral mode)?
+It sounds like a stupid question, but maybe the example is wrong could you
+give a better example of the visceral mode?
+
+Humans will often resort to wrong argumentation methods: Such as argumentum ad hominem
+or argumentum ad verecundiam. Is it possible to model these kind of arguments with
+help of Dung style for example? It would be funny if you could create
+some agents that try to resolve conflicts by calling each other names.
