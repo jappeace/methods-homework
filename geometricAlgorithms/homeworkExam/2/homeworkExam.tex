@@ -1,0 +1,43 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{pst-solides3d}
+\usepackage{auto-pst-pdf}
+\usepackage{tikz}
+\usepackage{enumerate}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\begin{document}
+\author{Jappie Klooster}
+\title{Stay in shape! Homework exam II}
+\maketitle
+\section{A disk and some half-planes}
+\subsection{Per case, what can you say about $H$}
+\begin{enumerate}[i]
+	\item \emph{There is no disk that has its centor non the $x$ axis
+			that lies inside all half-planes.}
+
+		There exists some half plan whose's area never crosses the x axis
+		(so is either completly above or below y=0).
+	\item \emph{There are arbitrarly large disk with the specifications.}
+
+		The half planes do not enclose the disk area.
+	\item \emph{The largest disk exists and is unique.}
+
+
+	\item \emph{There are several equally large largest disks}
+\end{enumerate}
+\subsection{Deal with case ii in linear worstcase time}
+\subsection{Formulate and proof the RIC lemma}
+\subsection{Give the RIC algorithm}
+\subsection{Prove the expected running time}
+% Don't forget to remove constants
+\subsection{Eplain why you can't use RIC for points}
+\section{A datastructure for horizontal line segments}
+\subsection{Analyze the storage requirements}
+\subsection{Argue that all horizontal line segs are found}
+\subsection{Give psuedo code for the query algorithm}
+\subsection{Analyze the query time}
+\section{Voronoi nearest neigbour\emph{s}}
+%TODO: wtf? maybe with higher order voronoi?? But it won't be log n
+\end{document}
