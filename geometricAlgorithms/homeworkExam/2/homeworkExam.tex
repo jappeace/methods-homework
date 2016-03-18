@@ -13,42 +13,85 @@
 \maketitle
 \section{A disk and some half-planes}
 \subsection{Per case, what can you say about $H$}
-Let $H_i$ be the intersection of halfplanes of $H$.
+Let $H_{int}$ be the intersection of halfplanes of $H$.
 \begin{enumerate}[i]
 	\item \emph{There is no disk that has its centor non the $x$ axis
 			that lies inside all half-planes.}
 
-		$H_i$ never crosses the x axis,
-		so it exists entirely above or below $y=0$.
+		$H_{int}$ never crosses the x axis,
+		so it exists entirely above or below $y=0$. Or the intersection is empty.
 
 	\item \emph{There are arbitrarly large disk with the specifications.}
 
-		$H_i$ is open on one side with no line parralel to te x axis and
-		each line can at most have $\pi$ radials angle difference
-		compared to the line that is most paralel to the x axis.
+		$H_{int}$ has no parallel line  to te x axis and
+		at most one line crossing the x axis.
 
 	\item \emph{The largest disk exists and is unique.}
 
-		$H_i$ produces an area with no x-axis parralel lines.
+		$H_{int}$ crosses the x-axis at least 2 times and
+		if there is a line parallel to the x axis then both x-axis crossing
+		to be in range of the diameter of the disk.
 
 	\item \emph{There are several equally large largest disks}
 
-		$H_i$ produces an area with x-axis parralel lines.
+		$H_{int}$ produces an area with lines parallel to the x-axis.
 
 \end{enumerate}
 
+\newpage
 \subsection{Deal with case ii in linear worstcase time}
-throw new exception(``done'');
+\begin{algorithmic}[1]
+	\Function{hasArbitrarlylargeDisc}{$H$}
+		\State
+		$b_r, b_l \gets None$
+		\For{$i \gets 1$ to $n$ with $h_i \in H$}
+
+			\If{$h_i$ is parallel to the x-axis}
+				\State
+				\Return $False$
+			\EndIf
+			\State
+			\Comment{Check where the x axes crossings are, and write it into
+			a variable pair, if both pairs are filled its not case ii.}
+			\If{$h_i$ points left}
+			\State
+				$b_r \gets h_i$
+			\EndIf
+			\If{$h_i$ points right}
+			\State
+				$b_l \gets h_i$
+			\EndIf
+			\If{$b_r$ not equal to $None$ and $b_l$ not equal to $None$}
+				\State
+				\Return $False$
+			\EndIf
+		\EndFor
+		\State
+		\Return $True$
+	\EndFunction
+	\State 
+	\State 
+\end{algorithmic}
 \subsection{Formulate and proof the RIC lemma}
+%TODO: een beeetje overtypen van 4.5
+Let $1 \leq i \leq n$, and let $c_i$ be the 
+
 \subsection{Give the RIC algorithm}
+
 \subsection{Prove the expected running time}
 % Don't forget to remove constants
 \subsection{Eplain why you can't use RIC for points}
 \section{A datastructure for horizontal line segments}
+
 \subsection{Analyze the storage requirements}
+%TODO: warning: this is x and y descisions.
 \subsection{Argue that all horizontal line segs are found}
 \subsection{Give psuedo code for the query algorithm}
+%TODO: sla lijnen op geen punten.
+
 \subsection{Analyze the query time}
+
 \section{Voronoi nearest neigbour\emph{s}}
 %TODO: wtf? maybe with higher order voronoi?? But it won't be log n
+%TODO: we hebben ook bogen. Kun je representateren als een lijn en een punt.
 \end{document}
