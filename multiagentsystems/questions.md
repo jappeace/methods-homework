@@ -73,3 +73,27 @@ Humans will often resort to wrong argumentation methods: Such as argumentum ad h
 or argumentum ad verecundiam. Is it possible to model these kind of arguments with
 help of Dung style for example? It would be funny if you could create
 some agents that try to resolve conflicts by calling each other names.
+
+# Logical foundation
+I'm interested in the refinement methodology. Coming from software
+engineering we used different techniques to design large systems.
+(Basically we would prioritize requirements and would work from high
+to low and call it SCRUM to sound fancy). Could you give an example
+how this works for a simple system? (for example the functional one)
+
+Considering the book is several years old, has there been any progress
+on model checking? It seems like a really good methodology to do unit/integration
+testing with (or even build into a type checker for a compiler).
+
+# A logic for normative multi-agent programs
+
+# Social norms
+
+# How to social goal
+
+# On the logic of normative systems
+
+# Power in game forms
+
+# Designing intelligent gameplay
+
