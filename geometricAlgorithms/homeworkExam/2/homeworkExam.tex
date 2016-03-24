@@ -13,28 +13,35 @@
 \maketitle
 \section{A disk and some half-planes}
 \subsection{Per case, what can you say about $H$}
-Let $H_{int}$ be the intersection of halfplanes of $H$.
+We number the half-planes of $H$: $h_1, h_2,\dots,h_i$.
+Let $H_{i}$ be the set of the first $i$ constraints with special constraints
+$x_1$ and $x_2$ both one unit away from the x axis and pointing to the x
+axis, and
+let $C_{i}$ be the feasible region defined by these constranits:
+
+\[ H_i := \{x_1, x_2, h_1, h_2,\dots, h_i\}\]
+\[ C_i := x_1 \cap x_2 \cap h_1 \cap h_2 \cap \dots \cap h_i\]
+
 \begin{enumerate}[i]
 	\item \emph{There is no disk that has its centor non the $x$ axis
 			that lies inside all half-planes.}
 
-		$H_{int}$ never crosses the x axis,
-		so it exists entirely above or below $y=0$. Or the intersection is empty.
+	The intersection $C_i$ is empty.
 
 	\item \emph{There are arbitrarly large disk with the specifications.}
 
-		$H_{int}$ has no parallel line  to te x axis and
+		$C_i$ has no parallel line  to te x axis and
 		at most one line crossing the x axis.
 
 	\item \emph{The largest disk exists and is unique.}
 
-		$H_{int}$ crosses the x-axis at least 2 times and
+		$C_i$ crosses the x-axis at least 2 times and
 		if there is a line parallel to the x axis then both x-axis crossing
 		to be in range of the diameter of the disk.
 
 	\item \emph{There are several equally large largest disks}
 
-		$H_{int}$ produces an area with lines parallel to the x-axis.
+		$C_i$ produces an area with lines parallel to the x-axis.
 
 \end{enumerate}
 
@@ -69,12 +76,15 @@ Let $H_{int}$ be the intersection of halfplanes of $H$.
 		\State
 		\Return $True$
 	\EndFunction
-	\State 
-	\State 
 \end{algorithmic}
 \subsection{Formulate and proof the RIC lemma}
 %TODO: een beeetje overtypen van 4.5
-Let $1 \leq i \leq n$, and let $c_i$ be the 
+Let $1 \leq i \leq n$, let $C_i$ be the defined as above and let $d_i$ be
+the largest disk in $C_i$. Then we have
+\begin{enumerate}[i]
+	\item If $d_{i-1} \in h_{i},$ $then$ $d_i = d_{i-1}$
+	\item If $d_{i-1} \in h_{i},$ $then$ $d_i = d_{i-1}$
+\end{enumerate}
 
 \subsection{Give the RIC algorithm}
 
