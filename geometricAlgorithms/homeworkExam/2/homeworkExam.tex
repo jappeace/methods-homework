@@ -14,19 +14,18 @@
 \section{A disk and some half-planes}
 \subsection{Per case, what can you say about $H$}
 We number the half-planes of $H$: $h_1, h_2,\dots,h_i$.
-Let $H_{i}$ be the set of the first $i$ constraints with special constraints
-$x_1$ and $x_2$ both one unit away from the x axis and pointing to the x
-axis, and
+Let $H_{i}$ be the set of the first $i$ constraints, and
 let $C_{i}$ be the feasible region defined by these constranits:
 
-\[ H_i := \{x_1, x_2, h_1, h_2,\dots, h_i\}\]
-\[ C_i := x_1 \cap x_2 \cap h_1 \cap h_2 \cap \dots \cap h_i\]
+\[ H_i := \{h_1, h_2,\dots, h_i\}\]
+\[ C_i := h_1 \cap h_2 \cap \dots \cap h_i\]
 
 \begin{enumerate}[i]
 	\item \emph{There is no disk that has its centor non the $x$ axis
 			that lies inside all half-planes.}
 
-	The intersection $C_i$ is empty.
+		$C_i$ never crosses the x axis,
+		so it exists entirely above or below $y=0$. Or the intersection is empty.
 
 	\item \emph{There are arbitrarly large disk with the specifications.}
 
