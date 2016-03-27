@@ -85,7 +85,17 @@ Considering the book is several years old, has there been any progress
 on model checking? It seems like a really good methodology to do unit/integration
 testing with (or even build into a type checker for a compiler).
 
-# A logic for normative multi-agent programs
+#  A logic for normative multi-agent programs
+In figure 1, if agents have no access to the counts-as rules, how are they supposed to know which norms should be followed.
+Or are the agents supposed to figure out what is allowed and what isn't just by doing things wrong and getting sanctions?
+
+Honestly I skimmed most of chapter 4, because its a little to logical for me.
+But then I saw 4.5 Does this chapter mean that you could build a type-checker
+for these "semantics", in that you get some compile error if you do something,
+stupid (such as talking about rules that don't exist). As a programmer I really
+like type checkers. Another example if you use an instance of this syntax
+and try to let your agent borrow a book without being registered,
+could you get a type error?
 
 # Social norms
 
