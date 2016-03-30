@@ -20,7 +20,7 @@ let $C_{i}$ be the feasible region defined by these constranits:
 \[ H_i := \{h_1, h_2,\dots, h_i\}\]
 \[ C_i := h_1 \cap h_2 \cap \dots \cap h_i\]
 
-\begin{enumerate}[i]
+\begin{enumerate}[(i)]
 	\item \emph{There is no disk that has its centor non the $x$ axis
 			that lies inside all half-planes.}
 
@@ -77,12 +77,29 @@ let $C_{i}$ be the feasible region defined by these constranits:
 	\EndFunction
 \end{algorithmic}
 \subsection{Formulate and proof the RIC lemma}
-%TODO: een beeetje overtypen van 4.5
+\paragraph{Lemma}
 Let $1 \leq i \leq n$, let $C_i$ be the defined as above and let $d_i$ be
 the largest disk in $C_i$. Then we have
-\begin{enumerate}[i]
-	\item If $d_{i-1} \in h_{i},$ $then$ $d_i = d_{i-1}$
-	\item If $d_{i-1} \in h_{i},$ $then$ $d_i = d_{i-1}$
+\begin{enumerate}[(i)]
+	\item If $d_{i-1} \in h_i,$ $then$ $d_i = d_{i-1}$
+%TODO: C = nill? dat klopt volgens mij niet
+	\item If $d_{i-1} \not\in h_{i},$ $then$ $C_i = \emptyset$
+		or $b_i \in l_i$ where $b_i$ is the boundary of $d_i$ and $l_i$
+		is the line bounding $h_i$.
+\end{enumerate}
+\paragraph{Proof}
+\begin{enumerate}[(i)]
+	\item Let $d_{i-1} \in h_i$. Because $C_i = C_{i-1}\cap h_i$ and
+		$d_{i-1} \in C_{i-1}$. Furtheremore,the optimal disk in $C_i$
+		cannot be better than the optimal disk in $C_{i-1}$, since
+		$C_i \subseteq C_{i-1}$. Hence, $d_{i-1}$ is the optimal disk
+		in $C_i$ as well.
+	\item Let $d_{i-1} \not\in h_{i}$. Suppose for a contradiction that
+		$C_i \not\emptyset$ and that $b_i \not\in l_i$. Now consider
+		the line segment $\overline{cx_{i-1}cx_i}$ where $cx_i$ is the
+		center on the x-axis of disk $d_i$. We have
+		$d_{i-1} \in C_{i-1}$ and, since $C_i \subset C_{i-1}$, also
+		$d_i \in C_{i-1}$. 
 \end{enumerate}
 
 \subsection{Give the RIC algorithm}
