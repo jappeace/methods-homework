@@ -20,26 +20,30 @@ let $C_{i}$ be the feasible region defined by these constranits:
 \[ H_i := \{h_1, h_2,\dots, h_i\}\]
 \[ C_i := h_1 \cap h_2 \cap \dots \cap h_i\]
 
+And so $C$ is $\cap H$.
+
 \begin{enumerate}[(i)]
 	\item \emph{There is no disk that has its centor non the $x$ axis
 			that lies inside all half-planes.}
 
-		$C_i$ does not intersect the x axis. So its either an empty set or entirly above or below the x axis.
+		$C$ does not intersect the x axis. So its either an empty set or entirly above or below the x axis.
 
-	\item \emph{There are arbitrarly large disk with the specifications.}
+	\item \emph{There lare arbitrarly large disk with the specifications.}
 
-		$C_i$ has no parallel line  to te x axis and
-		at most one line crossing the x axis.
+		$C$ has no parallel bounds to te x axis and
+		at most one bounding linesegment crossing the x axis.
 
 	\item \emph{The largest disk exists and is unique.}
 
-		$C_i$ crosses the x-axis at least 2 times and
-		if there is a line parallel to the x axis then both x-axis crossing
-		to be in range of the diameter of the disk.
+		$C$ bounding linesegments cross the x-axis 2 times and
+			the disk border is intersected at least 2 times by non x axis
+			parralel bounding linesegments.
 
 	\item \emph{There are several equally large largest disks}
 
-		$C_i$ produces an area with lines parallel to the x-axis.
+		$C$ produces an area with one or two bounding linesgments
+		parallel to the x-axis and these linesegment intersect the border
+		of the possible disks.
 
 \end{enumerate}
 
@@ -81,13 +85,11 @@ Let $1 \leq i \leq n$, let $C_i$ be the defined as above and let $d_i$ be
 the largest disk in $C_i$. Then we have
 \begin{enumerate}[(i)]
 	\item If $d_{i-1} \subset h_i,$ $then$ $d_i = d_{i-1}$
-%TODO: C = nill? dat klopt volgens mij niet
 	\item If $d_{i-1} \not\subset h_{i},$ $then$ $C_i$ does not intersect the x-axis
 		or $b_i \cap l_i \neq \emptyset$ where $b_i$ is the boundary of $d_i$ and $l_i$
 		is the line bounding $h_i$.
 \end{enumerate}
 \paragraph{Proof}
-\newpage
 \begin{enumerate}[(i)]
 	\item Let $d_{i-1} \subset h_i$. Because $C_i = C_{i-1}\cap h_i$ and
 		$d_{i-1} \subset C_{i-1}$ this means that $d_{i-1} \subset C_i$.
@@ -131,8 +133,9 @@ the largest disk in $C_i$. Then we have
 		\For{$i\gets 1$ to $n$ with $h_i \in H_r$}
 			\State
 			$d_i \gets d_{i-1}$
-			\If{$d_{i-1} \not\in h_i$}
-				$d_i \gets$
+			\If{$d_{i-1} \not\subset h_i$}
+			\State
+			$d_i \gets createLargestDiskFrom(h_i, \{h_0\dots,h_{i-1}\})$
 			\EndIf
 		\EndFor
 	\EndFunction
@@ -140,6 +143,8 @@ the largest disk in $C_i$. Then we have
 
 \subsection{Prove the expected running time}
 % Don't forget to remove constants
+
+
 \subsection{Eplain why you can't use RIC for points}
 \section{A datastructure for horizontal line segments}
 
