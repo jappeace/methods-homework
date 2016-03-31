@@ -137,9 +137,40 @@ the largest disk in $C_i$. Then we have
 			$d_i \gets d_{i-1}$
 			\If{$d_{i-1} \not\subset h_i$}
 			\State
-			$d_i \gets createLargestDiskFrom(h_i, \{h_0\dots,h_{i-1}\})$
+			$d_i \gets calculateBiggestDisk(h_i, \{h_0\dots,h_{i-1}\})$
 			\EndIf
 		\EndFor
+	\EndFunction
+	\Function{calulateBiggestDisk}{$h_{bound}$,$H_{prev}$}
+		\State
+		$d_0 \gets arbitrarlyLargeDisk()$
+		\For{$i\gets 1$ to $n$ with $h_i \in H_{prev}$}
+			\State
+			$d_i \gets d_{i-1}$
+			\If{$h_i$ does not point in the same direction as $h_{bound}$}
+			\If{$d_{i-1} \not\subset h_i$}
+				\If{$h_i \cap h_{bound}$ does not intersect the x-axis}
+					\State
+					\Return $None$
+				\EndIf
+				\If{$h_i$ is parralel to the x axis}
+					%TODO: parralel to x axis!
+					$d_i \gets$ Calulate the largest disk by
+					creating an imaginary triangle with vertex $a$ being the
+					intersection between $l_i$ and $l_{bound}$ and vertex $b$
+				\Else
+					$d_i \gets$ Calulate the largest disk by
+					creating an imaginary triangle with vertex $a$ being the
+					intersection between $l_i$ and $l_{bound}$ and vertex $b$
+					and $c$ being the $-Ycoordinate(a)$ equal to $l_i$ and
+					$l_{bound}$ respectivily. (because you use negative Y
+					coordinate the disk center will always be on the x axis).
+				\EndIf
+				\State
+			\EndIf
+			\EndIf
+		\EndFor
+
 	\EndFunction
 \end{algorithmic}
 
