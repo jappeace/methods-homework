@@ -24,8 +24,7 @@ let $C_{i}$ be the feasible region defined by these constranits:
 	\item \emph{There is no disk that has its centor non the $x$ axis
 			that lies inside all half-planes.}
 
-		$C_i$ never crosses the x axis,
-		so it exists entirely above or below $y=0$. Or the intersection is empty.
+		$C_i$ does not intersect the x axis. So its either an empty set or entirly above or below the x axis.
 
 	\item \emph{There are arbitrarly large disk with the specifications.}
 
@@ -81,28 +80,63 @@ let $C_{i}$ be the feasible region defined by these constranits:
 Let $1 \leq i \leq n$, let $C_i$ be the defined as above and let $d_i$ be
 the largest disk in $C_i$. Then we have
 \begin{enumerate}[(i)]
-	\item If $d_{i-1} \in h_i,$ $then$ $d_i = d_{i-1}$
+	\item If $d_{i-1} \subset h_i,$ $then$ $d_i = d_{i-1}$
 %TODO: C = nill? dat klopt volgens mij niet
-	\item If $d_{i-1} \not\in h_{i},$ $then$ $C_i = \emptyset$
-		or $b_i \in l_i$ where $b_i$ is the boundary of $d_i$ and $l_i$
+	\item If $d_{i-1} \not\subset h_{i},$ $then$ $C_i$ does not intersect the x-axis
+		or $b_i \cap l_i \neq \emptyset$ where $b_i$ is the boundary of $d_i$ and $l_i$
 		is the line bounding $h_i$.
 \end{enumerate}
 \paragraph{Proof}
+\newpage
 \begin{enumerate}[(i)]
-	\item Let $d_{i-1} \in h_i$. Because $C_i = C_{i-1}\cap h_i$ and
-		$d_{i-1} \in C_{i-1}$. Furtheremore,the optimal disk in $C_i$
+	\item Let $d_{i-1} \subset h_i$. Because $C_i = C_{i-1}\cap h_i$ and
+		$d_{i-1} \subset C_{i-1}$ this means that $d_{i-1} \subset C_i$.
+		Furtheremore,the optimal disk in $C_i$
 		cannot be better than the optimal disk in $C_{i-1}$, since
 		$C_i \subseteq C_{i-1}$. Hence, $d_{i-1}$ is the optimal disk
 		in $C_i$ as well.
-	\item Let $d_{i-1} \not\in h_{i}$. Suppose for a contradiction that
-		$C_i \not\emptyset$ and that $b_i \not\in l_i$. Now consider
-		the line segment $\overline{cx_{i-1}cx_i}$ where $cx_i$ is the
-		center on the x-axis of disk $d_i$. We have
-		$d_{i-1} \in C_{i-1}$ and, since $C_i \subset C_{i-1}$, also
-		$d_i \in C_{i-1}$. 
-\end{enumerate}
+%TODO: replace with using a line between center(d_{i-1}) and
+%		center(d_i) then reason about how d_i will keep growing
+%		 until it hits h_i.
+	\item Let $d_{i-1} \not\subset h_{i}$. Suppose for a contradiction that
+		$C_i$ intersects the x-axis and that $b_i \cap l_i = \emptyset$.
+		Consider the linesegment $s$ between $center(d_i)$ and 
+		$center(d_{i-1})$.
+		Where $center$ is a function that returns the center vertex of a disk.
+		We have $d_{i-1} \subset C_{i-1}$ and
+		since $C_i \subseteq C_{i-1}$, also $d_i \subset C_{i-1}$.
+		Together with the convexity of $C_{i-1}$, this implies that
+		the line segment $s$ is contained within $C_{i-1}$.
+		Since $d_{i-1}$ is the optimal disk in $C_{i-1}$ and the optimum is to
+		maximize $r_i$ the radius of $d_i$. Consider $d_i$
+		where $s$ is maximized, now to increase $r_i$ we move $d_i$ along $s$,
+		we can keep doing this until $b_i \cap h_i$.
+		So $d_i$ needs to intersect $h_i$ otherwise $d_i$ is not the optimum
+		disk in $C_i$. This shows it cannot be the case that $C_i$ intersects
+		the x-axis and $b_i\cap l_i = \emptyset$.
 
+\end{enumerate}
 \subsection{Give the RIC algorithm}
+
+\begin{algorithmic}[1]
+	\Function{calulateBiggestDisk}{$H$}
+		\State
+		$d_0 \gets arbitrarlyLargeDisk()$
+		\If{hasArbitrarlylargeDisc($H$)}
+			\State
+			\Return $d_0$
+		\EndIf
+		\State
+		$H_r \gets$ random shuffle $H$
+		\For{$i\gets 1$ to $n$ with $h_i \in H_r$}
+			\State
+			$d_i \gets d_{i-1}$
+			\If{$d_{i-1} \not\in h_i$}
+				$d_i \gets$
+			\EndIf
+		\EndFor
+	\EndFunction
+\end{algorithmic}
 
 \subsection{Prove the expected running time}
 % Don't forget to remove constants
