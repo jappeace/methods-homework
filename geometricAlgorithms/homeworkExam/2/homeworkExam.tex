@@ -138,6 +138,10 @@ the largest disk in $C_i$. Then we have
 			\If{$d_{i-1} \not\subset h_i$}
 			\State
 			$d_i \gets calculateBiggestDisk(h_i, \{h_0\dots,h_{i-1}\})$
+			\If{$d_i = None$}
+				\State
+				\Return $None$
+			\EndIf
 			\EndIf
 		\EndFor
 	\EndFunction
@@ -154,17 +158,12 @@ the largest disk in $C_i$. Then we have
 					\Return $None$
 				\EndIf
 				\If{$h_i$ is parralel to the x axis}
+				\State
 					%TODO: parralel to x axis!
-					$d_i \gets$ Calulate the largest disk by
-					creating an imaginary triangle with vertex $a$ being the
-					intersection between $l_i$ and $l_{bound}$ and vertex $b$
+				$d_i \gets$ Calulate the leftmost largest disk in $h_{bound} \cap h_{i}$
 				\Else
-					$d_i \gets$ Calulate the largest disk by
-					creating an imaginary triangle with vertex $a$ being the
-					intersection between $l_i$ and $l_{bound}$ and vertex $b$
-					and $c$ being the $-Ycoordinate(a)$ equal to $l_i$ and
-					$l_{bound}$ respectivily. (because you use negative Y
-					coordinate the disk center will always be on the x axis).
+				\State
+				$d_i \gets$ Calulate the largest disk in $h_{bound} \cap h_{i}$
 				\EndIf
 				\State
 			\EndIf
