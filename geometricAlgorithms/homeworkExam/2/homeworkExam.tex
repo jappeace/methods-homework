@@ -123,7 +123,7 @@ the largest disk in $C_i$. Then we have
 \subsection{Give the RIC algorithm}
 
 \begin{algorithmic}[1]
-	\Function{calulateBiggestDisk}{$H$}
+	\Function{calculateBiggestDisk}{$H$}
 		\State
 		$d_0 \gets arbitrarlyLargeDisk()$
 		\If{hasArbitrarlylargeDisc($H$)}
@@ -145,7 +145,7 @@ the largest disk in $C_i$. Then we have
 			\EndIf
 		\EndFor
 	\EndFunction
-	\Function{calulateBiggestDisk}{$h_{bound}$,$H_{prev}$}
+	\Function{calculateBiggestDisk}{$h_{bound}$,$H_{prev}$}
 		\State
 		$d_0 \gets arbitrarlyLargeDisk()$
 		\For{$i\gets 1$ to $n$ with $h_i \in H_{prev}$}
@@ -159,11 +159,11 @@ the largest disk in $C_i$. Then we have
 				\EndIf
 				\If{$h_i$ is parralel to the x axis}
 				\State
-					%TODO: parralel to x axis!
-				$d_i \gets$ Calulate the leftmost largest disk in $h_{bound} \cap h_{i}$
+				%TODO, the calculation with math?
+				$d_i \gets$ Calculate the leftmost largest disk in $h_{bound} \cap h_{i}$
 				\Else
 				\State
-				$d_i \gets$ Calulate the largest disk in $h_{bound} \cap h_{i}$
+				$d_i \gets$ Calculate the largest disk in $h_{bound} \cap h_{i}$
 				\EndIf
 				\State
 			\EndIf
@@ -175,7 +175,8 @@ the largest disk in $C_i$. Then we have
 
 \subsection{Prove the expected running time}
 % Don't forget to remove constants
-
+We will prove that a$calculateBiggestDisk(H)$ will run in $O(n)$ expected
+time with help of backwards analises.
 
 \subsection{Eplain why you can't use RIC for points}
 \section{A datastructure for horizontal line segments}
