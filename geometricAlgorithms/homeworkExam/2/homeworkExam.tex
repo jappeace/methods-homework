@@ -137,15 +137,17 @@ the largest disk in $C_i$. Then we have
 			$d_i \gets d_{i-1}$
 			\If{$d_{i-1} \not\subset h_i$}
 			\State
-			$d_i \gets calculateBiggestDisk(h_i, \{h_0\dots,h_{i-1}\})$
+			$d_i \gets calculateBiggestDiskFrom(h_i, \{h_0\dots,h_{i-1}\})$
 			\If{$d_i = None$}
 				\State
 				\Return $None$
 			\EndIf
 			\EndIf
 		\EndFor
+		\State
+		\Return $d_n$
 	\EndFunction
-	\Function{calculateBiggestDisk}{$h_{bound}$,$H_{prev}$}
+	\Function{calculateBiggestDiskFrom}{$h_{bound}$,$H_{prev}$}
 		\State
 		$d_0 \gets arbitrarlyLargeDisk()$
 		\For{$i\gets 1$ to $n$ with $h_i \in H_{prev}$}
@@ -169,16 +171,67 @@ the largest disk in $C_i$. Then we have
 			\EndIf
 			\EndIf
 		\EndFor
-
+		\State
+		\Return $d_n$
 	\EndFunction
 \end{algorithmic}
 
 \subsection{Prove the expected running time}
+It should be noted that both $calculateBiggestDisk(H)$ and
+$calculateBiggestDiskFrom(h,H)$ are both linear time functions.
+And so worst case $calculateBiggestDisk(H)$ is worst case:
+
+\[O(n^2)\]
+
 % Don't forget to remove constants
-We will prove that a$calculateBiggestDisk(H)$ will run in $O(n)$ expected
-time with help of backwards analises.
+We will prove that a$calculateBiggestDisk(H)$ will run in $\Theta(n)$ expected
+time with help of backwards analises: Consider the situation after $h_i$ is
+inserted, and $d_i$ is computed (either by $d_i = d_{i-1}$ or with help
+of $calculateBiggestDiskFrom(h_i,H)$). If $h_i$ does not bound the feasible
+region, or $d_i \subset h_i$, then the addition step was cheap
+and took $\Theta(1)$ time. But if $d_i \not\subset h_i$ then the addition
+step was expensive.
+
+There are $i$ half-planes that could have been defining $d_i$, and $i-2$
+of these are in random order. Since the order was reandom eacho of the $i-2$
+half-planes has the same probability to be the last one added, and only
+$\leq$ 2 of these cause the expensive step.
+
+Excpected time for $i$-th addition:
+
+\[\frac{i-4}{i-2}\cdot\Theta(1)+\frac{2}{i-2}\cdot\Theta(i)=\Theta(1)\]
+
+Total expected running time:
+
+\[3\Theta(n) = \Theta(n)\]
 
 \subsection{Eplain why you can't use RIC for points}
+To create a RIC algorithm with linear expected time we need to have the
+following properties, lets go trough each of one to see if they get violated.
+
+\begin{itemize}
+	\item \emph{The test wether the next input object violates the current
+		optimum must be possible and fast.}
+		This is true for this problem. Checking if a point is inside a disk
+		is trivially easy.
+	\item \emph{If the next input boject violates the current optimum,
+		finding the new optimum must be an easier problem than the general
+		problem.}
+		This is the violating property. because you can still move
+		the disk having a point violate the current disk may not be a point
+		wich with the disks boundary has to intersect.
+
+		A more crude way to put it is that you can have multiple optimum
+		that don't intersect the same points.
+	\item \emph{The optimum must already be defined by O(1) of the input
+		objects.}
+		I think this is true, you can use some math to figure out a new
+		optimum.
+	\item \emph{The analysis must work out.}
+		It doesn't work out because you can't gaurantee that you've just
+		found a local optimum instead of a global optimum. I mean you
+		could use this as a heuristic but not as an anwser.
+\end{itemize}
 \section{A datastructure for horizontal line segments}
 
 \subsection{Analyze the storage requirements}
@@ -186,6 +239,7 @@ time with help of backwards analises.
 \subsection{Argue that all horizontal line segs are found}
 \subsection{Give psuedo code for the query algorithm}
 %TODO: sla lijnen op geen punten.
+
 
 \subsection{Analyze the query time}
 
