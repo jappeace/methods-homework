@@ -252,8 +252,10 @@ This results in the following order of storage:
 
 
 \subsection{Argue that all horizontal line segs are found}
-All line segments are found because the binary search tree will
-select as many as possible y based nodes and then ask the 
+All lines are found because the outer tree just selects based on the y range
+as soon as a split node is encountered its starts reporting.
+Then the $x$ interval tree will filter out all lines that are not on
+the x at that level.
 
 \newpage
 \subsection{Give psuedo code for the query algorithm}
