@@ -252,12 +252,15 @@ This results in the following order of storage:
 
 
 \subsection{Argue that all horizontal line segs are found}
-All lines are found because the outer tree just selects based on the y range
-as soon as a split node is encountered its starts reporting.
-Then the $x$ interval tree will filter out all lines that are not on
-the x at that level.
+The outer tree will not start reporting untill it encounters a
+split node. Then it will only report the inner tree if the
+value of the nodes fall in the range of the query. So for
+the $[y:y']$ part of the query the algorithm is correct.
 
-\newpage
+The intervall tree for the $x$ part of the query will start
+reporting as soon as it encounters a decision. However it
+will only report the linesegements that intersect with $x$.
+
 \subsection{Give psuedo code for the query algorithm}
 \begin{algorithmic}[1]
 	\Function{select}{$v$, $x \times [y:y']$}
@@ -276,27 +279,51 @@ the x at that level.
 		\State
 		\Comment{If we get here it means we have a split node}
 		\State
-		\Return $\Call{selectSide}{v, x\times y, c_{right}}\cup
-		\Call{selectSide}{v,x\times y', c_{left}}$
+		\Return $\Call{reportLeft}{v, x\times y, c_{right}}\cup
+		\Call{reportRight}{v,x\times y', c_{left}}$
 	\EndFunction
-	\State
-	\Comment{$d_{irection}$ is a function that indicates which side we're reporting}
-	\Function{selectSide}{$v$, $x \times y$, $d_{irection}$}
+	\algstore{tree}
+\end{algorithmic}
+\newpage
+\begin{algorithmic}[1]
+	\algrestore{tree}
+	\Function{reportRight}{$v$, $x \times y$}
+		\State
+		$\phi \gets y \leq y_{val}(v)$
 		\If{$isLeaf(v)$}
+			\If{$\phi$}
+				\State
+				\Return $\Call{selectRange}{subtree(v),x}$
+			\EndIf
 			\State
 			\Return $\emptyset$
 		\EndIf
-		\If{$y \leq y_{val}(v)$}
+		\If{$\phi$}
 		\State
-		\Comment{`$opposite$' is a function that flips $d_{irection}$.}
-		\State
-		\Comment{So if $d_{irection}$ is $c_{right}$, $opposite(d_{irection})$ is $c_{left}$.}
-		\State
-		\Return $\Call{selectSide}{opposite(d_{irection})(v), x \times y} \cup
-		\Call{selectRange}{d_{irection}(v),x}$
+		\Return $\Call{reportRight}{c_{left}(v), x \times y} \cup
+		\Call{selectRange}{subtree(c_{right}(v)),x}$
 		\EndIf
 		\State
-		\Return $\Call{selectSide}{d_{irection}(v), x \times y}$
+		\Return $\Call{reportRight}{c_{right}(v), x \times y}$
+	\EndFunction
+	\Function{reportLeft}{$v$, $x \times y$}
+		\State
+		$\phi \gets y > y_{val}(v)$
+		\If{$isLeaf(v)$}
+			\If{$\phi$}
+				\State
+				\Return $\Call{selectRange}{subtree(v),x}$
+			\EndIf
+			\State
+			\Return $\emptyset$
+		\EndIf
+		\If{$\phi$}
+		\State
+		\Return $\Call{reportLeft}{c_{right}(v), x \times y} \cup
+		\Call{selectRange}{subtree(c_{left}(v)),x}$
+		\EndIf
+		\State
+		\Return $\Call{reportLeft}{c_{left}(v), x \times y}$
 	\EndFunction
 	\Function{selectRange}{$v$, $x$}
 	\If{$v$ is a leaf}
@@ -325,9 +352,6 @@ the x at that level.
 \section{Voronoi nearest neigbour\emph{s}}
 %TODO: wtf? maybe with higher order voronoi?? But it won't be log n
 %TODO: we hebben ook bogen. Kun je representateren als een lijn en een punt.
-
-
-
 
 \begin{thebibliography}{9}
 \bibitem{book}
