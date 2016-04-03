@@ -276,34 +276,27 @@ the x at that level.
 		\State
 		\Comment{If we get here it means we have a split node}
 		\State
-		\Return $\Call{reportLeft}{v, x\times y, c_{right}}\cup
-		\Call{reportRight}{v,x\times y', c_{left}}$
+		\Return $\Call{selectSide}{v, x\times y, c_{right}}\cup
+		\Call{selectSide}{v,x\times y', c_{left}}$
 	\EndFunction
-	\Function{reportRight}{$v$, $x \times y$}
+	\State
+	\Comment{$d_{irection}$ is a function that indicates which side we're reporting}
+	\Function{selectSide}{$v$, $x \times y$, $d_{irection}$}
 		\If{$isLeaf(v)$}
 			\State
 			\Return $\emptyset$
 		\EndIf
 		\If{$y \leq y_{val}(v)$}
 		\State
-		\Return $\Call{reportRight}{c_{left}(v), x \times y} \cup
-		\Call{selectRange}{subtree(c_{right}(v)),x}$
+		\Comment{`$opposite$' is a function that flips $d_{irection}$.}
+		\State
+		\Comment{So if $d_{irection}$ is $c_{right}$, $opposite(d_{irection})$ is $c_{left}$.}
+		\State
+		\Return $\Call{selectSide}{opposite(d_{irection})(v), x \times y} \cup
+		\Call{selectRange}{d_{irection}(v),x}$
 		\EndIf
 		\State
-		\Return $\Call{reportRight}{c_{right}(v), x \times y}$
-	\EndFunction
-	\Function{reportLeft}{$v$, $x \times y$}
-		\If{$isLeaf(v)$}
-			\State
-			\Return $\emptyset$
-		\EndIf
-		\If{$y > y_{val}(v)$}
-		\State
-		\Return $\Call{reportLeft}{c_{right}(v), x \times y} \cup
-		\Call{selectRange}{subtree(c_{left}(v)),x}$
-		\EndIf
-		\State
-		\Return $\Call{reportLeft}{c_{left}(v), x \times y}$
+		\Return $\Call{selectSide}{d_{irection}(v), x \times y}$
 	\EndFunction
 	\Function{selectRange}{$v$, $x$}
 	\If{$v$ is a leaf}
@@ -332,6 +325,9 @@ the x at that level.
 \section{Voronoi nearest neigbour\emph{s}}
 %TODO: wtf? maybe with higher order voronoi?? But it won't be log n
 %TODO: we hebben ook bogen. Kun je representateren als een lijn en een punt.
+
+
+
 
 \begin{thebibliography}{9}
 \bibitem{book}
