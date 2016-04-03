@@ -245,8 +245,8 @@ Note that $subtree(c_{left}(v))\cup subtree(c_{right}(v)) = subtree(v)$
 where $subtree$ is a function that returns the subtree of $v$ and 
 $c_{right}$ returns the right child and $c_{left}$ returns the left child.
 Every level of the outer tree has an $n$ amount of items stored in its
-subtrees. Because at deeper level the subtrees get split further.
-This results in the following order of storage:
+subtrees, and there are $log(n)$ levels because no 2 line segments have the
+same y coordinate. This results in the following order of storage:
 
 \[ O(n \cdot log(n))\]
 
@@ -260,6 +260,11 @@ the $[y:y']$ part of the query the algorithm is correct.
 The intervall tree for the $x$ part of the query will start
 reporting as soon as it encounters a decision. However it
 will only report the linesegements that intersect with $x$.
+
+The result also will not contain any duplicates, because
+when someting is repoted to the right in the main tree
+the algorithm will go to the left, so the next tree only
+contains things that weren't in the original report.
 
 \subsection{Give psuedo code for the query algorithm}
 \begin{algorithmic}[1]
@@ -349,7 +354,34 @@ will only report the linesegements that intersect with $x$.
 \end{algorithmic}
 \subsection{Analyze the query time}
 
+When we traverse the tree we spend at most $O(1+r_v)$ time at
+that node $v$ where $r_v$ is the time spend reporting the results.
+Summing over all $r_v$ results in $r$. The depth of the main tree
+is $log(n)$. we visit at most two nodes at any depth of the tree.
+This results in:
+
+\[ 2\cdot (log(n)+r)\]
+
+time to traverse it. Now we will fill in R by analysing the
+inner tree. At any node $v$ we visit we spend $O(1+k_v)$ time where
+$k_v$ is the number of linesegments we report at $v$. Summing
+over $k_v$ results in $k$. The depth of the tree is $log(n)$,
+we visit at most one node at any depth of the tree. This results in:
+
+\[ log(n)+k\]
+
+So now we can fill in $r$:
+
+\[ 2\cdot (log(n)+log(n)+k)\]
+
+Which results in:
+
+\[ O(log(n)+k) \]
+
+query time.
 \section{Voronoi nearest neigbour\emph{s}}
+\subsection{Storage}
+\subsection{Query time}
 %TODO: wtf? maybe with higher order voronoi?? But it won't be log n
 %TODO: we hebben ook bogen. Kun je representateren als een lijn en een punt.
 
