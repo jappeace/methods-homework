@@ -7,6 +7,7 @@
 \usepackage{tikz}
 \usepackage{enumerate}
 \renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\algrenewcomment[1]{\(\triangleright\) #1}
 \begin{document}
 \author{Jappie Klooster}
 \title{Stay in shape! Homework exam II}
@@ -137,7 +138,7 @@ the largest disk in $C_i$. Then we have
 			$d_i \gets d_{i-1}$
 			\If{$d_{i-1} \not\subset h_i$}
 			\State
-			$d_i \gets calculateBiggestDiskFrom(h_i, \{h_0\dots,h_{i-1}\})$
+			$d_i \gets \Call{calculateBiggestDiskFrom}{h_i, \{h_0\dots,h_{i-1}\}}$
 			\If{$d_i = None$}
 				\State
 				\Return $None$
@@ -233,17 +234,107 @@ following properties, lets go trough each of one to see if they get violated.
 		could use this as a heuristic but not as an anwser.
 \end{itemize}
 \section{A datastructure for horizontal line segments}
-
 \subsection{Analyze the storage requirements}
-%TODO: warning: this is x and y descisions.
+As can be read from lemma 10.2 (and the suceeding proof) from
+the book \cite{book}, an interval tree uses $O(n)$ storage.
+
+Now we have the outer tree that is a binary tree based on $y$ coordinates.
+For each interval node $v$ we have a canoconical subset $S_v \subseteq S$
+of all linesegments that appear in the subtree rooted at node $v$.
+Note that $subtree(c_{left}(v))\cup subtree(c_{right}(v)) = subtree(v)$
+where $subtree$ is a function that returns the subtree of $v$ and 
+$c_{right}$ returns the right child and $c_{left}$ returns the left child.
+Every level of the outer tree has an $n$ amount of items stored in its
+subtrees. Because at deeper level the subtrees get split further.
+This results in the following order of storage:
+
+\[ O(n \cdot log(n))\]
+
+
 \subsection{Argue that all horizontal line segs are found}
+All line segments are found because the binary search tree will
+select as many as possible y based nodes and then ask the 
+
+\newpage
 \subsection{Give psuedo code for the query algorithm}
-%TODO: sla lijnen op geen punten.
-
-
+\begin{algorithmic}[1]
+	\Function{select}{$v$, $x \times [y:y']$}
+		\If{$v$ is a leaf and $y < y_{val}(v) < y'$}
+			\State
+			\Return \Call{selectRange}{$subtree(v), x$}
+		\EndIf
+		\If{$y' < y_{val}(v)$}
+		\State
+		\Return \Call{select}{$c_{left}(v), x \times [y:y']$}
+		\EndIf
+		\If{$y > y_{val}(v)$}
+		\State
+		\Return \Call{select}{$c_{right}(v), x \times [y:y']$}
+		\EndIf
+		\State
+		\Comment{If we get here it means we have a split node}
+		\State
+		\Return $\Call{reportLeft}{v, x\times y, c_{right}}\cup
+		\Call{reportRight}{v,x\times y', c_{left}}$
+	\EndFunction
+	\Function{reportRight}{$v$, $x \times y$}
+		\If{$isLeaf(v)$}
+			\State
+			\Return $\emptyset$
+		\EndIf
+		\If{$y \leq y_{val}(v)$}
+		\State
+		\Return $\Call{reportRight}{c_{left}(v), x \times y} \cup
+		\Call{selectRange}{subtree(c_{right}(v)),x}$
+		\EndIf
+		\State
+		\Return $\Call{reportRight}{c_{right}(v), x \times y}$
+	\EndFunction
+	\Function{reportLeft}{$v$, $x \times y$}
+		\If{$isLeaf(v)$}
+			\State
+			\Return $\emptyset$
+		\EndIf
+		\If{$y > y_{val}(v)$}
+		\State
+		\Return $\Call{reportLeft}{c_{right}(v), x \times y} \cup
+		\Call{selectRange}{subtree(c_{left}(v)),x}$
+		\EndIf
+		\State
+		\Return $\Call{reportLeft}{c_{left}(v), x \times y}$
+	\EndFunction
+	\Function{selectRange}{$v$, $x$}
+	\If{$v$ is a leaf}
+		\State
+		\Return $\emptyset$
+	\EndIf
+	\If{$x < x_{mid}(v)$}
+		\State
+		$r \gets $ starting at the leftmost endpoint keep
+		returning all the intervals in $l_{left}(v)$ untill the
+		intervals no longer contain $x$. (basically a takewhile
+		operation in your favorite langauge).
+		\State
+		\Return $r \cup \Call{selectRange}{c_{left}(v),x}$
+	\EndIf
+	\State
+	$r \gets $ starting at the rightmost endpoint keep
+	returning all the intervals in $l_{right}(v)$ until the
+	intervals no longer contain $x$.
+	\State
+	\Return $r \cup \Call{selectRange}{c_{right}(v),x}$
+	\EndFunction
+\end{algorithmic}
 \subsection{Analyze the query time}
 
 \section{Voronoi nearest neigbour\emph{s}}
 %TODO: wtf? maybe with higher order voronoi?? But it won't be log n
 %TODO: we hebben ook bogen. Kun je representateren als een lijn en een punt.
+
+\begin{thebibliography}{9}
+\bibitem{book}
+de Berg et al,
+\textit{Computational geometry and applications }.
+3rd edition, 2008. Springer-Verlag Berlin Heidelberg.
+\end{thebibliography}
 \end{document}
