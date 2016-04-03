@@ -354,31 +354,26 @@ contains things that weren't in the original report.
 \end{algorithmic}
 \subsection{Analyze the query time}
 
-When we traverse the tree we spend at most $O(1+r_v)$ time at
-that node $v$ where $r_v$ is the time spend reporting the results.
-Summing over all $r_v$ results in $r$. The depth of the main tree
-is $log(n)$. we visit at most two nodes at any depth of the tree.
-This results in:
-
-\[ 2\cdot (log(n)+r)\]
-
-time to traverse it. Now we will fill in R by analysing the
-inner tree. At any node $v$ we visit we spend $O(1+k_v)$ time where
+We'll start by analysing the inner tree.
+At any node $v$ we visit we spend $O(1+k_v)$ time where
 $k_v$ is the number of linesegments we report at $v$. Summing
 over $k_v$ results in $k$. The depth of the tree is $log(n)$,
 we visit at most one node at any depth of the tree. This results in:
 
 \[ log(n)+k\]
 
-So now we can fill in $r$:
+So in the main tree we spend $O(log(n)+r_v)$ per call, where $r_v$ is
+the result for node $v$. Its also worth noting that we visit each level
+of the tree a maximum two times. Hence the total time we spend is:
 
-\[ 2\cdot (log(n)+log(n)+k)\]
+\[ 2\cdot \sum_v(log(n)+r_v)\]
 
+Notice that $\sum_v r_v = r$ and that the search path of $y$ and $y'$
+in the main tree have depth $log(n)$. so $\sum_v O(log(n))=log^2(n)$.
 Which results in:
 
-\[ O(log(n)+k) \]
+\[ O(log^2(n)+r) \]
 
-query time.
 \section{Voronoi nearest neigbour\emph{s}}
 \subsection{Storage}
 \subsection{Query time}
