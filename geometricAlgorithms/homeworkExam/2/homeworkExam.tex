@@ -374,11 +374,55 @@ Which results in:
 
 \[ O(log^2(n)+r) \]
 
+\subsection{Bonus}
+Applying what we've learned above we know we can handle ranges by using
+binary trees. For single values we can use interval trees.
+So suppose we know that $X$ will be an interval. Then the main tree will
+be a binary tree sorting on $x$ where each node has a two sub-binary trees $y$
+and $z$.
+When we start reporting for x we'll choose the associated subtree which
+is the interval qeury.
+If $Y$ is an interval then we choose the $y$ subtree.
+In the $y$ tree nodes have ascsociated structures that are interval trees
+on $z$.
+If $Z$ is the interval then we choose the $z$ subtree. In $z$ subtree
+there is again an associated structure for each node which is an interval
+tree on $y$.
+We can create another structure for when $X$ is not an interval. Similiar
+to the one above so that we can handle any range query.
+
+The storage requirement is:
+
+\[O(n\cdot log^2(n))\]
+
+Because the main tree is amplified aditionally in size by an extra associated
+structure depth.
+The query time is:
+
+\[ O(log^3(n)+r) \]
+
+Because there are 3 trees to traverse and we still need to report the anwsers.
 \section{Voronoi nearest neigbour\emph{s}}
 \subsection{Storage}
+The original datastructure was already of order:
+
+\[O(n)\]
+
+storage, this was a given, now we will start analyising how the extension
+will impact this order.
+For every point $p$ we store a trapazoidal map, which is $O(n)$ size
+storage (Theorom 6.3 of the book \cite{book}) where $n$ equals the amount of
+voronoi neighbours $k_p$. So per point we now have a storage of the order:
+
+\[O(1+k_p)\]
+
+However we can put an expectation on $k_p$ by using theorom 7.3 of the book
+\cite{book}. It says the number of edges is at most $3n-6$, an edge is a
+division between neigbours so the expected amount of neigbours per point
+is $3$. So the expected storage complexity is:
+
+\[ O(3n) = O(n) \]
 \subsection{Query time}
-%TODO: wtf? maybe with higher order voronoi?? But it won't be log n
-%TODO: we hebben ook bogen. Kun je representateren als een lijn en een punt.
 
 \begin{thebibliography}{9}
 \bibitem{book}
