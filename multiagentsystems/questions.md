@@ -98,6 +98,7 @@ and try to let your agent borrow a book without being registered,
 could you get a type error?
 
 # Social norms
+So why do people shake hands? Where is the utility?
 
 # How to social goal
 
