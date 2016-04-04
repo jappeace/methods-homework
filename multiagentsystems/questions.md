@@ -98,7 +98,18 @@ and try to let your agent borrow a book without being registered,
 could you get a type error?
 
 # Social norms
-So why do people shake hands? Where is the utility?
+
+> Evolution and fairness norms
+
+I get that the 3,3 contract is the most fair. However I'm asked to perform
+evolution in my head somehow, could you explain step by step why the evolution
+would force 3,3?
+
+> Consider a competition between alternative forms of money..."
+
+Can you explain this further?
+I mean I think the norms got to me in reading this sentence
+correctly. Maybe provide a different example.
 
 # How to social goal
 
