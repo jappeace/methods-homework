@@ -374,34 +374,48 @@ Which results in:
 
 \[ O(log^2(n)+r) \]
 
+\newpage
 \subsection{Bonus}
-Applying what we've learned above we know we can handle ranges by using
-binary trees. For single values we can use interval trees.
-So suppose we know that $X$ will be an interval. Then the main tree will
-be a binary tree sorting on $x$ where each node has a two sub-binary trees $y$
-and $z$.
-When we start reporting for x we'll choose the associated subtree which
-is the interval query.
-If $Y$ is an interval then we choose the $y$ subtree.
-In the $y$ tree nodes have associated structures that are interval trees
-on $z$.
-If $Z$ is the interval then we choose the $z$ subtree. In $z$ subtree
-there is again an associated structure for each node which is an interval
-tree on $y$.
-We can create another structure for when $X$ is not an interval. Similar
-to the one above so that we can handle any range query.
+Let $S=\{s_1,\dots,s_n\}$ be a set of $n$ line segments in space each
+of which is parallel to the x-axis, y-axis or z-axis.
+\paragraph{Structure} We use a data-structure whose main tree is a balanced
+binary search tree on the $x$ coordinates of the line segments of $S$.
+For each interval node $v$, we have a canonical subset $S_v\subseteq S$
+of all line segments that appear in the subtree rooted at $v$. The
+set $S_v$ is stored in two associated structures with $v$ as well:
+these are again balanced binary trees, one is on the $y$ coordinates
+of the line segments of $S_v$ and the other one is the $z$ coordinates
+of the line segments of $S_v$. These associated structures are similar
+in structure to the main tree however the associated structures of their
+nodes are interval trees the $y$
+subtree has associated interval trees based on the $z$ interval and
+the $z$ tree has it based on the $y$ interval.
+This structure cannot treat $x$ intervals however. To also treat
+$x$ intervals we create another tree similar to the one above, however
+we substitute $x$ by $y$ and $y$ by $x$.
+\paragraph{Query algorithm} If $X$ is an interval we use the first tree.
+So we go down the tree until we encounter a split node. If we do we
+split up the algorithm, one side starts reporting left and the other one
+right. However we need to choose the right associated
+structure. We first want to do the range query and save the single value for
+last. So if $Y$ in this case is a range query we choose the $y$ associated
+structure when reporting.
+The report call will query the associated structures similarly
+to the select of `2.c'. Only in this case the dimension name of $x$ will be
+replaced by $z$.
+\paragraph{Query time}
+The query time is:
 
+\[ O(log^3(n)+r) \]
+
+Because there are 3 trees to traverse and we still need to report the answers.
+\paragraph{Storage}
 The storage requirement is:
 
 \[O(n\cdot log^2(n))\]
 
 Because the main tree is amplified additionally in size by an extra associated
 structure depth.
-The query time is:
-
-\[ O(log^3(n)+r) \]
-
-Because there are 3 trees to traverse and we still need to report the answers.
 \section{Voronoi nearest neighbour\emph{s}}
 \subsection{Storage}
 The original data structure was already of order:
