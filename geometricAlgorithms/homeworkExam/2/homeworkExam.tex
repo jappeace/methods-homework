@@ -419,10 +419,24 @@ voronoi neighbours $k_p$. So per point we now have a storage of the order:
 However we can put an expectation on $k_p$ by using theorom 7.3 of the book
 \cite{book}. It says the number of edges is at most $3n-6$, an edge is a
 division between neigbours so the expected amount of neigbours per point
-is $3$. So the expected storage complexity is:
+is $\frac{3n-6}{n} \approx 3$. So the storage complexity is:
 
 \[ O(3n) = O(n) \]
+
+Note that this is not an expected complexity because the theorom 7.3 puts
+a hard upperbound on the amount of neigbours as long as $n\geq3$.
 \subsection{Query time}
+The original datastructure had an expected query time of the follwoing order:
+
+\[O(log(n))\]
+
+This was given. Now we will analyse if the extension will impact this
+perormance. The substructure is a trapezoidal map which has an expected
+query time of $O(log(k))$ where $k$ is the amount of neigbours for a
+particular point. If we combine this with the existing structure
+we get an expected query time of:
+
+\[O(log(n) \cdot log(k)) \]
 
 \begin{thebibliography}{9}
 \bibitem{book}
