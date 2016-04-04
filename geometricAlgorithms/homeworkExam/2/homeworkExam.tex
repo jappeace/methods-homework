@@ -16,7 +16,7 @@
 \subsection{Per case, what can you say about $H$}
 We number the half-planes of $H$: $h_1, h_2,\dots,h_i$.
 Let $H_{i}$ be the set of the first $i$ constraints, and
-let $C_{i}$ be the feasible region defined by these constranits:
+let $C_{i}$ be the feasible region defined by these constraints:
 
 \[ H_i := \{h_1, h_2,\dots, h_i\}\]
 \[ C_i := h_1 \cap h_2 \cap \dots \cap h_i\]
@@ -24,36 +24,36 @@ let $C_{i}$ be the feasible region defined by these constranits:
 And so $C$ is $\cap H$.
 
 \begin{enumerate}[(i)]
-	\item \emph{There is no disk that has its centor non the $x$ axis
+	\item \emph{There is no disk that has its center non the $x$ axis
 			that lies inside all half-planes.}
 
-		$C$ does not intersect the x axis. So its either an empty set or entirly above or below the x axis.
+		$C$ does not intersect the x axis. So its either an empty set or entirely above or below the x axis.
 
-	\item \emph{There lare arbitrarly large disk with the specifications.}
+	\item \emph{There arbitrary large disk with the specifications.}
 
-		$C$ has no parallel bounds to te x axis and
-		at most one bounding linesegment crossing the x axis.
+		$C$ has no parallel bounds to the x axis and
+		at most one bounding line segment crossing the x axis.
 
 	\item \emph{The largest disk exists and is unique.}
 
-		$C$ bounding linesegments cross the x-axis 2 times and
+		$C$ bounding line segments cross the x-axis 2 times and
 			the disk border is intersected at least 2 times by non x axis
-			parralel bounding linesegments, one linesegment intersects the
+			parallel bounding line segments, one line segment intersects the
 			left part of the disk and another the right part.
-			An alternative defintion is not case 1,2 and 4.
+			An alternative definition is not case 1,2 and 4.
 
 	\item \emph{There are several equally large largest disks}
 
-		$C$ produces an area with one or two bounding linesgments
-		parallel to the x-axis and these linesegment intersect the border
+		$C$ produces an area with one or two bounding line segments
+		parallel to the x-axis and these line segment intersect the border
 		of the possible disks.
 
 \end{enumerate}
 
 \newpage
-\subsection{Deal with case ii in linear worstcase time}
+\subsection{Deal with case ii in linear worst case time}
 \begin{algorithmic}[1]
-	\Function{hasArbitrarlylargeDisc}{$H$}
+	\Function{hasArbitrarylargeDisc}{$H$}
 		\State
 		$b_r, b_l \gets None$
 		\For{$i \gets 1$ to $n$ with $h_i \in H$}
@@ -96,7 +96,7 @@ the largest disk in $C_i$. Then we have
 \begin{enumerate}[(i)]
 	\item Let $d_{i-1} \subset h_i$. Because $C_i = C_{i-1}\cap h_i$ and
 		$d_{i-1} \subset C_{i-1}$ this means that $d_{i-1} \subset C_i$.
-		Furtheremore,the optimal disk in $C_i$
+		Furthermore,the optimal disk in $C_i$
 		cannot be better than the optimal disk in $C_{i-1}$, since
 		$C_i \subseteq C_{i-1}$. Hence, $d_{i-1}$ is the optimal disk
 		in $C_i$ as well.
@@ -105,7 +105,7 @@ the largest disk in $C_i$. Then we have
 %		 until it hits h_i.
 	\item Let $d_{i-1} \not\subset h_{i}$. Suppose for a contradiction that
 		$C_i$ intersects the x-axis and that $b_i \cap l_i = \emptyset$.
-		Consider the linesegment $s$ between $center(d_i)$ and 
+		Consider the line segment $s$ between $center(d_i)$ and 
 		$center(d_{i-1})$.
 		Where $center$ is a function that returns the center vertex of a disk.
 		We have $d_{i-1} \subset C_{i-1}$ and
@@ -160,7 +160,7 @@ the largest disk in $C_i$. Then we have
 					\State
 					\Return $None$
 				\EndIf
-				\If{$h_i$ is parralel to the x axis}
+				\If{$h_i$ is parallel to the x axis}
 				\State
 				%TODO, the calculation with math?
 				$d_i \gets$ Calculate the leftmost largest disk in $h_{bound} \cap h_{i}$
@@ -184,9 +184,8 @@ And so worst case $calculateBiggestDisk(H)$ is worst case:
 
 \[O(n^2)\]
 
-% Don't forget to remove constants
 We will prove that a$calculateBiggestDisk(H)$ will run in $\Theta(n)$ expected
-time with help of backwards analises: Consider the situation after $h_i$ is
+time with help of backwards analyses: Consider the situation after $h_i$ is
 inserted, and $d_i$ is computed (either by $d_i = d_{i-1}$ or with help
 of $calculateBiggestDiskFrom(h_i,H)$). If $h_i$ does not bound the feasible
 region, or $d_i \subset h_i$, then the addition step was cheap
@@ -194,11 +193,11 @@ and took $\Theta(1)$ time. But if $d_i \not\subset h_i$ then the addition
 step was expensive.
 
 There are $i$ half-planes that could have been defining $d_i$, and $i-2$
-of these are in random order. Since the order was reandom eacho of the $i-2$
+of these are in random order. Since the order was random each of the $i-2$
 half-planes has the same probability to be the last one added, and only
 $\leq$ 2 of these cause the expensive step.
 
-Excpected time for $i$-th addition:
+Expected time for $i$-th addition:
 
 \[\frac{i-4}{i-2}\cdot\Theta(1)+\frac{2}{i-2}\cdot\Theta(i)=\Theta(1)\]
 
@@ -206,21 +205,21 @@ Total expected running time:
 
 \[3\Theta(n) = \Theta(n)\]
 
-\subsection{Eplain why you can't use RIC for points}
+\subsection{Explain why you can't use RIC for points}
 To create a RIC algorithm with linear expected time we need to have the
 following properties, lets go trough each of one to see if they get violated.
 
 \begin{itemize}
-	\item \emph{The test wether the next input object violates the current
+	\item \emph{The test of the next input object violates the current
 		optimum must be possible and fast.}
 		This is true for this problem. Checking if a point is inside a disk
 		is trivially easy.
-	\item \emph{If the next input boject violates the current optimum,
+	\item \emph{If the next input object violates the current optimum,
 		finding the new optimum must be an easier problem than the general
 		problem.}
-		This is the violating property. because you can still move
+		This is the violating property. Because you can still move
 		the disk having a point violate the current disk may not be a point
-		wich with the disks boundary has to intersect.
+		which with the disks boundary has to intersect.
 
 		A more crude way to put it is that you can have multiple optimum
 		that don't intersect the same points.
@@ -229,44 +228,44 @@ following properties, lets go trough each of one to see if they get violated.
 		I think this is true, you can use some math to figure out a new
 		optimum.
 	\item \emph{The analysis must work out.}
-		It doesn't work out because you can't gaurantee that you've just
+		It doesn't work out because you can't guarantee that you've just
 		found a local optimum instead of a global optimum. I mean you
-		could use this as a heuristic but not as an anwser.
+		could use this as a heuristic but not as an answer.
 \end{itemize}
-\section{A datastructure for horizontal line segments}
+\section{A data structure for horizontal line segments}
 \subsection{Analyze the storage requirements}
 As can be read from lemma 10.2 (and the suceeding proof) from
 the book \cite{book}, an interval tree uses $O(n)$ storage.
 
 Now we have the outer tree that is a binary tree based on $y$ coordinates.
-For each interval node $v$ we have a canoconical subset $S_v \subseteq S$
-of all linesegments that appear in the subtree rooted at node $v$.
+For each interval node $v$ we have a canonical subset $S_v \subseteq S$
+of all line segments that appear in the subtree rooted at node $v$.
 Note that $subtree(c_{left}(v))\cup subtree(c_{right}(v)) = subtree(v)$
 where $subtree$ is a function that returns the subtree of $v$ and 
 $c_{right}$ returns the right child and $c_{left}$ returns the left child.
 Every level of the outer tree has an $n$ amount of items stored in its
 subtrees, and there are $log(n)$ levels because no 2 line segments have the
-same y coordinate. This results in the following order of storage:
+same $y$ coordinate. This results in the following order of storage:
 
 \[ O(n \cdot log(n))\]
 
 
-\subsection{Argue that all horizontal line segs are found}
-The outer tree will not start reporting untill it encounters a
+\subsection{Argue that all horizontal line segments are found}
+The outer tree will not start reporting until it encounters a
 split node. Then it will only report the inner tree if the
 value of the nodes fall in the range of the query. So for
 the $[y:y']$ part of the query the algorithm is correct.
 
-The intervall tree for the $x$ part of the query will start
+The interval tree for the $x$ part of the query will start
 reporting as soon as it encounters a decision. However it
-will only report the linesegements that intersect with $x$.
+will only report the line segments that intersect with $x$.
 
 The result also will not contain any duplicates, because
-when someting is repoted to the right in the main tree
+when something is reported to the right in the main tree
 the algorithm will go to the left, so the next tree only
 contains things that weren't in the original report.
 
-\subsection{Give psuedo code for the query algorithm}
+\subsection{Give pseudo code for the query algorithm}
 \begin{algorithmic}[1]
 	\Function{select}{$v$, $x \times [y:y']$}
 		\If{$v$ is a leaf and $y < y_{val}(v) < y'$}
@@ -338,9 +337,9 @@ contains things that weren't in the original report.
 	\If{$x < x_{mid}(v)$}
 		\State
 		$r \gets $ starting at the leftmost endpoint keep
-		returning all the intervals in $l_{left}(v)$ untill the
-		intervals no longer contain $x$. (basically a takewhile
-		operation in your favorite langauge).
+		returning all the intervals in $l_{left}(v)$ until the
+		intervals no longer contain $x$. (basically a takeWhile
+		operation in your favorite language).
 		\State
 		\Return $r \cup \Call{selectRange}{c_{left}(v),x}$
 	\EndIf
@@ -356,7 +355,7 @@ contains things that weren't in the original report.
 
 We'll start by analysing the inner tree.
 At any node $v$ we visit we spend $O(1+k_v)$ time where
-$k_v$ is the number of linesegments we report at $v$. Summing
+$k_v$ is the number of line segments we report at $v$. Summing
 over $k_v$ results in $k$. The depth of the tree is $log(n)$,
 we visit at most one node at any depth of the tree. This results in:
 
@@ -369,7 +368,7 @@ of the tree a maximum two times. Hence the total time we spend is:
 \[ 2\cdot \sum_v(log(n)+r_v)\]
 
 Notice that $\sum_v r_v = r$ and that the search path of $y$ and $y'$
-in the main tree have depth $log(n)$. so $\sum_v O(log(n))=log^2(n)$.
+in the main tree have depth $log(n)$. So $\sum_v O(log(n))=log^2(n)$.
 Which results in:
 
 \[ O(log^2(n)+r) \]
@@ -381,58 +380,58 @@ So suppose we know that $X$ will be an interval. Then the main tree will
 be a binary tree sorting on $x$ where each node has a two sub-binary trees $y$
 and $z$.
 When we start reporting for x we'll choose the associated subtree which
-is the interval qeury.
+is the interval query.
 If $Y$ is an interval then we choose the $y$ subtree.
-In the $y$ tree nodes have ascsociated structures that are interval trees
+In the $y$ tree nodes have associated structures that are interval trees
 on $z$.
 If $Z$ is the interval then we choose the $z$ subtree. In $z$ subtree
 there is again an associated structure for each node which is an interval
 tree on $y$.
-We can create another structure for when $X$ is not an interval. Similiar
+We can create another structure for when $X$ is not an interval. Similar
 to the one above so that we can handle any range query.
 
 The storage requirement is:
 
 \[O(n\cdot log^2(n))\]
 
-Because the main tree is amplified aditionally in size by an extra associated
+Because the main tree is amplified additionally in size by an extra associated
 structure depth.
 The query time is:
 
 \[ O(log^3(n)+r) \]
 
-Because there are 3 trees to traverse and we still need to report the anwsers.
-\section{Voronoi nearest neigbour\emph{s}}
+Because there are 3 trees to traverse and we still need to report the answers.
+\section{Voronoi nearest neighbour\emph{s}}
 \subsection{Storage}
-The original datastructure was already of order:
+The original data structure was already of order:
 
 \[O(n)\]
 
-storage, this was a given, now we will start analyising how the extension
+Storage, this was a given, now we will start analysing how the extension
 will impact this order.
-For every point $p$ we store a trapazoidal map, which is $O(n)$ size
-storage (Theorom 6.3 of the book \cite{book}) where $n$ equals the amount of
-voronoi neighbours $k_p$. So per point we now have a storage of the order:
+For every point $p$ we store a trapezoidal map, which is $O(n)$ size
+storage (Theorem 6.3 of the book \cite{book}) where $n$ equals the amount of
+Voronoi neighbours $k_p$. So per point we now have a storage of the order:
 
 \[O(1+k_p)\]
 
-However we can put an expectation on $k_p$ by using theorom 7.3 of the book
+However we can put an expectation on $k_p$ by using theorem 7.3 of the book
 \cite{book}. It says the number of edges is at most $3n-6$, an edge is a
-division between neigbours so the expected amount of neigbours per point
+division between neighbours so the expected amount of neighbours per point
 is $\frac{3n-6}{n} \approx 3$. So the storage complexity is:
 
 \[ O(3n) = O(n) \]
 
-Note that this is not an expected complexity because the theorom 7.3 puts
-a hard upperbound on the amount of neigbours as long as $n\geq3$.
+Note that this is not an expected complexity because the theorem 7.3 puts
+a hard upper bound on the amount of neighbours as long as $n\geq3$.
 \subsection{Query time}
-The original datastructure had an expected query time of the follwoing order:
+The original data structure had an expected query time of the following order:
 
 \[O(log(n))\]
 
 This was given. Now we will analyse if the extension will impact this
-perormance. The substructure is a trapezoidal map which has an expected
-query time of $O(log(k))$ where $k$ is the amount of neigbours for a
+performance. The substructure is a trapezoidal map which has an expected
+query time of $O(log(k))$ where $k$ is the amount of neighbours for a
 particular point. If we combine this with the existing structure
 we get an expected query time of:
 
