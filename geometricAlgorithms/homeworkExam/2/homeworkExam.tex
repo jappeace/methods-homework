@@ -100,9 +100,6 @@ the largest disk in $C_i$. Then we have
 		cannot be better than the optimal disk in $C_{i-1}$, since
 		$C_i \subseteq C_{i-1}$. Hence, $d_{i-1}$ is the optimal disk
 		in $C_i$ as well.
-%TODO: replace with using a line between center(d_{i-1}) and
-%		center(d_i) then reason about how d_i will keep growing
-%		 until it hits h_i.
 	\item Let $d_{i-1} \not\subset h_{i}$. Suppose for a contradiction that
 		$C_i$ intersects the x-axis and that $b_i \cap l_i = \emptyset$.
 		Consider the line segment $s$ between $center(d_i)$ and 
@@ -112,11 +109,11 @@ the largest disk in $C_i$. Then we have
 		since $C_i \subseteq C_{i-1}$, also $d_i \subset C_{i-1}$.
 		Together with the convexity of $C_{i-1}$, this implies that
 		the line segment $s$ is contained within $C_{i-1}$.
-		Since $d_{i-1}$ is the optimal disk in $C_{i-1}$ and the optimum is to
-		maximize $r_i$ the radius of $d_i$. Consider $d_i$
-		where $s$ is maximized, now to increase $r_i$ we move $d_i$ along $s$,
+		Consider $d_i$ with the center at the end of $s$.
+		This is the smallest possible disk,
+		now to increase the radius we move $d_i$ along $s$,
 		we can keep doing this until $b_i \cap h_i$.
-		So $d_i$ needs to intersect $h_i$ otherwise $d_i$ is not the optimum
+		$d_i$ needs to intersect $h_i$ otherwise $d_i$ is not the optimum
 		disk in $C_i$. This shows it cannot be the case that $C_i$ intersects
 		the x-axis and $b_i\cap l_i = \emptyset$.
 
@@ -184,7 +181,7 @@ And so worst case $calculateBiggestDisk(H)$ is worst case:
 
 \[O(n^2)\]
 
-We will prove that a$calculateBiggestDisk(H)$ will run in $\Theta(n)$ expected
+We will prove that $calculateBiggestDisk(H)$ will run in $\Theta(n)$ expected
 time with help of backwards analyses: Consider the situation after $h_i$ is
 inserted, and $d_i$ is computed (either by $d_i = d_{i-1}$ or with help
 of $calculateBiggestDiskFrom(h_i,H)$). If $h_i$ does not bound the feasible
@@ -204,6 +201,9 @@ Expected time for $i$-th addition:
 Total expected running time:
 
 \[3\Theta(n) = \Theta(n)\]
+
+One $\Theta(n)$ for dealing with case ii, one $\Theta(n)$ for shuffling and
+the final $\Theta(n)$ for the algorithm.
 
 \subsection{Explain why you can't use RIC for points}
 To create a RIC algorithm with linear expected time we need to have the
@@ -234,7 +234,7 @@ following properties, lets go trough each of one to see if they get violated.
 \end{itemize}
 \section{A data structure for horizontal line segments}
 \subsection{Analyze the storage requirements}
-As can be read from lemma 10.2 (and the suceeding proof) from
+As can be read from lemma 10.2 (and the succeeding proof) from
 the book \cite{book}, an interval tree uses $O(n)$ storage.
 
 Now we have the outer tree that is a binary tree based on $y$ coordinates.
@@ -265,6 +265,7 @@ when something is reported to the right in the main tree
 the algorithm will go to the left, so the next tree only
 contains things that weren't in the original report.
 
+\newpage
 \subsection{Give pseudo code for the query algorithm}
 \begin{algorithmic}[1]
 	\Function{select}{$v$, $x \times [y:y']$}
@@ -286,11 +287,6 @@ contains things that weren't in the original report.
 		\Return $\Call{reportLeft}{v, x\times y, c_{right}}\cup
 		\Call{reportRight}{v,x\times y', c_{left}}$
 	\EndFunction
-	\algstore{tree}
-\end{algorithmic}
-\newpage
-\begin{algorithmic}[1]
-	\algrestore{tree}
 	\Function{reportRight}{$v$, $x \times y$}
 		\State
 		$\phi \gets y \leq y_{val}(v)$
@@ -329,6 +325,11 @@ contains things that weren't in the original report.
 		\State
 		\Return $\Call{reportLeft}{c_{left}(v), x \times y}$
 	\EndFunction
+	\algstore{tree}
+\end{algorithmic}
+\newpage
+\begin{algorithmic}[1]
+	\algrestore{tree}
 	\Function{selectRange}{$v$, $x$}
 	\If{$v$ is a leaf}
 		\State
