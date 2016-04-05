@@ -108,7 +108,7 @@ would force 3,3?
 > Consider a competition between alternative forms of money..."
 
 Can you explain this further?
-I mean I think the norms got to me in reading this sentence
+I mean I think the norms got to me while trying to read this sentence
 correctly. Maybe provide a different example.
 
 # How to social goal
