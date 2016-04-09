@@ -112,8 +112,26 @@ I mean I think the norms got to me while trying to read this sentence
 correctly. Maybe provide a different example.
 
 # How to social goal
+> Theorem 1
+
+They proof this by contradiction. However I don't understand it, could
+you elaborate the proof further? Preferably with some kind of picture
+proof instead of maths. (It doesn't even have to be a proof, just give an
+idea)
+
+> However it is not true that *all* monotonic social choice rules are
+implementable; see masking (1977) for counterexamples
+
+Can you give some of these counter examples? I'm curious.
 
 # On the logic of normative systems
+The reasonableness constraint: Does it mean that a normative system
+will always keep running? I mean if there is always a successor state
+that means it can never "die" so to speak?
+Also please explain the \ operator.
+
+What is the difference between an interpreted model and an uninterpreted?
+I mean the computational consequences are extreme (looking at theorem 4 and 5).
 
 # Power in game forms
 
