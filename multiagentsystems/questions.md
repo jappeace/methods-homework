@@ -134,6 +134,16 @@ What is the difference between an interpreted model and an uninterpreted?
 I mean the computational consequences are extreme (looking at theorem 4 and 5).
 
 # Power in game forms
+If V'_i = V, s'_i is impotent. What does this mean in laymen terms?
+I mean the strategy will result in all possible outcomes. How
+does this make it impotent?
+
+F(T) is the 'utility' the coalition gains by working together??
 
 # Designing intelligent gameplay
+Why do they use XML? I mean its has a pretty big overhead. Protobuf is much
+better for games. Especially if you want to define your messages before hand.
+
+Are there other design methodologies to model games incorporating agents 
+besides OperA?
 
