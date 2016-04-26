@@ -1,0 +1,101 @@
+\documentclass{article}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{enumerate}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\algrenewcomment[1]{\(\triangleright\) #1}
+\begin{document}
+\author{Jappie Klooster}
+\title{A summery of the interactive learning problem}
+
+\maketitle
+
+A lot of AI involves learning performed by a single agent. In this case the
+agent tries to figure out a function. Many techniques have been
+developed for this.
+
+However in a multi-agent system the environment contains other
+agents that also try to learn a function. Thus the environment
+changes without the agent interacting with it. So the learned
+function may be wrong.
+
+Simple rules can lead to complex behavior, this leads us to believe
+that one cannot separate learning from teaching in multi agent systems.
+When deciding what to do, an agent should consider both the things he
+learned from other agents passed behavior and how he wants to
+influence their future behavior.
+
+A problem arises when both agents want to be play teacher and
+both keep selecting uncoordinated actions. The question is if
+we can think of a simple rule that will enable them
+to coordinate without an external designation of a teacher.
+
+We consider something learning if there is a temporal nature in the domain
+and regularity across time. By doing this we can used
+passed experience to improve future strategy.
+
+Tit for That is an example of a very simple learning strategy.
+You could think of more complex strategies in which you consider
+more of the history to play in a more sophisticated manner.
+Consider frequency analysis of the opponents play for example.
+This is called fictitious play.
+
+Stochastic games are another example of where learning can be
+applied.
+
+Other aspects involving both types are weather agents already
+know the game. If the game is not known the agents can in
+addition learn about the structure of the game.
+Another question is if the game is observable, do the
+players know each others actions/payoff while playing?
+
+Another model that won't be treated is the investigation
+of large populations, this is used in biology.
+
+Learning strategies should be understood as choosing actions
+and updating beliefs. A consequence however is that
+using `accumulated knowledge' may not always be beneficial
+because it pre commits to a given strategy (while others may
+be better).
+
+Descriptive theories try to tell us how learning takes place
+in real life.
+The ideal descriptive theory would have the following two properties:
+Realism: `There should be a good match between the formal theory and the
+natural phenomenon being studied.', Convergence: `The formal
+theory should exhibit interesting behavioral properties, in particular
+convergence of the strategy profile being played to some solution concept
+(e.g., equilibrium) of the game being played.'.
+To demonstrate realism we can use experiments.
+
+The holy grail of convergence properties is demonstrating convergence to
+stationary strategies which form a Nash equilibrium of the stage game.
+Another approach recognizes Nash equilibria are rare as a result
+of a learning process. It requires the empirical frequency of
+play convergence to such an equilibrium.
+The third approach is giving up on Nash equilibria. This uses
+convergence to a correlated equilibrium of the stage game.
+The last one gives up on convergence of stationary policies. Instead it
+requires that the non-stationary policies converge to an interesting state.
+
+Prescriptive theories describes how learning should happen.
+For zero-sum games and even in repeated or stochastic
+zero sum games it can be asked if learning is happening optimally.
+But in general this won't work because the learning often depends on the
+learning of other agents.
+
+The equilibrium of learning strategies is an uncommon approach
+instead we use the more common and more practical approach
+of asking weather the payoff of a learning strategy is good enough.
+
+There are multiple different payoff requirements:
+Safety: `A learning rule is safe if it guarantees the agent at least
+its maxmin payoff, or “security value.” (Recall that this is the payoff the agent
+can guarantee to himself regardless of the strategies adopted by the opponents)'
+, Rationality: `A learning rule is rational if whenever the opponent
+settles on a stationary strategy of the stage game (i.e., the opponent adopts the
+same mixed strategy each time, regardless of the past), the agent settles on a best
+response to that strategy.', No-regret: `Against any set of opponents it yields a payoff that is no less than the
+payoff the agent could have obtained by playing any one of his pure strategies
+throughout. We give a more formal definition of this condition later in the chapter.'
+\end{document}
