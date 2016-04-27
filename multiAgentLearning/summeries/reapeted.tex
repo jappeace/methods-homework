@@ -1,0 +1,69 @@
+\documentclass{article}
+\usepackage{amsmath}
+\begin{document}
+\author{Jappie Klooster}
+\title{A brief summery of repeated}
+
+\maketitle
+
+Within the prisoners dilemma game the Pareto inefficient outcome
+cannot be avoided in a Nash equilibrium. This summery considers
+two person infinitely repeated games, subgame perfect
+equilibrium and Nash equilibrium.
+
+\[G_p= 
+	\bordermatrix{~ & C & D \cr
+                  C & 50,50 & 30,60 \cr
+                  D & 60,30 & 40,40 \cr}
+\]
+
+$G_p$ is a prisoners dilemma game. The strict dominant strategy
+for each player is $D$. So $(D,D)$ is the Nash equilibrium of this game.
+If $G_p$ is played infinitely many times $t=0,1,2\dots$ and each player
+learns what element of the set $\{(C,C),(C,D), (D,C),(D,D)\}$ has occurred.
+This induces an infinite stream of associated payoffs and it assumed that
+there is a common discount factor $0 < \delta < 1$ so that the final payoff
+to each player is $\delta$-discounted value of the infinite stream of
+payoffs. Player i(=1,2) obtains:
+
+\[\sum^\infty_{t=0}\delta^t_i\cdot(\text{payoff from $t$-th play})\]
+
+Where $\delta_i=\delta$ for $i=1,2$. A strategy should prescribe an
+action for a player at each moment in the history of the game up
+to time $t$ of the set $\{(C,C),(C,D),(D,C),(D,D)\}$. The infinite
+extensive form game just defined is denoted by $G^\infty_p(\delta)$.
+A natural solution to this game is the concept of subgame perfect
+equilibrium, where each subgame is equal to the game $G^\infty_p(\delta)$
+itself.
+
+A trigger strategy remains the same until some action occurs which
+will change the strategy permanently. So you keep playing a cooperating
+strategy until your opponent deviates from cooperating, to which you respond
+with eternal punishment after that. With common sense we can determine that
+such a strategy can solve the prisoners dilemma. This result is an important
+reason to study infinitely repeating games.
+
+By using more complex Trigger strategies utility can be increased even further
+Such as for example an alternating trigger strategy, where you keep alternating
+between playing $C$ and $D$, but as soon as your moves align with the opponent
+you play $D$ forever.
+
+If $G$ is an arbitrary $n-$person game, and the strategy combination
+$s=(s_1,\dots,s_n)$ is a Nash equilibrium in $G$, If $0<\delta<1$ then each
+player $i$ playing $s_i$ at every moment $t$ is a subgame perfect
+equilibrium in $G^\infty(\delta)$.
+
+The Folk theorem describes what happens with trigger strategies, players
+keep cooperating with each other under the threat of being punished forever.
+
+Even if you relax the possible game by not creating a Nash equilibrium, it
+still pays of for players to cooperate with each other (under the threat
+of playing the lesser profitable mixed strategy), since when doing
+this they can increase their utility.
+\paragraph{Questions}
+\begin{itemize}
+	\item one
+	\item two
+\end{itemize}
+
+\end{document}
