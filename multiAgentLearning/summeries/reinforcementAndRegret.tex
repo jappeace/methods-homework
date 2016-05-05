@@ -1,0 +1,83 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{tensor}
+\begin{document}
+\author{Jappie Klooster}
+\title{Reinforcing regrets}
+
+\maketitle
+
+Reinforcment means you like actions that have had a higher payoff in the passed,
+and thus will do them more often.
+
+In every time period $t$, a subject must choose an action from a finite set $X$.
+In each period $t$ the oponent generates an action $y \in Y$, which is
+or isn't revealed. Let $(x^t, y^t)$ denote the realized action in period $t$.
+The \emph{payoff} to teh subject in period $t$ is given by a function
+$u(x^t, y^t)$.
+
+Auxilaiarly variable $\theta^t_x \geq 0$ defines the \emph{propensitiy} of playing
+action $x$ at time $t$. $q^t_x$ is the \emph{probability} of playing action $x$
+at time $t$. A common assumption is that $q^t_x$ is \emph{proportional} to
+$\theta^t_x$:
+\[q^t_x=\theta^t_x/\sum_{x'\in X} \theta^t_{x'}\]
+
+If $q^t$ and $\theta^t$ are vectors in $R^k$ then the $x^{th}$ components are
+$q^t_x$ and $\theta^t_x$.
+The payoff at time $t$ is $u^t=u(x^t,y^t)$ which is assumed to be positive.
+If $e^t \in R^k$ then:
+
+\[e^t_x = 
+\begin{cases}
+	1 \text{ if } x \text{ is played at time } t \\
+	0 \text{ if } x \text{ is not played at time } t \\
+\end{cases}\]
+
+The \emph{linear updating model} takes form:
+
+\[\forall t \geq, \theta^{t-1}=\lambda^t\theta^t+u^te^t+w^t\]
+
+$\lambda^t$ is a discount factor $0 < \lambda^t < 1$. $w^t \in R^k_+$ is
+a positive vector of random perturbations. The initial propensitiy vector
+$\theta^1$ is strictly positive in all components. A simple model of this
+called \emph{cumulative payoff matching}:
+\[\theta^{t+1}=\theta^t+u^te^t\]
+Here the subject playes action at $t+1$ with a probability proportional to
+the action's cumulative payoff untill time $t$.
+
+$\Delta q^t = q^{t+1} - q^t$ is the incremental change in the probability
+vector between $t$ and $t+1$. The cumulative payoff in all periods up trough
+time t is $\sum_s \leq \tensor*[_t]{\mathbf{u}}{^s}$. Add to this the sum
+of the initial propensitiies $|\theta^1|=\sum_x\theta^1_x$ and the resulting
+value: $v^t=|\theta^1|+\sum_{s\leq t}u^s$. It follows that:
+\[\Delta q^t=[u^t/v^t][e^t-q^t]\]
+Since the payoff in each period $u^t$ is bounded and cumulative payoff $v^t$
+is unbounded, the incremental impact of payoff in any given period $u^t$ 
+diminishes at a rate of $1/t$.
+
+A variant:
+\[\Delta q^t = [u^t/(Ct^p+u^t)][e^t-q^t]\]
+Where C and p are positive constants. The current payoff is assumed to decrease
+at the power of $t$ in this variant. This implies that that subjects that
+use such a rule can lock into suboptimal play even against an opponent
+who is using a fixed istribution in every period.
+
+Another varient with $\lambda < 1$ and in each period $t$ there are random
+perturbations $w^t$:
+\[\theta^{t+1}=\lambda\theta^t+u^te^t+w^t\]
+Ignoring the pertrubations we can rewrite this in terms of change of the probability
+distribution:
+\[\Delta q^t=[u^t/v^t(\lambda)][e^t-q^t]\]
+\[v^t(\lambda)=\lambda^t|\theta^1|+\sum_{1\leq s \leq t}\lambda^{t-s}u^s\]
+The denominator $v^t(\lambda)$ is bounded above, so the marginal impact
+of period by period payoff levels eventually.
+
+Another extension uses asspiration level $a^t$. Actions are positively
+reinforced if the payoff exceed $a^t$ and negativly otherwise.
+\paragraph{Questions}
+\begin{itemize}
+	\item What is propensitiy?
+	\item Which of the proposed models is most popular/used and why?
+\end{itemize}
+
+\end{document}
