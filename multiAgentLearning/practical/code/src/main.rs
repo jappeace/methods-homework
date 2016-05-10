@@ -15,6 +15,22 @@
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 
+static simulationCount:i64= 100;
+struct Space{
+    width:i64,
+    height:i64
+}
+static SPACE:Space = Space {
+    width: 30,
+    height: 30
+};
+static directionChoices:&'static [i32;12] = &[30,60,90,120,150,180,210,240,270,300,330,0];
 fn main () {
-    println!("hello world");
+    println!("hello world {}", SPACE.width);
+    for i in 0..simulationCount {
+        use std::ops::Rem;
+        let select = (i as usize).rem(directionChoices.len());
+        println!("wrong spelling {}", directionChoices[select]);
+        
+    }
 }
