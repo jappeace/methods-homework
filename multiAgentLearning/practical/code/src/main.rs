@@ -15,16 +15,40 @@
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 
+// Configuration
 static simulationCount:i64= 100;
-struct Space{
-    width:i64,
-    height:i64
-}
+static skaterCount:i64 = 50;
+static directionChoices:&'static [i32;12] = &[30,60,90,120,150,180,210,240,270,300,330,0];
+static speed:f64 = 1.0;
+static collisionRadius:f64 = 1.0;
 static SPACE:Space = Space {
     width: 30,
     height: 30
 };
-static directionChoices:&'static [i32;12] = &[30,60,90,120,150,180,210,240,270,300,330,0];
+static REWARDS:Rewards = Rewards{
+    collision:-10.0,
+    avoided:10.0
+};
+
+// Structures
+struct Rewards{
+    collision:f64,
+    avoided:f64
+}
+struct Space{
+    width:i64,
+    height:i64
+}
+struct Point {
+    x: f64,
+    y: f64,
+}
+struct Skater{
+    directionPreferences:Vec<f64>,
+    position:Point
+}
+
+// Program
 fn main () {
     println!("hello world {}", SPACE.width);
     for i in 0..simulationCount {
