@@ -5,3 +5,4 @@ authors = ["jappie <j.t.klooster@students.uu.nl>"]
 license-file = "LICENSE"
 
 [dependencies]
+rand = "0.3"

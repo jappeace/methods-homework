@@ -1,5 +1,5 @@
 // This programs simulates a primitive reinforcement learning scanerio
-// Copyright (C) 2016 Jappe Klooster
+// Copyright (C) 2016 Jappie Klooster
 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
 
+extern crate rand;
 
 // Configuration
 static simulationCount:i64= 100;
@@ -43,13 +44,43 @@ struct Point {
     x: f64,
     y: f64,
 }
+struct Preference{
+    uses:i64,
+    lastReward:f64
+}
+use rand::Rng;
 struct Skater{
-    directionPreferences:Vec<f64>,
-    position:Point
+    actionOpinions:Vec<Preference>, // same size as the action set
+    position:Point,
+}
+impl Skater{
+
+    fn update(&mut self){
+        let choice = rand::random::<f64>();
+        println!("numbs {}", choice);
+    }
+    fn learn(&mut self, skaterPositions:Vec<Point>, direction:usize) {
+        // oldvalue + learnrate (reward - oldvalue)
+        let newReward = Skater::determineReward(skaterPositions, direction);
+        let oldReward = self.actionOpinions[direction].lastReward;
+        // where learnrate = (1/n)
+        let learnrate= 1.0 / self.actionOpinions[direction].uses as f64; 
+        self.actionOpinions[direction].lastReward = oldReward + learnrate * (newReward - oldReward);
+        self.actionOpinions[direction].uses += 1;
+    }
+    fn determineReward(skaterPositions:Vec<Point>,direction:usize) -> f64{
+        return 0.0;
+    }
 }
 
 // Program
-fn main () {
+fn main() {
+    let mut skat = Skater{
+        actionOpinions: Vec::<Preference>::new(),
+        position:Point{x:3.0,y:3.0},
+    };
+    skat.update();
+
     println!("hello world {}", SPACE.width);
     for i in 0..simulationCount {
         use std::ops::Rem;
