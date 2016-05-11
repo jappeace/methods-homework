@@ -14,27 +14,35 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
 
+// shut up rust
+#![allow(dead_code)]
+#![allow(non_upper_case_globals)]
+#![allow(non_snake_case)]
+
 extern crate rand;
 
 // Configuration
 static simulationCount:i64= 100;
 static skaterCount:i64 = 50;
-static directionChoices:&'static [i32;12] = &[30,60,90,120,150,180,210,240,270,300,330,0];
+static directionChoices:&'static [i32;12] = &[0,30,60,90,120,150,180,210,240,270,300,330];
 static speed:f64 = 1.0;
 static collisionRadius:f64 = 1.0;
 static SPACE:Space = Space {
     width: 30,
     height: 30
 };
-static REWARDS:Rewards = Rewards{
-    collision:-10.0,
-    avoided:10.0
+static Rewards:Reward = Reward{
+    collision:1.0,
+    avoided:10.0,
+    unreasonablyHigh:100.0
+
 };
 
 // Structures
-struct Rewards{
+struct Reward{
     collision:f64,
-    avoided:f64
+    avoided:f64,
+    unreasonablyHigh:f64
 }
 struct Space{
     width:i64,
@@ -48,13 +56,23 @@ struct Preference{
     uses:i64,
     lastReward:f64
 }
-use rand::Rng;
 struct Skater{
     actionOpinions:Vec<Preference>, // same size as the action set
     position:Point,
 }
 impl Skater{
-
+    fn new() -> Skater{
+        let defaultPrefs = directionChoices.into_iter().map( |&x|
+            Preference{
+                uses:0,
+                lastReward:Rewards.unreasonablyHigh
+            }
+        ).collect();
+        return Skater{
+            actionOpinions: defaultPrefs,
+            position:Point{x:3.0,y:3.0},
+        };
+    }
     fn update(&mut self){
         let choice = rand::random::<f64>();
         println!("numbs {}", choice);
@@ -75,10 +93,7 @@ impl Skater{
 
 // Program
 fn main() {
-    let mut skat = Skater{
-        actionOpinions: Vec::<Preference>::new(),
-        position:Point{x:3.0,y:3.0},
-    };
+    let mut skat = Skater::new();
     skat.update();
 
     println!("hello world {}", SPACE.width);
@@ -86,6 +101,5 @@ fn main() {
         use std::ops::Rem;
         let select = (i as usize).rem(directionChoices.len());
         println!("wrong spelling {}", directionChoices[select]);
-        
     }
 }
