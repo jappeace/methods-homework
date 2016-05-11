@@ -48,34 +48,63 @@ struct Space{
     width:i64,
     height:i64
 }
+#[derive(Clone)]
+#[derive(Debug)]
 struct Point {
     x: f64,
     y: f64,
 }
+#[derive(Clone)]
+#[derive(Debug)]
 struct Preference{
     uses:i64,
     lastReward:f64
 }
+#[derive(Clone)]
+#[derive(Debug)]
 struct Skater{
     actionOpinions:Vec<Preference>, // same size as the action set
     position:Point,
 }
 impl Skater{
     fn new() -> Skater{
-        let defaultPrefs = directionChoices.into_iter().map( |&x|
+        let defaultPrefs = directionChoices.into_iter().map( |&_|
             Preference{
                 uses:0,
                 lastReward:Rewards.unreasonablyHigh
             }
         ).collect();
+        
         return Skater{
             actionOpinions: defaultPrefs,
-            position:Point{x:3.0,y:3.0},
+            position:Point{
+                x:rand::random::<f64>()*SPACE.width as f64,
+                y:rand::random::<f64>()*SPACE.height as f64
+            },
         };
     }
-    fn update(&mut self){
-        let choice = rand::random::<f64>();
-        println!("numbs {}", choice);
+    fn update(mut self, skaterPositions:Vec<Point>) -> Skater{
+        let rewards:Vec<f64> = self.actionOpinions.clone().into_iter().map(
+            |opinion:Preference| opinion.lastReward
+        ).collect();
+        let totalReward = rewards.clone().into_iter().fold(0.0,|cur,prev| cur+prev);
+        let probablities = rewards.into_iter().map(|x| x/totalReward);
+        let mut chosenIndex:usize = 0;
+        { // here I gave up on recursion, and found folding to complicated, so I went back
+            // to my imperative roots.
+            let choice = rand::random::<f64>();
+            let mut probstack = 0.0;
+            for probability in probablities{
+                probstack += probability;
+                if(choice < probstack){ // and I wanted to use a library for this.
+                    break;
+                }
+                chosenIndex += 1;
+            }
+
+        }
+        self.learn(skaterPositions, chosenIndex);
+        return self;
     }
     fn learn(&mut self, skaterPositions:Vec<Point>, direction:usize) {
         // oldvalue + learnrate (reward - oldvalue)
@@ -90,16 +119,25 @@ impl Skater{
         return 0.0;
     }
 }
-
+use std::fmt;
+impl fmt::Display for Skater{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        return write!(f, "S(x:{} y:{}, {:?})", self.position.x, self.position.y, self.actionOpinions);
+    }
+}
+impl fmt::Display for Preference{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        return write!(f, "p(u:{} r:{})", self.uses, self.lastReward);
+    }
+}
 // Program
 fn main() {
-    let mut skat = Skater::new();
-    skat.update();
 
-    println!("hello world {}", SPACE.width);
-    for i in 0..simulationCount {
-        use std::ops::Rem;
-        let select = (i as usize).rem(directionChoices.len());
-        println!("wrong spelling {}", directionChoices[select]);
+    let mut skaters:Vec<Skater> = (1..skaterCount).into_iter().map(|x| Skater::new()).collect();
+    for _ in 0..simulationCount {
+        let positions:Vec<Point> = skaters.clone().into_iter().map(|s| s.position).collect();
+        skaters = skaters.into_iter().map(|s| s.update(positions.clone())).collect();
+
+        println!("Skaters: {:?}", skaters);
     }
 }
