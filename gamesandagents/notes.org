@@ -1,0 +1,72 @@
+
+* Uses
+- create a model for human navigation.
+  - Agent based, has problem with high densities
+  - Flow based for high densisties.
+  - probably sucks to find a middle ground.
+* Path planning sucks
+- Graphs making is hard.
+- The same graph doesn't always work
+* Algorithms
+Flocking. Folow the leader.
+** A-star
+Thanks dijkstra.
+*** advatages:
+Simple.
+*** Distadvantages:
+- Slow (if it goes wrong)
+- Ugly (although can be helped) At the cost of more time
+** Potential fields
+*** advantages:
+- Flexiibility, smooth paths
+*** Distadvantages:
+- Local minima,
+- ...
+
+** Probablistic roadmap
+*** Advatages
+- Reasonably fast,
+- High-demsnional problems
+*** Distadvantages
+- Predictable motions.
+- Lacks flexitility in dynamic envs
+- Storage can be expnsive
+** Navigation meshes
+opensource
+*** advantages
+- General approach
+- On the gpu can be constructed fast
+*** Distadvantages
+- May need manual editing
+- Currently he techniques are imprecise
+- Bad supprt for tarains
+- No autmatic annotation.
+* WE NEED SURFACE BASED NAVIATION
+instead of graph based.
+
+This course is about planning actions he sais.
+
+** Represnetation
+If there exists a path, we want to extract that...
+Fast computation ~3 seconds?
+
+** Attempts
+Mathematical mrphology: to slow
+Sampling of medial axis: 
+
+** Clasically
+We used to use curves, *but*, this is stupid, because humans
+don't do that and its hard to do in crowds because there is not 
+enough room.
+
+
+* Weighted path planning
+Open questions:
+Validation of the models
+Similution of MORE PEOPle. Currently (650 000)
+Realtime predictin during realtime invents (bombs?).
+
+uu crowd simulation framework.
+Dr Roland Geraerts
+** MIRAN
+...
