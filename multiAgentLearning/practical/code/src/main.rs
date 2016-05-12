@@ -122,7 +122,17 @@ impl Skater{
 use std::fmt;
 impl fmt::Display for Skater{
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        return write!(f, "S(x:{} y:{}, {:?})", self.position.x, self.position.y, self.actionOpinions);
+        let mut commaSeparated = String::new();
+
+        for num in &self.actionOpinions
+        {
+            commaSeparated.push_str(&num.to_string());
+            commaSeparated.push_str(", ");
+        }
+
+        commaSeparated.pop();
+        commaSeparated.pop();
+        return write!(f, "S(x:{} y:{}, {:?})", self.position.x, self.position.y, commaSeparated);
     }
 }
 impl fmt::Display for Preference{
@@ -138,6 +148,9 @@ fn main() {
         let positions:Vec<Point> = skaters.clone().into_iter().map(|s| s.position).collect();
         skaters = skaters.into_iter().map(|s| s.update(positions.clone())).collect();
 
-        println!("Skaters: {:?}", skaters);
+        for skater in skaters.clone(){
+
+            println!("S:{}", skater);
+        }
     }
 }
