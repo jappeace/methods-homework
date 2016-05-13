@@ -22,7 +22,7 @@
 extern crate rand;
 
 // Configuration
-static simulationCount:i64= 10;
+static simulationCount:i64= 1000;
 static skaterCount:i64 = 5;
 static directionChoices:&'static [f64;12] = &[0.0,30.0,60.0,90.0,120.0,150.0,180.0,210.0,240.0,270.0,300.0,330.0];
 static speed:f64 = 1.0;
@@ -66,11 +66,12 @@ struct Skater{
     actionOpinions:Vec<Preference>, // same size as the action set
     position:Point,
 }
+
 impl Skater{
     fn new() -> Skater{
         let defaultPrefs = directionChoices.into_iter().map( |&_|
             Preference{
-                uses:0,
+                uses:1,
                 lastReward:Rewards.unreasonablyHigh
             }
         ).collect();
@@ -114,6 +115,7 @@ impl Skater{
         let oldReward = self.actionOpinions[direction].lastReward;
         // where learnrate = (1/n)
         let learnrate= 1.0 / self.actionOpinions[direction].uses as f64; 
+        println!("newReward: {}, oldReward: {}, learnrate {}", newReward, oldReward, learnrate);
         self.actionOpinions[direction].lastReward = oldReward + learnrate * (newReward - oldReward);
         self.actionOpinions[direction].uses += 1;
     }
@@ -159,7 +161,6 @@ impl fmt::Display for Preference{
 
 // Program
 fn main() {
-
     let mut skaters:Vec<Skater> = (1..skaterCount).into_iter().map(|_| Skater::new()).collect();
     for _ in 0..simulationCount {
         let positions:Vec<Point> = skaters.clone().into_iter().map(|s| s.position).collect();
