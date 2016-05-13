@@ -22,9 +22,9 @@
 extern crate rand;
 
 // Configuration
-static simulationCount:i64= 100;
-static skaterCount:i64 = 50;
-static directionChoices:&'static [i32;12] = &[0,30,60,90,120,150,180,210,240,270,300,330];
+static simulationCount:i64= 10;
+static skaterCount:i64 = 5;
+static directionChoices:&'static [f64;12] = &[0.0,30.0,60.0,90.0,120.0,150.0,180.0,210.0,240.0,270.0,300.0,330.0];
 static speed:f64 = 1.0;
 static collisionRadius:f64 = 1.0;
 static SPACE:Space = Space {
@@ -96,60 +96,76 @@ impl Skater{
             let mut probstack = 0.0;
             for probability in probablities{
                 probstack += probability;
-                if(choice < probstack){ // and I wanted to use a library for this.
+                chosenIndex += 1;
+                if choice < probstack { // and I wanted to use a library for this.
                     break;
                 }
-                chosenIndex += 1;
             }
+            chosenIndex -= 1;
 
         }
         self.learn(skaterPositions, chosenIndex);
         return self;
     }
+
     fn learn(&mut self, skaterPositions:Vec<Point>, direction:usize) {
         // oldvalue + learnrate (reward - oldvalue)
-        let newReward = Skater::determineReward(skaterPositions, direction);
+        let newReward = self.determineReward(skaterPositions, direction);
         let oldReward = self.actionOpinions[direction].lastReward;
         // where learnrate = (1/n)
         let learnrate= 1.0 / self.actionOpinions[direction].uses as f64; 
         self.actionOpinions[direction].lastReward = oldReward + learnrate * (newReward - oldReward);
         self.actionOpinions[direction].uses += 1;
     }
-    fn determineReward(skaterPositions:Vec<Point>,direction:usize) -> f64{
-        return 0.0;
+
+    fn determineReward(&mut self, skaterPositions:Vec<Point>,direction:usize) -> f64{
+        let angle = directionChoices[direction];
+        let newPosition = Point{
+            x:self.position.x + speed * angle.cos(),
+            y:self.position.y + speed * angle.sin()
+        };
+        let hasCollision = skaterPositions.into_iter().any(
+            |p| (p.x - newPosition.x).powi(2) + (p.y - newPosition.y).powi(2) < speed.powi(2)
+        );
+        if hasCollision{
+            return Rewards.collision;
+        }
+        // now we also move.
+        self.position = newPosition;
+        return Rewards.avoided;
     }
 }
+
 use std::fmt;
 impl fmt::Display for Skater{
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let mut commaSeparated = String::new();
-
         for num in &self.actionOpinions
         {
             commaSeparated.push_str(&num.to_string());
             commaSeparated.push_str(", ");
         }
-
         commaSeparated.pop();
         commaSeparated.pop();
         return write!(f, "S(x:{} y:{}, {:?})", self.position.x, self.position.y, commaSeparated);
     }
 }
+
 impl fmt::Display for Preference{
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         return write!(f, "p(u:{} r:{})", self.uses, self.lastReward);
     }
 }
+
 // Program
 fn main() {
 
-    let mut skaters:Vec<Skater> = (1..skaterCount).into_iter().map(|x| Skater::new()).collect();
+    let mut skaters:Vec<Skater> = (1..skaterCount).into_iter().map(|_| Skater::new()).collect();
     for _ in 0..simulationCount {
         let positions:Vec<Point> = skaters.clone().into_iter().map(|s| s.position).collect();
         skaters = skaters.into_iter().map(|s| s.update(positions.clone())).collect();
 
         for skater in skaters.clone(){
-
             println!("S:{}", skater);
         }
     }
