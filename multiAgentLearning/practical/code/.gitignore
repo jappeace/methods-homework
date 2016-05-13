@@ -2,4 +2,4 @@ target
 *.swp
 *.swo
 *.lock
-*.plot
+*.plo

@@ -23,7 +23,7 @@ extern crate rand;
 extern crate gnuplot;
 
 // Configuration
-static simulationCount:i64= 1000;
+static simulationCount:i64= 10000;
 static skaterCount:i64 = 10;
 static directionChoices:&'static [f64;6] = &[0.0,60.0,120.0,180.0,240.0,300.0];
 static speed:f64 = 1.0;
@@ -163,6 +163,7 @@ struct Step{
     choices:Vec<usize>,
     avgReward:Vec<f64>
 }
+
 impl Step{
     fn new() -> Step{
         return Step{
@@ -172,7 +173,6 @@ impl Step{
     }
 }
 
-use gnuplot::{Figure, Caption, Color};
 // Program
 fn main() {
     let mut skaters:Vec<Skater> = (1..skaterCount).into_iter().map(|_| Skater::new()).collect();
@@ -190,31 +190,37 @@ fn main() {
         // hack to get the right amount of vec<f64> all initialized to 0
         let start:Vec<f64> = directionChoices.into_iter().map(|_| 0.0).collect();
         // we want to remove the outer structure into averages (so its a fold)
-        stepResult.avgReward = prefrences.into_iter().fold(start, |cur, prev|{
+        stepResult.avgReward = prefrences.into_iter().fold(start, |prev, cur|{
             // per preference, divide by skatercount and add previous value
             return cur.into_iter().zip(prev.into_iter()).map(|tupple|{
-                return tupple.1/skaterCount as f64 + tupple.1
+                return tupple.0/skaterCount as f64 + tupple.1
             }).collect();
         });
         simulationResult.push(stepResult);
         skaters = newSkaters;
     }
-    println!("{:?}", simulationResult);
     plot(simulationResult);
 }
 
+use gnuplot::{Figure, Caption, Color};
 fn plot(simulationResult:Vec<Step>){
-    /*
-    To plot: 
-     * Avg reward per angle,
-     * angles chosen per step.
-     */
-    let x = [0u32, 1, 2];
-    let y = [3u32, 4, 5];
+    let start = directionChoices.into_iter().map(|_| Vec::<f64>::new()).collect();
+    let rewards = simulationResult.iter().fold(start, |mut prev:Vec<Vec<f64>>, cur|{
+        for (i,r) in cur.avgReward.iter().enumerate(){
+            prev[i].push(r.clone());
+        }
+        return prev
+    });
     let mut fg = Figure::new();
-    fg.axes2d()
-        .lines(&x, &y, &[Caption("A line"), Color("black")]);
+    for reward in rewards{
+        fg.axes2d()
+            .lines(&(0..(simulationResult.len())).collect::<Vec<usize>>(), &reward, &[Caption("A line"), Color(&rngColor())]);
+    }
     fg.echo_to_file("plot.plot");
-
-    return;
+    fn rngColor() -> String{
+        fn rng() -> i32{
+            return ( rand::random::<f64>() * 255.0) as i32
+        }
+        return format!("#{0:x}{1:x}{2:x}{3:x}00", rng(), rng(), rng(), rng());
+    }
 }
