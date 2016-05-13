@@ -6,4 +6,4 @@ license-file = "LICENSE"
 
 [dependencies]
 rand = "0.3"
-
+gnuplot = "0.0.20"

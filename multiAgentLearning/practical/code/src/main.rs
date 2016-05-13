@@ -20,11 +20,12 @@
 #![allow(non_snake_case)]
 
 extern crate rand;
+extern crate gnuplot;
 
 // Configuration
 static simulationCount:i64= 1000;
-static skaterCount:i64 = 5;
-static directionChoices:&'static [f64;12] = &[0.0,30.0,60.0,90.0,120.0,150.0,180.0,210.0,240.0,270.0,300.0,330.0];
+static skaterCount:i64 = 10;
+static directionChoices:&'static [f64;6] = &[0.0,60.0,120.0,180.0,240.0,300.0];
 static speed:f64 = 1.0;
 static collisionRadius:f64 = 1.0;
 static SPACE:Space = Space {
@@ -84,7 +85,7 @@ impl Skater{
             },
         };
     }
-    fn update(mut self, skaterPositions:Vec<Point>) -> Skater{
+    fn update(&mut self, skaterPositions:Vec<Point>) -> usize{
         let rewards:Vec<f64> = self.actionOpinions.clone().into_iter().map(
             |opinion:Preference| opinion.lastReward
         ).collect();
@@ -106,7 +107,7 @@ impl Skater{
 
         }
         self.learn(skaterPositions, chosenIndex);
-        return self;
+        return chosenIndex;
     }
 
     fn learn(&mut self, skaterPositions:Vec<Point>, direction:usize) {
@@ -115,13 +116,12 @@ impl Skater{
         let oldReward = self.actionOpinions[direction].lastReward;
         // where learnrate = (1/n)
         let learnrate= 1.0 / self.actionOpinions[direction].uses as f64; 
-        println!("newReward: {}, oldReward: {}, learnrate {}", newReward, oldReward, learnrate);
         self.actionOpinions[direction].lastReward = oldReward + learnrate * (newReward - oldReward);
         self.actionOpinions[direction].uses += 1;
     }
 
     fn determineReward(&mut self, skaterPositions:Vec<Point>,direction:usize) -> f64{
-        let angle = directionChoices[direction];
+        let angle = directionChoices[direction].to_radians();
         let newPosition = Point{
             x:self.position.x + speed * angle.cos(),
             y:self.position.y + speed * angle.sin()
@@ -158,16 +158,63 @@ impl fmt::Display for Preference{
         return write!(f, "p(u:{} r:{})", self.uses, self.lastReward);
     }
 }
+#[derive(Debug)]
+struct Step{
+    choices:Vec<usize>,
+    avgReward:Vec<f64>
+}
+impl Step{
+    fn new() -> Step{
+        return Step{
+            choices: Vec::<usize>::new(),
+            avgReward: Vec::<f64>::new(),
+        }
+    }
+}
 
+use gnuplot::{Figure, Caption, Color};
 // Program
 fn main() {
     let mut skaters:Vec<Skater> = (1..skaterCount).into_iter().map(|_| Skater::new()).collect();
+    let mut simulationResult = Vec::<Step>::new();
     for _ in 0..simulationCount {
         let positions:Vec<Point> = skaters.clone().into_iter().map(|s| s.position).collect();
-        skaters = skaters.into_iter().map(|s| s.update(positions.clone())).collect();
-
-        for skater in skaters.clone(){
-            println!("S:{}", skater);
+        let mut newSkaters = Vec::<Skater>::new();
+        let mut stepResult = Step::new();
+        let mut prefrences = Vec::<Vec<f64>>::new();
+        for mut skater in skaters{
+            stepResult.choices.push(skater.update(positions.clone()));
+            newSkaters.push(skater.clone());
+            prefrences.push(skater.actionOpinions.into_iter().map(|p| p.lastReward).collect());
         }
+        // hack to get the right amount of vec<f64> all initialized to 0
+        let start:Vec<f64> = directionChoices.into_iter().map(|_| 0.0).collect();
+        // we want to remove the outer structure into averages (so its a fold)
+        stepResult.avgReward = prefrences.into_iter().fold(start, |cur, prev|{
+            // per preference, divide by skatercount and add previous value
+            return cur.into_iter().zip(prev.into_iter()).map(|tupple|{
+                return tupple.1/skaterCount as f64 + tupple.1
+            }).collect();
+        });
+        simulationResult.push(stepResult);
+        skaters = newSkaters;
     }
+    println!("{:?}", simulationResult);
+    plot(simulationResult);
+}
+
+fn plot(simulationResult:Vec<Step>){
+    /*
+    To plot: 
+     * Avg reward per angle,
+     * angles chosen per step.
+     */
+    let x = [0u32, 1, 2];
+    let y = [3u32, 4, 5];
+    let mut fg = Figure::new();
+    fg.axes2d()
+        .lines(&x, &y, &[Caption("A line"), Color("black")]);
+    fg.echo_to_file("plot.plot");
+
+    return;
 }
