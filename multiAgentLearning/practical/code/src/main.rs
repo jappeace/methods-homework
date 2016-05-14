@@ -23,10 +23,10 @@ extern crate rand;
 extern crate gnuplot;
 
 // Configuration
-static simulationCount:i64= 10000;
-static skaterCount:i64 = 10;
+static simulationCount:i64= 1000;
+static skaterCount:i64 = 80;
 static directionChoices:&'static [f64;6] = &[0.0,60.0,120.0,180.0,240.0,300.0];
-static speed:f64 = 1.0;
+static speed:f64 = 0.9;
 static collisionRadius:f64 = 1.0;
 static SPACE:Space = Space {
     width: 30,
@@ -123,8 +123,8 @@ impl Skater{
     fn determineReward(&mut self, skaterPositions:Vec<Point>,direction:usize) -> f64{
         let angle = directionChoices[direction].to_radians();
         let newPosition = Point{
-            x:self.position.x + speed * angle.cos(),
-            y:self.position.y + speed * angle.sin()
+            x:(self.position.x + speed * angle.cos() + SPACE.width as f64) % SPACE.width as f64,
+            y:(self.position.y + speed * angle.sin() + SPACE.height as f64) % SPACE.height as f64
         };
         let hasCollision = skaterPositions.into_iter().any(
             |p| (p.x - newPosition.x).powi(2) + (p.y - newPosition.y).powi(2) < speed.powi(2)
@@ -212,15 +212,24 @@ fn plot(simulationResult:Vec<Step>){
         return prev
     });
     let mut fg = Figure::new();
-    for reward in rewards{
-        fg.axes2d()
-            .lines(&(0..(simulationResult.len())).collect::<Vec<usize>>(), &reward, &[Caption("A line"), Color(&rngColor())]);
+    {
+        let mut axis = fg.axes2d();
+        for (i,reward) in rewards.into_iter().enumerate(){
+            axis.lines(
+                &(0..(simulationResult.len())).collect::<Vec<usize>>(),
+                &reward,
+                &[
+                    Caption(&format!("Angle {}", directionChoices[i])),
+                    Color(&rngColor())
+                ]
+            );
+        }
     }
     fg.echo_to_file("plot.plot");
     fn rngColor() -> String{
         fn rng() -> i32{
             return ( rand::random::<f64>() * 255.0) as i32
         }
-        return format!("#{0:x}{1:x}{2:x}{3:x}00", rng(), rng(), rng(), rng());
+        return format!("#{0:x}{1:x}0{2:x}0{3:x}", rng(), rng(), rng(), rng());
     }
 }
