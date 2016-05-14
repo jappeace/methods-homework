@@ -34,7 +34,7 @@ static SPACE:Space = Space {
 };
 static Rewards:Reward = Reward{
     collision:1.0,
-    avoided:10.0,
+    avoided:40.0,
     unreasonablyHigh:100.0
 
 };
@@ -211,7 +211,14 @@ fn plot(simulationResult:Vec<Step>){
         }
         return prev
     });
-    drawPlot(rewards, simulationResult.len(), &"rewards");
+    fn rngColor() -> String{
+        fn rng() -> i32{
+            return ( rand::random::<f64>() * 255.0) as i32
+        }
+        return format!("#{0:x}{1:x}0{2:x}0{3:x}", rng(), rng(), rng(), rng());
+    }
+    let colors:Vec<String> = directionChoices.into_iter().map(|_| rngColor()).collect();
+    drawPlot(rewards, simulationResult.len(), &"rewards", &colors);
     let startu:Vec<Vec<usize>> = directionChoices.into_iter().map(|_| Vec::<usize>::new()).collect();
     let choices = simulationResult.iter().fold(startu, |mut prev:Vec<Vec<usize>>, cur|{
         prev = prev.into_iter().map(|mut x| {
@@ -226,10 +233,10 @@ fn plot(simulationResult:Vec<Step>){
         }
         return prev;
     });
-    drawPlot(choices, simulationResult.len(), &"choices");
+    drawPlot(choices, simulationResult.len(), &"choices", &colors);
 }
 use gnuplot::DataType;
-fn drawPlot<T>(array:Vec<Vec< T >>, stepCount:usize, string:&str) where T : DataType{
+fn drawPlot<T>(array:Vec<Vec< T >>, stepCount:usize, string:&str, colors:&Vec<String>) where T : DataType{
     let mut fg = Figure::new();
     {
         let mut axis = fg.axes2d();
@@ -239,16 +246,10 @@ fn drawPlot<T>(array:Vec<Vec< T >>, stepCount:usize, string:&str) where T : Data
                 reward,
                 &[
                     Caption(&format!("{}: {}",string, directionChoices[i])),
-                    Color(&rngColor())
+                    Color(&colors[i])
                 ]
             );
         }
     }
     fg.echo_to_file(&format!("{}.plot", string));
-    fn rngColor() -> String{
-        fn rng() -> i32{
-            return ( rand::random::<f64>() * 255.0) as i32
-        }
-        return format!("#{0:x}{1:x}0{2:x}0{3:x}", rng(), rng(), rng(), rng());
-    }
 }
