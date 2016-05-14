@@ -204,28 +204,47 @@ fn main() {
 
 use gnuplot::{Figure, Caption, Color};
 fn plot(simulationResult:Vec<Step>){
-    let start = directionChoices.into_iter().map(|_| Vec::<f64>::new()).collect();
+    let start:Vec<Vec<f64>> = directionChoices.into_iter().map(|_| Vec::<f64>::new()).collect();
     let rewards = simulationResult.iter().fold(start, |mut prev:Vec<Vec<f64>>, cur|{
         for (i,r) in cur.avgReward.iter().enumerate(){
             prev[i].push(r.clone());
         }
         return prev
     });
+    drawPlot(rewards, simulationResult.len(), &"rewards");
+    let startu:Vec<Vec<usize>> = directionChoices.into_iter().map(|_| Vec::<usize>::new()).collect();
+    let choices = simulationResult.iter().fold(startu, |mut prev:Vec<Vec<usize>>, cur|{
+        prev = prev.into_iter().map(|mut x| {
+            x.push(0);
+            return x
+        }).collect();
+        for c in cur.choices.clone().into_iter(){
+            let mut choice = prev[c].clone();
+            let len = choice.len();
+            choice[len-1] = choice[len-1] + 1;
+            prev[c] = choice;
+        }
+        return prev;
+    });
+    drawPlot(choices, simulationResult.len(), &"choices");
+}
+use gnuplot::DataType;
+fn drawPlot<T>(array:Vec<Vec< T >>, stepCount:usize, string:&str) where T : DataType{
     let mut fg = Figure::new();
     {
         let mut axis = fg.axes2d();
-        for (i,reward) in rewards.into_iter().enumerate(){
+        for (i,reward) in array.into_iter().enumerate(){
             axis.lines(
-                &(0..(simulationResult.len())).collect::<Vec<usize>>(),
-                &reward,
+                &(0..(stepCount)).collect::<Vec<usize>>(),
+                reward,
                 &[
-                    Caption(&format!("Angle {}", directionChoices[i])),
+                    Caption(&format!("{}: {}",string, directionChoices[i])),
                     Color(&rngColor())
                 ]
             );
         }
     }
-    fg.echo_to_file("plot.plot");
+    fg.echo_to_file(&format!("{}.plot", string));
     fn rngColor() -> String{
         fn rng() -> i32{
             return ( rand::random::<f64>() * 255.0) as i32
