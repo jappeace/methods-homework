@@ -23,7 +23,7 @@ extern crate rand;
 extern crate gnuplot;
 
 // Configuration
-static simulationCount:i64= 1000;
+static simulationCount:i64= 100;
 static skaterCount:i64 = 20;
 static directionChoices:&'static [f64;6] = &[0.0,60.0,120.0,180.0,240.0,300.0];
 static speed:f64 = 0.9;
@@ -150,7 +150,7 @@ fn egreedy(skater:&mut Skater, skaterPositions:Vec<Point>) -> usize{
         // explore
         rand::thread_rng().gen_range(0, directionChoices.len())
     }else{
-        let start:(usize,f64) = (0, 0.0);
+        let start:(usize,f64) = (0, -Rewards.unreasonablyHigh);
         skater.actionOpinions.iter().enumerate().fold(start, |prev,(index,preference)| {
             if prev.1 < preference.lastReward {
                 return (index,preference.lastReward);
@@ -162,7 +162,7 @@ fn egreedy(skater:&mut Skater, skaterPositions:Vec<Point>) -> usize{
     return choice;
 }
 fn greedy(skater:&mut Skater, skaterPositions:Vec<Point>) -> usize{
-    let start:(usize,f64) = (0, 0.0);
+    let start:(usize,f64) = (0, -Rewards.unreasonablyHigh);
     let choice:usize = skater.actionOpinions.iter().enumerate().fold(start, |prev,(index,preference)| {
         if prev.1 < preference.lastReward {
             return (index,preference.lastReward);
@@ -261,7 +261,6 @@ fn main() {
     plot(simulationResult);
 }
 
-use gnuplot::{Figure, Caption, Color};
 fn plot(simulationResult:Vec<Step>){
     let start:Vec<Vec<f64>> = directionChoices.into_iter().map(|_| Vec::<f64>::new()).collect();
     let rewards = simulationResult.iter().fold(start, |mut prev:Vec<Vec<f64>>, cur|{
@@ -294,7 +293,11 @@ fn plot(simulationResult:Vec<Step>){
     });
     drawPlot(choices, simulationResult.len(), &"choices", &colors);
 }
-use gnuplot::DataType;
+fn markerSymbol(nr:usize) -> char{
+    let choice = ['.','+','x','*','s','S','o','O','t','T','d','D','r','R'];
+    return choice[nr%choice.len()];
+}
+use gnuplot::{Figure, Caption, Color, DataType, PointSymbol, PointSize};
 fn drawPlot<T>(array:Vec<Vec< T >>, stepCount:usize, string:&str, colors:&Vec<String>) where T : DataType{
     let mut fg = Figure::new();
     {
@@ -304,6 +307,8 @@ fn drawPlot<T>(array:Vec<Vec< T >>, stepCount:usize, string:&str, colors:&Vec<St
                 &(0..(stepCount)).collect::<Vec<usize>>(),
                 reward,
                 &[
+                    PointSymbol(markerSymbol(i)),
+                    PointSize(30.0),
                     Caption(&format!("{}: {}",string, directionChoices[i])),
                     Color(&colors[i])
                 ]
