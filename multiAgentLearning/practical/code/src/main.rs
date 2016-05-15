@@ -23,18 +23,18 @@ extern crate rand;
 extern crate gnuplot;
 
 // Configuration
-static simulationCount:i64= 100;
-static skaterCount:i64 = 20;
+static simulationCount:i64= 1000;
+static skaterCount:i64 = 31;
 static directionChoices:&'static [f64;6] = &[0.0,60.0,120.0,180.0,240.0,300.0];
-static speed:f64 = 0.9;
+static speed:f64 = 0.5;
 static collisionRadius:f64 = 1.0;
 static SPACE:Space = Space {
     width: 10,
     height: 10
 };
 static Rewards:Reward = Reward{
-    collision:-100.0,
-    avoided:10.0,
+    collision:-1.0,
+    avoided:20.0,
     unreasonablyHigh:100.0
 };
 // learn strategy:
