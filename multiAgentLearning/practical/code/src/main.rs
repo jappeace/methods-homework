@@ -61,63 +61,47 @@ struct Preference{
     uses:i64,
     lastReward:f64
 }
-#[derive(Clone)]
-#[derive(Debug)]
-struct Skater{
+struct Skater<'b>{
     actionOpinions:Vec<Preference>, // same size as the action set
     position:Point,
+    strategy:Box<LearnStrategy + 'b>
 }
 
-impl Skater{
-    fn new() -> Skater{
+impl<'b> Clone for Skater<'b>{
+    fn clone(&self) -> Skater<'b>{
+        return Skater{
+            actionOpinions: self.actionOpinions.clone(),
+            position:self.position.clone(),
+            strategy:self.strategy
+        }
+    }
+    fn clone_from(&mut self, source: &Skater<'b>) {
+        self.strategy = source.strategy;
+        self.position = source.position.clone();
+        self.actionOpinions = source.actionOpinions.clone();
+    } 
+}
+impl<'b> Skater<'b>{
+
+    fn new(learnStrategy:Box<LearnStrategy + 'b>) -> Skater{
         let defaultPrefs = directionChoices.into_iter().map( |&_|
             Preference{
                 uses:1,
                 lastReward:Rewards.unreasonablyHigh
             }
         ).collect();
-        
         return Skater{
             actionOpinions: defaultPrefs,
             position:Point{
                 x:rand::random::<f64>()*SPACE.width as f64,
                 y:rand::random::<f64>()*SPACE.height as f64
             },
+            strategy:learnStrategy
         };
     }
+
     fn update(&mut self, skaterPositions:Vec<Point>) -> usize{
-        let rewards:Vec<f64> = self.actionOpinions.clone().into_iter().map(
-            |opinion:Preference| opinion.lastReward
-        ).collect();
-        let totalReward = rewards.iter().fold(0.0,|cur,prev| cur+prev);
-        let probablities = rewards.into_iter().map(|x| x/totalReward);
-        let mut chosenIndex:usize = 0;
-        { // here I gave up on recursion, and found folding to complicated, so I went back
-            // to my imperative roots.
-            let choice = rand::random::<f64>();
-            let mut probstack = 0.0;
-            for probability in probablities{
-                probstack += probability;
-                chosenIndex += 1;
-                if choice < probstack { // and I wanted to use a library for this.
-                    break;
-                }
-            }
-            chosenIndex -= 1;
-
-        }
-        self.learn(skaterPositions, chosenIndex);
-        return chosenIndex;
-    }
-
-    fn learn(&mut self, skaterPositions:Vec<Point>, direction:usize) {
-        // oldvalue + learnrate (reward - oldvalue)
-        let newReward = self.determineReward(skaterPositions, direction);
-        let oldReward = self.actionOpinions[direction].lastReward;
-        // where learnrate = (1/n)
-        let learnrate= 1.0 / self.actionOpinions[direction].uses as f64; 
-        self.actionOpinions[direction].lastReward = oldReward + learnrate * (newReward - oldReward);
-        self.actionOpinions[direction].uses += 1;
+        return self.clone().strategy.learn(self,skaterPositions);
     }
 
     fn determineReward(&mut self, skaterPositions:Vec<Point>,direction:usize) -> f64{
@@ -138,8 +122,44 @@ impl Skater{
     }
 }
 
+trait LearnStrategy {
+    fn learn(&self, skater:&mut Skater, skaterPositions:Vec<Point>) -> usize;
+}
+struct OnlineLearning;
+impl LearnStrategy for OnlineLearning {
+    fn learn(&self, skater:&mut Skater, skaterPositions:Vec<Point>) -> usize{
+        let rewards:Vec<f64> = skater.actionOpinions.clone().into_iter().map(
+            |opinion:Preference| opinion.lastReward
+        ).collect();
+        let totalReward = rewards.iter().fold(0.0,|cur,prev| cur+prev);
+        let probablities = rewards.into_iter().map(|x| x/totalReward);
+        let mut chosenIndex:usize = 0;
+        { // here I gave up on recursion, and found folding to complicated, so I went back
+            // to my imperative roots.
+            let choice = rand::random::<f64>();
+            let mut probstack = 0.0;
+            for probability in probablities{
+                probstack += probability;
+                chosenIndex += 1;
+                if choice < probstack { // and I wanted to use a library for this.
+                    break;
+                }
+            }
+            chosenIndex -= 1;
+
+        }
+        // oldvalue + learnrate (reward - oldvalue)
+        let newReward = skater.determineReward(skaterPositions, chosenIndex);
+        let oldReward = skater.actionOpinions[chosenIndex].lastReward;
+        // where learnrate = (1/n)
+        let learnrate= 1.0 / skater.actionOpinions[chosenIndex].uses as f64; 
+        skater.actionOpinions[chosenIndex].lastReward = oldReward + learnrate * (newReward - oldReward);
+        skater.actionOpinions[chosenIndex].uses += 1;
+        return chosenIndex;
+    }
+}
 use std::fmt;
-impl fmt::Display for Skater{
+impl<'b> fmt::Display for Skater<'b>{
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let mut commaSeparated = String::new();
         for num in &self.actionOpinions
@@ -175,7 +195,7 @@ impl Step{
 
 // Program
 fn main() {
-    let mut skaters:Vec<Skater> = (1..skaterCount).into_iter().map(|_| Skater::new()).collect();
+    let mut skaters:Vec<Skater> = (1..skaterCount).into_iter().map(|_| Skater::new(Box::new(OnlineLearning))).collect();
     let mut simulationResult = Vec::<Step>::new();
     for _ in 0..simulationCount {
         let positions:Vec<Point> = skaters.clone().into_iter().map(|s| s.position).collect();
