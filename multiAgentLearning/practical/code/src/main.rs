@@ -89,7 +89,7 @@ impl Skater{
         let rewards:Vec<f64> = self.actionOpinions.clone().into_iter().map(
             |opinion:Preference| opinion.lastReward
         ).collect();
-        let totalReward = rewards.clone().into_iter().fold(0.0,|cur,prev| cur+prev);
+        let totalReward = rewards.iter().fold(0.0,|cur,prev| cur+prev);
         let probablities = rewards.into_iter().map(|x| x/totalReward);
         let mut chosenIndex:usize = 0;
         { // here I gave up on recursion, and found folding to complicated, so I went back
