@@ -24,20 +24,27 @@ extern crate gnuplot;
 
 // Configuration
 static simulationCount:i64= 1000;
-static skaterCount:i64 = 80;
+static skaterCount:i64 = 20;
 static directionChoices:&'static [f64;6] = &[0.0,60.0,120.0,180.0,240.0,300.0];
 static speed:f64 = 0.9;
 static collisionRadius:f64 = 1.0;
 static SPACE:Space = Space {
-    width: 30,
-    height: 30
+    width: 10,
+    height: 10
 };
 static Rewards:Reward = Reward{
-    collision:1.0,
-    avoided:40.0,
+    collision:-100.0,
+    avoided:10.0,
     unreasonablyHigh:100.0
 
 };
+// learn strategy:
+// choose from onlinelearn, egreedy, greedy (without explore)
+static strategy:selectActionFunction = greedy;
+static learnStrat:learnFunction = constantLearning;
+
+type selectActionFunction = fn(&mut Skater, Vec<Point>) -> usize;
+type learnFunction = fn(&mut Skater, usize, f64);
 
 // Structures
 struct Reward{
@@ -61,29 +68,15 @@ struct Preference{
     uses:i64,
     lastReward:f64
 }
-struct Skater<'b>{
+#[derive(Clone)]
+struct Skater{
     actionOpinions:Vec<Preference>, // same size as the action set
     position:Point,
-    strategy:Box<LearnStrategy + 'b>
 }
 
-impl<'b> Clone for Skater<'b>{
-    fn clone(&self) -> Skater<'b>{
-        return Skater{
-            actionOpinions: self.actionOpinions.clone(),
-            position:self.position.clone(),
-            strategy:self.strategy
-        }
-    }
-    fn clone_from(&mut self, source: &Skater<'b>) {
-        self.strategy = source.strategy;
-        self.position = source.position.clone();
-        self.actionOpinions = source.actionOpinions.clone();
-    } 
-}
-impl<'b> Skater<'b>{
+impl Skater{
 
-    fn new(learnStrategy:Box<LearnStrategy + 'b>) -> Skater{
+    fn new() -> Skater{
         let defaultPrefs = directionChoices.into_iter().map( |&_|
             Preference{
                 uses:1,
@@ -95,13 +88,12 @@ impl<'b> Skater<'b>{
             position:Point{
                 x:rand::random::<f64>()*SPACE.width as f64,
                 y:rand::random::<f64>()*SPACE.height as f64
-            },
-            strategy:learnStrategy
+            }
         };
     }
 
     fn update(&mut self, skaterPositions:Vec<Point>) -> usize{
-        return self.clone().strategy.learn(self,skaterPositions);
+        return strategy(self,skaterPositions);
     }
 
     fn determineReward(&mut self, skaterPositions:Vec<Point>,direction:usize) -> f64{
@@ -122,44 +114,93 @@ impl<'b> Skater<'b>{
     }
 }
 
-trait LearnStrategy {
-    fn learn(&self, skater:&mut Skater, skaterPositions:Vec<Point>) -> usize;
-}
-struct OnlineLearning;
-impl LearnStrategy for OnlineLearning {
-    fn learn(&self, skater:&mut Skater, skaterPositions:Vec<Point>) -> usize{
-        let rewards:Vec<f64> = skater.actionOpinions.clone().into_iter().map(
-            |opinion:Preference| opinion.lastReward
-        ).collect();
-        let totalReward = rewards.iter().fold(0.0,|cur,prev| cur+prev);
-        let probablities = rewards.into_iter().map(|x| x/totalReward);
-        let mut chosenIndex:usize = 0;
-        { // here I gave up on recursion, and found folding to complicated, so I went back
-            // to my imperative roots.
-            let choice = rand::random::<f64>();
-            let mut probstack = 0.0;
-            for probability in probablities{
-                probstack += probability;
-                chosenIndex += 1;
-                if choice < probstack { // and I wanted to use a library for this.
-                    break;
-                }
+fn onlineLearn(skater:&mut Skater, skaterPositions:Vec<Point>) -> usize{
+    let rewards:Vec<f64> = skater.actionOpinions.clone().into_iter().map(
+        |opinion:Preference| opinion.lastReward
+    ).collect();
+    let totalReward = rewards.iter().fold(0.0,|cur,prev| cur+prev);
+    let probablities = rewards.into_iter().map(|x| x/totalReward);
+    let mut chosenIndex:usize = 0;
+    { // here I gave up on recursion, and found folding to complicated, so I went back
+        // to my imperative roots.
+        let choice = rand::random::<f64>();
+        let mut probstack = 0.0;
+        for probability in probablities{
+            probstack += probability;
+            chosenIndex += 1;
+            if choice < probstack { // and I wanted to use a library for this.
+                break;
             }
-            chosenIndex -= 1;
-
         }
-        // oldvalue + learnrate (reward - oldvalue)
-        let newReward = skater.determineReward(skaterPositions, chosenIndex);
-        let oldReward = skater.actionOpinions[chosenIndex].lastReward;
-        // where learnrate = (1/n)
-        let learnrate= 1.0 / skater.actionOpinions[chosenIndex].uses as f64; 
-        skater.actionOpinions[chosenIndex].lastReward = oldReward + learnrate * (newReward - oldReward);
-        skater.actionOpinions[chosenIndex].uses += 1;
-        return chosenIndex;
+        chosenIndex -= 1;
     }
+    learn(skater, skaterPositions, chosenIndex);
+    return chosenIndex;
+}
+fn learn(skater:&mut Skater, skaterPositions:Vec<Point>, choice:usize){
+    let reward = skater.determineReward(skaterPositions, choice);
+    learnStrat(skater, choice, reward);
+    skater.actionOpinions[choice].uses += 1;
+}
+
+use rand::Rng;
+mod orderf64;
+fn egreedy(skater:&mut Skater, skaterPositions:Vec<Point>) -> usize{
+    let episolon = 0.1;
+    let greed = rand::random::<f64>();
+    let choice:usize = if greed <= episolon{
+        // explore
+        rand::thread_rng().gen_range(0, directionChoices.len())
+    }else{
+        let start:(usize,f64) = (0, 0.0);
+        skater.actionOpinions.iter().enumerate().fold(start, |prev,(index,preference)| {
+            if prev.1 < preference.lastReward {
+                return (index,preference.lastReward);
+            }
+            return prev;
+        }).0
+    };
+    learn(skater, skaterPositions, choice);
+    return choice;
+}
+fn greedy(skater:&mut Skater, skaterPositions:Vec<Point>) -> usize{
+    let start:(usize,f64) = (0, 0.0);
+    let choice:usize = skater.actionOpinions.iter().enumerate().fold(start, |prev,(index,preference)| {
+        if prev.1 < preference.lastReward {
+            return (index,preference.lastReward);
+        }
+        return prev;
+    }).0;
+    learn(skater, skaterPositions, choice);
+    return choice;
+}
+
+fn proportional(skater:&mut Skater, skaterPositions:Vec<Point>) -> usize{
+    // v = totalReward (of entire game)
+    // u gained utility (from playing x)
+    // e_x = x been played
+    // q_{t-1} = previous propenticy
+    return 0;
+}
+
+// learn slower and slower
+fn regresiveLearning(skater:&mut Skater, action:usize, newReward:f64){
+    // oldvalue + learnrate (reward - oldvalue)
+    let oldReward = skater.actionOpinions[action].lastReward;
+    // where learnrate = (1/n)
+    let learnrate= 1.0 / skater.actionOpinions[action].uses as f64; 
+    skater.actionOpinions[action].lastReward = oldReward + learnrate * (newReward - oldReward);
+}
+
+static learnRate:f64 = 0.2;
+fn constantLearning(skater:&mut Skater, action:usize, newReward:f64) {
+    // oldvalue + learnrate (reward - oldvalue)
+    let oldReward = skater.actionOpinions[action].lastReward;
+    // where learnrate = (1/n)
+    skater.actionOpinions[action].lastReward = oldReward + learnRate * (newReward - oldReward);
 }
 use std::fmt;
-impl<'b> fmt::Display for Skater<'b>{
+impl fmt::Display for Skater{
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let mut commaSeparated = String::new();
         for num in &self.actionOpinions
@@ -195,7 +236,7 @@ impl Step{
 
 // Program
 fn main() {
-    let mut skaters:Vec<Skater> = (1..skaterCount).into_iter().map(|_| Skater::new(Box::new(OnlineLearning))).collect();
+    let mut skaters:Vec<Skater> = (1..skaterCount).into_iter().map(|_| Skater::new()).collect();
     let mut simulationResult = Vec::<Step>::new();
     for _ in 0..simulationCount {
         let positions:Vec<Point> = skaters.clone().into_iter().map(|s| s.position).collect();
