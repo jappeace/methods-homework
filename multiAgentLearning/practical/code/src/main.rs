@@ -36,7 +36,6 @@ static Rewards:Reward = Reward{
     collision:-100.0,
     avoided:10.0,
     unreasonablyHigh:100.0
-
 };
 // learn strategy:
 // choose from onlinelearn, egreedy, greedy (without explore)
@@ -144,7 +143,6 @@ fn learn(skater:&mut Skater, skaterPositions:Vec<Point>, choice:usize){
 }
 
 use rand::Rng;
-mod orderf64;
 fn egreedy(skater:&mut Skater, skaterPositions:Vec<Point>) -> usize{
     let episolon = 0.1;
     let greed = rand::random::<f64>();
