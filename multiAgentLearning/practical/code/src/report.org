@@ -1,11 +1,83 @@
 #+TITLE: Rusty reinforcement learning
 
 * Introduction
+This document describes an analyses of different reinforcement learning techniques, and
+their effects on multi-agent environments.
+To complete the multi-agent learning course, it was requested to create such a document.
 
-* Questionaire
+First the situation will be described, then an implementation to study this situation will
+be described, after that the results and observations will be presented from which finally a
+conclusion will be drawn.
 
-* Implementation
+* Situation description
+To study multi-agent reinforcement we'll create a world in the shape of a torus.
+In here different entities roam about called skaters. They roam at constant speed
+and have a constant collision radius. Every game tick the skaters choose a direction
+from a set of predefined directions.
 
+If a skater collides with another skater they won't move and receive a reward. If
+they don't collide they will receive a different reward.
+
+** The parameters
+$N \in \mathbb{N}$ is the amount of skaters.
+$w$ is the width and $h$ height of the surface of the torus. Where $w,h \in \mathbb{N}$
+\[
+  A=\{0,60,120,180,240,300\}
+\]
+$A$ is the set of possible actions which is uniform for all skaters. $r > 0$ is the
+collision radius. $\delta > 0$ is the speed at which the skater move.
+$R_1$ is the reward received when avoiding collision. $R_2$ is the reward received
+when colliding (and not moving).
+
+** Task description
+The task is to implement this situation in a programming language of choice. Then
+suitable values for the parameters have to be decided such that interesting behavior
+emerges.
+
+*** Questions
+Is  it always the case that $N$ skaters converge to one angle, or is it almost surely
+the case, or is this not the case at all?
+In any case proof it.
+
+* Approach
+First the situation was implemented[fn:: Source can be found here:
+https://github.com/jappeace/methods-homework/blob/master/multiAgentLearning/practical/code/src/main.rs]
+in Rust.
+This language was chosen because the author wanted to learn it. There are many advantages to
+Rust described elsewhere[fn:: Rust advantages: https://www.rust-lang.org/].
+The assignment was small enough to try and use an unknown language for implementation. 
+
+First the situation was implemented. Meaning that all variables were created and the
+representation of the Skaters. Then a simple updating mechanism was created.
+After which the first learning strategy was created, the mixed strategy. This one
+was created first because it was believed to be the easiest one to implement.
+
+After that the graph creation was done. This was done with help of Gnuplot[fn::
+Gnuplot http://www.gnuplot.info/] and its respective rust library[fn::
+Gnuplot rust library: https://github.com/SiegeLord/RustGnuplot].
+
+When the graph creation was done experimentation the real experimentation started.
+First the egreedy and greedy strategies were also implemented for comparison.
+egreedy means in this case greedy plus exploration, and greedy is just choose
+always the best last reward.
+However the learn rate was still regressive, meaning there was less learning done
+over time, so this was replaced with a constant learn rate, and learn rate itself
+became a separate configuration option.
+
+Finally importing the graphs into the org[fn:: Emacs org mode was used to export to latex, source can be found here:
+https://github.com/jappeace/methods-homework/blob/master/multiAgentLearning/practical/code/src/report.org]
+format proved somewhat problematic,
+since the output of the plot library was just a set of instructions for gnuplot.
+But a simple shell script solved that:
+
+#+begin_src shell
+     for file in `ls *.plot`;
+     do gnuplot -e "set terminal pngcairo size 800,400 enhanced font"\
+                "'Verdana,10'; set output '"$file".png" $file;
+     done
+#+end_src
+
+This created png files of the plots.
 * Results and observations
 #+LATEX: \newpage
 ** Egreedy
@@ -54,3 +126,5 @@
 #+LATEX: \newpage
 
 * Conclusion
+* References
+The code can be found here: 
