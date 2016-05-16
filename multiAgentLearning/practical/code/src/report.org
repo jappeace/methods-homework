@@ -7,5 +7,50 @@
 * Implementation
 
 * Results and observations
+#+LATEX: \newpage
+** Egreedy
+*** Constant
+#+CAPTION: Egreedy constant rewards
+[[./results/egreedy_constant-rewards.plot.png]]
+#+CAPTION: Egreedy constant choices
+[[./results/egreedy_constant-choices.plot.png]]
+
+#+LATEX: \newpage
+*** Regressive
+#+CAPTION: Egreedy regressive learning rewards
+[[./results/egreedy_regresiveLearning-rewards.plot.png]]
+#+CAPTION: Egreedy regressive learning choices
+[[./results/egreedy_regresiveLearning-choices.plot.png]]
+
+#+LATEX: \newpage
+** Greedy
+*** Constant
+#+CAPTION: Greedy constant rewards
+[[./results/greedy_constant-rewards.plot.png]]
+#+CAPTION: Greedy constant choices
+[[./results/greedy_constant-choices.plot.png]]
+
+#+LATEX: \newpage
+*** Regressive
+#+CAPTION: Greedy regressive learning rewards
+[[./results/greedy_regresiveLearning-rewards.plot.png]]
+#+CAPTION: Greedy regressive learning choices
+[[./results/greedy_regresiveLearning-choices.plot.png]]
+
+#+LATEX: \newpage
+** Mixed
+*** Constant
+#+CAPTION: Mixed constant rewards
+[[./results/onlineLearn_constant-rewards.plot.png]]
+#+CAPTION: Mixed constant choices
+[[./results/onlineLearn_constant-choices.plot.png]]
+
+#+LATEX: \newpage
+*** Regressive
+#+CAPTION: Mixed regressive learning rewards
+[[./results/onlineLearn_regresiveLearning-rewards.plot.png]]
+#+CAPTION: Mixed regressive learning choices
+[[./results/onlineLearn_regresiveLearning-choices.plot.png]]
+#+LATEX: \newpage
 
 * Conclusion
