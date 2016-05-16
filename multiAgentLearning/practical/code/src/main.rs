@@ -14,8 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see <http://www.gnu.org/licenses/>.
 
-// shut up rust
-#![allow(dead_code)]
 #![allow(non_upper_case_globals)]
 #![allow(non_snake_case)]
 
@@ -27,7 +25,7 @@ static simulationCount:i64= 1000;
 static skaterCount:i64 = 31;
 static directionChoices:&'static [f64;6] = &[0.0,60.0,120.0,180.0,240.0,300.0];
 static speed:f64 = 0.5;
-static collisionRadius:f64 = 1.0;
+static collisionRadius:f64 = 0.5;
 static SPACE:Space = Space {
     width: 10,
     height: 10
@@ -37,10 +35,11 @@ static Rewards:Reward = Reward{
     avoided:20.0,
     unreasonablyHigh:100.0
 };
+static runname:&'static str = "greedy_regresiveLearning";
 // learn strategy:
 // choose from onlinelearn, egreedy, greedy (without explore)
 static strategy:selectActionFunction = greedy;
-static learnStrat:learnFunction = constantLearning;
+static learnStrat:learnFunction = regresiveLearning;
 
 type selectActionFunction = fn(&mut Skater, Vec<Point>) -> usize;
 type learnFunction = fn(&mut Skater, usize, f64);
@@ -102,7 +101,7 @@ impl Skater{
             y:(self.position.y + speed * angle.sin() + SPACE.height as f64) % SPACE.height as f64
         };
         let hasCollision = skaterPositions.into_iter().any(
-            |p| (p.x - newPosition.x).powi(2) + (p.y - newPosition.y).powi(2) < speed.powi(2)
+            |p| (p.x - newPosition.x).powi(2) + (p.y - newPosition.y).powi(2) < collisionRadius.powi(2)
         );
         if hasCollision{
             return Rewards.collision;
@@ -171,14 +170,6 @@ fn greedy(skater:&mut Skater, skaterPositions:Vec<Point>) -> usize{
     }).0;
     learn(skater, skaterPositions, choice);
     return choice;
-}
-
-fn proportional(skater:&mut Skater, skaterPositions:Vec<Point>) -> usize{
-    // v = totalReward (of entire game)
-    // u gained utility (from playing x)
-    // e_x = x been played
-    // q_{t-1} = previous propenticy
-    return 0;
 }
 
 // learn slower and slower
@@ -269,14 +260,7 @@ fn plot(simulationResult:Vec<Step>){
         }
         return prev
     });
-    fn rngColor() -> String{
-        fn rng() -> i32{
-            return ( rand::random::<f64>() * 255.0) as i32
-        }
-        return format!("#{0:x}{1:x}0{2:x}0{3:x}", rng(), rng(), rng(), rng());
-    }
-    let colors:Vec<String> = directionChoices.into_iter().map(|_| rngColor()).collect();
-    drawPlot(rewards, simulationResult.len(), &"rewards", &colors);
+    drawPlot(rewards, simulationResult.len(), &"rewards");
     let startu:Vec<Vec<usize>> = directionChoices.into_iter().map(|_| Vec::<usize>::new()).collect();
     let choices = simulationResult.iter().fold(startu, |mut prev:Vec<Vec<usize>>, cur|{
         prev = prev.into_iter().map(|mut x| {
@@ -291,29 +275,35 @@ fn plot(simulationResult:Vec<Step>){
         }
         return prev;
     });
-    drawPlot(choices, simulationResult.len(), &"choices", &colors);
+    drawPlot(choices, simulationResult.len(), &"choices");
 }
 fn markerSymbol(nr:usize) -> char{
     let choice = ['.','+','x','*','s','S','o','O','t','T','d','D','r','R'];
     return choice[nr%choice.len()];
 }
-use gnuplot::{Figure, Caption, Color, DataType, PointSymbol, PointSize};
-fn drawPlot<T>(array:Vec<Vec< T >>, stepCount:usize, string:&str, colors:&Vec<String>) where T : DataType{
+fn colors(nr:usize) -> String {
+    let choice = ["red", "green", "blue", "orange", "black", "cyan"];
+    return choice[nr%choice.len()].to_string();
+}
+use gnuplot::*;
+fn drawPlot<T>(array:Vec<Vec< T >>, stepCount:usize, string:&str) where T : DataType{
     let mut fg = Figure::new();
     {
         let mut axis = fg.axes2d();
         for (i,reward) in array.into_iter().enumerate(){
-            axis.lines(
+            axis.lines_points(
                 &(0..(stepCount)).collect::<Vec<usize>>(),
                 reward,
                 &[
                     PointSymbol(markerSymbol(i)),
-                    PointSize(30.0),
+                    PointSize(0.5),
                     Caption(&format!("{}: {}",string, directionChoices[i])),
-                    Color(&colors[i])
+                    Color(&colors(i)),
+                    LineWidth(1.0)
+
                 ]
             );
         }
     }
-    fg.echo_to_file(&format!("{}.plot", string));
+    fg.echo_to_file(&format!("{}-{}.plot", runname, string));
 }
