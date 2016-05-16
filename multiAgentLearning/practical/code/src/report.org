@@ -45,7 +45,7 @@ https://github.com/jappeace/methods-homework/blob/master/multiAgentLearning/prac
 in Rust.
 This language was chosen because the author wanted to learn it. There are many advantages to
 Rust described elsewhere[fn:: Rust advantages: https://www.rust-lang.org/].
-The assignment was small enough to try and use an unknown language for implementation. 
+The use assignment was small enough to try and use an unknown language for implementation. 
 
 First the situation was implemented. Meaning that all variables were created and the
 representation of the Skaters. Then a simple updating mechanism was created.
@@ -126,5 +126,3 @@ This created png files of the plots.
 #+LATEX: \newpage
 
 * Conclusion
-* References
-The code can be found here: 
