@@ -1,1 +1,4 @@
 *.dump
+*.tex
+auto
+ltxpng
