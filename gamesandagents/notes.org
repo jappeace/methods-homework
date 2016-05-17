@@ -75,5 +75,22 @@ Dr Roland Geraerts
 *** MIRAN
 ...
 * Adaptive game AI
-The techniques are kindoff standart. So they're easy but you want to know how
+The techniques are kind off standart. So they're easy but you want to know how
 to /use/ them.
+
+/Adaptive/ in this case means adapting the gameplay so that its fun. There is
+a strategy that can be adapted some how.
+
+** Scalability 
+Make the game interesting for novices as experts of the genre/game. (replay value).
+Using adaptive AI could make the AI act stronger once it detects if the player is
+an expert.
+
+** Justify
+If you do this you should justify it. If its easier to use smoke and mirrors then
+do so.
+
+... also make sure the big boss will accept it. (so here you have a controll esque
+kind off situation. Using formal logic may help you with this).
+** Doubts
+Learning wrong things...
