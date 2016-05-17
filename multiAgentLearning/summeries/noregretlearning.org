@@ -1,4 +1,4 @@
-#+TITLE: No regret learning
+#+TITLE: A summery of no regret learning
 #+OPTIONS: toc:nil 
 
 Lets say you played a strategy with a payoff of $3$ for $11$ rounds.
@@ -25,17 +25,29 @@ if:
 
 One of the most simplest rules with this property is the following: In each
 period $t+1$, the decider plays each action with a probability proportional
-to the nonnegative part of his regret up trough time t:
+to the non-negative part of his regret up trough time t:
 
 \[ q^{t+1}_x=[\bar{r}^t_x]_+/\sum_{x'\in X}[\bar{r}^t_{x'}]_+ \]
 (If the denominator is zero the choice $q^{t+1}\in\Delta(X)$ is arbitrary), this is called
 /regret matching/. In a finite game $G$, regret matching by a given player almost
 surely yields no regret against every possible sequence of play by the opponents.
 
-To cast regret matching into a rule that is similar to a reinforcement rule:
+To cast regret matching into a rule that is similar to a reinforcement learning rule:
 The /aspiration level/ is the average payoff over the first $t$ periods: $\bar{u}^t$.
 The /reinforcement increment/ in period $t$ is the vector $r^t$, where
 $r^t_x=u(x,y^t)-\bar{u}^t$ for each $x \in X$. Lastly, the vector of propensities at time
 $t+1$ is the non-negative part of the sum of the previous increments:
 \[\theta^{t+1}=[\sum_{1\leq s \leq t} r^s]_+ \]
 
+You can design simple variants of this approach that require no knowledge of
+the opponents realized actions. To demonstrate this assume a probability $\epsilon$
+of experimentation and plays all actions $x \in X$.
+When no experimentation is done regret matching is applied
+where the "estimated" regret association is the average payoff in the
+previous periods when he experimented and chose $x$ minus the average
+realized payoff in over all played actions. This is called
+/regret matching with $\epsilon$ experimentation/. If $\delta>0$ and $\epsilon>0$ then
+this has at most $\delta$ regret against every sequence of play by nature.
+
+By reducing $\epsilon$ over time towards 0 at a slow enough pace you can ensure
+that there is no regret in the long run.
