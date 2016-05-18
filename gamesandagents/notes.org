@@ -94,3 +94,11 @@ do so.
 kind off situation. Using formal logic may help you with this).
 ** Doubts
 Learning wrong things...
+
+** Enjoying games
+Make it complex enough, but also make it fair.
+Hard games are fun, if they're fair. So the player doesn't lose because
+of things he can't predict, but instead he loses because he didn't
+pay enough attention (if he loses he should've made a consious mistake).
+
+Therefor cheating AI is **BAD**.

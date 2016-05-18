@@ -1,0 +1,44 @@
+#+TITLE: Notes
+
+* Intro
+A is always assumed to be you for reasons.
+
+Mixed = proportional reinforcement
+supremum = least upper bound
+
+peyton youngs is:
+
+\[\limsup\limit_{t\to\infty}\]
+
+but its better to do:
+\[\lim\limit_{t\to\infty}\sup\]
+
+* Regrets
+The regrets are average positive parts (or zero) or normal,
+which is used interchanged a lot so its confusing.
+
+Because its a stochastic process the regret is somewhere on the point.
+
+Blackwell's approachability theorom --> just use the picture (stochastic
+regred matching).
+
+** \epsilon-greedy
+just explore \epsilon% amount of the time.
+the rest of the time do o regret matching.
+
+*** Strong law of large numbers...
+The Strong law of large numbers for dependent random variables.
+This is not your average bachelor theorom. Its some super
+advanced stuff, that is apperantly not mainstream.
+
+So the weird thing is the dependentness.
+
+
+*** Peytons hard argument
+... you'll stay 2\epsilon away from the minimum.
+\delta = the value you require
+
+* Corrolated equilibria
+generalized form of nash equilibria.
+
+
