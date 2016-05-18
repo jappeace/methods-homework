@@ -32,7 +32,7 @@ to the non-negative part of his regret up trough time t:
 /regret matching/. In a finite game $G$, regret matching by a given player almost
 surely yields no regret against every possible sequence of play by the opponents.
 
-To cast regret matching into a rule that is similar to a reinforcement learning rule:
+To cast regret matching into a rule that is similar to a reinforcement rule:
 The /aspiration level/ is the average payoff over the first $t$ periods: $\bar{u}^t$.
 The /reinforcement increment/ in period $t$ is the vector $r^t$, where
 $r^t_x=u(x,y^t)-\bar{u}^t$ for each $x \in X$. Lastly, the vector of propensities at time
