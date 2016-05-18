@@ -1,0 +1,75 @@
+#+TITLE: Summery of equilibrium
+#+OPTIONS: toc:nil
+#+LaTeX_CLASS_OPTIONS: [margin=0.5in]
+
+Do behaviors of different kind of learning rules tend to certain equilibrium?
+To answer this first have to decide what tends to means and what equilibrium means.
+
+We start with Nash equilibrium and correlated equilibrium. If $G$ is a finite
+$n$ person game with joint action space $X=\Pi X_i$. $q$ is a probability distribution
+on $X$. the probability of $x$ is $q(x)$, where $\sum_{x\in X} q(x) = 1$. $x_{-i}$ denotes a 
+tupple of actions taken by everyone except player $i$. $q$ is a /correlated equilibrium/
+if:
+
+\[ \forall i \forall x_i, x'_i \in X_i, \]
+\[ \sum_{x_{-i} \in X_{-i}} u_i (x'_i ,x_{-i}) q(x_i , x_{-i} ) \leq \sum_{x_{-i} \in X_{-i} } u_i(x_i , x_{-i} ) q(x_i , x_{-i} )\]
+
+$q$ is a correlated equilibrium if and only if no one wants to deviate
+from the outcome dictated by the correlated draw after his part
+has been revealed.
+
+A variant on this is when the
+action tuple $x$ hasn't been drawn each
+player has the opportunity to opt out. Then he can play any action he
+likes. If he doesn't opt out he commits to his part of $x$. If all
+player opt in we call this a /coarse correlated equilibrium/.
+The marginal probability that the action tupple $x_{-i} \in X_{-i} = \Pi_{j \neq i} X_j$
+will be played under this condition is:
+
+\[ q_{-i}(x_{-i})=\sum_{x'_i \in X_i} q(x'_i , x_{-i}).\]
+
+Therefore $i$ has no motive for opting out if:
+
+\[ \forall i \forall x'_i \in X_i, \sum_{x_{-i} \in X_{-i}} u_i (x'_i ,x_{-i}) q_{-i}(x_{-i}) \leq \sum_{x\in X } u_i(x) q(x) \]
+So for each player $i$ this is just the sum of the in equalities.
+Thus every correlated equilibrium is a coarse correlated equilibrium.
+The difference is the point where players can opt out.
+
+If $q$ is a product distribution $q(x)=\Pi Q^j(x_j)$ where each $q^j$ is a
+probability distribution on $X_j$. Then $q$ is a Nash equilibrium if 
+no player i can deviate from $q$ an achieve a higher payoff:
+
+\[ \forall i \forall x'_i \in X_i, \]
+\[ \sum_{x_{-i} \in X_{-i}} u_i (x'_i ,x_{-i}) \prod_{j\neq i} q^j(x_j) \leq \sum_{x\in X } u_i(x) \prod_{i} q^j(x_j) \]
+
+This implies a coarse correlated equilibrium.
+
+Each concept is determined by two conditions:
+
+1. Are the actions correlated or independent
+2. Is participation of each player conditional on first knowing his part
+  of the outcome or not.
+
+If $G$ is a finite, the set of Nash equilibria $\mathfrak{N}(G)$, is
+nonempty. The set of correlated equilibria $C(G)$ is a nonempty
+/convex/ subset that contains $\mathfrak{N}(G)$, and the set
+of coarse correlated equilibria $CC(G)$ is a convex subset
+that contains $C(G)$. Thus we have:
+
+\[ \mathfrak{N}(G) \subseteq C(G) \subseteq CC(G) \subseteq G \]
+
+Coarse correlated equilibrium belong to a family of generalizations
+of correlated equilibrium that arise from considering different
+information partitions of players. /information partition/ $P_i$
+for player $i$ is a partition of $X$ - nonempty non-overlapping subsets whose
+union is $X$. $P=(P_1, ..., P_n)$ a list of information partitions for $n$ players.
+A /correlated equilibrium with information structure $P$/ is a correlated equilibrium
+only instead of show all information partition $P_i$ is shown to the player $i$.
+
+$q$ is a correlated equilibrium with information structure $P$ iff:
+
+\[ \forall i \forall x'_i \in X_i \forall P_i \in P_i , q(P_i) > 0 \Rightarrow \]
+\[\sum_{x_i \in P_i} u_i (x'_i ,x_{-i}) q(x) \leq \sum_{x\in P } u_i(x) q(x) \]
+
+Obviously this holds for $q(P_i)=0. Therefore the set of all solutions
+for this forms a convex polytope, which may be empty.
