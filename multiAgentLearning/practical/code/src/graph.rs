@@ -31,7 +31,9 @@ impl PlotDrawer{
             }
             return prev
         });
-        self.drawPlot(rewards, simulationResult.len(), &"rewards");
+        if self.config.plotOptions.shouldPlotRewards{
+            self.drawPlot(rewards, simulationResult.len(), &"rewards");
+        }
         let startu:Vec<Vec<usize>> = self.config.directionChoices.into_iter().map(|_| Vec::<usize>::new()).collect();
         let choices = simulationResult.iter().fold(startu, |mut prev:Vec<Vec<usize>>, cur|{
             prev = prev.into_iter().map(|mut x| {
@@ -46,7 +48,9 @@ impl PlotDrawer{
             }
             return prev;
         });
-        self.drawPlot(choices, simulationResult.len(), &"choices");
+        if self.config.plotOptions.shouldPlotChoices{
+            self.drawPlot(choices, simulationResult.len(), &"choices");
+        }
     }
     fn drawPlot<T>(&self, array:Vec<Vec< T >>, stepCount:usize, string:&str) where T : DataType{
         fn markerSymbol(nr:usize) -> char{

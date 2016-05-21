@@ -55,7 +55,8 @@ pub fn egreedy(learnF:&learnFunction, skater:&mut Skater, skaterPositions:Vec<Po
     learn(learnF, skater, skaterPositions, choice);
     return choice;
 }
-fn greedy(learnF:&learnFunction, skater:&mut Skater, skaterPositions:Vec<Point>) -> usize{
+
+pub fn greedy(learnF:&learnFunction, skater:&mut Skater, skaterPositions:Vec<Point>) -> usize{
     let start:(usize,f64) = (0, -skater.rewards.unreasonablyHigh);
     let choice:usize = skater.actionOpinions.iter().enumerate().fold(start, |prev,(index,preference)| {
         if prev.1 < preference.lastReward {

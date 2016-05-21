@@ -46,15 +46,15 @@ fn main() {
     let cfgs = vec!(RunConfiguration::createWith(
         "egreedy".to_string(), learningStrategies::egreedy, learningStrategies::constantLearning
     ),RunConfiguration::createWith(
-        "greedy".to_string(), learningStrategies::egreedy, learningStrategies::constantLearning
+        "greedy".to_string(), learningStrategies::greedy, learningStrategies::constantLearning
     ),RunConfiguration::createWith(
-        "mixed".to_string(), learningStrategies::egreedy, learningStrategies::constantLearning
+        "mixed".to_string(), learningStrategies::mixed, learningStrategies::constantLearning
     ),RunConfiguration::createWith(
         "egreedy-reg".to_string(), learningStrategies::egreedy, learningStrategies::regresiveLearning
     ),RunConfiguration::createWith(
-        "greedy-reg".to_string(), learningStrategies::egreedy, learningStrategies::regresiveLearning
+        "greedy-reg".to_string(), learningStrategies::greedy, learningStrategies::regresiveLearning
     ),RunConfiguration::createWith(
-        "mixed-reg".to_string(), learningStrategies::egreedy, learningStrategies::regresiveLearning
+        "mixed-reg".to_string(), learningStrategies::mixed, learningStrategies::regresiveLearning
     )
     );
 
@@ -63,33 +63,56 @@ fn main() {
     let mut handl:Vec<JoinHandle<()>> = vec![];
     handl.extend(cfgs.into_iter().map(|cfg| thread::spawn(|| run(cfg))));
 
-    let skaterCountRange:Vec<i64> = vec![20,25,30,35,40];
-    handl.extend( skaterCountRange.into_iter().map(|count|{
-        let name = format!("egreedy-{}", count);
-        let mut config = RunConfiguration::createWith(
-            name, learningStrategies::egreedy, learningStrategies::constantLearning
-        );
-        config.skaterCount = count;
-        thread::spawn(|| {
-            run(config);
-        })
-    }));
+    let skaterCountRange:Vec<i64> = vec![10, 20, 30,40,50,60,70];
+    let speeds:Vec<f64> = vec![0.2, 0.5, 2f64];
+    for speed in speeds.clone(){
+        handl.extend( skaterCountRange.clone().into_iter().map(|count|{
+            let name = format!("greedy-c{}-s{}", count, speed);
+            let mut config = RunConfiguration::createWith(
+                name, learningStrategies::greedy, learningStrategies::constantLearning
+            );
+            config.speed = speed;
+            config.plotOptions.shouldPlotChoices = false;
+            config.skaterCount = count;
+            thread::spawn(|| {
+                run(config);
+            })
+        }));
+    }
 
+    for speed in speeds{
+        handl.extend( skaterCountRange.clone().into_iter().map(|count|{
+            let name = format!("greedy-inverse-c{}-s{}", count, speed);
+            let mut config = RunConfiguration::createWith(
+                name, learningStrategies::greedy, learningStrategies::constantLearning
+            );
+            config.speed = speed;
+            config.plotOptions.shouldPlotChoices = false;
+            config.skaterCount = count;
+            config.rewards.collision = 20f64;
+            config.rewards.avoided = -20f64;
+            thread::spawn(|| {
+                run(config);
+            })
+        }));
+    }
     // wait for the tasks to complete
+    // the program will kill subthreads if we don't.
     for h in handl{
         h.join();
     }
 }
 // a single simulation run based on the configuration
 fn run(config:RunConfiguration){
-    let mut skaters:Vec<Skater> = (1..config.skaterCount).into_iter().map(
+    let mut skaters:Vec<Skater> = (0..config.skaterCount).into_iter().map(
         |_| Skater::new(&config)).collect();
     let mut simulationResult = Vec::<Step>::new();
-    for _ in 0..config.simulationCount {
+    for s in 0..config.simulationCount {
         let positions:Vec<Point> = skaters.clone().into_iter().map(|s| s.position).collect();
         let mut newSkaters = Vec::<Skater>::new();
         let mut stepResult = Step::new();
         let mut prefrences = Vec::<Vec<f64>>::new();
+
         for mut skater in skaters{
             stepResult.choices.push(skater.update(positions.clone(), &config.learnStrat, &config.strategy));
             newSkaters.push(skater.clone());

@@ -62,7 +62,9 @@ impl Skater{
             y:(self.position.y + self.speed * angle.sin() + self.space.height as f64)
                 % self.space.height as f64
         };
-        let hasCollision = skaterPositions.into_iter().any(
+        let hasCollision = skaterPositions.into_iter().filter(
+            |x| self.position.x != x.x && self.position.y != x.y
+        ).any(
             |p| (p.x - newPosition.x).powi(2) + (p.y - newPosition.y).powi(2) < self.radius.powi(2)
         );
         if hasCollision{
