@@ -27,11 +27,13 @@ pub   strategy:selectActionFunction,
 pub   learnStrat:learnFunction,
 }
 
+pub static resultDir:&'static str = "results";
+
 impl RunConfiguration {
     pub fn createWith(runname:String, strategy:selectActionFunction, learnStrat:learnFunction) -> RunConfiguration{
         return RunConfiguration{
             runname:runname,
-            simulationCount:1000,
+            simulationCount:3500,
             skaterCount:31,
             directionChoices:[0.0,60.0,120.0,180.0,240.0,300.0],
             speed:0.5,

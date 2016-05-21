@@ -26,12 +26,23 @@ mod config;
 mod learningStrategies;
 mod graph;
 use skater::{Skater, Point};
-use config::RunConfiguration;
+use config::{RunConfiguration, resultDir};
 use graph::{Step, PlotDrawer};
 use learningStrategies::*;
+use std::thread;
+use std::error::Error;
 // Program
 fn main() {
+    // reset output
+    match createOutpuDir() {
+        Ok(s) => println!("output dir reset"),
+        Err(e) => {
+            println!("could not create ouptutdir {}", e.to_string());
+            return
+        },
+    }
 
+    // create configs
     let cfgs = vec!(RunConfiguration::createWith(
         "egreedy".to_string(), learningStrategies::egreedy, learningStrategies::constantLearning
     ),RunConfiguration::createWith(
@@ -46,20 +57,69 @@ fn main() {
         "mixed-reg".to_string(), learningStrategies::egreedy, learningStrategies::regresiveLearning
     )
     );
-    for config in cfgs{
-        run(config);
-    }
-    let skaterCountRange = 25..35;
-    for count in skaterCountRange{
 
+    // map the configurations into tasks (which get executed on seperate threads)
+    use std::thread::JoinHandle;
+    let mut handl:Vec<JoinHandle<()>> = vec![];
+    handl.extend(cfgs.into_iter().map(|cfg| thread::spawn(|| run(cfg))));
+
+    let skaterCountRange:Vec<i64> = vec![20,25,30,35,40];
+    handl.extend( skaterCountRange.into_iter().map(|count|{
         let name = format!("egreedy-{}", count);
         let mut config = RunConfiguration::createWith(
             name, learningStrategies::egreedy, learningStrategies::constantLearning
         );
         config.skaterCount = count;
-        run(config);
+        thread::spawn(|| {
+            run(config);
+        })
+    }));
+
+    // wait for the tasks to complete
+    for h in handl{
+        h.join();
+    }
+
+    // here we created all the graphs,
+    // now to render the images.
+    use std::process::Command;
+    use std::path::Path;
+    // this will only work on *.nix with gnuplot installed
+    // if it crashes here, well at least you got the *.plot files.
+    // you also need pngcairo.
+    let command =concat!(
+        "for file in `ls *.plot`; do gnuplot -e \"set terminal pngcairo size ",
+        "800,400 enhanced font 'Verdana,10'; set output '\"$file\".png\"",
+        " $file; done"
+    );
+    println!("executing command: {}", command);
+    use std::env::current_dir;
+    let mut path = current_dir().unwrap();
+    path.push(Path::new(resultDir));
+    println!("the path is {}", path.to_str().unwrap());
+    use std::fs;
+    let files = fs::read_dir(resultDir).unwrap();
+    for file in files{
+        let name = format!("{}", file.unwrap().path().display());
+        let output = Command::new("gnuplot").args(&[
+            "-e",
+            &format!(
+                "\"set terminal pngcairo size 800,400 enhanced font 'Verdana,10';{}{}{}",
+                " set output '\"", name, "\".png\""
+            )[..],
+            &name[..]]
+        ).output();
+        match output {
+            Ok(s) => println!("created the png plots"),
+            Err(e) => println!(
+                concat!("could not create png plots,",
+                        " make sure you have gnuplot and pngcairo installed,",
+                        " error: {}"
+                ), e.to_string()),
+        }
     }
 }
+// a single simulation run based on the configuration
 fn run(config:RunConfiguration){
     let mut skaters:Vec<Skater> = (1..config.skaterCount).into_iter().map(
         |_| Skater::new(&config)).collect();
@@ -89,3 +149,9 @@ fn run(config:RunConfiguration){
     PlotDrawer::new(config).plot(simulationResult);
 }
 
+fn createOutpuDir() -> Result<String, Box<Error>>{
+    use std::fs;
+    try!(fs::remove_dir_all(resultDir));
+    try!(fs::create_dir(resultDir));
+    Ok("Done".into())
+}

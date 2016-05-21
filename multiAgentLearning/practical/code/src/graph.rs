@@ -75,6 +75,9 @@ impl PlotDrawer{
                 );
             }
         }
-        fg.echo_to_file(&format!("{}-{}.plot", self.config.runname, string));
+        let plotname = format!("{}-{}", self.config.runname, string);
+        println!("writing {}", plotname);
+        use config::resultDir;
+        fg.echo_to_file(&format!("{}/{}.plot", resultDir, plotname));
     }
 }
