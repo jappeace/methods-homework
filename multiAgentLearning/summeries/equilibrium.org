@@ -71,5 +71,10 @@ $q$ is a correlated equilibrium with information structure $P$ iff:
 \[ \forall i \forall x'_i \in X_i \forall P_i \in P_i , q(P_i) > 0 \Rightarrow \]
 \[\sum_{x_i \in P_i} u_i (x'_i ,x_{-i}) q(x) \leq \sum_{x\in P } u_i(x) q(x) \]
 
-Obviously this holds for $q(P_i)=0. Therefore the set of all solutions
+Obviously this holds for $q(P_i)=0$. Therefore the set of all solutions
 for this forms a convex polytope, which may be empty.
+
+* Questions
+
+1. What is a polytope?
+2. What is the use for making differations between all these equilibria?
