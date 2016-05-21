@@ -79,45 +79,6 @@ fn main() {
     for h in handl{
         h.join();
     }
-
-    // here we created all the graphs,
-    // now to render the images.
-    use std::process::Command;
-    use std::path::Path;
-    // this will only work on *.nix with gnuplot installed
-    // if it crashes here, well at least you got the *.plot files.
-    // you also need pngcairo.
-    let command =concat!(
-        "for file in `ls *.plot`; do gnuplot -e \"set terminal pngcairo size ",
-        "800,400 enhanced font 'Verdana,10'; set output '\"$file\".png\"",
-        " $file; done"
-    );
-    println!("executing command: {}", command);
-    use std::env::current_dir;
-    let mut path = current_dir().unwrap();
-    path.push(Path::new(resultDir));
-    println!("the path is {}", path.to_str().unwrap());
-    use std::fs;
-    let files = fs::read_dir(resultDir).unwrap();
-    for file in files{
-        let name = format!("{}", file.unwrap().path().display());
-        let output = Command::new("gnuplot").args(&[
-            "-e",
-            &format!(
-                "\"set terminal pngcairo size 800,400 enhanced font 'Verdana,10';{}{}{}",
-                " set output '\"", name, "\".png\""
-            )[..],
-            &name[..]]
-        ).output();
-        match output {
-            Ok(s) => println!("created the png plots"),
-            Err(e) => println!(
-                concat!("could not create png plots,",
-                        " make sure you have gnuplot and pngcairo installed,",
-                        " error: {}"
-                ), e.to_string()),
-        }
-    }
 }
 // a single simulation run based on the configuration
 fn run(config:RunConfiguration){
