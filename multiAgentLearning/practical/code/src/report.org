@@ -88,7 +88,7 @@ The design was also put into separate files (called modules), this
 made the code a lot more manageable.
 
 it was also decided to put each run configuration on a separate thread.
-Rust is made with a-synchronus programming in mind, so doing this was somewhat  obligotary.
+Rust is made with a-synchronus programming in mind, so doing this was somewhat obligatory.
 This final modification allows the creation of graphs of many separate configurations without
 it costing to much time, although now the luxury problem arose of having to many plots to fit
 in the report (54). I decided to handpick some and write about them.
@@ -274,4 +274,59 @@ Its not complete convergence, since some other directions are also still
 used (and have to be because someone has to come from the other side to
 make sure they keep colliding).
 
+** Other strategies
+Here the other strategies will be discussed although not as thorough.
+For both its the case that:
+
+| Variable | Value |
+|----------+-------|
+| $N$      |    30 |
+| $\delta$      |   0.5 |
+
+The only things that change are the learn strategy and action select strategy.
+The reason for not being so thorough is that the random element of both mixed
+and egreedy makes it hard to say what exactly is going on.
+
+*** Egreedy
+Exploration greedy with $\epsilon = 0.1$.
+
+#+Caption: Constant learning rate
+[[./results/egreedy-rewards.plot.png]]
+
+#+CAPTION: Regressive learning rate
+[[./results/egreedy-reg-rewards.plot.png]]
+
+#+LATEX: \newpage
+*** Mixed strategy
+
+#+CAPTION: Constant learning rate
+[[./results/mixed-rewards.plot.png]]
+
+#+CAPTION: Regressive learning rate
+[[./results/mixed-reg-rewards.plot.png]]
 * Conclusion
+I think its almost surely not the case that skaters converge towards one angle.
+The reason for this is that convergence towards one angle is an incredibly unstable
+state.
+As soon as one skater stop for whatever reason and someone behind him bumps into him
+all progress towards the convergence is over.
+
+You can see for example in the baseline, where *any* action gives high reward, this is
+opposite of convergence. But even if you add more skaters there is just a chance
+they'll tumble into an abyss, as we've seen in the traffic jam example.
+
+Coercion looks somewhat more like convergence, but even this isn't exactly that since they
+other directions are still used.
+
+Then if we flip the rewards things change, and it really looks like we get convergence,
+but there is a problem for the greedy algorithm, someone has to go against  the flow and
+stop all other skaters so that nobody moves. So its basically impossible to get convergence
+because at least one skater has to go against the rest to stop everyone from moving. So
+convergence here is theoretically impossible (and all the graphs I produced show the same,
+there is always another direction being used).
+
+Finally there are the mixed and egreedy strategies, but these won't have convergence by definition.
+Because they have their inherit random element.
+
+To get convergence one would need to pick the exactly the right variables, *and* the right
+strategy *and* run the simulation probably for a *long* time, and even then its not guaranteed.
