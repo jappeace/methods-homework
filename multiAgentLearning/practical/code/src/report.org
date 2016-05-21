@@ -153,11 +153,18 @@ strategies are:
 2. Constant learning.
 
 Constant learning will be used unless mentioned otherwise.
+
+*** Run count
+The program is limited by the amount of simulation steps done. It was
+decided to do only 3500 because this creates graphs that fit nicely on
+the paper without trouble.
+
+#+LATEX: \newpage
 * Results and observations
 
-** The most boring behavior
+** The most uninteresting behavior
 To have a baseline for interesting behavior, first a graph is shown which is as
-boring as I could possibly generated,
+boring as I could possibly generated:
 
 #+CAPTION: Baseline interesting
 [[./results/greedy-c10-s0.2-rewards.plot.png]]
@@ -169,5 +176,102 @@ boring as I could possibly generated,
 
 So in this graph the skaters have *lots* of space, almost any action results
 in the max payoff, and because they're moving slow collisions are almost unheard of.
+
+#+LATEX: \newpage
+** Traffic jam
+Skipping a few of those graphs we reach the first interesting one, in here you can
+see all the skaters having really high payoff for a while on all actions, but
+then they get stuck.
+
+#+CAPTION: Something weird
+[[./results/greedy-c20-s0.5-rewards.plot.png]]
+
+| Variable | Value |
+|----------+-------|
+| $N$      |    20 |
+| $\delta$      |   0.5 |
+
+What happens here is that at first everyone has enough space,
+because they're distributed uniformly across the space. After a
+while some collisions start to happen causing some skaters to stop moving
+for a while and they change their behavior as a result of it. By doing
+so they may cause more collisions (by moving in the "wrong direction"),
+and this causes massive uncertainty, and also suffering because they end up dropping
+below 0 for the rest of the run.
+
+#+LATEX: \newpage
+** Coercion
+There is to little space, but after a while the skaters come to a certain (bullied)
+agreement:
+
+#+CAPTION: Coercion
+[[./results/greedy-c30-s2-rewards.plot.png]]
+
+| Variable | Value |
+|----------+-------|
+| $N$      |    30 |
+| $\delta$      |     2 |
+
+Here you can see what happens if the space is very crowded but the skaters are
+moving fast compared to their body sizes (moving 4 times their size).
+
+#+LATEX: \newpage
+** Suffering
+Its full. Not enough room to go anywhere, the skaters are bumping in each other
+all the time no matter which direction they take:
+
+#+CAPTION: There is not enough space
+[[./results/greedy-c40-s0.5-rewards.plot.png]]
+
+| Variable | Value |
+|----------+-------|
+| $N$      |    40 |
+| $\delta$      |   0.5 |
+
+This situation is somewhat similar to traffic jam, except there was no moment
+of happiness at all. Oddly enough at the speed of $\delta$ 0.2 it is still possible
+to get this moment off happiness.
+
+#+LATEX: \newpage
+** Inverse
+For these I flipped the rewards, thus:
+
+| Variable | Value |
+|----------+-------|
+| $R_1$     |   -20 |
+| $R_2      |    20 |
+
+The short story is that they all end up standing still colliding with each other.
+
+*** Suffering baseline
+So they get rewards for colliding, therefore having a sparsely populated
+space doesn't give much (if any) reward.
+
+#+CAPTION: Baseline inverse
+[[./results/greedy-inverse-c10-s0.5-rewards.plot.png]]
+
+| Variable | Value |
+|----------+-------|
+| $N$      |    10 |
+| $\delta$      |   0.5 |
+
+
+#+LATEX: \newpage
+*** Convergence?
+This looks the most like convergence I've seen:
+
+#+CAPTION: Inverse convergence
+[[./results/greedy-inverse-c20-s0.2-rewards.plot.png]]
+
+| Variable | Value |
+|----------+-------|
+| $N$      |    20 |
+| $\delta$      |   0.2 |
+
+Basically they roam around for a while and then meet all the sudden.
+Being greedy they decide to milk that action and stand still forever.
+Its not complete convergence, since some other directions are also still
+used (and have to be because someone has to come from the other side to
+make sure they keep colliding).
 
 * Conclusion
