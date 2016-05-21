@@ -78,6 +78,21 @@ But a simple shell script solved that:
 #+end_src
 
 This created png files of the plots.
+
+After the deadline was extended, the decision was made to automate the proccess of writing plots
+from specialized configurations. Previously some global variables had to be set
+to let the program create a specific plot, but with the new design certain run
+configurations could be pre-created and executed and create all plots.
+
+The design was also put into separate files (called modules), this
+made the code a lot more manageable.
+
+it was also decided to put each run configuration on a separate thread.
+Rust is made with a-synchronus programming in mind, so doing this was somewhat  obligotary.
+This final modification allows the creation of graphs of many seperate configurations without
+it costing to much time, although now the luxory problem arised of having to many plots to fit
+in the report (54). I decided to handpick some and write about them.
+
 * Results and observations
 #+LATEX: \newpage
 ** Egreedy
