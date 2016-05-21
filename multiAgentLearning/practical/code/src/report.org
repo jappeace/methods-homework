@@ -1,4 +1,6 @@
 #+TITLE: Rusty reinforcement learning
+#+OPTIONS: toc:nil 
+#+OPTIONS: num:nil
 
 * Introduction
 This document describes an analyses of different reinforcement learning techniques, and
@@ -233,8 +235,8 @@ of happiness at all. Oddly enough at the speed of $\delta$ 0.2 it is still possi
 to get this moment off happiness.
 
 #+LATEX: \newpage
-** Inverse
-For these I flipped the rewards, thus:
+** Inverse rewards
+For these graphs I flipped the rewards, thus:
 
 | Variable | Value |
 |----------+-------|
@@ -304,6 +306,8 @@ Exploration greedy with $\epsilon = 0.1$.
 
 #+CAPTION: Regressive learning rate
 [[./results/mixed-reg-rewards.plot.png]]
+
+#+LATEX: \newpage
 * Conclusion
 I think its almost surely not the case that skaters converge towards one angle.
 The reason for this is that convergence towards one angle is an incredibly unstable
