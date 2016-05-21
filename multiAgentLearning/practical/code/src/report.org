@@ -79,7 +79,7 @@ But a simple shell script solved that:
 
 This created png files of the plots.
 
-After the deadline was extended, the decision was made to automate the proccess of writing plots
+After the deadline was extended, the decision was made to automate the process of writing plots
 from specialized configurations. Previously some global variables had to be set
 to let the program create a specific plot, but with the new design certain run
 configurations could be pre-created and executed and create all plots.
@@ -89,55 +89,85 @@ made the code a lot more manageable.
 
 it was also decided to put each run configuration on a separate thread.
 Rust is made with a-synchronus programming in mind, so doing this was somewhat  obligotary.
-This final modification allows the creation of graphs of many seperate configurations without
-it costing to much time, although now the luxory problem arised of having to many plots to fit
+This final modification allows the creation of graphs of many separate configurations without
+it costing to much time, although now the luxury problem arose of having to many plots to fit
 in the report (54). I decided to handpick some and write about them.
 
+** A closer look at the parameters
+Before talking about which graphs I decided to show I want to clear up some initial
+observations I had about the parameters.
+
+*** Speed
+$N$, the amount of skaters, $w,h$ the width and height and $r$ the collision radius
+of each skaters will all have similar effects on the skater behavior. These parameters
+all influence the available movement space. For example if we increase $w$, the end
+result will be that the skaters will have more space to move around and thus less
+chance to collide with other skaters. So it would be pointless to try and create separate
+graphs for all these parameters since in essence they do the same. So I decided just
+modify $N$ and leave the others be.
+
+| Variable | Value     |
+|----------+-----------|
+| $N$      | Specified |
+| $w$      | 10        |
+| $h$      | 10        |
+| $r$      | 0.5       |
+
+*** Speed
+$\delta$, the movement speed, doesn't modify space however. So I did decide to create graphs
+for different $\delta$. The speed will be specified per graph.
+
+*** Action set
+It would be interested to modify and compare $A$, the set of available actions,
+but the current code base doesn't support modifying that. Therefore all $A$ is the same.
+\[
+  A=\{0,60,120,180,240,300\}
+\]
+
+*** Rewards
+$R_1$ avoiding collision reward and $R_2$ collision reward are also compared,
+the reason being, that the natural intuition would be
+to try and assign values in which the skaters try to avoid each other. But, you
+could also try and make them collide with each other by flipping these
+"intuitive" values.
+By default the rewards will be the following:
+
+| Variable | Value |
+|----------+-------|
+| $R_1$     |    20 |
+| $R_2$     |   -20 |
+
+*** Learning method
+In the implementation I differentiate between two concepts, first the
+method of action selection, secondly how rewards are learned.
+For action selection 3 different strategies are implemented:
+
+1. Mixed
+2. Greedy
+3. Explore greedy
+
+Greedy will be used unless mentioned differently. The implemented learn
+strategies are:
+
+1. Regressive learning (learn less over time).
+2. Constant learning.
+
+Constant learning will be used unless mentioned otherwise.
 * Results and observations
-#+LATEX: \newpage
-** Egreedy
-*** Constant
-#+CAPTION: Egreedy constant rewards
-[[./results/egreedy_constant-rewards.plot.png]]
-#+CAPTION: Egreedy constant choices
-[[./results/egreedy_constant-choices.plot.png]]
 
-#+LATEX: \newpage
-*** Regressive
-#+CAPTION: Egreedy regressive learning rewards
-[[./results/egreedy_regresiveLearning-rewards.plot.png]]
-#+CAPTION: Egreedy regressive learning choices
-[[./results/egreedy_regresiveLearning-choices.plot.png]]
+** The most boring behavior
+To have a baseline for interesting behavior, first a graph is shown which is as
+boring as I could possibly generated,
 
-#+LATEX: \newpage
-** Greedy
-*** Constant
-#+CAPTION: Greedy constant rewards
-[[./results/greedy_constant-rewards.plot.png]]
-#+CAPTION: Greedy constant choices
-[[./results/greedy_constant-choices.plot.png]]
+#+CAPTION: Baseline interesting
+[[./results/greedy-c10-s0.2-rewards.plot.png]]
 
-#+LATEX: \newpage
-*** Regressive
-#+CAPTION: Greedy regressive learning rewards
-[[./results/greedy_regresiveLearning-rewards.plot.png]]
-#+CAPTION: Greedy regressive learning choices
-[[./results/greedy_regresiveLearning-choices.plot.png]]
+| Variable | Value |
+|----------+-------|
+| $N$      |    10 |
+| $\delta$      |   0.2 |
 
-#+LATEX: \newpage
-** Mixed
-*** Constant
-#+CAPTION: Mixed constant rewards
-[[./results/onlineLearn_constant-rewards.plot.png]]
-#+CAPTION: Mixed constant choices
-[[./results/onlineLearn_constant-choices.plot.png]]
-
-#+LATEX: \newpage
-*** Regressive
-#+CAPTION: Mixed regressive learning rewards
-[[./results/onlineLearn_regresiveLearning-rewards.plot.png]]
-#+CAPTION: Mixed regressive learning choices
-[[./results/onlineLearn_regresiveLearning-choices.plot.png]]
-#+LATEX: \newpage
+So in this graph the skaters have *lots* of space, almost any action results
+in the max payoff, and because they're moving slow collisions are almost unheard of.
 
 * Conclusion
