@@ -49,19 +49,19 @@ This language was chosen because the author wanted to learn it. There are many a
 Rust described elsewhere[fn:: Rust advantages: https://www.rust-lang.org/].
 The use assignment was small enough to try and use an unknown language for implementation. 
 
-First the situation was implemented. Meaning that all variables were created and the
-representation of the Skaters. Then a simple updating mechanism was created.
+Then the situation was implemented. Meaning that all variables were created and the
+representation of the Skaters. A simple updating mechanism was created.
 After which the first learning strategy was created, the mixed strategy. This one
-was created first because it was believed to be the easiest one to implement.
+was created first because it was believed to be the easiest strategy to implement.
 
-After that the graph creation was done. This was done with help of Gnuplot[fn::
+After that the graph rendering was implemented. This was done with help of Gnuplot[fn::
 Gnuplot http://www.gnuplot.info/] and its respective rust library[fn::
 Gnuplot rust library: https://github.com/SiegeLord/RustGnuplot].
 
 When the graph creation was done experimentation the real experimentation started.
 First the egreedy and greedy strategies were also implemented for comparison.
-egreedy means in this case greedy plus exploration, and greedy is just choose
-always the best last reward.
+egreedy means in this case greedy plus exploration, and greedy is the strategy
+where always the last best rewarded action is chosen.
 However the learn rate was still regressive, meaning there was less learning done
 over time, so this was replaced with a constant learn rate, and learn rate itself
 became a separate configuration option.
@@ -70,16 +70,7 @@ Finally importing the graphs into the org[fn:: Emacs org mode was used to export
 https://github.com/jappeace/methods-homework/blob/master/multiAgentLearning/practical/code/src/report.org]
 format proved somewhat problematic,
 since the output of the plot library was just a set of instructions for gnuplot.
-But a simple shell script solved that:
-
-#+begin_src shell
-     for file in `ls *.plot`;
-     do gnuplot -e "set terminal pngcairo size 800,400 enhanced font"\
-                "'Verdana,10'; set output '"$file".png" $file;
-     done
-#+end_src
-
-This created png files of the plots.
+But a shell script solved that[fn:: located here: https://github.com/jappeace/methods-homework/blob/master/multiAgentLearning/practical/code/src/makegraphs.sh].
 
 After the deadline was extended, the decision was made to automate the process of writing plots
 from specialized configurations. Previously some global variables had to be set
