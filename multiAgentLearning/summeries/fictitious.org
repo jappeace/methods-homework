@@ -1,0 +1,135 @@
+#+TITLE: Fictitious play: A summery of variants
+#+OPTIONS: toc:nil
+#+LATEX_HEADER: \usepackage[margin=0.4in]{geometry}
+
+Fictitious play combines a prediction of the future based on past observations
+and an optimal response given the prediction. The forecasting procedure is a 
+simple extrapolation of empirical frequencies to date. There is no account
+taken for patterns or the player's own actions or his opponents in the data.
+
+Fictitious play only converges to a weak correlated equilibrium under
+special cases and even then it just resembles it. But certain elements
+yield significant improvements.
+
+Considering a finite n-person game $G$. function $f_i$ is a /forecasting rule/ for
+player $i$ that maps each $\xi^t$ to a probility distribution over the opponents'
+action in period $t+1$:
+
+\[ f_i(\xi^t) \in \Delta(X_{-i})\]
+
+A /response rule/ is a function $g_i$ that maps each history $\xi^t$ to a probability
+distribution over $i$'s /own/ actions in period $t+i$,
+
+
+\[ g_i(\xi^t) \in \Delta(X_{-i})\]
+
+. pair $(f_i, g_i) is a /predictive learning rule/ for player
+$i$.a This is usefull for discussing large classes of learning rules
+without imposing conditions on prediction. It does not cover reinforcement,
+regret matching and related rules ave no predictive component at all.
+Calibrated forecasting rules don't fit because it has a random component.
+
+With a history $\xi^t=(x^1,... , x^t)$, $\varphi^{it}(\xi^t)\in\Delta_i=\delta(X_i)$ is the empirical
+frequency distribution of $i's$ actions trough time t. The ficitious play forecasting
+rule for $i$ is:
+
+\[ f_i(\xi^t)=\prod_{j\neq i} \varphi^{jt} \]
+
+$i$ forecasts that his opponent are using stationary strategies consistent
+with the observed play to date, these strategies are assumed to be /independent/.
+$g_i(\xi^t)$ is the best miopic response to the prediction $f_i(\xi^t)$, so if $p^{-i} = f_i(\xi^t)$ then
+$q^i  g_i(p^{-i})$ is a distribution in $\Delta_i$ satisfying:
+
+\[ \forall x, x' \in X_i , q^i_x > 0 \Rightarrow u_i (x, p^{-i}) \geq u_i (x', p^{-i})\]
+
+Now we say (f_i, g_i) is a /fictitious play process/ (FPP) for player i.
+On $G$ a ficitious play process consists of $(f_i ,g_i)$ for each of the n
+players.
+
+$\omega$ is a realization of a play. A fictitious play process converges empirically
+on $\omega$ if for each player $i$ there exists $q^i \in \Delta_i$ such that $\varphi^{it}(\omega) \to q^i$ as
+$t \to \infty$. $q=(q^1 ,..., q^n)$ is a Nash equilibrium of $G$. If all $\omega$ converge
+pointwise to Nash equilibrium, then we say a FPP converges empirically.
+
+To describe more realistic behavior one can modify fictitious play:
+
+1. With random shocks in the responses.
+2. Only consider recent data.
+3. Use incomplete information.
+
+Lets consider a modification of fictitious play where the player responses
+are smoothed by random shocks. The forecasting rule is the same as in ordinary
+fictitious play, and $p^{-i} \in \Delta_{-i}$ denotes $i$'s forecasts for the openents' behavior.
+u_i(x_i, p^{-i}) is the expected payoff from $x_i \in X_i$ given the forecast. For the
+example $i's$ choice probabilities can be described by[fn:logistic-function: A logistic function]:
+
+\[ q^i(x_i | p^{-i} = \frac{e^{u_i (x_i, p^{-i} )/\gamma_i}}{\sum_{x'_i \in X_i} e^{u_i (x'_i, p^{-i} )/\gamma_i}}\]
+
+$\gamma_i > 0$ is the /response parameter/, a real number. When it is close to zero
+it approximates the behavior closely. It can also be interpreted as an optimal
+response rule when payoffs are pertubated by small unobserved utility shocks:
+In each period $t, i$'s payoffs are pertubated by random variables $\epsilon^t_i$. $i$'s
+payoff function at time $t$ is a random variable of the form:
+
+\[ u^t_i(x) = u_i(x) + \epsilon^t_i\]
+
+The cumulative distribution of $\epsilon^t_i$ is given by:
+
+\[ ln P(\epsilon^t_i \leq z) = -e^{-z/\gamma_i}\]
+
+From here we can derive that $i$ plays by [fn:logistic-function].
+
+Alternativly we can consider only recent data from experimentation results.
+Given probability distribution $q^i$ with full support on $\Delta_i$, the amount
+of information conveyed by $q^i$ can be represented by entropy function
+$-\sum_j q_j^i ln q^i_j$. If $i$'s actual utility $U_i(q^i, p^{-i})$ is a weighted
+combination of his current payoff and of information from experimentation:
+
+\[ U_i(q^i, p^{-i})=u_i(q^i, p^{-i}) - \gamma_i \sum_j q^i_j ln q^i_j \]
+
+then it can be shown the optimal $q^i$ is given by[fn:logistic-function].
+To generalize: Let $w_i:\Delta_i \to R$ be any smooth, differentiable, strictly
+concave function that $|\Delta w_i(q^i)|\to \infty$ whenever $q^i$ approaches the boundary of
+$\Delta_i$.
+$i$'s /smoothed utility/ function is:
+
+
+\[ U_i(q^i, p^{-i})=u_i(q^i, p^{-i}) - \gamma_i w_i(q^i_j), \gamma_i > 0 \]
+
+Consider the process in which $i$ uses the ficitious forecasting rule $f_i$
+together with a response function $g_i$ that maximizes $U_i(q^i, p^{-i})$ with respect
+to $q^i$. This learning rule is called /smoothed fictitious play/ with smoothing
+function $w_i$ and smoothing parameter $\gamma_i$
+
+If $G$ is a finite game and $\epsilon > 0$ and a given player uses smoothed fictitious
+play with a sufficiently small smoothing parameter, then with probability 1
+his regrets are bounded above by $\epsilon$.
+
+To better understand smoothed fictitious play, we can juxtapose it with regret
+matching. Fix a player $i$ with $k$ actions and $\bar{r}^{it} \in R^k$ be this player's
+vector of regrets up trough time $t$. Every $\bar{r}^{it}$ can be written $\bar{r}^{it}
+= u_i(j,\varphi^{-it})-\bar{u}^t_i$, where $\varphi^{-it}$ is the realized joint empirical distribution
+of the openents' play and $\bar{u}^t_i$ is i's average per period payoff trough
+time $t$. Regret matching results in a /better reply/ strategy, however,
+fictitious play will result in a /best reply/ strategy. Smoothed fictitious
+play is neither. But like fictitious play it does not depend on $\bar{u}^t_i$.
+
+Fictitious play and smoothed fictitious play both need the entire history to 
+determine the next period's actions. As a model of learning behavior this
+is unrealistic. /fictitious play with memory/ m is a process in which
+each player chooses a best reply to the empirical distribution of plays by the
+openents over the preceding $m$ periods. This does not necessarily lead to
+equilibrium behavior. But, if we introduce a small amount of inertia to the
+learning process, for example the player takes the same action as the previous
+period with probability $0 < \lambda < 1$, and chooses a best reply against the 
+product of the empirical distributions otherwise. This is called
+/fictitious play with finite memory and inertia/.
+
+If $G$ is a finite $n$-person game that is weakly acyclic under better replies.
+With probability 1, every better reply process with finite memory and inertia
+converges in period by period behaviors to a pure Nash equilibrium of $G$.
+
+*Questions*
+
+1. What is a logistic function?
+2. What is a quantal response function?

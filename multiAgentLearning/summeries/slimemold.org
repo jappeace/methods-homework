@@ -1,0 +1,33 @@
+#+TITLE: Summarizing slime molds optimizations
+#+OPTIONS: toc:nil
+
+This paper describes a population based particle model of Physarum which
+collectively approximates the complex formation and evolution of transport
+networks seen in the organism /Physarum plycephalum/. 
+
+The model used is rather simple. Every particle (or particle has three sensors, one left,
+one right and one in front. If the particles senses more food to the left it turns
+left, if it smells more right it turns right otherwise it stays on track.
+The particles sense food *and* secrete it.
+
+The algorithm used has two stages, the sensory stage is used for rotating the
+particles. In here there is interplay between the sensor arm $s$ and rotation
+angle $r$ parameters. If $s=r$ then the initial network will contract, if $r<s$
+the contraction behavior is increased and if $r>s$ then spontaneous branching
+will appear.
+The motor stage is used for attempting to move the particles forward.
+If a particle can move forward, it'll do so while also depositing a food trail.
+If the particle cannot move then nothing happens.
+
+The creation of the algorithm uses a gray-scale image to determine initial
+nutrients, and parameter $p$, which is a percent of pixels in that image that
+indicates the amount of initial particles.
+Diffusion is used to to leave a "sent trail" to food sources. Some foods are
+preferred over others.
+
+Even without seeding the environment the agents quickly form into network
+structures. Modifying the sensor offset manipulation of path thickness.
+When the population is initialized the diffusing food sources deposited
+by initial random movements attracts nearby particles. So densely populated
+areas attract more particles, and sparsely populated areas don't attract
+particles. More particles means more attraction this is the reinforcement effect.
