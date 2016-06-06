@@ -1,0 +1,58 @@
+#+TITLE: Stisficting play
+#+OPTIONS: toc:nil
+
+* Introduction
+Prissoners dillema:
+
+| 3,3 | 1,4 |
+| 4,1 | 2,2 |
+
+Normally this is solved by having:
+
++ Players are aware of game structure.
++ Players are awere of other players decision
++ Players are aware of the other's payoff
++ Players are awere that the actions of other agents are affecting there autcomes
+
+These assumptions aren't always feasable IRL.
+If we remove these assumptions, we exit game theory, and enter machine learning.
+
+* Related
+
+Traditional rational choice hteory says that an agent faced with
+a decision will choose the alternative tat maximizes a utility function.
+But there is little evidence that people make decisions in this manner.
+As a replacement satisficing was proposed: "A decion maker who
+chooses the best available alternative according to some criteria is said
+to optimize; one who chooses an alternative that meets or exceeds
+specified criteria, but tat is not gauranteed to be either unique or in any
+sense the best is said to satisfice."
+
+A satisificing agent selects an alternative that meets a set of aspiration
+levels, as long as tese are being met, the agent can continue to act witout
+expending any search costs, if they aren't, search is executed.
+
+# So in esscence, a satisificing agent is content, rather than ambitious.
+# and being content solves the prisoners dillema.
+
+
+* Satisfaction
+
+
+| Symbol | definition                       |
+|--------+----------------------------------|
+| $t$    | time                             |
+| $A_t$   | first player action in $\{C,D\}$ |
+| $\alpha_t$   | first player aspiration level    |
+| $\pi^A_t$  | payoff for player A              |
+| $\lambda$    | learning rate  |
+| $B_t$   | player B action                  |
+| $\beta_t$   | player b aspiration level        |
+| $\sigma$    | Reward for mutual cooperation    |
+| $\delta$    | Reward for mutual defection      |
+
+
+
+
+
+
