@@ -1,0 +1,106 @@
+#+TITLE: Particle swarms and you: A summery
+#+OPTIONS: toc:nil
+#+LATEX_HEADER: \usepackage[margin=0.4in]{geometry}
+
+* Algorithm
+In PSO a number of simple entities the particles—are placed in the search space
+of some problem, and each evaluates the objective function at its current
+location. Then each particle determines its own movement trough the
+search space by looking at aspects of its own history and the best performing
+particles (based on fitness). Eventually the swarm will move to an optimum.
+
+** Symbol explenation
+Every particle in the swarm is composed of three $D$-dimensional vectors,
+where $D$ is the dimensionality of the search space. The vectors are:
+
+| symbol     | definition       |
+|------------+------------------|
+| $\vec{x}_i$ | Current position |
+| $\vec{p}_i$ | Best position    |
+| $\vec{v}_i$ | Velocity         |
+| $\vec{p}_g$ | Best neighbor    |
+
+** Pseudo code
+1. Initialize a population of particles with random positions and velocities
+2. *while* criterion is false
+   1. For each particle, evaluate the desired optimization fitness function
+      in $D$ variables.
+   2. $\vec{p}_i \gets$ If $\vec{x}_i$ is better than $\vec{p}_i$
+   3. $\vec{p}_g \gets$ Particle in neighborhood with most success so far.
+   4. Change velocities of the particle with:
+      \begin{equation}
+      \begin{cases}
+          \vec{v}_i \gets \vec{v}_i + \vec{U}(0,\varphi_1)\otimes (\vec{p}_i-\vec{x}_i)+\vec{U}(0,\varphi_1)\otimes (\vec{p}_g-\vec{x}_i),\\
+          \vec{x}_i \gets \vec{x}_i + \vec{v}_i
+      \end{cases}
+      \end{equation}
+3. *end while*
+*** Notes
+
+- $\vec{U}(0,\varphi_i)$ represents a vector of random numbers uniformly distributed
+  in $[0,\varphi_i]$, which is randomly generated for each iteration per particle.
+- $\otimes$ is component wise multiplication.
+- In the original $\vec{v}_i$ was kept within $[-V_{max}, +V_{max}]$.
+** Parameters 
+the $\varphi_i$ controlls the magnitude of the random forces. The behavior of
+a PSO changes radically with the value of it: The PSO can become more
+or less "responsive" and possibly even unstable, with particle speeds
+increasing without controll. Therefore $V_{max}$ was introduced, however this
+presents a problem, because the optimal value for $V_{max}$ is problem specific.
+But no reasonable rule of thumb is known. To solve this problem /inertia
+weight/ $\omega$ was introduced. This is a discount factor on the previous
+$\vec{v}_i$, and acts as "friction".
+
+To remove the guesswork out of setting the values for $\varphi_i$, you can use:
+  \begin{equation}
+  \begin{cases}
+      \vec{v}_i \gets \chi(\vec{v}_i + \vec{U}(0,\varphi_1)\otimes (\vec{p}_i-\vec{x}_i)+\vec{U}(0,\varphi_1)\otimes (\vec{p}_g-\vec{x}_i)),\\
+      \vec{x}_i \gets \vec{x}_i + \vec{v}_i
+  \end{cases}
+  \end{equation}
+
+where $\varphi=\varphi_1 + \varphi_2 > 4$ and
+\[ \chi=\frac{2}{\varphi-2+\sqrt{\varphi^2-4\varphi}}\]
+
+** FIPS
+In /fully informed particle swarm/ te particle is affected by all its
+neighbours. sometimes with no influence from its own previous success.
+It can be described as follows:
+
+  \begin{equation}
+  \begin{cases}
+      \vec{v}_i \gets \chi \bigg(\vec{v}_i + \frac{1}{K_i} \sum^{K_i}_{n=1} \vec{U}(0,\varphi)\otimes (\vec{p}_{nbr_n}-\vec{x}_i)+)\bigg),\\
+      \vec{x}_i \gets \vec{x}_i + \vec{v}_i
+  \end{cases}
+  \end{equation}
+
+where $K_i$ is the number of neighbours for particle $i$ and $nbr_n$ is $i$'s 
+nth neigbour. FIPS can find better solutions in fewer itterations with
+good paramters, but its much more dpendent on population topology.
+
+* Topologies
+/Euclidean neigbourhood/ was the first topology, but it was soon abondened because
+it was computationally expensive and had undesirable conergence properties.
+/Global best/ was the next one introduced. The best neigbour in the entire
+population influenced the target particle. It is a static topology, neigbours
+and neigbourhood do not chagne in a run.
+/Local best/ is another topology where each individual was connected to $K=2$
+adjecent members in the population array. It converged more slowly than /gbest/
+but was less vurnable to local optima.
+The von Neumann structure posseses some of the parralelism of /lbest/. yet nodes
+have degree $K=4$; thus the sgraph is more densely connected than /lbest/,
+but less desnly than /gbest/.
+
+** Dynamics
+Because /lbest/ seems better for exploration of the search space and /gbest/
+has better convergence, a good idea might be to combine the two. So the 
+search begins with a /lbest/ ring lattice and slowly inreases untill the
+population is fully connected by the end of the run.
+Another dynamic topology uses a weighted euclidean distance in identifying the
+interaction partner for a particle. For each vector element they find the
+particle thatas the highest "fitness distance ratio".
+* Questions
+
+1. Aren't these algorithms super computational expensive?
+2. In what situtaion should I defintivily use a PSO, instead of something else? and why?
+   I mean, is it just an alternative to GA's? So it can solve binpack to?
