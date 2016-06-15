@@ -1,34 +1,86 @@
 \abstract{
-An abstract of less than 150 words.
+	%TODO abstract
 }
 
-Intro blurb, if any
 
-\section{Introduction}
-\lipsum[1-2]
+%TODO Intro blurb, if any
 
-\multicolinterrupt{
-\begin{center}
-\large\textit{``Oh wow, I can break the columns for quotes and things!''}
-\end{center}
-\vspace{-2em}\hbox{}\hfill --- J. van Doe
+\section{Introductions}
 
-}
+Satisficing play was originally introduced
+to try and limit the computation power that earlier models required of human
+behavior \citep{herbert}. Originating from the field of ecnomics, they
+wanted to use a model that was not ``super intelligent''.
 
-\section{Agents}
-\lipsum
+Such assumptions can include:
 
-\section{Learning}
-\lipsum
+\begin{itemize}
+  \item The structure of the game is known.
+  \item Awareness of other player's decisions.
+  \item Awareness of being in a game situation
+  \item Being able to preform maximization calculations.
+\end{itemize}
 
-\section{How to references}
-\citep{R}, \citep{ihaka:1996}.
+\section{Algorithm}
+The core algorithm as presented by \citep{herbert} and formalized by
+\citep{karandikar}
+can be seen bellow:
+
+\begin{enumerate}
+  \item $ \begin{cases}
+              \text{if } \pi_t \geq \alpha_t & A_{t+1} = A_t\\
+              \text{else} & A_{t+1} \neq A_t
+              \end{cases}$
+  \item $ \alpha_{t+1} = \lambda \alpha_t + (1-\lambda) \pi_t $ \\
+\end{enumerate}
+\begin{tabular}{ll}
+  Definition & symbol \\ \toprule
+  Time & $t$ \\
+  Action & $A_t$ \\
+  Utility & $\pi_t$ \\
+  Aspiration & $\alpha_t$ \\
+  Learning rate & $\lambda$ \\ \bottomrule
+\end{tabular}
+
+In the first phase the next action is selected. If the action still holds
+according to the satificing level or ambition it will remain the same, if not another
+action will be selected. In the second phase the satisficing level is updated.
+In here the constant learning rate is used. This is a variable that can be
+modified to adjust the amount of new information being used or how much
+information from memory is used.
+
+
+\section{Iterated prisoners dilemma}
+
+To demonstrate a potential use of this algorithm we will use at several example
+cases. The first one being the iterated prisoners dilemma. Consider
+the following normal form game:
+
+\begin{tabular}{lll}
+            & Cooperate   & Defect \\
+  Cooperate & $(2,2)$     & $(0,3)$  \\
+  Defect    & $(3,0)$     & $(1,1)$  \\
+\end{tabular}
+
+The Nash equilibrium of this games lies on Defect,Defect. However, all but
+defect are pareto optimal actions.
+
+\section{References to treat}
+\begin{itemize}
+  \item \citep{stimpson:2001}
+  \item \citep{stimpson:2003}
+  \item \citep{sandholm} % q-learning in iterated prisoners dilemma
+  \item \citep{arthur} % maybe not, comparing algorithms against humans
+  \item \citep{bowling}
+  \item \citep{feltovich}
+  \item \citep{crandall}
+\end{itemize}
 
 \bibliography{main}
 
-\address{Jaan van Doe\\
+\address{Jappie Klooster\\
   Dept. of Informatics\\
   Universiteit Utrecht\\
   The Netherlands\\}
-\email{j.vanDoe@students.uu.nl}
+\email{j.t.klooster@students.uu.nl}
 
