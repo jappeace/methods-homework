@@ -1,9 +1,7 @@
 \abstract{
-	%TODO abstract
+  %TODO abstract
+	abstract..
 }
-
-
-%TODO Intro blurb, if any
 
 \section{Introductions}
 
@@ -11,8 +9,6 @@ Satisficing play was originally introduced
 to try and limit the computation power that earlier models required of human
 behavior \citep{herbert}. Originating from the field of ecnomics, they
 wanted to use a model that was not ``super intelligent''.
-
-Such assumptions can include:
 
 \begin{itemize}
   \item The structure of the game is known.
@@ -63,18 +59,30 @@ the following normal form game:
 \end{tabular}
 
 The Nash equilibrium of this games lies on Defect,Defect. However, all but
-defect are pareto optimal actions.
+that action are pareto optimal actions.
 
-\section{References to treat}
-\begin{itemize}
-  \item \citep{stimpson:2001}
-  \item \citep{stimpson:2003}
-  \item \citep{sandholm} % q-learning in iterated prisoners dilemma
-  \item \citep{arthur} % maybe not, comparing algorithms against humans
-  \item \citep{bowling}
-  \item \citep{feltovich}
-  \item \citep{crandall}
-\end{itemize}
+
+\section{Properties of satisifing play}
+Using both \citep{karandikar} and \citep{stimpson:2001} works to look deeper
+at the properties of satisifing play. 
+
+karandikar used a theoretical proofing method, wehreas stimpson showed some
+experimental results.
+
+also showing the contrast graph which supports the work of \citep{arthur}
+
+\section{An extended satisficing play}
+
+In here we discuss the work of \citep{stimpson:2003}, where he extends the
+algorithm to be played with mutliple action choices.
+
+\section{Satisficing compared to other learning methods}
+With help of the work of \citep{crandall} saticificing play is compared
+to Q-learning and WOLF-PHC.
+Q-learning is explained briefly with help of \citep{sandholm} and WOLF-PHC
+with help of \citep{bowling}.
+ 
+Finally some graphs are shown how they compare
 
 \bibliography{main}
 
@@ -83,4 +91,3 @@ defect are pareto optimal actions.
   Universiteit Utrecht\\
   The Netherlands\\}
 \email{j.t.klooster@students.uu.nl}
-
