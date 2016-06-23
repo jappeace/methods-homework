@@ -1,0 +1,92 @@
+#+TITLE: Summarizing methodology of Multi agent learning
+#+OPTIONS: toc:nil
+#+LATEX_HEADER: \usepackage[margin=1.2in]{geometry}
+
+Multi-Agent learning results has produce very good results, however the authors
+believe the very foundation of MAL could benefit from discussion. They've
+identified five distinctly different agendas being pursued by MAL literature,
+these are being left implicit which makes it hard to compare results.
+They also want to answer questions such as "What exact questions is MAL addressing?"
+and "With what unit to measure the answers of these questions?". The ultimate
+goal is to try and clarify foundational issues.
+
+* Formal setting
+
+This introduces /stochastic games/ or /Markov games/. Most of MAL adopts this
+and focuses on /repeated games/. These also generalizes /Markov Decision Problems/,
+from which most learning literature in AI originates.
+
+$(N,S,\vec{A},\vec{R},T)$ is a stochastic game tuple. $N$ is a set of agents
+indexed $1,...,n$. $S$ is a set of $n$ agent stage games. $\vec{A}=A_1,..., A_n$,
+with $A_i$ the set of actions of agent $i$, where the agent has the same
+strategy space in all games. $\vec{R}=R_1,..., R_n$, with $R_i : S \times \vec{A} \to \Re$
+giving the immediate reward function of agent $i$ for stage game $S$.
+$T:S \times \vec{A} \to \Pi(S)$ is a stochastic transition function that specifies 
+the probability of the next stage game to be played
+based on the game just played and its actions.
+
+For finitely repeated games we can aggregate the set of immediate rewards received
+in each state by using the sum or average, for infinite games however a limit
+is required or the sum of discounted rewards $\sum^\infty_{t=1} \delta^t r_t$, where $r_t$ is the
+reward received at time $t$.
+
+This can also work for replicator dynamics and evolutionary stable strategies.
+The replicator model assumes a population of homogeneous agents which each
+continuously play a two player game against themselves. This can be expressed
+in a tuple $(A,P_0, R)$. $A$ is the set of possible pure actions for 
+agents $1,..., m$. $P_0$ is the initial distribution of agents across possible
+possible srategies, $\sum_{i=1}^m P_0(i)=1$. $R:A\times A \to \Re$ is the immediate reward
+function for each agent with $R(a, a')$ giving the reward for an agent playing
+$a$ against another agent playing $a'$.
+The population then changes proportionally to how the average rewards stack
+up for each strategy:  dt(P_t(a)) = P_t(a)[ u_t(a)-u^*_t ],
+where $u_t(a)=\sum_a , P_t(a')R(a,a')$
+and $u_t^* \sum_a P_t(a)u_t(a)$. A strategy $a$ is then defined to be an evolutionary
+stable strategy iff for some \epsilon > 0 and for all other strategies $a'$,
+$R(a, (1-\epsilon)a+\epsilon')>R(a',(1-\epsilon)a+\epsilon a')$. A way to interpret these settings is as
+representing a large population undergoing frequent pairwise interactions.
+
+* Special characteristics
+
+In a multi-agent setting one cannot separate /learning/ from /teaching/. For
+this reason it might be more appropriate to speak of multi-agent /adaptation/
+instead of /learning/
+
+* Sample of MAL work
+For a more concrete discussion some existing work has been reviewed.
+
+** Techniques
+
+The first approach is model based, which has the following general scheme:
+
+1. Start with some model for the opponent's strategy
+2. Compute and play the best response
+3. Observe the opponent's play and update your model of his strategy
+4. Goto 2.
+
+Examples of these are /fictitious play/ and /rational learning/.
+
+Model free approaches are often called /reinforcement learning/.
+The basic algorithm for solving a known MDP starts by initializing a value
+function $V_0:S\to \Re$, the value the can be iteratively updated using the /bellman
+equation/.
+For unknown reward and transition functions the /Q-learning/ algorithm can
+be used. The Q-learning algorithm can be extended to the multi-agent
+stochastic game setting by each agent pretend the environment is passive
+and ignore other agents.
+
+Another approach is no-regret learning. This has some unique properties that
+distinguish it from the work above. The basic concept tries to evaluate the
+success of learning rules and minimize an attribute called "regret".
+
+** Typical results
+
+1. Convergence of the strategy profile to an equilibrium of the stage game in
+   self play.
+2. Learning an opponent's strategy
+3. Obtaining payoffs that exceed a specified threshold.
+
+* Questions
+
+1. Why are there so many different agendas for doing research?
+2. Where does neuro-evolution fit into?

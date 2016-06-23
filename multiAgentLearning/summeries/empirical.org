@@ -1,0 +1,88 @@
+#+TITLE: Summarizing empirically evaluating multiagent learning algorithms
+#+OPTIONS: toc:nil
+#+LATEX_HEADER: \usepackage[margin=1.2in]{geometry}
+
+This paper focuses on creating a platform for doing large scale MAL analyses.
+They also do an experiment with this platform.
+
+In this paper, an ordered pair of two algorithms is a /pairing/. It is ordered
+because the two player games are a-symmetric. If an algorithm is paired with itself
+its called /self play/. /game generators/ can create /game instances/ from
+distributions. So a /game generator/ instance is a factory that configures
+/game instances/ in a certain way. However different /game generators/ produce
+different type of games, such as the prisoner's dilemma /game generator/ produces
+games that comply to the prisoner's dilemma constraint.
+A game instance and a pairing taken together is called a /match/. A /partially
+specified match/ is a match with an algorithm missing from the pairing.
+A /run/ is a simulation of a match. Which can be executed for several /iterations/
+in case of non-deterministic algorithms.
+
+The platform exists of three major parts, the config GUI, the experiment engine,
+and the visualization GUI. The first step is to use the GUI to configure the
+experiment, the second step generates the for each desired match. Then
+the jobs are run with help of the "engine", this step generates the datafiles,
+then the fourth step is to compute performance metrics based on these files.
+The final step visualizes the results.
+
+The algorithms that are studied with this platform in the paper are: /Fictitious play/,
+/Determined/, which plays the Nash equilibrium which obtains the highest personal
+reward, /Awesome/, /Meta/, /GIGA-WoLF/, /Global Stochastic Approximation/ which
+is a newly introduced variance on /GIGA/ and uses a noisy rather than deterministic
+step, /RV_{\sigma(t)}/, /Q-Learning/, /Minimax-Q/ aand /Minimax-Q-IDR/ and finally
+of course, a /random/.
+
+The expirement following games from the GAMUT collection to run the experiments:
+a game with normal covariant random payoffs,
+bertrand oligopoly,
+cournot duopoly,
+dispersion game,
+grab the dollar,
+guess two thirds of the average,
+majority voting,
+minimum effort game,
+random symmetric action graph game,
+travelers dilemma,
+two player arms race game,
+war of attrition,
+two by two games.
+
+Bootstrapping is used to reduce the amount of runs for the experiments, while
+still ensuring that summery statistics are significantly different.
+To compare if distributions themselves are signficantly different the 
+Kolmogorov-Smirnov test is used,  Spearman’s rank correlation test is usedto see
+if two paired variables are signficantly different. To asses convergence
+the Fischer exact test was used together  with a threshold based on
+vector distance to save on computation time. Probabilistic domination is
+checked visually.
+
+The first observation is that Q-learning and $RV_{\sigma(t)} attain the highest average
+rewards on the grand distribution. The next observation was that Q-learning was
+that Q-learning was the best algorithm for most generators.
+Then another observation was that there was no clear correlation between
+game size and reward, for some generators algorithms perform better on large
+games and on others they do worse. Another observation was that algorithm
+performance depends a lot on which opponent is played.
+The only pure strategy Nash equilibrium found were by Determined and Q-learning
+and Q-learning in self play. Q-learning was also never really probabilistically 
+dominated by other algorithms. A lot of algorithms also tended to have a lower
+average reward on self play, and similar algorithms tended to have similar
+performance (surprisingly). Q-learning also appeared to minimize regret the
+most, whereas GIGA-WoLF most frequently achieved negative regret runs. On
+a per opponent basis, Q-learning, GIGA-WoLF, GSA and RV_{\sigma(t)} were rarely
+probabilistically dominated in terms of regret. Another observation
+was that strategic proximity to stage-game Nash equilibrium was correlated
+with average reward for all algorithms and most algorithm-generator pairs.
+Compared to other algorithm, Q-Learning attained enforceable payoff most
+frequently. Q-Learning payoff profiles were also consistent with repeated
+Nash equilibrium more often than any other algorithm.
+
+* Questions
+
+I have my questions about the implementation of a platform to do these
+comparisons, I mean you suddenly are bounded to a programming language,
+and have to trust the authors source code, not to speak of licensing
+issues. What if there is a bug? Are they gonna give support? The only
+reasonable way to do such a thing is to make it opensource. And the only
+thing they say its available for free, but it doesn't include a license
+file. So it may be available for download for free, but you don't know
+what that means legally, can you copy it? Redistribute a bug fix?

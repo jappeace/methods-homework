@@ -1,0 +1,122 @@
+#+TITLE: Review form
+#+OPTIONS: toc:nil
+
+# [The author of the paper receives a completed review form,
+# together with an annotated copy of his paper.
+# The instructor only receives a printed copy of this review form.]
+
+# [All lines contained in square brackets are removed from the final review.]
+
+| Course      | MAA, edition 201*-201*                             |
+| Title       | Satisficing play in the multi-agent social dilemma |
+| Author      | Kelvin Lubertson                                   |
+| Reviewer    | Jappie Klooster                                    |
+| Review date | <2016-06-18 Sat>                                   |
+* Summary of review
+# [Summary and major recommendation (2-3 lines, only to be written after
+# having completed the details of the actual review).]
+
+The goal of this form is to help the author to improve his paper.
+Both the review and the concept paper are graded as assignments.
+
+* Summary of concept paper (3-12 lines)
+# [Summarise the paper to show that you have red it, that you have tried to
+# understand it, and that you have to tried to follow the ideas of the author.]
+Its about satisificing play, specifically aimed at the social dilemma paper of 
+Stimpson 2003. First the prisoners dilemma is introduced as a "start" social
+dilemma. Then the  social dilemma is introduced and its properties. After which
+Karandikar's algorithm is introduced, which is followed up by the extended social
+dilemma algorithm. After that, the algorithm for the social dillema is
+introduced which is clarified with some example. Finally there is a part
+about how satisificing agents can't be exploited. Which isn't finished yet.
+Same for the experimental results part.
+
+* Format discipline
+# [Does the paper follow the guidelines for a CS-magazine article as
+# explained on the organisation page?  (``1. A CS-magazine article is a
+# cross-breed between a science magazine and a computer magazine.  Etc.''
+# If not, then how could quality / organisation / completeness be improved?]
+Seems fine. I wouldn't use INFOMAA as a per page title, since that abbreviation
+is really hard to figure out for a third party. I also think student numbers
+look silly on papers, but its in the standard format, so I guess I'm alone
+on that one.
+
+* Composition
+# [Does the paper possess a clear structure? If not,
+# give recommendations to improve its composition.]
+Rename the social dillema chapter to either A social dillema or
+prisoners dillema, or state explicitly that the prisoners dillema is a social
+dillema early in the chapter.
+
+I'm also not sure if first introducing both problems (ie the prisoners and
+social dillema) and then both algorithms (karandikar, stimpson) is a good
+idea, since the description of the social dillema is rather big, but that's
+just my opinion.
+
+* Composition (theme & thread)
+# [Is it clear which (sub-) topic is discussed?
+# Does the main theme of the paper clearly stand out?  
+# Is a clear thread recognisable?  Does the paper contain one message
+# (good!) or multiple messages (not so good)?]
+Good, it first start with the scenario description and then later the proposed
+algorithms to solve it. It also keeps focused on just the social dillema and
+its properties.
+
+* Clarity and comprehensability
+# [Can you understand what is written?  If not why not?  
+# How can the author improve clarity?]
+I think its clearly written, although the social dillemma itself, its a hard
+scenario, I don't really see the relationship between a payoff matrix and
+a social dillema. There is an example given
+
+* Scientific level
+# [There must be one point in the paper were he treatment goes more in-depth.
+# Here a formula must be shown and discussed, a proof must be given,
+# or a comparable academic exercise ("trick") must be performed.
+# Does the paper contain such a point?  How can the in-depth section
+# be improved?]
+
+Yes definitively, the algorithms itself are interesting, but also how they can't
+really be tricked part (in the play against other defecting agents chapter).
+
+* Credibility
+# [Is writing cogent and sound?  Is it convincing?
+# If not, suggest where to remove unbelievable claims and how to make
+# argumentation credible.]
+The final parts are a little less creditable, but I'm assuming its not finished
+yet.
+
+* Attractiveness
+# [Does the paper contain enough pictures, or figures or tables or diagrams
+# to attract the attention?  Does it contain sub-headers and call outs to
+# interrupt large blocks of text?  Are these sub-headers and call outs
+# functional?  Would you start reading the paper if you happen to stumble
+# upon it occasionally?  Why?]
+I would like more pictures, but I suppose there are quite a few if you
+count the tables with it.
+
+* References
+# [Are ideas properly referenced?  Is the paper connected to existing
+# literature?  Or is it "pie in the sky" (i.e., an isolated idea)?
+# If not connected, indicate how a connection can be established.]
+Seems to be very well referenced, there aren't any "new" ideas presented
+in here as far as I'm aware. It would be nice to have a reference to things
+like pareto dominance, or the prisoners dillema. But I think
+its nit picking at that point, because its so well known in game-theory.
+
+* Tidiness
+# [Is the following taken care of?  Page numbering, spelling, no typos,
+# consistent layout, consistent use of fonts, uniform format of references,
+# quality of English.  Indicate where the paper can be improved]
+
+The english and tidiness is very good, I haven't  spotted many typos,
+although the range conditions should be checked (as always). For example:
+
+- The basic algorithm explenation by karandikar in step one, should contain a
+  case for equal.
+- On the final page there is a sentence: As long as the learning rate is below
+  0 and 1... It seems like a dubious thing to say, I'd expect between there.
+
+** typos:
+
+- The final sentence of Multi-agent social dilemma stops abruptly.

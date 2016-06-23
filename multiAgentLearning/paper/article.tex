@@ -3,21 +3,28 @@
 	abstract..
 }
 
-\section{Introductions}
+\section{Introduction}
 
 Satisficing play was originally introduced
 to try and limit the computation power that earlier models required of human
-behavior \citep{herbert}. Originating from the field of ecnomics, they
+behavior \citep{herbert}. Originating from the field of economics, they
 wanted to use a model that was not ``super intelligent''.
 
+The classical models from the field of economics had at least one of the
+following assumptions:
+
 \begin{itemize}
+\itemsep0em 
   \item The structure of the game is known.
   \item Awareness of other player's decisions.
   \item Awareness of being in a game situation
   \item Being able to preform maximization calculations.
 \end{itemize}
 
-\section{Algorithm}
+These assumptions can be called common knowledge, and are a demanding to
+make \citep{binmore}. 
+
+\section{Core algorithm}
 The core algorithm as presented by \citep{herbert} and formalized by
 \citep{karandikar}
 can be seen bellow:
@@ -39,7 +46,7 @@ can be seen bellow:
 \end{tabular}
 
 In the first phase the next action is selected. If the action still holds
-according to the satificing level or ambition it will remain the same, if not another
+according to the satisficing level or ambition it will remain the same, if not another
 action will be selected. In the second phase the satisficing level is updated.
 In here the constant learning rate is used. This is a variable that can be
 modified to adjust the amount of new information being used or how much
@@ -47,6 +54,7 @@ information from memory is used.
 
 
 \section{Iterated prisoners dilemma}
+[To be extended]
 
 To demonstrate a potential use of this algorithm we will use at several example
 cases. The first one being the iterated prisoners dilemma. Consider
@@ -59,10 +67,29 @@ the following normal form game:
 \end{tabular}
 
 The Nash equilibrium of this games lies on Defect,Defect. However, all but
-that action are pareto optimal actions.
+that action are pareto optimal actions. So the Nash equilibrium would be the
+``right'' strategy to play if the game is only played once, but if you repeat
+the game against the same opponent, interestingly enough you can ``solve''
+the prisoners dilemma by ``teaching'' the opponent to cooperate.
 
+However strategies such as tit for tat or win stay lose shift already know
+which actions are winning and which are punishing to try and solve it.
+Satisficing play learns this however by updating the aspiration it got from
+playing a move. If we consider a game vs always cooperate for example:
 
+...
+
+But now if we start with a lower apsiration level:
+
+...
+
+And finally vs tit for tat, a game which can also be found in the
+\citep{stimpson:2001} paper:
+
+...
 \section{Properties of satisifing play}
+[To be extended]
+
 Using both \citep{karandikar} and \citep{stimpson:2001} works to look deeper
 at the properties of satisifing play. 
 
@@ -72,9 +99,21 @@ experimental results.
 also showing the contrast graph which supports the work of \citep{arthur}
 
 \section{An extended satisficing play}
+[To be extended]
 
 In here we discuss the work of \citep{stimpson:2003}, where he extends the
 algorithm to be played with mutliple action choices.
+Stimpson created a game where resources had to be allocated among agents.
+
+
+\begin{tabular}{ll}
+  Definition & symbol \\ \toprule
+  Time & $t$ \\
+  Action & $A_t$ \\
+  Utility & $\pi_t$ \\
+  Aspiration & $\alpha_t$ \\
+  Learning rate & $\lambda$ \\ \bottomrule
+\end{tabular}
 
 \section{Satisficing compared to other learning methods}
 With help of the work of \citep{crandall} saticificing play is compared
