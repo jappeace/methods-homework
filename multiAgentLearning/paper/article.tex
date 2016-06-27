@@ -28,8 +28,8 @@ make \citep{binmore}.
 
 \section{Core algorithm}
 The core algorithm as presented by \citep{herbert} and formalized by
-\citep{karandikar} \todo[inline]{karandikars algorithm is different..}
-can be seen bellow:
+\citep{karandikar},
+in here we present the simplified version of \citep{stimpson:2001} first:
 
 \begin{enumerate}
   \item $ \begin{cases}
@@ -38,6 +38,7 @@ can be seen bellow:
               \end{cases}$
   \item $ \alpha_{t+1} = \lambda \alpha_t + (1-\lambda) \pi_t $ \\
 \end{enumerate}
+\todo{add table caption}
 \begin{tabular}{ll}
   Definition & symbol \\ \toprule
   Time & $t$ \\
@@ -55,12 +56,13 @@ modified to adjust the amount of new information being used or how much
 information from memory is used.
 
 
-\section{Iterated prisoners dilemma}
+\section{Iterated prisoner's dilemma}
 \drafting
 To demonstrate a potential use of this algorithm we will use at several example
-cases. The first one being the iterated prisoners dilemma. Consider
+cases. The first one being the iterated prisoner's dilemma. Consider
 the following normal form game:
 
+\todo{add table caption}
 \begin{tabular}{lll}
             & Cooperate   & Defect \\
   Cooperate & $(2,2)$     & $(0,3)$  \\
@@ -71,12 +73,14 @@ The Nash equilibrium of this game lies on Defect,Defect. However, all but
 that action are pareto optimal actions. So the Nash equilibrium would be the
 ``right'' strategy to play if the game is only played once, but if you repeat
 the game against the same opponent, interestingly enough you can ``solve''
-the prisoners dilemma by ``teaching'' the opponent to cooperate.
+the prisoner's dilemma by ``teaching'' the opponent to cooperate.
+\todo{can one really solve? Is it really teaching? should either add references
+or change wording}
 
 However strategies such as tit for tat or win stay lose shift already know
 which actions are winning and which are punishing to try and solve it.
 Satisficing play learns this however by updating the aspiration it got from
-playing a move. If we consider a game vs always cooperate for example:
+playing a move. If we consider a game versus always cooperate for example:
 
 \todo{copy table}
 
@@ -84,17 +88,17 @@ But now if we start with a lower apsiration level:
 
 \todo{copy table}
 
-And finally vs tit for tat, a game which can also be found in the
+And finally versus tit for tat, a game which can also be found in the
 \citep{stimpson:2001} paper:
 
 \todo{copy table}
-\section{Properties of satisifing play}
+\section{Properties of satisficing play}
 \drafting
 
 Using both \citep{karandikar} and \citep{stimpson:2001} works to look deeper
-at the properties of satisifing play. 
+at the properties of satisficing play. 
 
-karandikar used a theoretical proofing method, wehreas stimpson showed some
+karandikar used a theoretical proofing method, whereas Stimpson showed some
 experimental results.
 
 also showing the contrast graph which supports the work of \citep{arthur}
@@ -106,16 +110,6 @@ In here we discuss the work of \citep{stimpson:2003}, where he extends the
 algorithm to be played with mutliple action choices.
 Stimpson created a game where resources had to be allocated among agents.
 
-
-\begin{tabular}{ll}
-  Definition & symbol \\ \toprule
-  Time & $t$ \\
-  Action & $A_t$ \\
-  Utility & $\pi_t$ \\
-  Aspiration & $\alpha_t$ \\
-  Learning rate & $\lambda$ \\ \bottomrule
-\end{tabular}
-
 \section{Satisficing compared to other learning methods}
 \drafting
 
@@ -126,7 +120,7 @@ with help of \citep{bowling}.
  
 Finally some graphs are shown how they compare
 
-\todo{check }
+\todo{add caption for tables?}
 \bibliography{main}
 
 \address{Jappie Klooster\\
