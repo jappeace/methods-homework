@@ -1,10 +1,9 @@
 \abstract{
   %TODO abstract
-	abstract..
+  \todo[inline]{abstract missing}
 }
-
 \section{Introduction}
-
+\toReview
 Satisficing play was originally introduced
 to try and limit the computation power that earlier models required of human
 behavior \citep{herbert}. Originating from the field of economics, they
@@ -12,7 +11,6 @@ wanted to use a model that was not ``super intelligent''.
 
 The classical models from the field of economics had at least one of the
 following assumptions:
-
 \begin{itemize}
 \itemsep0em 
   \item The structure of the game is known.
@@ -26,7 +24,7 @@ make \citep{binmore}.
 
 \section{Core algorithm}
 The core algorithm as presented by \citep{herbert} and formalized by
-\citep{karandikar}
+\citep{karandikar} \todo[inline]{karandikars algorithm is different..}
 can be seen bellow:
 
 \begin{enumerate}
@@ -54,8 +52,7 @@ information from memory is used.
 
 
 \section{Iterated prisoners dilemma}
-[To be extended]
-
+\drafting
 To demonstrate a potential use of this algorithm we will use at several example
 cases. The first one being the iterated prisoners dilemma. Consider
 the following normal form game:
@@ -77,18 +74,18 @@ which actions are winning and which are punishing to try and solve it.
 Satisficing play learns this however by updating the aspiration it got from
 playing a move. If we consider a game vs always cooperate for example:
 
-...
+\todo{copy table}
 
 But now if we start with a lower apsiration level:
 
-...
+\todo{copy table}
 
 And finally vs tit for tat, a game which can also be found in the
 \citep{stimpson:2001} paper:
 
-...
+\todo{copy table}
 \section{Properties of satisifing play}
-[To be extended]
+\drafting
 
 Using both \citep{karandikar} and \citep{stimpson:2001} works to look deeper
 at the properties of satisifing play. 
@@ -99,7 +96,7 @@ experimental results.
 also showing the contrast graph which supports the work of \citep{arthur}
 
 \section{An extended satisficing play}
-[To be extended]
+\drafting
 
 In here we discuss the work of \citep{stimpson:2003}, where he extends the
 algorithm to be played with mutliple action choices.
@@ -116,6 +113,7 @@ Stimpson created a game where resources had to be allocated among agents.
 \end{tabular}
 
 \section{Satisficing compared to other learning methods}
+\drafting
 With help of the work of \citep{crandall} saticificing play is compared
 to Q-learning and WOLF-PHC.
 Q-learning is explained briefly with help of \citep{sandholm} and WOLF-PHC

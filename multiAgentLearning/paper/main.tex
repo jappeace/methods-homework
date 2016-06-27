@@ -5,9 +5,15 @@
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amssymb,array}
 \usepackage{booktabs}
-
+\usepackage[obeyFinal, colorinlistoftodos]{todonotes}
+\presetkeys%
+    {todonotes}%
+    {inline}{}
 %% load any required packages here
-
+\newcommand{\drafting}{\todo[noline, color=gray]{Working draft}}
+\newcommand{\toReview}{\todo[noline, color=yellow]{To review}}
+\newcommand{\underReview}[1]{\todo[noline, color=olive]{Under review by #1}}
+\newcommand{\cleared}{\todo[noline, color=white]{Cleared}}
 \begin{document}
 \headertitle{Multi-agent learning paper}
 \footauthor{Jappie Klooster (5771803)}
