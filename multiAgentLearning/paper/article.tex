@@ -58,7 +58,7 @@ modified to adjust the amount of new information being used or how much
 information from memory is used.
 
 
-\section{Iterated prisoner's dilemma}
+\section{Satisficing play in action}
 \todo{make an intermezzo of this?}
 \drafting
 To demonstrate a potential use of this algorithm we will use at several example
@@ -87,9 +87,9 @@ playing a move. If we consider a game versus always cooperate for example:
 
 \begin{tabular}{lllll}
     t & Cooperate & $A_t$ & $\pi_t$ & $\alpha_t$ \\
-    0 & C     & C    & 3       & 4 \\
-    1 & C     & D    & 4       & 3.5 \\
-    2 & C     & D    & 4       & 3.75 \\
+    0 & C     & C    & 2       & 3 \\
+    1 & C     & D    & 3       & 2.5 \\
+    2 & C     & D    & 3       & 2.75 \\
 \end{tabular}
 
 \drafting In $t=0$ satisficing play doesn't meet its ambition of 4, therefore, in the
@@ -100,30 +100,38 @@ But now if we start with a lower apsiration level:
 
 \begin{tabular}{lllll}
   t & Coop & $A_t$ & $\pi_t$ & $\alpha_t$ \\
-  0 & C     & C    & 3       & 2 \\
-  1 & C     & C    & 3       & 2.5 \\
-  2 & C     & C    & 3       & 2.75 \\
+  0 & C     & C    & 2       & 1 \\
+  1 & C     & C    & 2       & 1.5 \\
+  2 & C     & C    & 2       & 1.75 \\
 \end{tabular}
 
 \drafting So here satisficing play finds a Pareto optimal action, but it doesn't find
 the best possible action it could get against this opponent. From this example
 we can also see how dependent satisficing play is on its starting parameters.
-\todo{here we can interject an intermezo, of how karandikar tried to solve
-this with trajection and random pertrubations}
+\todo{here we can interject an intermezzo, of how karandikar tried to solve
+this with trajection and random perturbations}
 
-\drafting And finally versus tit for tat, a game which can also be found in the
-\citep{stimpson:2001} paper:
+\drafting Now consider a game versus tit for tat (TT), Tit for Tat is a
+strategy that always copies the last action of its opponent.
+This game can also be found in the \citep{stimpson:2001} paper:
 
 \begin{tabular}{lllll}
         t & TT & $A_t$ & $\pi_t$ & $\alpha_t$ \\
-        0 & C     & C    & 3       & 4  \\
-        1 & C     & D    & 4       & 3.5 \\
-        2 & D     & D    & 2       & 3.75 \\
-        3 & D     & C    & 1       & 2.87 \\
-        4 & C     & D    & 4       & 3.435 \\
-        5 & D     & D    & 2       & 2.715 \\
-        6 & D     & C    & 1       & 1.85875 \\
+        0 & C     & C    & 2       & 3  \\
+        1 & C     & D    & 3       & 2.5 \\
+        2 & D     & D    & 1       & 2.75 \\
+        3 & D     & C    & 0       & 1.87 \\
+        4 & C     & D    & 3       & 2.435 \\
+        5 & D     & D    & 1       & 1.715 \\
+        6 & D     & C    & 0       & 0.85875 \\
 \end{tabular}
+
+In this table we can see satisficing play and tit for tat ending up in a cycle.
+at $t=0$ satisficing gained to little reward for its ambition level $\alpha_t$,
+and therefore switches action in the next round. In $t=1$ saticificing play
+is satisfied, but int $t=2$ it no longer is so it switches but this even ends
+up being worse at $t=3$. After that the cycle resets at $t=4$, the cycle becomes
+most obvious when looking at the $\pi_t$ column.
 \section{Properties of satisficing play}
 \drafting
 
