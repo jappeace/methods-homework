@@ -13,7 +13,7 @@ to try and limit the computation power that earlier models required of human
 behavior \citep{herbert}. Originating from the field of economics, they
 wanted to use a model that was not ``super intelligent''.
 
-The classical models from the field of economics had at least one of the
+\toReview The classical models from the field of economics had at least one of the
 following assumptions:
 \begin{itemize}
 \itemsep0em 
@@ -23,11 +23,13 @@ following assumptions:
   \item Being able to preform maximization calculations.
 \end{itemize}
 
-These assumptions can be called common knowledge, and are a demanding to
+\toReview These assumptions can be called common knowledge, and are a demanding to
 make \citep{binmore}. 
 
+\todo{give paper overview}
+
 \section{Core algorithm}
-The core algorithm as presented by \citep{herbert} and formalized by
+\toReview The core algorithm as presented by \citep{herbert} and formalized by
 \citep{karandikar},
 in here we present the simplified version of \citep{stimpson:2001} first:
 
@@ -48,7 +50,7 @@ in here we present the simplified version of \citep{stimpson:2001} first:
   Learning rate & $\lambda$ \\ \bottomrule
 \end{tabular}
 
-In the first phase the next action is selected. If the action still holds
+\toReview In the first phase the next action is selected. If the action still holds
 according to the satisficing level or ambition it will remain the same, if not another
 action will be selected. In the second phase the satisficing level is updated.
 In here the constant learning rate is used. This is a variable that can be
@@ -57,6 +59,7 @@ information from memory is used.
 
 
 \section{Iterated prisoner's dilemma}
+\todo{make an intermezzo of this?}
 \drafting
 To demonstrate a potential use of this algorithm we will use at several example
 cases. The first one being the iterated prisoner's dilemma. Consider
@@ -69,7 +72,7 @@ the following normal form game:
   Defect    & $(3,0)$     & $(1,1)$  \\
 \end{tabular}
 
-The Nash equilibrium of this game lies on Defect,Defect. However, all but
+\drafting The Nash equilibrium of this game lies on Defect,Defect. However, all but
 that action are pareto optimal actions. So the Nash equilibrium would be the
 ``right'' strategy to play if the game is only played once, but if you repeat
 the game against the same opponent, interestingly enough you can ``solve''
@@ -77,21 +80,50 @@ the prisoner's dilemma by ``teaching'' the opponent to cooperate.
 \todo{can one really solve? Is it really teaching? should either add references
 or change wording}
 
-However strategies such as tit for tat or win stay lose shift already know
+\drafting However strategies such as tit for tat or win stay lose shift already know
 which actions are winning and which are punishing to try and solve it.
 Satisficing play learns this however by updating the aspiration it got from
 playing a move. If we consider a game versus always cooperate for example:
 
-\todo{copy table}
+\begin{tabular}{lllll}
+    t & Cooperate & $A_t$ & $\pi_t$ & $\alpha_t$ \\
+    0 & C     & C    & 3       & 4 \\
+    1 & C     & D    & 4       & 3.5 \\
+    2 & C     & D    & 4       & 3.75 \\
+\end{tabular}
 
+\drafting In $t=0$ satisficing play doesn't meet its ambition of 4, therefore, in the
+next game it modifies its ambition and changes its action. Here we can see
+that satisficing play does get more utility than its ambition, and is satisfied
+with its action.
 But now if we start with a lower apsiration level:
 
-\todo{copy table}
+\begin{tabular}{lllll}
+  t & Coop & $A_t$ & $\pi_t$ & $\alpha_t$ \\
+  0 & C     & C    & 3       & 2 \\
+  1 & C     & C    & 3       & 2.5 \\
+  2 & C     & C    & 3       & 2.75 \\
+\end{tabular}
 
-And finally versus tit for tat, a game which can also be found in the
+\drafting So here satisficing play finds a Pareto optimal action, but it doesn't find
+the best possible action it could get against this opponent. From this example
+we can also see how dependent satisficing play is on its starting parameters.
+\todo{here we can interject an intermezo, of how karandikar tried to solve
+this with trajection and random pertrubations}
+
+\drafting And finally versus tit for tat, a game which can also be found in the
 \citep{stimpson:2001} paper:
 
-\todo{copy table}
+\begin{tabular}{lllll}
+        t & TT & $A_t$ & $\pi_t$ & $\alpha_t$ \\
+        0 & C     & C    & 3       & 4  \\
+        1 & C     & D    & 4       & 3.5 \\
+        2 & D     & D    & 2       & 3.75 \\
+        3 & D     & C    & 1       & 2.87 \\
+        4 & C     & D    & 4       & 3.435 \\
+        5 & D     & D    & 2       & 2.715 \\
+        6 & D     & C    & 1       & 1.85875 \\
+\end{tabular}
 \section{Properties of satisficing play}
 \drafting
 
