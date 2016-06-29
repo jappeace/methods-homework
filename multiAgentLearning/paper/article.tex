@@ -115,10 +115,7 @@ But now if we start with a lower apsiration level:
 the best possible action it could get against this opponent. From this example
 we can also see how dependent satisficing play is on its starting parameters.
 
-\todo{here we can interject an intermezzo, of how karandikar tried to solve
-this with trajection and random perturbations}
-
-\drafting Now consider a game versus tit for tat (TT), Tit for Tat is a
+\toReview Now consider a game versus tit for tat (TT), Tit for Tat is a
 strategy that always copies the last action of its opponent.
 This game can also be found in the \citep{stimpson:2001} paper:
 
@@ -162,16 +159,81 @@ not enter this cycle and just keep on cooperating.
 
 \section{A saticificing comparison}
 \drafting So, until now we've seen thoroughly how saticificing play works, and even some
-strengths and weaknesses. However, 
+strengths and weaknesses. However, what we really want to see is how it does
+compare against other MAL algorithms. So to do this we'll first introduce the
+competitors (Q-learning and WOLF-PHC) and then we'll show per game how they
+do in comparison with help of the work of \citep{crandall}.
 
-\todo{
-With help of the work of \citep{crandall} saticificing play is compared
-to Q-learning and WOLF-PHC.
-Q-learning is explained briefly with help of \citep{sandholm} and WOLF-PHC
-with help of \citep{bowling}.
- 
-Finally some graphs are shown how they compare
-}
+Q-Learning is described by \citep{sandholm} in the following way: ``The
+Q-learning algorithm works by estimating the values of state-action pairs. The
+value $Q(s,q)$ is the expected discounted sum of future payoffs obtained by taking
+action $a$ from state $s$ and following an optimal policy thereafter.
+Once these values have been learned, the optimal action from any state
+is the one with the highest Q-value. After initializing the Q-values to arbitrary
+numbers they are estimated based on experience as follows: 1. Select an action
+$a$ from the current state $s$, causing an immediate payoff $r$ and arriving at
+state $s'$. 2. Update $Q(s,a)$ based on this experience as follows:
+\[\Delta Q(s,a) = \lambda[r+\gamma \text{ max }Q(s',b)-Q(s,a)]\]
+Where $\lambda$ is the learning rate and $0 \leq \gamma < 1$ is the discount
+factor.
+3. Go to 1.
+'' A look-up table is used to store the Q-values.
+
+\todo{explain WOLF-PHC better?}
+WoLF-PHC stands or win or learn fast policy hill climbing. It is 
+introduced as an extension to q-learning. However with the addition that
+learning rate should be increased when ``losing''. A more precise definition
+can be found in the paper of \citep{bowling}.
+
+The actual comparison of the algorithms is done by \citep{crandall}, in here
+we will discuss several of his results. All the algorithms are compared in self
+play. The first game result we'll discuss
+is the already introduced prisoner's dillema:
+\includegraphics[width=2.5in]{crandall/prisoners}
+
+Where the S-Algorithm is saticificing play as defined by stimpson, WoLF-PHC is
+defined as above and QL is Q-learning. We can clearly see saticificing play
+performing a lot better than the other two algorithms in this instance.
+(Note that in this figure different values were used than our example, but
+the basic structure of the game is the same).
+
+A game of chicken is a game where 2 players drive in a straight line in their
+cars straight towards each other. If both players keep on driving straight,
+they'll crash and get a bad reward. If one of them moves out of the way, he'll
+be ashamed, but be better of than crashing, the other one will of course get
+some fame, and if both players move out of the way, they'll share the same.
+Formally it looks like this:
+
+\begin{tabular}{lll}
+              & Bend & Straight \\
+    Bend & $(3,3)$     & $(2,3.5)$  \\
+    Straight & $(3.5,2)$     & $(1,1)$  \\
+\end{tabular}
+
+And here is the result of Crandall:
+\includegraphics[width=2.5in]{crandall/chicken}
+
+In here we see again saticificing play performing better than Q-Learning and
+WoLF. However, the difference is a lot less refined.
+
+Shapley's game is a 3 action choice game. If saticificing play has to change
+action, instead of picking the other action, it will just pick uniformly random
+of the 2 other actions. The context of the game is left to the imagination
+of the reader and the normal form game looks like this:
+
+\begin{tabular}{llll}
+              & a & b & c \\
+    A & $(0,0)$ & $(0,1)$     & $(1.0)$  \\
+    B & $(1,0)$ & $(0,0)$     & $(0.1)$  \\
+    C & $(0,1)$ & $(1,0)$     & $(0.0)$  \\
+\end{tabular}
+
+This is the result of crandall:
+\includegraphics[width=2.5in]{crandall/shapleys}
+
+In here we can see saticifing play performing a lot worse than the other two
+algorithms. This is because, Crandall explains, the joint aspiration never
+falls below the Pareto frontier, thus the behavior is essentially random.
 
 \section{Properties of satisficing play}
 \drafting

@@ -5,6 +5,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amssymb,array}
 \usepackage{booktabs}
+\usepackage{graphicx}
 \usepackage[obeyFinal, colorinlistoftodos]{todonotes}
 \presetkeys%
     {todonotes}%
@@ -14,12 +15,13 @@
 \newcommand{\toReview}{\todo[noline, color=yellow]{To review}}
 \newcommand{\underReview}[1]{\todo[noline, color=olive]{Under review by #1}}
 \newcommand{\cleared}{\todo[noline, color=white]{Cleared}}
+\graphicspath{{img/}}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
 \begin{document}
 \headertitle{Multi-agent learning paper}
 \footauthor{Jappie Klooster (5771803)}
 \submitted{July 1\textsuperscript{st}, 2017}
 \draftnum{I}
-
 \title{Satisficing play}
 \subtitle{Ambition and cooperation}
 \author{Jappie Klooster}
