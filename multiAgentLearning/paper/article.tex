@@ -7,6 +7,7 @@
 }
 \todo{misses callouts, intermezzi and quotes}
 \section{Introduction}
+\label{sec:introduction}
 \toReview
 Satisficing play was originally introduced
 to try and limit the computation power that earlier models required of human
@@ -29,6 +30,7 @@ make \citep{binmore}.
 \todo{give paper overview}
 
 \section{Core algorithm}
+\label{sec:core-algorithm}
 \toReview The core algorithm as presented by \citep{herbert} and formalized by
 \citep{karandikar},
 in here we present the simplified version of \citep{stimpson:2001} first:
@@ -60,13 +62,14 @@ information from memory is used.
 
 \section{Satisficing play in action}
 \todo{make an intermezzo of this?}
-\drafting
+\toReview
 To demonstrate a potential use of this algorithm we will use at several example
 cases. The first one being the iterated prisoner's dilemma.
 \fbox{
   \begin{minipage}{2.5in}
+    \toReview
     \subsection{A prisoner's dillema introduction}
-    The prisoner's dillema is one of the classical game thoery examples.
+    The prisoner's dillema is one of the classical game theory examples.
     Consider the following normal form game which is a prisoner's dillema:
     \begin{tabular}{lll}
                 & Cooperate   & Defect \\
@@ -75,14 +78,15 @@ cases. The first one being the iterated prisoner's dilemma.
     \end{tabular}
     The Nash equilibrium of this game lies on (Defect,Defect). However, all but
     that action are pareto optimal actions. So the Nash equilibrium would be the
-    ``right'' strategy to play if the game is only played once, but if you repeat
-    the game against the same opponent, interestingly enough you can ``solve''
-    the prisoner's dilemma by ``teaching'' the opponent to cooperate.
-    \todo{can one really solve? Is it really teaching? should either add references
-    or change wording}
-	\end{minipage}
-	}
-\drafting However strategies such as tit for tat or win stay lose shift already know
+    ``right'' strategy to play if the game is only played once. However if you repeat
+    the game against the same opponent you can ``solve''
+    the prisoner's dilemma, meaning not playing the Nash equilibrium,
+    but trying to get pareto optimal rewards. This
+    is often done by starting defecting as soon as your opponent starts
+    defecting, both the tit for tat and win stay lose shift strategies do this.
+  \end{minipage}
+}
+\toReview Strategies such as tit for tat or win stay lose shift already know
 which actions are winning and which are punishing to try and solve it.
 Satisficing play learns this however by updating the aspiration it got from
 playing a move. If we consider a game versus always cooperate for example:
@@ -94,7 +98,7 @@ playing a move. If we consider a game versus always cooperate for example:
     2 & C     & D    & 3       & 2.75 \\
 \end{tabular}
 
-\drafting In $t=0$ satisficing play doesn't meet its ambition of 4, therefore, in the
+\toReview In $t=0$ satisficing play doesn't meet its ambition of 4, therefore, in the
 next game it modifies its ambition and changes its action. Here we can see
 that satisficing play does get more utility than its ambition, and is satisfied
 with its action.
@@ -107,9 +111,10 @@ But now if we start with a lower apsiration level:
   2 & C     & C    & 2       & 1.75 \\
 \end{tabular}
 
-\drafting So here satisficing play finds a Pareto optimal action, but it doesn't find
+\toReview So here satisficing play finds a Pareto optimal action, but it doesn't find
 the best possible action it could get against this opponent. From this example
 we can also see how dependent satisficing play is on its starting parameters.
+
 \todo{here we can interject an intermezzo, of how karandikar tried to solve
 this with trajection and random perturbations}
 
@@ -133,10 +138,45 @@ at $t=0$ satisficing gained to little reward for its ambition level $\alpha_t$,
 and therefore switches action in the next round. In $t=1$ saticificing play
 is satisfied, but int $t=2$ it no longer is so it switches but this even ends
 up being worse at $t=3$. After that the cycle resets at $t=4$, the cycle becomes
-most obvious when looking at the $\pi_t$ column.
+most obvious when looking at the $\pi_t$ column. Also note about this opponent
+that if saticificing play would've started with a lower aspiration, it would
+not enter this cycle and just keep on cooperating.
+\fbox{
+  \begin{minipage}{2.5in}
+    \toReview
+    \subsection{Karandikar's algorithm}
+    In the \nameref{sec:core-algorithm} section we said we would use Karandikar's
+    notation, but use the simplified version of stimpson.
+    Karandikar version would not necessarily change action when being
+    disappointed (aspiration level not met), but would switch with a
+    probability $p$, which he called \emph{inertia}.
+    
+    He also introduced another model, which used random perturbations on
+    $\alpha_t$. This ``solved'', the initial state problem, however to prevent
+    the random trembles to run out of hand relative to the game rewards the tremble
+    generating function needed a feasible payoff interval $\Lambda$. Which
+    requires more knowledge of the game, breaking the initial assumptions
+    presented in the \nameref{sec:introduction}.
+  \end{minipage}
+}
+
+\section{A saticificing comparison}
+\drafting So, until now we've seen thoroughly how saticificing play works, and even some
+strengths and weaknesses. However, 
+
+\todo{
+With help of the work of \citep{crandall} saticificing play is compared
+to Q-learning and WOLF-PHC.
+Q-learning is explained briefly with help of \citep{sandholm} and WOLF-PHC
+with help of \citep{bowling}.
+ 
+Finally some graphs are shown how they compare
+}
+
 \section{Properties of satisficing play}
 \drafting
 
+\todo{
 Using both \citep{karandikar} and \citep{stimpson:2001} works to look deeper
 at the properties of satisficing play. 
 
@@ -144,23 +184,15 @@ karandikar used a theoretical proofing method, whereas Stimpson showed some
 experimental results.
 
 also showing the contrast graph which supports the work of \citep{arthur}
-
+}
 \section{An extended satisficing play}
 \drafting
 
+\todo{
 In here we discuss the work of \citep{stimpson:2003}, where he extends the
 algorithm to be played with mutliple action choices.
 Stimpson created a game where resources had to be allocated among agents.
-
-\section{Satisficing compared to other learning methods}
-\drafting
-
-With help of the work of \citep{crandall} saticificing play is compared
-to Q-learning and WOLF-PHC.
-Q-learning is explained briefly with help of \citep{sandholm} and WOLF-PHC
-with help of \citep{bowling}.
- 
-Finally some graphs are shown how they compare
+}
 
 \todo{add caption for tables?}
 \bibliography{main}
@@ -170,3 +202,5 @@ Finally some graphs are shown how they compare
   Universiteit Utrecht\\
   The Netherlands\\}
 \email{j.t.klooster@students.uu.nl}
+
+%  LocalWords:  Karandikar
