@@ -1,11 +1,17 @@
 \abstract{
-  %TODO abstract
-  \todo[inline]{abstract missing}
+  This paper takes a closer look at satisficing play. We explain the algorithm
+  thoroughly and then look at empirical comparisons with Q-Learning and WoLF-PHC. From
+  this we can conclude that satisficing play is relatively
+  good at games with a cooperation aspect.
+  Then we take a closer look at it in the prisoner's dillema. Where we
+  discover that even with variance in the paremeters satisficing play ends up
+  cooperating most of the time in self play. We conclude that satisficing play
+  is an algorithm of serious interest to MAL researches.
 }
 \todo{be more critical? maybe it depends to much on its paremeters?
-  Or which game types are good for saticifing play?
+  Or which game types are good for satisficing play?
 }
-\todo{misses callouts, intermezzi and quotes}
+\todo{misses callouts and quotes}
 \section{Introduction}
 \label{sec:introduction}
 \toReview
@@ -14,7 +20,7 @@ to try and limit the computation power that earlier models required of human
 behavior \citep{herbert}. Originating from the field of economics, they
 wanted to use a model that was not ``super intelligent''.
 
-\toReview The classical models from the field of economics had at least one of the
+The classical models from the field of economics had at least one of the
 following assumptions:
 \begin{itemize}
 \itemsep0em 
@@ -24,10 +30,15 @@ following assumptions:
   \item Being able to preform maximization calculations.
 \end{itemize}
 
-\toReview These assumptions can be called common knowledge, and are a demanding to
+These assumptions can be called common knowledge, and are a demanding to
 make \citep{binmore}. 
 
-\todo{give paper overview}
+In this paper we'll take a closer look at satisficing play. First we'll introduce
+the core algorithm. Then we see how it works with several examples, which will
+give us a better intuition about the algorithm. After that we see how it
+compares to more ``classical'' MAL algorithms. Finally we dive deep into the
+theoretical properties of satisficing play, and look at some empirical results
+of satisficing play in the prisoner's dillema.
 
 \section{Core algorithm}
 \label{sec:core-algorithm}
@@ -52,7 +63,7 @@ in here we present the simplified version of \citep{stimpson:2001} first:
   Learning rate & $\lambda$ \\ \bottomrule
 \end{tabular}
 
-\toReview In the first phase the next action is selected. If the action still holds
+In the first phase the next action is selected. If the action still holds
 according to the satisficing level or ambition it will remain the same, if not another
 action will be selected. In the second phase the satisficing level is updated.
 In here the constant learning rate is used. This is a variable that can be
@@ -61,6 +72,7 @@ information from memory is used.
 
 
 \section{Satisficing play in action}
+\label{sec:playaction}
 \toReview
 To demonstrate a potential use of this algorithm we will use at several example
 cases. The first one being the iterated prisoner's dilemma.
@@ -161,7 +173,7 @@ not enter this cycle and just keep on cooperating.
 }
 
 \section{A saticificing comparison}
-\drafting So, until now we've seen thoroughly how saticificing play works, and even some
+\toReview So, until now we've seen thoroughly how saticificing play works, and even some
 strengths and weaknesses. However, what we really want to see is how it does
 compare against other MAL algorithms. So to do this we'll first introduce the
 competitors (Q-learning and WOLF-PHC) and then we'll show per game how they
@@ -190,14 +202,7 @@ can be found in the paper of \citep{bowling}.
 
 The actual comparison of the algorithms is done by \citep{crandall}, in here
 we will discuss several of his results. All the algorithms are compared in self
-play. The algorithms use the following parameters:
-
-\begin{tabular}{ll}
-  Satisficing & $\alpha_0\in \mathbb{P}_0, \lambda=0.99$ \\
-  WoLF-PHC & $\lambda=1/(10+0.001 k^a_s), \gamma = 0.95, \epsilon-\text{greedy w}$ 
-             $/\epsilon = \tex{max}(0.2-0.0006t,0)$ \\
-\end{tabular}
-
+play. 
 The first game result we'll discuss
 is the already introduced prisoner's dillema:
 \includegraphics[width=2.5in]{crandall/prisoners}
@@ -240,15 +245,15 @@ the imagination of the reader and the normal form game looks like this:
 This is the result of crandall:
 \includegraphics[width=2.5in]{crandall/shapleys}
 
-In here we can see saticifing play performing a lot worse than the other two
+In here we can see satisficing play performing a lot worse than the other two
 algorithms. This is because, Crandall explains, the joint aspiration never
 falls below the Pareto frontier, thus the behavior is essentially random.
 
 \noindent
 \fbox{
   \begin{minipage}{2.5in}
-    \drafting
-    \subsection{Multi-action saticificing}
+    \toReview
+    \subsection{$N$-action saticificing}
     In their paper \citep{stimpson:2003} introduce a modification to
     saticificing play.
     Rather than just picking the other action, which it can't do because there
@@ -272,25 +277,139 @@ although they also compared against Q-Learning and came towards similar results:
 
 In here we can see saticificing play outperforming Q-Learning and WoLF quite
 starkly. But we can also see that this result looks quite a lot like the
-prisoners dillema result. This is because the MASD was basically a generalization
-of the prisoners dillema, so this result isn't surprising.
+prisoner's dillema result. This is because the MASD was basically a generalization
+of the prisoner's dillema, so this result isn't surprising.
 
 \section{Properties of satisficing play}
+\toReview
 To analyse saticfing play further we use the work of \citep{karandikar} and
 \citep{stimpson:2001}. Karandikar gave some good theoretical foundations,
-whereas stimpson did some deep emepircal experiments on self play in the
-prisoners dillema with parameter perturbations.
-\drafting
+whereas stimpson did empirical experiments on self play in the
+prisoner's dillema with parameter perturbations. However as said in the
+\nameref{sec:core-algorithm} it should be noted
+that the algorithms of Karandikar and Stimpson are different. The main
+difference is the lack of \emph{inertia} in the algorithm of Stimpson, which
+makes the behavior deterministic.
 
-\todo{
-Using both \citep{karandikar} and \citep{stimpson:2001} works to look deeper
-at the properties of satisficing play. 
+Karandikar sums up his work quite thoroughly in  the informal discussion section
+of his paper. First of all ``   First, the untrembled joint process of
+aspirations and actions always converges to a pure strategy state.''
+This means that even without trembles, saticfing play with inertia
+will end up in a state wherein aspiration levels of both players equals payoff.
+The second result I want to discuss is:
+``The limit invariant distribution places
+almost all weight on the cooperative outcome, provided that the persistence
+parameter is sufficiently close to unity.''. Where the persistence parameter
+is the learning rate, and the invariant distribution is the trembled process,
+in other words, the saticfing play algorithm with trembles. For more details
+the reader is referred towards that paper.
 
-karandikar used a theoretical proofing method, whereas Stimpson showed some
-experimental results.
+Before the results of Stimpson are discussed we first have to consider the
+possible outcomes. It is important to keep in mind that in his algorithm
+the result of karandikar doesn't hold, because inertia is missing. Therefore
+not all processes will converge to a pure strategy state.
+the possible outcomes are:
+\begin{enumerate}
+  \item Convergence to certain actions.
+  \item Action cycles.
+  \item Complete chaos.
+\end{enumerate}
+We've seen both one and two in the section \nameref{sec:playaction}. Three
+is mentioned because there lacks a theoretical proof of it being impossible.
+Stimpson studied the behavior of saticfing play empirically in the prisoner's
+dillema, so over 5000 trials he ended up with the following result:
 
-also showing the contrast graph which supports the work of \citep{arthur}
+\includegraphics[width=2.5in]{stimpson/strategies}
+
+Where the leters stand for the actions, for example DC is (Defect,Cooperate).
+If letters are have dashes in between they indicate action cycles, for example:
+$DD-CC-DC$ is (Defect, Defect), (Cooperate, Cooperate) and 
+(Defect,Cooperate).
+From here we can see that saticfing play ends up cooperating most of the time.
+The variations are because the parameters were set randomly, such as initial
+aspiration, learning rate or even initial action.
+
+They also made another graph depicting how initial aspiration levels influenced
+the perecentage of the time ending up with mutual cooperation, this happened
+over 1000 trials:
+
+\includegraphics[width=2.5in]{stimpson/aspiration}
+
+Alfa is the initial aspiration of player 1, Beta of player 2, and the colors
+indicate the percentage of the time that cooperation happened. From this we can
+see that if the goal is cooperation, having initially high aspiration is good
+most of the time. You can also see some kind of intrusion towards the center,
+from which you could conclude that having similiar aspirations is good for
+cooperation. But the authors do not do this. It is also somewhat crenelated,
+probably because of the low number of trials they used to make this graph.
+
+To further study satisficing play in the prisoner's dillema, a generalization
+has to be made. Therefore stimpson introduces a generalized dillema that looks
+like the following normal form game:
+\begin{tabular}{lll}
+            & Cooperate   & Defect \\
+  Cooperate & $(\sigma,\sigma)$     & $(0,1)$  \\
+  Defect    & $(1,0)$     & $(\delta,\delta)$  \\
+\end{tabular}
+Where $(0<\delta<\sigma<1)$ and $\sigma>0.5$. Sigma $\sigma$ for cooperate and
+Delta $\delta$ for defect. The constraint $(0<\delta<\sigma<1)$ exists to make
+sure the game is a prisoner's dillema and $\sigma>0.5$ is used to ensure the
+Pareto front of the prisoner's dillema.
+The following graph illustrates the effect of different reward contrasts,
+and was created over 1000 trials:
+
+\noindent
+\includegraphics[width=2.5in]{stimpson/contrast}
+
+The colors indicate the percentage of time a run resulted in cooperation.
+According to the authors, cooperation is most likely when $\delta$ is small
+and $\sigma$ is large. If they are close together distinction between 
+defection and cooperation becomes difficult. This is typical of non-optimizing
+algorithms, and Arthur writes that his algorithm and even human behavior
+
+\multicolinterrupt{
+\begin{center}
+\large\emph{``Beyond the perceptual threshold, non-optimal outcomes become likely''}
+\end{center}
+\vspace{-2em}\hbox{}\hfill --- \citep{arthur}
 }
+
+``appear to discover and exploit the optimal action with high probability,
+\emph{as long as it is not difficult to discriminate}. But beyond a perceptual
+threshold, where differences in alternatives become less pronounced,
+non-optimal outcomes become more likely'' \citep{arthur}
+
+The final result presented by stimpson is the learning rate. The learning
+rate determines how quickly aspiration should be updated. A higher learning
+rate means that values of the past are less relevant. The following graph
+was made over 1000 trials:
+
+\noindent
+\includegraphics[width=2.5in]{stimpson/learning-rate}
+
+Where lambda is the learning rate. As we can see the percentage of cooperation
+(the number on the $y$-axis), increases with higher learning rate. But starkly
+drops once it reaches one and aspiration isn't updated at all.
+
+\section{Conclusion}
+\toReview
+
+We've seen how saticfing play works and some potential issues with it.
+Then we compared it against other multi-agent
+algorithm's empircally. Where we've
+seen it be better in a lot of famous games, but in others such as shapely it
+performed relatively more poorly. We've also seen it been extended to play
+with more actions and against more agents in the MASD.
+After that we looked closer to the theoretical properties
+of saticfing play, where we've seen it with the introduction of random elements
+convergence to the coopertive outcome becomes likely.
+Finally we've also seen empirical tests
+on the deterministic variant in the prisoner's dillema. From this we've seen
+that parameters are important, but most of the time it results in the coopertive
+outcome anyway.
+
+From this we can conclude that saticfing play is a serious algorithm to be of
+interest of MAL researches.
 
 \todo{add caption for tables?}
 \bibliography{main}
