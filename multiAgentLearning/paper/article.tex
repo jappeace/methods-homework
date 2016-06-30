@@ -1,20 +1,18 @@
-\abstract{
+\cleared \abstract{
   This paper takes a closer look at satisficing play. We explain the algorithm
-  thoroughly and then look at empirical comparisons with Q-Learning and WoLF-PHC. From
-  this we can conclude that satisficing play is relatively
+  thoroughly and then look at empirical comparisons with Q-Learning and
+  WoLF-PHC. From this we can conclude that satisficing play is relatively
   good at games with a cooperation aspect.
-  Then we take a closer look at it in the prisoner's dillema. Where we
-  discover that even with variance in the paremeters satisficing play ends up
+  After that a more thorough inspection is done with satisficing play in the
+  prisoner's dilemma. Where we
+  discover that even with variance in the parameters satisficing play ends up
   cooperating most of the time in self play. We conclude that satisficing play
   is an algorithm of serious interest to MAL researches.
 }
-\todo{be more critical? maybe it depends to much on its paremeters?
-  Or which game types are good for satisficing play?
-}
-\todo{misses callouts and quotes}
+
 \section{Introduction}
 \label{sec:introduction}
-\toReview
+\cleared
 Satisficing play was originally introduced
 to try and limit the computation power that earlier models required of human
 behavior \citep{herbert}. Originating from the field of economics, they
@@ -36,15 +34,15 @@ make \citep{binmore}.
 In this paper we'll take a closer look at satisficing play. First we'll introduce
 the core algorithm. Then we see how it works with several examples, which will
 give us a better intuition about the algorithm. After that we see how it
-compares to more ``classical'' MAL algorithms. Finally we dive deep into the
+compares to several other MAL algorithms. Finally we dive deep into the
 theoretical properties of satisficing play, and look at some empirical results
-of satisficing play in the prisoner's dillema.
+of satisficing play in the prisoner's dilemma.
 
 \section{Core algorithm}
 \label{sec:core-algorithm}
-\toReview The core algorithm as presented by \citep{herbert} and formalized by
+\cleared The core algorithm as presented by \citep{herbert} and formalized by
 \citep{karandikar},
-in here we present the simplified version of \citep{stimpson:2001} first:
+in here we present the simplified version of \citep{stimpson:2001}:
 
 \begin{enumerate}
   \item $ \begin{cases}
@@ -53,7 +51,7 @@ in here we present the simplified version of \citep{stimpson:2001} first:
               \end{cases}$
   \item $ \alpha_{t+1} = \lambda \alpha_t + (1-\lambda) \pi_t $ \\
 \end{enumerate}
-\todo{add table caption}
+
 \begin{tabular}{ll}
   Definition & symbol \\ \toprule
   Time & $t$ \\
@@ -73,34 +71,37 @@ information from memory is used.
 
 \section{Satisficing play in action}
 \label{sec:playaction}
-\toReview
-To demonstrate a potential use of this algorithm we will use at several example
-cases. The first one being the iterated prisoner's dilemma.
+\cleared
+To demonstrate a potential use of this algorithm we will use it in several
+example cases. The first one being the iterated prisoner's dilemma.
 
 \noindent
 \fbox{
   \begin{minipage}{2.5in}
-    \toReview
-    \subsection{A prisoner's dillema introduction}
-    The prisoner's dillema is one of the classical game theory examples.
-    Consider the following normal form game which is a prisoner's dillema:
+    \cleared
+    \subsection{A prisoner's dilemma introduction}
+    The prisoner's dilemma is one of the classical game theory examples.
+    Consider the following normal form game which is a prisoner's dilemma:
     \begin{tabular}{lll}
                 & Cooperate   & Defect \\
       Cooperate & $(2,2)$     & $(0,3)$  \\
       Defect    & $(3,0)$     & $(1,1)$  \\
     \end{tabular}
     The Nash equilibrium of this game lies on (Defect,Defect). However, all but
-    that action are pareto optimal actions. So the Nash equilibrium would be the
-    ``right'' strategy to play if the game is only played once. However if you repeat
-    the game against the same opponent you can ``solve''
+    that action are Pareto optimal actions. So the Nash equilibrium would be the
+    ``right'' strategy to play if the game is only played once. However if you
+    repeat the game against the same opponent you can ``solve''
     the prisoner's dilemma, meaning not playing the Nash equilibrium,
-    but trying to get pareto optimal rewards. This
+    but trying to get Pareto optimal rewards. This
     is often done by starting defecting as soon as your opponent starts
-    defecting, both the tit for tat and win stay lose shift strategies do this.
+    defecting, or ``punishing'' non-cooperation,
+    both the tit for tat and win stay lose shift strategies do this.
   \end{minipage}
 }
-\toReview Strategies such as tit for tat or win stay lose shift already know
-which actions are winning and which are punishing to try and solve it.
+\cleared Strategies such as tit for tat or win stay lose shift already ``know''
+which actions are winning and which are punishing when solving the iterated
+prisoner's dilemma. Therefore they introduce the knowledge about the game
+structure axiom discussed in the \nameref{sec:introduction}.
 Satisficing play learns this however by updating the aspiration it got from
 playing a move. If we consider a game versus always cooperate for example:
 
@@ -111,11 +112,11 @@ playing a move. If we consider a game versus always cooperate for example:
     2 & C     & D    & 3       & 2.75 \\
 \end{tabular}
 
-\toReview In $t=0$ satisficing play doesn't meet its ambition of 4, therefore, in the
-next game it modifies its ambition and changes its action. Here we can see
-that satisficing play does get more utility than its ambition, and is satisfied
-with its action.
-But now if we start with a lower apsiration level:
+\cleared In $t=0$ satisficing play doesn't meet its ambition of 4, therefore,
+in the next game it modifies its ambition and changes its action.
+Here we can see that satisficing play does get more utility than its ambition,
+and is satisfied with its action.
+But now if we start with a lower aspiration level:
 
 \begin{tabular}{lllll}
   t & Coop & $A_t$ & $\pi_t$ & $\alpha_t$ \\
@@ -124,13 +125,14 @@ But now if we start with a lower apsiration level:
   2 & C     & C    & 2       & 1.75 \\
 \end{tabular}
 
-\toReview So here satisficing play finds a Pareto optimal action, but it doesn't find
+\cleared Here satisficing play finds a Pareto optimal action, but it doesn't find
 the best possible action it could get against this opponent. From this example
 we can also see how dependent satisficing play is on its starting parameters.
 
-\toReview Now consider a game versus tit for tat (TT), Tit for Tat is a
+\cleared Now consider a game versus tit for tat (TT), Tit for Tat is a
 strategy that always copies the last action of its opponent.
-This game can also be found in the \citep{stimpson:2001} paper:
+This game can also be found in the \citep{stimpson:2001} paper, although
+this version is extended more:
 
 \begin{tabular}{lllll}
         t & TT & $A_t$ & $\pi_t$ & $\alpha_t$ \\
@@ -143,43 +145,43 @@ This game can also be found in the \citep{stimpson:2001} paper:
         6 & D     & C    & 0       & 0.85875 \\
 \end{tabular}
 
-In this table we can see satisficing play and tit for tat ending up in a cycle.
+\cleared In this table we can see satisficing play and tit for tat ending up in a cycle.
 at $t=0$ satisficing gained to little reward for its ambition level $\alpha_t$,
-and therefore switches action in the next round. In $t=1$ saticificing play
-is satisfied, but int $t=2$ it no longer is so it switches but this even ends
-up being worse at $t=3$. After that the cycle resets at $t=4$, the cycle becomes
+and therefore switches action in the next round. In $t=1$ satisficing play
+is satisfied, but in $t=2$ it no longer is satisfied, so it switches but this ends
+up being worse at $t=3$, after that the cycle resets at $t=4$. The cycle becomes
 most obvious when looking at the $\pi_t$ column. Also note about this opponent
-that if saticificing play would've started with a lower aspiration, it would
+that if satisficing play would've started with a lower aspiration, it would
 not enter this cycle and just keep on cooperating.
 
 \noindent
 \fbox{
   \begin{minipage}{2.5in}
-    \toReview
+    \cleared
     \subsection{Karandikar's algorithm}
     In the \nameref{sec:core-algorithm} section we said we would use Karandikar's
-    notation, but use the simplified version of stimpson.
+    notation, but use the simplified version of Stimpson.
     Karandikar version would not necessarily change action when being
     disappointed (aspiration level not met), but would switch with a
     probability $p$, which he called \emph{inertia}.
     
-    He also introduced another model, which used random perturbations on
+    \cleared He also introduced another model, which used random perturbations on
     $\alpha_t$. This ``solved'', the initial state problem, however to prevent
     the random trembles to run out of hand relative to the game rewards the tremble
     generating function needed a feasible payoff interval $\Lambda$. Which
     requires more knowledge of the game, breaking the initial assumptions
-    presented in the \nameref{sec:introduction}.
+    (somewhat) presented in the \nameref{sec:introduction}.
   \end{minipage}
 }
 
-\section{A saticificing comparison}
-\toReview So, until now we've seen thoroughly how saticificing play works, and even some
+\section{A satisficing comparison}
+\cleared Until now we've seen thoroughly how satisficing play works, and even some
 strengths and weaknesses. However, what we really want to see is how it does
 compare against other MAL algorithms. So to do this we'll first introduce the
 competitors (Q-learning and WOLF-PHC) and then we'll show per game how they
 do in comparison with help of the work of \citep{crandall}.
 
-Q-Learning is described by \citep{sandholm} in the following way: ``The
+\cleared Q-Learning is described by \citep{sandholm} in the following way: ``The
 Q-learning algorithm works by estimating the values of state-action pairs. The
 value $Q(s,q)$ is the expected discounted sum of future payoffs obtained by taking
 action $a$ from state $s$ and following an optimal policy thereafter.
@@ -192,28 +194,55 @@ state $s'$. 2. Update $Q(s,a)$ based on this experience as follows:
 Where $\lambda$ is the learning rate and $0 \leq \gamma < 1$ is the discount
 factor.
 3. Go to 1.
-'' A look-up table is used to store the Q-values.
+''. A look-up table is used to store the Q-values. The experiments use the
+following parameters for Q-Learning:
 
-\todo{explain WOLF-PHC better?}
-WoLF-PHC stands or win or learn fast policy hill climbing. It is 
+\begin{tabular}{ll}
+  Variable & Value \\
+  $\gamma$ & 0 \\
+  $\lambda$ & $1/(10+0.01 k_s^a)$ \\
+  $\epsilon$-greedy w/$\epsilon$ & 0.1
+\end{tabular}
+
+\cleared Where $k^a_s$ is the number of times that action $a$ has been played
+in state $s$.
+
+\cleared WoLF-PHC stands or win or learn fast policy hill climbing. It is 
 introduced as an extension to q-learning. However with the addition that
 learning rate should be increased when ``losing''. A more precise definition
-can be found in the paper of \citep{bowling}.
+can be found in the paper of \citep{bowling}. The experiments used the following
+parameters for WoLF-PHC:
+\begin{tabular}{ll}
+  Variable & Value \\
+  $\gamma$ & 0.95 \\
+  $\lambda$ & $1/(10+0.01 k_s^a)$ \\
+  $\epsilon$-greedy w/$\epsilon$ & max($0.2-0.0006 t, 0.1$)
+\end{tabular}
 
-The actual comparison of the algorithms is done by \citep{crandall}, in here
-we will discuss several of his results. All the algorithms are compared in self
-play. 
+\cleared The parameters that were used for satisficing play by Crandall were the
+following:
+
+\begin{tabular}{ll}
+  Variable & Value \\
+  $\alpha$ & Random payoff \\
+  $\lambda$ & 0.99 \\
+\end{tabular}
+
+\cleared The actual comparison of the algorithms is done by \citep{crandall},
+in here we will discuss several of his results.
+All the algorithms are compared in self play. 
 The first game result we'll discuss
-is the already introduced prisoner's dillema:
+is the already introduced prisoner's dilemma:
 \includegraphics[width=2.5in]{crandall/prisoners}
 
-Where the S-Algorithm is saticificing play as defined by stimpson, WoLF-PHC is
-defined as above and QL is Q-learning. We can clearly see saticificing play
+\cleared Where the S-Algorithm is satisficing play as defined by stimpson,
+WoLF-PHC is defined as above and QL is Q-learning.
+We can clearly see satisficing play
 performing a lot better than the other two algorithms in this instance.
 (Note that in this figure different values were used than our example, but
 the basic structure of the game is the same).
 
-A game of chicken is a game where 2 players drive in a straight line in their
+\cleared A game of chicken is a game where 2 players drive in a straight line in their
 cars straight towards each other. If both players keep on driving straight,
 they'll crash and get a bad reward. If one of them moves out of the way, he'll
 be ashamed, but be better of than crashing, the other one will of course get
@@ -226,13 +255,15 @@ Formally it looks like this:
     Straight & $(3.5,2)$     & $(1,1)$  \\
 \end{tabular}
 
-And here is the result of Crandall:
+\cleared This is the result presented by Crandall:
+
+\noindent
 \includegraphics[width=2.5in]{crandall/chicken}
 
-In here we see again saticificing play performing better than Q-Learning and
+\cleared In here we see again satisficing play performing better than Q-Learning and
 WoLF. However, the difference is a lot less refined.
 
-Shapley's game is a 3 action choice game. The context of the game is left to
+\cleared Shapley's game is a 3 action choice game. The context of the game is left to
 the imagination of the reader and the normal form game looks like this:
 
 \begin{tabular}{llll}
@@ -242,71 +273,80 @@ the imagination of the reader and the normal form game looks like this:
     C & $(0,1)$ & $(1,0)$     & $(0.0)$  \\
 \end{tabular}
 
-This is the result of crandall:
+\cleared This is the result of Crandall:
+
+\noindent
 \includegraphics[width=2.5in]{crandall/shapleys}
 
-In here we can see satisficing play performing a lot worse than the other two
+\cleared In here we can see satisficing play performing a lot worse than the other two
 algorithms. This is because, Crandall explains, the joint aspiration never
 falls below the Pareto frontier, thus the behavior is essentially random.
+Basically Q-Learning and WoLF learn to coordinate, however satisficing play
+can't do this, because it lacks the extensive memory structure the other two
+algorithms have.
 
 \noindent
 \fbox{
   \begin{minipage}{2.5in}
-    \toReview
-    \subsection{$N$-action saticificing}
+    \cleared  
+    \subsection{$N$-action satisficing}
     In their paper \citep{stimpson:2003} introduce a modification to
-    saticificing play.
-    Rather than just picking the other action, which it can't do because there
-    are more than that available, it will pick uniformly across the other
-    actions. This change allows saticificing play to play in $n$-action games
-    rather than just 2 action games.
+    satisficing play.
+    Rather than just picking the other action, it will pick uniformly across
+    the other actions. This change allows satisficing play to play in
+    $n$-action games rather than just 2 action games.
   \end{minipage}
 }
 
-The multi-agent social dillema (MASD) was invented by \citep{stimpson:2003}. This game
-is impossible to express in normal form, since it consists of $N$ players (well
-it is possible if $N=2$, but otherwise not really).
+\cleared The multi-agent social dilemma (MASD) was invented by
+\citep{stimpson:2003}. This game
+is difficult to express in normal form, since it consists of $N$ players.
 Each player has a choice of allocating $M$ units to either his own goal, 
 or the group goal. The Nash equilibrium of this game lies when all agents
 contribute all of the resources towards their own goal. But the Nash bargaining
 solution lies on contributing everything towards to group goal. We will present
-the results of \citep{crandall}, since \citep{stimpson:2003} didn't do bar-charts,
-although they also compared against Q-Learning and came towards similar results:
+the results of \citep{crandall}, since \citep{stimpson:2003} didn't do
+bar-charts, although they also compared against Q-Learning and came towards
+similar results:
 
+\noindent
 \includegraphics[width=2.5in]{crandall/masd}
 
-In here we can see saticificing play outperforming Q-Learning and WoLF quite
+\cleared In here we can see satisficing play outperforming Q-Learning and WoLF quite
 starkly. But we can also see that this result looks quite a lot like the
-prisoner's dillema result. This is because the MASD was basically a generalization
-of the prisoner's dillema, so this result isn't surprising.
+prisoner's dilemma result. This is because the MASD was developed
+to try and capture the key features of the prisoner's dilemma,
+so this result isn't surprising.
 
 \section{Properties of satisficing play}
-\toReview
-To analyse saticfing play further we use the work of \citep{karandikar} and
+\cleared 
+To analyse satisficing play further we use the work of \citep{karandikar} and
 \citep{stimpson:2001}. Karandikar gave some good theoretical foundations,
 whereas stimpson did empirical experiments on self play in the
-prisoner's dillema with parameter perturbations. However as said in the
+prisoner's dilemma with parameter perturbations. However as said in the
 \nameref{sec:core-algorithm} it should be noted
 that the algorithms of Karandikar and Stimpson are different. The main
-difference is the lack of \emph{inertia} in the algorithm of Stimpson, which
-makes the behavior deterministic.
+difference is the lack of \emph{inertia} in the algorithm of Stimpson, without 
+it, the behavior becomes deterministic.
 
-Karandikar sums up his work quite thoroughly in  the informal discussion section
-of his paper. First of all ``   First, the untrembled joint process of
+\cleared Karandikar sums up his work quite thoroughly in  the informal
+discussion section of his paper. First of all
+``   the untrembled joint process of
 aspirations and actions always converges to a pure strategy state.''
-This means that even without trembles, saticfing play with inertia
-will end up in a state wherein aspiration levels of both players equals payoff.
+This means that even without trembles, satisficing play with inertia
+will end up in a state wherein aspiration levels of both players equals payoff
+per action.
 The second result I want to discuss is:
 ``The limit invariant distribution places
 almost all weight on the cooperative outcome, provided that the persistence
 parameter is sufficiently close to unity.''. Where the persistence parameter
 is the learning rate, and the invariant distribution is the trembled process,
-in other words, the saticfing play algorithm with trembles. For more details
-the reader is referred towards that paper.
+by trembled process he means the satisficing play algorithm with trembles.
+For more details the reader is referred towards that paper.
 
-Before the results of Stimpson are discussed we first have to consider the
-possible outcomes. It is important to keep in mind that in his algorithm
-the result of karandikar doesn't hold, because inertia is missing. Therefore
+\cleared Before the results of Stimpson are discussed we first have to consider
+the possible outcomes. It is important to keep in mind that in his algorithm
+the result of Karandikar doesn't hold, because inertia is missing. Therefore
 not all processes will converge to a pure strategy state.
 the possible outcomes are:
 \begin{enumerate}
@@ -314,72 +354,83 @@ the possible outcomes are:
   \item Action cycles.
   \item Complete chaos.
 \end{enumerate}
-We've seen both one and two in the section \nameref{sec:playaction}. Three
+\cleared We've seen both one and two in the section \nameref{sec:playaction}. Three
 is mentioned because there lacks a theoretical proof of it being impossible.
-Stimpson studied the behavior of saticfing play empirically in the prisoner's
-dillema, so over 5000 trials he ended up with the following result:
+Stimpson studied the behavior of satisficing play empirically in the prisoner's
+dilemma, the parameters used in all of his experiments were 
+uniformly selected per trial in the following ranges:
 
+\begin{tabular}{lll}
+  Variable & Min & Max \\
+  $\alpha, \beta$ & 0.5 & 2  \\
+  $\lambda$ & 0.1 & 0.9  \\
+  $\sigma$ & 0.51 & 1.0  \\
+  $\delta$ & 0.1 & $\sigma$
+\end{tabular}
+
+Where $\alpha, \beta$ are the initial aspiration levels of both players.
+$\lambda$ is the learning rate, $\sigma$ is the payoff for cooperation and
+$\delta$ for defection, more on that later.
+The initial actions were randomly selected.
+Over 5000 trials he ended up with the following result:
+
+\noindent
 \includegraphics[width=2.5in]{stimpson/strategies}
 
-Where the leters stand for the actions, for example DC is (Defect,Cooperate).
+\cleared Where the letters stand for the actions, for example DC is (Defect,Cooperate).
 If letters are have dashes in between they indicate action cycles, for example:
 $DD-CC-DC$ is (Defect, Defect), (Cooperate, Cooperate) and 
 (Defect,Cooperate).
-From here we can see that saticfing play ends up cooperating most of the time.
+From here we can see that satisficing play ends up cooperating most of the time.
 The variations are because the parameters were set randomly, such as initial
 aspiration, learning rate or even initial action.
 
-They also made another graph depicting how initial aspiration levels influenced
-the perecentage of the time ending up with mutual cooperation, this happened
-over 1000 trials:
+\cleared They made another graph depicting how initial aspiration levels
+influenced the percentage of the time ending up with mutual cooperation,
+this happened over 1000 trials:
 
+\noindent
 \includegraphics[width=2.5in]{stimpson/aspiration}
 
-Alfa is the initial aspiration of player 1, Beta of player 2, and the colors
+\cleared Alpha is the initial aspiration of player 1, Beta of player 2, and the colors
 indicate the percentage of the time that cooperation happened. From this we can
 see that if the goal is cooperation, having initially high aspiration is good
 most of the time. You can also see some kind of intrusion towards the center,
-from which you could conclude that having similiar aspirations is good for
-cooperation. But the authors do not do this. It is also somewhat crenelated,
-probably because of the low number of trials they used to make this graph.
+from which you could conclude that having similar aspirations is good for
+cooperation. But the authors do not do this and therefore we won't either.
+It is also somewhat crenelated, probably because of the low number of trials
+they used to make this graph.
 
-To further study satisficing play in the prisoner's dillema, a generalization
-has to be made. Therefore stimpson introduces a generalized dillema that looks
+\cleared To further study satisficing play in the prisoner's dilemma, a generalization
+has to be made. Therefore Stimpson introduces a generalized dilemma that looks
 like the following normal form game:
 \begin{tabular}{lll}
             & Cooperate   & Defect \\
   Cooperate & $(\sigma,\sigma)$     & $(0,1)$  \\
   Defect    & $(1,0)$     & $(\delta,\delta)$  \\
 \end{tabular}
-Where $(0<\delta<\sigma<1)$ and $\sigma>0.5$. Sigma $\sigma$ for cooperate and
+\cleared Where $(0<\delta<\sigma<1)$ and $\sigma>0.5$. Sigma $\sigma$ for cooperate and
 Delta $\delta$ for defect. The constraint $(0<\delta<\sigma<1)$ exists to make
-sure the game is a prisoner's dillema and $\sigma>0.5$ is used to ensure the
-Pareto front of the prisoner's dillema.
+sure the game is a prisoner's dilemma and $\sigma>0.5$ is used to ensure the
+Pareto front of the prisoner's dilemma.
 The following graph illustrates the effect of different reward contrasts,
 and was created over 1000 trials:
 
 \noindent
 \includegraphics[width=2.5in]{stimpson/contrast}
 
-The colors indicate the percentage of time a run resulted in cooperation.
+\cleared The colors indicate the percentage of time a run resulted in cooperation.
 According to the authors, cooperation is most likely when $\delta$ is small
 and $\sigma$ is large. If they are close together distinction between 
 defection and cooperation becomes difficult. This is typical of non-optimizing
 algorithms, and Arthur writes that his algorithm and even human behavior
 
-\multicolinterrupt{
-\begin{center}
-\large\emph{``Beyond the perceptual threshold, non-optimal outcomes become likely''}
-\end{center}
-\vspace{-2em}\hbox{}\hfill --- \citep{arthur}
-}
-
-``appear to discover and exploit the optimal action with high probability,
+\cleared ``appear to discover and exploit the optimal action with high probability,
 \emph{as long as it is not difficult to discriminate}. But beyond a perceptual
 threshold, where differences in alternatives become less pronounced,
 non-optimal outcomes become more likely'' \citep{arthur}
 
-The final result presented by stimpson is the learning rate. The learning
+\cleared The final result presented by stimpson is the learning rate. The learning
 rate determines how quickly aspiration should be updated. A higher learning
 rate means that values of the past are less relevant. The following graph
 was made over 1000 trials:
@@ -387,31 +438,30 @@ was made over 1000 trials:
 \noindent
 \includegraphics[width=2.5in]{stimpson/learning-rate}
 
-Where lambda is the learning rate. As we can see the percentage of cooperation
+\cleared Where lambda is the learning rate. As we can see the percentage of cooperation
 (the number on the $y$-axis), increases with higher learning rate. But starkly
 drops once it reaches one and aspiration isn't updated at all.
 
-\section{Conclusion}
-\toReview
 
-We've seen how saticfing play works and some potential issues with it.
+\section{Conclusion}
+\cleared 
+We've seen how satisficing play works and some potential issues with it.
 Then we compared it against other multi-agent
 algorithm's empircally. Where we've
 seen it be better in a lot of famous games, but in others such as shapely it
-performed relatively more poorly. We've also seen it been extended to play
+performed relatively poorly. We've also seen it been extended to play
 with more actions and against more agents in the MASD.
 After that we looked closer to the theoretical properties
-of saticfing play, where we've seen it with the introduction of random elements
+of satisficing play, where we've seen it with the introduction of random elements
 convergence to the coopertive outcome becomes likely.
 Finally we've also seen empirical tests
-on the deterministic variant in the prisoner's dillema. From this we've seen
+on the deterministic variant in the prisoner's dilemma. From this we've seen
 that parameters are important, but most of the time it results in the coopertive
 outcome anyway.
 
-From this we can conclude that saticfing play is a serious algorithm to be of
+\cleared From this we can conclude that satisficing play is a serious algorithm to be of
 interest of MAL researches.
 
-\todo{add caption for tables?}
 \bibliography{main}
 
 \address{Jappie Klooster\\
