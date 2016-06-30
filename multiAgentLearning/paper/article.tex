@@ -61,10 +61,11 @@ information from memory is used.
 
 
 \section{Satisficing play in action}
-\todo{make an intermezzo of this?}
 \toReview
 To demonstrate a potential use of this algorithm we will use at several example
 cases. The first one being the iterated prisoner's dilemma.
+
+\noindent
 \fbox{
   \begin{minipage}{2.5in}
     \toReview
@@ -138,6 +139,8 @@ up being worse at $t=3$. After that the cycle resets at $t=4$, the cycle becomes
 most obvious when looking at the $\pi_t$ column. Also note about this opponent
 that if saticificing play would've started with a lower aspiration, it would
 not enter this cycle and just keep on cooperating.
+
+\noindent
 \fbox{
   \begin{minipage}{2.5in}
     \toReview
@@ -187,7 +190,15 @@ can be found in the paper of \citep{bowling}.
 
 The actual comparison of the algorithms is done by \citep{crandall}, in here
 we will discuss several of his results. All the algorithms are compared in self
-play. The first game result we'll discuss
+play. The algorithms use the following parameters:
+
+\begin{tabular}{ll}
+  Satisficing & $\alpha_0\in \mathbb{P}_0, \lambda=0.99$ \\
+  WoLF-PHC & $\lambda=1/(10+0.001 k^a_s), \gamma = 0.95, \epsilon-\text{greedy w}$ 
+             $/\epsilon = \tex{max}(0.2-0.0006t,0)$ \\
+\end{tabular}
+
+The first game result we'll discuss
 is the already introduced prisoner's dillema:
 \includegraphics[width=2.5in]{crandall/prisoners}
 
@@ -216,10 +227,8 @@ And here is the result of Crandall:
 In here we see again saticificing play performing better than Q-Learning and
 WoLF. However, the difference is a lot less refined.
 
-Shapley's game is a 3 action choice game. If saticificing play has to change
-action, instead of picking the other action, it will just pick uniformly random
-of the 2 other actions. The context of the game is left to the imagination
-of the reader and the normal form game looks like this:
+Shapley's game is a 3 action choice game. The context of the game is left to
+the imagination of the reader and the normal form game looks like this:
 
 \begin{tabular}{llll}
               & a & b & c \\
@@ -235,7 +244,42 @@ In here we can see saticifing play performing a lot worse than the other two
 algorithms. This is because, Crandall explains, the joint aspiration never
 falls below the Pareto frontier, thus the behavior is essentially random.
 
+\noindent
+\fbox{
+  \begin{minipage}{2.5in}
+    \drafting
+    \subsection{Multi-action saticificing}
+    In their paper \citep{stimpson:2003} introduce a modification to
+    saticificing play.
+    Rather than just picking the other action, which it can't do because there
+    are more than that available, it will pick uniformly across the other
+    actions. This change allows saticificing play to play in $n$-action games
+    rather than just 2 action games.
+  \end{minipage}
+}
+
+The multi-agent social dillema (MASD) was invented by \citep{stimpson:2003}. This game
+is impossible to express in normal form, since it consists of $N$ players (well
+it is possible if $N=2$, but otherwise not really).
+Each player has a choice of allocating $M$ units to either his own goal, 
+or the group goal. The Nash equilibrium of this game lies when all agents
+contribute all of the resources towards their own goal. But the Nash bargaining
+solution lies on contributing everything towards to group goal. We will present
+the results of \citep{crandall}, since \citep{stimpson:2003} didn't do bar-charts,
+although they also compared against Q-Learning and came towards similar results:
+
+\includegraphics[width=2.5in]{crandall/masd}
+
+In here we can see saticificing play outperforming Q-Learning and WoLF quite
+starkly. But we can also see that this result looks quite a lot like the
+prisoners dillema result. This is because the MASD was basically a generalization
+of the prisoners dillema, so this result isn't surprising.
+
 \section{Properties of satisficing play}
+To analyse saticfing play further we use the work of \citep{karandikar} and
+\citep{stimpson:2001}. Karandikar gave some good theoretical foundations,
+whereas stimpson did some deep emepircal experiments on self play in the
+prisoners dillema with parameter perturbations.
 \drafting
 
 \todo{
@@ -246,14 +290,6 @@ karandikar used a theoretical proofing method, whereas Stimpson showed some
 experimental results.
 
 also showing the contrast graph which supports the work of \citep{arthur}
-}
-\section{An extended satisficing play}
-\drafting
-
-\todo{
-In here we discuss the work of \citep{stimpson:2003}, where he extends the
-algorithm to be played with mutliple action choices.
-Stimpson created a game where resources had to be allocated among agents.
 }
 
 \todo{add caption for tables?}
