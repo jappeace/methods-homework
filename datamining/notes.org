@@ -1,0 +1,47 @@
+so we're training a,b,c,d...
+
+* Linear regression
+Only thing linear is input variables (a,b,c,d), can do non-linear on x
+
+
+* Classes
+try to make splits which give as much information as possible.
+So given some record, calculate the error after getting the record your prediction
+has. The best choice is found by "brute force".
+
+
+** Resubstitution error
+
+
+$\Delta i(s,t) = \frac{2}{7} - (\frac{3}{7} \dot \frac{1}{3} + \frac{4}{7} \dot 0 = \frac{1}{7}$
+
+*** Resubstitution
+is concave but not stritctly concave
+
+s_1 = (300,100), (100,300)
+s_2 = (200,400), (200,0)
+
+resubstition says $s_1 = s_2$, but $s_2$ is better because you already have
+something pure.
+
+*** GNI
+$i(l) = 
+
+$\phi(p)=p(1-p)=p-p^2$
+$\phi^{'}(p)=1-2p \phi^{''}(p)=-2$
+
+p(0|l) = probability of class 0 in left child, p(0|r) = right child.
+
+** Pruning
+2^{l-1}-1 because don't count splits that result in themselves (ie split nothing).
+
+$ \lfloor f\rfloor = $ the largest integer that is smaller than $f$. ie cast to int ??
+
+r(t) = error at node t, for example (30|10) has an error of 1/4 because you're
+gonna geuss the highest probability, so 30, so from the total 40 you're gonna
+be wrong 1/4 of the times.
+
+\alpha , smaller is better. Choose the minimum value and prune every node that has
+that. Then *recalculate* the \alpha and you can prune again. So you get a finite
+sequence of pruned trees.
+
