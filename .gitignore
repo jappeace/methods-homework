@@ -22,6 +22,7 @@ methods/cogniveProcessing/MAIR_CPprac1_4/Files_PsychToolboxV2/__MACOSX
 *.pdf
 *.odg
 *.bin
+*.ppt
 
 #archives
 *.zip
