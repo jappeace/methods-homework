@@ -45,3 +45,24 @@ be wrong 1/4 of the times.
 that. Then *recalculate* the \alpha and you can prune again. So you get a finite
 sequence of pruned trees.
 
+
+* Excersizes...
+
+** one
+- 9
+- 
+  - c|bbaabeede
+  - cbb|aabeede
+  - cbbaa|beede
+  - cbbaab|eede
+  - cbbaabee|de
+  - cbbaabeed|e
+- 9
+- 37.5,48.5, asuming you take out both 40 and 45 first since they're conflicting
+- .5, since you an ignore both the 40 and 45
+
+** two
+
+$i(t)=1-\sum^C_{j=1} p(j|t)^2$
+
+- 7,10,13,16,19
