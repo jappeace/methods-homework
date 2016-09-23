@@ -45,7 +45,41 @@ be wrong 1/4 of the times.
 that. Then *recalculate* the \alpha and you can prune again. So you get a finite
 sequence of pruned trees.
 
+** The saturated model
+The high number is unrealistic because you don't have enough observations.
 
+*** Independence model
+X and Y are independent iff P(X,Y) = P(X)P(Y) for all values of X and Y.
+
+This assumption is made.. to try and make the dimensionality problem less
+problematic
+
+$P(Y|X)=\frac{P(X,Y)}{P(X)}$
+
+*** Conditional independence
+$X\rlap Y = $ independent.
+
+in the example, if I already know someone smokes, a nicotine stain won't
+give you more information.
+
+In the ice cream example, you first say if more poeple go to the beach
+so there are more icecream sales, but if you start considering the weather
+the association disappears since you say both variables are caused by the
+weather. You know the weather so you can explain icecream sales and beach
+visits.
+
+*** Graphs
+Local markov property, if I know the boundary of X_2 and X_3 I can predict X_1
+without considering the rest of the graph (see the example graph slides)
+
+*** Example
+$\overset{^}{n}(clinic1,more,no)= \frac{297 \times 7}{476} = 4.37$
+
+cpr = 1 then x and y are independent
+
+If you condition on clinic than the relation between care and mortality
+disaears, but if you collapse on that then there is an association. So
+its very dangerous to remove variables.
 * Excersizes...
 
 ** one
@@ -58,11 +92,29 @@ sequence of pruned trees.
   - cbbaabee|de
   - cbbaabeed|e
 - 9
-- 37.5,48.5, asuming you take out both 40 and 45 first since they're conflicting
-- .5, since you an ignore both the 40 and 45
+- 37.5,
+  42.5,
+  48.5
+- 0.25 + (0.25 - 2/7*5/7) = 0.29591836734
+  (0.25-(5/6*1/6)) + (0.25-(5/6*1/6)) = 0.22222222222
+  (0.25 - 2/7*5/7) + 0.25 = 0.29591836734
+  so its the 42.5 split
+
+
 
 ** two
 
 $i(t)=1-\sum^C_{j=1} p(j|t)^2$
 
-- 7,10,13,16,19
+- 10,13,16
+- its 16, with an impurity reduction of 0.56-0.375=0.185
+  - total impurity: 1-((6/10)^2+(2/10)^2+(2/10)^2) = 0.56
+  - 10: 1-((4/8)^2+(2/8)^2+(2/8)^2) = 0.625
+  - 13: (1-((1/5)^2+(4/5)^2) =         0.32
+        (1-((2/5)^2+(2/5)^2+(1/5)^2)) = 0.64
+                                    --- +
+                                    0.96
+  - 16: 1-((2/8)^2+(6/8)^2) = 0.375
+- its 13, but you're making things worse..
+
+
