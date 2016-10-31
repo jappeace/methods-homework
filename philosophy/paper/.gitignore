@@ -1,0 +1,6 @@
+*.dvi
+*.bbl
+*.pdf
+*.tex
+references
+auto
