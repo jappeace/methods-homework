@@ -2,5 +2,8 @@
 *.bbl
 *.pdf
 *.tex
+*.blg
+*.fdb_latexmk
+*.fls
 references
 auto
