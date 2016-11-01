@@ -1,0 +1,57 @@
+* first meeting
+Voeg personlijkeid toe aan een patient communicatie game.
+moet makkelijk aan verscillende charecters worden veranderd.
+
+Papers lezen.
+- Wat heb ik begrepen
+- Wat ga ik doen
+Op basis hiervan een planning maken
+education pagina fomulier invllen.
+
+Voor 11 november af hebben gemaakt.
+
+* Paper campos_ mabs 2009
+
+** Personality
+*** Content oriented
+    Assign values to relationships between agent personality, the situation, and
+    the possible actions.
+    This lacks flexibility since different siutations require different values.
+    # also its opaque in my opinion
+*** Process orientated
+    Agents prefer a particular process
+    # so could this mean preference to being treated polityly/directly
+    # in communication? How do you distinguish such a preference in text?
+    # How would you give this feedback in a game.
+    its mbti...
+    # damn, my old nemisis returns, well this becomes easy...
+
+    # Wait why are I/E and J/P ignored, they're like super important, especially
+    # for planning (well J/P are)...
+
+** Fictisious personality
+    In Weide et al, (Personality based practical reasoning 2008) the agent reasons
+    about te users personality. may be interesting.
+
+** Comments
+*** How to change planning into dialogue?
+  Perhaps the scanerios have goals or someting, and agents/patients can choose
+  certain rections to achieve those goals. Then we can inject personality in there.
+
+*** TODO get MBTI definitions straight
+Is MBTI even types? I think the test gives you scores anyway just like the trait
+pshycology does. Not to speak about [[http://thoughtcatalog.com/heidi-priebe/2015/06/if-youre-confused-about-your-myers-briggs-personality-type-read-this-an-intro-to-cognitive-functions/][Cognitvie functions.]] 
+So I want to recheck those referecnes and make sure the things described in the
+paper are correct (since I remember it somewhat different).
+Anyway I think even its not interperted quite right the main idea of the paper
+still will work.
+Perhaps I should ask about this?
+Can I use please understand me II as a source?
+
+Should acknowledge the critcism on MBTI and give a reply (types are easier
+than floating points).
+# So maybe this is overkill?
+*** TODO look closer at that logic
+
+* Paper AngelloGala 2015
+process reasoning: 
