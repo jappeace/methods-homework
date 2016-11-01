@@ -36,6 +36,8 @@ as you were talking about stuff related to blocks.
 # find a micro world definition in the papers
 However the blocks and the robotic arm were virtual.
 
+There is strict seperation between world objects, and agent's believes.
+Information has to pass trough senses to reach the agent.
 * Criticism on the micro-world approach
 Here we'll discuss criticism on the micro-world approach with help of cite:dreyfus1981micro 
 and cite:winograd1974.
@@ -45,6 +47,14 @@ Here we'll discuss how cite:honing1993microworld used a microworld in their
 research and how they suggest.
 (They suggest a micro world could be use full as an experimentation device).
 
+Often we have ethical dilemmas that don't make any real world sense,
+but are still useful for the sake of ethics.
+With micro world we can model these
+because micro worlds don't have to make any real world sense, just internal sense.
+
+In robotics code needs to be tested with expensive parts.
+Using micro worlds which are free to copy we can cheapen the
+development of robotic agents.
 * How complex does a micro-world need to be for AI?
 This will be a small speculative chapter.
 In here we'll explore the possibility of using a micro world as an AGI petri-dish.
