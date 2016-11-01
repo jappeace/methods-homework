@@ -7,10 +7,15 @@
 # Goed aankleden, kan een micro wereld worden gebruikt
 # om een AI te ontwikkelen?
 
+# Don't get lost in the technicalities.
+
+# There are few recent publications about micro worlds, they used to be very
+# popular in the 70's. Why aren't there anymore publications about this?
 
 * What is a micro-world?
 # my fellow students often don't understand what I'm talking about with just
 # a "micro-world" so I should define well what I mean with it.
+
 In a strongly recommended book cite:book_copeland,
 the authors explained that in the 1970's there used to be programs that could
 manipulate their environment based on language commands.
@@ -50,6 +55,9 @@ Then we'll discuss the update rate of human senses.
 Finally we'll introduce the micro-world/agent based architecture. (basically
 agents that can only receive input trough senses and output trough muscle
 control).
+
+# Perhaps build on this and add my own thought experiments
+# Build on this with good reasoning, don't trhow out random claims.
 
 * Conclusion
 We'll conclude that the micro world idea for language processing may not have
