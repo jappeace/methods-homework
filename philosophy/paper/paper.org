@@ -20,7 +20,7 @@ manipulate their environment based on language commands.
 Something which even today quite novel with technologies such as Siri or
 Google now.
 Could you imagine how impressive this must have been in the 1970's?
-The program called Shrdlu cite:winograd1971
+The program called Shrdlu cite:winograd1971procedures 
 and other areas such as computer vision cite:waltz1971.
 All these results had one thing in common, micro worlds.
 But in the last 20 years or so no more papers have appeared about micro worlds.
@@ -31,9 +31,6 @@ then we'll look at some of the criticism that probably let to its eventual demis
 with that criticism in mind we'll try to explore some possible use cases.
 
 * What is a micro-world?
-# my fellow students often don't understand what I'm talking about with just
-# a "micro-world" so I should define well what I mean with it.
-                                                                   
 One of the first was called Shrdlu, invented by Terry Winograd cite:winograd1971procedures.    
 This program controlled a robotic arm that could move blocks from one place                                                            
 to another. 
@@ -55,7 +52,6 @@ It should be noted that this definition came from an internal memo in MIT
 never meant for publication,
 but since its fairly colorful we think it works very well.
 
-# TODO: add citation to definition of simulation
 A micro world is a sort of simulation, but we think its important to remember
 the later part of the memo in which we say that things represented in a
 micro world don't necessarily need to be true in the real world. A simulation
@@ -81,6 +77,27 @@ of Shrdlu it was a robot arm.
 * Criticism on the micro-world approach
 Here we'll discuss criticism on the micro-world approach with help of Dreyfus
 cite:dreyfus1981micro and Wingorad cite:winograd1974.
+
+As always lets start with Shrdlu, why didn't this became the core technology
+of Siri or Google Now? Well first of all Wingorad gave up devlopment in 1974.
+He stated that developing the system just became to complex. He proposes
+two potential ways of dealing with this, create better abstractions
+and do things in a more modular way, the second was a description of something
+which we today would call machine learning: "The dream is that we can start
+with a minimum of structure, then provide masses of data and expect the program
+to build its own complexities" cite:winograd1974 (end of page 13).
+
+He continues about wanting to have a type system (in paragraph 1.2),
+without mentioning it (but all those problems would basically be solved with a
+type system).
+Lisp is dynamically typed. So why didn't he use a better language? There 
+wasn't anything else, C was just invented. A year before that ML (which
+had the desire winograd craved for without knowing it), but
+a year is not a long time for language adoption, especially without the
+internet.
+
+You may ask, why am I talking about type systems, well this is what AI
+researcher where dealing with. Wanting to have technologies that are tak
 
 * Could a micro-world be use-full?
 Here we'll discuss how cite:honing1993microworld used a microworld in their
