@@ -62,15 +62,11 @@ micro world don't necessarily need to be true in the real world. A simulation
 wants to try to be as close to the real world as possible
 cite:wiki_simulation.
 
-Copeland cite:book_copeland mentions that micro world later went on to become
-expert systems.
-This is wrong,
+The difference between expert system and micro worlds is that
 expert systems may have an internal simulation of the world,
 but this isn't a micro world.
-Micro worlds may not map directly to the real world but simulations do want to do this.
-Besides even if they did use a micro world,
-the micro world would just be a part of the expert system.
-That doesn't mean they became it, but just became part of it.
+Micro worlds may not map directly to the real world but simulations
+do want to do this.
 
 A micro world is an artificially constructed world for conducting AI research.
 The AI program (or agent) experiences the world trough senses to avoid logical
