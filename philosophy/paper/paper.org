@@ -55,6 +55,8 @@ because micro worlds don't have to make any real world sense, just internal sens
 In robotics code needs to be tested with expensive parts.
 Using micro worlds which are free to copy we can cheapen the
 development of robotic agents.
+
+** How does a microworld differ from a simulation?
 * How complex does a micro-world need to be for AI?
 This will be a small speculative chapter.
 In here we'll explore the possibility of using a micro world as an AGI petri-dish.
