@@ -12,35 +12,79 @@
 # There are few recent publications about micro worlds, they used to be very
 # popular in the 70's. Why aren't there anymore publications about this?
 
+In the early days of AI there was an idea of AI development called
+"micro worlds".
+A strongly recommended book cite:book_copeland,
+the authors explained that in the 1970's there used to be programs that could                                                          
+manipulate their environment based on language commands.
+Something which even today quite novel with technologies such as Siri or
+Google now.
+Could you imagine how impressive this must have been in the 1970's?
+The program called Shrdlu cite:winograd1971
+and other areas such as computer vision cite:waltz1971.
+All these results had one thing in common, micro worlds.
+But in the last 20 years or so no more papers have appeared about micro worlds.
+What happened to this approach?
+Why did people stop doing research into it?
+In this paper we'll explore firstly what the micro world is,
+then we'll look at some of the criticism that probably let to its eventual demise,
+with that criticism in mind we'll try to explore some possible use cases.
+
 * What is a micro-world?
 # my fellow students often don't understand what I'm talking about with just
 # a "micro-world" so I should define well what I mean with it.
-
-In a strongly recommended book cite:book_copeland,
-the authors explained that in the 1970's there used to be programs that could
-manipulate their environment based on language commands.
-
-The term /micro-world/ was coined in an internal MIT memo in 1970 cited quoted
-in cite:dreyfus1981micro: "Each model - or `micro-world' as we shall call it - 
-is very schematic; it talks about a fairyland in which things are so simplified 
-that almost every statement about them would be literally false if asserted about 
-in the real world."
-
-One of the first was called Shrdlu, invented by Terry Winograd.
-This program controlled a robotic arm that could move blocks from one place
-to another.
-
-It could also understand natural language to an impressive level, as long 
-as you were talking about stuff related to blocks.
-
-# find a micro world definition in the papers
+                                                                   
+One of the first was called Shrdlu, invented by Terry Winograd cite:winograd1971procedures.    
+This program controlled a robotic arm that could move blocks from one place                                                            
+to another. 
 However the blocks and the robotic arm were virtual.
+The purpose of the program was to understand natural language, and it did
+this very well.
+It could for example deduce what reference words meant such as "it",
+do semantical deduction (can the table pick up blocks?)
+and understand concepts such as ownership.
 
-There is strict seperation between world objects, and agent's believes.
+The term /micro-world/ was coined in an internal MIT memo in 1970 cited quoted                                                         
+in cite:dreyfus1981micro: "Each model - or `micro-world' as we shall call it -                                                         
+is very schematic; it talks about a fairyland in which things are so simplified                                                        
+that almost every statement about them would be literally false if asserted about                                                      
+in the real world."                                                
+Now this definition may already shed some light on the possible criticisms
+on micro worlds, but we'll discuss that more thoroughly later.
+It should be noted that this definition came from an internal memo in MIT
+never meant for publication,
+but since its fairly colorful we think it works very well.
+
+# TODO: add citation to definition of simulation
+A micro world is a sort of simulation, but we think its important to remember
+the later part of the memo in which we say that things represented in a
+micro world don't necessarily need to be true in the real world. A simulation
+wants to try to be as close to the real world as possible
+cite:wiki_simulation.
+
+Copeland cite:book_copeland mentions that micro world later went on to become
+expert systems.
+This is wrong,
+expert systems may have an internal simulation of the world,
+but this isn't a micro world.
+Micro worlds may not map directly to the real world but simulations do want to do this.
+Besides even if they did use a micro world,
+the micro world would just be a part of the expert system.
+That doesn't mean they became it, but just became part of it.
+
+A micro world is an artificially constructed world for conducting AI research.
+The AI program (or agent) experiences the world trough senses to avoid logical
+omniscience.
+There is strict separation between world objects, and agent's believes.
 Information has to pass trough senses to reach the agent.
+It has an internal deliberation system separate of the world.
+The AI program usually has a way to interact with the micro world, in case
+of Shrdlu it was a robot arm.
+
+                                                                   
 * Criticism on the micro-world approach
-Here we'll discuss criticism on the micro-world approach with help of cite:dreyfus1981micro 
-and cite:winograd1974.
+Here we'll discuss criticism on the micro-world approach with help of Dreyfus
+cite:dreyfus1981micro and Wingorad cite:winograd1974.
 
 * Could a micro-world be use-full?
 Here we'll discuss how cite:honing1993microworld used a microworld in their
@@ -56,8 +100,8 @@ In robotics code needs to be tested with expensive parts.
 Using micro worlds which are free to copy we can cheapen the
 development of robotic agents.
 
-** How does a microworld differ from a simulation?
 * How complex does a micro-world need to be for AI?
+# we can also spin this as a prediction engine, ie the imagination of an agent
 This will be a small speculative chapter.
 In here we'll explore the possibility of using a micro world as an AGI petri-dish.
 This is done firstly by establishing that humans are an GI.
