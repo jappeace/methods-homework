@@ -96,6 +96,13 @@ I think its important to ask yourself in this chapter, how much can be left
 implicit? Is this here for toroughness (theory) or are you going to define per
 scenario "norms: doctor is polite, patient cooperative."
 
+* Paper Gala2016
+The salve game architecture uses scripts to organize the scanerios.
+I think it uses pattern matching to decide responses, with added scripts 
+to modify event parameter.
+If we use the salve architecture how do we encode personality into this?
+
 * Questions
 
+** main question: How does adding personality to agents in an communication train game effect gameplay?
 ** How far is agentification of communicate! implemented?
