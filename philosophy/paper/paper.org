@@ -81,23 +81,28 @@ cite:dreyfus1981micro and Wingorad cite:winograd1974.
 As always lets start with Shrdlu, why didn't this became the core technology
 of Siri or Google Now? Well first of all Wingorad gave up devlopment in 1974.
 He stated that developing the system just became to complex. He proposes
-two potential ways of dealing with this, create better abstractions
-and do things in a more modular way, the second was a description of something
-which we today would call machine learning: "The dream is that we can start
-with a minimum of structure, then provide masses of data and expect the program
-to build its own complexities" cite:winograd1974 (end of page 13).
-
+two potential ways of dealing with this,
+create better abstractions and do things in a more modular way,
+the second was a description of something which we today would call machine learning:
+"The dream is that we can start with a minimum of structure, 
+then provide masses of data and expect the program to build its own 
+complexities" cite:winograd1974 (end of page 13).
 He continues about wanting to have a type system (in paragraph 1.2),
 without mentioning it (but all those problems would basically be solved with a
 type system).
 Lisp is dynamically typed. So why didn't he use a better language? There 
-wasn't anything else, C was just invented. A year before that ML (which
-had the desire winograd craved for without knowing it), but
-a year is not a long time for language adoption, especially without the
-internet.
+wasn't anything else, C was just invented.
+A year before that ML (which had the desire winograd craved for without knowing
+it),
+but a year is not a long time for language adoption,
+especially without the internet.
 
-You may ask, why am I talking about type systems, well this is what AI
-researcher where dealing with. Wanting to have technologies that are tak
+Dreyfus goes attacks Shrdlu from a different direction. He says that the
+biggest issue not only Shrldu had but all micro worlds was there limited
+domain in the first place.
+So here we have an AI researcher giving up on the micro world because it became
+to complex to work with, and then a philosopher stating that the micro world
+approach is obviously not complex enough.
 
 * Could a micro-world be use-full?
 Here we'll discuss how cite:honing1993microworld used a microworld in their
