@@ -184,7 +184,46 @@ Testing the autonomous robot in a micro world could safe cost,
 but even better it could be exposed to ethical tests along the way.
 
 * How complex does a micro-world need to be for AI?
-# we can also spin this as a prediction engine, ie the imagination of an agent
+We humans, made of meat, like to think of ourselves as a general intelligence.
+By which we mean, we are massively adaptable.
+There is no other species on earth, that went to the moon, and came back
+to tell the tale.
+However in terms of computing power, how impressive are we really?
+
+Lets first start with the input and output.
+The inputs are the senses of which the traditional ones are:
+Sight,
+hearing,
+taste,
+smell
+and touch.
+Then there are the non-traditional ones such as:
+Balance and acceleration,
+Temperature,
+proprioception (if you close your eyes you still know where your limbs are),
+pain and the
+internal senses
+such as hunger and pulmonary stretch receptors (your lungs).
+There are more internal ones but I won't name them all,
+since the names are very difficult to both understand and write.
+You could argue that sustenance is also input,
+but we'll consider the sense of eating good enough.
+The output of humans on the other hand is extremely simple: Muscle movement.
+However we can consider sounds as a separate output since the physics of
+speech hasn't been figured out yet cite:perrier2003influences,
+but speech synthesis is a thing.
+
+So there we have it, the only Intelligence we know of and all its inputs.
+Now the question is could we create a micro world that Incorporated all these
+senses?
+By this I mean, can we stimulate a potential agent with all these senses?
+For things such as sight and hearing this is easily answerable with a yes.
+For example an agent in a micro world could get every time unit a PNG image
+with what he sees and an mp3 with what he hears.
+However for taste, smell, touch and the other senses the answer is more difficult.
+There are no standard ways of encoding these things.
+You may argue that you can encode temperature as a number in Celsius.
+
 This will be a small speculative chapter.
 In here we'll explore the possibility of using a micro world as an AGI petri-dish.
 This is done firstly by establishing that humans are an GI.
@@ -198,6 +237,7 @@ control).
 # Perhaps build on this and add my own thought experiments
 # Build on this with good reasoning, don't trhow out random claims.
 
+# we can also spin this as a prediction engine, ie the imagination of an agent
 * Conclusion
 We'll conclude that the micro world idea for language processing may not have
 been the greatest but it can have uses as a research methodology.
