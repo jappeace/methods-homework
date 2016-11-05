@@ -98,8 +98,26 @@ but a year is not a long time for language adoption,
 especially without the internet.
 
 Dreyfus goes attacks Shrdlu from a different direction. He says that the
-biggest issue not only Shrldu had but all micro worlds was there limited
+biggest issue not only Shrdlu had but all micro worlds was there limited
 domain in the first place.
+Take for example the concept of owning.
+In Shrdlu's mind just a flag is set whether an object is owned by someone.
+When later inquired about it he will just check the flag.
+Therefore we can safely say that Shrdlu does not really understand what
+it means to own something.
+This argument is therefore a subclass of the syntax vs semantics discussion
+which is out of the scope of this paper.
+
+Another important thing to note is that Shrdlu uses a primitive to "understand"
+ownership.
+Wingorad thought that the size of the list of primitives would not be a
+problem.
+The use of primitives however flows eventually over into the frame problem.
+Because you need to keep adding primitives to understand more of the world.
+Initially wingrorad thought this list would be finite and better abstractions
+could help with this.
+
+
 So here we have an AI researcher giving up on the micro world because it became
 to complex to work with, and then a philosopher stating that the micro world
 approach is obviously not complex enough.
