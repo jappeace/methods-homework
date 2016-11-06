@@ -9,36 +9,56 @@
 
 # Don't get lost in the technicalities.
 
+# CLEARED
 In the early days of AI there was an idea of AI development called
 "micro worlds".
 In a strongly recommended book cite:book_copeland,
-the authors explained that in the 1970's there used to be programs that could                                                          
-manipulate their environment based on language commands.
-Something which even today is quite novel with technologies such as Siri or
-Google now.
+the authors explained that in the 1970's there used to be programs that 
+could do some very interesting things for their time.
+One program, Shrdlu could for example understand language commands and execute
+them on its environment cite:winograd1971procedures .
+Something which is only getting introduced to consumers today
+with technologies such as Siri or Google now.
+Another program could parse 2d scenes and make a 3d representation of it
+cite:waltz1971.
+Something which is in the present day still an active research topic.
 Could you imagine how impressive this must have been in the 1970's?
-The program was called Shrdlu cite:winograd1971procedures 
-and other areas such as computer vision cite:waltz1971.
-All these results had one thing in common, micro worlds.
-But in the last 20 years or so no more papers have appeared about micro worlds.
+The programs I'm talking about had one thing in common, micro worlds.
+But in the last 20 years or so no more papers have appeared about 
+programs that use the micro world approach.
 What happened to this approach?
 Why did people stop doing research into it?
 In this paper we'll explore firstly what the micro world is,
-then we'll look at some of the criticism that probably let to its eventual demise,
+then we'll look at some of the criticism that let to its eventual demise,
 with that criticism in mind we'll try to explore some possible use cases.
 
 * What is a micro world?
-One of the first was called Shrdlu, invented by Terry Winograd cite:winograd1971procedures.    
+# CLEARED
+In this chapter we'll describe what a micro world is.
+First by example, and then later we'll define it more thoroughly.
+This chapter will also indicate the scope of this paper, and will put
+the reader on the same line when talking about micro worlds.
+
+# CLEARED
+One of the most impressive micro world programs was called Shrdlu,
+invented by Terry Winograd cite:winograd1971procedures.    
 This program controlled a robotic arm that could move blocks from one place                                                            
-to another. 
-However the blocks and the robotic arm were virtual.
+to another. It also had an eye to observe its world with.
+The blocks and the robotic arm were virtual and eye were virtual.
+You could interact with Shrdlu trough a command line.
 The purpose of the program was to understand natural language, and it did
 this very well.
 It could for example deduce what reference words meant such as "it",
 do semantical deduction (can the table pick up blocks?)
 and understand concepts such as ownership.
+Conversations with Shrdlu appeared very naturally.
+# TODO: insert reference to conversation? Add image of the world?
 
-The term /micro world/ was coined in an internal MIT memo in 1970 cited quoted                                                         
+# TODO: discuss waltz's program? see how its different?
+# TODO: why did people get excited?
+
+# CLEARED
+The term /micro world/ was coined in an internal MIT memo in 1970 quoted                                                         
 in cite:dreyfus1981micro: "Each model - or `micro world' as we shall call it -                                                         
 is very schematic; it talks about a fairyland in which things are so simplified                                                        
 that almost every statement about them would be literally false if asserted about                                                      
@@ -46,20 +66,40 @@ in the real world."
 Now this definition may already shed some light on the possible criticisms
 on micro worlds, but we'll discuss that more thoroughly later.
 It should be noted that this definition came from an internal memo in MIT
-never meant for publication,
-but since its fairly colorful we think it works very well.
+never meant for publication.
 
-A micro world is a sort of simulation, but we think its important to remember
-the later part of the memo in which we say that things represented in a
-micro world don't necessarily need to be true in the real world. A simulation
-wants to try to be as close to the real world as possible
+# CLEARED
+Lets first make a less strongly worded definition of the term micro world:
+A micro world is an artificially constructed world for conducting AI research.
+The AI program (or agent) experiences the world trough senses to avoid logical
+omniscience.
+There is strict separation between world objects, and agent's believes.
+Information has to pass trough senses to reach the agent.
+It has an internal deliberation system separate of the micro world.
+The AI program usually has a way to interact with the micro world, in case
+of Shrdlu it was a robot arm.
+A micro world does not need to be compatible with the real world.
+
+# CLEARED
+So you may wonder,
+what is the difference between a micro world and a simulation?
+A micro world is a sort of simulation,
+but its important to remember that things represented in a micro world don't
+necessarily need to be true in the real world.
+A simulation however wants to try to be as close to the real world as possible
 cite:wiki_simulation.
 
+# CLEARED
+Some sources argue that micro world became expert systems
+cite:micro_world_is_expert.
+But in our definition this is not the case.
 The difference between expert system and micro worlds is that
 expert systems may have an internal simulation of the world,
 but this isn't a micro world.
 Micro worlds may not map directly to the real world but simulations
 do want to do this.
+Another difference is that an expert system says nothing about the agent
+having senses, or trying to separate beliefs from the world.
 Honing goes further cite:honing1993microworld stating that micro world are
 the anti thesis of expert systems.
 Expert systems are rule based systems which encode all their knowledge as rules.
@@ -70,55 +110,63 @@ understandable for humans.
 Micro world are supposed to /find/ interactions of rules,
 whereas expert systems are supposed to /describe/ them.
 
-A micro world is an artificially constructed world for conducting AI research.
-The AI program (or agent) experiences the world trough senses to avoid logical
-omniscience.
-There is strict separation between world objects, and agent's believes.
-Information has to pass trough senses to reach the agent.
-It has an internal deliberation system separate of the world.
-The AI program usually has a way to interact with the micro world, in case
-of Shrdlu it was a robot arm.
-
-# TODO why did people get excited about them?
-                                                                   
 * Criticism on the micro world approach
-Here we'll discuss criticism on the micro world approach with help of Dreyfus
+# CLEARED
+Now we'll discuss criticism on the micro world approach with help of Dreyfus
 cite:dreyfus1981micro and Wingorad cite:winograd1974.
 
-As always lets start with Shrdlu, why didn't this became the core technology
-of Siri or Google Now? Well first of all Wingorad gave up devlopment in 1974.
-He stated that developing the system just became to complex. He proposes
-two potential ways of dealing with this,
-create better abstractions and do things in a more modular way,
-the second was a description of something which we today would call machine learning:
-"The dream is that we can start with a minimum of structure, 
-then provide masses of data and expect the program to build its own 
-complexities" cite:winograd1974 (end of page 13).
-He continues about wanting to have a type system (in paragraph 1.2),
-without mentioning it,
-all the problems would he states would be solved with a type system.
-Lisp is dynamically typed. So why didn't he use a better language?
+# CLEARED
+As always lets start with Shrdlu,
+why didn't this became the core technology of Siri or Google Now?
+Well first of all Wingorad gave up devlopment in 1974.
+Its kind of important for a software project to succeed to have people
+working on it.
+He stated that developing the system just became to complex.
+He proposes two potential ways of dealing with this:
+1. Firstly create better abstractions and do things in a more modular way.
+   Of course this is a non trivial task,
+   especially considering the tools he was working with at the time.
+3. Secondly was a description of something which we today would call machine learning:
+   "The dream is that we can start with a minimum of structure, 
+   then provide masses of data and expect the program to build its own 
+   complexities" cite:winograd1974 (end of page 13).
+In a later paragraph (1.2),
+he lists several problems would all mostly have been solved by a type system.
+Lisp is dynamically typed.
+So why didn't he use a better language?
 There wasn't anything else, C was just invented.
 A year before that ML (which had that type system he wanted),
 but a year is not a long time for language adoption,
-especially without the internet.
+besides it would've been experimental and buggy.
+We thought it was interesting to read some researcher from several decades ago
+describing problems and desires that are now subjects of active research. 
 
-Dreyfus goes attacks Shrdlu from a different direction. He says that the
+# CLEARED
+Dreyfus attacks Shrdlu from a different direction. He says that the
 biggest issue not only Shrdlu had but all micro worlds was there limited
 domain in the first place.
 Take for example the concept of owning.
 In Shrdlu's mind just a flag is set whether an object is owned by someone.
 When later inquired about it he will just check the flag.
+Dreyfus asks does Shrldlu with this system really understand owning? 
+If it did it would realize its not part of a community in which owning makes
+sense, in our culture computers can't own anything.
 Therefore we can say that Shrdlu does not really understand what
 it means to own something.
 This argument is therefore a subclass of the syntax vs semantics discussion
 which is out of the scope of this paper.
+However it does expose a problem with the micro world approach.
+The way ownership was implemented in this way is called a micro theory.
+The theory would be something along the lines of:
+"Ownership = All objects with my name on the ownership flag belong to me".
+This then would be considered a particle, from which we later can generalize
+or expand the concept of ownership.
+Similarly to how natural sciences built up by studying isolated systems.
+The problem is that there is no understanding of ownership at all
+from which you can generalize, its defined as a primitive.
 # TODO add reference to syntax vs semantics
 
-So here we have an AI researcher giving up on the micro world because it became
-to complex to work with, and then a philosopher stating that the micro world
-approach is obviously not complex enough.
-
+# CLEARED
 Another major issue Dreyfus had with the micro world approach was that the
 programs that were produced often could not do anything outside of their world.
 This was especially true for waltz's scene parser.
@@ -126,22 +174,28 @@ It would do simple pattern matching on scenes consisting of geometric objects.
 However converting this methodology to recognize real world objects is a non
 trivial problem.
 
+# CLEARED
 Copeland argues the deepest criticism on Shrdlu and the micro world approach is
 the contribution it did to AI research "or lack thereof",
 citing winograd himself cite:winograd1974, "its a dead end".
 Although we think that saying micro worlds had no contribution to AI at all is
-to harsh. For one it made winograd realize that programming is not something
-for the faint hearted.
+to harsh,
+because the constrains may have been somewhat naive,
+but the methodology itself could be useful.
+This will be explained more thoroughly in the next chapters.
 
 # TODO what replaced micro world research? Why did it stop?
 * Could a micro world be use full?
+# CLEARED
 So perhaps micro worlds are not the end goal we should strive for in AI.
-In this section we will discuss some other potential use cases for micro worlds.
+In this section we will discuss some other potential use cases for micro worlds,
+while keeping in mind the criticism the approach got in the previous section.
 
+# CLEARED
 The work Honing 1993 cite:honing1993microworld mostly ignores existing
 applications of micro world and just looks at the definition and the approach.
 He was interested in formalizing musical knowledge and used the micro world
-not as an end to his research but rather as an exploration methodology.
+not as an end demonstration to his research but rather as an exploration methodology.
 He argues that programming forces you into a different mindset,
 and forces you to answer questions that you did not think of before.
 Experimentation with the ad-hoc formalization can lead to new understandings
@@ -149,16 +203,9 @@ and lead to a better formalization.
 But however he warns that having a functional program is far from having
 a functional theory.
 
-Copeland argued that Shrdlu had no contribution to AI research. But we think
-this is too harsh.
-Firstly the Shrldlu project deepened our knowledge of natural language,
-it made dreyfus for example point out that representing ownership as a simple
-flag is not the same as understanding ownership.
-We also discovered that the straight forward approach of encoding language
-this way will lead to an incredibly complex system.
-This is why honing said its not enough to develop a micro world program.
-The theory has to follow.
-
+# CLEARED
+So Honing used a micro world to test his formalization of musical knowledge,
+and checked if it sounded right.
 However we want to propose several other possible use cases of micro worlds.
 Firstly lets consider ethics.
 Often we have ethical dilemmas that don't make any real world sense,
@@ -167,32 +214,46 @@ For example lets say you have a self driving car.
 It can choose to either ride into 4 elderly people, 2 children or blow up the
 car with the driver.
 The common sense reply to this "dilemma" is that its completely unrealistic.
-However in the micro world approach we can change the laws of realism.
-Remember that in the memo definition a micro world doesn't need to work
+The care would have more choices than that you'd say.
+However in the micro world approach we can change the world to be realistic
+with respect to the dilemma.
+Remember that in our definition a micro world doesn't need to work
 the same as the real world.
-Now you can put your self driving car agent in the micro world and force
+Now you can put the program that drives the car in the micro world and force
 it to make a decision, and evaluate if this is what you wanted.
 The micro world approach has helped you to explore and evaluate if the
 program complies with the ethics you desire.
+What's even better is that you can automate this process for multiple dilemma's,
+before you roll out and updated version into the wild.
+The only hard part becomes deciding what the "right" answer is, but figuring
+that out is out of the scope of this paper.
 
+# CLEARED
 In another scenario, lets say you want to build a autonomous robot.
 However your budget is extremely tight,
-therefore you don't want the program to trip over and break the hardware.
+therefore you don't want the program to trip over and break the hardware in
+the first test run.
 Again we can use a micro world approach to test the program.
 Most parts these days already have 3d representation with help of programs
 such as autocad.
 In fact there are entire databases online available 
 from which you can choose your 3d parts cite:parts_database.
+So if your micro world would use only these parts, and have a somewhat
+realistic physics engine, you could test with some confidence that it won't fall.
 Testing the autonomous robot in a micro world could safe cost,
-but even better it could be exposed to ethical tests along the way.
+and what's even better, it could be exposed to ethical tests along the way.
 
 * How complex does a micro world need to be for AI?
+# TO REVIEW
 We humans, made of meat, like to think of ourselves as a general intelligence.
 By which we mean, we are massively adaptable.
-There is no other species on earth, that went to the moon, and came back
+There is no other species on earth, that went to the moon and came back
 to tell the tale.
 However in terms of computing power, how impressive are we really?
 
+# TODO bridge this gap better
+
+# TO REVIEW
 Lets first start with the input and output.
 The inputs are the senses of which the traditional ones are:
 Sight,
@@ -216,6 +277,7 @@ However we can consider sounds as a separate output since the physics of
 speech hasn't been figured out yet cite:perrier2003influences,
 but speech synthesis is a thing.
 
+# TO REVIEW
 So there we have it, the only Intelligence we know of and all its inputs.
 Now the question is could we create a micro world that incorporates all these
 senses?
@@ -240,6 +302,7 @@ By doing this we don't need to put the entire world into the machine, we
 don't care for example about atom movement, so this doesn't need to be put into
 the micro world.
 
+# TO REVIEW
 Why would you want to do this? Why do we need all these senses?
 The only general intelligence we know of has all these senses.
 If we want to develop a system that could emulate human cognition,
@@ -247,6 +310,7 @@ it should have the same information available as humans.
 Interaction trough the world should also just go trough muscle control.
 However this could also be replaced by robotic limb controls.
 
+# TO REVIEW
 If we strictly separate the agent from the world in such a say that it can
 only interact trough muscle movement or speech,
 and receive information trough senses we're no longer talking about an agent
@@ -265,6 +329,7 @@ mode).
 
 # we can also spin this as a prediction engine, ie the imagination of an agent
 * Conclusion
+# TO REVIEW
 We've discussed what micro worlds are and why people got excited about them.
 Then we discussed the criticism they got.
 If we say that Micro worlds are not results, Then we can start exploring what
@@ -280,3 +345,4 @@ by observing closely what inputs and outputs we humans have.
 
 bibliographystyle:unsrt
 bibliography:refs.bib
+
