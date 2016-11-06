@@ -93,7 +93,7 @@ Micro worlds may not map directly to the real world but simulations
 do want to do this.
 Another difference is that an expert system says nothing about the agent
 having senses, or trying to separate beliefs from the world.
-Honing goes further cite:honing1993micro world stating that micro world are
+Honing goes further cite:honing1993micro stating that micro world are
 the anti thesis of expert systems.
 Expert systems are rule based systems which encode all their knowledge as rules.
 These get so complex that humans no longer can understand how all these rules
@@ -383,7 +383,7 @@ micro world (or how it imagines it) and then see how certain actions play
 out.
 
 * Conclusion
-# TO REVIEW
+# CLEARED
 We've discussed what micro worlds are and why people got excited about them.
 Then we discussed the criticism they got.
 If we say that Micro worlds are not results, Then we can start exploring what
