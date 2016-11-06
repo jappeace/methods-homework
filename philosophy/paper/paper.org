@@ -2,13 +2,6 @@
 #+OPTIONS: toc:nil num:nil
 #+LATEX_HEADER: \usepackage{natbib}
 
-# this is a comment, btw, I use org mode.
-# Opassen dat het niet te historisch word
-# Goed aankleden, kan een micro wereld worden gebruikt
-# om een AI te ontwikkelen?
-
-# Don't get lost in the technicalities.
-
 # CLEARED
 In the early days of AI there was an idea of AI development called
 "micro worlds".
