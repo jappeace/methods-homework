@@ -1,0 +1,6 @@
+This document describes a thesis plan for Jappie Klooster.
+
+* How does adding personality to agents in an communication train game effect gameplay?
+
+** 
+** How far is agentification of communicate! implemented?
