@@ -1,0 +1,14 @@
+* Koen
+You miss citations.
+
+The introduction and conclusions seem really long compared to the rest
+of the paper.
+You start after the introduction with a solution but no problem has been
+specified (or was that the introduction)?
+
+I often don't get the meaning of allineas, what is the purpose of them?
+Each one should have a contained goal be a statement if you will
+and each should somehow advance the plot/thread you're working towards.
+I guess it just misses structure...
+
+What is the point of this paper?
