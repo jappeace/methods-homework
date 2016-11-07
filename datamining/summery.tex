@@ -1,0 +1,192 @@
+\documentclass[12pt,landscape]{extarticle}
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{color,graphicx,overpic}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\newcommand{\indep}{\rotatebox[origin=c]{90}{$\vDash$}}
+
+
+\pdfinfo{
+  /Title (EC cheatsheet)
+  /Creator (TeX)
+  /Producer (pdfTeX 1.40.0)
+  /Author (Jappie Klooster)
+  /Subject (Evulotionary computing)
+  /Keywords (Evolutionary, Computing, Gentic, Algorithm, Heuristics, Strategy)}
+
+% This sets page margins to .5 inch if using letter paper, and to 1cm
+% if using A4 paper. (This probably isn't strictly necessary.)
+% If using another size paper, use default 1cm margins.
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+    { \geometry{top=.5in,left=.5in,right=.5in,bottom=.5in} }
+    {\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+        {\geometry{top=0.5cm,left=0.5cm,right=0.5cm,bottom=0.5cm} }
+        {\geometry{top=0.5cm,left=0.5cm,right=0.5cm,bottom=0.5cm} }
+    }
+
+% Turn off header and footer
+\pagestyle{empty}
+
+% Redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-0.8ex plus -.5ex minus -.2ex}%
+                                {0.2ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-0ex plus -.5ex minus -.2ex}%
+                                {0.1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\makeatother
+
+% Define BibTeX command
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+%My Environments
+\newtheorem{example}[section]{Example}
+% -----------------------------------------------------------------------
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{multicols}{3}
+
+
+% multicol parameters
+% These lengths are set only within the two main columns
+%\setlength{\columnseprule}{0.25pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\begin{center}
+     \Large{\underline{Datamining}} \\
+\end{center}
+\section{Classification trees}
+\subsection{Building classification trees}
+The objective of tree construction is to finally obtain nodes that are pure,
+in the sense that they contain cases of a single class only.
+\subsubsection{Impurity and quality of a split}
+Impurity is a function:
+\[i(t)=\phi(p_1,p_2,...,p_J)\]
+where $p_j(j=1,...,J)$ is the relative frequency of the $J$ different classes.
+$\phi$ is the impurity function with the following constraints:
+\begin{enumerate}
+  \item An impurity measure of a node should be at maximum when the observations
+    are distributed evenly over all classes in that node.
+  \item It should be at a minimum when all observations belong to a single class.
+  \item $\phi$ is a symmetric function of $p_1,...,p_J$.
+    a symmetric function of n variables is one whose value at any n-tuple of
+    arguments is the same as its value at any permutation of that n-tuple.
+\end{enumerate}
+The quality of a split is defined as follows:
+\[\Delta i(s,t)=i(t)-\phi(l)i(l)-\phi(r)i(r)\]
+Where $\phi$ is a function that determines the proportion of cases for a node
+and $l$ and $r$ are the left and right nodes of $t$.
+\paragraph{Resubstitution error}
+It measures what fraction of the class in a node is classified incorrectly if
+we assign every case to the majority class in that node.
+\paragraph{Gini} $i(t)=\sum_j p(j|t)(1-p(j|t))$
+\paragraph{entropy}$i(t)=\sum_j p(j|t)log p(j|t)$
+
+\subsubsection{Overfiting and pruning}
+There are two strategies to avoid overfiting in tree construction:
+Stopping rules, don't expand a node if impurity reduction below some threshold
+and pruning, grow a large tree than later merge back nodes.
+Stopping rules have a disadvantage that they sometimes require you to make
+a weak split to get a good split.
+\paragraph{Cost complexity pruning}
+A problem with pruning is that the number of pruned subtree is $O(e^n)$.
+So cost complexity pruning only considers trees that are
+``the best of their kind''.
+$T$ denotes the tree with leaf nodes $\overset{\sim}{T}$  and leaf node count
+$|\overset{\sim}{T}|$
+$R(T)$ denotes the fraction of cases in the training sample that are
+misclassified by $T$, the re-substitution error of $T$.
+We define the total cost: $C_\alpha(T)=R(T)+\alpha |\overset{\sim}{T}|$
+The total cost of tree $T$ consists of the $R(T)$ and a penalty for complexity
+$\alpha|\overset{\sim}{T}|$ where $\alpha$ is the parameter that determines the
+complexity penalty.
+a complex tree that has no errors may have a higher cost than a mall tree with
+a number of errors depending on the value of $\alpha (\geq 0)$.
+$T_{max}$ denotes the large tree that should be pruned to the right size.
+If we fix the value of $\alpha$, therer is a smallest minimizing subtree $T(\alpha)$
+of $T_{max}$ that fulfills:
+$C_\alpha(T(\alpha))=min T \leq T_{max} C_\alpha(T)$ which says that there is no
+subtree of $T_[max]$ with lower cost than $T(\alpha)$, and
+If $C_\alpha (T) = C_\alpha(T(\alpha))$ then $T(\alpha) \leq T$ which says that
+fi there is a tie then we pick the smallest tree (the one that is a subtree of
+all other that achieve the minimum).
+It can be shown that for every value of $\alpha$ there is  such a smallest
+minimizing subtree. But this is non trivial.
+Even though $\alpha$ goes trough a continum of values there is only a finite
+numer of sutrees of $T_{max}$. We can construct a descreasing sequence of
+subtrees of $T_{max}$: $T_1 > T_2 > ... > {t_1} $ where $t_1$ is the root node,
+such tat $T_k$ is the smallest minimizing subtree for
+$\alpha \in (\alpha_k, \alpha_{k+1})$. $T_1$ is the smallest subtree of $T_{max}$
+with the same resubstitution error as $T_{max}$ ($T_1=T(\alpha=0)$).
+the algorithm to find $T_1$ is: find any pair of leaf nodes with a common parent
+that can be merged back withoutincreasing te resubtition error. Continue until
+no more such pair can be found.
+\[g(t)=\frac{R(t)-R(T_{1,t})}{|\overset{\sim}{T}_{1,t}|-1}\]
+is a function to calculate the next value for $\alpha$ at which $T_k - T_t$
+becomes better than $T_k$.
+The algorithm for cost complexity is as follows: We start by computing $T_1$ from $T_{max}$
+by using $\alpha = 0$. Then we repeat until we reach the root node:
+For each node $t$ in he current tree $T_k$ we compute $g_k(t)$. Then we prune
+$T_k$ in all nodes for which $g_k$ achieves the minimum to obtain $T_{k+1}$.
+\subsubsection{Selection of the final tree}
+$R^{ts}(T)$ denotes the estimated error rate of tree $T$. You can use
+the entire set and just pick the one with the lowest estimated error.
+There is also cross validation, which can be used if the data set is smaller.
+
+\subsection{Missing data}
+The easiest way is  to throw away records with missing data.
+This has the following disadvantages: Potential bias and loss of power (which
+means that our precision is reduced because we loose a lot of examples).
+If we want to use a tree with incomplete data we have the following problems:
+How to determine the quality of a spiet? Which way gets an observation send
+with a missing value?
+If the class labe misses its useless anyway so it should be thrown away.
+A solution is ignoring the quality aspect and add surogate splits.
+\subsection{Computational efficiency}
+A categorical attribute with $L$ is distinct values has $2^{L-1}-1$ possible
+distinct splits.
+For binary class problems and impurity measures that belong to class $\mathcal{F}$
+there is a more efficient algorithm for finding the optimal split.
+$p(0|x=b_l)$  denotes the realitve frequency of class 0 for observations in the
+current node with $x=b_l$. Order $p(0|x=b_l)$. Then one of the $L$ subsets
+is the optimal split. Thus the search is reduced to $O(L-1)$
+\subsubsection{Tree construction}
+   Asuming all $p$ attributes $x_1, ..., x_p$ are numeric we have to sort
+   them per attribute, which takes $O(n log n)$ time.
+   Best case (where each split is a perfect subdivision) we traverse the tree
+   and have to consider $O(n)$ splits per level resulting in $O(n log n)$ time.
+   Worst case it becomes $O(n^2)$
+\section{Graphical models}
+\subsection{Probability rules}
+sum rule $P(X)=\sum_y P(X,Y)$, product rule $P(X,Y)=P(X|Y)P(Y)$.
+\subsection{Independence}
+Random vectors $X$ and $Y$ are independent iff $P(x,y)=P(x)P(y) \text{ for all } (x,y)$
+Therefore $P(x|y)=P(x)$. Independence can be written as $X \indep Y$
+\section{Baysian networks}
+\section{Freq item set mining}
+\end{multicols}
+\end{document}
