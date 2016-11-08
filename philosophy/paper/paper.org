@@ -5,9 +5,6 @@
 # are the arguments well
 # structure: is what is promised delivered?
 
-# traditional vs non traditonal sense should have a reference
-# there are more internal senses should be in a way that there not relevant for discussion
-
 # perhaps replace we'll with I?
 # its weird to describe my opinion as we?
 #
@@ -121,7 +118,7 @@ cite:dreyfus1981micro and Winograd cite:winograd1974.
 As always let's start with Shrdlu,
 why didn't this become the core technology of Siri or Google Now?
 Well first of all Winograd gave up devlopment in 1974.
-Its kind of important for a software project to succeed to have people
+It's kind of important for a software project to succeed to have people
 working on it.
 He stated that developing the system just became too complex.
 He proposes two potential ways of dealing with this:
@@ -151,7 +148,7 @@ Take for example the concept of owning.
 In Shrdlu's mind just a flag is set whether an object is owned by someone.
 When later inquired about it he will just check the flag.
 Dreyfus asks does Shrldlu with this system really understand owning? 
-If it did it would realize its not part of a community in which owning makes
+If it did it would realize it's not part of a community in which owning makes
 sense, in our culture computers can't own anything.
 Therefore we can say that Shrdlu does not really understand what
 it means to own something.
@@ -165,7 +162,7 @@ This then would be considered a particle, from which we later can generalize
 or expand the concept of ownership.
 Similarly to how natural sciences built up by studying isolated systems.
 The problem is that there is no understanding of ownership at all
-from which you can generalize, its defined as a primitive.
+from which you can generalize, it's defined as a primitive.
 # TODO add reference to syntax vs semantics
 
 # CLEARED
@@ -194,9 +191,8 @@ In this section we will discuss some other potential use cases for micro worlds,
 while keeping in mind the criticism the approach got in the previous section.
 
 # CLEARED
-# TODO fix this sentence
-The work Honing 1993 cite:honing1993micro world mostly ignores existing
-applications of micro world and just looks at the definition and the approach.
+The work Honing 1993 cite:honing1993micro mostly ignores existing
+micro worlds and looks at the definition of the approach.
 He was interested in formalizing musical knowledge and used the micro world
 not as an end demonstration to his research but rather as an exploration methodology.
 He argues that programming forces you into a different mindset,
@@ -211,14 +207,12 @@ So Honing used a micro world to test his formalization of musical knowledge,
 and checked if it sounded right.
 However we want to propose several other possible use cases of micro worlds.
 Firstly let's consider ethics.
-# rewrite this sentence because the tone is wrong
-# it has theoretical value.
 Often we have ethical dilemmas that don't make any real world sense,
-but are still useful for the sake of ethics.
+but are still useful for their theoretical value.
 For example let's say you have a self driving car.
 It can choose to either ride into 4 elderly people, 2 children or blow up the
 car with the driver.
-The common sense reply to this "dilemma" is that its completely unrealistic.
+The common sense reply to this "dilemma" is that it's completely unrealistic.
 The car would have more choices than that you would say.
 However in the micro world approach we can change the world to be realistic
 with respect to the dilemma.
@@ -277,7 +271,7 @@ proprioception (if you close your eyes you still know where your limbs are),
 pain
 and the internal senses such as hunger and pulmonary stretch receptors (your lungs).
 There are more internal ones but I won't name them all,
-since the names are very difficult to both understand and write.
+because they're not relevant for the discussion.
 We don't consider sustenance as input to the human brain,
 because the experience of eating comes trough the senses.
 The output the human brain produces on the other hand is a lot more simple:
@@ -344,7 +338,7 @@ Can't we just leave out proprioception to make our lives easier as AI researcher
 Well, the only general intelligence we know of has all these senses.
 If we want to develop a system that could emulate human cognition,
 it should have the same information available as humans.
-If you leave something out it is going to be more alien in its thinking process
+If you leave something out it is going to be more alien in it's thinking process
 than us, because it will perceive the same situation different
 than us and thus come to different conclusions.
 
@@ -364,7 +358,7 @@ Let's say that program $A$ is suspected of being an AGI.
 The first obstacle it has to overcome is of course a CAPTCHA cite:von2004telling.
 Then we can let it play chess, let it do some archery and drive a car.
 Because it lives in a micro world we can throw an arbitrary number of challenges
-against it to ensure that its indeed massively adaptable.
+against it to ensure that it's indeed massively adaptable.
 Then finally we could also put it onto several ethical tests to ensure it
 behaves properly.
 Whats even more important is that this entire process could be automated.
@@ -387,26 +381,31 @@ We're talking about an artificial creature.
 # CLEARED
 Something else what you can do with this architecture is that the creatures
 could have the ability to imagine a micro world in their thought process.
-So if it deliberates its next move it could start an instance of the 
+So if it deliberates it's next move it could start an instance of the 
 micro world (or how it imagines it) and then see how certain actions play
 out.
 
 * Conclusion
-# TODO summery, it misses a statement.
-# also add the difference between microworld and simulation
-# anwser "why they aren't used anymore?"
 # CLEARED
-We've discussed what micro worlds are and why people got excited about them.
-Then we discussed the criticism they got.
+We've discussed what micro worlds are, simulations that don't necessarily
+need to apply to the real world
+and why people got excited about them, the rapid results for subjects that are
+even today difficult.
+Then we discussed the criticism they got,
+which mainly involved the difficulty of bringing the programs written in
+a micro world to a real world scenario.
 If we say that Micro worlds are not results, Then we can start exploring what
 they are.
-They're just experimentation tools to gain either deeper understanding of a
+They're an experimentation tools to gain either deeper understanding of a
 system or test it.
-Several use cases have been discussed.
+With this in mind several use cases have been discussed,
+such as in ethics and robotics.
 Finally we've discussed what a micro world would need to simulate for it to be
 able to host a program that could be a general intelligence,
 by observing closely what inputs and outputs we humans have.
-Then we observed possible advantages of such an approach.
+Then we observed possible advantages of such an approach,
+which could provide a reliable testing method (is the program an AI?)
+and could give this program a way of doing imagination.
 
 <<bibliography link>>
 
