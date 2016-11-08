@@ -103,7 +103,7 @@ and $l$ and $r$ are the left and right nodes of $t$.
 It measures what fraction of the class in a node is classified incorrectly if
 we assign every case to the majority class in that node.
 \paragraph{Gini} $i(t)=\sum_j p(j|t)(1-p(j|t))$
-\paragraph{entropy}$i(t)=\sum_j p(j|t)log p(j|t)$
+\paragraph{entropy}$i(t)=\sum_j p(j|t)\log p(j|t)$
 
 \subsubsection{Overfiting and pruning}
 There are two strategies to avoid overfiting in tree construction:
@@ -175,9 +175,9 @@ current node with $x=b_l$. Order $p(0|x=b_l)$. Then one of the $L$ subsets
 is the optimal split. Thus the search is reduced to $O(L-1)$
 \subsubsection{Tree construction}
    Asuming all $p$ attributes $x_1, ..., x_p$ are numeric we have to sort
-   them per attribute, which takes $O(n log n)$ time.
+   them per attribute, which takes $O(n \log n)$ time.
    Best case (where each split is a perfect subdivision) we traverse the tree
-   and have to consider $O(n)$ splits per level resulting in $O(n log n)$ time.
+   and have to consider $O(n)$ splits per level resulting in $O(n \log n)$ time.
    Worst case it becomes $O(n^2)$
 \section{Graphical models}
 \subsection{Probability rules}
@@ -186,11 +186,99 @@ To estimate the joint distrubtion of $X$ and $Y$ we use $\overset{\wedge}{P}(x,y
 \subsection{Independence}
 Random vectors $X$ and $Y$ are independent iff $P(x,y)=P(x)P(y) \text{ for all } (x,y)$
 Therefore $P(x|y)=P(x)$. Independence can be written as $X \indep Y$.
-This gives the factorisation criterion for independent randomvectors:
+This gives the factorization criterion for independent random vectors:
 random vectors $X$ and $Y$ are independent iff there exists two functions $g$
 and $h$ such that: $P(x,y) = g(x)h(y)$ for all $(x,y)$.
+A ``log version'' is: $\log P(x,y)=g'(x)+h'(y)$ for all $(x,y)$.
 Random vectors $X$ and $Y$ re independent given $Z$ iff
+$P(x,y|z)=P(x|z)P(y|z)$ for all $(x,y)$ and for all $z$ for which $P(z)>0$.
+This is the same as:
 $P(x,y,z)=P(x,z)P(y,z)/P(z)$.
+With marginal independence we can state a simple factorization criterion
+to establish conditional independence: random vectors $X$ and $Y$ are
+conditionally independent given $Z,X \indep Y | Z$ iff there exists
+functions $g$ and $h$ such that $P(x,y,z)=g(x,z)h(y,z)$.
+\subsection{Independence graphs}
+Conditional independence relations can be represented as a conditional
+independence graph. Let $X=(X_1,X_2,\dots, X_k)$ be a $k$-dimensional random
+vector. The conditional independence graph of $X$ is the undirected graph
+$G=(K,E)$ with $K={1,2,...,k}$ and where ${i,j}$ is not in the edge set $E$ 
+iff $X_i \indep X_j|rest$.
+Global markov property: $a$ seperates $b$ from $c$ ($a,b,c$ disjoint) iff
+$X_b \indep X_c | X_a$ where $X_a=(X_i;i\in a)$ and $a$ seperates $b$ from
+$c$ if for all $i \in b, j\in c:$ $a$ seperates $i$ from $j$.
+Is equal to local markov property: $X_i \indep$ rest | boundary$(i)$ where
+the boundary of a vertex $i$ is simply the set of adjecent vertices.
+\subsection{Log linear models}
+\subsubsection{for binary data}
+A random experiment that only disguises between two possible outcomes is
+called a \emph{Bernoulli} experiment. Random variable $X$ denotes the number of
+successes in a Bernoulli experiment; $X$ therefore has possible values 0 and 1.
+The probability distribution of $X$ is completely determined by the probablity of
+success which we denote by $p$  and is $P(X=0) = 1 - p $ and $ P(X=1)=p$.
+$X$ has the probability function $P(x)=p^x(1-p)^{1-x}$ for $x=0,1$ and
+$0 \leq p \leq 1$.
+log properities: $\log a^b=b \log a$, $\log ab = \log a + \log b$,
+$\log \frac{a}{b}=\log a - \log b$.
+The cartesion product 
+${0,1} \times {0,1}$ creates a table of the bivariate Bernoulli random
+vector $(X_1,X_2)$.
+\begin{tabular}{llll}
+  $P(x_1,x_2)$ & $x_2=0$ & $x_1=1$ & Total \\
+  $x_1=0$ & $p(0,0)$ & $p(0,1)$ & $p_1(0)$ \\
+  $x_1=1$ & $p(1,0)$ & $p(1,1)$ & $p_1(1)$ \\
+  Total & $p_2(0)$ & $p_2(1)$ & $1$ \\
+\end{tabular}
+which can be written as
+$P(x_1,x_2)=p(0,0)^{(1-x_1)(1-x_2)}p(0,1)^{(1-x_1)x_2}p(1,0)^{x_1(1-x_2)}p(1,1)^{x_1x_2}$
+for $x_1=0,1$ and $x_2=0,1$.
+Taking logarithms of this identity for $P$ and collecting terms in$x_1$ and
+$x_2$ gives:
+$\log P(x_1,x_2)= \begin{matrix}
+    \log p(0,0) + x_1 \log \frac{p(1,0)}{p(0,0)} +  \\
+    x_2 \log \frac{p(0,1)}{p(0,0)} + x_1 x_2 \log \frac{p(1,1)p(0,0)}{p(0,1)p(1,0)}
+    \end{matrix}
+$
+reparameterizing the right hand side leads tothe so-caled \emph{log-linear expension}
+$\log P(x_1,x_2)=u_\emptyset+ x_1u_1 + x_2 u_2 + x_1 x_2 u_{12}$
+the $u$ coefficients are called $u$-terms, they substitue the log part.
+The coefficient of the product $x_1x_2$ is the logarithm of the cross product
+ratio:
+$u_{12}=\log cpr(X_1,X_2)$
+The random variables $X_1$ and $X_2$ are independent iff $u_{12}=0$
+If $u_{12}=0$ we can take $g(x_1)=u_\emptyset + x_1 u_1$ and $h(x_2)= u_2 x_2$.
+This is not posible with $u_{12}\neq 0$.
+We can enforce (conditional) independence constraints by etting the right
+$u$-terms to zero.
+\subsection{non binary data}
+To work with non binary data we make the u terms functions rather than constants:
+$log P(x_1,x_2)=u_\emptyset + u_1(x_1) + u_2(x_2) + u_{12}(x_1,x_2)$
+This produces to many parameters, and to identify them we have to impose
+an extra constraint: $u_a(x_a)=0$ whenever $x_i=0$ and $i\in a$. Here we
+assume that if $x_i$ has $d_i$ possible values, these are numbered
+$0,1,...,d_i-1$, but not ordered.
+\subsection{Hierarchical and graphical}
+% TODO: perhaps delete this section?
+The log-linear expension of the crossclassified multinominal density function
+$P_K$ is $\log P_K(x)=\underset{a \subseteq K}{\sum} u_a(x_a)$ where the sum is
+taken over all possible subsets of $K={1,2,...,k}$ and where the $u$-terms are
+coorinate projection functions, so that $u_a(x)=u_a(x_a)$ and also satisfy the
+constraint that $u_a(x)=0$ whenever $x_i = 0$ and $i\in a$.
+\subsubsection{Independence and the u-terms}
+$If(X_a,X_b,X_c)$ is a partitioned multinominal random vector then
+$X_b \indep X_c|X_a$ if and only if all u-terms in the log-linear expension with
+one or more coordinate in $b$ and one or more coordinate in $c$ are zero.
+The proof is direct application of the factorisation theorom for conditional
+independence.
+\subsubsection{Graphical model}
+Given an independence graph $G=(K,E)$ the cross-classified multinomal
+distrubtion for the random vector $X$ is a graphical model for $X$ if the
+distribution of $X$ is an arbitrary apart from constraints of the form that for
+all pairs of coordinates not in the edge set $E$ of $G$ the $u$ terms containing
+the selected coordinates are identically zero.
+\subsection{Maximum likelhood estimation}
+The maximum likelihood estimator of gaphical log linear model $M$ satisfies the
+likelihood equations: $\overset{\wedge}{n}_a=N\overset{\wedge}{P}_a=n_a$
 \section{Baysian networks}
 \section{Freq item set mining}
 \end{multicols}
