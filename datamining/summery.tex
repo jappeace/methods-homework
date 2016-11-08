@@ -9,9 +9,8 @@
 \usepackage{graphicx}
 \newcommand{\indep}{\rotatebox[origin=c]{90}{$\vDash$}}
 
-
 \pdfinfo{
-  /Title (EC cheatsheet)
+  /Title (Datamining cheatsheet)
   /Creator (TeX)
   /Producer (pdfTeX 1.40.0)
   /Author (Jappie Klooster)
@@ -183,9 +182,15 @@ is the optimal split. Thus the search is reduced to $O(L-1)$
 \section{Graphical models}
 \subsection{Probability rules}
 sum rule $P(X)=\sum_y P(X,Y)$, product rule $P(X,Y)=P(X|Y)P(Y)$.
+To estimate the joint distrubtion of $X$ and $Y$ we use $\overset{\wedge}{P}(x,y)=\frac{n(x,y)}{n}$
 \subsection{Independence}
 Random vectors $X$ and $Y$ are independent iff $P(x,y)=P(x)P(y) \text{ for all } (x,y)$
-Therefore $P(x|y)=P(x)$. Independence can be written as $X \indep Y$
+Therefore $P(x|y)=P(x)$. Independence can be written as $X \indep Y$.
+This gives the factorisation criterion for independent randomvectors:
+random vectors $X$ and $Y$ are independent iff there exists two functions $g$
+and $h$ such that: $P(x,y) = g(x)h(y)$ for all $(x,y)$.
+Random vectors $X$ and $Y$ re independent given $Z$ iff
+$P(x,y,z)=P(x,z)P(y,z)/P(z)$.
 \section{Baysian networks}
 \section{Freq item set mining}
 \end{multicols}
