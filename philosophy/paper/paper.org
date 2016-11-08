@@ -2,6 +2,15 @@
 #+OPTIONS: toc:nil num:nil
 #+LATEX_HEADER: \usepackage{natbib}
 
+# are the arguments well
+# structure: is what is promised delivered?
+
+# traditional vs non traditonal sense should have a reference
+# there are more internal senses should be in a way that there not relevant for discussion
+
+# perhaps replace we'll with I?
+# its weird to describe my opinion as we?
+#
 # CLEARED
 In the early days of AI there was an idea of AI development called
 "micro worlds".
@@ -62,7 +71,7 @@ It should be noted that this definition came from an internal memo in MIT
 never meant for publication.
 
 # CLEARED
-Lets first make a less strongly worded definition of the term micro world:
+Let's first make a less strongly worded definition of the term micro world:
 A micro world is an artificially constructed world for conducting AI research.
 The AI program (or agent) experiences the world trough senses to avoid logical
 omniscience.
@@ -77,7 +86,7 @@ A micro world does not need to be compatible with the real world.
 So you may wonder,
 what is the difference between a micro world and a simulation?
 A micro world is a sort of simulation,
-but its important to remember that things represented in a micro world don't
+but it's important to remember that things represented in a micro world don't
 necessarily need to be true in the real world.
 A simulation however wants to try to be as close to the real world as possible
 cite:wiki_simulation.
@@ -106,12 +115,12 @@ whereas expert systems are supposed to /describe/ them.
 * Criticism on the micro world approach
 # CLEARED
 Now we'll discuss criticism on the micro world approach with help of Dreyfus
-cite:dreyfus1981micro and Wingorad cite:winograd1974.
+cite:dreyfus1981micro and Winograd cite:winograd1974.
 
 # CLEARED
-As always lets start with Shrdlu,
-why didn't this became the core technology of Siri or Google Now?
-Well first of all Wingorad gave up devlopment in 1974.
+As always let's start with Shrdlu,
+why didn't this become the core technology of Siri or Google Now?
+Well first of all Winograd gave up devlopment in 1974.
 Its kind of important for a software project to succeed to have people
 working on it.
 He stated that developing the system just became too complex.
@@ -178,13 +187,14 @@ but the methodology itself could be useful.
 This will be explained more thoroughly in the next chapters.
 
 # TODO what replaced micro world research? Why did it stop?
-* Could a micro world be use full?
+* Could a micro world be useful?
 # CLEARED
 So perhaps micro worlds are not the end goal we should strive for in AI.
 In this section we will discuss some other potential use cases for micro worlds,
 while keeping in mind the criticism the approach got in the previous section.
 
 # CLEARED
+# TODO fix this sentence
 The work Honing 1993 cite:honing1993micro world mostly ignores existing
 applications of micro world and just looks at the definition and the approach.
 He was interested in formalizing musical knowledge and used the micro world
@@ -200,14 +210,16 @@ a functional theory.
 So Honing used a micro world to test his formalization of musical knowledge,
 and checked if it sounded right.
 However we want to propose several other possible use cases of micro worlds.
-Firstly lets consider ethics.
+Firstly let's consider ethics.
+# rewrite this sentence because the tone is wrong
+# it has theoretical value.
 Often we have ethical dilemmas that don't make any real world sense,
 but are still useful for the sake of ethics.
-For example lets say you have a self driving car.
+For example let's say you have a self driving car.
 It can choose to either ride into 4 elderly people, 2 children or blow up the
 car with the driver.
 The common sense reply to this "dilemma" is that its completely unrealistic.
-The care would have more choices than that you'd say.
+The car would have more choices than that you would say.
 However in the micro world approach we can change the world to be realistic
 with respect to the dilemma.
 Remember that in our definition a micro world doesn't need to work
@@ -217,12 +229,12 @@ it to make a decision, and evaluate if this is what you wanted.
 The micro world approach has helped you to explore and evaluate if the
 program complies with the ethics you desire.
 What's even better is that you can automate this process for multiple dilemma's,
-before you roll out and updated version into the wild.
+before you roll out an updated version into the wild.
 The only hard part becomes deciding what the "right" answer is, but figuring
 that out is out of the scope of this paper.
 
 # CLEARED
-In another scenario, lets say you want to build a autonomous robot.
+In another scenario, let's say you want to build a autonomous robot.
 However your budget is extremely tight,
 therefore you don't want the program to trip over and break the hardware in
 the first test run.
@@ -233,11 +245,10 @@ In fact there are entire databases online available
 from which you can choose your 3d parts cite:parts_database.
 So if your micro world would use only these parts, and have a somewhat
 realistic physics engine, you could test with some confidence that it won't fall.
-Testing the autonomous robot in a micro world could safe cost,
+Testing the autonomous robot in a micro world could save cost,
 and what's even better, it could be exposed to ethical tests along the way.
 
 * How complex does a micro world need to be for AI?
-# TODO motivating why you would want to do this
 # CLEARED
 We humans, like to think of ourselves as a general intelligence.
 By which we mean, we are massively adaptable.
@@ -251,17 +262,15 @@ Or would something more simple suffice?
 In this section we'll try to answer these questions.
 
 # CLEARED
-Lets first analyze the data a human brain takes in.
+Let's first analyze the data a human brain takes in.
 This passes trough something which are commonly called "senses".
-The "traditional" ones are:
+The "traditional" ones are cite:postgate1994outer:
 Sight,
 hearing,
 taste,
 smell
 and touch.
-Traditional because everyone learns about these in biology on high-school,
-and they're kind off obvious.
-Then there are the non-traditional ones such as:
+Then there are the non-traditional ones such as cite:nontraditional:
 Balance and acceleration,
 Temperature,
 proprioception (if you close your eyes you still know where your limbs are),
@@ -321,11 +330,11 @@ Another problem is that giving each agent all these senses every unit of time
 will be slow,
 for humans this time unit is at least 21 times per second for sight,
 but it varies per sense.
-There is hope for this approach however,
-for one standards are not necessary,
-you could just invent an encoding on the fly,
-experimentation is one of the strong suits of the micro world approach,
-the theory shouldn't not be forgotten however.
+There is hope for this approach however.
+For one standards are not necessary.
+You could just invent an encoding on the fly.
+Experimentation is one of the strong suits of the micro world approach.
+The theory shouldn't not be forgotten however.
 Secondly the time in the micro world can move slower than time in the real world.
 
 # CLEARED
@@ -351,7 +360,7 @@ consistent around the inhabitants.
 # CLEARED
 Now we've defined a micro world that can possibly host an artificial general
 intelligence (AGI) we can have some fun with it.
-Lets say that program $A$ is suspected of being an AGI.
+Let's say that program $A$ is suspected of being an AGI.
 The first obstacle it has to overcome is of course a CAPTCHA cite:von2004telling.
 Then we can let it play chess, let it do some archery and drive a car.
 Because it lives in a micro world we can throw an arbitrary number of challenges
@@ -383,6 +392,9 @@ micro world (or how it imagines it) and then see how certain actions play
 out.
 
 * Conclusion
+# TODO summery, it misses a statement.
+# also add the difference between microworld and simulation
+# anwser "why they aren't used anymore?"
 # CLEARED
 We've discussed what micro worlds are and why people got excited about them.
 Then we discussed the criticism they got.
