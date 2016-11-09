@@ -20,12 +20,7 @@
 % This sets page margins to .5 inch if using letter paper, and to 1cm
 % if using A4 paper. (This probably isn't strictly necessary.)
 % If using another size paper, use default 1cm margins.
-\ifthenelse{\lengthtest { \paperwidth = 11in}}
-    { \geometry{top=.5in,left=.5in,right=.5in,bottom=.5in} }
-    {\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
-        {\geometry{top=0.5cm,left=0.2cm,right=0.2cm,bottom=0.5cm} }
-        {\geometry{top=0.5cm,left=0.2cm,right=0.2cm,bottom=0.5cm} }
-    }
+\geometry{top=0.2cm,left=0.2cm,right=0.2cm,bottom=0.2cm}
 
 % Turn off header and footer
 \pagestyle{empty}
@@ -347,5 +342,60 @@ variables.
 We can write the joint density:
 $P(X)=\underset{i=1}{\overset{k}{\prod}}P(X_i|X_{pa(i)})$.
 and the conditional indepencence as: $i \indep j|an({i,j})$
+\subsection{Interpretation}
+Given a DAG we construct the moral graph $G^m$ by marrying parents and deleting
+directions, that is:
+For each $i \in K$ we connect all vertices in $pa(i)$ with lines, we replace all
+arrows in $E$ with lines.
+\subsection{Maximum likelyhood estimation}
+\subsubsection{ML estimation for Multinomal distribution}
+We want to estimate the probabilities $p1 , p2 , \dots , p_J$
+of getting outcomes $1, 2, \dots , J$ If in $n$ trials,
+we observe n1 outcomes $1, n_2$ of $2, \dots, n_J$ of $J$,
+then the obvious guess is to estimate $p_j , j = 1, \dots , J$, by $n_j /n$.
+This is also the maximum likelihood estimate.
+\subsection{ML estimation for bayesian nets}
+The joint probability for $n$ independent observation in log likelyhood becomes
+$L=\underset{i=1}{\overset{k}{\sum}}\underset{x_i,x_{pa(i)}}{\sum}n(x_i,x_{pa(i)})
+\log p(x_i|x_{pa(i)})$
+where $p$ stands for network parameters, $n(x_i,x_{pa(i)})$ for the number of
+obsevations with $X_i=x_i$ and $X_{pa(i)}=x_{pa(i)}$.
+If the parameters are not related this is just a bunch of independent
+multinomalestimation problems. So we can say
+$\overset{\wedge}{p}(x_i|x_{pa(i)})=\frac{n(x_i,x_{pa(i)})}{n(x_{pa(i))}}$,
+which can be substituted in the $L$ formula.
+\subsection{Estimation from incomplete data}
+We paritition the complete data in an observed part $X_{obs}$ and a missing part
+$X_{miss}$. For observation $j$ we write $X^{(j)}=(X_{obs}^{(j)},X_{mis}^{(j)})$.
+We want to find those parameter values that maximize the probability of the
+observed data.
+This means that if some values are missing,
+we have to obtain the marginal probability of the observed data by summing out
+the missing data. For observation $j$,
+the probability thus is:
+$P(X^{j}_{obs})=\underset{X^{(j)}_{mis}}{\sum}P(X^{(j)})$
+For all observations it becomes a product.
+Direct maximization of the observed data likelihood is complicated because we get
+a sum of parameters inside a log.
+There is an algorithm iterative scheme to compute the ML estimate called
+expectation maximization, it alternates between expectation step and maximization
+steps. 
+\subsection{Model selection with complete data}
+To prevent overfitting we introduce a penalty. $L^M$ denotes the value of the
+log-likelyhood function evaluated at $\overset{\wedge}{p}^M$; the ML estimates
+of $p$ under model $M$. Akaikes information criterion would ive the follwoing
+quality form model $M$: $AIC(M)=-2L^M+2dim(M)$ where $dim(M)$ is thenumber of
+parameters of the model. which we divide by $-2$ to get higher value for higher
+quality: $AIC(M)=L^M-dim(M)$. AIC gives a relativly low penalty for complex
+models therefore Baysian infromation criterion is more popular:
+$BIC(M)=L^M-\frac{\log n}{2} dim(M)$
+So now we have a well-defined optimzation problem: Given training data, scoring
+function (BIC), space of possible models (all DAG's) find a network that
+maximaizes the score.
+This is however NP hard therefore heuristics such as hillclimbing are used.
+The score is decomposable, its a sum of terms where each term contains the
+variables $i \cup pa(i)$. This means we only have to recalculate for variables
+of which the parent set has changed.
+\section{Freq paternset minig}
 \end{multicols}
 \end{document}
