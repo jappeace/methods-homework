@@ -397,6 +397,8 @@ This is however NP hard therefore heuristics such as hillclimbing are used.
 The score is decomposable, its a sum of terms where each term contains the
 variables $i \cup pa(i)$. This means we only have to recalculate for variables
 of which the parent set has changed.
+You have the reverse opperation because hillclimbing only looks one step ahead,
+therefore adding and deleting can't emulate it.
 \section{Freq paternset minig}
 \subsection{Association rules: The binary case}
 The traditional setting for association rules consists of a set of transactions
@@ -502,5 +504,32 @@ in which it is contained (its closure).
 Our strategy is therefore to select the maximal itemsets,
 generate all their sub- sets,
 and determine their support using the third property.
+\section{Frequent pattern mining}
+$\Sigma$ is the set of labels, $s=s_1,_2,\dots,s_n$ where $s_i \in \Sigma$,
+prefix $s[1:i]=s_1,s_2,\dots,s_1, 0 \leq i \leq n$. suffix $s[i:n]$.
+Let $s=s_1,s_2\dots s_n$ and $r=r_1,r_2,\dots r_m$ be two sequences over
+$\Sigma$. We say $r$ is a subsequence of $s$ denoted $r \subseteq s$, if there
+exists a one-to-one mapping $\phi:[1,m]\to[1,n]$ such that $r[i]=s[\phi(i)]$ and
+$i< j \Rightarrow \phi(i)<\phi(j)$.
+Each position in $r$ is mapped to a position in $s$ with the same label and the
+orer of labels is preserved. There may however be interverning gapsbetween
+consecutive elements of $r$ in the mapping.
+Given a database $D={s_1,\dots,s_N}$ of $N$ sequences and given some sequenc $r$
+the suport is defined as the total number of seuences in $D$ that contain $r$:
+$sup(r)=|\{s_i\in D:r\subseteq s_i\}|$. Given a minimum support threshold minsup,
+compute $\mathcal{F}(minsup,D)=\{r|sup(r)\leq minsup\}$.
+For two sequences $r_1$ and $r_2$ we have $r_1 \subseteq r_2 \Rightarrow
+sup(r_1) \leq sup(r_2)$ becuase $\forall s \in D: r_2 \subseteq s \Rightarrow
+r_1 \subseteq s$
+Hence in a level wise search for frequent sequences there is no point in
+expending infrequent ones.
+\subsection{GSP algorthm}
+Perform level wise search. Don't extend infrequent sequences.
+Candiadate generation for level $k+1$: take two frequent sequences $r_a$ and
+$r_b$ of length $k$ with $r_a[q:k-1]=r_b[1:k-1]$ and generate pre-candadate
+$r_{ab}=r_a+r_b[k]$. Pre-candidate $r_{ab}$ becomes a candidate (has to be
+counted) if all its subsequences of length $k$ are frequent. Note that we allow
+$r_a = r_b$.
+\subsection{Node labeled Graph}
 \end{multicols}
 \end{document}
