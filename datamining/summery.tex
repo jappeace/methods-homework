@@ -1,4 +1,4 @@
-\documentclass[12pt,landscape]{extarticle}
+\documentclass[10pt,landscape]{extarticle}
 \usepackage{multicol}
 \usepackage{calc}
 \usepackage{ifthen}
@@ -23,8 +23,8 @@
 \ifthenelse{\lengthtest { \paperwidth = 11in}}
     { \geometry{top=.5in,left=.5in,right=.5in,bottom=.5in} }
     {\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
-        {\geometry{top=0.5cm,left=0.5cm,right=0.5cm,bottom=0.5cm} }
-        {\geometry{top=0.5cm,left=0.5cm,right=0.5cm,bottom=0.5cm} }
+        {\geometry{top=0.5cm,left=0.2cm,right=0.2cm,bottom=0.5cm} }
+        {\geometry{top=0.5cm,left=0.2cm,right=0.2cm,bottom=0.5cm} }
     }
 
 % Turn off header and footer
@@ -279,7 +279,42 @@ the selected coordinates are identically zero.
 \subsection{Maximum likelhood estimation}
 The maximum likelihood estimator of gaphical log linear model $M$ satisfies the
 likelihood equations: $\overset{\wedge}{n}_a=N\overset{\wedge}{P}_a=n_a$
+\subsubsection{Iterative proportional fitting}
+Is a converging algorithm
+Start with a uniform table. Then set the row margins to the fitted counts
+and distribute them proportionally. Then do the same for the columns, keep
+doing this until the values converged.
+
+\subsection{Decomosable graphical models}
+Decomposable models are graphical models that have explicit formulas for the
+maximum likelihood estimates.
+This is a convenient property from a computational viewpoint.
+If we only have to fit one model this is perhaps not so important,
+but when we have little prior knowledge we typically have to search a
+potentially large space of possible models.
+Decomposable models are very easy to characterize by their independence graphs.
+They have triangulated independence graphs: their independence graphs have no
+chordless cycles of length greater than three. A cycle is called chordless
+if no other than successive pairs of vertices in the cycle are adjacent. 
+\subsection{Deviance and likelhood ratio test}
+The deviance of a fitted model compares the log-likelihood of the fitted model
+to the log-likelihood of the saturated model.
+The larger the model deviance, the poorer the fit.
+The likelihood of a model $M$ is
+$L(\overset{\wedge}{P}(x);n(x))=\underset{x}{\prod}\overset{\wedge}{P}(x)^{n(x)}$
+and the log likelihood of a model $M$ is
+$\underset{x}{\sum} n(x)\log \overset{\wedge}{P}(x)$
+$L^i=L(\overset{\wedge}{P}^{M_i})$ is the value of the log likelihood function
+valutated at $\overset{\wedge}{P}^{M_i}$; the ML estimates of $P$ under $M_i$.
+Let $M_0 \subseteq M_1$; ie $M_0$ can be obtained from $M_1$ by setting
+additional $u$-terms to zero (more restrictions). The deviance between $M_0$ and
+$M_1$ is $dev(M_0) - dev(M_1) = 2(L^1 - L^0)$.
+For large $N$ $2(L^1-L^0) \approx M_0 \chi^2_v$ where the degrees of freedom $v$
+is equal to the number of additional restrictions of $M_0$. 
+We reject the null hypothesis that $M_0$ is the true model when:
+$2(L^1-L^0)>\chi^2_{v;\alpha}$. 
 \section{Baysian networks}
+
 \section{Freq item set mining}
 \end{multicols}
 \end{document}
