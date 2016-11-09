@@ -1,4 +1,4 @@
-\documentclass[10pt,landscape]{extarticle}
+\documentclass[9pt,landscape]{extarticle}
 \usepackage{multicol}
 \usepackage{calc}
 \usepackage{ifthen}
@@ -8,6 +8,9 @@
 \usepackage{hyperref}
 \usepackage{graphicx}
 \newcommand{\indep}{\rotatebox[origin=c]{90}{$\vDash$}}
+\usepackage{amssymb}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
 
 \pdfinfo{
   /Title (Datamining cheatsheet)
@@ -79,17 +82,15 @@ The objective of tree construction is to finally obtain nodes that are pure,
 in the sense that they contain cases of a single class only.
 \subsubsection{Impurity and quality of a split}
 Impurity is a function:
-\[i(t)=\phi(p_1,p_2,...,p_J)\]
+$i(t)=\phi(p_1,p_2,...,p_J)$
 where $p_j(j=1,...,J)$ is the relative frequency of the $J$ different classes.
 $\phi$ is the impurity function with the following constraints:
-\begin{enumerate}
-  \item An impurity measure of a node should be at maximum when the observations
-    are distributed evenly over all classes in that node.
-  \item It should be at a minimum when all observations belong to a single class.
-  \item $\phi$ is a symmetric function of $p_1,...,p_J$.
-    a symmetric function of n variables is one whose value at any n-tuple of
-    arguments is the same as its value at any permutation of that n-tuple.
-\end{enumerate}
+An impurity measure of a node should be at maximum when the observations
+are distributed evenly over all classes in that node,
+it should be at a minimum when all observations belong to a single class,
+$\phi$ is a symmetric function of $p_1,...,p_J$.
+A symmetric function of n variables is one whose value at any n-tuple of
+arguments is the same as its value at any permutation of that n-tuple.
 The quality of a split is defined as follows:
 \[\Delta i(s,t)=i(t)-\phi(l)i(l)-\phi(r)i(r)\]
 Where $\phi$ is a function that determines the proportion of cases for a node
@@ -397,5 +398,109 @@ The score is decomposable, its a sum of terms where each term contains the
 variables $i \cup pa(i)$. This means we only have to recalculate for variables
 of which the parent set has changed.
 \section{Freq paternset minig}
+\subsection{Association rules: The binary case}
+The traditional setting for association rules consists of a set of transactions
+in which each transaction is a set of items.
+Translated to a relational setting,
+we have a table db with schema $R = {I_1 , \dots, I_n }$,
+in which each $I_i$ is a binary attribute.
+The attributes correspond with the items,
+the rows in the table with the transactions
+; a row has value 1 for an attribute if and only if the transaction contains
+that item.
+For $X,Y \subseteq R$, with $X\cap Y=\emptyset$ let $s(X)$ denote the support of
+$X$, the number of tuples that have value 1 for all items in $X$. for an
+association rule $X \to Y$ define the support is $s(X\cup Y)$, the confidence is
+$s(X\cup Y)/s(X)$
+The problem is to find all association rules that match or exceed the user
+defined lower thresholds for confidence, \emph{minconf}, and support
+\emph{minsup}.
+In a major abuse of notation,
+you could say that the support of X (when expressed as a fraction) corresonds
+to $P (X)$ in probability terms,
+and the confidence of $X \to Y$ with the conditional probability $P (Y | X)$.
+There are two tesholds we have to satisfy:
+find all sets $Z$ whoese support exceeds the minimal threshold. These sets are
+called frequent. Then test for all non-empty subsets $X$ of frequent sets $Z$
+wheter the rul $X \to Z \setminus X(=Y)$ holds with sufficient confidence.
+\subsubsection{A priori alogirhtm}
+Finding all frequents sets is problematic since all sets of $R$ are
+$|\mathcal{P}(R)|=2^{|R|}$. But since $Z$ can only be frequent if all its
+(non-empty) subsets are frequent we can do it.
+This is known as the A-Priori property. In other words, we can search level wise
+for the frequent sets.
+The level is the number of items in the set. Denote by $C(i)$ the sets of $i$
+items that are potentially frequent (the candidate sets) and by $F (i)$
+the frequent sets of $i$ items.
+Start with level one all entries of $R$ (in random order),
+filter on the level $C(i)$ each entry
+that doesn't have enough support, these are the frequent items $F(i)$.
+Then $i$ is increased, and we start creating the
+next level of candidates $C(i)$ based on $F(i-1)$ (which we just made).
+Then they do this:
+For each $X \in F (i − 1)$ do
+For each $Y \in F (i − 1)$ that shares the first $i − 2$ items with X do
+$C(i) := C(i) \cup {X \cup Y }$
+If we assume the db is sparse the complexity becomes $O(|R|^{k+1})$ where $k$
+is the maximal size of frequent items sets that is $k << |R|$.
+To generate association rules:
+\emph{flatmap} each freq set $X$ \emph{with} each non empty $Y \subset X$ filtering
+$s(X)/s(X\setminus Y)\geq minconf$ as $X \setminus Y \to Y $
+\subsection{Drowining in assoc rules}
+\subsubsection{Postprocessing the result set}
+We can order the resultss we can use conidence and support: they define a
+partial order on the set of rules. Given rules $r_1$ and $r_2, r_1A$ iff 
+$s(r_1) \leq s(r_2) \wedge conf(r_1) < con (r_2)$ or
+$s(r_1) < s(r_2) \wedge conf(r_1) \leq conf(r_2)$
+A rule is interesting if it gives usefull infromation. Lots of measures have
+been defined as an attempt to do that: lift, interest, conviction, colective
+strength, gain, gini, entropy, $\chi^2$ This is lift:
+$lift(A\to C)=\frac{P(C|A)}{P(C)}=\frac{P(A,C)}{P(A)P(C)}$
+The lift should be bigger than one for a rle to be itneresting.
+\subsubsection{Generating less rules}
+Closed frequent itemsets are itemsets that completely characterise their
+associated set of transactions.
+That is, a frequent itemset $I$ is closed if $I$ contains all items that occur in
+all transactions in the support of $I$.
+For an itemset $I$, denote by $\sigma(I)$ the set of tuples in which all items
+in $I$ are bought, that is $\sigma(I)=\{t \in db | \forall i \in I, i \in t\}$
+For a set of transaction $T$ let $f(T)$ denote the set of items that are bought
+in all transaction in $T$, that is $f(T)=\{i \in R | \forall t \in T, i \in t\}$
+The closure can be obtained by $c(I)=f(\sigma(I))$.
+To give a procedural description of applying the closure operator to an itemset
+$I$:
+first get the transactions in which all items in $I$ are bought,
+and then see whether there are any more items that are common to all these
+transactions.
+If so, add them to $I$ and return the result.
+Clearly, $I \subseteq c(I)$ and $I$ has the same support as $c(I)$.
+An itemset $I$ is closed if and only if $c(I) = I$.
+An itemset $I$ is a closed frequent itemset iff it is both frequent and closed.
+The A-Close algorithm for finding al frequent closed itemsets consists of 2
+phases: One, discover all freq closed itemsets in db. Derive all frequent
+itemsets from the freqeunt closed itemsets found in phase 1.
+In phase 1 the algorithm determines a set of so-called generators that will
+produce all frequent closed itemsets by application of the closure operator $c$.
+An itemset $I$ is a generator of a closed itemset $J$ if it is one of the
+smallest itemsets with $c(I) = J$.
+A-Close performs a levelwise search like Apriori:
+$G_{i+1}$ (the set of generators at level $i + 1$) is constructed using $G_i$.
+Using their support, and the support of their $i$-subsets in $G_i$,
+infrequent itemsets and itemsets that have the same support as one of their
+subsets are deleted from $G_{i+1}$. The rational of the secon pruning rule is
+that if an itemset has a subset with the same suppport, then this subset also
+has the same closure.
+Now that the generators have been determined, we compute their closures,
+where $c(I)=\cap t \in db: I \subseteq t$. Different generators may produce the
+same closure, duplicates are removed.
+In phase 2 we determine all frequent itemsets and their support.
+We use the following properties:
+1. All maximal frequent itemsets are closed.
+2. Every frequent itemset is a subset of a maximal frequent itemset.
+3. The support of an itemset equals the support of the smallest closed itemset
+in which it is contained (its closure).
+Our strategy is therefore to select the maximal itemsets,
+generate all their sub- sets,
+and determine their support using the third property.
 \end{multicols}
 \end{document}
