@@ -314,7 +314,38 @@ is equal to the number of additional restrictions of $M_0$.
 We reject the null hypothesis that $M_0$ is the true model when:
 $2(L^1-L^0)>\chi^2_{v;\alpha}$. 
 \section{Baysian networks}
-
-\section{Freq item set mining}
+\subsection{Definition and notation}
+A directed graph is a pair $G = (K, E)$, where $K$ is a set of vertices and $E$
+is a set of edges with ordered pairs of vertices.
+If there is an arrow from $i$ to $j$,
+then we write this as $i \to j$, or equivalently as $(ij) \in E$.
+We restrict attention to directed graphs with no directed cycles,
+i.e. acyclic directed graphs (DAGs). If $i \to j$,
+then $X_i$ is called a parent of $X_j$ ,
+and $X_j$ is called a child of $X_i$ .
+The set of coordinates of the parents of $X_j$ is denoted $pa(j)$, so
+$X_{pa(j)}$ denotes the set of parents of $X_j$ .
+If there is a directed path from $i$ to $j$,
+then $X_i$ is called an ancestor of $X_j$ .
+The set of coordinates of the ancestors of $X_j$ is denoted an $(j)$.
+The absence of any directed cycles is equivalent to the existence of an
+ordering of the nodes ${1, 2, \dots , k}$ such that $i \to j$ only when $i < j$.
+In other words, there exists an ordering of the nodes such that arrows point
+only from lower-numbered nodes to higher-numbered nodes.
+Suppose that a priori knowledge tells us the variables can be labeled
+$X_1 , X_2 , \dots , X_k$ such that $X_i$ is prior to $X_{i+1}$.
+Corresponding to this ordering we can factorize the joint density of
+$X_1 , X_2 , \dots , X_k$ as $P(X)=P(X_1)P(X_2|X_1)\dots P(X_k|X_{k-1},X_{k-2},\dots,X_1)$
+In contructing a DAG, an arrow is drawn from $i$ to $j$, where $i<j$, unless
+$P(X_j|X_{j-1}\dots,X_1)$ does not depend on $X_i$.
+This is the key difference between DAGs and undirected graphs.
+In both types of graph a missing edge between $X_i$ and $X_j$ is equivalent to
+a conditional independence relation between $X_i$ and $X_j$.
+In undirected graphs they are conditionally independent given all the remaining
+variables, whereas in DAGs they are conditionally independent given all prior
+variables. 
+We can write the joint density:
+$P(X)=\underset{i=1}{\overset{k}{\prod}}P(X_i|X_{pa(i)})$.
+and the conditional indepencence as: $i \indep j|an({i,j})$
 \end{multicols}
 \end{document}
