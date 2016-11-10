@@ -1,4 +1,4 @@
-\documentclass[9pt,landscape]{extarticle}
+\documentclass[8pt,landscape]{extarticle}
 \usepackage{multicol}
 \usepackage{calc}
 \usepackage{ifthen}
@@ -531,5 +531,71 @@ $r_{ab}=r_a+r_b[k]$. Pre-candidate $r_{ab}$ becomes a candidate (has to be
 counted) if all its subsequences of length $k$ are frequent. Note that we allow
 $r_a = r_b$.
 \subsection{Node labeled Graph}
+A node labled graph is a quadruple $G=(V,E,\Sigma,L)$ where: $V$ is the set of
+nodes, $E$ is the set of edges, $\Sigma$ is the set of labels, and $\L: V->
+\Sigma$ is a labeling function.
+A labeled rooted unordered tree $U = (V , E , \Sigma, L, v^r )$ is an $G$ with a
+special node $v^r$ called the root of the tree such that there exists exactly
+one path betweeen the root node and any other node in $V$.
+A labeled rooted rodered tree $T = (V, E, L, v^r, \leq)$ is an unordered tree
+$U$ where between all the iblings an orderer $\leq$ is dfined. to every node in
+an ordered tree a preorder $(pre(v))$ number is assigned according to the depth
+first traversel of the tree.
+\subsubsection{Tree inclusion relations}
+An induced subtree preserves parent child relationships.
+$\pi(v)$ denotes the parent of node $v$.
+Given two oreered trees $D$ and $T$ we call $T$ an induced subtree of $D$ if
+there exists an injective matching function $\phi$ of $V_T$ into $V_d$ with the
+following conditions: $\phi$ preservers the labels: $L_T(v)=L_D(\phi(v))$,
+$\phi$ preservers the parent child relation:
+$v_i = \pi_T(v_j)\Leftrightarrow \phi(v_i)=\pi_D(\phi(v_j))$
+$\phi$ preservers the left to right orderbetween the nodes: $pre(v_i) <
+pre(v_j ) \Leftrightarrow pre(\phi(v_i)) < pre(phi(v_j))$  
+An induced subtreee $T$ can be obtained from a tree $D$ by rpeatedly removing
+leaf nodes, or possibly the root node if it has only one child.
+This definition is the same for embedded subtree, except the equal sign become
+$\in$ in the relation constiant and $\pi$ talks about the ancestor set.
+An embedded subtree preserves ancestor decendent realtionships. 
+\subsubsection{Freq tree mining task}
+Given a database of trees $D=\{d_1, d_2, \dots, d_n\}$ and a tree inclusion
+relation $\preceq$ we define the suppot of a tree $T$ as
+$sup(T,D)=|\{d\in D | T \preceq d\}|$. Given a minimum support treshehold
+minsup, compute $\mathcal{F}(minsup,D)=\{T|sup(T,D)\leq minsup\}$
+\emph{Anti monoticity property}: For a database of trees $D$ and two trees $T_1$
+and $T_2$ we have $T_1 \preceq T_2 \Rightarrow sup(T_1, D) \leq sup(T_2, D)$,
+because $\forall d \in D: T_2 \preceq d \Rightarrow T_1 \preceq d$
+Hence in a level wise search fro frequenttreees there is no point in expanding
+infrequent trees.
+\subsubsection{Right most extension}
+Let $T_k$ denote a tree of size $k$.
+Consider the node numbering of $T_k$ according to pre-order (depth-first)
+traversal of the tree.
+The right-most branch of the tree is the path from the root node to the
+right-most leaf (i.e. the node with number $k$).
+To expand the tree $T_k$,
+it is only allowed to add a node as the right-most child of a node on
+the right-most branch of $T_k$.
+This node gets number $k + 1$,
+as it is the last node in the pre-order traversal of $T_{k+1}$.
+The right-most extension technique generates each tree at most once.
+Also, the right-most expansion technique generates every possible tree, so each
+tree is generated exactly once.
+\emph{occurene list}:
+To determine whether a pattern tree occurs in a data tree, an occurrence list
+is maintained that contains the list of nodes in the data tree to which the
+nodes in the pattern tree can be mapped.
+FREQT only stores the nodes of the data tree to which the right-most node in
+the pattern tree can be mapped.
+This is sufficient since only the nodes on the right-most branch are needed
+for future extension.
+\subsection{Frequent pattern and clasification}
+Frequent pattern mining can also be used to extract features for classification
+tasks: 1 Find frequent patterns per class.
+2 Define discriminating patterns, for example,
+as patterns that are frequent in one class but not in the other.
+3 Use the presence/absence of such a discriminating pattern as a (binary)
+feature for constructing a classifier (e.g. classification tree!).
+4 In this way we can include non-tabular data (sequences, trees, graphs)
+into an algorithm that requires a tabular data structure.
 \end{multicols}
 \end{document}
