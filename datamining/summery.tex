@@ -178,7 +178,13 @@ is the optimal split. Thus the search is reduced to $O(L-1)$
 \section{Graphical models}
 \subsection{Probability rules}
 sum rule $P(X)=\sum_y P(X,Y)$, product rule $P(X,Y)=P(X|Y)P(Y)$.
-To estimate the joint distrubtion of $X$ and $Y$ we use $\overset{\wedge}{P}(x,y)=\frac{n(x,y)}{n}$
+To estimate the joint distrubtion of $X$ and $Y$ we use
+$\overset{\wedge}{P}(x,y)=\frac{n(x,y)}{n}$
+\subsection{Fitted counts}
+These are simply obtained by multiplying
+the estimated probabilities with the total number of observations. 
+To determine whether the independence assumption is justified, we compare the
+observed counts with the fitted counts of the independence model.
 \subsection{Independence}
 Random vectors $X$ and $Y$ are independent iff $P(x,y)=P(x)P(y) \text{ for all } (x,y)$
 Therefore $P(x|y)=P(x)$. Independence can be written as $X \indep Y$.
