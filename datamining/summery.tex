@@ -101,6 +101,8 @@ we assign every case to the majority class in that node.
 \paragraph{Gini} $i(t)=\sum_j p(j|t)(1-p(j|t))$
 \paragraph{entropy}$i(t)=\sum_j p(j|t)\log p(j|t)$
 
+It is not correct to only consider splits on the border between
+segments in the presence of a minleaf constraint.
 \subsubsection{Overfiting and pruning}
 There are two strategies to avoid overfiting in tree construction:
 Stopping rules, don't expand a node if impurity reduction below some threshold
@@ -286,7 +288,11 @@ Is a converging algorithm
 Start with a uniform table. Then set the row margins to the fitted counts
 and distribute them proportionally. Then do the same for the columns, keep
 doing this until the values converged.
-
+The equation for the cells than is:
+$\overset{\wedge}{n}(x)^{\{s+1\}}=\overset{\wedge}{n}(x)^{\{s\}}\frac{n_1(x_1)}{\overset{\wedge}{n}(x)^{\{s\}}}$
+where $s$ is the current step in ipf. The margins are replaced for every
+iteration by the desired value, whereas the others are calulated, this gives
+convergene because you alternate.
 \subsection{Decomosable graphical models}
 Decomposable models are graphical models that have explicit formulas for the
 maximum likelihood estimates.
@@ -405,6 +411,13 @@ variables $i \cup pa(i)$. This means we only have to recalculate for variables
 of which the parent set has changed.
 You have the reverse opperation because hillclimbing only looks one step ahead,
 therefore adding and deleting can't emulate it.
+\subsection{Chow and lius algorithm}
+that maximizes log likelyhood score:
+Compute the mutual information between each pair of variables.
+Make a complete (undirected) graph where each node corresponds to a variable.
+Put the mutual information between a pair of variables as a weight on the edge
+between that pair. Compute a maximum weight spanning tree.
+Pick a root node, and let all the edges point away from the root.
 \section{Freq paternset minig}
 \subsection{Association rules: The binary case}
 The traditional setting for association rules consists of a set of transactions
@@ -510,6 +523,7 @@ in which it is contained (its closure).
 Our strategy is therefore to select the maximal itemsets,
 generate all their sub- sets,
 and determine their support using the third property.
+A-close is more efficient then Apriori on dense, highly correlated data sets.
 \section{Frequent pattern mining}
 $\Sigma$ is the set of labels, $s=s_1,_2,\dots,s_n$ where $s_i \in \Sigma$,
 prefix $s[1:i]=s_1,s_2,\dots,s_1, 0 \leq i \leq n$. suffix $s[i:n]$.
@@ -603,5 +617,17 @@ as patterns that are frequent in one class but not in the other.
 feature for constructing a classifier (e.g. classification tree!).
 4 In this way we can include non-tabular data (sequences, trees, graphs)
 into an algorithm that requires a tabular data structure.
+\section{Social networks}
+What progblem do we run into when we want to classify the objects in the test
+set of social networks?
+To predict the class label of one object,
+we need the class labels of the linked objects,
+because they determine the value of the link-attributes.
+But the class labels of these linked objects are also unknown.
+To bootstrap the whole process, we can start with
+an initial classification that only uses the node-attributes and disregards the
+link- attributes.
+Starting from this initial classification we can iteratively improve
+the solution.
 \end{multicols}
 \end{document}
