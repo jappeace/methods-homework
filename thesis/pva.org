@@ -1,11 +1,14 @@
+#+TITLE: Thesis plan of approach
+#+OPTIONS: toc:nil num:nil
+
 This document describes a thesis plan for Jappie Klooster.
 
-* Research question
-** Main question
-  How does adding personality to agents in an communication train game effect
+* Subject
+** Main research question
+  How does adding personality to agents in an communication practice game effect
   gameplay?
-** Sub questions
-*** What is the best personality theory to base a software model on?
+** Sub research questions
+*** 1 What is the best personality theory to base a software model on?
 I added this question because the other paper I read skimmed this subject but
 didn't really go deep into it.
 I think its important to add a solid foundation to the chosen theory.
@@ -13,9 +16,10 @@ I think its important to add a solid foundation to the chosen theory.
 Also I want to look at:
     In Weide et al, (Personality based practical reasoning 2008) the agent reasons
     about the users personality.
-*** What does this theory say about comminucation?
+This maybe a stretch goal
+*** 2 What does this theory say about communication?
 For example something like this http://www.socionics.com/rel/relcht.htm
-*** How can this theory be implemented in the existing game?
+*** 3 How can this theory be implemented in the existing game?
 **** How far is agentification progressed and what still needs to be done?
 **** How to map dialogue on a goal based system?
 I think they use scripts in the SALVE game to solve this, but the scripts seem
@@ -23,52 +27,93 @@ to low level to work for personality, I think the api should become more
 abstract to allow the system to reason about it if it goes according to the
 proccess the personality of the agent likes.
 
+** Technical requirements
+The personality should be easily changeable for different characters.
 
 * Planning
 
-| Week | Do what                 | start date       | end date         |
-|------+-------------------------+------------------+------------------|
+| Week | action                  | start date     | end date       |
+|------+-------------------------+----------------+----------------|
 |    1 | research 1              | [2016-11-14 Mon] | [2016-11-18 Fri] |
 |    2 | research 1              | [2016-11-21 Mon] | [2016-11-25 Fri] |
 |    3 | research 2              | [2016-11-28 Mon] | [2016-12-02 Fri] |
 |    4 | research 2 start with 3 | [2016-12-05 Mon] | [2016-12-09 Fri] |
 |    5 | research 3              | [2016-12-12 Mon] | [2016-12-16 Fri] |
-|    6 | start implementing      | [2016-12-19 Mon] | [2016-12-23 Fri] |
-|    7 | start implementing      | [2016-12-19 Mon] | [2016-12-23 Fri] |
-|    8 | start implementing      | [2016-12-19 Mon] | [2016-12-23 Fri] |
-|    9 | start implementing      | [2016-12-19 Mon] | [2016-12-23 Fri] |
-|    10 | start implementing      | [2016-12-19 Mon] | [2016-12-23 Fri] |
-|    6 | start implementing      | [2016-12-19 Mon] | [2016-12-23 Fri] |
-|    6 | start implementing      | [2016-12-19 Mon] | [2016-12-23 Fri] |
-|      |                         |                  |                  |
+|    6 | start implementing I    | [2016-12-19 Mon] | [2016-12-23 Fri] |
+|    7 | winter break            | [2016-12-26 Mon] | [2016-12-30 Fri] |
+|    8 | winter break            | [2017-01-02 Mon] | [2017-01-06 Fri] |
+|    9 | implementing I          | [2017-01-09 Mon] | [2017-01-13 Fri] |
+|   10 | implementing II         | [2017-01-16 Mon] | [2017-01-20 Fri] |
+|   11 | implementing II         | [2017-01-23 Mon] | [2017-01-27 Fri] |
+|   12 | implementing III        | [2017-01-30 Mon] | [2017-02-03 Fri] |
+|   13 | implementing III        | [2017-02-06 Mon] | [2017-02-10 Fri] |
+|   14 | implementing IV         | [2017-02-13 Mon] | [2017-02-17 Fri] |
+|   15 | implementing IV         | [2017-02-20 Mon] | [2017-02-24 Fri] |
+|   16 | implementing V          | [2017-02-27 Mon] | [2017-03-03 Fri] |
+|   17 | implementing V          | [2017-03-06 Mon] | [2017-03-10 Fri] |
+|   18 | winter sport            | [2017-03-13 Mon] | [2017-03-17 Fri] |
+|   19 | implementing VI         | [2017-03-20 Mon] | [2017-03-24 Fri] |
+|   20 | implementing VI         | [2017-03-27 Mon] | [2017-03-31 Fri] |
+|   21 | implementing VII        | [2017-04-03 Mon] | [2017-04-07 Fri] |
+|   22 | implementing VII        | [2017-04-10 Mon] | [2017-04-14 Fri] |
+|   23 | implementing VIII       | [2017-04-17 Mon] | [2017-04-21 Fri] |
+|   24 | implementing VIII       | [2017-04-24 Mon] | [2017-04-28 Fri] |
+|   25 | write thesis I          | [2017-05-01 Mon] | [2017-05-05 Fri] |
+|   26 | write thesis I          | [2017-05-08 Mon] | [2017-05-12 Fri] |
+|   27 | write thesis II         | [2017-05-15 Mon] | [2017-05-19 Fri] |
+|   28 | write thesis II         | [2017-05-22 Mon] | [2017-05-26 Fri] |
+|   29 | write thesis III        | [2017-05-29 Mon] | [2017-06-02 Fri] |
+|   30 | write thesis III        | [2017-06-05 Mon] | [2017-06-09 Fri] |
+|   31 | final version           | [2017-06-12 Mon] | [2017-06-16 Fri] |
+|   32 |                         | [2017-06-19 Mon] | [2017-06-23 Fri] |
+|   33 |                         | [2017-06-26 Mon] | [2017-06-30 Fri] |
 
-| Week | action |      start |        end |
-|------+--------+------------+------------|
-|    1 |        | 2016-12-19 | 2016-12-23 |
-|    2 |        | 2016-12-26 | 2016-12-30 |
-|    3 |        | 2017-01-02 | 2017-01-06 |
-|    4 |        | 2017-01-09 | 2017-01-13 |
-|    5 |        | 2017-01-16 | 2017-01-20 |
-|    6 |        | 2017-01-23 | 2017-01-27 |
-|    7 |        | 2017-01-30 | 2017-02-03 |
-|    8 |        | 2017-02-06 | 2017-02-10 |
-|    9 |        | 2017-02-13 | 2017-02-17 |
-|   10 |        | 2017-02-20 | 2017-02-24 |
-|   11 |        | 2017-02-27 | 2017-03-03 |
-|   12 |        | 2017-03-06 | 2017-03-10 |
-|   13 |        | 2017-03-13 | 2017-03-17 |
-|   14 |        | 2017-03-20 | 2017-03-24 |
-|   15 |        | 2017-03-27 | 2017-03-31 |
-|   16 |        | 2017-04-03 | 2017-04-07 |
-|   17 |        | 2017-04-10 | 2017-04-14 |
-|   18 |        | 2017-04-17 | 2017-04-21 |
-|   19 |        | 2017-04-24 | 2017-04-28 |
-|   20 |        | 2017-05-01 | 2017-05-05 |
-|   21 |        | 2017-05-08 | 2017-05-12 |
-|   22 |        | 2017-05-15 | 2017-05-19 |
-|   23 |        | 2017-05-22 | 2017-05-26 |
-|   24 |        | 2017-05-29 | 2017-06-02 |
-|   25 |        | 2017-06-05 | 2017-06-09 |
-|   26 |        | 2017-06-12 | 2017-06-16 |
-|   27 |        | 2017-06-19 | 2017-06-23 |
-|   28 |        | 2017-06-26 | 2017-06-30 |
+I'm not sure if such a strict separation between writing the thesis and
+implementing is possible or a good idea.
+Research 1 indicates: do research to answer question 1. While researching the
+an initial outline of the thesis can be created (especially the related work
+part).
+
+The roman numerals indicate iterative cycles. In case of implementing at the
+beginning of a cycle certain goals are established. Then at the end of a cycle
+its determined if the goals were reached.
+This is an /agile/ approach, which is
+useful for situation in which you're not sure what the task involves
+(like programming, or research).
+Its hard to call this approach SCRUM, since that only works for teams.
+
+The last two weeks are left intentionally blank. I hope to be
+finished at that time, but these weeks can also be annexed if the situation
+requires it.
+
+* Tools
+** Agent platform
+An existing agent platform will be used.
+Preferably this one: https://github.com/BasTesterink/OO2APL
+which is a java implementation of 2apl.
+
+If that fails for some reason the original 2apl can still be used.
+
+** Programming language
+Because we agent platform is written in Java I can use any langauge that can
+interact with java bytecode, for example: Groovy, Clojure, Scala, Python trough Jython
+and of course java itself.
+
+Therefore I chose to use Scala, since it has a strong type system and a cleaner
+syntax than Java (less verbose mostly).
+
+** Misc
+editor: spacemacs,
+version control: git,
+documenting tool: org-mode which exports to latex
+
+* Risks
+1. From the last meeting I got to hear that the agentification failed. Since this
+    work will build on top of that work it has to be analyzed how much has to be
+    done to get this into working order.
+    After this is cleared up the planning may change.
+2. If the previous work was built in 2apl in prolog we have to decide if its
+    more efficient to port or use 2apl in prolog. So the programming langauge
+    choice may change.
+3. Working with reseach platforms is a stable endeavour. Any bugs are features.
+
