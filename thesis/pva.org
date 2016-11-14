@@ -3,6 +3,13 @@
 
 This document describes a thesis plan for Jappie Klooster.
 
+In the project personality will be added to agents. To do this we first try
+to figure out the best psychology framework to do this.
+Then this theory is investigated to see what it says about communication.
+Finally this theory is combined with the existing serious game COMMUNICATE!
+To investigate how these changes will affect the gameplay.
+To do this thoroughly, we want the personalities to be easily adjustable.
+
 * Subject
 ** Main research question
   How does adding personality to agents in an communication practice game effect
@@ -115,5 +122,4 @@ documenting tool: org-mode which exports to latex
 2. If the previous work was built in 2apl in prolog we have to decide if its
     more efficient to port or use 2apl in prolog. So the programming langauge
     choice may change.
-3. Working with reseach platforms is a stable endeavour. Any bugs are features.
 
