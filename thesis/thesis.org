@@ -1,0 +1,11 @@
+#+TITLE: Adding some personality to serious communication games
+#+OPTIONS: toc:nil num:nil
+#+LATEX_HEADER: \usepackage{natbib}
+
+bla bla bla cite:campos_mabs2016. and then there was MBTI cite:campos_mabs2009 
+and of course don't forget cite:augello2015social 
+
+<<bibliography link>>
+
+bibliographystyle:unsrt
+bibliography:refs.bib
