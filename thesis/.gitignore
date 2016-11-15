@@ -1,4 +1,8 @@
 code
 *.tex
 auto
+*.dvi
+*.fdb_latexmk
+*.fls
+*.bbl
 
