@@ -5,4 +5,5 @@ auto
 *.fdb_latexmk
 *.fls
 *.bbl
+*.blg
 
