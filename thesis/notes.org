@@ -102,7 +102,13 @@ I think it uses pattern matching to decide responses, with added scripts
 to modify event parameter.
 If we use the salve architecture how do we encode personality into this?
 
-* Questions
 
-** main question: How does adding personality to agents in an communication train game effect gameplay?
-** How far is agentification of communicate! implemented?
+* questions
+How to reference the papers sent?
+** Planning
+1. is the strict separation of implementing/writing a good idea or should I
+    iterate on both?
+2. length of planning, can I go so far in the future, planning 7 sprints ahead
+   of time seems a little strange.
+
+Is the research question sensible?
