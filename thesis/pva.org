@@ -26,7 +26,10 @@ Also I want to look at:
 This maybe a stretch goal
 *** 2 What does this theory say about communication?
 For example something like this http://www.socionics.com/rel/relcht.htm
-*** 3 How can this theory be implemented in the existing game?
+*** 3 Can the thoery be simplified (and how)?
+This is important because if we can implement a simpler version first and
+later extend that than we can iterate on the results
+*** 4 How can this theory be implemented in the existing game?
 **** How far is agentification progressed and what still needs to be done?
 **** How to map dialogue on a goal based system?
 I think they use scripts in the SALVE game to solve this, but the scripts seem
@@ -39,13 +42,13 @@ The personality should be easily changeable for different characters.
 
 * Planning
 
-| Week | action                  | start date     | end date       |
-|------+-------------------------+----------------+----------------|
+| Week | action                  | start date       | end date         |
+|------+-------------------------+------------------+------------------|
 |    1 | research 1              | [2016-11-14 Mon] | [2016-11-18 Fri] |
-|    2 | research 1              | [2016-11-21 Mon] | [2016-11-25 Fri] |
-|    3 | research 2              | [2016-11-28 Mon] | [2016-12-02 Fri] |
-|    4 | research 2 start with 3 | [2016-12-05 Mon] | [2016-12-09 Fri] |
-|    5 | research 3              | [2016-12-12 Mon] | [2016-12-16 Fri] |
+|    2 | research 2              | [2016-11-21 Mon] | [2016-11-25 Fri] |
+|    3 | research 2 start with 3 | [2016-11-28 Mon] | [2016-12-02 Fri] |
+|    4 | research 3 start with 4 | [2016-12-05 Mon] | [2016-12-09 Fri] |
+|    5 | research 4              | [2016-12-12 Mon] | [2016-12-16 Fri] |
 |    6 | start implementing I    | [2016-12-19 Mon] | [2016-12-23 Fri] |
 |    7 | winter break            | [2016-12-26 Mon] | [2016-12-30 Fri] |
 |    8 | winter break            | [2017-01-02 Mon] | [2017-01-06 Fri] |
