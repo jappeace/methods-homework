@@ -1,8 +1,13 @@
-#+TITLE: Adding some personality to serious communication games
+#+TITLE: A serious communication game with personalities
 #+OPTIONS: toc:nil num:nil
 #+LATEX_HEADER: \usepackage{natbib}
 
-* TODO Introduction (remove title)
+* TODO Introduction here (removing this title)
+** TODO abstract (removing this title)
+** TODO keywords (removing this title)
+
+* TODO Related work
+** TODO ???
 
 * Personality Theories
 The field of psychology has been somewhat active in trying to model human
@@ -36,9 +41,38 @@ use the big five to communicate clearly what their research meant without
 having to redefining the words every time cite:pervin2008handbookp114..116.
 
 1. MBTI
+2. OCEAN (big five?)
 3. ...
+
+** TODO The best framework
+In here we'll discuss what is the best framework for our usecase.
+** TODO Simplification
+In here we'll discuss what simplifications could be applied to the best
+framework (this is use full to discuss because it makes it easier to create
+a prototype).
+** TODO Communication in framework
+Here we discuss research into communication based on this framework.
+
+* TODO Agent orientated programming
+** TODO BDI
+# perhaps talk about bratman?
+** TODO BDI with peronality
+cite:campos_mabs2009
+
+* TODO The communicate game
+cite:augello2015social
+** TODO Existing functions
+# user interaction, goal of the game etc
+** TODO Existing architecture
+cite:campos_mabs2016
+
+* TODO Extending the communication game
+# Basically all the work I did?
+
+* TODO Conclusion
 
 <<bibliography link>>
 
 bibliographystyle:unsrt
 bibliography:refs.bib
+
