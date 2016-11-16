@@ -24,26 +24,43 @@ However the second requirement not so much. Therefore our first job will be
 to list existing psychology personality frameworks, and filter out those
 that are unfeasible to implement.
 
+
 ** Contending frameworks
-In the begining of the 1990's there were many ways to measure psycology that
-didn't agree with each other. For example at Berkley alone block used a 2
-dimensional ego-resilience and ego-controll method cite:block1980role, whereas
-gough measured folk concepts such as self-controll, well-being and tollerance
-cite:gough1987california.
-Personality researchers hoped that they would be the one to discover a
-structure that would then be adopted by other researchers cite:pervin2008handbookp114.
+The first framework we'll discuss is called the big five.
+This framework was not really invented, but rather discovered trough
+lexical analyses cite:tupes1961recurrent.
+Although the labels used were different,
+they conveyed the same idea as the big five model used now.
+The methodology what they used was basically applying manual data mining on a
+dictionary and then look at what worked for personality. 
+The term big five first coined in 1981 by Goldberg cite:goldberg1981language.
+The big five were not big because of their intrinsic greatness, but rather to
+emphasize how broad these factors were.
+
+In the begining of the 1990's there were many ways to measure personality that
+didn't agree with each other.
+For example at Berkley alone block used a 2 dimensional ego-resilience and
+ego-controll method cite:block1980role,
+whereas gough measured folk concepts such as self-controll, well-being and
+tolerance cite:gough1987california.
+Personality researchers hoped that they would be the one to discover a structure
+that would then be adopted by other researchers cite:pervin2008handbookp114.
 
 The goal of the big five was not to present a new structure that convinced
-others to use it. But rather to provide a taxonomy that all psychologist could
-agree upon. Therefore the researchers could keep on exploring there niche, with
-their proffered structure, but once they would present their work they could
-use the big five to communicate clearly what their research meant without
-having to redefining the words every time cite:pervin2008handbookp114..116.
+others to use it.
+But rather to provide a taxonomy that all psychologist could agree upon.
+Since the big five was so broad, this worked.
+Therefore the researchers could keep on exploring there niche,
+with their proffered structure,
+but once they would present their work they could use the big five to
+communicate clearly what their research meant without having to redefining the
+words every time cite:pervin2008handbookp114..116.
+
 
 1. MBTI
 2. OCEAN (big five?)
 3. ...
-
+*** TODO content oriented vs process orientated (token vs type?)
 ** TODO The best framework
 In here we'll discuss what is the best framework for our usecase.
 ** TODO Simplification
