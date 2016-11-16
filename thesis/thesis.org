@@ -25,7 +25,7 @@ to list existing psychology personality frameworks, and filter out those
 that are unfeasible to implement.
 
 
-** Contending frameworks
+** The big five
 The first framework we'll discuss is called the big five.
 This framework was not really invented, but rather discovered trough
 lexical analyses cite:tupes1961recurrent.
@@ -72,14 +72,36 @@ The big five as in the OCEAN definition has the following units of measurement:
 The big five has been extensively tested and the result has been replicated
 in multiple studies cite:pervin2008handbookp119.
 
-However although these terms may provide a great taxonomy,
+Although these terms may provide a great taxonomy,
 it does not say anything about implementation.
 By this we mean that lets say you have a score of 0.8 for Neuroticism,
 how does this influence my decision for selecting action $a$ or $b$?
+Now you could say, use a mixed strategy where in you choose 80% of the time
+the neurotic typical neurotic approach.
+Then we need a valuation function $v: A \mapsto i$ where $A$ is an action and
+$i \in \mathbb{N}$ to decide which of the two actions is more neurotic.
+This still leaves open the question of how this decision interacts with
+the other dimensions,
+which is non trivial to answer.
 
-1. MBTI
-2. OCEAN (big five?)
-3. ...
+** MBTI
+The Meyer brigs type indicator asses people in a similiar way that the big five
+method does.
+However once the assesment is complete the scores are reduced to a type.
+
+*** Kersey's MBTI
+Before continuing we would like to say a word about an extremely popular
+interpertation of MBTI which we will call Kersey's MBTI.
+In this interpertation the sixteen types are also placed in general groups
+of four but here the $ST$ and $SF$ distinction is replaced by $SJ$ and $SP$
+cite:keirsey1998please.
+It turns out however that Kersey invented this distinction because
+"He thought it made sense to group them this way" cite:whyaretypesdistinct.
+In doing this he rejected the work of Jung and also that of cognitive functions.
+Which is problematic because the theory he presented then does not make any
+thoeretical sense.
+Therefore Kersey's MBTI will not be used in this thesis.
+
 *** TODO content oriented vs process orientated (token vs type?)
 ** TODO The best framework
 In here we'll discuss what is the best framework for our usecase.
