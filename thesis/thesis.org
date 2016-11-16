@@ -56,6 +56,26 @@ but once they would present their work they could use the big five to
 communicate clearly what their research meant without having to redefining the
 words every time cite:pervin2008handbookp114..116.
 
+The big five as in the OCEAN definition has the following units of measurement:
+- Openness or originality, if you score high on this you enjoy learning new
+  things just for the sake of learning. If you score low then you don't enjoy
+  this
+- Conciseness, how tidy you are, if you score high the dishes don't stack up
+  in the sink.
+- Extroversion, a high score indicates you enjoy leading the conversation and
+  you'll speak up when you disagree with someone.
+- Agreeableness or altruism, a low score would indicate that you don't want to
+  share and generally don't trust people.
+- Neuroticism or nervousness, a high score indicates that you like to brag and
+  get upset when someone is angry at them.
+
+The big five has been extensively tested and the result has been replicated
+in multiple studies cite:pervin2008handbookp119.
+
+However although these terms may provide a great taxonomy,
+it does not say anything about implementation.
+By this we mean that lets say you have a score of 0.8 for Neuroticism,
+how does this influence my decision for selecting action $a$ or $b$?
 
 1. MBTI
 2. OCEAN (big five?)
