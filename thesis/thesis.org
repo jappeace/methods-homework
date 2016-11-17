@@ -136,9 +136,20 @@ and therfore will be an excelent philosopher.
 *** MBTI
 The meyer brigs type indicator is based upon Carl Jung's theory of personality
 types.
+However it brings two important changes to the thoery, first of all the way
+of measuring personality type is changed. 
 The Meyer brigs type indicator asses people in a similiar way that the big five
 method does.
 However once the assesment is complete the scores are reduced to a type.
+
+The MBTI has got ondur some heavy critism in use.
+For one meyer has said that someone that is of type $I$ falls clearly into
+the $I$ category, therfore a bimodal distribution is expected,
+however it has been shown that is not the case cite:bess2002bimodal,
+but this could be the result of the scores being biderictional
+cite:salter2005two.
+It also fell short on factor analyses and reliability
+cite:pittenger1993measuring.
 
 *** Kersey's MBTI
 Before continuing we would like to say a word about an extremely popular
@@ -152,6 +163,19 @@ In doing this he rejected the work of Jung and also that of cognitive functions.
 Which is problematic because the theory he presented then does not make any
 thoeretical sense.
 Therefore Kersey's MBTI will not be used in this thesis.
+
+
+*** Altermatives to MBTI
+    There exist other implementation of Jung's type thoery that handle the
+    critisms a lot better, such as the PPSDQ and SL-TDI cite:arnau1999alternative.
+    The SL-TDI stays really close to jungian theory by keeping introversion 
+    and extroversion as attitudes rather than traits. It also has a strong
+    cooralation with the big-five.
+    Although the PPSDQ is internally more consistent.
+# I think SL-TDI is better, it stays closer to jung (and also drops 8 types
+# and corrolation with the neo-pi means that it sticks closer to the real world
+# also the cited study is quite biased to ppsdq, and they say stupid things
+# such as "sl-tdi deviates more from the jungian model".
 
 *** TODO content oriented vs process orientated (token vs type?)
 ** TODO The best framework
