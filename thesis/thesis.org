@@ -84,7 +84,59 @@ This still leaves open the question of how this decision interacts with
 the other dimensions,
 which is non trivial to answer.
 
-** MBTI
+** Personality types
+Much of the issues we had with the big five
+could be solved by a theoretical foundation of personality types.
+To do this we'll look first at the proposed method by the grandfather of 
+personality research, Carl Jung.
+After which we'll look at a thoeretical evolution proposed by Myers and
+Myers-Brigs, which also introduced a structered method of measuring types.
+Then we'll discuss some critique's on this method.
+*** Jung's theory of psychological types
+Jung describes several concepts, firstly each person has two attitudes:
+/Introversion/ and /extroversion/.
+Extroversion means dealing with the outside world and therfore is called
+objective (or observable).
+Intoversion is the world inside a person, and therefore is subjective,
+or private.
+Jung argues this may be so private that the consiouness can't even access it.
+These attitudes are mutually exclusive,
+you can't do introversion and extroversion at the same time.
+For example if you're day dreaming you're not doing extroversion.
+A person who spends most of his time in the introversion attitude is called
+an /introvert/. But he is not totally the one or the other.
+Then it should also be noted that the unconsciousness according to Jung is
+flipped in attitude.
+cite:hall1973primer
+
+Then there are four functions that can be combined with the attitudes.
+The first two functions are called the /rational functions/
+because they act as a method of making judgements.
+/Thinking/ is a function that connects ideas with each other to arrive at
+generalizations or conclusions. 
+/Feeling/ evaluates ideas by determinging if its good or bad, pleasant
+or unpleasant, beautifull or ugly.
+The /irrational functions/ are called this becuase they require no reason.
+/Sensation/ is sense perception created by the stimulation of the senses,
+it can always be rooted to a sense,
+such as "I see a balloon" or "I feel hungry".
+/Intuition/ is like a sensetion but its not produced by a sense.
+Therefore it has no origin in the same way as sensation has,
+by which its explained as "just a hunch" or "I feel it in my bones".
+
+To use these functions they have to be combined with attitudes.
+Therefore a person will never be of a thinking type,
+but rather either a thinking introvert or thinking extrovert.
+We can now imagine what this means,
+an extroverted thinker will for example make judgement about the real world,
+and therefore be more like a scientist,
+whereas an introverted thinker will make judgement about ideas in his mind,
+and therfore will be an excelent philosopher.
+(Not to say type has anything to do with intelligence)
+
+*** MBTI
+The meyer brigs type indicator is based upon Carl Jung's theory of personality
+types.
 The Meyer brigs type indicator asses people in a similiar way that the big five
 method does.
 However once the assesment is complete the scores are reduced to a type.
