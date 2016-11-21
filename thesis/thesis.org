@@ -138,13 +138,19 @@ The meyer brigs type indicator is based upon Carl Jung's theory of personality
 types.
 However it brings two important changes to the thoery, first of all the way
 of measuring personality type is changed. 
-The Meyer brigs type indicator asses people in a similiar way that the big five
-method does.
+First of all it uses a strutured approach rather than Carl Jungs projective
+approach. The responses to items are finite and therefore can be deduced based
+on theory. Jung used open ended anwsering with word associations for example.
+Then there is the introduction of the fourth letter to the type.
+Which is either a $J$ for judging or a $P$ for perceiving. this letter
+indicates if the judging (rational) function is dominant or the perceiving
+(irrational) is cite:carlson1985recent.
 However once the assesment is complete the scores are reduced to a type.
 
 The MBTI has got ondur some heavy critism in use.
 For one meyer has said that someone that is of type $I$ falls clearly into
-the $I$ category, therfore a bimodal distribution is expected,
+the $I$ category, therfore a bimodal distribution is expected. This means
+that most people should eiter clearly fall into $I$ or $E$. 
 however it has been shown that is not the case cite:bess2002bimodal,
 but this could be the result of the scores being biderictional
 cite:salter2005two.
