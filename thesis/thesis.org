@@ -71,6 +71,8 @@ The big five as in the OCEAN definition has the following units of measurement:
 
 The big five has been extensively tested and the result has been replicated
 in multiple studies cite:pervin2008handbookp119.
+One can measure his big five score trough a test called the NEO-PI, or the
+NEO-FFI. The FFI variant is shorter but less precise cite:costa1992revised.
 
 Although these terms may provide a great taxonomy,
 it does not say anything about implementation.
@@ -139,7 +141,7 @@ and therfore will be an excelent philosopher.
 *** MBTI
 The meyer brigs type indicator is based upon Carl Jung's theory of personality
 types.
-However it brings two important changes to the theory, first of all the way
+However it brings two important changes, first of all the way
 of measuring personality type is changed. 
 First of all it uses a strutured approach rather than Carl Jungs projective
 approach.
@@ -152,6 +154,19 @@ indicates if the judging $J$ (rational) function is more preffered or the
 perceiving $P$ (irrational) is.
 However once the assesment is complete the scores are reduced to a type.
 
+Before continuing we would like to say a word about an extremely popular
+interpertation of MBTI which is based on Kersey's book "Please understand me",
+and later "Please understand me II".
+In this interpertation the sixteen types are also placed in general groups
+of four but here the $ST$ and $SF$ distinction is replaced by $SJ$ and $SP$
+cite:keirsey1998please.
+It turns out however that Kersey invented this distinction because
+"He thought it made sense to group them this way" cite:whyaretypesdistinct.
+In doing this he rejected the work of Jung and also that of cognitive functions.
+Which is problematic because the theory he presented then does not make any
+thoeretical sense.
+Therefore Kersey's MBTI will not be used in this thesis.
+
 The MBTI is extremly popular in a subfield called Organizational Developement
 (OD) cite:sample2004myers. 
 But it has gotton some heavy critism in from the field of psycology.
@@ -163,6 +178,9 @@ This means that most people should eiter clearly fall into $I$ or $E$.
 however it has been shown that is not the case cite:bess2002bimodal,
 but this could be the result of the scores being biderictional
 cite:salter2005two.
+An extended investigation into weather jungian constructs are truly categorial
+however concluded that this was not the case and a continues scale is required
+cite:arnau2003jungian.
 
 It also fell short on factor analyses and reliability.
 Factor analyses tries to deduce based on observerd variables potential
@@ -189,34 +207,41 @@ has passed between them its not considered a big issue.
 However for the MBTI it has been shown that after a period of 5 weeks 50%
 of the participants changed in score cite:pittenger1993measuring.
 
-*** Kersey's MBTI
-Before continuing we would like to say a word about an extremely popular
-interpertation of MBTI which is based on Kersey's book "Please understand me",
-and later "Please understand me II".
-In this interpertation the sixteen types are also placed in general groups
-of four but here the $ST$ and $SF$ distinction is replaced by $SJ$ and $SP$
-cite:keirsey1998please.
-It turns out however that Kersey invented this distinction because
-"He thought it made sense to group them this way" cite:whyaretypesdistinct.
-In doing this he rejected the work of Jung and also that of cognitive functions.
-Which is problematic because the theory he presented then does not make any
-thoeretical sense.
-Therefore Kersey's MBTI will not be used in this thesis.
 
 
-*** Altermatives to MBTI
-    There exist other implementation of Jung's type thoery that handle the
-    critisms a lot better, such as the PPSDQ and SL-TDI cite:arnau1999alternative.
-    The SL-TDI stays really close to jungian theory by keeping introversion 
-    and extroversion as attitudes rather than traits. It also has a strong
-    cooralation with the big-five.
-    Although the PPSDQ is internally more consistent.
-# I think SL-TDI is better, it stays closer to jung (and also drops 8 types
-# and corrolation with the neo-pi means that it sticks closer to the real world
-# also the cited study is quite biased to ppsdq, and they say stupid things
-# such as "sl-tdi deviates more from the jungian model".
+*** Alternatives to MBTI
+There exist other implementation of Jung's type thoery that handle the
+critisms a lot better, such as the PPSDQ and SL-TDI.
+The SL-TDI stays really close to jungian theory by keeping introversion 
+and extroversion as attitudes rather than traits.
+It also has a strong cooralation with the big-five. 
+Although the PPSDQ is internally more consistent cite:arnau1999alternative.
 
-*** TODO content oriented vs process orientated (token vs type?)
+The PPSDQ keeps basically the same theory as MBTI but uses a different measuring
+method. Instead of forced questions it uses a word-pair checklist for
+$I/E, S/N$ and $T/F$, and for the $J/P$ self describing sentences are used
+cite:melancon1996measurement.
+A word pair checklist looks like:
+
+| Word          |   |   |   | Word      |
+|---------------+---+---+---+-----------|
+| Empathy       | 1 | 2 | 3 | Logic     |
+| Dispassionate | 1 | 2 | 3 | Emotional |
+The sentence is a statement in which you can agree or disagree. 
+This test method is simple but effective.
+
+SLTDI measures functions by presenting 20 situations and then giving subject
+possible actions which corrolate with the functions.
+The subjects then have to indicate how likely it is that they would choose that
+particular action cite:arnau2000reliability.
+
+Both of these alternatives use a continues scale and have a high cooralation with
+the big five cite:arnau1997measurement.
+The PPSDQ is measuring the same thing as MBTI cite:kier1997new,king1999score,
+but does not suffer from the same critisms as MBTI.
+
+*** TODO content oriented vs process orientated 
+# token vs type?
 ** TODO The best framework
 In here we'll discuss what is the best framework for our use case.
 ** TODO Simplification
@@ -235,14 +260,14 @@ cite:campos_mabs2009
 * TODO The communicate game
 cite:augello2015social
 ** TODO Existing functions
-# user interaction, goal of the game etc
+user interaction, goal of the game etc
 ** TODO Existing architecture
 cite:campos_mabs2016
 
 * TODO Extending the communication game
-# Basically all the work I did?
+The practical implementation.
 
-* TODO Conclusion
+* TODO Future work
 
 <<bibliography link>>
 
