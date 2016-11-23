@@ -239,7 +239,10 @@ Both of these alternatives use a continues scale and have a high cooralation wit
 the big five cite:arnau1997measurement.
 The PPSDQ is measuring the same thing as MBTI cite:kier1997new,king1999score,
 but does not suffer from the same critisms as MBTI.
-
+**** TODO more extended treatment of all critisisms that don't apply
+     For example I read somewhere they're more reliable but I need to find the
+     source first, and factor analyses has been done in earlier cited papers
+     but this needs to be referenced too.
 *** TODO content oriented vs process orientated 
 # token vs type?
 ** TODO The best framework
