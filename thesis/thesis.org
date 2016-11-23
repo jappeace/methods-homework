@@ -106,8 +106,7 @@ For example if you're day dreaming you're not doing extroversion.
 A person who spends most of his time in the introversion attitude is called
 an /introvert/. But he is not totally the one or the other.
 Then it should also be noted that the unconsciousness according to Jung is
-flipped in attitude.
-cite:hall1973primer
+flipped in attitude. cite:hall1973primer97-98attitude
 
 Then there are four functions that can be combined with the attitudes.
 The first two functions are called the /rational functions/
@@ -116,6 +115,8 @@ because they act as a method of making judgements.
 generalizations or conclusions. 
 /Feeling/ evaluates ideas by determinging if its good or bad, pleasant
 or unpleasant, beautifull or ugly.
+Note that this is /not/ the same as being emotional,
+although you can be emotional and use this function.
 The /irrational functions/ are called this becuase they require no reason.
 /Sensation/ is sense perception created by the stimulation of the senses,
 it can always be rooted to a sense,
@@ -123,10 +124,12 @@ such as "I see a balloon" or "I feel hungry".
 /Intuition/ is like a sensetion but its not produced by a sense.
 Therefore it has no origin in the same way as sensation has,
 by which its explained as "just a hunch" or "I feel it in my bones".
+cite:hall1973primer98-100functions
 
 To use these functions they have to be combined with attitudes.
 Therefore a person will never be of a thinking type,
 but rather either a thinking introvert or thinking extrovert.
+cite:hall1973primer100-101combo
 We can now imagine what this means,
 an extroverted thinker will for example make judgement about the real world,
 and therefore be more like a scientist,
@@ -136,30 +139,60 @@ and therfore will be an excelent philosopher.
 *** MBTI
 The meyer brigs type indicator is based upon Carl Jung's theory of personality
 types.
-However it brings two important changes to the thoery, first of all the way
+However it brings two important changes to the theory, first of all the way
 of measuring personality type is changed. 
 First of all it uses a strutured approach rather than Carl Jungs projective
-approach. The responses to items are finite and therefore can be deduced based
-on theory. Jung used open ended anwsering with word associations for example.
-Then there is the introduction of the fourth letter to the type.
+approach.
+The responses to items are finite and therefore can be deduced based on theory.
+Jung used open ended anwsering with word associations for example cite:hall1973primer23method.
+Then there is the introduction of the fourth letter to the type
+cite:carlson1985recent.
 Which is either a $J$ for judging or a $P$ for perceiving. this letter
-indicates if the judging (rational) function is dominant or the perceiving
-(irrational) is cite:carlson1985recent.
+indicates if the judging $J$ (rational) function is more preffered or the
+perceiving $P$ (irrational) is.
 However once the assesment is complete the scores are reduced to a type.
 
-The MBTI has got ondur some heavy critism in use.
-For one meyer has said that someone that is of type $I$ falls clearly into
-the $I$ category, therfore a bimodal distribution is expected. This means
-that most people should eiter clearly fall into $I$ or $E$. 
+The MBTI is extremly popular in a subfield called Organizational Developement
+(OD) cite:sample2004myers. 
+But it has gotton some heavy critism in from the field of psycology.
+
+MBTI expects if someone that is of type $I$ falls clearly into
+the $I$ category,
+therfore a bimodal distribution is expected.
+This means that most people should eiter clearly fall into $I$ or $E$. 
 however it has been shown that is not the case cite:bess2002bimodal,
 but this could be the result of the scores being biderictional
 cite:salter2005two.
-It also fell short on factor analyses and reliability
-cite:pittenger1993measuring.
+
+It also fell short on factor analyses and reliability.
+Factor analyses tries to deduce based on observerd variables potential
+simpler un-observerd variables.
+With this technique the desired outcome is that there are 4 question clusters
+(or factors), one for each dimension.
+Secondly these factors should be independent,
+a question that influences I/E score should not influence S/N.
+Finally we expect the factors to indicate differences between individuals.
+Random questions won't do that.
+However it turned out the MBTI had more than 4 factors (6), then there were
+questions that were in different factors than the majority
+and finally there were also some quetions doing no discrimination at all
+(not being scored). cite:sipps1985item
+
+Reliability indicates how often the same result will come out of the test,
+for example if you take the mbti a 100 times you may be classified the same
+type for 70 times.
+Which would be an indication it has a reliablity of arround 70%.
+But in psycology another aspect is important,
+namely the interval in between which the tests are taken,
+if for example two tests produce starkly different results but a lot of time
+has passed between them its not considered a big issue.
+However for the MBTI it has been shown that after a period of 5 weeks 50%
+of the participants changed in score cite:pittenger1993measuring.
 
 *** Kersey's MBTI
 Before continuing we would like to say a word about an extremely popular
-interpertation of MBTI which we will call Kersey's MBTI.
+interpertation of MBTI which is based on Kersey's book "Please understand me",
+and later "Please understand me II".
 In this interpertation the sixteen types are also placed in general groups
 of four but here the $ST$ and $SF$ distinction is replaced by $SJ$ and $SP$
 cite:keirsey1998please.
@@ -185,7 +218,7 @@ Therefore Kersey's MBTI will not be used in this thesis.
 
 *** TODO content oriented vs process orientated (token vs type?)
 ** TODO The best framework
-In here we'll discuss what is the best framework for our usecase.
+In here we'll discuss what is the best framework for our use case.
 ** TODO Simplification
 In here we'll discuss what simplifications could be applied to the best
 framework (this is use full to discuss because it makes it easier to create
@@ -196,7 +229,7 @@ Here we discuss research into communication based on this framework.
 * TODO Agent orientated programming
 ** TODO BDI
 # perhaps talk about bratman?
-** TODO BDI with peronality
+** TODO BDI with personality
 cite:campos_mabs2009
 
 * TODO The communicate game
