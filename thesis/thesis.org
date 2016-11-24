@@ -139,6 +139,22 @@ whereas an introverted thinker will make judgement about ideas in his mind,
 and therfore will be an excelent philosopher.
 
 *** TODO detailed overview of combinations?
+Let $\mathcal{J}$ denote the set of all possible jungian functions such that:
+\[ \mathcal{J} = \{ T_e, T_i, F_e, F_i, S_e, S_i, N_e, N_i\}\]
+Where
++ $T_e$ stands for extraverted thinking, which is thinking about objects in the
+  real world. This is thinking with a goal, a problem to solve,
+  or to check weather certain laws are upheld.
++ $T_i$ stands for introverted thinking, this kind of thinking could be called
+  deductive, it tries to construct a framework to explain the world.
++ $F_e$ stands for extraverted feeling, where objective or external criteria
+  is used to judge, for example something is beautifull or ugly.
++ $F_i$ stands for introverted feeling, 
++ $S_e$ stands for extroverted sensing,
++ $S_i$ stands for introverted sensing,
++ $N_e$ stands for extraverted intuition,
++ $N_i$ stands for introverted intuition.
+
 
 *** MBTI
 The meyer brigs type indicator is based upon Carl Jung's theory of personality
@@ -181,7 +197,7 @@ A possible grouping of the sixteen type exists using the middle letters:
 This grouping goes under the rationale that the first two functions only
 differ in either attitude, order or both.
 
-Before continuing we would like to say a word about an extremely popular
+Before continuing we would like to say a word about a popular
 interpertation of MBTI which is based on Kersey's book "Please understand me",
 and later "Please understand me II".
 In this interpertation the sixteen types are also placed in general groups
@@ -234,14 +250,7 @@ has passed between them its not considered a big issue.
 However for the MBTI it has been shown that after a period of 5 weeks 50%
 of the participants changed in score cite:pittenger1993measuring.
 
-*** Alternatives to MBTI
-There exist other implementation of Jung's type thoery that handle the
-critisms a lot better, such as the PPSDQ and SL-TDI.
-The SL-TDI stays really close to jungian theory by keeping introversion 
-and extroversion as attitudes rather than traits.
-It also has a strong cooralation with the big-five. 
-Although the PPSDQ is internally more consistent cite:arnau1999alternative.
-
+*** PPSDQ
 The PPSDQ keeps basically the same theory as MBTI but uses a different measuring
 method. Instead of forced questions it uses a word-pair checklist for
 $I/E, S/N$ and $T/F$, and for the $J/P$ self describing sentences are used
@@ -255,19 +264,45 @@ A word pair checklist looks like:
 The sentence is a statement in which you can agree or disagree. 
 This test method is simple but effective.
 
-SLTDI measures functions by presenting 20 situations and then giving subject
+*** SL-TDI
+SL-TDI measures functions by presenting 20 situations and then giving subject
 possible actions which corrolate with the functions.
 The subjects then have to indicate how likely it is that they would choose that
 particular action cite:arnau2000reliability.
 
+It becomes rather staight forward to make a function preference of the 
+measurement of SL-TDI since the qeustion directly measure the jungian
+functions.
+A possible personality type therefore would be:
+
+\[ o(S_i) \geq o(T_i) \geq o(S_e) \geq o(F_e) \geq o(N_i) \geq o(T_e) \geq o(N_e) \geq o(F_i) \]
+
+Where $o$ is a function $ f \in \mathcal{J}, i \in \mathbb{I}, o: f \mapsto i$
+in which $i$ is the type mode score of $f$.
+
+This denotion is much less strict than the MBTI or PPSDQ since it does not force
+alternating attitudes or pairing of rational/irrational functions.
+Therefore the amount of personality types SL-TDI supports drastically exceeds
+that of the PPSDQ. In other words, there always exists a mapping from PPSDQ
+to SL-TDI, but not always from SL-TDI to PPSDQ.
+The reason for doing this is because there is experimental evidence
+that there exist personalities outside of the stucture orignally imposed by
+MBTI and the subsequent PPSDQ cite:loomis1980testing.
+
+*** SL-TDI v PPSDQ v MBTI
+There exist other implementation of Jung's type thoery that handle the
+critisms a lot better, such as the PPSDQ and SL-TDI.
+The SL-TDI stays really close to jungian theory by keeping introversion 
+and extroversion as attitudes rather than traits.
+It also has a strong cooralation with the big-five. 
+Although the PPSDQ is internally more consistent cite:arnau1999alternative.
+
+
 Both of these alternatives use a continues scale and have a high cooralation with
 the big five cite:arnau1997measurement.
 The PPSDQ is measuring the same thing as MBTI cite:kier1997new,king1999score,
-but does not suffer from the same critisms as MBTI.
-**** TODO more extended treatment of all critisisms that don't apply for these alternatives.
-For example I read somewhere they're more reliable but I need to find the
-source first, and factor analyses has been done in earlier cited papers
-but this needs to be referenced too.
+but lacks the critisms of MBTI.
+
 *** TODO content oriented vs process orientated 
 # token vs type?
 ** TODO The best framework
