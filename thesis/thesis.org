@@ -138,6 +138,8 @@ and therefore be more like a scientist,
 whereas an introverted thinker will make judgement about ideas in his mind,
 and therfore will be an excelent philosopher.
 
+*** TODO detailed overview of combinations?
+
 *** MBTI
 The meyer brigs type indicator is based upon Carl Jung's theory of personality
 types.
@@ -149,10 +151,35 @@ The responses to items are finite and therefore can be deduced based on theory.
 Jung used open ended anwsering with word associations for example cite:hall1973primer23method.
 Then there is the introduction of the fourth letter to the type
 cite:carlson1985recent.
-Which is either a $J$ for judging or a $P$ for perceiving. this letter
-indicates if the judging $J$ (rational) function is more preffered or the
-perceiving $P$ (irrational) is.
+Which is either a $J$ for judging (rational in jung terms)
+or a $P$ for perceiving (irrational in jung terms).
+This dimension indicates together with the $I/E$ dimension which function is
+dominant and which is auxilirary which we'll see later.
 However once the assesment is complete the scores are reduced to a type.
+
+Once completed with the MBTI you'll get a type as outcome, for example "INTJ".
+This label tells you inderectly which of carl jung's functions is dominant,
+auxilirary, tetriary and inferior cite:mccaulley2000myers.
+In other words it provides a sequence of preferences
+cite:website.mbtitypedynamics.
+In case of INTJ it would be: \[N_i > T_e  > F_i > S_e\]
+So the most preffered function to be used by someone of type INTJ would be $N_i$,
+then $T_e$ and so forth.
+In this case $N_i$ means introverted iNtuition cite:website.mbtisequence. 
+These are the same function as Jung used, the MBTI
+just imposed an order on them cite:mccaulley2000myers.
+How much preference there is for a function is not encoded in MBTI, just an
+order of preference.
+An ENTJ would be simialar to INTJ but with the order a little different:
+\[T_e > N_i > S_e > F_i\]
+With this definition the interplay of the judging/perceiving dimension becomes
+more obvious if we look at INTP: \[T_i > N_e > S_i > F_e\]
+It's similar to an ENTJ, but the attitudes have flipped.
+
+A possible grouping of the sixteen type exists using the middle letters:
+\[\{NT, ST, NF, SF\}\]
+This grouping goes under the rationale that the first two functions only
+differ in either attitude, order or both.
 
 Before continuing we would like to say a word about an extremely popular
 interpertation of MBTI which is based on Kersey's book "Please understand me",
@@ -207,8 +234,6 @@ has passed between them its not considered a big issue.
 However for the MBTI it has been shown that after a period of 5 weeks 50%
 of the participants changed in score cite:pittenger1993measuring.
 
-
-
 *** Alternatives to MBTI
 There exist other implementation of Jung's type thoery that handle the
 critisms a lot better, such as the PPSDQ and SL-TDI.
@@ -239,10 +264,10 @@ Both of these alternatives use a continues scale and have a high cooralation wit
 the big five cite:arnau1997measurement.
 The PPSDQ is measuring the same thing as MBTI cite:kier1997new,king1999score,
 but does not suffer from the same critisms as MBTI.
-**** TODO more extended treatment of all critisisms that don't apply
-     For example I read somewhere they're more reliable but I need to find the
-     source first, and factor analyses has been done in earlier cited papers
-     but this needs to be referenced too.
+**** TODO more extended treatment of all critisisms that don't apply for these alternatives.
+For example I read somewhere they're more reliable but I need to find the
+source first, and factor analyses has been done in earlier cited papers
+but this needs to be referenced too.
 *** TODO content oriented vs process orientated 
 # token vs type?
 ** TODO The best framework
