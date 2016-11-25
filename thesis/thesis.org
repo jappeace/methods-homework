@@ -138,7 +138,6 @@ and therefore be more like a scientist,
 whereas an introverted thinker will make judgement about ideas in his mind,
 and therfore will be an excelent philosopher.
 
-*** TODO detailed overview of combinations?
 Let $\mathcal{J}$ denote the set of all possible jungian functions such that:
 \[ \mathcal{J} = \{ T_e, T_i, F_e, F_i, S_e, S_i, N_e, N_i\}\]
 Where
@@ -149,12 +148,17 @@ Where
   deductive, it tries to construct a framework to explain the world.
 + $F_e$ stands for extraverted feeling, where objective or external criteria
   is used to judge, for example something is beautifull or ugly.
-+ $F_i$ stands for introverted feeling, 
-+ $S_e$ stands for extroverted sensing,
-+ $S_i$ stands for introverted sensing,
-+ $N_e$ stands for extraverted intuition,
-+ $N_i$ stands for introverted intuition.
-
+  Established standards may be used to decide this and therefore its a
+  conservative function. Decisions are based on interpersonal and cultural values.
++ $F_i$ stands for introverted feeling, decisions based on personal values.
++ $S_e$ stands for extroverted sensing, Act on concrete data from the here and
+  now. Then lets it go.
++ $S_i$ stands for introverted sensing, acts on concrete data from memories and
+  passed experience.
++ $N_e$ stands for extraverted intuition, try to find possibilities in every
+  situation.
++ $N_i$ stands for introverted intuition. Looks new possibilities in ideas.
+# TODO revise this
 
 *** MBTI
 The meyer brigs type indicator is based upon Carl Jung's theory of personality
@@ -275,7 +279,7 @@ measurement of SL-TDI since the qeustion directly measure the jungian
 functions.
 A possible personality type therefore would be:
 
-\[ o(S_i) \geq o(T_i) \geq o(S_e) \geq o(F_e) \geq o(N_i) \geq o(T_e) \geq o(N_e) \geq o(F_i) \]
+\[ S_i \geq T_i \geq S_e \geq F_e \geq N_i \geq T_e \geq N_e \geq F_i \]
 
 Where $o$ is a function $ f \in \mathcal{J}, i \in \mathbb{I}, o: f \mapsto i$
 in which $i$ is the type mode score of $f$.
