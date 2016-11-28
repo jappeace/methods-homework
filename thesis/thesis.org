@@ -6,8 +6,41 @@
 ** TODO abstract (removing this title)
 ** TODO keywords (removing this title)
 
-* TODO Related work
-** TODO ???
+* Related work
+  To simulate personality in comminucation games there have been already several
+works proposed.
+Etheredge used the OCEAN personality theory to create argumentative
+agents cite:etheredge2016personality.
+Although argumentation is not the same as comminucation we can consider the
+method used to make the personality.
+In this paper a personality model is introduced based on OCEAN.
+To move from personality values in OCEAN towards action selection fuzzy logic
+is used.
+However this has a major disadvantage in that a lot of rules need to be
+added to do action selection.
+This can make action selection opaque.
+It is for example not immediately clear how a higher anxiety will influence
+action selection.
+Having a lot of rule also make maintenance hard, if for example there is an
+unwanted behavior many rules need to be inspected before the change can be made.
+
+Van den bosch also chose to use OCEAN to model characters in a serious
+comminucation game cite:van2012characters.
+He used a nested probabilistic if else structure to decide on how agents should
+interact.
+His methodologies had some shortcomings however,
+for example a not agreeable person was defined as someone who'd had a high
+probability of telling facts about himself.
+
+In agents with with personalities cocu tried making a complete game based
+on mbti cite:cocu2015agents.
+However comminucation was never implemented and personality got reduced to
+doing a single action.
+
+Campos used the MBTI to create BDI based agents cite:campos_mabs2009.
+We will use a more fine grained version of MBTI but his architecture is used,
+in which personality will be processed orientated rather than content
+orientated.
 
 * Personality Theories
 The field of psychology has been somewhat active in trying to model human
@@ -87,6 +120,7 @@ the other dimensions,
 which is non trivial to answer.
 
 ** Personality types
+*** TODO check math of campos/dignum and compare to own
 Much of the issues we had with the big five
 could be solved by a theoretical foundation of personality types.
 To do this we'll look first at the proposed method by the grandfather of 
@@ -255,8 +289,9 @@ However for the MBTI it has been shown that after a period of 5 weeks 50%
 of the participants changed in score cite:pittenger1993measuring.
 
 *** PPSDQ
-The PPSDQ keeps basically the same theory as MBTI but uses a different measuring
-method. Instead of forced questions it uses a word-pair checklist for
+The PPSDQ keeps basically the same theory as MBTI cite:kier1997new,king1999score,
+but uses a different measuring method.
+Instead of forced questions it uses a word-pair checklist for
 $I/E, S/N$ and $T/F$, and for the $J/P$ self describing sentences are used
 cite:melancon1996measurement.
 A word pair checklist looks like:
@@ -268,6 +303,16 @@ A word pair checklist looks like:
 The sentence is a statement in which you can agree or disagree. 
 This test method is simple but effective.
 
+The result of the PPSDQ would look something like: I-30 N-20 T-80 J-60, with
+a scale of 0 to 100. To calulate the jungian functions as a probability measure
+some math is required. Our subject is $70\%$ of the time introverted and $30\%$ of the 
+time extroverted. $60\%$ of the time judging and $40\%$ of the time perceiving.
+therefore N_i would be calulated as: 0.7 \times 0.4 \times 0.8 = 0.224 or $22.4\%$.
+N_e would be $0.3 \times 0.4 \times 0.8 = 0.096$ etc.
+From this you can make a preference sequence or create a mixed strategy.
+
+The PPSDQ is measuring the same thing as MBTI 
+but lacks the critisms of MBTI.
 *** SL-TDI
 SL-TDI measures functions by presenting 20 situations and then giving subject
 possible actions which corrolate with the functions.
@@ -293,28 +338,53 @@ The reason for doing this is because there is experimental evidence
 that there exist personalities outside of the stucture orignally imposed by
 MBTI and the subsequent PPSDQ cite:loomis1980testing.
 
-*** SL-TDI v PPSDQ v MBTI
-There exist other implementation of Jung's type thoery that handle the
-critisms a lot better, such as the PPSDQ and SL-TDI.
-The SL-TDI stays really close to jungian theory by keeping introversion 
-and extroversion as attitudes rather than traits.
-It also has a strong cooralation with the big-five. 
-Although the PPSDQ is internally more consistent cite:arnau1999alternative.
 
+** The best personality framework for CS
+To re-iterate, we are interested in a framework that is realistic, and easy to
+implement.
+The Big Five falls short on the easy to implement,
+there is no underlying theoretical framework to support it cite:eysenck1992four,
+therefore we cannot base our implementation on anything except our own
+interpertation.
 
-Both of these alternatives use a continues scale and have a high cooralation with
-the big five cite:arnau1997measurement.
-The PPSDQ is measuring the same thing as MBTI cite:kier1997new,king1999score,
-but lacks the critisms of MBTI.
+The MBTI has been criticized a lot from the field of psychology,
+but it does have a solid theoretical foundation.
+There is some relation between the big five and MBTI cite:furnham1996big.
+Therefore its somewhat realistic, but quite easy to implement.
 
+Both of the alternatives of MBTI use a continues scale and have a high
+cooralation with the big five cite:arnau1997measurement.
+
+The PPSDQ is based on the same thoery as MBTI, but with scaled type letters.
+To convert the type to function attitudes some extra work has to be done,
+namely calulate their respective probabilities.
+Then to decide which function attitude to use some kind of mixed strategy
+has to be used.
+The PPSDQ is more realistic, but at the cost of being more difficult to
+implement.
+The PPSDQ is internally most consistent of the discussed alternatives
+(excluding OCEAN) cite:arnau1999alternative.
+
+The SL-TDI is even harder to implement than the PPSDQ because the function
+attitudes no longer have to alternate.
+This means that function attidues have to work in any combination,
+for example a function pair of $T_e, T_i$ is impossible in both PPSDQ and MBTI.
+Since SL-TDI drops an assumption, which is shown with experimental evidence
+to be false cite:loomis1980testing, we can say SL-TDI's theory is most realistic.
+Therefore we can say the SL-TDI is more difficult to implement than PPSDQ but
+also more realistic.
+
+Therefore our preference for implementation is the following:
+
+\[ \text{MBTI} > \text{PPSDQ} > \text{SL-TDI} > \text{OCEAN} \]
+
+There is another hidden reasoning behind this, the work of PPSDQ can built on
+that of MBTI, and that of SL-TDI can build on that of PPSDQ.
+OCEAN builds on nothing, we'll leave that for future work.
 *** TODO content oriented vs process orientated 
 # token vs type?
-** TODO The best framework
-In here we'll discuss what is the best framework for our use case.
-** TODO Simplification
-In here we'll discuss what simplifications could be applied to the best
-framework (this is use full to discuss because it makes it easier to create
-a prototype).
+
+
 ** TODO Communication in framework
 Here we discuss research into communication based on this framework.
 
