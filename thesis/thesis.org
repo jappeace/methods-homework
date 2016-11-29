@@ -10,14 +10,22 @@
 #+LATEX_HEADER: \newcommand{\cleared}{\todo[noline, color=white]{Cleared}}
 
 # Title page
-
 #+LATEX: \input{title}
+
+# The order of this thesis will be done in a way to let future researcher
+# decide the value of the thesis quickly
+# 1. First the abstract to let a researcher quickly discard this thesis if neccesary.
+# 2. The toc, to let a researcher jump to interseting pages quickly.
+# 3. The introduction and main body of the thesis. If all else fails a
+# reaserhcer can use this as fallback
 
 * Abstract :prelim:
 \todo[inline]{abstract}
 
 \newpage
 #+TOC: headlines 2
+
+\newpage
 
 * TODO Introduction here (removing this title)
 ** TODO keywords (removing this title)
