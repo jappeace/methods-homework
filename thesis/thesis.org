@@ -1,12 +1,68 @@
 #+TITLE: A serious communication game with personalities
-#+OPTIONS: toc:nil num:nil
 #+LATEX_HEADER: \usepackage{natbib}
+#+LATEX_HEADER: \usepackage[obeyFinal, colorinlistoftodos]{todonotes}
+#+LaTeX_CLASS: article
+#+Options: toc:nil ^:nil 
+#+Options: title:nil
+#+LATEX_HEADER: \newcommand{\drafting}{\todo[noline, color=gray]{Working draft}}
+#+LATEX_HEADER: \newcommand{\toReview}{\todo[noline, color=yellow]{To review}}
+#+LATEX_HEADER: \newcommand{\underReview}[1]{\todo[noline, color=olive]{Under review by #1}}
+#+LATEX_HEADER: \newcommand{\cleared}{\todo[noline, color=white]{Cleared}}
+# Title page
+#+BEGIN_LaTeX
+\makeatletter
+\begin{titlepage}
+\begin{center}
+
+\vspace*{.06\textheight}
+{\scshape\LARGE Universiteit Utrecht\par}\vspace{1.5cm} % University name
+\textsc{\Large Master Thesis}\\[0.5cm] % Thesis type
+
+\hrule
+{\huge \bfseries \@title \par}\vspace{0.4cm} % Thesis title
+\hrule
+ 
+\begin{minipage}[t]{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Author:}\\
+\author % Author name 
+\end{flushleft}
+\end{minipage}
+\begin{minipage}[t]{0.4\textwidth}
+\begin{flushright} \large
+\emph{Supervisor:} \\
+Frank Dignum \\
+Medi Dastani
+\end{flushright}
+\end{minipage}\\[3cm]
+ 
+\vfill
+
+Faculty of Science \\
+Artificial Intelligence\\[2cm] % Research group name and department name
+ 
+\vfill
+
+{\large \today}\\[4cm] % Date
+%\includegraphics{logo} % University/department logo - uncomment to place it
+ 
+\vfill
+\end{center}
+\end{titlepage}
+\makeatother
+#+END_LaTeX
+
+* Abstract :prelim:
+\todo[inline]{abstract}
+
+\newpage
+#+TOC: headlines 2
 
 * TODO Introduction here (removing this title)
-** TODO abstract (removing this title)
 ** TODO keywords (removing this title)
 
 * Related work
+\drafting
   To simulate personality in comminucation games there have been already several
 works proposed.
 Etheredge used the OCEAN personality theory to create argumentative
@@ -24,6 +80,11 @@ action selection.
 Having a lot of rule also make maintenance hard, if for example there is an
 unwanted behavior many rules need to be inspected before the change can be made.
 
+In agents with with personalities cocu tried making a complete game based
+on MBTI cite:cocu2015agents.
+However comminucation was never implemented and personality got reduced to
+doing a single action.
+
 Van den bosch also chose to use OCEAN to model characters in a serious
 comminucation game cite:van2012characters.
 He used a nested probabilistic if else structure to decide on how agents should
@@ -31,11 +92,10 @@ interact.
 His methodologies had some shortcomings however,
 for example a not agreeable person was defined as someone who'd had a high
 probability of telling facts about himself.
-
-In agents with with personalities cocu tried making a complete game based
-on mbti cite:cocu2015agents.
-However comminucation was never implemented and personality got reduced to
-doing a single action.
+Which in certain situations could be considered strange,
+for example a spy who was captured.
+This kind of methodology is called content orientated cite:campos_mabs2009,
+the personality, would and should change depending on context.
 
 Campos used the MBTI to create BDI based agents cite:campos_mabs2009.
 We will use a more fine grained version of MBTI but his architecture is used,
@@ -43,6 +103,7 @@ in which personality will be processed orientated rather than content
 orientated.
 
 * Personality Theories
+\toReview
 The field of psychology has been somewhat active in trying to model human
 personality cite:pervin2008handbook. 
 Several frameworks have been developed to figure out people's
@@ -59,6 +120,7 @@ that are unfeasible to implement.
 
 
 ** The big five
+\toReview
 The first framework we'll discuss is called the big five.
 This framework was not really invented, but rather discovered trough
 lexical analyses cite:tupes1961recurrent.
@@ -120,7 +182,8 @@ the other dimensions,
 which is non trivial to answer.
 
 ** Personality types
-*** TODO check math of campos/dignum and compare to own
+\todo{check math of campos/dignum and compare to own}
+\toReview
 Much of the issues we had with the big five
 could be solved by a theoretical foundation of personality types.
 To do this we'll look first at the proposed method by the grandfather of 
@@ -129,6 +192,7 @@ After which we'll look at a thoeretical evolution proposed by Myers and
 Myers-Brigs, which also introduced a structered method of measuring types.
 Then we'll discuss some critique's on this method.
 *** Jung's theory of psychological types
+\toReview
 Jung describes several concepts, firstly each person has two attitudes:
 /Introversion/ and /extroversion/.
 Extroversion means dealing with the outside world and therfore is called
@@ -195,6 +259,7 @@ Where
 # TODO revise this
 
 *** MBTI
+\toReview
 The meyer brigs type indicator is based upon Carl Jung's theory of personality
 types.
 However it brings two important changes, first of all the way
@@ -289,6 +354,7 @@ However for the MBTI it has been shown that after a period of 5 weeks 50%
 of the participants changed in score cite:pittenger1993measuring.
 
 *** PPSDQ
+\toReview
 The PPSDQ keeps basically the same theory as MBTI cite:kier1997new,king1999score,
 but uses a different measuring method.
 Instead of forced questions it uses a word-pair checklist for
@@ -311,9 +377,11 @@ therefore N_i would be calulated as: 0.7 \times 0.4 \times 0.8 = 0.224 or $22.4\
 N_e would be $0.3 \times 0.4 \times 0.8 = 0.096$ etc.
 From this you can make a preference sequence or create a mixed strategy.
 
-The PPSDQ is measuring the same thing as MBTI 
-but lacks the critisms of MBTI.
+The PPSDQ is measuring the same thing as MBTI but lacks the critisms of MBTI.
+The PPSDQ is internally most consistent of the discussed alternatives
+(excluding OCEAN) cite:arnau1999alternative.
 *** SL-TDI
+\toReview
 SL-TDI measures functions by presenting 20 situations and then giving subject
 possible actions which corrolate with the functions.
 The subjects then have to indicate how likely it is that they would choose that
@@ -339,7 +407,8 @@ that there exist personalities outside of the stucture orignally imposed by
 MBTI and the subsequent PPSDQ cite:loomis1980testing.
 
 
-** The best personality framework for CS
+** Comparison of theories
+\toReview
 To re-iterate, we are interested in a framework that is realistic, and easy to
 implement.
 The Big Five falls short on the easy to implement,
@@ -353,17 +422,17 @@ There is some relation between the big five and MBTI cite:furnham1996big.
 Therefore its somewhat realistic, but quite easy to implement.
 
 Both of the alternatives of MBTI use a continues scale and have a high
-cooralation with the big five cite:arnau1997measurement.
+correlation with the big five cite:arnau1997measurement.
+This means is that they are measuring something which is also measured by the
+big five in some way.
 
 The PPSDQ is based on the same thoery as MBTI, but with scaled type letters.
 To convert the type to function attitudes some extra work has to be done,
 namely calulate their respective probabilities.
-Then to decide which function attitude to use some kind of mixed strategy
+To decide which function attitude to use some kind of mixed strategy
 has to be used.
 The PPSDQ is more realistic, but at the cost of being more difficult to
 implement.
-The PPSDQ is internally most consistent of the discussed alternatives
-(excluding OCEAN) cite:arnau1999alternative.
 
 The SL-TDI is even harder to implement than the PPSDQ because the function
 attitudes no longer have to alternate.
@@ -371,8 +440,7 @@ This means that function attidues have to work in any combination,
 for example a function pair of $T_e, T_i$ is impossible in both PPSDQ and MBTI.
 Since SL-TDI drops an assumption, which is shown with experimental evidence
 to be false cite:loomis1980testing, we can say SL-TDI's theory is most realistic.
-Therefore we can say the SL-TDI is more difficult to implement than PPSDQ but
-also more realistic.
+This comes however at the cost of being even more difficult to implement.
 
 Therefore our preference for implementation is the following:
 
@@ -381,31 +449,37 @@ Therefore our preference for implementation is the following:
 There is another hidden reasoning behind this, the work of PPSDQ can built on
 that of MBTI, and that of SL-TDI can build on that of PPSDQ.
 OCEAN builds on nothing, we'll leave that for future work.
-*** TODO content oriented vs process orientated 
-# token vs type?
+\todo[inline]{content oriented vs process orientated}
 
 
-** TODO Communication in framework
+** Communication in framework
+\drafting
+Most of the research on comminucation in this chapter is based on MBTI,
+it can to some extend also be applied to the PPSDQ and SL-TDI since they are 
+based on the same theoretical construct.
+However it should be noted that its not a one to one mapping.
 Here we discuss research into communication based on this framework.
 
-* TODO Agent orientated programming
-** TODO BDI
-# perhaps talk about bratman?
-** TODO BDI with personality
+* Agent orientated programming
+\todo[inline]{perhaps talk about bratman?}
+\todo[inline]{BDI}
+\todo[inline]{Personalized bdi architecture}
 cite:campos_mabs2009
-
-* TODO The communicate game
+* The communicate game
 cite:augello2015social
-** TODO Existing functions
-user interaction, goal of the game etc
+** TODO Existing functionality
+\todo[inline]{Existing functionality, user interaction etc}
 ** TODO Existing architecture
+\todo[inline]{Existing architecture, how does the trikery work}
 cite:campos_mabs2016
+** TODO Extending it
+\todo[inline]{Proposed Extension, why this extension}
 
-* TODO Extending the communication game
-The practical implementation.
-
-* TODO Future work
-
+* Conclusion
+\todo[inline]{Discussion}
+** Future work
+\todo[inline]{Depending on the successfulness this chapter becomes smaller and more fine grained}
+* Attachments
 <<bibliography link>>
 
 bibliographystyle:unsrt
