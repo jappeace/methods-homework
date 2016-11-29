@@ -19,16 +19,19 @@
 # 3. The introduction and main body of the thesis. If all else fails a
 # reaserhcer can use this as fallback
 
-* Abstract :prelim:
+* Abstract                                                          
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
 \todo[inline]{abstract}
+\todo{keywords}
 
 \newpage
 #+TOC: headlines 2
 
 \newpage
 
-* TODO Introduction here (removing this title)
-** TODO keywords (removing this title)
+\todo[inline]{Introduction here} 
 
 * Related work
 \drafting
