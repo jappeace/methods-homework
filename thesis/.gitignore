@@ -1,5 +1,6 @@
 code
-*.tex
+pva.tex
+thesis.tex
 auto
 *.dvi
 *.fdb_latexmk
