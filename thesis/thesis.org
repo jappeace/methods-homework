@@ -1,4 +1,5 @@
 #+TITLE: A serious communication game with personalities
+# Pure functional serious comminucation in-game
 #+LATEX_HEADER: \usepackage{natbib}
 #+LATEX_HEADER: \usepackage[obeyFinal, colorinlistoftodos]{todonotes}
 #+LaTeX_CLASS: article
@@ -24,7 +25,12 @@
 :PROPERTIES:
 :UNNUMBERED: t
 :END:
+
+#+BEGIN_CENTER
+
 \todo[inline]{abstract}
+
+#+END_CENTER
 \todo{keywords}
 
 \newpage
@@ -34,9 +40,8 @@
 
 \todo[inline]{Introduction here} 
 
-
 * Related work
-\drafting
+\toReview
   To simulate personality in comminucation games there have been already several
 works proposed.
 Etheredge used the OCEAN personality theory to create argumentative
@@ -199,7 +204,7 @@ such as "I see a balloon" or "I feel hungry".
 /Intuition/ is like a sensetion but its not produced by a sense.
 Therefore it has no origin in the same way as sensation has,
 by which its explained as "just a hunch" or "I feel it in my bones".
-cite:hall1973primer98-100functions
+cite:beauchamp2005communication,hall1973primer98-100functions
 
 To use these functions they have to be combined with attitudes.
 Therefore a person will never be of a thinking type,
@@ -216,14 +221,17 @@ Let $\mathcal{J}$ denote the set of all possible jungian functions such that:
 Where
 + $T_e$ stands for extraverted thinking, which is thinking about objects in the
   real world. This is thinking with a goal, a problem to solve,
-  or to check weather certain laws are upheld.
+  or to check weather certain laws are upheld (or a system to check).
 + $T_i$ stands for introverted thinking, this kind of thinking could be called
   deductive, it tries to construct a framework to explain the world.
+  This is consistent reasoning based on internal believes,
+  which does not necessarily solve a problem.
 + $F_e$ stands for extraverted feeling, where objective or external criteria
   is used to judge, for example something is beautifull or ugly.
   Established standards may be used to decide this and therefore its a
   conservative function. Decisions are based on interpersonal and cultural values.
-+ $F_i$ stands for introverted feeling, decisions based on personal values.
++ $F_i$ stands for introverted feeling, decisions based on personal values and
+believes.
 + $S_e$ stands for extroverted sensing, Act on concrete data from the here and
   now. Then lets it go.
 + $S_i$ stands for introverted sensing, acts on concrete data from memories and
@@ -428,20 +436,40 @@ Therefore our preference for implementation is the following:
 There is another hidden reasoning behind this, the work of PPSDQ can built on
 that of MBTI, and that of SL-TDI can build on that of PPSDQ.
 OCEAN builds on nothing, we'll leave that for future work.
-\todo[inline]{content oriented vs process orientated}
 
 
-** Communication in framework
-\drafting
-Most of the research on comminucation in this chapter is based on MBTI,
-it can to some extend also be applied to the PPSDQ and SL-TDI since they are 
-based on the same theoretical construct.
-However it should be noted that its not a one to one mapping.
-Here we discuss research into communication based on this framework.
+\todo[inline]{Communication in framework}
+\todo[inline]{Perhaps we can use socionics?}
 
 * Agent orientated programming
+\drafting
+In this chapter we'll discuss the thoery behind intelligent agents,
+and reason in favor of this approach.
+We'll also compare it with alternatives.
+
+** What is an agent
+\drafting
+In the literature there is little consensus on what exactly an agent is,
+however there is a general consensus that an agent is /autonomous/
+cite:wooldridge2009introduction.
+To make this more clear we'll use Wooldriges' definition:
+
+#+BEGIN_QUOTE
+An /agent/ is a computer system that is /situated/ in some /environment/ and
+that is capable of /autonomous action/ in this environment in order to meet its
+delegated objectives. -- Wooldridge
+#+END_QUOTE
+
+*** Belief desires and intentions
+\drafting
 \todo[inline]{perhaps talk about bratman?}
 \todo[inline]{BDI}
+** Why do this?
+\drafting
+
+** BDI + Personality
+\drafting
+\todo[inline]{content oriented vs process orientated}
 \todo[inline]{Personalized bdi architecture}
 cite:campos_mabs2009
 * The communicate game
@@ -460,12 +488,14 @@ being sensitive, but rather being sensitive to the people who appreciate it.
 cite:clack2004personality
 
 ** TODO Existing functionality
-\todo[inline]{Existing functionality, user interaction etc}
+\todo[inline]{Existing functionality and design, user interaction etc}
 ** TODO Existing architecture
 \todo[inline]{Existing architecture, how does the trikery work}
 cite:campos_mabs2016
 ** TODO Extending it
 \todo[inline]{Proposed Extension, why this extension}
+*** TODO Design extension
+*** TODO Architecturual changes
 
 * Conclusion
 \todo[inline]{Discussion}
