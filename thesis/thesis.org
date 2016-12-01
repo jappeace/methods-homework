@@ -105,12 +105,17 @@ This framework was not really invented, but rather discovered trough
 lexical analyses cite:tupes1961recurrent.
 Although the labels used were different,
 they conveyed the same idea as the big five model used now.
-The methodology what they used was basically applying manual data mining on a
-dictionary and then look at what worked for personality.
-\todo{this was factor analyses probably, this should be explained here}
+The methodology used is something which is called factor analyses[fn::
+In the paper the term 'varimax rotational program' is used,
+but if we look this term in wikipedia, we can see the result is called factor
+analyses cite:varymaxrotanonalprogram].
+Factor analyses is a statistical methodology that tries to find underlying
+hidden variables.
+This methodology has become used in psychology cite:fabrigar1999evaluating.
+
 The term big five first coined in 1981 by Goldberg cite:goldberg1981language.
-The big five were not big because of their intrinsic greatness, but rather to
-emphasize how broad these factors were.
+The big five were not big because of their intrinsic greatness,
+but rather to emphasize how broad these factors were.
 
 In the begining of the 1990's there were many ways to measure personality that
 didn't agree with each other.
@@ -162,7 +167,6 @@ the other dimensions,
 which is non trivial to answer.
 
 ** Personality types
-\todo{check math of campos/dignum and compare to own}
 \toReview
 Much of the issues we had with the big five
 could be solved by a theoretical foundation of personality types.
