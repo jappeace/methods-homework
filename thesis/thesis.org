@@ -82,7 +82,7 @@ in which personality will be processed orientated rather than content
 orientated.
 
 * Personality Theories
-\toReview
+\cleared
 The field of psychology has been somewhat active in trying to model human
 personality cite:pervin2008handbook. 
 Several frameworks have been developed to figure out people's
@@ -92,15 +92,21 @@ We are interested in two ways in existing personality theories:
    help anyone in the serious game.
 2. Ease of implementation. If the personality theory is too hard (or impossible)
    to implement in the serious game than we can't use it.
-Luckily the field of psychology is very interested in the first requirement. 
-However the second requirement not so much. Therefore our first job will be
-to list existing psychology personality frameworks, and filter out those
-that are unfeasible to implement.
+The field of psychology is very interested in the first requirement. 
+However the second requirement not so much.
+Therefore our first job will be to list existing psychology personality
+frameworks,
+and filter out those that are unfeasible to implement.
 
 
 ** The big five
-\toReview
+\cleared
 The first framework we'll discuss is called the big five.
+The term big five first coined in 1981 by Goldberg cite:goldberg1981language.
+The big five were not big because of their intrinsic greatness,
+but rather to emphasize how broad these factors were.
+
+\cleared
 This framework was not really invented, but rather discovered trough
 lexical analyses cite:tupes1961recurrent.
 Although the labels used were different,
@@ -111,31 +117,31 @@ but if we look this term in wikipedia, we can see the result is called factor
 analyses cite:varymaxrotanonalprogram].
 Factor analyses is a statistical methodology that tries to find underlying
 hidden variables.
-This methodology has become used in psychology cite:fabrigar1999evaluating.
+This methodology has become widely used in psychology cite:fabrigar1999evaluating.
 
-The term big five first coined in 1981 by Goldberg cite:goldberg1981language.
-The big five were not big because of their intrinsic greatness,
-but rather to emphasize how broad these factors were.
-
+\cleared
 In the begining of the 1990's there were many ways to measure personality that
 didn't agree with each other.
 For example at Berkley alone block used a 2 dimensional ego-resilience and
 ego-controll method cite:block1980role,
-whereas gough measured folk concepts such as self-controll, well-being and
+whereas Gough measured folk concepts such as self-controll, well-being and
 tolerance cite:gough1987california.
 Personality researchers hoped that they would be the one to discover a structure
 that would then be adopted by other researchers cite:pervin2008handbookp114.
 
+\cleared
 The goal of the big five was not to present a new structure that convinced
-others to use it.
-But rather to provide a taxonomy that all psychologist could agree upon.
-Since the big five was so broad, this worked.
-Therefore the researchers could keep on exploring there niche,
-with their proffered structure,
+others to use it,
+but rather to provide a taxonomy that all psychologist could agree upon.
+Since the big five was so broad (because of the statistical methods used),
+this worked.
+Therefore the researchers could keep on exploring there niche with their
+proffered structure,
 but once they would present their work they could use the big five to
 communicate clearly what their research meant without having to redefining the
 words every time cite:pervin2008handbookp114..116.
 
+\cleared
 The big five as in the OCEAN definition has the following units of measurement:
 - Openness or originality, if you score high on this you enjoy learning new
   things just for the sake of learning. If you score low then you don't enjoy
@@ -149,50 +155,61 @@ The big five as in the OCEAN definition has the following units of measurement:
 - Neuroticism or nervousness, a high score indicates that you like to brag and
   get upset when someone is angry at them.
 
+\cleared
 The big five has been extensively tested and the result has been replicated
 in multiple studies cite:pervin2008handbookp119.
 One can measure his big five score trough a test called the NEO-PI, or the
 NEO-FFI. The FFI variant is shorter but less precise cite:costa1992revised.
 
+\cleared
 Although these terms may provide a great taxonomy,
-it does not say anything about implementation.
-By this we mean that lets say you have a score of 0.8 for Neuroticism,
+it does not have any theoretical foundation cite:eysenck1992four.
+This means it becomes difficult to speak about implementation.
+To make this more clear we use a thought experiment:
+Lets say you have a score of 0.8 for Neuroticism,
 how does this influence my decision for selecting action $a$ or $b$?
 Now you could say, use a mixed strategy where in you choose 80% of the time
 the neurotic typical neurotic approach.
-Then we need a valuation function $v: A \mapsto i$ where $A$ is an action and
-$i \in \mathbb{N}$ to decide which of the two actions is more neurotic.
-This still leaves open the question of how this decision interacts with
-the other dimensions,
-which is non trivial to answer.
+Then we need a valuation function to decide which of the two actions is more
+neurotic.
+But once we've done this we still haven't taken into account any of the
+other factors.
+Solving this is a non-trivial endeavour.
 
 ** Personality types
-\toReview
-Much of the issues we had with the big five
-could be solved by a theoretical foundation of personality types.
-To do this we'll look first at the proposed method by the grandfather of 
+\cleared
+To address the big five's issue of having no thoeretical foundation we'll
+have a look into personality types.
+We begin with the theoretical foundation proposed by the grandfather of
 personality research, Carl Jung.
 After which we'll look at a thoeretical evolution proposed by Myers and
 Myers-Brigs, which also introduced a structered method of measuring types.
-Then we'll discuss some critique's on this method.
+Then we'll discuss some critique on this method.
+With this critisim in mind we'll look at alternatives to the MBTI that have been
+proposed afterwards.
+
 *** Jung's theory of psychological types
-\toReview
+\cleared
 Jung describes several concepts, firstly each person has two attitudes:
 /Introversion/ and /extroversion/.
 Extroversion means dealing with the outside world and therfore is called
 objective (or observable).
 Intoversion is the world inside a person, and therefore is subjective,
 or private.
-Jung argues this may be so private that the consiouness can't even access it.
+This privacy however may bo so great that the consiouness can't even access it.
 These attitudes are mutually exclusive,
 you can't do introversion and extroversion at the same time.
-For example if you're day dreaming you're not doing extroversion.
+For example if you're day dreaming you're not paying attention to your
+surroundings.
 A person who spends most of his time in the introversion attitude is called
-an /introvert/. But he is not totally the one or the other.
-Then it should also be noted that the unconsciousness according to Jung is
+an /introvert/.
+But he is not totally the one or the other, ie an introvert can still have
+extravert moments and vice versa.
+It should also be noted that the unconsciousness according to Jung is
 flipped in attitude. cite:hall1973primer97-98attitude
 
-Then there are four functions that can be combined with the attitudes.
+\cleared
+Then there are four functions.
 The first two functions are called the /rational functions/
 because they act as a method of making judgements.
 /Thinking/ is a function that connects ideas with each other to arrive at
@@ -210,7 +227,9 @@ Therefore it has no origin in the same way as sensation has,
 by which its explained as "just a hunch" or "I feel it in my bones".
 cite:beauchamp2005communication,hall1973primer98-100functions
 
-To use these functions they have to be combined with attitudes.
+\cleared
+To use these functions they have to be combined with attitudes, producing
+/function attitudes/.
 Therefore a person will never be of a thinking type,
 but rather either a thinking introvert or thinking extrovert.
 cite:hall1973primer100-101combo
@@ -220,14 +239,17 @@ and therefore be more like a scientist,
 whereas an introverted thinker will make judgement about ideas in his mind,
 and therfore will be an excelent philosopher.
 
-Let $\mathcal{J}$ denote the set of all possible jungian functions such that:
+\toReview
+Let $\mathcal{J}$ denote the set of all possible jungian function attitudes
+such that:
 \[ \mathcal{J} = \{ T_e, T_i, F_e, F_i, S_e, S_i, N_e, N_i\}\]
 Where
 + $T_e$ stands for extraverted thinking, which is thinking about objects in the
   real world. This is thinking with a goal, a problem to solve,
-  or to check weather certain laws are upheld (or a system to check).
-+ $T_i$ stands for introverted thinking, this kind of thinking could be called
-  deductive, it tries to construct a framework to explain the world.
+  to check weather certain laws are upheld, or a system to check.
++ $T_i$ stands for introverted thinking,
+  this kind of thinking could be called deductive,
+  it tries to construct a framework to explain the world.
   This is consistent reasoning based on internal believes,
   which does not necessarily solve a problem.
 + $F_e$ stands for extraverted feeling, where objective or external criteria
@@ -235,7 +257,7 @@ Where
   Established standards may be used to decide this and therefore its a
   conservative function. Decisions are based on interpersonal and cultural values.
 + $F_i$ stands for introverted feeling, decisions based on personal values and
-believes.
+  believes.
 + $S_e$ stands for extroverted sensing, Act on concrete data from the here and
   now. Then lets it go.
 + $S_i$ stands for introverted sensing, acts on concrete data from memories and
@@ -243,35 +265,41 @@ believes.
 + $N_e$ stands for extraverted intuition, try to find possibilities in every
   situation.
 + $N_i$ stands for introverted intuition. Looks new possibilities in ideas.
-\todo{revise this list, make sure its sensible}
 
-\todo[inline]{Explain the shadow from jungs idea}
+Another important concept is the idea of the /principal/ and /auxilirary/
+function cite:hall1973primer105principal.
+The principal function is the one that is most preffered.
+The auxilirary renders its services to the principal function,
+however this function cannot be the opposite of the principal.
+So if /Feeling/ is the principal function than thinking connot be the auxilirary.
+This is also true for the irrational functions.
 
 *** MBTI
-\toReview
+\cleared
 The meyer brigs type indicator is based upon Carl Jung's theory of personality
 types.
 However it brings two important changes, first of all the way
 of measuring personality type is changed. 
-First of all it uses a strutured approach rather than Carl Jungs projective
-approach.
+It uses a strutured approach rather than Carl Jungs projective approach.
 The responses to items are finite and therefore can be deduced based on theory.
-Jung used open ended anwsering with word associations for example cite:hall1973primer23method.
-Then there is the introduction of the fourth letter to the type
-cite:carlson1985recent.
+In contrast to Jung's technique where he used open ended anwsering with word
+associations cite:hall1973primer23method.
+Then there is the introduction of an extra index used to order function
+attitudes cite:carlson1985recent.
 Which is either a $J$ for judging (rational in jung terms)
 or a $P$ for perceiving (irrational in jung terms).
-This dimension indicates together with the $I/E$ dimension which function is
-dominant and which is auxilirary which we'll see later.
-However once the assesment is complete the scores are reduced to a type.
+This dimension indicates together with the $I/E$ dimension which function
+attitude is dominant and which is auxilirary.
 
-Once completed with the MBTI you'll get a type as outcome, for example "INTJ".
+\toReview
+Once completed with the MBTI you'll get charatcter string as outcome,
+for example "INTJ".
 This label tells you inderectly which of carl jung's functions is dominant,
 auxilirary, tetriary and inferior cite:mccaulley2000myers.
 In other words it provides a sequence of preferences
 cite:website.mbtitypedynamics.
 In case of INTJ it would be:
-\[N_i > T_e  > F_i > S_e\] \todo{check how campos does the math, otherwise stick to this}
+\[N_i > T_e  > F_i > S_e\]
 \todo[inline]{shadow should be either mentioned or formalized}
 So the most preffered function to be used by someone of type INTJ would be $N_i$,
 then $T_e$ and so forth.
@@ -286,11 +314,13 @@ With this definition the interplay of the judging/perceiving dimension becomes
 more obvious if we look at INTP: \[T_i > N_e > S_i > F_e\]
 It's similar to an ENTJ, but the attitudes have flipped.
 
+\toReview
 A possible grouping of the sixteen type exists using the middle letters:
 \[\{NT, ST, NF, SF\}\]
 This grouping goes under the rationale that the first two functions only
 differ in either attitude, order or both.
 
+\toReview
 Before continuing we would like to say a word about a popular
 interpertation of MBTI which is based on Kersey's book "Please understand me",
 and later "Please understand me II".
@@ -304,10 +334,12 @@ Which is problematic because the theory he presented then does not make any
 thoeretical sense.
 Therefore Kersey's MBTI will not be used in this thesis.
 
+\toReview
 The MBTI is extremly popular in a subfield called Organizational Developement
 (OD) cite:sample2004myers. 
 But it has gotton some heavy critism in from the field of psycology.
 
+\toReview
 MBTI expects if someone that is of type $I$ falls clearly into
 the $I$ category,
 therfore a bimodal distribution is expected.
@@ -319,6 +351,7 @@ An extended investigation into weather jungian constructs are truly categorial
 however concluded that this was not the case and a continues scale is required
 cite:arnau2003jungian.
 
+\toReview
 It also fell short on factor analyses and reliability.
 Factor analyses tries to deduce based on observerd variables potential
 simpler un-observerd variables.
@@ -333,6 +366,7 @@ questions that were in different factors than the majority
 and finally there were also some quetions doing no discrimination at all
 (not being scored). cite:sipps1985item
 
+\toReview
 Reliability indicates how often the same result will come out of the test,
 for example if you take the mbti a 100 times you may be classified the same
 type for 70 times.
@@ -360,6 +394,7 @@ A word pair checklist looks like:
 The sentence is a statement in which you can agree or disagree. 
 This test method is simple but effective.
 
+\toReview
 The result of the PPSDQ would look something like: I-30 N-20 T-80 J-60, with
 a scale of 0 to 100. To calulate the jungian functions as a probability measure
 some math is required. Our subject is $70\%$ of the time introverted and $30\%$ of the 
@@ -368,6 +403,7 @@ therefore N_i would be calulated as: 0.7 \times 0.4 \times 0.8 = 0.224 or $22.4\
 N_e would be $0.3 \times 0.4 \times 0.8 = 0.096$ etc.
 From this you can make a preference sequence or create a mixed strategy.
 
+\toReview
 The PPSDQ is measuring the same thing as MBTI but lacks the critisms of MBTI.
 The PPSDQ is internally most consistent of the discussed alternatives
 (excluding OCEAN) cite:arnau1999alternative.
@@ -378,6 +414,7 @@ possible actions which corrolate with the functions.
 The subjects then have to indicate how likely it is that they would choose that
 particular action cite:arnau2000reliability.
 
+\toReview
 It becomes rather staight forward to make a function preference of the 
 measurement of SL-TDI since the qeustion directly measure the jungian
 functions.
@@ -385,9 +422,11 @@ A possible personality type therefore would be:
 
 \[ S_i \geq T_i \geq S_e \geq F_e \geq N_i \geq T_e \geq N_e \geq F_i \]
 
+\toReview
 Where $o$ is a function $ f \in \mathcal{J}, i \in \mathbb{I}, o: f \mapsto i$
 in which $i$ is the type mode score of $f$.
 
+\toReview
 This denotion is much less strict than the MBTI or PPSDQ since it does not force
 alternating attitudes or pairing of rational/irrational functions.
 Therefore the amount of personality types SL-TDI supports drastically exceeds
@@ -407,16 +446,19 @@ there is no underlying theoretical framework to support it cite:eysenck1992four,
 therefore we cannot base our implementation on anything except our own
 interpertation.
 
+\toReview
 The MBTI has been criticized a lot from the field of psychology,
 but it does have a solid theoretical foundation.
 There is some relation between the big five and MBTI cite:furnham1996big.
 Therefore its somewhat realistic, but quite easy to implement.
 
+\toReview
 Both of the alternatives of MBTI use a continues scale and have a high
 correlation with the big five cite:arnau1997measurement.
 This means is that they are measuring something which is also measured by the
 big five in some way.
 
+\toReview
 The PPSDQ is based on the same thoery as MBTI, but with scaled type letters.
 To convert the type to function attitudes some extra work has to be done,
 namely calulate their respective probabilities.
@@ -425,6 +467,7 @@ has to be used.
 The PPSDQ is more realistic, but at the cost of being more difficult to
 implement.
 
+\toReview
 The SL-TDI is even harder to implement than the PPSDQ because the function
 attitudes no longer have to alternate.
 This means that function attidues have to work in any combination,
@@ -433,10 +476,12 @@ Since SL-TDI drops an assumption, which is shown with experimental evidence
 to be false cite:loomis1980testing, we can say SL-TDI's theory is most realistic.
 This comes however at the cost of being even more difficult to implement.
 
+\toReview
 Therefore our preference for implementation is the following:
 
 \[ \text{MBTI} > \text{PPSDQ} > \text{SL-TDI} > \text{OCEAN} \]
 
+\toReview
 There is another hidden reasoning behind this, the work of PPSDQ can built on
 that of MBTI, and that of SL-TDI can build on that of PPSDQ.
 OCEAN builds on nothing, we'll leave that for future work.
@@ -446,6 +491,9 @@ OCEAN builds on nothing, we'll leave that for future work.
 \todo[inline]{Perhaps we can use socionics?}
 
 * Agent orientated programming
+# How do I measure that the persnoality created is in fact in complience with
+# the personality I aimed for?
+# Can I let the personality take the test somehow?
 \drafting
 In this chapter we'll discuss the thoery behind intelligent agents,
 and reason in favor of this approach.
