@@ -1,6 +1,7 @@
 #+TITLE: A serious communication game with personalities
 # Pure functional serious comminucation in-game
 #+LATEX_HEADER: \usepackage{natbib}
+#+LATEX_HEADER: \renewcommand{\bibsection}{}
 #+LATEX_HEADER: \usepackage[obeyFinal, colorinlistoftodos]{todonotes}
 #+LaTeX_CLASS: article
 #+LaTeX_CLASS_OPTIONS: [a4paper, drafting]
@@ -38,7 +39,32 @@
 
 \newpage
 
-\todo[inline]{Introduction here} 
+\drafting
+Communication is the foundation of our modern society.
+Having good communication skills can help individuals in both professional as
+their personal lives.
+However training people in communication skills can be difficult.
+Since another party is required to communicate with,
+and then finally someone tutor or teacher has to be there to give feedback.
+Serious games can be used to train people with these kind of skills
+cite:swartout2013virtual.
+Therefore a general "communicate!" game was developed.
+Wherein teachers can create scenarios to let students play it cite:jeuring2015demo.
+
+
+A specific scenario was created for doctor/patient interaction
+cite:augello2015social.
+To train physicians properly "social practices" are used, which refers to
+normal behavior in society.
+The game selected these based on a probabilistic model.
+Using this allows students to have multiple runs of a scenario which don't 
+follow the same path every time.
+The game was later extended to train for specific skills cite:augello2016social,
+such as following certain protocols
+(for example be polite and follow medical standards) and empathy.
+
+
+cite:clack2004personality
 
 * Related work
 \toReview
@@ -123,8 +149,8 @@ This methodology has become widely used in psychology cite:fabrigar1999evaluatin
 In the begining of the 1990's there were many ways to measure personality that
 didn't agree with each other.
 For example at Berkley alone block used a 2 dimensional ego-resilience and
-ego-controll method cite:block1980role,
-whereas Gough measured folk concepts such as self-controll, well-being and
+ego-control method cite:block1980role,
+whereas Gough measured folk concepts such as self-control, well-being and
 tolerance cite:gough1987california.
 Personality researchers hoped that they would be the one to discover a structure
 that would then be adopted by other researchers cite:pervin2008handbookp114.
@@ -549,7 +575,7 @@ cite:clack2004personality
 \todo[inline]{Existing functionality and design, user interaction etc}
 ** TODO Existing architecture
 \todo[inline]{Existing architecture, how does the trikery work}
-cite:campos_mabs2016
+cite:augello2016social
 ** TODO Extending it
 \todo[inline]{Proposed Extension, why this extension}
 *** TODO Design extension
@@ -559,7 +585,37 @@ cite:campos_mabs2016
 \todo[inline]{Discussion}
 ** Future work
 \todo[inline]{Depending on the successfulness this chapter becomes smaller and more fine grained}
-* Attachments
+* Appendices
+** Tools used
+\todo[inline]{I think this is more sometthing for a blog (especially the finding part)}
+This thesis was written in spacemacs with help of org-mode.
+The program changes were also made with spacemacs.
+Version control was done with help of git.
+*** Finding references
+\todo{remove this sub chapter?}
+Most references were found with help of Google scholar,
+To get papers either to verify them for reliability or to check theory
+the first attempt was usually the [[http://scholar.google.com.proxy.library.uu.nl/][university proxy]].
+This sometimes failed, especially for older or more niche papers,
+which resulted in the use of [[https://moscow.sci-hub.ac/][sci-hub]].
+Sci hub significantly helped in the verification of sources.
+
+Books were much more problematic to come by however.
+Especially older books, I couldn't find for example "gifts differing" or
+"psycologiese typen" anywhere except as hard copies which would take to long and
+for which I don't have the money.
+Isn't it strange that at least 35 years after their dead Meyer-Brigs and
+Jung still earn money?
+I eventually found a primer jungian psycology cite:hall1973primer, in an
+online library from which you could "borrow" the book.
+Which basically meant either an encrypted file or view it in the browser.
+This resulted in making screen shots of the book since I wasn't in the mood
+to reload the website every time I needed to look up some detail.
+Other methods I used included [[http://gen.lib.rus.ec/][library genises]], and [[https://www.reddit.com/r/Piracy/comments/2oftbu/guide_the_idiot_proof_guide_to_downloading_ebooks/][irc book downloading]].
+I never found a good book on MBTI, and had to result on papers describing it or
+websites.
+
+** References
 <<bibliography link>>
 
 bibliographystyle:unsrt
