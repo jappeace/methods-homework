@@ -585,37 +585,7 @@ cite:augello2016social
 \todo[inline]{Discussion}
 ** Future work
 \todo[inline]{Depending on the successfulness this chapter becomes smaller and more fine grained}
-* Appendices
-** Tools used
-\todo[inline]{I think this is more sometthing for a blog (especially the finding part)}
-This thesis was written in spacemacs with help of org-mode.
-The program changes were also made with spacemacs.
-Version control was done with help of git.
-*** Finding references
-\todo{remove this sub chapter?}
-Most references were found with help of Google scholar,
-To get papers either to verify them for reliability or to check theory
-the first attempt was usually the [[http://scholar.google.com.proxy.library.uu.nl/][university proxy]].
-This sometimes failed, especially for older or more niche papers,
-which resulted in the use of [[https://moscow.sci-hub.ac/][sci-hub]].
-Sci hub significantly helped in the verification of sources.
-
-Books were much more problematic to come by however.
-Especially older books, I couldn't find for example "gifts differing" or
-"psycologiese typen" anywhere except as hard copies which would take to long and
-for which I don't have the money.
-Isn't it strange that at least 35 years after their dead Meyer-Brigs and
-Jung still earn money?
-I eventually found a primer jungian psycology cite:hall1973primer, in an
-online library from which you could "borrow" the book.
-Which basically meant either an encrypted file or view it in the browser.
-This resulted in making screen shots of the book since I wasn't in the mood
-to reload the website every time I needed to look up some detail.
-Other methods I used included [[http://gen.lib.rus.ec/][library genises]], and [[https://www.reddit.com/r/Piracy/comments/2oftbu/guide_the_idiot_proof_guide_to_downloading_ebooks/][irc book downloading]].
-I never found a good book on MBTI, and had to result on papers describing it or
-websites.
-
-** References
+* References
 <<bibliography link>>
 
 bibliographystyle:unsrt
