@@ -39,7 +39,7 @@
 
 \newpage
 
-\drafting
+\toReview
 Communication is the foundation of our modern society.
 Having good communication skills can help individuals in both professional as
 their personal lives.
@@ -51,6 +51,7 @@ cite:swartout2013virtual.
 Therefore a general "communicate!" game was developed.
 Wherein teachers can create scenarios to let students play it cite:jeuring2015demo.
 
+\toReview
 A script based game has of course the weakness that a student can't use
 creative responses, all possible responses are scripted into the scenario
 and replying correctly relies on a simple /abc/ choice.
@@ -62,6 +63,7 @@ In this thesis we are interested in extending his work with personalities
 on top of social practices.
 Meaning that the patients will have personality.
 
+\toReview
 Since the personality topic has become quite popular in recent years will
 first take a small chapter to look at related work.
 After that, to validate our work according to personality research
@@ -74,7 +76,6 @@ We continue by taking a close look at the state of the existing software we're
 planning to extend.
 After this we'll discuss the implementation.
 Finally we'll compare the different implementations.
-
 
 * Related work
 \toReview
@@ -117,7 +118,7 @@ We will use a more fine grained version of MBTI but his architecture is used,
 in which personality will be processed orientated rather than content
 orientated.
 
-* Personality Theories
+* Personality theories
 \cleared
 The field of psychology has been somewhat active in trying to model human
 personality cite:pervin2008handbook. 
@@ -532,7 +533,7 @@ There is another hidden reasoning behind this, the work of PPSDQ can built on
 that of MBTI, and that of SL-TDI can build on that of PPSDQ.
 OCEAN builds on nothing, we'll leave that for future work.
 
-* Agent orientated programming
+* Artificial personality intelligence
 # How do I measure that the persnoality created is in fact in complience with
 # the personality I aimed for?
 # Can I let the personality take the test somehow?
@@ -542,7 +543,7 @@ and reason in favor of this approach.
 We'll also compare it with alternatives.
 
 
-** What is an agent
+** Agent orientated programming
 \drafting
 In the literature there is little consensus on what exactly an agent is,
 however there is a general consensus that an agent is /autonomous/
@@ -559,22 +560,42 @@ delegated objectives. -- Wooldridge
 \drafting
 \todo[inline]{perhaps talk about bratman?}
 \todo[inline]{BDI}
-** Why do this?
+*** Why do this?
 \drafting
+
+** Social practices
 
 ** BDI + Personality
 \drafting
 \todo[inline]{content oriented vs process orientated}
-\todo[inline]{Personalized bdi architecture}
 
-** Social practices are moves?
+\todo[inline]{Personalized bdi architecture}
 cite:campos_mabs2009
+**** TODO explain how jung functions are programming functions? or data? 
+
+
 * The serious game
-cite:augello2015social
 \drafting
+There have been several distinct versions of the "comminuate!" game. 
+The first version was a web based game, with an extended scenario editor.
+cite:jeuring2015demo
+However it had some significant flaws, for example each dialog would always
+happen the same way if you chose the same answers,
+making practicing on it somewhat unrealistic.
+This was addressed in the probabilistic reasoner variant.
+Which used the concept of /social practices/ to determine probabilistic
+responses based on user choices cite:augello2015social.
+However the game was still limited too preditermined user choices.
+This means the user never has to remember what to do, he can just click some 
+choice.
+To address this issue the game was extended with an extended version of
+AIML cite:weiderveld2016chatbot, called S-AIML cite:augello2016model. 
+
+
+
 A specific scenario was created for doctor/patient interaction     
 cite:augello2015social.                                            
-To train physicians properly "social practices" are used, which refers to
+To train physicians properly /social practices/ are used, which refers to
 normal behavior in society.                                        
 The game selected these based on a probabilistic model.            
 Using this allows students to have multiple runs of a scenario which don't 
@@ -583,7 +604,10 @@ The game was later extended to train for specific skills cite:augello2016social,
 such as following certain protocols                                
 (for example be polite and follow medical standards) and empathy.  
 
+However, since a common complaint against doctors is lack of bed side manner,
+it is suggested that doctors should take personality in consideration.
 cite:clack2004personality    
+
 The communicate game was created to make doctors able to practice frequently
 with talking to patients. \todo{cite this}
 To put this in game form is ideal because it allows doctors to practice the
