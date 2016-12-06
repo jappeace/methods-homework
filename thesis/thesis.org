@@ -573,9 +573,13 @@ delegated objectives. -- Wooldridge
 cite:campos_mabs2009
 **** TODO explain how jung functions are programming functions? or data? 
 
-
 * The serious game
 \drafting
+This chapter describes the game we inherited from our predecessors.
+We have to discuss precisely what they did for two reasons:
+1. To help understand the design constraints we work under
+2. To distinct our changes from theirs'
+
 There have been several distinct versions of the "comminuate!" game. 
 The first version was a web based game, with an extended scenario editor.
 cite:jeuring2015demo
@@ -591,8 +595,6 @@ choice.
 To address this issue the game was extended with an extended version of
 AIML cite:weiderveld2016chatbot, called S-AIML cite:augello2016model. 
 
-
-
 A specific scenario was created for doctor/patient interaction     
 cite:augello2015social.                                            
 To train physicians properly /social practices/ are used, which refers to
@@ -604,28 +606,33 @@ The game was later extended to train for specific skills cite:augello2016social,
 such as following certain protocols                                
 (for example be polite and follow medical standards) and empathy.  
 
-However, since a common complaint against doctors is lack of bed side manner,
-it is suggested that doctors should take personality in consideration.
-cite:clack2004personality    
-
-The communicate game was created to make doctors able to practice frequently
-with talking to patients. \todo{cite this}
-To put this in game form is ideal because it allows doctors to practice the
-basics without the need for another human patient.
-However, the current implementation does not have personality implemented.
-This means every virtual patient will always react the same way.
-So in the game its always good to be sensitive and polite.
-It turns out however the issues most doctors struggle with isn't so much
-being sensitive, but rather being sensitive to the people who appreciate it.
-cite:clack2004personality
-
 ** TODO Existing functionality
+*** TODO how used by the end user?
+*** TODO how do you configure it?
 \todo[inline]{Existing functionality and design, user interaction etc}
 ** TODO Existing architecture
 \todo[inline]{Existing architecture, how does the trikery work}
 cite:augello2016social
-** TODO Extending it
+*** TODO client server architecture
+*** TODO text processing
+*** TODO deliberation
+* The ++serious game
+\drafting
+The communicate game was created to make students able to practice
+communicating cite:jeuring2015demo.
+To put this in game form is ideal because it allows doctors to practice the
+basics without the need for another human patient.
+However, the current implementation does not have personality implemented.
+This means every virtual patient will always react the same way,
+which makes it difficult to practice the same situation several times,
+since you can just start memorizing responses that work.
+It turns out however the issues most doctors struggle with isn't so much
+being sensitive, but rather being sensitive to the people who appreciate it.
+cite:clack2004personality
+
 \todo[inline]{Proposed Extension, why this extension}
+*** Ideas
+\todo[inline]{To circumvent typing errors of users we can put input trough a spell checker taking the first correction}
 *** TODO Design extension
 *** TODO Architecturual changes
 

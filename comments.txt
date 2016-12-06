@@ -1,0 +1,51 @@
+You probably can replace the chapters with sections, making the entire
+thesis more cohesive since its not that big. 
+(although more students seem to have chosen this appraoch so perhaps I 
+just have bad taste)
+
+headings in the intro are kind of annoying.
+Finding the goal in te intro was difficult, its mentioned at the end of the 
+inspiration setion wich is weird.
+
+first headings called introduction per chapter can be removed 
+(kindoff redundant)
+
+Aren't sripts also used in theater?
+
+4.1 definition third sentence starts with thirdly out of the blue.
+
+OCC model isn't mentioned until the implementation chapter
+Wait what, ALICE is used, how?!
+In the implementation section in the structure overview you mention on the 
+end its a client server like application,
+why is it like this? Shouldn't you mention this earlier? (Its a pretty
+idiomatic pattern)
+Its good you cite the REST architecture, since in recent years it has become
+a buzzword
+
+is AIML an xml dialect? or just xml interpeted in a certain way?
+looks just like xml to me.
+The only extension would be the use of a * rather than a tag, its kindoff
+not xml-y.
+
+I don't think that apandix A is neccesary, I mean I think its obvious.
+
+Lacks diagrams of the archietecture. For example a sequence diagram
+Why Unity?
+What is the server, I mean langauge and such (I could deduce the client based
+on unity)?
+
+What drools are, how they work and why they're chosen is unclear to me. 
+(although to be fair you had a placeholder for this)
+Why didn't you choose groovy jython, or clojure? (sticking in jvm based script domain)
+
+You could add too "comminucate!" disadvantages
+that its written in PHP, which is critisized, a lot https://eev.ee/blog/2012/04/09/php-a-fractal-of-bad-design/
+But I don't know if that's appropriate.
+I don't know why you replaced the client (if you did this...).
+
+--- 
+
+How are social practices used?
+Is there any BDI stuff going on?
+
