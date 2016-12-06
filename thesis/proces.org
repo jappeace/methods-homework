@@ -1,0 +1,60 @@
+#+TITLE: Process
+# Pure functional serious comminucation in-game
+#+LATEX_HEADER: \usepackage{natbib}
+#+LATEX_HEADER: \renewcommand{\bibsection}{}
+#+LATEX_HEADER: \usepackage[obeyFinal, colorinlistoftodos]{todonotes}
+#+LaTeX_CLASS: article
+#+LaTeX_CLASS_OPTIONS: [a4paper, drafting]
+#+Options: toc:nil ^:nil 
+#+Options: title:nil
+#+LATEX_HEADER: \newcommand{\drafting}{\todo[noline, color=gray]{Working draft}}
+#+LATEX_HEADER: \newcommand{\toReview}{\todo[noline, color=yellow]{To review}}
+#+LATEX_HEADER: \newcommand{\underReview}[1]{\todo[noline, color=olive]{Under review by #1}}
+#+LATEX_HEADER: \newcommand{\cleared}{\todo[noline, color=white]{Cleared}}
+
+# Title page
+#+LATEX: \input{title}
+
+# The order of this thesis will be done in a way to let future researcher
+# decide the value of the thesis quickly
+# 1. First the abstract to let a researcher quickly discard this thesis if neccesary.
+# 2. The toc, to let a researcher jump to interseting pages quickly.
+# 3. The introduction and main body of the thesis. If all else fails a
+# reaserhcer can use this as fallback
+
+* Tools used
+This thesis was written in spacemacs with help of org-mode.
+The program changes were also made with spacemacs.
+Version control was done with help of git.
+*** Finding references
+Most references were found with help of Google scholar,
+To get papers either to verify them for reliability or to check theory
+the first attempt was usually the [[http://scholar.google.com.proxy.library.uu.nl/][university proxy]].
+This sometimes failed, especially for older or more niche papers,
+which resulted in the use of [[https://moscow.sci-hub.ac/][sci-hub]].
+Sci hub significantly helped in the verification of sources.
+
+Once a copy of the paper was aquired I could see what the basis was of the
+reference.
+Many authors acutually don't cite a source but rather someone else
+talking about a source.
+I think that's ok, but to get more information you can try to find that paper
+too.
+The abstract is extremely use full in determining if you should consider the
+paper or not.
+
+Books were much more problematic to come by however.
+Especially older books, I couldn't find for example "gifts differing" or
+"psycologiese typen" anywhere except as hard copies which would take to long and
+for which I don't have the money.
+Isn't it strange that at least 35 years after their dead Meyer-Brigs and
+Jung still earn money?
+I eventually found a primer jungian psycology cite:hall1973primer, in an
+online library from which you could "borrow" the book.
+Which basically meant either an encrypted file or view it in the browser.
+This resulted in making screen shots of the book since I wasn't in the mood
+to reload the website every time I needed to look up some detail.
+Other methods I used included [[http://gen.lib.rus.ec/][library genises]], and [[https://www.reddit.com/r/Piracy/comments/2oftbu/guide_the_idiot_proof_guide_to_downloading_ebooks/][irc book downloading]].
+I never found a good book on MBTI, and had to result on papers describing it or
+websites.
+
