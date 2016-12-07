@@ -214,6 +214,7 @@ other factors.
 Solving this is a non-trivial endeavour.
 
 ** Personality types
+<<sec:types>>
 \cleared
 To address the big five's issue of having no thoeretical foundation we'll
 have a look into personality types.
@@ -330,6 +331,7 @@ This dimension indicates together with the $I/E$ dimension which function
 attitude is dominant and which is auxilirary.
 
 \cleared
+<<sec:mbti:order_comparison>>
 Once completed with the MBTI you'll get charatcter string as outcome,
 for example "INTJ".
 This label tells you inderectly which of carl jung's functions is dominant,
@@ -476,7 +478,6 @@ The reason for doing this is because there is experimental evidence
 that there exist personalities outside of the stucture orignally imposed by
 MBTI and the subsequent PPSDQ cite:loomis1980testing.
 
-
 ** Comparison of theories
 \cleared
 To re-iterate, we are interested in a framework that is realistic, and easy to
@@ -564,7 +565,8 @@ delegated objectives. -- Wooldridge
 \drafting
 
 ** Social practices
-To limit the domain of the application we're gonna make we'll use a device
+\toReview
+To limit the domain of the application a theoretical device is used
 called social practices.
 This gives an ordered overview in what domain our program should work.
 In other words, rather than some extra element, it will be the
@@ -638,7 +640,44 @@ cite:augello2016social
 *** TODO client server architecture
 *** TODO text processing
 *** TODO deliberation
-* The ++serious game
+    
+* Jungian BDI
+\drafting
+In this chapter we will consider how to combine jungian psycology with BDI,
+as was orignally done by Campos cite:campos_mabs2009.
+There are some differences from the theory discussed in [[sec:types]].
+The difference is that in the discussed theory we would translate MBTI to the
+underlying jungian functions, whereas in campos the measured dimensions were
+used.
+Translating to the functions has some advantages,
+by doing so we are for example not bound to just the MBTI.
+We also get more accurate descriptions of what Jungian functions are, Jung
+described in his work people with that particular function as dominant.
+But this is harder to do with the dimensions, because if you take an INTJ and an
+INTP the semantics of both the N and T change because of the P/J dimension, 
+as can be seen in their respective order (see [[sec:mbti:order_comparison]]).
+Campos avoids this by ignoring the I/E and J/P dimensions, resulting in a
+simplified thoery.
+However we would like to note that it is not an easily extendable simplification.
+Therefore we chose to instead simplify types to orders of Jungian function
+attitudes.
+
+Another consideration to make is what are these function attitudes?
+By which I mean what do they represent in computer science terms, progams,
+objects, functions?
+Or what should they be.
+Since Jung wasn't much of a mathematician cite:jungonfunctionsn its just an
+informal definition.
+However we can make a mapping to certain BDI processes
+based upon their description,
+but before that is done we need to make several structural observations.
+
+Firstly functions attitudes are not independent, by which I mean that
+if we have a function attitude $a$, followed by $b$ then the resulting
+behavior is different than $b$ followed by $a$ (see [[sec:mbti:order_comparison]]).
+
+* Detailed implementation
+\todo[inline]{How to go from process orientated to selecting an anwser?}
 \drafting
 The communicate game was created to make students able to practice
 communicating cite:jeuring2015demo.
