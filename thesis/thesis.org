@@ -564,6 +564,28 @@ delegated objectives. -- Wooldridge
 \drafting
 
 ** Social practices
+To limit the domain of the application we're gonna make we'll use a device
+called social practices.
+This gives an ordered overview in what domain our program should work.
+In other words, rather than some extra element, it will be the
+/foundation/ of the program cite:dignum2014contextualized.
+We can formulate therefore the social practice that is relevant for this thesis 
+in the following way:
+
++ Practice name: Doctor appointment
++ /Physical context/,
+  - Resources: Computer, chair, diagnostic tools..
+  - Places: waiting room, doctor's office...
+  - Actors: doctor, patient, assistant, ...
++ /Social context/,
+  - Roles: Doctor, Patient...
+  - Norms: doctor is polite, patient is polite, doctor is inquisitive
+  - Social interpretation: Can sit on chair, cannot sit on table.
++ /Activities/, share information, do diagnostics, minor treatments,
+  prescribing drugs...
++ /Plan patterns/, Introduction \to ask complaints \to gather history \dots 
++ /Social meaning/, awkwardness, gratitude, ...
++ /Competences/, Give injection, empathetic talk
 
 ** BDI + Personality
 \drafting
@@ -633,6 +655,22 @@ cite:clack2004personality
 \todo[inline]{Proposed Extension, why this extension}
 *** Ideas
 \todo[inline]{To circumvent typing errors of users we can put input trough a spell checker taking the first correction}
+**** Tooling stuff
++ Move to gradle instead of maven. I don't see a reason to ever use maven,
+  gradle is just that much nicer in use.
++ Better names for top folders or removing several of them,
+  its unclear to me what they stand for or what there purpose is.
++ Can consider using Scala which has major advantages: better typing system and
+  more referential transparancy (ie immutable by default),
+  but this has also some disadvantages such as a steeper learning curve,
+  another grad student may not appreciate it as much as I.
+***** branches
+Branching strategy seems like overkill, if a develop branch is used then usually
+the master gets neglected (for small projects, which this is),
+if a feature such as web sockets is obviously better there is no need to create a
+branch for it since everyone wants it anyway which results in the original being neglected.
+The only real reason to use branches is to provide stability to existing customers,
+which probably don't exist
 *** TODO Design extension
 *** TODO Architecturual changes
 
