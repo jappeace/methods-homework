@@ -643,7 +643,7 @@ cite:augello2016social
 *** TODO deliberation
     
 * Jungian BDI
-\drafting
+\toReview
 In this chapter we will consider how to combine jungian psycology with BDI,
 as was orignally done by Campos cite:campos_mabs2009.
 There are some differences from the theory discussed in [[sec:types]].
@@ -663,6 +663,7 @@ However we would like to note that it is not an easily extendable simplification
 Therefore we chose to instead simplify types to orders of Jungian function
 attitudes.
 
+\toReview
 Another consideration to make is what are these function attitudes?
 By which I mean what do they represent in computer science terms, progams,
 objects, functions?
@@ -673,16 +674,19 @@ However we can make a mapping to certain BDI processes
 based upon their description,
 but before that is done we need to make several structural observations.
 
+\toReview
 Firstly functions attitudes are not independent, by which I mean that
 if we have a function attitude $a$, followed by $b$ then the resulting
 behavior is different than $b$ followed by $a$ (see [[sec:mbti:order_comparison]]).
 
+\toReview
 Secondly all functions should be used and their order matters.
 The first function used should be most prevalent.
 This means that we can't just execute all functions and use a do preference
 selection on the result.
 
 ** A prototypical approach
+\toReview
 To make this process more easy to understand we'll first ignore interplay
 between the functions and define a prototype for the individual functions.
 To do this we will define some terms.
@@ -705,6 +709,7 @@ information after which we get a new believe base and a set of actions.
 We marked the $f_a$ arrow, this is where we want to encode our function attitude
 in, in which a process is preferred.
 
+\toReview
 This definition is however too general for our domain.
 First of all the set of sensory information can be reduced to a String,
 since this is the information we get from a user.
@@ -723,6 +728,7 @@ this is required to keep the agent not only reactive but also proactive.
 This produces the following prototype:
 \[ B_t \to t \to M_t \overset{f_a}{\to} (B_{t+1}, A_{t+1}) \]
 
+\toReview
 $\mathcal{A}$ is also to broad in definition.
 For our domain we are not interested in every possible action,
 however, it is a lot harder to constrain this formally.
@@ -735,6 +741,7 @@ Therefore we constrain the set of possible actions informally with help of
 the social practice (see [[social practice]]).
 
 ** Composing type dynamics
+\toReview
 The first thing an commendable programmer may think of when trying to combine
 behavior is of course functional composition.
 However there is an important requirement for this to work.
@@ -747,27 +754,42 @@ We either need another function that maps $A_t$ into a $M_t$ or we need
 to come up with another approach.
 It probably is more obvious to consider another approach.
 
+\toReview
 In this approach we will give $f_a$ another argument which is the next $f_a$.
 This looks like the following:
 \[ \left (\overset{next}{B_t \to t \to M_t \to (B_{t+1}, A_{t+1})}\right ) \to B_t \to t \to M_t \overset{f_a}{\to} (B_{t+1}, A_{t+1}) \]
-In this case the /next/ function can play an advisory role to $f_a$.
-As unit a function that does not modify behavior and selects a random action can
-be chosen, or just the action that results in a message: "I don't know".
+Note that the function in the next bracket has the same prototype as the codomain.
+In this case the /next/ function can play an advisory role to the codomain.
+As unit a function the action that results in a message: "I don't know".
+By unit function we mean the initial /next/ function.
 
+\toReview
 To illustrate this prototype design more clearly we'll sketch an example
 with the first two functions of the INTJ type:
 \[N_i > T_e \]
 So to encode this as a function we start with the least preferred type namely
 the $T_e$, however to let it play an advisory role in the $N_i$ function we first
 need to complete the /next/ argument.
-Because its the least preferred function we just use unit.
+Because its the least preferred function we just use the unit.
 Now the curried type of $T_e$ satisfies that of $N_i$ and we can use it as
 /next/.
+This methodology can be used for an entire personality type (ie all 8 functions
+in some order)
 
+\toReview
 With this methodology function attitudes can decide themselves to consult the
 next type.
 Then they can inspect the result, and even the changed believe base to decide
 if its a good idea to do.
+
+\toReview
+This architecture can be extended with the scale based jungian models
+such as sl-tdi and ppsdq by introducing a random choice for using the current or
+next function.\todo{should I do this?}
+However this becomes rather messy because we're modeling pure functions,
+therefore we will ignore this for now. 
+
+\todo[inline]{Another possible extension would be to alternate rational and irrational /next/ function types.}
 
 * Implementation
 \todo[inline]{How to go from process orientated to selecting an anwser?}
@@ -785,9 +807,9 @@ being sensitive, but rather being sensitive to the people who appreciate it.
 cite:clack2004personality
 
 \todo[inline]{Proposed Extension, why this extension}
-*** Ideas
+** Ideas
 \todo[inline]{To circumvent typing errors of users we can put input trough a spell checker taking the first correction}
-**** Tooling stuff
+*** Tooling stuff
 + Move to gradle instead of maven. I don't see a reason to ever use maven,
   gradle is just that much nicer in use.
 + Better names for top folders or removing several of them,
@@ -796,15 +818,15 @@ cite:clack2004personality
   more referential transparancy (ie immutable by default),
   but this has also some disadvantages such as a steeper learning curve,
   another grad student may not appreciate it as much as I.
-***** branches
+**** branches
 Branching strategy seems like overkill, if a develop branch is used then usually
 the master gets neglected (for small projects, which this is),
 if a feature such as web sockets is obviously better there is no need to create a
 branch for it since everyone wants it anyway which results in the original being neglected.
 The only real reason to use branches is to provide stability to existing customers,
 which probably don't exist
-*** TODO Design extension
-*** TODO Architecturual changes
+** TODO Design extension
+** TODO Architecturual changes
 
 * In conclusion
 \todo[inline]{Discussion, comparison}
