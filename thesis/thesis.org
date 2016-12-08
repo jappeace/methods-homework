@@ -565,6 +565,7 @@ delegated objectives. -- Wooldridge
 \drafting
 
 ** Social practices
+<<social practice>>
 \toReview
 To limit the domain of the application a theoretical device is used
 called social practices.
@@ -676,7 +677,95 @@ Firstly functions attitudes are not independent, by which I mean that
 if we have a function attitude $a$, followed by $b$ then the resulting
 behavior is different than $b$ followed by $a$ (see [[sec:mbti:order_comparison]]).
 
-* Detailed implementation
+Secondly all functions should be used and their order matters.
+The first function used should be most prevalent.
+This means that we can't just execute all functions and use a do preference
+selection on the result.
+
+** A prototypical approach
+To make this process more easy to understand we'll first ignore interplay
+between the functions and define a prototype for the individual functions.
+To do this we will define some terms.
+Let $\mathcal{B}$ denote the set of all
+possible believes and let $B_t$ with $B_t \subseteq \mathcal{B}$ denote the
+believes of an agent at time $t$. 
+$\mathcal{S}$ is the set of all possible sense information, in which $S_t$
+with $S_t \subseteq \mathcal{S}$ denotes the sense information of an agent at
+time $t$.
+$\mathcal{A}$ denotes the set of all possible actions with $A_t$ with
+$A_t \subseteq \mathcal{A}$ denoting the set of actions executed by the agent at
+time $t$.
+With this definition we can define every possible agent configuration as the 
+following pure function prototype[fn::Using a Haskell like syntax where the
+arrows indicate functions, left of the arrow is the argument and right is the
+result, alternativly this is similar to category theory]
+\[ B_t \to S_t \overset{f_a}{\to} (B_{t+1}, A_{t+1}) \]
+This says, we first put in the current believe base, then the sensory
+information after which we get a new believe base and a set of actions.
+We marked the $f_a$ arrow, this is where we want to encode our function attitude
+in, in which a process is preferred.
+
+This definition is however too general for our domain.
+First of all the set of sensory information can be reduced to a String,
+since this is the information we get from a user.
+We can reduce it even further, since the string gets matched on meaning with
+help of AIML. AIML has the possibility to for example reduce the string "hi" and
+"hello" to the meaning "greeting" to which then a template response is
+generated.
+Therefore rather than speaking of sets in $\mathcal{S}$ we can speak of 
+$\mathcal{M}$ where $\mathcal{M} \subset \mathcal{S}$ which stands for meanings that
+were encoded into the agent's string matching.
+Then we can define $M_t \subset \mathcal{M}$ which stands for the meaning we matched on
+at time $t$.
+However by doing this we lost the sense of time,
+therefore we have to give time as a separate argument,
+this is required to keep the agent not only reactive but also proactive.
+This produces the following prototype:
+\[ B_t \to t \to M_t \overset{f_a}{\to} (B_{t+1}, A_{t+1}) \]
+
+$\mathcal{A}$ is also to broad in definition.
+For our domain we are not interested in every possible action,
+however, it is a lot harder to constrain this formally.
+For example when the agent is asked to sit on the counter,
+how should this be encoded,
+if we constrained the agent with just answering questions?
+Movement should be possible for example but movement like one does during sky
+diving is not interesting.
+Therefore we constrain the set of possible actions informally with help of
+the social practice (see [[social practice]]).
+
+** Composing type dynamics
+The first thing an commendable programmer may think of when trying to combine
+behavior is of course functional composition.
+However there is an important requirement for this to work.
+The input type and output type need to be the same of the two functions we
+want to combine.
+We want to combine two $f_a$ functions that simply have different behavior.
+Since the prototype of the $f_a$ function does not have a similar type of
+output as input we cannot easily do this.
+We either need another function that maps $A_t$ into a $M_t$ or we need
+to come up with another approach.
+It probably is more obvious to consider another approach.
+
+In this approach we will give $f_a$ another argument which is the next $f_a$.
+This looks like the following:
+\[ \left (\overset{next}{B_t \to t \to M_t \to (B_{t+1}, A_{t+1})}\right ) \to B_t \to t \to M_t \overset{f_a}{\to} (B_{t+1}, A_{t+1}) \]
+In this case the /next/ function can play an advisory role to $f_a$.
+As unit a function that does not modify behavior and selects a random action can
+be chosen, or just the action that results in a message: "I don't know".
+
+To illustrate this prototype design more clearly we'll sketch an example
+with the first two functions of the INTJ type:
+\[N_i > T_e \]
+So to encode this as a function we start with the least preferred type namely
+the $T_e$, however to let it play an advisory role in the $N_i$ function we first
+need to complete the /next/ argument.
+Because its the least preferred function we just use unit.
+Now the curried type of $T_e$ satisfies that of $N_i$ and we can use it as
+/next/.
+
+
+* Implementation
 \todo[inline]{How to go from process orientated to selecting an anwser?}
 \drafting
 The communicate game was created to make students able to practice
