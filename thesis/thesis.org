@@ -764,6 +764,10 @@ Because its the least preferred function we just use unit.
 Now the curried type of $T_e$ satisfies that of $N_i$ and we can use it as
 /next/.
 
+With this methodology function attitudes can decide themselves to consult the
+next type.
+Then they can inspect the result, and even the changed believe base to decide
+if its a good idea to do.
 
 * Implementation
 \todo[inline]{How to go from process orientated to selecting an anwser?}
