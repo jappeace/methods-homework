@@ -745,52 +745,50 @@ cite:augello2016social
     
 * Jungian BDI
 <<Jungian BDI>>
-\drafting
-In this chapter we will consider how to combine jungian psycology with BDI,
+\toReview
+In this chapter we will consider how to combine Jungian psycology with BDI,
 as was orignally done by Campos cite:campos_mabs2009.
 There are some differences from the theory discussed in [[sec:types]].
 The difference is that in the discussed theory we would translate MBTI to the
-underlying jungian functions, whereas in campos the measured dimensions were
-used.
+underlying jungian functions, whereas Campos used the measured dimensions.
 Translating to the functions has some advantages,
 by doing so we are for example not bound to just the MBTI.
-We also get more accurate descriptions of what Jungian functions are, Jung
-described in his work people with that particular function as dominant.
-But this is harder to do with the dimensions, because if you take an INTJ and an
+We also get more accurate descriptions of what Jungian functions are,
+Jung described in his work people with that particular function as dominant.
+This is harder to do with the dimensions, because if you take an INTJ and an
 INTP the semantics of both the N and T change because of the P/J dimension, 
 as can be seen in their respective order (see [[sec:mbti:order_comparison]]).
 Campos avoids this by ignoring the I/E and J/P dimensions, resulting in a
-simplified thoery.
+simplified theory.
 However we would like to note that it is not an easily extendable simplification.
-Therefore we chose to instead simplify types to orders of Jungian function
-attitudes.
+Therefore we chose to simplify types to orders in Jungian function attitudes.
 
-\drafting
+\toReview
 Another consideration to make is what are these function attitudes?
 By which I mean what do they represent in computer science terms, progams,
 objects, functions?
-Or what should they be.
-Since Jung wasn't much of a mathematician cite:jungonfunctionsn its just an
+What should they be?
+Since Jung wasn't much of a mathematician cite:jungonfunctions its just an
 informal definition.
 However we can make a mapping to certain BDI processes
 based upon their description,
 but before that is done we need to make several structural observations.
 
-\drafting
+\toReview
 Firstly functions attitudes are not independent, by which I mean that
 if we have a function attitude $a$, followed by $b$ then the resulting
 behavior is different than $b$ followed by $a$ (see [[sec:mbti:order_comparison]]).
 
-\drafting
+\toReview
 Secondly all functions should be used and their order matters.
 The first function used should be most prevalent.
 This means that we can't just execute all functions and use a do preference
 selection on the result.
 
-** A prototypical approach
-\drafting
+** A signature approach
+\toReview
 To give a more deep understanding of the scope of this project we will
-try to come up with a prototype that models a pure function for all the
+try to come up with a type signature of a pure function that models all the
 function attitudes.
 This is done with a Haskell like syntax (or category theory),
 in which the arrows indicate a function,
@@ -803,7 +801,7 @@ Capital letters indicate sets.\todo{cite the haskell and category theory?}
 
 \toReview
 To make this process more easy to understand we'll first ignore interplay
-between the functions and define a prototype for the individual functions.
+between the functions and define a type signature for the individual functions.
 To do this we will define some terms.
 Let $\mathcal{B}$ denote the set of all
 possible believes and let $B_t$ with $B_t \subseteq \mathcal{B}$ denote the
@@ -815,7 +813,7 @@ $\mathcal{A}$ denotes the set of all possible actions with $A_t$ with
 $A_t \subseteq \mathcal{A}$ denoting the set of actions executed by the agent at
 time $t$.
 With this definition we can define every possible agent configuration as the 
-following pure function prototype 
+following pure function type signature
 \[ B_t \to S_t \overset{f_a}{\to} (B_{t+1}, A_{t+1}) \]
 This says, we first put in the current believe base, then the sensory
 information after which we get a new believe base and a set of actions.
@@ -840,7 +838,7 @@ we matched on at time $t$.
 However by doing this we lost the sense of time,
 therefore we have to give time as a separate argument,
 this is required to keep the agent not only reactive but also proactive.
-This produces the following prototype:
+This produces the following type signature:
 \[ B_t \to t \to M_t \overset{f_a}{\to} (B_{t+1}, A_{t+1}) \]
 
 \toReview
@@ -852,11 +850,11 @@ or the replies encoded by the programmer.
 In this case $\mathcal{R} \subset \mathcal {A}$ since replying to something is an
 action.
 Now we can define $R_t$ with $R_t \subseteq \mathcal{R}$ which is a set of
-replies at time $t$. This produces the prototype:
+replies at time $t$. This produces the type signature:
 \[ B_t \to t \to M_t \overset{f_a}{\to} (B_{t+1}, R_{t+1}) \]
 
-\drafting
-Now we should note that this heavily constrains our agent.
+\toReview
+Now we should note that this type signature heavily constrains our agent.
 It for example can't handle being punched in the face by the doctor unless
 there is a meaning encoded for that. 
 It also runs into trouble when the agent is asked to sit on the counter.
@@ -864,7 +862,8 @@ Movement should be possible for example but movement like one does during sky
 diving is not interesting because we have the informal constraint of the
 [[social practice]].
 However once movement becomes a requirement we can just create a new function
-prototype that can use these functions for the text replies.
+type signature that is less restrictive, but still has the option to use these
+functions for the text replies.
 
 ** Composing type dynamics
 \toReview
@@ -874,7 +873,7 @@ However there is an important requirement for this to work.
 The input type and output type need to be the same of the two functions we
 want to combine.
 We want to combine two $f_a$ functions that simply have different behavior.
-Since the prototype of the $f_a$ function does not have a similar type of
+Since the type signature of the $f_a$ function does not have a similar type of
 output as input we cannot easily do this.
 We either need another function that maps $A_t$ into a $M_t$ or we need
 to come up with another approach.
@@ -891,11 +890,12 @@ believes and action.
 By unit function we mean the initial /next/ function.
 
 \toReview
-To illustrate this prototype design more clearly we'll sketch an example
-with the first two functions of the INTJ type:
+To illustrate the use of this type signature design more clearly we'll sketch
+an example with the first two function attitudes of the INTJ type:
 \[N_i > T_e \]
-So to encode this as a function we start with the least preferred type namely
-the $T_e$, however to let it play an advisory role in the $N_i$ function we first
+So to encode this as a function we start with the least preferred function
+attitude namely the $T_e$,
+however to let it play an advisory role in the $N_i$ function we first
 need to complete the /next/ argument.
 Because its the least preferred function we just use the unit.
 Now the partially applied type of $T_e$ satisfies that of $N_i$ and we can use it as
@@ -918,6 +918,8 @@ therefore we will ignore this for now.
 
 \todo[inline]{Another possible extension would be to alternate rational and irrational /next/ function types. But how would one do this? A simple marker output? Then it won't be representative for SL-TDI or would it, I mean if you just skip proprtionally would it matter?}
 
+** Mapping function attitudes to a process 
+\todo[inline]{haven't done this yet}
 * Implementation
 \todo[inline]{How to go from process orientated to selecting an anwser?}
 \drafting
