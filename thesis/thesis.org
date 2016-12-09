@@ -558,12 +558,32 @@ delegated objectives. -- Wooldridge
 #+END_QUOTE
 
 *** Belief desires and intentions
-\drafting
-\todo[inline]{perhaps talk about bratman?}
-\todo[inline]{BDI}
-*** Why do this?
-\drafting
+The belief desire intention model of human practical reasoning was first
+introduced by bratman cite:bratman1987intention.
+It is based upon folk psycology, ie common sense is used.
 
+\drafting
+The idea of BDI is that an agent has believes, these can be anything, such as
+I believe the grass is green, or I believe the keys are on the table.
+Note that we never speak about facts, an agent can believe something to be a
+fact, but that doesn't make it a fact.
+Desires are special kind of believes that give agents a reason to be, they
+may also be called goals.
+Intentions are plans to make a desire come to fruition.
+
+A number of reasons have been stated to use this methodology.
+The foremost is to make agent orientated systems less expensive in maintenance,
+verification and construction cite:rao1995bdi.
+If these things are true is another matter.
+
+*** logic of BDI
+\todo[inline]{cohen \& levesque}
+\todo[inline]{Rao and georgeff}
+\todo[inline]{karo \& jj}
+\todo[inline]{Agotness cause it crazy}
+*** Concrete implementations
+\todo[inline]{2apl}
+\todo[inline]{jade cite:braubach2003jadex}
 ** Social practices
 <<social practice>>
 \toReview
@@ -702,7 +722,7 @@ time $t$.
 With this definition we can define every possible agent configuration as the 
 following pure function prototype[fn::Using a Haskell like syntax where the
 arrows indicate functions, left of the arrow is the argument and right is the
-result, alternativly this is similar to category theory]
+result, alternativly this is similar to category theory] \todo{cite the haskell and category theory?}
 \[ B_t \to S_t \overset{f_a}{\to} (B_{t+1}, A_{t+1}) \]
 This says, we first put in the current believe base, then the sensory
 information after which we get a new believe base and a set of actions.
@@ -784,12 +804,12 @@ if its a good idea to do.
 
 \toReview
 This architecture can be extended with the scale based jungian models
-such as sl-tdi and ppsdq by introducing a random choice for using the current or
-next function.\todo{should I do this?}
+such as SL-TDI and PDQ by introducing a random choice for using the current or
+next function. \todo{should I do this?}
 However this becomes rather messy because we're modeling pure functions,
 therefore we will ignore this for now. 
 
-\todo[inline]{Another possible extension would be to alternate rational and irrational /next/ function types.}
+\todo[inline]{Another possible extension would be to alternate rational and irrational /next/ function types. But how would one do this? A simple marker output? Then it won't be representative for SL-TDI or would it, I mean if you just skip proprtionally would it matter?}
 
 * Implementation
 \todo[inline]{How to go from process orientated to selecting an anwser?}
