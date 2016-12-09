@@ -78,6 +78,7 @@ After this we'll discuss the implementation.
 Finally we'll compare the different implementations.
 
 * Related work
+<<Related work>>
 \toReview
   To simulate personality in comminucation games there have been already several
 works proposed.
@@ -534,18 +535,20 @@ There is another hidden reasoning behind this, the work of PPSDQ can built on
 that of MBTI, and that of SL-TDI can build on that of PPSDQ.
 OCEAN builds on nothing, we'll leave that for future work.
 
-* Artificial personality intelligence
+* Artificial intelligence literature
 # How do I measure that the persnoality created is in fact in complience with
 # the personality I aimed for?
 # Can I let the personality take the test somehow?
-\drafting
-In this chapter we'll discuss the thoery behind intelligent agents,
-and reason in favor of this approach.
-We'll also compare it with alternatives.
+\toReview
+In this chapter we will look at some of the AI based literature.
+For example we will have a look at the intelligent agent approach and the BDI
+architecture.
+We will also look at some theoretical attempts at implementing personality.
+Theoretical attempts are often a logic in contrast to the topics
+discussed in [[Related work]] which include executable implementations.
 
-
-** Agent orientated programming
-\drafting
+** Agents background
+\toReview
 In the literature there is little consensus on what exactly an agent is,
 however there is a general consensus that an agent is /autonomous/
 cite:wooldridge2009introduction.
@@ -557,35 +560,100 @@ that is capable of /autonomous action/ in this environment in order to meet its
 delegated objectives. -- Wooldridge
 #+END_QUOTE
 
+\toReview
+In another older definition cite:wooldridge1995intelligent he highlights
+/autonomy/, /social ability/, /reactivity/, and /pro activity/.
+Where autonomy means that no human intervention is required,
+social ability means it can talk to other agents,
+reactivity is that it can reply on input and pro activity means that it can
+show behavior while not reacting to something.
+However he later continues on that a stronger claim about an agent is a
+piece of software that uses concepts which are attributed to humans.
+Such as believes desires and intentions.
+
+\toReview
+This is the reason we can't call any program an agent.
+For example an operating system kernel is
+autonomous (a user would never interact with it),
+social (can do networking),
+reactive (it will comply to hardware interprets for example)
+and proactive (a process hogging to much memory will be killed without the
+process asking for it).
+However we won't call a kernel an agent because it doesn't even come close to
+having believes, desires or intentions.
+
+\toReview
+Something to keep in mind is that there are three "branches" of agent research
+cite:wooldridge1995intelligent.
+The first one is /agent theory/ in which /specifications/ and methods of 
+specifications are developed. They ask what are agents and what are they
+ought to do and how do we tell them that.
+Then there are the /agent architectures/, these address questions of how
+to implement the specifications written by the theorists.
+In this paper we won't discuss architectures since we work in an existing
+system described in section [[The serious game]].
+Finally there are the /agent langauges/, which ask the question how to write
+agent programs.
+Again this is mostly preditermined for us, but we will give a small overview.
+
 *** Belief desires and intentions
+\toReview
 The belief desire intention model of human practical reasoning was first
 introduced by bratman cite:bratman1987intention.
-It is based upon folk psycology, ie common sense is used.
+It is based upon a "common sense" framework of human reasoning.
 
-\drafting
+\toReview
 The idea of BDI is that an agent has believes, these can be anything, such as
 I believe the grass is green, or I believe the keys are on the table.
 Note that we never speak about facts, an agent can believe something to be a
 fact, but that doesn't make it a fact.
 Desires are special kind of believes that give agents a reason to be, they
 may also be called goals.
-Intentions are plans to make a desire come to fruition.
+Intentions are (partial) plans to make a desire come to fruition.
+How to formalize this properly turns out to be a hard question, which is
+analyzed in the following section [[bdi logics]].
 
+\toReview
 A number of reasons have been stated to use this methodology.
 The foremost is to make agent orientated systems less expensive in maintenance,
-verification and construction cite:rao1995bdi.
-If these things are true is another matter.
+verification and construction according to Rao and Georgeff cite:rao1995bdi. 
+However they don't cite a source for this.
 
-*** logic of BDI
-\todo[inline]{cohen \& levesque}
-\todo[inline]{Rao and georgeff}
-\todo[inline]{karo \& jj}
-\todo[inline]{Agotness cause it crazy}
+\toReview
+Another paper argues in favour of agent orientated design cite:jennings2001agent.
+It has the following major arguments:
+It is effective to divide a complex problem domain into several smaller problems,
+abstracting in an agent orientated way is more "natural",
+and complex systems dependencies and interactions can be easily modeled.
+
+*** Logic of BDI
+<<bdi logics>>
+\toReview
+Logic of BDI is an attempt to formalize how agents behave.
+One of the first formalization of Bratman's theory was that of Cohen and
+Levesque cite:cohen1990intention. It was based on linear time logic and
+used operators for actions and modalities for goals and beliefs cite:meyer2014logics.
+It was also used a tiered formalism, with at the bottom belief goals and
+actions which provided the basis for the higher achievement and persistent goals
+and intentions to do and be.
+Rao and Georgeff introduced a different formalism that used branching time logic. 
+They use modal operators for belief desires and intentions and then put 
+constraints on them to make interactions meaning full cite:meyer2014logics.
+Therefore this formalism is much closer to that of bratman cite:rao1991modeling.
+Finally there is the KARO formalism which is based on dynamic logic.
+This is the logic of actions and computation. They extend this logic with
+epistemics to add believes to it cite:meyer2014logics.
+
+\todo[inline]{decide if I'm gonna use any of these logics, I mean the "why discuss this?" question is now unwansered... Perhaps I should delete this?}
 *** Concrete implementations
+
+\todo[inline]{Again perhaps I should consider deleting this?}
 \todo[inline]{2apl}
 \todo[inline]{jade cite:braubach2003jadex}
 ** Social practices
 <<social practice>>
+\todo[inline]{critques on social practices?}
+\todo[inline]{come back social practices}
 \toReview
 To limit the domain of the application a theoretical device is used
 called social practices.
@@ -610,15 +678,28 @@ in the following way:
 + /Social meaning/, awkwardness, gratitude, ...
 + /Competences/, Give injection, empathetic talk
 
+If the social practices however are defined more formally they could be 
+used in a bigger system such as in cite:augello2015social and
+cite:augello2016model.
 ** BDI + Personality
 \drafting
-\todo[inline]{content oriented vs process orientated}
-
-\todo[inline]{Personalized bdi architecture}
+\todo[inline]{other proposed systems and argue for campos}
+Campos discussed an architecture in which personality emerged not from things
+you like,
+but rather than trying to determine which content a personality preferred,
+the personality was encoded in the process they preferred.
+This was called /process orientated/ rather than contend orientated.
 cite:campos_mabs2009
-**** TODO explain how jung functions are programming functions? or data? 
+For example in their interpretation of MBTI a Sensing agent would make a plan
+in complete details whereas an intuitive agent would just continue planning as
+needed.
+Thinking agents would base their decision process upon their own believes
+whereas feeling agents would consider what other agents want.
+In our model we conceptualize the Jungian functions also as a process.
+We comment more on this in section [[Jungian BDI]].
 
 * The serious game
+<<The serious game>>
 \drafting
 This chapter describes the game we inherited from our predecessors.
 We have to discuss precisely what they did for two reasons:
@@ -663,7 +744,8 @@ cite:augello2016social
 *** TODO deliberation
     
 * Jungian BDI
-\toReview
+<<Jungian BDI>>
+\drafting
 In this chapter we will consider how to combine jungian psycology with BDI,
 as was orignally done by Campos cite:campos_mabs2009.
 There are some differences from the theory discussed in [[sec:types]].
@@ -683,7 +765,7 @@ However we would like to note that it is not an easily extendable simplification
 Therefore we chose to instead simplify types to orders of Jungian function
 attitudes.
 
-\toReview
+\drafting
 Another consideration to make is what are these function attitudes?
 By which I mean what do they represent in computer science terms, progams,
 objects, functions?
@@ -694,18 +776,31 @@ However we can make a mapping to certain BDI processes
 based upon their description,
 but before that is done we need to make several structural observations.
 
-\toReview
+\drafting
 Firstly functions attitudes are not independent, by which I mean that
 if we have a function attitude $a$, followed by $b$ then the resulting
 behavior is different than $b$ followed by $a$ (see [[sec:mbti:order_comparison]]).
 
-\toReview
+\drafting
 Secondly all functions should be used and their order matters.
 The first function used should be most prevalent.
 This means that we can't just execute all functions and use a do preference
 selection on the result.
 
 ** A prototypical approach
+\drafting
+To give a more deep understanding of the scope of this project we will
+try to come up with a prototype that models a pure function for all the
+function attitudes.
+This is done with a Haskell like syntax (or category theory),
+in which the arrows indicate a function,
+left of the arrow is called a domain and the right side a codomain.
+The domain is also the argument of a function.
+If we see a pattern like $a \to b \to c$ means $a \to (b \to c)$ or give an $a$
+and return a function $b \to c$, this process is called partial application
+cite:haskellpartialapplication.
+Capital letters indicate sets.\todo{cite the haskell and category theory?}
+
 \toReview
 To make this process more easy to understand we'll first ignore interplay
 between the functions and define a prototype for the individual functions.
@@ -720,12 +815,12 @@ $\mathcal{A}$ denotes the set of all possible actions with $A_t$ with
 $A_t \subseteq \mathcal{A}$ denoting the set of actions executed by the agent at
 time $t$.
 With this definition we can define every possible agent configuration as the 
-following pure function prototype[fn::Using a Haskell like syntax where the
-arrows indicate functions, left of the arrow is the argument and right is the
-result, alternativly this is similar to category theory] \todo{cite the haskell and category theory?}
+following pure function prototype 
 \[ B_t \to S_t \overset{f_a}{\to} (B_{t+1}, A_{t+1}) \]
 This says, we first put in the current believe base, then the sensory
 information after which we get a new believe base and a set of actions.
+In this the intentions are encoded in the function used, and the desires are
+part of the believe base.
 We marked the $f_a$ arrow, this is where we want to encode our function attitude
 in, in which a process is preferred.
 
@@ -740,8 +835,8 @@ generated.
 Therefore rather than speaking of sets in $\mathcal{S}$ we can speak of 
 $\mathcal{M}$ where $\mathcal{M} \subset \mathcal{S}$ which stands for meanings that
 were encoded into the agent's string matching.
-Then we can define $M_t \subset \mathcal{M}$ which stands for the meaning we matched on
-at time $t$.
+Then we can define $M_t \subseteq \mathcal{M}$ which stands for the meaning
+we matched on at time $t$.
 However by doing this we lost the sense of time,
 therefore we have to give time as a separate argument,
 this is required to keep the agent not only reactive but also proactive.
@@ -750,19 +845,30 @@ This produces the following prototype:
 
 \toReview
 $\mathcal{A}$ is also to broad in definition.
-For our domain we are not interested in every possible action,
-however, it is a lot harder to constrain this formally.
-For example when the agent is asked to sit on the counter,
-how should this be encoded,
-if we constrained the agent with just answering questions?
+For our domain we are not interested in every possible action.
+Therefore we constrain $\mathcal{A}$ by introducing yet another set
+$\mathcal{R}$ which stands for the set of a possible reply messages,
+or the replies encoded by the programmer.
+In this case $\mathcal{R} \subset \mathcal {A}$ since replying to something is an
+action.
+Now we can define $R_t$ with $R_t \subseteq \mathcal{R}$ which is a set of
+replies at time $t$. This produces the prototype:
+\[ B_t \to t \to M_t \overset{f_a}{\to} (B_{t+1}, R_{t+1}) \]
+
+\drafting
+Now we should note that this heavily constrains our agent.
+It for example can't handle being punched in the face by the doctor unless
+there is a meaning encoded for that. 
+It also runs into trouble when the agent is asked to sit on the counter.
 Movement should be possible for example but movement like one does during sky
-diving is not interesting.
-Therefore we constrain the set of possible actions informally with help of
-the social practice (see [[social practice]]).
+diving is not interesting because we have the informal constraint of the
+[[social practice]].
+However once movement becomes a requirement we can just create a new function
+prototype that can use these functions for the text replies.
 
 ** Composing type dynamics
 \toReview
-The first thing an commendable programmer may think of when trying to combine
+The first thing a commendable programmer may think of when trying to combine
 behavior is of course functional composition.
 However there is an important requirement for this to work.
 The input type and output type need to be the same of the two functions we
@@ -777,10 +883,11 @@ It probably is more obvious to consider another approach.
 \toReview
 In this approach we will give $f_a$ another argument which is the next $f_a$.
 This looks like the following:
-\[ \left (\overset{next}{B_t \to t \to M_t \to (B_{t+1}, A_{t+1})}\right ) \to B_t \to t \to M_t \overset{f_a}{\to} (B_{t+1}, A_{t+1}) \]
+\[ \left (\overset{next}{B_t \to t \to M_t \to (B_{t+1}, R_{t+1})}\right ) \to B_t \to t \to M_t \overset{f_a}{\to} (B_{t+1}, R_{t+1}) \]
 Note that the function in the next bracket has the same prototype as the codomain.
 In this case the /next/ function can play an advisory role to the codomain.
-As unit a function the action that results in a message: "I don't know".
+A unit function can be defined that produces empty sets as results for both
+believes and action.
 By unit function we mean the initial /next/ function.
 
 \toReview
@@ -791,7 +898,7 @@ So to encode this as a function we start with the least preferred type namely
 the $T_e$, however to let it play an advisory role in the $N_i$ function we first
 need to complete the /next/ argument.
 Because its the least preferred function we just use the unit.
-Now the curried type of $T_e$ satisfies that of $N_i$ and we can use it as
+Now the partially applied type of $T_e$ satisfies that of $N_i$ and we can use it as
 /next/.
 This methodology can be used for an entire personality type (ie all 8 functions
 in some order)
@@ -800,7 +907,7 @@ in some order)
 With this methodology function attitudes can decide themselves to consult the
 next type.
 Then they can inspect the result, and even the changed believe base to decide
-if its a good idea to do.
+if its a good idea to use the result.
 
 \toReview
 This architecture can be extended with the scale based jungian models
