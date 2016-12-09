@@ -58,3 +58,35 @@ Other methods I used included [[http://gen.lib.rus.ec/][library genises]], and [
 I never found a good book on MBTI, and had to result on papers describing it or
 websites.
 
+
+* Complaints
+Lets talk about this paper cite:jennings2001agent.
+I like how they compared agents to objects completly ignoring that 
+agents are a subclass of objects, and provide a reference to a guy that
+said classes and objects don't provide enough abstraction, yes you idiot,
+YOU ARE SUPPOSED TO PROVIDE THE ABSTRACTION
+Then they go on proposing how every agent should have an own thread of controll
+to make modeling the domain easier...
+are you shitting me? You want to introduce /more/ threads to make
+things easier?!
+The term complex system was never defined, this was handy for when they needed
+some circular arguments such as: "however since the systems' ineherit complexity
+it is impossible to know apraroi all possible interactions",
+we have a solution for that, its called a type system and pattern matching.
+Also note how the fact that designing systems can be "natural",
+yes this is how I imagine my ancestors, trying to start a fire while talking
+about composite banking.
+The final remark is the use of images, the first image the system is all
+squibaly and dark colours, wheras the second and third one are way more
+organised and lighter in colour.
+Noticing this I was like how popular is this thing,
+its obviously trying to do unconsciousness manipulation: 1404 citations.
+crap, my faith in humanity took another hit.
+
+And yet I will hypocratly cite this paper do because it does what I need it to do,
+argue in favor of bdi so that I can use the rest of my teacher work in
+"good consciousness".
+In a perfect word I would try to make a "critique" paper on this paper,
+but this would significantly delay my study and I just don't care about this
+particular design methodology that bad.
+Now, PICK UP THAT CAN
