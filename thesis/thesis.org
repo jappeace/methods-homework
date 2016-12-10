@@ -947,6 +947,8 @@ cite:clack2004personality
   more referential transparancy (ie immutable by default),
   but this has also some disadvantages such as a steeper learning curve,
   another grad student may not appreciate it as much as I.
++ Protocol buffers could be used for protocol. Its strongly typed and has both
+  C# and Java bindings
 **** branches
 Branching strategy seems like overkill, if a develop branch is used then usually
 the master gets neglected (for small projects, which this is),
