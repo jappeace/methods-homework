@@ -114,3 +114,5 @@ existing subsytem.
 This wouldn't have been a problem if mvn wildfly:run would also include a
 datasource subsystem, which it didn't.
 
+To combat these issues I made a build guide and included it as an appendix
+to the thesis (I don't want anyone else to deal with this crap).
