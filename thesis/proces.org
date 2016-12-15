@@ -90,3 +90,27 @@ In a perfect word I would try to make a "critique" paper on this paper,
 but this would significantly delay my study and I just don't care about this
 particular design methodology that bad.
 Now, PICK UP THAT CAN
+
+* Problems with building
+I extracted the unity game rather stupidly where the project was extracted,
+and then also re-extracted within a subfolder causing a super weird project
+structure and git in git repositories.
+
+There was an unmerged meta file, these files probably shouldn't even be tracked
+since they're auto generated.
+
+There were references to the "unity" editor which caused build errors. I just
+remoeved the references and it build fine ergo the references were redundant.
+I think re-sharper could've fixed this.
+
+gradle can't do wildfly
+
+Maven for some reason needs to have a profile to allow it to compile?
+So it needs to know my name? wut?
+
+I downloaded the wrong application server that did not contain a datasource
+subsystem, in doing so I spend over 2 days trying to enable mysql on a non
+existing subsytem.
+This wouldn't have been a problem if mvn wildfly:run would also include a
+datasource subsystem, which it didn't.
+
