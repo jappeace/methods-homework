@@ -22,7 +22,7 @@
 # 3. The introduction and main body of the thesis. If all else fails a
 # reaserhcer can use this as fallback
 
-* Abstract                                                          
+** Abstract                                                          
 :PROPERTIES:
 :UNNUMBERED: t
 :END:
@@ -39,6 +39,7 @@
 
 \newpage
 
+* Introduction
 \toReview
 Communication is the foundation of our modern society.
 Having good communication skills can help individuals in both professional as
@@ -77,7 +78,7 @@ planning to extend.
 After this we'll discuss the implementation.
 Finally we'll compare the different implementations.
 
-* Related work
+** Related work
 <<Related work>>
 \toReview
   To simulate personality in comminucation games there have been already several
@@ -119,629 +120,647 @@ We will use a more fine grained version of MBTI but his architecture is used,
 in which personality will be processed orientated rather than content
 orientated.
 
-* Personality theories
-\cleared
-The field of psychology has been somewhat active in trying to model human
-personality cite:pervin2008handbook. 
-Several frameworks have been developed to figure out people's
-personality and what this in turn would mean for their lives.
-We are interested in two ways in existing personality theories:
-1. Accuracy, if a personality thoery does not fit the reality at all it won't
-   help anyone in the serious game.
-2. Ease of implementation. If the personality theory is too hard (or impossible)
-   to implement in the serious game than we can't use it.
-The field of psychology is very interested in the first requirement. 
-However the second requirement not so much.
-Therefore our first job will be to list existing psychology personality
-frameworks,
-and filter out those that are unfeasible to implement.
-
-
-** The big five
-\cleared
-The first framework we'll discuss is called the big five.
-The term big five first coined in 1981 by Goldberg cite:goldberg1981language.
-The big five were not big because of their intrinsic greatness,
-but rather to emphasize how broad these factors were.
-
-\cleared
-This framework was not really invented, but rather discovered trough
-lexical analyses cite:tupes1961recurrent.
-Although the labels used were different,
-they conveyed the same idea as the big five model used now.
-The methodology used is something which is called factor analyses[fn::
-In the paper the term 'varimax rotational program' is used,
-but if we look this term in wikipedia, we can see the result is called factor
-analyses cite:varymaxrotanonalprogram].
-Factor analyses is a statistical methodology that tries to find underlying
-hidden variables.
-This methodology has become widely used in psychology cite:fabrigar1999evaluating.
-
-\cleared
-In the begining of the 1990's there were many ways to measure personality that
-didn't agree with each other.
-For example at Berkley alone block used a 2 dimensional ego-resilience and
-ego-control method cite:block1980role,
-whereas Gough measured folk concepts such as self-control, well-being and
-tolerance cite:gough1987california.
-Personality researchers hoped that they would be the one to discover a structure
-that would then be adopted by other researchers cite:pervin2008handbookp114.
-
-\cleared
-The goal of the big five was not to present a new structure that convinced
-others to use it,
-but rather to provide a taxonomy that all psychologist could agree upon.
-Since the big five was so broad (because of the statistical methods used),
-this worked.
-Therefore the researchers could keep on exploring there niche with their
-proffered structure,
-but once they would present their work they could use the big five to
-communicate clearly what their research meant without having to redefining the
-words every time cite:pervin2008handbookp114..116.
-
-\cleared
-The big five as in the OCEAN definition has the following units of measurement:
-- Openness or originality, if you score high on this you enjoy learning new
-  things just for the sake of learning. If you score low then you don't enjoy
-  this
-- Conciseness, how tidy you are, if you score high the dishes don't stack up
-  in the sink.
-- Extroversion, a high score indicates you enjoy leading the conversation and
-  you'll speak up when you disagree with someone.
-- Agreeableness or altruism, a low score would indicate that you don't want to
-  share and generally don't trust people.
-- Neuroticism or nervousness, a high score indicates that you like to brag and
-  get upset when someone is angry at them.
-
-\cleared
-The big five has been extensively tested and the result has been replicated
-in multiple studies cite:pervin2008handbookp119.
-One can measure his big five score trough a test called the NEO-PI, or the
-NEO-FFI. The FFI variant is shorter but less precise cite:costa1992revised.
-
-\cleared
-Although these terms may provide a great taxonomy,
-it does not have any theoretical foundation cite:eysenck1992four.
-This means it becomes difficult to speak about implementation.
-To make this more clear we use a thought experiment:
-Lets say you have a score of 0.8 for Neuroticism,
-how does this influence my decision for selecting action $a$ or $b$?
-Now you could say, use a mixed strategy where in you choose 80% of the time
-the neurotic typical neurotic approach.
-Then we need a valuation function to decide which of the two actions is more
-neurotic.
-But once we've done this we still haven't taken into account any of the
-other factors.
-Solving this is a non-trivial endeavour.
-
-** Personality types
-<<sec:types>>
-\cleared
-To address the big five's issue of having no thoeretical foundation we'll
-have a look into personality types.
-We begin with the theoretical foundation proposed by the grandfather of
-personality research, Carl Jung.
-After which we'll look at a thoeretical evolution proposed by Myers and
-Myers-Brigs, which also introduced a structered method of measuring types.
-Then we'll discuss some critique on this method.
-With this critisim in mind we'll look at alternatives to the MBTI that have been
-proposed afterwards.
-
-*** Jung's theory of psychological types
-\cleared
-Jung describes several concepts, firstly each person has two attitudes:
-/Introversion/ and /extroversion/.
-Extroversion means dealing with the outside world and therfore is called
-objective (or observable).
-Intoversion is the world inside a person, and therefore is subjective,
-or private.
-This privacy however may bo so great that the consiouness can't even access it.
-These attitudes are mutually exclusive,
-you can't do introversion and extroversion at the same time.
-For example if you're day dreaming you're not paying attention to your
-surroundings.
-A person who spends most of his time in the introversion attitude is called
-an /introvert/.
-But he is not totally the one or the other, ie an introvert can still have
-extravert moments and vice versa.
-It should also be noted that the unconsciousness according to Jung is
-flipped in attitude. cite:hall1973primer97-98attitude
-
-\cleared
-Then there are four functions.
-The first two functions are called the /rational functions/
-because they act as a method of making judgements.
-/Thinking/ is a function that connects ideas with each other to arrive at
-generalizations or conclusions. 
-/Feeling/ evaluates ideas by determinging if its good or bad, pleasant
-or unpleasant, beautifull or ugly.
-Note that this is /not/ the same as being emotional,
-although you can be emotional and use this function.
-The /irrational functions/ are called this becuase they require no reason.
-/Sensation/ is sense perception created by the stimulation of the senses,
-it can always be rooted to a sense,
-such as "I see a balloon" or "I feel hungry".
-/Intuition/ is like a sensetion but its not produced by a sense.
-Therefore it has no origin in the same way as sensation has,
-by which its explained as "just a hunch" or "I feel it in my bones".
-cite:beauchamp2005communication,hall1973primer98-100functions
-
-\cleared
-To use these functions they have to be combined with attitudes, producing
-/function attitudes/.
-Therefore a person will never be of a thinking type,
-but rather either a thinking introvert or thinking extrovert.
-cite:hall1973primer100-101combo
-We can now imagine what this means,
-an extroverted thinker will for example make judgement about the real world,
-and therefore be more like a scientist,
-whereas an introverted thinker will make judgement about ideas in his mind,
-and therfore will be an excelent philosopher.
-
-\cleared
-Let $\mathcal{J}$ denote the set of all possible jungian function attitudes
-such that:
-\[ \mathcal{J} = \{ T_e, T_i, F_e, F_i, S_e, S_i, N_e, N_i\}\]
-Where
-+ $T_e$ stands for extraverted thinking, which is thinking about objects in the
-  real world. This is thinking with a goal, a problem to solve,
-  to check weather certain laws are upheld, or a system to check.
-+ $T_i$ stands for introverted thinking,
-  this kind of thinking could be called deductive,
-  it tries to construct a framework to explain the world.
-  This is consistent reasoning based on internal believes,
-  which does not necessarily solve a problem.
-+ $F_e$ stands for extraverted feeling, where objective or external criteria
-  is used to judge, for example something is beautifull or ugly.
-  Established standards may be used to decide this and therefore its a
-  conservative function. Decisions are based on interpersonal and cultural values.
-+ $F_i$ stands for introverted feeling, decisions based on personal values and
-  believes.
-+ $S_e$ stands for extroverted sensing, Act on concrete data from the here and
-  now. Then lets it go.
-+ $S_i$ stands for introverted sensing, acts on concrete data from memories and
-  passed experience.
-+ $N_e$ stands for extraverted intuition, try to find possibilities in every
-  situation.
-+ $N_i$ stands for introverted intuition. Looks new possibilities in ideas.
-
-\cleared
-Another important concept is the idea of the /principal/ and /auxilirary/
-function cite:hall1973primer105principal.
-The principal function is the one that is most preffered.
-The auxilirary renders its services to the principal function,
-however this function cannot be the opposite of the principal.
-So if /Feeling/ is the principal function than thinking connot be the auxilirary.
-This is also true for the irrational functions.
-
-*** MBTI
-\cleared
-The meyer brigs type indicator is based upon Carl Jung's theory of personality
-types.
-However it brings two important changes, first of all the way
-of measuring personality type is changed. 
-It uses a strutured approach rather than Carl Jungs projective approach.
-The responses to items are finite and therefore can be deduced based on theory.
-In contrast to Jung's technique where he used open ended anwsering with word
-associations cite:hall1973primer23method.
-Then there is the introduction of an extra index used to order function
-attitudes cite:carlson1985recent.
-Which is either a $J$ for judging (rational in jung terms)
-or a $P$ for perceiving (irrational in jung terms).
-This dimension indicates together with the $I/E$ dimension which function
-attitude is dominant and which is auxilirary.
-
-\cleared
-<<sec:mbti:order_comparison>>
-Once completed with the MBTI you'll get charatcter string as outcome,
-for example "INTJ".
-This label tells you inderectly which of carl jung's functions is dominant,
-auxilirary, tetriary and inferior cite:mccaulley2000myers.
-In other words it provides a sequence of preferences
-cite:website.mbtitypedynamics.
-In case of INTJ it would be:
-\[N_i > T_e  > F_i > S_e\]
-So the most preffered function to be used by someone of type INTJ would be $N_i$,
-then $T_e$ and so forth.
-These are the same function as Jung used, the MBTI
-just imposed an order on them cite:mccaulley2000myers,website.mbtisequence.
-How much preference there is for a function is not encoded in MBTI, just an
-order of preference.
-An ENTJ would be simialar to INTJ but with a different order:
-\[T_e > N_i > S_e > F_i\]
-With this definition the interplay of the judging/perceiving dimension becomes
-more obvious if we look at INTP: \[T_i > N_e > S_i > F_e\]
-It's similar to an ENTJ, but the attitudes have flipped.
-
-\cleared
-A possible grouping of the sixteen type exists using the middle letters:
-\[\{NT, ST, NF, SF\}\]
-This grouping goes under the rationale that the first two functions only
-differ in either attitude, order or both.
-
-\cleared
-Before continuing we would like to say a word about a popular
-interpertation of MBTI which is based on Kersey's book "Please understand me",
-and later "Please understand me II".
-In this interpertation the sixteen types are also placed in general groups
-of four but here the $ST$ and $SF$ distinction is replaced by $SJ$ and $SP$
-cite:keirsey1998please.
-It turns out however that Kersey invented this distinction because
-"He thought it made sense to group them this way" cite:whyaretypesdistinct.
-In doing this he rejected the work of Jung and also that of cognitive functions.
-Which is problematic because the theory he presented then does not make any
-thoeretical sense.
-Therefore Kersey's MBTI will not be used in this thesis.
-
-\cleared
-The MBTI is extremly popular in a subfield called Organizational Developement
-(OD) cite:sample2004myers. 
-But it has gotton some heavy critism in from the field of psycology.
-
-\cleared
-Since MBTI reduces the test scores to type,
-it is expected that most of the population would fall into either proposed
-dimensions. For example $I$ or $E$.
-This is called a bimodal distribution.
-However it has been shown that is not the case cite:bess2002bimodal,
-but this could be the result of the scores being biderictional
-cite:salter2005two.
-An extended investigation into weather jungian constructs are truly categorial
-however concluded that this was not the case and a continues scale is required
-cite:arnau2003jungian.
-
-\cleared
-It also fell short on factor analyses and reliability.
-With this technique the desired outcome is that there are 4 question clusters
-(or factors), one for each dimension.
-Secondly these factors should be independent,
-a question that influences I/E score should not influence S/N.
-Finally we expect the factors to indicate differences between individuals.
-Random questions won't do that.
-However it turned out the MBTI had more than 4 factors (6), then there were
-questions that were in different factors than the majority
-and finally there were also some quetions doing no discrimination at all
-(not being scored) cite:sipps1985item. 
-
-\cleared
-Reliability indicates how often the same result will come out of the test,
-for example if you take the mbti a 100 times you may be classified the same
-type for 70 times.
-Which would be an indication it has a reliablity of arround 70%.
-But in psycology another aspect is important,
-namely the interval in between which the tests are taken,
-if for example two tests produce starkly different results but a long time
-has passed between them its not considered a big issue.
-However for the MBTI it has been shown that after a period of 5 weeks 50%
-of the participants changed in score cite:pittenger1993measuring.
-Since Jung basically said that type is decided very early on in life
-this result is rather bad cite:hall1973primer106inborn.
-
-*** PPSDQ
-\cleared
-The PPSDQ keeps basically the same theory as MBTI cite:kier1997new,king1999score,
-but uses a different measuring method.
-Instead of forced questions it uses a word-pair checklist for
-$I/E, S/N$ and $T/F$, and for the $J/P$ self describing sentences are used
-cite:melancon1996measurement.
-A word pair checklist looks like:
-
-| Word          |   |   |   | Word      |
-|---------------+---+---+---+-----------|
-| Empathy       | 1 | 2 | 3 | Logic     |
-| Dispassionate | 1 | 2 | 3 | Emotional |
-The sentence is a statement in which you can agree or disagree. 
-This test method is simple but effective.
-
-\cleared
-The result of the PPSDQ would look something like: I-30 N-20 T-80 J-60, with
-a scale of 0 to 100. To calulate the jungian functions as a probability measure
-some math is required. Our subject is $70\%$ of the time introverted and $30\%$ of the 
-time extroverted. $60\%$ of the time judging and $40\%$ of the time perceiving.
-therefore N_i would be calulated as: 0.7 \times 0.4 \times 0.8 = 0.224 or $22.4\%$.
-N_e would be $0.3 \times 0.4 \times 0.8 = 0.096$ etc.
-From this you can make a preference sequence or create a mixed strategy.
-
-\cleared
-The PPSDQ is measuring the same thing as MBTI but lacks the critisms of MBTI.
-The reliability is for example between 90% to 95% with a delay of two weeks.
-The internal consistency was also measured which proved to be better than
-MBTI but there was still a dependency between S/N and P/J which remains
-unexplained cite:kier1997new.
-The PPSDQ is internally most consistent of the discussed alternatives
-(excluding OCEAN) cite:arnau1999alternative.
-
-*** SL-TDI
-\cleared
-SL-TDI measures functions by presenting 20 situations and then giving subject
-possible actions which corrolate with the functions.
-The subjects then have to indicate how likely it is that they would choose that
-particular action cite:arnau2000reliability.
-
-\cleared
-It becomes rather staight forward to make a function preference of the 
-measurement of SL-TDI since the qeustion directly measure the jungian
-functions.
-A possible personality type therefore would be:
-\[ S_i \geq T_i \geq S_e \geq F_e \geq N_i \geq T_e \geq N_e \geq F_i \]
-To determine the preference we just used the observed value in the test.
-Since every situation offers a choice for each function with a 5 point value
-there is no need for normalization.
-
-\cleared
-This denotion is much less strict than the MBTI or PPSDQ since it does not force
-alternating attitudes or pairing of rational/irrational functions in the
-preference.
-Therefore the amount of personality types SL-TDI supports drastically exceeds
-that of the PPSDQ. In other words, there always exists a mapping from PPSDQ
-to SL-TDI, but not always from SL-TDI to PPSDQ.
-The reason for doing this is because there is experimental evidence
-that there exist personalities outside of the stucture orignally imposed by
-MBTI and the subsequent PPSDQ cite:loomis1980testing.
-
-** Comparison of theories
-\cleared
-To re-iterate, we are interested in a framework that is realistic, and easy to
-implement.
-The Big Five falls short on the easy to implement,
-there is no underlying theoretical framework to support it cite:eysenck1992four,
-therefore we cannot base our implementation on anything except our own
-interpertation.
-
-\cleared
-The MBTI has been criticized a lot from the field of psychology,
-but it does have a solid theoretical foundation.
-There is some relation between the big five and MBTI cite:furnham1996big.
-Therefore its somewhat realistic, but quite easy to implement.
-
-\cleared
-Both of the alternatives of MBTI use a continues scale and have a high
-correlation with the big five cite:arnau1997measurement.
-This means is that they are measuring something which is also measured by the
-big five in some way.
-
-\cleared
-The PPSDQ is based on the same thoery as MBTI, but with scaled type letters.
-To convert the type to function attitudes some extra work has to be done,
-namely calulate their respective probabilities.
-To decide which function attitude to use some kind of mixed strategy
-has to be used.
-The PPSDQ is more realistic, but at the cost of being more difficult to
-implement.
-
-\cleared
-The SL-TDI is even harder to implement than the PPSDQ because the function
-attitudes no longer have to alternate.
-This either means that functions are independent (thereby rejecting some of Jung's work),
-or that they have to work in some kind of combination.
-If they work in some kind of combination and we have to following preference:
-\[ T_e > T_i > S_i > N_i > F_e > N_e > S_e > F_i\]
-We select the first function to work with, but it requires some information now,
-what to do?
-Select $S_i$, thereby skipping $T_i$, or select $T_i$ and let it decide to
-select $S_i$, but this would basially give $T_i$ censorship rights.
-This is difficult to anwser therfore it is a lot more difficult to implement
-than PPSDQ.
-Since SL-TDI drops an assumption, which is shown with experimental evidence
-to be false cite:loomis1980testing, we can say SL-TDI's theory is most realistic.
-This comes however at the cost of being even more difficult to implement.
-
-\cleared
-Therefore our preference for implementation is the following:
-\[ \text{MBTI} > \text{PPSDQ} > \text{SL-TDI} > \text{OCEAN} \]
-
-\cleared
-There is another hidden reasoning behind this, the work of PPSDQ can built on
-that of MBTI, and that of SL-TDI can build on that of PPSDQ.
-OCEAN builds on nothing, we'll leave that for future work.
-
-* Artificial intelligence literature
-# How do I measure that the persnoality created is in fact in complience with
-# the personality I aimed for?
-# Can I let the personality take the test somehow?
-\toReview
-In this chapter we will look at some of the AI based literature.
-For example we will have a look at the intelligent agent approach and the BDI
-architecture.
-We will also look at some theoretical attempts at implementing personality.
-Theoretical attempts are often a logic in contrast to the topics
-discussed in [[Related work]] which include executable implementations.
-
-** Agents background
-\toReview
-In the literature there is little consensus on what exactly an agent is,
-however there is a general consensus that an agent is /autonomous/
-cite:wooldridge2009introduction.
-To make this more clear we'll use Wooldriges' definition:
-
-#+BEGIN_QUOTE
-An /agent/ is a computer system that is /situated/ in some /environment/ and
-that is capable of /autonomous action/ in this environment in order to meet its
-delegated objectives. -- Wooldridge
-#+END_QUOTE
-
-\toReview
-In another older definition cite:wooldridge1995intelligent he highlights
-/autonomy/, /social ability/, /reactivity/, and /pro activity/.
-Where autonomy means that no human intervention is required,
-social ability means it can talk to other agents,
-reactivity is that it can reply on input and pro activity means that it can
-show behavior while not reacting to something.
-However he later continues on that a stronger claim about an agent is a
-piece of software that uses concepts which are attributed to humans.
-Such as believes desires and intentions.
-
-\toReview
-This is the reason we can't call any program an agent.
-For example an operating system kernel is
-autonomous (a user would never interact with it),
-social (can do networking),
-reactive (it will comply to hardware interprets for example)
-and proactive (a process hogging to much memory will be killed without the
-process asking for it).
-However we won't call a kernel an agent because it doesn't even come close to
-having believes, desires or intentions.
-
-\toReview
-Something to keep in mind is that there are three "branches" of agent research
-cite:wooldridge1995intelligent.
-The first one is /agent theory/ in which /specifications/ and methods of 
-specifications are developed. They ask what are agents and what are they
-ought to do and how do we tell them that.
-Then there are the /agent architectures/, these address questions of how
-to implement the specifications written by the theorists.
-In this paper we won't discuss architectures since we work in an existing
-system described in section [[The serious game]].
-Finally there are the /agent langauges/, which ask the question how to write
-agent programs.
-Again this is mostly preditermined for us, but we will give a small overview.
-
-*** Belief desires and intentions
-\toReview
-The belief desire intention model of human practical reasoning was first
-introduced by bratman cite:bratman1987intention.
-It is based upon a "common sense" framework of human reasoning.
-
-\toReview
-The idea of BDI is that an agent has believes, these can be anything, such as
-I believe the grass is green, or I believe the keys are on the table.
-Note that we never speak about facts, an agent can believe something to be a
-fact, but that doesn't make it a fact.
-Desires are special kind of believes that give agents a reason to be, they
-may also be called goals.
-Intentions are (partial) plans to make a desire come to fruition.
-How to formalize this properly turns out to be a hard question, which is
-analyzed in the following section [[bdi logics]].
-
-\toReview
-A number of reasons have been stated to use this methodology.
-The foremost is to make agent orientated systems less expensive in maintenance,
-verification and construction according to Rao and Georgeff cite:rao1995bdi. 
-However they don't cite a source for this.
-
-\toReview
-Another paper argues in favour of agent orientated design cite:jennings2001agent.
-It has the following major arguments:
-It is effective to divide a complex problem domain into several smaller problems,
-abstracting in an agent orientated way is more "natural",
-and complex systems dependencies and interactions can be easily modeled.
-
-*** Logic of BDI
-<<bdi logics>>
-\toReview
-Logic of BDI is an attempt to formalize how agents behave.
-One of the first formalization of Bratman's theory was that of Cohen and
-Levesque cite:cohen1990intention. It was based on linear time logic and
-used operators for actions and modalities for goals and beliefs cite:meyer2014logics.
-It was also used a tiered formalism, with at the bottom belief goals and
-actions which provided the basis for the higher achievement and persistent goals
-and intentions to do and be.
-Rao and Georgeff introduced a different formalism that used branching time logic. 
-They use modal operators for belief desires and intentions and then put 
-constraints on them to make interactions meaning full cite:meyer2014logics.
-Therefore this formalism is much closer to that of bratman cite:rao1991modeling.
-Finally there is the KARO formalism which is based on dynamic logic.
-This is the logic of actions and computation. They extend this logic with
-epistemics to add believes to it cite:meyer2014logics.
-
-\todo[inline]{decide if I'm gonna use any of these logics, I mean the "why discuss this?" question is now unwansered... Perhaps I should delete this?}
-*** Concrete implementations
-
-\todo[inline]{Again perhaps I should consider deleting this?}
-\todo[inline]{2apl}
-\todo[inline]{jade cite:braubach2003jadex}
-** Social practices
-<<social practice>>
-\todo[inline]{critques on social practices?}
-\todo[inline]{come back social practices}
-\toReview
-To limit the domain of the application a theoretical device is used
-called social practices.
-This gives an ordered overview in what domain our program should work.
-In other words, rather than some extra element, it will be the
-/foundation/ of the program cite:dignum2014contextualized.
-We can formulate therefore the social practice that is relevant for this thesis 
-in the following way:
-
-+ Practice name: Doctor appointment
-+ /Physical context/,
-  - Resources: Computer, chair, diagnostic tools..
-  - Places: waiting room, doctor's office...
-  - Actors: doctor, patient, assistant, ...
-+ /Social context/,
-  - Roles: Doctor, Patient...
-  - Norms: doctor is polite, patient is polite, doctor is inquisitive
-  - Social interpretation: Can sit on chair, cannot sit on table.
-+ /Activities/, share information, do diagnostics, minor treatments,
-  prescribing drugs...
-+ /Plan patterns/, Introduction \to ask complaints \to gather history \dots 
-+ /Social meaning/, awkwardness, gratitude, ...
-+ /Competences/, Give injection, empathetic talk
-
-If the social practices however are defined more formally they could be 
-used in a bigger system such as in cite:augello2015social and
-cite:augello2016model.
-** BDI + Personality
+* Background
 \drafting
-\todo[inline]{other proposed systems and argue for campos}
-Campos discussed an architecture in which personality emerged not from things
-you like,
-but rather than trying to determine which content a personality preferred,
-the personality was encoded in the process they preferred.
-This was called /process orientated/ rather than contend orientated.
-cite:campos_mabs2009
-For example in their interpretation of MBTI a Sensing agent would make a plan
-in complete details whereas an intuitive agent would just continue planning as
-needed.
-Thinking agents would base their decision process upon their own believes
-whereas feeling agents would consider what other agents want.
-In our model we conceptualize the Jungian functions also as a process.
-We comment more on this in section [[Jungian BDI]].
+In this chapter we will discuss the work that is the foundation of this thesis.
+First we will look at personality theories developed by psychology.
+Then we will look at some to the literature in AI (and more importantly
+argue for the methodology used), and finally we will look at the serious
+game in its existing form.
+** Personality theories
+ \cleared
+ The field of psychology has been somewhat active in trying to model human
+ personality cite:pervin2008handbook. 
+ Several frameworks have been developed to figure out people's
+ personality and what this in turn would mean for their lives.
+ We are interested in two ways in existing personality theories:
+ 1. Accuracy, if a personality thoery does not fit the reality at all it won't
+    help anyone in the serious game.
+ 2. Ease of implementation. If the personality theory is too hard (or impossible)
+    to implement in the serious game than we can't use it.
+ The field of psychology is very interested in the first requirement. 
+ However the second requirement not so much.
+ Therefore our first job will be to list existing psychology personality
+ frameworks,
+ and filter out those that are unfeasible to implement.
 
-* The serious game
-<<The serious game>>
-\drafting
-This chapter describes the game we inherited from our predecessors.
-We have to discuss precisely what they did for two reasons:
-1. To help understand the design constraints we work under
-2. To distinct our changes from theirs'
 
-There have been several distinct versions of the "comminuate!" game. 
-The first version was a web based game, with an extended scenario editor.
-cite:jeuring2015demo
-However it had some significant flaws, for example each dialog would always
-happen the same way if you chose the same answers,
-making practicing on it somewhat unrealistic.
-This was addressed in the probabilistic reasoner variant.
-Which used the concept of /social practices/ to determine probabilistic
-responses based on user choices cite:augello2015social.
-However the game was still limited too preditermined user choices.
-This means the user never has to remember what to do, he can just click some 
-choice.
-To address this issue the game was extended with an extended version of
-AIML cite:weiderveld2016chatbot, called S-AIML cite:augello2016model. 
+*** The big five
+ \cleared
+ The first framework we'll discuss is called the big five.
+ The term big five first coined in 1981 by Goldberg cite:goldberg1981language.
+ The big five were not big because of their intrinsic greatness,
+ but rather to emphasize how broad these factors were.
 
-A specific scenario was created for doctor/patient interaction     
-cite:augello2015social.                                            
-To train physicians properly /social practices/ are used, which refers to
-normal behavior in society.                                        
-The game selected these based on a probabilistic model.            
-Using this allows students to have multiple runs of a scenario which don't 
-follow the same path every time.                                   
-The game was later extended to train for specific skills cite:augello2016social,
-such as following certain protocols                                
-(for example be polite and follow medical standards) and empathy.  
+ \cleared
+ This framework was not really invented, but rather discovered trough
+ lexical analyses cite:tupes1961recurrent.
+ Although the labels used were different,
+ they conveyed the same idea as the big five model used now.
+ The methodology used is something which is called factor analyses[fn::
+ In the paper the term 'varimax rotational program' is used,
+ but if we look this term in wikipedia, we can see the result is called factor
+ analyses cite:varymaxrotanonalprogram].
+ Factor analyses is a statistical methodology that tries to find underlying
+ hidden variables.
+ This methodology has become widely used in psychology cite:fabrigar1999evaluating.
 
-** TODO Existing functionality
-*** TODO how used by the end user?
-*** TODO how do you configure it?
-\todo[inline]{Existing functionality and design, user interaction etc}
-** TODO Existing architecture
-\todo[inline]{Existing architecture, how does the trikery work}
-cite:augello2016social
-*** TODO client server architecture
-*** TODO text processing
-*** TODO deliberation
+ \cleared
+ In the begining of the 1990's there were many ways to measure personality that
+ didn't agree with each other.
+ For example at Berkley alone block used a 2 dimensional ego-resilience and
+ ego-control method cite:block1980role,
+ whereas Gough measured folk concepts such as self-control, well-being and
+ tolerance cite:gough1987california.
+ Personality researchers hoped that they would be the one to discover a structure
+ that would then be adopted by other researchers cite:pervin2008handbookp114.
+
+ \cleared
+ The goal of the big five was not to present a new structure that convinced
+ others to use it,
+ but rather to provide a taxonomy that all psychologist could agree upon.
+ Since the big five was so broad (because of the statistical methods used),
+ this worked.
+ Therefore the researchers could keep on exploring there niche with their
+ proffered structure,
+ but once they would present their work they could use the big five to
+ communicate clearly what their research meant without having to redefining the
+ words every time cite:pervin2008handbookp114..116.
+
+ \cleared
+ The big five as in the OCEAN definition has the following units of measurement:
+ - Openness or originality, if you score high on this you enjoy learning new
+   things just for the sake of learning. If you score low then you don't enjoy
+   this
+ - Conciseness, how tidy you are, if you score high the dishes don't stack up
+   in the sink.
+ - Extroversion, a high score indicates you enjoy leading the conversation and
+   you'll speak up when you disagree with someone.
+ - Agreeableness or altruism, a low score would indicate that you don't want to
+   share and generally don't trust people.
+ - Neuroticism or nervousness, a high score indicates that you like to brag and
+   get upset when someone is angry at them.
+
+ \cleared
+ The big five has been extensively tested and the result has been replicated
+ in multiple studies cite:pervin2008handbookp119.
+ One can measure his big five score trough a test called the NEO-PI, or the
+ NEO-FFI. The FFI variant is shorter but less precise cite:costa1992revised.
+
+ \cleared
+ Although these terms may provide a great taxonomy,
+ it does not have any theoretical foundation cite:eysenck1992four.
+ This means it becomes difficult to speak about implementation.
+ To make this more clear we use a thought experiment:
+ Lets say you have a score of 0.8 for Neuroticism,
+ how does this influence my decision for selecting action $a$ or $b$?
+ Now you could say, use a mixed strategy where in you choose 80% of the time
+ the neurotic typical neurotic approach.
+ Then we need a valuation function to decide which of the two actions is more
+ neurotic.
+ But once we've done this we still haven't taken into account any of the
+ other factors.
+ Solving this is a non-trivial endeavour.
+
+*** Personality types
+ <<sec:types>>
+ \cleared
+ To address the big five's issue of having no thoeretical foundation we'll
+ have a look into personality types.
+ We begin with the theoretical foundation proposed by the grandfather of
+ personality research, Carl Jung.
+ After which we'll look at a thoeretical evolution proposed by Myers and
+ Myers-Brigs, which also introduced a structered method of measuring types.
+ Then we'll discuss some critique on this method.
+ With this critisim in mind we'll look at alternatives to the MBTI that have been
+ proposed afterwards.
+
+**** Jung's theory of psychological types
+ \cleared
+ Jung describes several concepts, firstly each person has two attitudes:
+ /Introversion/ and /extroversion/.
+ Extroversion means dealing with the outside world and therfore is called
+ objective (or observable).
+ Intoversion is the world inside a person, and therefore is subjective,
+ or private.
+ This privacy however may bo so great that the consiouness can't even access it.
+ These attitudes are mutually exclusive,
+ you can't do introversion and extroversion at the same time.
+ For example if you're day dreaming you're not paying attention to your
+ surroundings.
+ A person who spends most of his time in the introversion attitude is called
+ an /introvert/.
+ But he is not totally the one or the other, ie an introvert can still have
+ extravert moments and vice versa.
+ It should also be noted that the unconsciousness according to Jung is
+ flipped in attitude. cite:hall1973primer97-98attitude
+
+ \cleared
+ Then there are four functions.
+ The first two functions are called the /rational functions/
+ because they act as a method of making judgements.
+ /Thinking/ is a function that connects ideas with each other to arrive at
+ generalizations or conclusions. 
+ /Feeling/ evaluates ideas by determinging if its good or bad, pleasant
+ or unpleasant, beautifull or ugly.
+ Note that this is /not/ the same as being emotional,
+ although you can be emotional and use this function.
+ The /irrational functions/ are called this becuase they require no reason.
+ /Sensation/ is sense perception created by the stimulation of the senses,
+ it can always be rooted to a sense,
+ such as "I see a balloon" or "I feel hungry".
+ /Intuition/ is like a sensetion but its not produced by a sense.
+ Therefore it has no origin in the same way as sensation has,
+ by which its explained as "just a hunch" or "I feel it in my bones".
+ cite:beauchamp2005communication,hall1973primer98-100functions
+
+ \cleared
+ To use these functions they have to be combined with attitudes, producing
+ /function attitudes/.
+ Therefore a person will never be of a thinking type,
+ but rather either a thinking introvert or thinking extrovert.
+ cite:hall1973primer100-101combo
+ We can now imagine what this means,
+ an extroverted thinker will for example make judgement about the real world,
+ and therefore be more like a scientist,
+ whereas an introverted thinker will make judgement about ideas in his mind,
+ and therfore will be an excelent philosopher.
+
+ \cleared
+ Let $\mathcal{J}$ denote the set of all possible jungian function attitudes
+ such that:
+ \[ \mathcal{J} = \{ T_e, T_i, F_e, F_i, S_e, S_i, N_e, N_i\}\]
+ Where
+ + $T_e$ stands for extraverted thinking, which is thinking about objects in the
+   real world. This is thinking with a goal, a problem to solve,
+   to check weather certain laws are upheld, or a system to check.
+ + $T_i$ stands for introverted thinking,
+   this kind of thinking could be called deductive,
+   it tries to construct a framework to explain the world.
+   This is consistent reasoning based on internal believes,
+   which does not necessarily solve a problem.
+ + $F_e$ stands for extraverted feeling, where objective or external criteria
+   is used to judge, for example something is beautifull or ugly.
+   Established standards may be used to decide this and therefore its a
+   conservative function. Decisions are based on interpersonal and cultural values.
+ + $F_i$ stands for introverted feeling, decisions based on personal values and
+   believes.
+ + $S_e$ stands for extroverted sensing, Act on concrete data from the here and
+   now. Then lets it go.
+ + $S_i$ stands for introverted sensing, acts on concrete data from memories and
+   passed experience.
+ + $N_e$ stands for extraverted intuition, try to find possibilities in every
+   situation.
+ + $N_i$ stands for introverted intuition. Looks new possibilities in ideas.
+
+ \cleared
+ Another important concept is the idea of the /principal/ and /auxilirary/
+ function cite:hall1973primer105principal.
+ The principal function is the one that is most preffered.
+ The auxilirary renders its services to the principal function,
+ however this function cannot be the opposite of the principal.
+ So if /Feeling/ is the principal function than thinking connot be the auxilirary.
+ This is also true for the irrational functions.
+
+**** MBTI
+ \cleared
+ The meyer brigs type indicator is based upon Carl Jung's theory of personality
+ types.
+ However it brings two important changes, first of all the way
+ of measuring personality type is changed. 
+ It uses a strutured approach rather than Carl Jungs projective approach.
+ The responses to items are finite and therefore can be deduced based on theory.
+ In contrast to Jung's technique where he used open ended anwsering with word
+ associations cite:hall1973primer23method.
+ Then there is the introduction of an extra index used to order function
+ attitudes cite:carlson1985recent.
+ Which is either a $J$ for judging (rational in jung terms)
+ or a $P$ for perceiving (irrational in jung terms).
+ This dimension indicates together with the $I/E$ dimension which function
+ attitude is dominant and which is auxilirary.
+
+ \cleared
+ <<sec:mbti:order_comparison>>
+ Once completed with the MBTI you'll get charatcter string as outcome,
+ for example "INTJ".
+ This label tells you inderectly which of carl jung's functions is dominant,
+ auxilirary, tetriary and inferior cite:mccaulley2000myers.
+ In other words it provides a sequence of preferences
+ cite:website.mbtitypedynamics.
+ In case of INTJ it would be:
+ \[N_i > T_e  > F_i > S_e\]
+ So the most preffered function to be used by someone of type INTJ would be $N_i$,
+ then $T_e$ and so forth.
+ These are the same function as Jung used, the MBTI
+ just imposed an order on them cite:mccaulley2000myers,website.mbtisequence.
+ How much preference there is for a function is not encoded in MBTI, just an
+ order of preference.
+ An ENTJ would be simialar to INTJ but with a different order:
+ \[T_e > N_i > S_e > F_i\]
+ With this definition the interplay of the judging/perceiving dimension becomes
+ more obvious if we look at INTP: \[T_i > N_e > S_i > F_e\]
+ It's similar to an ENTJ, but the attitudes have flipped.
+
+ \cleared
+ A possible grouping of the sixteen type exists using the middle letters:
+ \[\{NT, ST, NF, SF\}\]
+ This grouping goes under the rationale that the first two functions only
+ differ in either attitude, order or both.
+
+ \cleared
+ Before continuing we would like to say a word about a popular
+ interpertation of MBTI which is based on Kersey's book "Please understand me",
+ and later "Please understand me II".
+ In this interpertation the sixteen types are also placed in general groups
+ of four but here the $ST$ and $SF$ distinction is replaced by $SJ$ and $SP$
+ cite:keirsey1998please.
+ It turns out however that Kersey invented this distinction because
+ "He thought it made sense to group them this way" cite:whyaretypesdistinct.
+ In doing this he rejected the work of Jung and also that of cognitive functions.
+ Which is problematic because the theory he presented then does not make any
+ thoeretical sense.
+ Therefore Kersey's MBTI will not be used in this thesis.
+
+ \cleared
+ The MBTI is extremly popular in a subfield called Organizational Developement
+ (OD) cite:sample2004myers. 
+ But it has gotton some heavy critism in from the field of psycology.
+
+ \cleared
+ Since MBTI reduces the test scores to type,
+ it is expected that most of the population would fall into either proposed
+ dimensions. For example $I$ or $E$.
+ This is called a bimodal distribution.
+ However it has been shown that is not the case cite:bess2002bimodal,
+ but this could be the result of the scores being biderictional
+ cite:salter2005two.
+ An extended investigation into weather jungian constructs are truly categorial
+ however concluded that this was not the case and a continues scale is required
+ cite:arnau2003jungian.
+
+ \cleared
+ It also fell short on factor analyses and reliability.
+ With this technique the desired outcome is that there are 4 question clusters
+ (or factors), one for each dimension.
+ Secondly these factors should be independent,
+ a question that influences I/E score should not influence S/N.
+ Finally we expect the factors to indicate differences between individuals.
+ Random questions won't do that.
+ However it turned out the MBTI had more than 4 factors (6), then there were
+ questions that were in different factors than the majority
+ and finally there were also some quetions doing no discrimination at all
+ (not being scored) cite:sipps1985item. 
+
+ \cleared
+ Reliability indicates how often the same result will come out of the test,
+ for example if you take the mbti a 100 times you may be classified the same
+ type for 70 times.
+ Which would be an indication it has a reliablity of arround 70%.
+ But in psycology another aspect is important,
+ namely the interval in between which the tests are taken,
+ if for example two tests produce starkly different results but a long time
+ has passed between them its not considered a big issue.
+ However for the MBTI it has been shown that after a period of 5 weeks 50%
+ of the participants changed in score cite:pittenger1993measuring.
+ Since Jung basically said that type is decided very early on in life
+ this result is rather bad cite:hall1973primer106inborn.
+
+**** PPSDQ
+ \cleared
+ The PPSDQ keeps basically the same theory as MBTI cite:kier1997new,king1999score,
+ but uses a different measuring method.
+ Instead of forced questions it uses a word-pair checklist for
+ $I/E, S/N$ and $T/F$, and for the $J/P$ self describing sentences are used
+ cite:melancon1996measurement.
+ A word pair checklist looks like:
+
+ | Word          |   |   |   | Word      |
+ |---------------+---+---+---+-----------|
+ | Empathy       | 1 | 2 | 3 | Logic     |
+ | Dispassionate | 1 | 2 | 3 | Emotional |
+ The sentence is a statement in which you can agree or disagree. 
+ This test method is simple but effective.
+
+ \cleared
+ The result of the PPSDQ would look something like: I-30 N-20 T-80 J-60, with
+ a scale of 0 to 100. To calulate the jungian functions as a probability measure
+ some math is required. Our subject is $70\%$ of the time introverted and $30\%$ of the 
+ time extroverted. $60\%$ of the time judging and $40\%$ of the time perceiving.
+ therefore N_i would be calulated as: 0.7 \times 0.4 \times 0.8 = 0.224 or $22.4\%$.
+ N_e would be $0.3 \times 0.4 \times 0.8 = 0.096$ etc.
+ From this you can make a preference sequence or create a mixed strategy.
+
+ \cleared
+ The PPSDQ is measuring the same thing as MBTI but lacks the critisms of MBTI.
+ The reliability is for example between 90% to 95% with a delay of two weeks.
+ The internal consistency was also measured which proved to be better than
+ MBTI but there was still a dependency between S/N and P/J which remains
+ unexplained cite:kier1997new.
+ The PPSDQ is internally most consistent of the discussed alternatives
+ (excluding OCEAN) cite:arnau1999alternative.
+
+**** SL-TDI
+ \cleared
+ SL-TDI measures functions by presenting 20 situations and then giving subject
+ possible actions which corrolate with the functions.
+ The subjects then have to indicate how likely it is that they would choose that
+ particular action cite:arnau2000reliability.
+
+ \cleared
+ It becomes rather staight forward to make a function preference of the 
+ measurement of SL-TDI since the qeustion directly measure the jungian
+ functions.
+ A possible personality type therefore would be:
+ \[ S_i \geq T_i \geq S_e \geq F_e \geq N_i \geq T_e \geq N_e \geq F_i \]
+ To determine the preference we just used the observed value in the test.
+ Since every situation offers a choice for each function with a 5 point value
+ there is no need for normalization.
+
+ \cleared
+ This denotion is much less strict than the MBTI or PPSDQ since it does not force
+ alternating attitudes or pairing of rational/irrational functions in the
+ preference.
+ Therefore the amount of personality types SL-TDI supports drastically exceeds
+ that of the PPSDQ. In other words, there always exists a mapping from PPSDQ
+ to SL-TDI, but not always from SL-TDI to PPSDQ.
+ The reason for doing this is because there is experimental evidence
+ that there exist personalities outside of the stucture orignally imposed by
+ MBTI and the subsequent PPSDQ cite:loomis1980testing.
+
+*** Comparison of theories
+ \cleared
+ To re-iterate, we are interested in a framework that is realistic, and easy to
+ implement.
+ The Big Five falls short on the easy to implement,
+ there is no underlying theoretical framework to support it cite:eysenck1992four,
+ therefore we cannot base our implementation on anything except our own
+ interpertation.
+
+ \cleared
+ The MBTI has been criticized a lot from the field of psychology,
+ but it does have a solid theoretical foundation.
+ There is some relation between the big five and MBTI cite:furnham1996big.
+ Therefore its somewhat realistic, but quite easy to implement.
+
+ \cleared
+ Both of the alternatives of MBTI use a continues scale and have a high
+ correlation with the big five cite:arnau1997measurement.
+ This means is that they are measuring something which is also measured by the
+ big five in some way.
+
+ \cleared
+ The PPSDQ is based on the same thoery as MBTI, but with scaled type letters.
+ To convert the type to function attitudes some extra work has to be done,
+ namely calulate their respective probabilities.
+ To decide which function attitude to use some kind of mixed strategy
+ has to be used.
+ The PPSDQ is more realistic, but at the cost of being more difficult to
+ implement.
+
+ \cleared
+ The SL-TDI is even harder to implement than the PPSDQ because the function
+ attitudes no longer have to alternate.
+ This either means that functions are independent (thereby rejecting some of Jung's work),
+ or that they have to work in some kind of combination.
+ If they work in some kind of combination and we have to following preference:
+ \[ T_e > T_i > S_i > N_i > F_e > N_e > S_e > F_i\]
+ We select the first function to work with, but it requires some information now,
+ what to do?
+ Select $S_i$, thereby skipping $T_i$, or select $T_i$ and let it decide to
+ select $S_i$, but this would basially give $T_i$ censorship rights.
+ This is difficult to anwser therfore it is a lot more difficult to implement
+ than PPSDQ.
+ Since SL-TDI drops an assumption, which is shown with experimental evidence
+ to be false cite:loomis1980testing, we can say SL-TDI's theory is most realistic.
+ This comes however at the cost of being even more difficult to implement.
+
+ \cleared
+ Therefore our preference for implementation is the following:
+ \[ \text{MBTI} > \text{PPSDQ} > \text{SL-TDI} > \text{OCEAN} \]
+
+ \cleared
+ There is another hidden reasoning behind this, the work of PPSDQ can built on
+ that of MBTI, and that of SL-TDI can build on that of PPSDQ.
+ OCEAN builds on nothing, we'll leave that for future work.
+
+** Artificial intelligence literature
+ # How do I measure that the persnoality created is in fact in complience with
+ # the personality I aimed for?
+ # Can I let the personality take the test somehow?
+ \toReview
+ In this section we will look at some of the AI based literature.
+ For example we will have a look at the intelligent agent approach and the BDI
+ architecture.
+ We will also look at some theoretical attempts at implementing personality.
+ Theoretical attempts are often a logic in contrast to the topics
+ discussed in [[Related work]] which include executable implementations.
+
+*** Agents background
+ \toReview
+ In the literature there is little consensus on what exactly an agent is,
+ however there is a general consensus that an agent is /autonomous/
+ cite:wooldridge2009introduction.
+ To make this more clear we'll use Wooldriges' definition:
+
+ #+BEGIN_QUOTE
+ An /agent/ is a computer system that is /situated/ in some /environment/ and
+ that is capable of /autonomous action/ in this environment in order to meet its
+ delegated objectives. -- Wooldridge
+ #+END_QUOTE
+
+ \toReview
+ In another older definition cite:wooldridge1995intelligent he highlights
+ /autonomy/, /social ability/, /reactivity/, and /pro activity/.
+ Where autonomy means that no human intervention is required,
+ social ability means it can talk to other agents,
+ reactivity is that it can reply on input and pro activity means that it can
+ show behavior while not reacting to something.
+ However he later continues on that a stronger claim about an agent is a
+ piece of software that uses concepts which are attributed to humans.
+ Such as believes desires and intentions.
+
+ \toReview
+ This is the reason we can't call any program an agent.
+ For example an operating system kernel is
+ autonomous (a user would never interact with it),
+ social (can do networking),
+ reactive (it will comply to hardware interprets for example)
+ and proactive (a process hogging to much memory will be killed without the
+ process asking for it).
+ However we won't call a kernel an agent because it doesn't even come close to
+ having believes, desires or intentions.
+
+ \toReview
+ Something to keep in mind is that there are three "branches" of agent research
+ cite:wooldridge1995intelligent.
+ The first one is /agent theory/ in which /specifications/ and methods of 
+ specifications are developed. They ask what are agents and what are they
+ ought to do and how do we tell them that.
+ Then there are the /agent architectures/, these address questions of how
+ to implement the specifications written by the theorists.
+ In this paper we won't discuss architectures since we work in an existing
+ system described in section [[The serious game]].
+ Finally there are the /agent langauges/, which ask the question how to write
+ agent programs.
+ Again this is mostly preditermined for us, but we will give a small overview.
+
+**** Belief desires and intentions
+ \toReview
+ The belief desire intention model of human practical reasoning was first
+ introduced by bratman cite:bratman1987intention.
+ It is based upon a "common sense" framework of human reasoning.
+
+ \toReview
+ The idea of BDI is that an agent has believes, these can be anything, such as
+ I believe the grass is green, or I believe the keys are on the table.
+ Note that we never speak about facts, an agent can believe something to be a
+ fact, but that doesn't make it a fact.
+ Desires are special kind of believes that give agents a reason to be, they
+ may also be called goals.
+ Intentions are (partial) plans to make a desire come to fruition.
+ How to formalize this properly turns out to be a hard question, which is
+ analyzed in the following section [[bdi logics]].
+
+ \toReview
+ A number of reasons have been stated to use this methodology.
+ The foremost is to make agent orientated systems less expensive in maintenance,
+ verification and construction according to Rao and Georgeff cite:rao1995bdi. 
+ However they don't cite a source for this.
+
+ \toReview
+ Another paper argues in favour of agent orientated design cite:jennings2001agent.
+ It has the following major arguments:
+ It is effective to divide a complex problem domain into several smaller problems,
+ abstracting in an agent orientated way is more "natural",
+ and complex systems dependencies and interactions can be easily modeled.
+
+**** Logic of BDI
+ <<bdi logics>>
+ \toReview
+ Logic of BDI is an attempt to formalize how agents behave.
+ One of the first formalization of Bratman's theory was that of Cohen and
+ Levesque cite:cohen1990intention. It was based on linear time logic and
+ used operators for actions and modalities for goals and beliefs cite:meyer2014logics.
+ It was also used a tiered formalism, with at the bottom belief goals and
+ actions which provided the basis for the higher achievement and persistent goals
+ and intentions to do and be.
+ Rao and Georgeff introduced a different formalism that used branching time logic. 
+ They use modal operators for belief desires and intentions and then put 
+ constraints on them to make interactions meaning full cite:meyer2014logics.
+ Therefore this formalism is much closer to that of bratman cite:rao1991modeling.
+ Finally there is the KARO formalism which is based on dynamic logic.
+ This is the logic of actions and computation. They extend this logic with
+ epistemics to add believes to it cite:meyer2014logics.
+
+ \todo[inline]{decide if I'm gonna use any of these logics, I mean the "why discuss this?" question is now unwansered... Perhaps I should delete this?}
+**** Concrete implementations
+
+ \todo[inline]{Again perhaps I should consider deleting this?}
+ \todo[inline]{2apl}
+ \todo[inline]{jade cite:braubach2003jadex}
+*** Social practices
+ <<social practice>>
+ \todo[inline]{critques on social practices?}
+ \todo[inline]{come back social practices}
+ \toReview
+ To limit the domain of the application a theoretical device is used
+ called social practices.
+ This gives an ordered overview in what domain our program should work.
+ In other words, rather than some extra element, it will be the
+ /foundation/ of the program cite:dignum2014contextualized.
+ We can formulate therefore the social practice that is relevant for this thesis 
+ in the following way:
+
+ + Practice name: Doctor appointment
+ + /Physical context/,
+   - Resources: Computer, chair, diagnostic tools..
+   - Places: waiting room, doctor's office...
+   - Actors: doctor, patient, assistant, ...
+ + /Social context/,
+   - Roles: Doctor, Patient...
+   - Norms: doctor is polite, patient is polite, doctor is inquisitive
+   - Social interpretation: Can sit on chair, cannot sit on table.
+ + /Activities/, share information, do diagnostics, minor treatments,
+   prescribing drugs...
+ + /Plan patterns/, Introduction \to ask complaints \to gather history \dots 
+ + /Social meaning/, awkwardness, gratitude, ...
+ + /Competences/, Give injection, empathetic talk
+
+ If the social practices however are defined more formally they could be 
+ used in a bigger system such as in cite:augello2015social and
+ cite:augello2016model.
+*** BDI + Personality
+ \drafting
+ \todo[inline]{other proposed systems and argue for campos}
+ Campos discussed an architecture in which personality emerged not from things
+ you like,
+ but rather than trying to determine which content a personality preferred,
+ the personality was encoded in the process they preferred.
+ This was called /process orientated/ rather than contend orientated.
+ cite:campos_mabs2009
+ For example in their interpretation of MBTI a Sensing agent would make a plan
+ in complete details whereas an intuitive agent would just continue planning as
+ needed.
+ Thinking agents would base their decision process upon their own believes
+ whereas feeling agents would consider what other agents want.
+ In our model we conceptualize the Jungian functions also as a process.
+ We comment more on this in section [[Jungian BDI]].
+
+** The serious game
+ <<The serious game>>
+ \drafting
+ This chapter describes the game we inherited from our predecessors.
+ We have to discuss precisely what they did for two reasons:
+ 1. To help understand the design constraints we work under
+ 2. To distinct our changes from theirs'
+
+ There have been several distinct versions of the "comminuate!" game. 
+ The first version was a web based game, with an extended scenario editor.
+ cite:jeuring2015demo
+ However it had some significant flaws, for example each dialog was scripted by
+ the teacher and the answers the student could give were specified by the teacher.
+ This made practicing on it somewhat unrealistic.
+ Practicing in this case would mean memorising what button to click rather
+ than to figure out what to say.
+ To address this issue the game was extended with an extended version of
+ AIML cite:weiderveld2016chatbot, called S-AIML cite:augello2016model. 
+
+ A specific scenario was created for doctor/patient interaction     
+ cite:augello2015social.                                            
+ The game in this verson also has the ability to judge the skills practiced
+ cite:augello2016social,
+ such as following certain protocols                                
+ (for example be polite and follow medical standards) and empathy.  
+
+*** Existing functionality
+ \drafting
+ There are two major functionality perspectives to consider,
+ that of the student, and that of the teacher.
+ We will consider these in separate subsections since in game they
+ don't interact.
+**** how used by the end user?
+ For a student to use the application he has to first start a client.
+ Then he can either register or login. After that he has to select
+**** TODO how do you configure it?
+ \todo[inline]{Existing functionality and design, user interaction etc}
+**** server config
+ [[Http://wildfly.org/][Wildfly]] is used to run the server instance. 
+
+*** Existing architecture
+ The game uses a client server architecture.
+ The client is written in unity and the server is a Java servlet running on
+ wildfly.
+ Communication between the two applications happens trough a web socket.
+ A web socket is used because it allows the chatbot to pro-active, which is not
+ possible with a technology such as REST.
+
+ Because the user input is free form, eg the user can type any text,
+ a technique must be used to decide what the user had said.
+ The technique is called AIML.
+ \todo[inline]{Existing architecture, how does the trikery work}
+ cite:augello2016social
+**** TODO text processing
+**** TODO deliberation
     
 * Jungian BDI
 <<Jungian BDI>>
@@ -919,7 +938,27 @@ therefore we will ignore this for now.
 \todo[inline]{Another possible extension would be to alternate rational and irrational /next/ function types. But how would one do this? A simple marker output? Then it won't be representative for SL-TDI or would it, I mean if you just skip proprtionally would it matter?}
 
 ** Mapping function attitudes to a process 
+Now you may argue at this point we haven't refined our types a lot, since
+the believe structure was defined as "Every possible believe",
+which is basically analogous to "Anything you can think of" or in a Object Orientated terminology: Object.
+Since the believes serve as input of our function and output of the function
+we may as well have said $Object \to Object$.
+Of course the believes are not intended to be true output but rather just
+part of the mind. ie the believes are intended to be kept in a container
+whereas the input $M_t$ and the output $R_{t+1}$ would only be visible for the
+"outside world".
+But still we want to refine our all possible believe to something which is 
+less broad in scope.
+To do this we will start analyzing the Jungian functions and see what
+"extra" information require to function to perform their duties.
+
+
+
 \todo[inline]{haven't done this yet}
+How does each individual function effect the planning process?
+What (initial) believes (for example F_i needs its internal value structure)
+as are necessary to accomplish this.
+I think we can then also constrain the believe type.
 * Implementation
 \todo[inline]{How to go from process orientated to selecting an anwser?}
 \drafting
@@ -935,12 +974,15 @@ It turns out however the issues most doctors struggle with isn't so much
 being sensitive, but rather being sensitive to the people who appreciate it.
 cite:clack2004personality
 
+Whenever one starts working on an existing software project the first obstacle
+faced is building/executing the project, this is discussed in detail in the
+section [[building]].
 \todo[inline]{Proposed Extension, why this extension}
 ** Ideas
 \todo[inline]{To circumvent typing errors of users we can put input trough a spell checker taking the first correction}
+\todo[inline]{Regex mathing as an extension to existing matching}
+\todo[inline]{How to deal with long inputs? I think sentence splitting was mentioned?}
 *** Tooling stuff
-+ Move to gradle instead of maven. I don't see a reason to ever use maven,
-  gradle is just that much nicer in use.
 + Better names for top folders or removing several of them,
   its unclear to me what they stand for or what there purpose is.
 + Can consider using Scala which has major advantages: better typing system and
@@ -963,9 +1005,184 @@ which probably don't exist
 \todo[inline]{Discussion, comparison}
 ** Future work
 \todo[inline]{Depending on the successfulness this chapter becomes smaller and more fine grained}
-* References
+
+* Appendix
+** References
 <<bibliography link>>
 
 bibliographystyle:unsrt
 bibliography:refs.bib
+
+
+** Building
+<<building>>
+In the case of this project two hurdles need to be overcome, because the
+server uses a starkly different tool chain than the client.
+The client was build in Unity, 
+In this appendix we will record how the application can be build.
+It may seem trivial but the Java EE world is incredibly complex.
+We assume a unix-like system as a basis, with a package manager.
+
+*** Client
+The client is relatively easy too setup since its dumb and build with a
+monolithic environment (unity).
+Therefore you need to have the unity editor.
+The only issues with the client were an incomplete merge and a dangling
+import that produced build errors.
+Also note that there exists a Linux editor,
+its just not officially supported (yet) but the latest version can be found [[https://forum.unity3d.com/threads/unity-on-linux-release-notes-and-known-issues.350256/][here.]]
+
+*** Server
+The server runs on Java, therefore the first step is to install Java.
+In our case java 8 was used. If your system uses portage you can use the
+following command:
+
+#+BEGIN_SRC sh
+   # emerge dev-java/oracle-jdk-bin
+#+END_SRC
+
+**** Maven
+Then maven needs to be installed since gradle didn't work:
+
+#+BEGIN_SRC sh
+   # emerge dev-java/maven-bin
+#+END_SRC
+
+Maven is the package manager for java software, it downloads and installs
+dependencies (and dependency dependencies) automatically based on xml
+configuration.
+Do note that to use maven you need to setup a \url{\string~/.m2/settings.xml}
+file. I based mine on [[https://maven.apache.org/settings.html][this]] with help of [[https://maven.apache.org/ref/3.3.9/maven-settings/settings.html][this.]]
+The active profile should have the name local so that the local profile is used
+in the maven project (in this case /local/).
+Otherwise the wildfly plugin won't deploy the application.
+To test if maven works go to the \url{communicate2/communicate/communicate_server}
+folder and execute:
+
+#+BEGIN_SRC sh
+ $ mvn compile
+#+END_SRC
+
+If no errors occur it means the settings are configure right.
+However we are not done yet since the resulting binary is not executable.
+It is something called a servlet which is an api for server like applications.
+To use this binary, hence forth called war, we need an application server.
+Our maven repository and code base has been configured towards /wildfly/,
+so we will use that.
+
+***** Gradle attempt
+it was attempted to replace maven with gradle, since its a lot less verbose
+than maven and easier to setup however doesn't have the picketlink extension
+which wildfly requires.
+Therefore gradle was abandoned and the maven tool was used instead.
+**** Get wildfly
+Download wildfly from [[http://wildfly.org/downloads/][here]], choose the full web distribution
+(if you choose the servlet one you'll run into trouble since it doesn't have the
+datasource subsystem, it took me about two days to figure that out).
+Extract this download somewhere which we will call hence forth $WILDFLY.
+
+**** Setup datasource
+Now its time to configure the persistent datasource.
+The code base can handle sessions,
+but to deal with user registration and logins and such we need a database.
+There are two methods, mariadb and the in ram storage.
+Mariadb is what the online application uses and its probably better to
+stick to that for active devlopment, but if you just want to have
+a quick look at the server you should use look at section [[inmemorydb]].
+
+**** Mariab setup
+So first install mariadb (or mysql, they are the same, except mariadb has better
+defaults):
+#+BEGIN_SRC sh
+  # emerge dev-db/mariadb
+#+END_SRC
+Then we need to setup the user and database:
+#+BEGIN_SRC sh
+    $ mysql -u root
+    > create database salve;
+    > GRANT ALL PRIVILEGES ON salve.* To 'salve'@'localhost'
+    IDENTIFIED BY 'salve';
+#+END_SRC
+
+**** mariadb driver
+Now we need to make the application server aware of the database.
+To do this we first need to install a driver from here [[http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.33/mysql-connector-java-5.1.33.jar][here]],
+then copy this jar into
+\url{$WILDFLY/modules/system/layers/base/com/mysql/driver/main}
+you probably need to make everything after base.
+Also create another file called \url{module.xml} with the following content:
+#+BEGIN_SRC xml
+<module xmlns="urn:jboss:module:1.3" name="com.mysql.driver">
+ <resources>
+  <resource-root path="mysql-connector-java-5.1.33.jar" />
+ </resources>
+ <dependencies>
+  <module name="javax.api"/>
+  <module name="javax.transaction.api"/>
+ </dependencies>
+</module>
+#+END_SRC
+
+**** wildfly datasource
+Now the /driver/ is installed we need to configure it as a datasource.
+To do this we move to \url{$WILDFLY/bin}.
+Then execute the following commands:
+#+BEGIN_SRC sh
+   $ chmod +x add-user.sh jboss-cli.sh standalone.sh
+   $ ./standalone.sh &
+   $ ./jboss-cli.sh --connect controller=localhost
+   --command="/subsystem=datasources/jdbc-driver=mysql:add(driver-name="\
+   "mysql,driver-module-name=com.mysql.driver,driver-class-name="\
+   "com.mysql.jdbc.Driver)"
+   $ ./add-user.sh
+   $ xdg-open localhost:9990
+#+END_SRC
+
+That last command should open the browser. Click then
+Configuration \to subsystems \to datasrouces \to non xa \to add  \to mysql \to next.
+The name should be GameDS and the JNDI name should be java:/GameDS,
+now click: next \to detect driver \to mysql.
+The url should be \url{jdbc:mysql://localhost:3306/salve}, the username and pass
+should both be salve, now click next \to finish.
+
+**** deploying
+first go to the \url{communicate2/communicate/communicate_server} folder.
+Then to deploy the application the following command is used:
+
+#+BEGIN_SRC sh
+ $ mvn wildfly:deploy
+#+END_SRC
+
+However when this was attempted when the application was deployed it was found
+out that a persistent storage is required.
+
+**** Alternative: in memory db
+<<inmemorydb>>
+Now there is a choice to be made, you can either choose to use maria db
+or try and point the appliation to the in ram storage of wildfly.
+To do this go to:
+\url{communicate2/communicate/communicate_server/src/main/resources/META-INF}
+and then modify the replace everything with:
+#+BEGIN_SRC xml
+  <?xml version="1.0" encoding="UTF-8"?>
+  <persistence version="2.1"
+  xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+  xmlns:xsi="http://www.w3.org/2001/xmlschema-instance"
+  xsi:schemalocation=
+  "http://xmlns.jcp.org/xml/ns/persistence 
+http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+  >
+      <persistence-unit name="salve_persistence_unit"
+          transaction-type="JTA">
+          <jta-data-source>java:jboss/myDs</jta-data-source>
+          <properties>
+              <property name="hibernate.dialect"
+                        value="org.hibernate.dialect.H2Dialect" />
+              <property name="hibernate.max_fetch_depth" value="3" />
+              <property name="hibernate.hbm2ddl.auto" value="update" />
+              <property name="hibernate.show_sql" value="true" />
+          </properties>
+      </persistence-unit>
+  </persistence>
+#+END_SRC
 
