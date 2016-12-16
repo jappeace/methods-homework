@@ -1,12 +1,16 @@
 #+TITLE: A serious communication game with personalities
 # Pure functional serious comminucation in-game
-#+LATEX_HEADER: \usepackage{natbib}
-#+LATEX_HEADER: \renewcommand{\bibsection}{}
-#+LATEX_HEADER: \usepackage[obeyFinal, colorinlistoftodos]{todonotes}
 #+LaTeX_CLASS: article
 #+LaTeX_CLASS_OPTIONS: [a4paper, drafting]
+
 #+Options: toc:nil ^:nil 
 #+Options: title:nil
+#+OPTIONS: H:5
+
+#+LATEX_HEADER: \usepackage{natbib}
+#+LATEX_HEADER: \renewcommand{\bibsection}{}
+
+#+LATEX_HEADER: \usepackage[obeyFinal, colorinlistoftodos]{todonotes}
 #+LATEX_HEADER: \newcommand{\drafting}{\todo[noline, color=gray]{Working draft}}
 #+LATEX_HEADER: \newcommand{\toReview}{\todo[noline, color=yellow]{To review}}
 #+LATEX_HEADER: \newcommand{\underReview}[1]{\todo[noline, color=olive]{Under review by #1}}
@@ -717,17 +721,20 @@ game in its existing form.
  There have been several distinct versions of the "comminuate!" game. 
  The first version was a web based game, with an extended scenario editor.
  cite:jeuring2015demo
- However it had some significant flaws, for example each dialog was scripted by
+ However it had some drawbacks, for example each dialog was scripted by
  the teacher and the answers the student could give were specified by the teacher.
  This made practicing on it somewhat unrealistic.
  Practicing in this case would mean memorising what button to click rather
  than to figure out what to say.
- To address this issue the game was extended with an extended version of
+
+ To address this issue the a new implementation was made. 
+ This version was based around the idea of a chatbot, in the form of the ALICE
+ bot.
  AIML cite:weiderveld2016chatbot, called S-AIML cite:augello2016model. 
 
  A specific scenario was created for doctor/patient interaction     
  cite:augello2015social.                                            
- The game in this verson also has the ability to judge the skills practiced
+ The game in this version also has the ability to judge the skills practiced
  cite:augello2016social,
  such as following certain protocols                                
  (for example be polite and follow medical standards) and empathy.  
@@ -738,13 +745,23 @@ game in its existing form.
  that of the student, and that of the teacher.
  We will consider these in separate subsections since in game they
  don't interact.
-**** how used by the end user?
+**** Student usage
  For a student to use the application he has to first start a client.
- Then he can either register or login. After that he has to select
-**** TODO how do you configure it?
- \todo[inline]{Existing functionality and design, user interaction etc}
-**** server config
- [[Http://wildfly.org/][Wildfly]] is used to run the server instance. 
+ He can now choose to start a new game.
+ There are options to list existing games but these have not been completed.
+ Once in game the user enters a screen as can be seen in [[fig:client]]:
+  #+CAPTION: Client view
+  #+NAME:   fig:client
+[[./img/client.png]]
+
+From here the student can start practicing, the game will track his progress
+on the server.
+**** Teacher usage
+For the teacher there is right now no client.
+The way a teacher can setup a scenario is trough modifying AIML and drool files.
+The teacher probably needs an expert to do this since these are right now
+combined with the war.
+It would be difficult to modify these files on a running instance.
 
 *** Existing architecture
  The game uses a client server architecture.
@@ -754,14 +771,14 @@ game in its existing form.
  A web socket is used because it allows the chatbot to pro-active, which is not
  possible with a technology such as REST.
 
- Because the user input is free form, eg the user can type any text,
- a technique must be used to decide what the user had said.
- The technique is called AIML.
+**** File structure
+Much can be learned from a project's file structure.
+dto = protocol
  \todo[inline]{Existing architecture, how does the trikery work}
  cite:augello2016social
 **** TODO text processing
 **** TODO deliberation
-    
+   \todo[inline]{drools} 
 * Jungian BDI
 <<Jungian BDI>>
 \toReview
@@ -804,7 +821,7 @@ The first function used should be most prevalent.
 This means that we can't just execute all functions and use a do preference
 selection on the result.
 
-** A signature approach
+** A type signature approach
 \toReview
 To give a more deep understanding of the scope of this project we will
 try to come up with a type signature of a pure function that models all the
@@ -872,6 +889,9 @@ Now we can define $R_t$ with $R_t \subseteq \mathcal{R}$ which is a set of
 replies at time $t$. This produces the type signature:
 \[ B_t \to t \to M_t \overset{f_a}{\to} (B_{t+1}, R_{t+1}) \]
 
+\todo[inline]{this R is incomplete, it should contain a meaning to to alow planning on it, So that the agent can predict what the user will say (or think what he will say) and work towards a goal}
+
+
 \toReview
 Now we should note that this type signature heavily constrains our agent.
 It for example can't handle being punched in the face by the doctor unless
@@ -884,7 +904,7 @@ However once movement becomes a requirement we can just create a new function
 type signature that is less restrictive, but still has the option to use these
 functions for the text replies.
 
-** Composing type dynamics
+*** Composing type dynamics
 \toReview
 The first thing a commendable programmer may think of when trying to combine
 behavior is of course functional composition.
@@ -936,8 +956,10 @@ However this becomes rather messy because we're modeling pure functions,
 therefore we will ignore this for now. 
 
 \todo[inline]{Another possible extension would be to alternate rational and irrational /next/ function types. But how would one do this? A simple marker output? Then it won't be representative for SL-TDI or would it, I mean if you just skip proprtionally would it matter?}
+\todo[inline]{A possible type difference would be to have the rational functions behave as going from multiple inputs to 1 input and the irrational as from 1 input to multiple outputs}
 
 ** Mapping function attitudes to a process 
+\drafting
 Now you may argue at this point we haven't refined our types a lot, since
 the believe structure was defined as "Every possible believe",
 which is basically analogous to "Anything you can think of" or in a Object Orientated terminology: Object.
@@ -952,13 +974,25 @@ less broad in scope.
 To do this we will start analyzing the Jungian functions and see what
 "extra" information require to function to perform their duties.
 
-
-
-\todo[inline]{haven't done this yet}
+\drafting
 How does each individual function effect the planning process?
 What (initial) believes (for example F_i needs its internal value structure)
 as are necessary to accomplish this.
-I think we can then also constrain the believe type.
+
+| Function | required data                                     |
+| $T_e$    | Knowing which objects are available               |
+| $T_i$    | The logic structure (axioms)                      |
+| $F_e$    | The group values (walking in someone else's shoes |
+| $F_i$    | The personal values                               |
+| $S_e$    | Inormation from the senses                        |
+| $S_i$    | Memories from the senses                         |
+| $N_e$    | A situation graph to jump to?                     |
+| $N_i$    | An idea graph?                                    |
+
+\todo[inline]{what is N}
+
+*** TODO how to use this in dialogue
+
 * Implementation
 \todo[inline]{How to go from process orientated to selecting an anwser?}
 \drafting
@@ -991,6 +1025,19 @@ section [[building]].
   another grad student may not appreciate it as much as I.
 + Protocol buffers could be used for protocol. Its strongly typed and has both
   C# and Java bindings
++ java ee is going to lose support
++ xml shouldn't be used as a procudual langauge (http://wiki.c2.com/?XmlAbuse)
+  its probably better to replace it with yaml https://en.wikipedia.org/wiki/XML#Criticism
+  (seriously most of the code of alice bot involvelves mapping xml into objects
+  (for which exist libraries https://stackoverflow.com/questions/15881876/mapping-xml-entities-to-java-objects)
+  and valiating it, (which can be done by an xsd better anyway)).
++ I think it would be better to just drop the alice bot, it doesn't 
+  do that much (except for dealing with xml).
++ drools: I didn't know rule engines were a thing, explained here:
+  https://access.redhat.com/documentation/en-US/JBoss_Enterprise_SOA_Platform/4.2/html/JBoss_Rules_Manual/sect-JBoss_Rules_Reference_Manual-Why_use_a_Rule_Engine.html
+http://martinfowler.com/bliki/RulesEngine.html
+  I think they're just pure functions that use aspect oriented program to
+  intercept and modify the application.
 **** branches
 Branching strategy seems like overkill, if a develop branch is used then usually
 the master gets neglected (for small projects, which this is),
@@ -1005,17 +1052,22 @@ which probably don't exist
 \todo[inline]{Discussion, comparison}
 ** Future work
 \todo[inline]{Depending on the successfulness this chapter becomes smaller and more fine grained}
-
 * Appendix
-** References
+** A. References
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
 <<bibliography link>>
 
 bibliographystyle:unsrt
 bibliography:refs.bib
 
-
-** Building
+** B. Building
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
 <<building>>
+\toReview
 In the case of this project two hurdles need to be overcome, because the
 server uses a starkly different tool chain than the client.
 The client was build in Unity, 
@@ -1024,6 +1076,7 @@ It may seem trivial but the Java EE world is incredibly complex.
 We assume a unix-like system as a basis, with a package manager.
 
 *** Client
+\toReview
 The client is relatively easy too setup since its dumb and build with a
 monolithic environment (unity).
 Therefore you need to have the unity editor.
@@ -1033,6 +1086,7 @@ Also note that there exists a Linux editor,
 its just not officially supported (yet) but the latest version can be found [[https://forum.unity3d.com/threads/unity-on-linux-release-notes-and-known-issues.350256/][here.]]
 
 *** Server
+\toReview
 The server runs on Java, therefore the first step is to install Java.
 In our case java 8 was used. If your system uses portage you can use the
 following command:
@@ -1042,12 +1096,14 @@ following command:
 #+END_SRC
 
 **** Maven
+\toReview
 Then maven needs to be installed since gradle didn't work:
 
 #+BEGIN_SRC sh
    # emerge dev-java/maven-bin
 #+END_SRC
 
+\toReview
 Maven is the package manager for java software, it downloads and installs
 dependencies (and dependency dependencies) automatically based on xml
 configuration.
@@ -1063,6 +1119,7 @@ folder and execute:
  $ mvn compile
 #+END_SRC
 
+\toReview
 If no errors occur it means the settings are configure right.
 However we are not done yet since the resulting binary is not executable.
 It is something called a servlet which is an api for server like applications.
@@ -1071,17 +1128,20 @@ Our maven repository and code base has been configured towards /wildfly/,
 so we will use that.
 
 ***** Gradle attempt
+\toReview
 it was attempted to replace maven with gradle, since its a lot less verbose
 than maven and easier to setup however doesn't have the picketlink extension
 which wildfly requires.
 Therefore gradle was abandoned and the maven tool was used instead.
 **** Get wildfly
+\toReview
 Download wildfly from [[http://wildfly.org/downloads/][here]], choose the full web distribution
 (if you choose the servlet one you'll run into trouble since it doesn't have the
 datasource subsystem, it took me about two days to figure that out).
 Extract this download somewhere which we will call hence forth $WILDFLY.
 
 **** Setup datasource
+\toReview
 Now its time to configure the persistent datasource.
 The code base can handle sessions,
 but to deal with user registration and logins and such we need a database.
@@ -1091,11 +1151,13 @@ stick to that for active devlopment, but if you just want to have
 a quick look at the server you should use look at section [[inmemorydb]].
 
 **** Mariab setup
+\toReview
 So first install mariadb (or mysql, they are the same, except mariadb has better
 defaults):
 #+BEGIN_SRC sh
   # emerge dev-db/mariadb
 #+END_SRC
+\toReview
 Then we need to setup the user and database:
 #+BEGIN_SRC sh
     $ mysql -u root
@@ -1104,7 +1166,8 @@ Then we need to setup the user and database:
     IDENTIFIED BY 'salve';
 #+END_SRC
 
-**** mariadb driver
+**** Mariadb driver
+\toReview
 Now we need to make the application server aware of the database.
 To do this we first need to install a driver from here [[http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.33/mysql-connector-java-5.1.33.jar][here]],
 then copy this jar into
@@ -1123,7 +1186,8 @@ Also create another file called \url{module.xml} with the following content:
 </module>
 #+END_SRC
 
-**** wildfly datasource
+**** Wildfly datasource
+\toReview
 Now the /driver/ is installed we need to configure it as a datasource.
 To do this we move to \url{$WILDFLY/bin}.
 Then execute the following commands:
@@ -1138,6 +1202,7 @@ Then execute the following commands:
    $ xdg-open localhost:9990
 #+END_SRC
 
+\toReview
 That last command should open the browser. Click then
 Configuration \to subsystems \to datasrouces \to non xa \to add  \to mysql \to next.
 The name should be GameDS and the JNDI name should be java:/GameDS,
@@ -1145,7 +1210,8 @@ now click: next \to detect driver \to mysql.
 The url should be \url{jdbc:mysql://localhost:3306/salve}, the username and pass
 should both be salve, now click next \to finish.
 
-**** deploying
+**** Deploying
+\toReview
 first go to the \url{communicate2/communicate/communicate_server} folder.
 Then to deploy the application the following command is used:
 
@@ -1153,10 +1219,12 @@ Then to deploy the application the following command is used:
  $ mvn wildfly:deploy
 #+END_SRC
 
+\toReview
 However when this was attempted when the application was deployed it was found
 out that a persistent storage is required.
 
 **** Alternative: in memory db
+\toReview
 <<inmemorydb>>
 Now there is a choice to be made, you can either choose to use maria db
 or try and point the appliation to the in ram storage of wildfly.
