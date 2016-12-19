@@ -764,19 +764,23 @@ combined with the war.
 It would be difficult to modify these files on a running instance.
 
 *** Existing architecture
- The game uses a client server architecture.
- The client is written in unity and the server is a Java servlet running on
- wildfly.
- Communication between the two applications happens trough a web socket.
- A web socket is used because it allows the chatbot to pro-active, which is not
- possible with a technology such as REST.
+    The game uses a client server architecture.
+    The client is written in unity and the server is a Java servlet running on
+    wildfly.
+    Communication between the two applications happens trough a web socket.
+    A web socket is used because it allows the chatbot to pro-active, which is not
+    possible with a technology such as REST.
 
-**** File structure
-Much can be learned from a project's file structure.
-dto = protocol
- \todo[inline]{Existing architecture, how does the trikery work}
+**** Source tree
+    There are two major source trees tracked in separate version control systems.
+    The first manages the client and the second the server.
+    The protocol is tracked in the respective client and server folders named dto.
+
+**** text processing
+     Text processing is done with help of the ALICE chat bot. This bot does the
+     parsing and validation of AIML, after this is done it specifies a repsonse
+     based on the AIML.
  cite:augello2016social
-**** TODO text processing
 **** TODO deliberation
    \todo[inline]{drools} 
 * Jungian BDI
