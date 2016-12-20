@@ -240,6 +240,7 @@ game in its existing form.
  proposed afterwards.
 
 **** Jung's theory of psychological types
+<<Jungian types>>
  \cleared
  Jung describes several concepts, firstly each person has two attitudes:
  /Introversion/ and /extroversion/.
@@ -318,6 +319,7 @@ game in its existing form.
  + $N_i$ stands for introverted intuition. Looks new possibilities in ideas.
 
  \cleared
+ <<Jungian alternating functions>>
  Another important concept is the idea of the /principal/ and /auxilirary/
  function cite:hall1973primer105principal.
  The principal function is the one that is most preffered.
@@ -776,12 +778,18 @@ It would be difficult to modify these files on a running instance.
     The first manages the client and the second the server.
     The protocol is tracked in the respective client and server folders named dto.
 
-**** text processing
+**** Text processing
      Text processing is done with help of the ALICE chat bot. This bot does the
-     parsing and validation of AIML, after this is done it specifies a repsonse
+     parsing and validation of AIML, after this is done it specifies a response
      based on the AIML.
+     The ALICE bot is used as a library by the wildfly application that
+     handles web socket comminucation and game tracking.
  cite:augello2016social
-**** TODO deliberation
+**** Deliberation
+     To do deliberation ALICE was changed to allow for extra tags.
+     These are hooks to determine when specific drools should be used.
+     As of right now the only thing the drools do is modify the emotion of the
+     agent which is reflected in the scenario score.
    \todo[inline]{drools} 
 * Jungian BDI
 <<Jungian BDI>>
@@ -959,14 +967,62 @@ next function. \todo{should I do this?}
 However this becomes rather messy because we're modeling pure functions,
 therefore we will ignore this for now. 
 
-\todo[inline]{Another possible extension would be to alternate rational and irrational /next/ function types. But how would one do this? A simple marker output? Then it won't be representative for SL-TDI or would it, I mean if you just skip proprtionally would it matter?}
+***  Rational and irrational
+\drafting
+Up till now we have modeled the type signature have consumed sets meanings and
+produced sets of replies.
+However we ignored cardinality.
+If we look at the definition ([[Jungian types]]) of rational and irrational,
+we can make a design decision about the cardinality.
+Rational functions are about making decisions therefore it should
+consume one or many meaning and produce only one reply,
+irrational are about producing information therefore it should consume
+one meaning and produce many.
+
+\drafting
+Modeling this idea into type is however easier said than done.
+There are problems with this.
+Lets say the primary function is an irrational one.
+Now we give it a meaning from the user and get out multiple replies.
+How do we decide which should be used?
+Or if it is an rational and we give it a single meaning how should the
+rational function get multiple meanings to make a decision upon?
+
+\drafting
+To solve this problem we will apply an order to the replies.
+The highest in the order will be the most preferred reply and the lowest the
+least preferred.
+This results in the following conceptualized architecture:
+/rational/ functions change the order of replies,
+/irrational/ increase the number of options.
+So if we start with an irrational function it produces several related meanings
+to the inputted meaning in a tree like structure.
+The original meaning uttered by the user as root node and the produced response
+meanings as children. \todo{I should change meaning input to a tree structure}
+These then get inserted into the next rational function which modifies the order
+of the children. After doing this it passes this structure to the next
+rational functions (because they alternate [[Jungian alternating functions]]),
+until all functions in the personality had their chance.
+The unit function then makes a reply of this meaning (ie choosing the highest
+ordered child) which then returns trough all functions that can still modify it.
+This could happen if a rational function was the first function for example
+and didn't have any choices available to decide upon.
+This structure still works with SL-TDI's non alternation.
+
 \todo[inline]{A possible type difference would be to have the rational functions behave as going from multiple inputs to 1 input and the irrational as from 1 input to multiple outputs}
 
+*** Extroversion and introversion
+We can model extroversion and introversion as a preference for using a depth first
+or breadth first search in the data structures used to either make a decision or
+generate possibilities.
+
+\todo[inline]{Depth first vs breath first}
 ** Mapping function attitudes to a process 
 \drafting
 Now you may argue at this point we haven't refined our types a lot, since
 the believe structure was defined as "Every possible believe",
-which is basically analogous to "Anything you can think of" or in a Object Orientated terminology: Object.
+which is basically analogous to "Anything you can think of" or in a Object
+Orientated terminology: Object.
 Since the believes serve as input of our function and output of the function
 we may as well have said $Object \to Object$.
 Of course the believes are not intended to be true output but rather just
@@ -988,14 +1044,18 @@ as are necessary to accomplish this.
 | $T_i$    | The logic structure (axioms)                      |
 | $F_e$    | The group values (walking in someone else's shoes |
 | $F_i$    | The personal values                               |
-| $S_e$    | Inormation from the senses                        |
+| $S_e$    | Information from the senses                       |
 | $S_i$    | Memories from the senses                         |
 | $N_e$    | A situation graph to jump to?                     |
 | $N_i$    | An idea graph?                                    |
 
 \todo[inline]{what is N}
+\todo[inline]{So what about the difference between $S_e$ and $S_i$ is that $S_e$ does breath first whereas $S_i$ does depth first}
 
 *** TODO how to use this in dialogue
+
+**  TODO is this interpretation effective?
+\todo[inline]{Does INTJ and ENTJ become different? How about INTJ and INTP?}
 
 * Implementation
 \todo[inline]{How to go from process orientated to selecting an anwser?}
@@ -1015,6 +1075,8 @@ cite:clack2004personality
 Whenever one starts working on an existing software project the first obstacle
 faced is building/executing the project, this is discussed in detail in the
 section [[building]].
+
+# https://developer.jboss.org/wiki/FunctionalProgrammingInDrools
 \todo[inline]{Proposed Extension, why this extension}
 ** Ideas
 \todo[inline]{To circumvent typing errors of users we can put input trough a spell checker taking the first correction}
@@ -1224,8 +1286,12 @@ Then to deploy the application the following command is used:
 #+END_SRC
 
 \toReview
-However when this was attempted when the application was deployed it was found
-out that a persistent storage is required.
+If your build gets stuck because it tries to find communicate jars from the 
+internet it can help to go to the root folder and execute:
+
+#+BEGIN_SRC sh
+ $ mvn compile
+#+END_SRC
 
 **** Alternative: in memory db
 \toReview
