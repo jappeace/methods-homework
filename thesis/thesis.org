@@ -26,6 +26,9 @@
 # 3. The introduction and main body of the thesis. If all else fails a
 # reaserhcer can use this as fallback
 
+# smaller code font size (cause mostly boring xml)
+#+LATEX_HEADER: \RequirePackage{fancyvrb}
+#+LATEX_HEADER: \DefineVerbatimEnvironment{verbatim}{Verbatim}{fontsize=\scriptsize}
 ** Abstract                                                          
 :PROPERTIES:
 :UNNUMBERED: t
@@ -44,47 +47,51 @@
 \newpage
 
 * Introduction
-\toReview
+\cleared
 Communication is the foundation of our modern society.
 Having good communication skills can help individuals in both professional as
-their personal lives.
+well as in their personal lives.
 However training people in communication skills can be difficult.
 Another party is required to communicate with,
 and a tutor or teacher has to be there to give feedback.
 Serious games can be used to train people with these kind of skills
 cite:swartout2013virtual.
 Therefore a general "communicate!" game was developed.
-Wherein teachers can create scenarios to let students play it cite:jeuring2015demo.
+Wherein teachers can create scenarios to let their students practice with
+communication cite:jeuring2015demo.
 
-\toReview
+\cleared
+This game was script based, the teacher made a scenario and the student would
+follow the choices predefined by the teacher.
 A script based game has of course the weakness that a student can't use
-creative responses, all possible responses are scripted into the scenario
+creative responses,
+all possible responses are scripted into the scenario
 and replying correctly relies on a simple /abc/ choice.
-To combat this the Weiderveld created an alternative serious game based on the
+To combat this an alternative serious game was made based on the
 chatbot Alice cite:weiderveld2016chatbot.
-This bot was however extended with the idea of social practices,
-to both measure performance and limit the domain to that of a doctor appointment.
-In this thesis we are interested in extending his work with personalities
-on top of social practices.
-Meaning that the patients will have personality.
+To measure performance a rule engine was used, and to limit the domain
+to that of a doctor's appointment social practices were used.
+In this thesis we are interested in extending this work with personalities,
+where we consider personalities to be a preference for a process rather than
+content cite:campos_mabs2009.
 
-\toReview
-Since the personality topic has become quite popular in recent years will
-first take a small chapter to look at related work.
-After that, to validate our work according to personality research
-we'll look at existing personality theories and their advantages and
-disadvantages,
+\cleared
+Since the personality topic has become quite popular in recent years
+some thoughts will be devoted to related work.
+After that,
+to validate our work according to personality research
+we'll look at existing personality theories and their advantages and disadvantages,
 keeping practical considerations in mind.
 Then we'll have a look at idiomatic AI programming and how in theory personality
 could be combined with AI.
-We continue by taking a close look at the state of the existing software we're
-planning to extend.
+We continue by taking a close look at the state of the existing software that
+we're planning to extend.
 After this we'll discuss the implementation.
 Finally we'll compare the different implementations.
 
 ** Related work
 <<Related work>>
-\toReview
+\cleared
   To simulate personality in comminucation games there have been already several
 works proposed.
 Etheredge used the OCEAN personality theory to create argumentative
@@ -102,11 +109,13 @@ action selection.
 Having a lot of rule also make maintenance hard, if for example there is an
 unwanted behavior many rules need to be inspected before the change can be made.
 
+\cleared
 In agents with with personalities cocu tried making a complete game based
 on MBTI cite:cocu2015agents.
 However comminucation was never implemented and personality got reduced to
 doing a single action.
 
+\cleared
 Van den bosch also chose to use OCEAN to model characters in a serious
 comminucation game cite:van2012characters.
 He used a nested probabilistic if else structure to decide on how agents should
@@ -119,18 +128,19 @@ for example a spy who was captured.
 This kind of methodology is called content orientated cite:campos_mabs2009,
 the personality, would and should change depending on context.
 
+\cleared
 Campos used the MBTI to create BDI based agents cite:campos_mabs2009.
 We will use a more fine grained version of MBTI but his architecture is used,
 in which personality will be processed orientated rather than content
 orientated.
 
 * Background
-\drafting
+\cleared
 In this chapter we will discuss the work that is the foundation of this thesis.
 First we will look at personality theories developed by psychology.
-Then we will look at some to the literature in AI (and more importantly
-argue for the methodology used), and finally we will look at the serious
-game in its existing form.
+Then we will look at some to the literature in AI and argue for the
+methodologies used,
+and finally we will look at the serious game in its existing form.
 ** Personality theories
  \cleared
  The field of psychology has been somewhat active in trying to model human
@@ -553,7 +563,7 @@ game in its existing form.
  # How do I measure that the persnoality created is in fact in complience with
  # the personality I aimed for?
  # Can I let the personality take the test somehow?
- \toReview
+ \cleared
  In this section we will look at some of the AI based literature.
  For example we will have a look at the intelligent agent approach and the BDI
  architecture.
@@ -666,8 +676,8 @@ game in its existing form.
  \todo[inline]{jade cite:braubach2003jadex}
 *** Social practices
  <<social practice>>
- \todo[inline]{critques on social practices?}
- \todo[inline]{come back social practices}
+ \todo[inline]{critques on social practices? To show potential weaknesses}
+ \todo[inline]{come back social practices, why these weaknesses are not a problem}
  \toReview
  To limit the domain of the application a theoretical device is used
  called social practices.
@@ -714,12 +724,14 @@ game in its existing form.
 
 ** The serious game
  <<The serious game>>
- \drafting
+  \todo[inline]{this section is not complete because I haven't gotten the game to work propperly I think (or the game is incomplete which mean I describe it way better than that it actually is)}
+    \toReview
  This chapter describes the game we inherited from our predecessors.
  We have to discuss precisely what they did for two reasons:
  1. To help understand the design constraints we work under
  2. To distinct our changes from theirs'
 
+    \toReview
  There have been several distinct versions of the "comminuate!" game. 
  The first version was a web based game, with an extended scenario editor.
  cite:jeuring2015demo
@@ -729,11 +741,13 @@ game in its existing form.
  Practicing in this case would mean memorising what button to click rather
  than to figure out what to say.
 
+    \toReview
  To address this issue the a new implementation was made. 
  This version was based around the idea of a chatbot, in the form of the ALICE
  bot.
  AIML cite:weiderveld2016chatbot, called S-AIML cite:augello2016model. 
 
+    \toReview
  A specific scenario was created for doctor/patient interaction     
  cite:augello2015social.                                            
  The game in this version also has the ability to judge the skills practiced
@@ -742,23 +756,27 @@ game in its existing form.
  (for example be polite and follow medical standards) and empathy.  
 
 *** Existing functionality
- \drafting
+    \toReview
  There are two major functionality perspectives to consider,
  that of the student, and that of the teacher.
  We will consider these in separate subsections since in game they
  don't interact.
 **** Student usage
+
+    \toReview
  For a student to use the application he has to first start a client.
  He can now choose to start a new game.
  There are options to list existing games but these have not been completed.
  Once in game the user enters a screen as can be seen in [[fig:client]]:
   #+CAPTION: Client view
   #+NAME:   fig:client
-[[./img/client.png]]
+  [[./img/client.png]]
 
+    \toReview
 From here the student can start practicing, the game will track his progress
 on the server.
 **** Teacher usage
+    \toReview
 For the teacher there is right now no client.
 The way a teacher can setup a scenario is trough modifying AIML and drool files.
 The teacher probably needs an expert to do this since these are right now
@@ -766,6 +784,7 @@ combined with the war.
 It would be difficult to modify these files on a running instance.
 
 *** Existing architecture
+    \toReview
     The game uses a client server architecture.
     The client is written in unity and the server is a Java servlet running on
     wildfly.
@@ -774,11 +793,13 @@ It would be difficult to modify these files on a running instance.
     possible with a technology such as REST.
 
 **** Source tree
+    \toReview
     There are two major source trees tracked in separate version control systems.
     The first manages the client and the second the server.
     The protocol is tracked in the respective client and server folders named dto.
 
 **** Text processing
+    \toReview
      Text processing is done with help of the ALICE chat bot. This bot does the
      parsing and validation of AIML, after this is done it specifies a response
      based on the AIML.
@@ -786,16 +807,18 @@ It would be difficult to modify these files on a running instance.
      handles web socket comminucation and game tracking.
  cite:augello2016social
 **** Deliberation
+    \toReview
      To do deliberation ALICE was changed to allow for extra tags.
      These are hooks to determine when specific drools should be used.
      As of right now the only thing the drools do is modify the emotion of the
      agent which is reflected in the scenario score.
-   \todo[inline]{drools} 
+    \todo[inline]{drools, Lucas didn't write about them...} 
 * Jungian BDI
 <<Jungian BDI>>
 \toReview
 In this chapter we will consider how to combine Jungian psycology with BDI,
 as was orignally done by Campos cite:campos_mabs2009.
+\todo{except we do way more in this chapter, such as 1 limiting the scope by using category thoery/haskell types, 2 going from text to game thoeretic actions}
 There are some differences from the theory discussed in [[sec:types]].
 The difference is that in the discussed theory we would translate MBTI to the
 underlying jungian functions, whereas Campos used the measured dimensions.
@@ -888,6 +911,8 @@ therefore we have to give time as a separate argument,
 this is required to keep the agent not only reactive but also proactive.
 This produces the following type signature:
 \[ B_t \to t \to M_t \overset{f_a}{\to} (B_{t+1}, A_{t+1}) \]
+
+\todo[inline]{This meaning is incomplete, it should be a game tree from which meaning to meaning makes sense. IE according to the perceiving functions their data structures, every level on the tree should be someone saying something. The root node being the user utterence if reactive and the chatbot if proactive. Then the judgement functions can figure out how close we are getting towards the goal}
 
 \toReview
 $\mathcal{A}$ is also to broad in definition.
@@ -1009,14 +1034,16 @@ This could happen if a rational function was the first function for example
 and didn't have any choices available to decide upon.
 This structure still works with SL-TDI's non alternation.
 
-\todo[inline]{A possible type difference would be to have the rational functions behave as going from multiple inputs to 1 input and the irrational as from 1 input to multiple outputs}
-
 *** Extroversion and introversion
+\drafting
 We can model extroversion and introversion as a preference for using a depth first
 or breadth first search in the data structures used to either make a decision or
 generate possibilities.
+So for example when an extroverted irrational function wants to generate
+possibilities, it will look at its data source (meaning graphs that are either
+ideas or objects) and then look at each possibility around the current one to
+make a reply. 
 
-\todo[inline]{Depth first vs breath first}
 ** Mapping function attitudes to a process 
 \drafting
 Now you may argue at this point we haven't refined our types a lot, since
@@ -1036,8 +1063,9 @@ To do this we will start analyzing the Jungian functions and see what
 
 \drafting
 How does each individual function effect the planning process?
-What (initial) believes (for example F_i needs its internal value structure)
+What (initial) believes
 as are necessary to accomplish this.
+The $F_i$ function needs its personal value structure for example.
 
 | Function | required data                                     |
 | $T_e$    | Knowing which objects are available               |
@@ -1050,12 +1078,127 @@ as are necessary to accomplish this.
 | $N_i$    | An idea graph?                                    |
 
 \todo[inline]{what is N}
-\todo[inline]{So what about the difference between $S_e$ and $S_i$ is that $S_e$ does breath first whereas $S_i$ does depth first}
 
-*** TODO how to use this in dialogue
+*** How to use this in dialogue
+\todo[inline]{Perhaps I should move this to implementation? Or split this up into an abstrat and an xml representation?}
+\todo[inline]{Can we use ontologies for the meaning part?}
+\drafting
+The first step is to map the user input which is of type String at time $t$
+into type $M_t$ for meaning at time $t$.
+For this the AIML is used. It can matched, however the langauge has to be
+modified to not just produce a reaction but instead indicate what the meaning
+is of a reaction.
+So the modification would include:
 
-**  TODO is this interpretation effective?
-\todo[inline]{Does INTJ and ENTJ become different? How about INTJ and INTP?}
+#+BEGIN_SRC xml
+<aiml>
+	<category>
+		<pattern>
+			How are you
+		</pattern>
+		<template>
+			Not doing too well today.
+		</template>
+	</category>
+	<category>
+		<pattern>
+			How * you
+		</pattern>
+		<template>
+			<srai>How are you</srai>
+		</template>
+	</category>
+</aiml>
+#+END_SRC
+Into 
+#+BEGIN_SRC xml
+  <aiml>
+	  <category>
+		  <pattern>
+			  How are you
+		  </pattern>
+		  <meaning>
+            StatusInquery
+		  </meaning>
+	  </category>
+
+	  <category>
+		  <pattern>
+			  How * you
+		  </pattern>
+		  <meaning>
+            StatusInquery
+		  </meaning>
+	  </category>
+  </aiml>
+#+END_SRC
+
+\drafting
+Now we lost the responsive nature of the chatbot, rather than saying how to
+reply directly to certain kind of responses we just say what they mean in this
+social context.
+But now what if the agent wants to do a status inquery, well the string
+into a status inquery is already available, we just need to separate the literal
+strings from the catch all patterns:
+
+#+BEGIN_SRC xml
+  <aiml>
+	  <category>
+		  <literal>
+			  How are you?
+		  </literal>
+		  <patterns>
+			  <pattern>How * you</pattern>
+			  <pattern>How are you *</pattern>
+		  </patterns>
+		  <meaning>
+            StatusInquery
+		  </meaning>
+	  </category>
+  </aiml>
+#+END_SRC
+
+\drafting
+If the agent wants to do a status inquery it will use the literal,
+if a user string needs to be converted to a meaning we first look at all
+available literals and then we start with the patterns.
+So if the agent wants to reply to this it will use its personality
+functions to put in the meaning out of which comes a reply, which contains
+a meaning and therefore also a literal with the text it needs to say.
+
+**  Consistency with theory
+  \drafting
+  In this section we will explore if especially INTJ and ENTJ (MBTI) types would
+  produce different actions by analyzing when the functions would act.
+  We will only look at the first two functions because it is enough:
+  The first two functions of INTJ are:
+  \[N_i > T_e \]
+  And of ENTJ they are:
+  \[ T_e > N_i \]
+
+  \drafting
+  What we would expect is that the $T_e$ and $N_i$ produce different results
+  because of the order they are in the sequence.
+  So in case of ENTJ if $T_e$ receives an meaning $M_t$ from the user
+  it will pass it directly to the next function since it can't make decisions
+  based on a single meaning. Then once the $N_i$ function returns a reply
+  (which has the entire meaning tree in it) it can judgments based on these 
+  meanings producing a final reply.
+  In case of INTJ the $N_i$ function would generate the meanings based on its
+  data structure and pass this tree with the children to $T_e$ to assign values
+  to it.
+  Then it can either return this result or pass it to the /next/ function and
+  judge these results again.
+  
+  \drafting
+  In any case the main difference is that an INTJ $T_e$ function gets to
+  value before the other functions get a chance to do anything. In case of an
+  ENTJ it is always just a final judgement.
+
+** TODO Encoding goals
+   Judgment is mainly about figuring out which actions are going into the right
+   direction of a goal.
+   \todo[inline]{Can we leave goals implicit to the social context?}
 
 * Implementation
 \todo[inline]{How to go from process orientated to selecting an anwser?}
@@ -1111,6 +1254,8 @@ if a feature such as web sockets is obviously better there is no need to create 
 branch for it since everyone wants it anyway which results in the original being neglected.
 The only real reason to use branches is to provide stability to existing customers,
 which probably don't exist
+
+** TODO Convert all of AIML to something more terse
 ** TODO Design extension
 ** TODO Architecturual changes
 
