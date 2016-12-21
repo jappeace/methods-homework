@@ -1073,13 +1073,13 @@ The $F_i$ function needs its personal value structure for example.
 | $F_e$    | The group values (walking in someone else's shoes |
 | $F_i$    | The personal values                               |
 | $S_e$    | Information from the senses                       |
-| $S_i$    | Memories from the senses                         |
+| $S_i$    | Memories from the senses                          |
 | $N_e$    | A situation graph to jump to?                     |
 | $N_i$    | An idea graph?                                    |
 
-\todo[inline]{what is N}
+\todo[inline]{what is N? Right now I'm thinking the difference between S and N is just two different graphs of connected meanings, Or perhaps N uses a meaning graph and S uses sensory information somehow?}
 
-*** How to use this in dialogue
+*** From strings to playable actions
 \todo[inline]{Perhaps I should move this to implementation? Or split this up into an abstrat and an xml representation?}
 \todo[inline]{Can we use ontologies for the meaning part?}
 \drafting
@@ -1278,18 +1278,17 @@ bibliography:refs.bib
 :UNNUMBERED: t
 :END:
 <<building>>
-\toReview
-In the case of this project two hurdles need to be overcome, because the
+\cleared
+To build this project two hurdles need to be overcome, because the
 server uses a starkly different tool chain than the client.
-The client was build in Unity, 
 In this appendix we will record how the application can be build.
 It may seem trivial but the Java EE world is incredibly complex.
-We assume a unix-like system as a basis, with a package manager.
+We assume a unix-like operating system with a package manager.
 
 *** Client
-\toReview
-The client is relatively easy too setup since its dumb and build with a
-monolithic environment (unity).
+\cleared
+The client is relatively easy too setup since its build with a
+monolithic environment.
 Therefore you need to have the unity editor.
 The only issues with the client were an incomplete merge and a dangling
 import that produced build errors.
@@ -1297,7 +1296,7 @@ Also note that there exists a Linux editor,
 its just not officially supported (yet) but the latest version can be found [[https://forum.unity3d.com/threads/unity-on-linux-release-notes-and-known-issues.350256/][here.]]
 
 *** Server
-\toReview
+\cleared
 The server runs on Java, therefore the first step is to install Java.
 In our case java 8 was used. If your system uses portage you can use the
 following command:
@@ -1307,14 +1306,14 @@ following command:
 #+END_SRC
 
 **** Maven
-\toReview
-Then maven needs to be installed since gradle didn't work:
+\cleared
+Then maven needs to be installed since gradle didn't work ([[Gradle attempt]]):
 
 #+BEGIN_SRC sh
    # emerge dev-java/maven-bin
 #+END_SRC
 
-\toReview
+\cleared
 Maven is the package manager for java software, it downloads and installs
 dependencies (and dependency dependencies) automatically based on xml
 configuration.
@@ -1330,29 +1329,31 @@ folder and execute:
  $ mvn compile
 #+END_SRC
 
-\toReview
+\cleared
 If no errors occur it means the settings are configure right.
 However we are not done yet since the resulting binary is not executable.
 It is something called a servlet which is an api for server like applications.
-To use this binary, hence forth called war, we need an application server.
+To use this binary, we need an application server.
 Our maven repository and code base has been configured towards /wildfly/,
 so we will use that.
 
 ***** Gradle attempt
-\toReview
+<<Gradle attempt>>
+\cleared
 it was attempted to replace maven with gradle, since its a lot less verbose
 than maven and easier to setup however doesn't have the picketlink extension
 which wildfly requires.
 Therefore gradle was abandoned and the maven tool was used instead.
+
 **** Get wildfly
-\toReview
+\cleared
 Download wildfly from [[http://wildfly.org/downloads/][here]], choose the full web distribution
 (if you choose the servlet one you'll run into trouble since it doesn't have the
-datasource subsystem, it took me about two days to figure that out).
+datasource subsystem, it took about two days to figure that out).
 Extract this download somewhere which we will call hence forth $WILDFLY.
 
 **** Setup datasource
-\toReview
+\cleared
 Now its time to configure the persistent datasource.
 The code base can handle sessions,
 but to deal with user registration and logins and such we need a database.
@@ -1362,13 +1363,13 @@ stick to that for active devlopment, but if you just want to have
 a quick look at the server you should use look at section [[inmemorydb]].
 
 **** Mariab setup
-\toReview
+\cleared
 So first install mariadb (or mysql, they are the same, except mariadb has better
 defaults):
 #+BEGIN_SRC sh
   # emerge dev-db/mariadb
 #+END_SRC
-\toReview
+\cleared
 Then we need to setup the user and database:
 #+BEGIN_SRC sh
     $ mysql -u root
@@ -1378,7 +1379,7 @@ Then we need to setup the user and database:
 #+END_SRC
 
 **** Mariadb driver
-\toReview
+\cleared
 Now we need to make the application server aware of the database.
 To do this we first need to install a driver from here [[http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.33/mysql-connector-java-5.1.33.jar][here]],
 then copy this jar into
@@ -1398,7 +1399,7 @@ Also create another file called \url{module.xml} with the following content:
 #+END_SRC
 
 **** Wildfly datasource
-\toReview
+\cleared
 Now the /driver/ is installed we need to configure it as a datasource.
 To do this we move to \url{$WILDFLY/bin}.
 Then execute the following commands:
@@ -1413,7 +1414,7 @@ Then execute the following commands:
    $ xdg-open localhost:9990
 #+END_SRC
 
-\toReview
+\cleared
 That last command should open the browser. Click then
 Configuration \to subsystems \to datasrouces \to non xa \to add  \to mysql \to next.
 The name should be GameDS and the JNDI name should be java:/GameDS,
@@ -1422,7 +1423,7 @@ The url should be \url{jdbc:mysql://localhost:3306/salve}, the username and pass
 should both be salve, now click next \to finish.
 
 **** Deploying
-\toReview
+\cleared
 first go to the \url{communicate2/communicate/communicate_server} folder.
 Then to deploy the application the following command is used:
 
@@ -1430,7 +1431,7 @@ Then to deploy the application the following command is used:
  $ mvn wildfly:deploy
 #+END_SRC
 
-\toReview
+\cleared
 If your build gets stuck because it tries to find communicate jars from the 
 internet it can help to go to the root folder and execute:
 
@@ -1439,13 +1440,13 @@ internet it can help to go to the root folder and execute:
 #+END_SRC
 
 **** Alternative: in memory db
-\toReview
+\cleared
 <<inmemorydb>>
 Now there is a choice to be made, you can either choose to use maria db
 or try and point the appliation to the in ram storage of wildfly.
 To do this go to:
 \url{communicate2/communicate/communicate_server/src/main/resources/META-INF}
-and then modify the replace everything with:
+and then replace everything with:
 #+BEGIN_SRC xml
   <?xml version="1.0" encoding="UTF-8"?>
   <persistence version="2.1"
