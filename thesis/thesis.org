@@ -813,15 +813,22 @@ It would be difficult to modify these files on a running instance.
      As of right now the only thing the drools do is modify the emotion of the
      agent which is reflected in the scenario score.
     \todo[inline]{drools, Lucas didn't write about them...} 
-* Jungian BDI
+* BDI and Jung
 <<Jungian BDI>>
 \toReview
 In this chapter we will consider how to combine Jungian psycology with BDI,
 as was orignally done by Campos cite:campos_mabs2009.
-\todo{except we do way more in this chapter, such as 1 limiting the scope by using category thoery/haskell types, 2 going from text to game thoeretic actions}
-There are some differences from the theory discussed in [[sec:types]].
+We will reduce the scope off the personality function by using category theory
+cite:spivak2013category.
+\todo{Either replace category theory with haskell like syntax or learn it and cite it}
+Then we will also look at how to convert user utterances to game theoretic
+actions.
+
+\toReview
+There are some differences from the theory discussed in [[sec:types]] and Campos'
+process.
 The difference is that in the discussed theory we would translate MBTI to the
-underlying jungian functions, whereas Campos used the measured dimensions.
+underlying Jungian functions, whereas Campos used the measured dimensions.
 Translating to the functions has some advantages,
 by doing so we are for example not bound to just the MBTI.
 We also get more accurate descriptions of what Jungian functions are,
@@ -856,12 +863,19 @@ The first function used should be most prevalent.
 This means that we can't just execute all functions and use a do preference
 selection on the result.
 
+\drafting
+We will interpret the Jungian functions as a mapping from an agents believes
+and senses towards an agent action and new believes.
+This is then reduced to the scope of a chatbot in the social practice.
+After this we will look what the categories that were introduced mean, in an
+attempt to reduce the amount of believes.
+
 ** A type signature approach
 \toReview
 To give a more deep understanding of the scope of this project we will
 try to come up with a type signature of a pure function that models all the
 function attitudes.
-This is done with a Haskell like syntax (or category theory),
+This is done with a Haskell like syntax (or category theory), \todo{choose}
 in which the arrows indicate a function,
 left of the arrow is called a domain and the right side a codomain.
 The domain is also the argument of a function.
@@ -871,9 +885,13 @@ cite:haskellpartialapplication.
 Capital letters indicate sets.\todo{cite the haskell and category theory?}
 
 \toReview
-To make this process more easy to understand we'll first ignore interplay
-between the functions and define a type signature for the individual functions.
-To do this we will define some terms.
+To make this process more easy to understand we'll postpone modeling interplay
+between the $f_a$ function attitudes and define a type signature for them working
+individually.
+To do this we will define some terms, with which we will go from the broadest
+definition possible definition towards one that fits the project scope.
+
+\toReview
 Let $\mathcal{B}$ denote the set of all
 possible believes and let $B_t$ with $B_t \subseteq \mathcal{B}$ denote the
 believes of an agent at time $t$. 
@@ -890,28 +908,52 @@ This says, we first put in the current believe base, then the sensory
 information after which we get a new believe base and a set of actions.
 In this the intentions are encoded in the function used, and the desires are
 part of the believe base.
-We marked the $f_a$ arrow, this is where we want to encode our function attitude
-in, in which a process is preferred.
+We marked the $f_a$ arrow, which indicates the deliberation process of the agent,
+in which a process is preferred. So $f_a$ can be any of the function attitudes.
 
-\toReview
+\drafting
 This definition is however too general for our domain.
 First of all the set of sensory information can be reduced to a String,
 since this is the information we get from a user.
-We can reduce it even further, since the string gets matched on meaning with
-help of AIML. AIML has the possibility to for example reduce the string "hi" and
-"hello" to the meaning "greeting" to which then a template response is
-generated.
-Therefore rather than speaking of sets in $\mathcal{S}$ we can speak of 
-$\mathcal{M}$ where $\mathcal{M} \subset \mathcal{S}$ which stands for meanings that
-were encoded into the agent's string matching.
-Then we can define $M_t \subseteq \mathcal{M}$ which stands for the meaning
-we matched on at time $t$.
-However by doing this we lost the sense of time,
-therefore we have to give time as a separate argument,
-this is required to keep the agent not only reactive but also proactive.
+However a String is still to broad since going from a textual representation
+to a deliberation process is difficult.
+Therefore we will introduce another mapping function $g$:
+\[ \sigma \overset{g}{\to} m \]
+Where $\sigma$ is a string and $m$ a meaning where $m \in \mathcal{M}$ in which
+$\mathcal{M}$ stands for the set of all encoded meanings.
+Conversely  there is another function $g'$:
+\[ m \overset{g'}{\to} \sigma \]
+This allows meaning $m$ to decoded into string $\sigma$.
+Note that in this relation there can be multiple $\sigma$ that map to the same
+meaning, but one meaning always produces one string $\sigma$.
+In the previous version this mapping was entirely done by AIML.
+How this is done in this version will be discussed in the implementation
+section [[From strings to meanings]].
+
+So the simplification is now as follows,
+so firstly we note that $\mathcal{M} \subset \mathcal{S}$,
+since understanding meaning is a form of sensation.
+Then we can define $M_t \subseteq \mathcal{M}$ which stands for the meanings
+the agent received at time $t$.
+To ensure a reactive and proactive agent we also have to pass the current time
+as argument.
+This allows the agent to do deliberation without having received a meaning
+(ie an empty set).
 This produces the following type signature:
 \[ B_t \to t \to M_t \overset{f_a}{\to} (B_{t+1}, A_{t+1}) \]
 
+\todo{I'm thinking of moddeling the meaning input as a tree, and the output as a tree. With the left most child of the rootnode being the most preffered output.}
+\drafting
+An important observation to note is that we used a set rather than an element
+for a meaning.
+This is intentional.
+There are several reasons for this,
+we do not want to exclude the possibility of several meanings at time $t$.
+Secondly to deliberate if a possible response is adequate we need to be able
+to test related meanings into a game tree.
+So for example if an $f_a$ wants to know what the other will reply
+to a particular meaning $m$, he can simply pass that meaning to another $f_a$
+and look at the response.
 \todo[inline]{This meaning is incomplete, it should be a game tree from which meaning to meaning makes sense. IE according to the perceiving functions their data structures, every level on the tree should be someone saying something. The root node being the user utterence if reactive and the chatbot if proactive. Then the judgement functions can figure out how close we are getting towards the goal}
 
 \toReview
@@ -1044,6 +1086,7 @@ possibilities, it will look at its data source (meaning graphs that are either
 ideas or objects) and then look at each possibility around the current one to
 make a reply. 
 
+\todo[inline]{alternativly I just may drop this...}
 ** Mapping function attitudes to a process 
 \drafting
 Now you may argue at this point we haven't refined our types a lot, since
@@ -1078,93 +1121,6 @@ The $F_i$ function needs its personal value structure for example.
 | $N_i$    | An idea graph?                                    |
 
 \todo[inline]{what is N? Right now I'm thinking the difference between S and N is just two different graphs of connected meanings, Or perhaps N uses a meaning graph and S uses sensory information somehow?}
-
-*** From strings to playable actions
-\todo[inline]{Perhaps I should move this to implementation? Or split this up into an abstrat and an xml representation?}
-\todo[inline]{Can we use ontologies for the meaning part?}
-\drafting
-The first step is to map the user input which is of type String at time $t$
-into type $M_t$ for meaning at time $t$.
-For this the AIML is used. It can matched, however the langauge has to be
-modified to not just produce a reaction but instead indicate what the meaning
-is of a reaction.
-So the modification would include:
-
-#+BEGIN_SRC xml
-<aiml>
-	<category>
-		<pattern>
-			How are you
-		</pattern>
-		<template>
-			Not doing too well today.
-		</template>
-	</category>
-	<category>
-		<pattern>
-			How * you
-		</pattern>
-		<template>
-			<srai>How are you</srai>
-		</template>
-	</category>
-</aiml>
-#+END_SRC
-Into 
-#+BEGIN_SRC xml
-  <aiml>
-	  <category>
-		  <pattern>
-			  How are you
-		  </pattern>
-		  <meaning>
-            StatusInquery
-		  </meaning>
-	  </category>
-
-	  <category>
-		  <pattern>
-			  How * you
-		  </pattern>
-		  <meaning>
-            StatusInquery
-		  </meaning>
-	  </category>
-  </aiml>
-#+END_SRC
-
-\drafting
-Now we lost the responsive nature of the chatbot, rather than saying how to
-reply directly to certain kind of responses we just say what they mean in this
-social context.
-But now what if the agent wants to do a status inquery, well the string
-into a status inquery is already available, we just need to separate the literal
-strings from the catch all patterns:
-
-#+BEGIN_SRC xml
-  <aiml>
-	  <category>
-		  <literal>
-			  How are you?
-		  </literal>
-		  <patterns>
-			  <pattern>How * you</pattern>
-			  <pattern>How are you *</pattern>
-		  </patterns>
-		  <meaning>
-            StatusInquery
-		  </meaning>
-	  </category>
-  </aiml>
-#+END_SRC
-
-\drafting
-If the agent wants to do a status inquery it will use the literal,
-if a user string needs to be converted to a meaning we first look at all
-available literals and then we start with the patterns.
-So if the agent wants to reply to this it will use its personality
-functions to put in the meaning out of which comes a reply, which contains
-a meaning and therefore also a literal with the text it needs to say.
 
 **  Consistency with theory
   \drafting
@@ -1215,50 +1171,139 @@ It turns out however the issues most doctors struggle with isn't so much
 being sensitive, but rather being sensitive to the people who appreciate it.
 cite:clack2004personality
 
+\drafting
 Whenever one starts working on an existing software project the first obstacle
 faced is building/executing the project, this is discussed in detail in the
-section [[building]].
+appendix [[building]].
 
-# https://developer.jboss.org/wiki/FunctionalProgrammingInDrools
 \todo[inline]{Proposed Extension, why this extension}
+
+** From strings to meanings
+<<From strings to meanings>>
+\todo[inline]{Can we use ontologies for the meaning part?}
+\drafting
+The first step is to map the user input which is of type String at time $t$
+into type $M_t$ for meaning at time $t$.
+For this the AIML is used. It can matched, however the langauge has to be
+modified to not just produce a reaction but instead indicate what the meaning
+is of a reaction.
+We will use an example to illustrate the differences:
+
+#+BEGIN_SRC xml
+<aiml>
+	<category>
+		<pattern>
+			How are you
+		</pattern>
+		<template>
+			Not doing too well today.
+		</template>
+	</category>
+	<category>
+		<pattern>
+			How * you
+		</pattern>
+		<template>
+			<srai>How are you</srai>
+		</template>
+	</category>
+</aiml>
+#+END_SRC
+So the modification would now look like:
+
+#+BEGIN_SRC xml
+  <aiml>
+	  <category>
+		  <pattern>
+			  How are you
+		  </pattern>
+		  <meaning>
+            StatusInquery
+		  </meaning>
+	  </category>
+	  <category>
+		  <pattern>
+			  How * you
+		  </pattern>
+		  <meaning>
+            StatusInquery
+		  </meaning>
+	  </category>
+  </aiml>
+#+END_SRC
+
+\drafting
+These changes loose reactive nature of the chatbot,
+rather than saying how to reply directly to certain kind of responses we just
+say what they mean in this social context.
+
+*** Meaning to string
+\drafting
+But now what if the agent wants to do a status inquery, well the string
+into a status inquery is already available, we just need to separate the literal
+strings from the catch all patterns:
+
+#+BEGIN_SRC xml
+  <aiml>
+	  <category>
+		  <literal>
+			  How are you?
+		  </literal>
+		  <patterns>
+			  <pattern>How * you</pattern>
+			  <pattern>How are you *</pattern>
+		  </patterns>
+		  <meaning>
+            StatusInquery
+		  </meaning>
+	  </category>
+  </aiml>
+#+END_SRC
+
+\drafting
+If the agent wants to do a status inquery it will use the literal,
+if a user string needs to be converted to a meaning we first look at all
+available literals and then we start with the patterns.
+So if the agent wants to reply to this it will use its personality
+functions to put in the meaning out of which comes a reply, which contains
+a meaning and therefore also a literal with the text it needs to say.
+
+\drafting
+Finally we can remove both the aiml tags and category tags and use the value
+of the meaning tags as the file name to ensure there is always one meaning.
+Thereby we leave the aiml tags and category tags implicit and the meaning
+name derived since you need to have a filename anyway.
+This results in a much more terse definition:
+
+#+BEGIN_SRC xml
+<literal>
+    How are you?
+</literal>
+<patterns>
+    <pattern>How * you</pattern>
+    <pattern>How are you *</pattern>
+</patterns>
+#+END_SRC
+
+\todo[inline]{If we have time we can compare information per character between the new and old method, going from 251 to 131 is quite an improvement}
+# https://developer.jboss.org/wiki/FunctionalProgrammingInDrools
 ** Ideas
 \todo[inline]{To circumvent typing errors of users we can put input trough a spell checker taking the first correction}
 \todo[inline]{Regex mathing as an extension to existing matching}
 \todo[inline]{How to deal with long inputs? I think sentence splitting was mentioned?}
 *** Tooling stuff
-+ Better names for top folders or removing several of them,
-  its unclear to me what they stand for or what there purpose is.
-+ Can consider using Scala which has major advantages: better typing system and
-  more referential transparancy (ie immutable by default),
-  but this has also some disadvantages such as a steeper learning curve,
-  another grad student may not appreciate it as much as I.
 + Protocol buffers could be used for protocol. Its strongly typed and has both
   C# and Java bindings
-+ java ee is going to lose support
 + xml shouldn't be used as a procudual langauge (http://wiki.c2.com/?XmlAbuse)
   its probably better to replace it with yaml https://en.wikipedia.org/wiki/XML#Criticism
   (seriously most of the code of alice bot involvelves mapping xml into objects
   (for which exist libraries https://stackoverflow.com/questions/15881876/mapping-xml-entities-to-java-objects)
   and valiating it, (which can be done by an xsd better anyway)).
-+ I think it would be better to just drop the alice bot, it doesn't 
-  do that much (except for dealing with xml).
 + drools: I didn't know rule engines were a thing, explained here:
   https://access.redhat.com/documentation/en-US/JBoss_Enterprise_SOA_Platform/4.2/html/JBoss_Rules_Manual/sect-JBoss_Rules_Reference_Manual-Why_use_a_Rule_Engine.html
 http://martinfowler.com/bliki/RulesEngine.html
   I think they're just pure functions that use aspect oriented program to
   intercept and modify the application.
-**** branches
-Branching strategy seems like overkill, if a develop branch is used then usually
-the master gets neglected (for small projects, which this is),
-if a feature such as web sockets is obviously better there is no need to create a
-branch for it since everyone wants it anyway which results in the original being neglected.
-The only real reason to use branches is to provide stability to existing customers,
-which probably don't exist
-
-** TODO Convert all of AIML to something more terse
-** TODO Design extension
-** TODO Architecturual changes
-
 * In conclusion
 \todo[inline]{Discussion, comparison}
 ** Future work
