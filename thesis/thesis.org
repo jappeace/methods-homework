@@ -572,11 +572,11 @@ and finally we will look at the serious game in its existing form.
  discussed in [[Related work]] which include executable implementations.
 
 *** Agents background
- \toReview
+ \cleared
  In the literature there is little consensus on what exactly an agent is,
  however there is a general consensus that an agent is /autonomous/
  cite:wooldridge2009introduction.
- To make this more clear we'll use Wooldriges' definition:
+ To make this more clear we'll use Wooldridges' definition:
 
  #+BEGIN_QUOTE
  An /agent/ is a computer system that is /situated/ in some /environment/ and
@@ -584,19 +584,19 @@ and finally we will look at the serious game in its existing form.
  delegated objectives. -- Wooldridge
  #+END_QUOTE
 
- \toReview
- In another older definition cite:wooldridge1995intelligent he highlights
+ \cleared
+ In another older definition cite:wooldridge1995intelligent Wooldridge highlights
  /autonomy/, /social ability/, /reactivity/, and /pro activity/.
  Where autonomy means that no human intervention is required,
  social ability means it can talk to other agents,
  reactivity is that it can reply on input and pro activity means that it can
  show behavior while not reacting to something.
- However he later continues on that a stronger claim about an agent is a
+ However he later continues on with a stronger claim about an agent is a
  piece of software that uses concepts which are attributed to humans.
  Such as believes desires and intentions.
 
- \toReview
- This is the reason we can't call any program an agent.
+ \cleared
+ This is the reason why we can't call any program an agent.
  For example an operating system kernel is
  autonomous (a user would never interact with it),
  social (can do networking),
@@ -606,7 +606,7 @@ and finally we will look at the serious game in its existing form.
  However we won't call a kernel an agent because it doesn't even come close to
  having believes, desires or intentions.
 
- \toReview
+ \cleared
  Something to keep in mind is that there are three "branches" of agent research
  cite:wooldridge1995intelligent.
  The first one is /agent theory/ in which /specifications/ and methods of 
@@ -621,12 +621,12 @@ and finally we will look at the serious game in its existing form.
  Again this is mostly preditermined for us, but we will give a small overview.
 
 **** Belief desires and intentions
- \toReview
+ \cleared
  The belief desire intention model of human practical reasoning was first
  introduced by bratman cite:bratman1987intention.
  It is based upon a "common sense" framework of human reasoning.
 
- \toReview
+ \cleared
  The idea of BDI is that an agent has believes, these can be anything, such as
  I believe the grass is green, or I believe the keys are on the table.
  Note that we never speak about facts, an agent can believe something to be a
@@ -637,18 +637,26 @@ and finally we will look at the serious game in its existing form.
  How to formalize this properly turns out to be a hard question, which is
  analyzed in the following section [[bdi logics]].
 
- \toReview
+ \cleared
  A number of reasons have been stated to use this methodology.
  The foremost is to make agent orientated systems less expensive in maintenance,
  verification and construction according to Rao and Georgeff cite:rao1995bdi. 
  However they don't cite a source for this.
 
- \toReview
+ \cleared
  Another paper argues in favour of agent orientated design cite:jennings2001agent.
  It has the following major arguments:
  It is effective to divide a complex problem domain into several smaller problems,
  abstracting in an agent orientated way is more "natural",
  and complex systems dependencies and interactions can be easily modeled.
+ # A case study is presented as proof of these claims.
+ # also its more natural.
+ # more natural
+ # natural
+ # aurl
+ # l
+ #
+ # segfault
 
 **** Logic of BDI
  <<bdi logics>>
@@ -669,9 +677,9 @@ and finally we will look at the serious game in its existing form.
  epistemics to add believes to it cite:meyer2014logics.
 
  \todo[inline]{decide if I'm gonna use any of these logics, I mean the "why discuss this?" question is now unwansered... Perhaps I should delete this?}
-**** Concrete implementations
+**** TODO Concrete implementations
 
- \todo[inline]{Again perhaps I should consider deleting this?}
+ \todo{Again perhaps I should consider deleting this?}
  \todo[inline]{2apl}
  \todo[inline]{jade cite:braubach2003jadex}
 *** Social practices
@@ -1157,7 +1165,6 @@ table [[tab:fa-and-data]]. To finish modeling the believes we just need to
 the meaning graph. The meaning graph $G$ is a set of connections $(m_1, m_2)$
 where $m_1, m_2 \in \mathcal{M} \wedge m_1 \neq m_2$.
 Therefore $B = (m, h, h', [m], [D], G)$
-\todo{lacks satisficing and fictitious play values}
 
 #+CAPTION: function attitudes and their required data
 #+NAME:   tab:fa-and-data
