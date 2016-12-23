@@ -1047,22 +1047,22 @@ Now the partially applied type of $T_e$ satisfies that of $N_i$ and we can use i
 This methodology can be used for an entire personality type (ie all 8 functions
 in some order)
 
-\toReview
+\cleared
 With this methodology function attitudes can decide themselves to consult the
 next type.
 Then they can inspect the result, and even the changed believe base to decide
 if its a good idea to use the result.
 
-\toReview
+\cleared
 This architecture can be extended with the scale based jungian models
 such as SL-TDI and PDQ by introducing a random choice for using the current or
 next function.
 However this becomes rather messy because we're modeling pure functions,
 therefore we leave this as an exercise to the reader.
 
-***  Rational and irrational
+***  Rational and irrational cardinality
 <<Rational and irrational>>
-\toReview
+\cleared
 Up till now we have modeled the type signature have consumed sets meanings and
 produced sets of replies.
 However we ignored cardinality.
@@ -1073,6 +1073,7 @@ consume one or many meaning and produce only one reply,
 irrational are about producing information therefore it should consume
 one meaning and produce many.
 
+\todo[inline]{either say what a reply is in the dialogue tree or rewrite to use the dialogue tree}
 \toReview
 Modeling this idea into type is however easier said than done.
 There are problems with this.
