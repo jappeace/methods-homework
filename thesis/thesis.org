@@ -650,17 +650,10 @@ and finally we will look at the serious game in its existing form.
  abstracting in an agent orientated way is more "natural",
  and complex systems dependencies and interactions can be easily modeled.
  # A case study is presented as proof of these claims.
- # also its more natural.
- # more natural
- # natural
- # aurl
- # l
- #
- # segfault
 
 **** Logic of BDI
  <<bdi logics>>
- \toReview
+ \cleared
  Logic of BDI is an attempt to formalize how agents behave.
  One of the first formalization of Bratman's theory was that of Cohen and
  Levesque cite:cohen1990intention. It was based on linear time logic and
@@ -686,7 +679,7 @@ and finally we will look at the serious game in its existing form.
  <<social practice>>
  \todo[inline]{critques on social practices? To show potential weaknesses}
  \todo[inline]{come back social practices, why these weaknesses are not a problem}
- \toReview
+ \cleared
  To limit the domain of the application a theoretical device is used
  called social practices.
  This gives an ordered overview in what domain our program should work.
@@ -714,7 +707,7 @@ and finally we will look at the serious game in its existing form.
  used in a bigger system such as in cite:augello2015social and
  cite:augello2016model.
 *** BDI + Personality
- \drafting
+ \cleared
  \todo[inline]{other proposed systems and argue for campos}
  Campos discussed an architecture in which personality emerged not from things
  you like,
@@ -729,33 +722,35 @@ and finally we will look at the serious game in its existing form.
  whereas feeling agents would consider what other agents want.
  In our model we conceptualize the Jungian functions also as a process.
  We comment more on this in section [[Jungian BDI]].
-
+ 
 ** The serious game
  <<The serious game>>
-  \todo[inline]{this section is not complete because I haven't gotten the game to work propperly I think (or the game is incomplete which mean I describe it way better than that it actually is)}
-    \toReview
+\todo[inline]{this section is not complete because I haven't gotten the game to work propperly I think (or the game is incomplete which mean I describe it way better than that it actually is)}
+  \cleared
  This chapter describes the game we inherited from our predecessors.
  We have to discuss precisely what they did for two reasons:
  1. To help understand the design constraints we work under
  2. To distinct our changes from theirs'
 
-    \toReview
- There have been several distinct versions of the "comminuate!" game. 
- The first version was a web based game, with an extended scenario editor.
+  \cleared
+ There have been several distinct versions of the "communicate!" game. 
+ The first version was a web based game, with a scenario editor.
  cite:jeuring2015demo
- However it had some drawbacks, for example each dialog was scripted by
- the teacher and the answers the student could give were specified by the teacher.
+ However it had some drawbacks,
+ for example each dialog was scripted by the teacher and the answers the student
+ could give were specified by the teacher.
  This made practicing on it somewhat unrealistic.
  Practicing in this case would mean memorising what button to click rather
  than to figure out what to say.
 
-    \toReview
+ \cleared
  To address this issue the a new implementation was made. 
  This version was based around the idea of a chatbot, in the form of the ALICE
  bot.
- AIML cite:weiderveld2016chatbot, called S-AIML cite:augello2016model. 
+ The AIML language was extended to allow emotional reactions of the agent.
+ This new langauge was called S-AIML cite:augello2016model. 
 
-    \toReview
+ \cleared
  A specific scenario was created for doctor/patient interaction     
  cite:augello2015social.                                            
  The game in this version also has the ability to judge the skills practiced
@@ -764,14 +759,14 @@ and finally we will look at the serious game in its existing form.
  (for example be polite and follow medical standards) and empathy.  
 
 *** Existing functionality
-    \toReview
+    \cleared
  There are two major functionality perspectives to consider,
  that of the student, and that of the teacher.
  We will consider these in separate subsections since in game they
  don't interact.
 **** Student usage
 
-    \toReview
+    \cleared
  For a student to use the application he has to first start a client.
  He can now choose to start a new game.
  There are options to list existing games but these have not been completed.
@@ -780,11 +775,11 @@ and finally we will look at the serious game in its existing form.
   #+NAME:   fig:client
   [[./img/client.png]]
 
-    \toReview
+    \cleared
 From here the student can start practicing, the game will track his progress
 on the server.
 **** Teacher usage
-    \toReview
+    \cleared
 For the teacher there is right now no client.
 The way a teacher can setup a scenario is trough modifying AIML and drool files.
 The teacher probably needs an expert to do this since these are right now
@@ -792,7 +787,7 @@ combined with the war.
 It would be difficult to modify these files on a running instance.
 
 *** Existing architecture
-    \toReview
+    \cleared
     The game uses a client server architecture.
     The client is written in unity and the server is a Java servlet running on
     wildfly.
@@ -801,13 +796,13 @@ It would be difficult to modify these files on a running instance.
     possible with a technology such as REST.
 
 **** Source tree
-    \toReview
+    \cleared
     There are two major source trees tracked in separate version control systems.
     The first manages the client and the second the server.
     The protocol is tracked in the respective client and server folders named dto.
 
 **** Text processing
-    \toReview
+    \cleared
      Text processing is done with help of the ALICE chat bot. This bot does the
      parsing and validation of AIML, after this is done it specifies a response
      based on the AIML.
@@ -815,24 +810,29 @@ It would be difficult to modify these files on a running instance.
      handles web socket comminucation and game tracking.
  cite:augello2016social
 **** Deliberation
-    \toReview
+    \cleared
      To do deliberation ALICE was changed to allow for extra tags.
      These are hooks to determine when specific drools should be used.
      As of right now the only thing the drools do is modify the emotion of the
      agent which is reflected in the scenario score.
-    \todo[inline]{drools, Lucas didn't write about them...} 
+     It appears as if the entire bot is only reactive.
+     All deliberation is done in the predefined xml files which is quite limited
+     in scope.
+     The only "extra" deliberation happens in the drools, which as of right now
+     only handles emotions.
+
 * BDI and Jung
 <<Jungian BDI>>
-\toReview
+\cleared
 In this chapter we will consider how to combine Jungian psycology with BDI,
 as was orignally done by Campos cite:campos_mabs2009.
-We will reduce the scope off the personality function by using category theory
-cite:spivak2013category.
+We will reduce the scope of the deliberation function by using a haskell like
+syntax (or category theory cite:spivak2013category).
 \todo{Either replace category theory with haskell like syntax or learn it and cite it}
-Then we will also look at how to convert user utterances to game theoretic
-actions.
+Then we will also look at how to convert user utterances to objects we can do
+reasoning with.
 
-\toReview
+\cleared
 There are some differences from the theory discussed in [[sec:types]] and Campos'
 process.
 The difference is that in the discussed theory we would translate MBTI to the
@@ -841,18 +841,19 @@ Translating to the functions has some advantages,
 by doing so we are for example not bound to just the MBTI.
 We also get more accurate descriptions of what Jungian functions are,
 Jung described in his work people with that particular function as dominant.
-This is harder to do with the dimensions, because if you take an INTJ and an
-INTP the semantics of both the N and T change because of the P/J dimension, 
+This is harder to do with the dimensions, because if you take an INTJ type and an
+INTP type the semantics of both the N and T change because of the P/J dimension, 
 as can be seen in their respective order (see [[sec:mbti:order_comparison]]).
 Campos avoids this by ignoring the I/E and J/P dimensions, resulting in a
 simplified theory.
 However we would like to note that it is not an easily extendable simplification.
-Therefore we chose to simplify types to orders in Jungian function attitudes.
+Therefore we chose to translate types to orders in Jungian function attitudes,
+something which is already done by MBTI (see [[sec:mbti:order_comparison]]).
 
-\toReview
+\cleared
 Another consideration to make is what are these function attitudes?
-By which I mean what do they represent in computer science terms, progams,
-objects, functions?
+By which I mean what do they represent in computer science terms: progams,
+objects or functions?
 What should they be?
 Since Jung wasn't much of a mathematician cite:jungonfunctions its just an
 informal definition.
@@ -860,46 +861,46 @@ However we can make a mapping to certain BDI processes
 based upon their description,
 but before that is done we need to make several structural observations.
 
-\toReview
+\cleared
 Firstly functions attitudes are not independent, by which I mean that
 if we have a function attitude $a$, followed by $b$ then the resulting
 behavior is different than $b$ followed by $a$ (see [[sec:mbti:order_comparison]]).
 
-\toReview
+\cleared
 Secondly all functions should be used and their order matters.
 The first function used should be most prevalent.
 This means that we can't just execute all functions and use a do preference
 selection on the result.
 
-\toReview
+\cleared
 We will interpret the Jungian functions as a mapping from an agents believes
 and senses towards an agent action and new believes.
 This is then reduced to the scope of a chatbot in the social practice.
-After this we will look what the categories that were introduced mean, in an
-attempt to reduce the amount of believes.
+After this we will look what extra information the function attitudes need
+in an attempt to reduce the amount of possible believes.
 
 ** A type signature approach
-\toReview
+\cleared
 To give a more deep understanding of the scope of this project we will
 try to come up with a type signature of a pure function that models all the
 function attitudes.
-This is done with a Haskell like syntax (or category theory), \todo{choose}
+This is done with a Haskell like syntax (or category theory), \todo{cite the haskell and category theory?}
 in which the arrows indicate a function,
 left of the arrow is called a domain and the right side a codomain.
 The domain is also the argument of a function.
 If we see a pattern like $a \to b \to c$ means $a \to (b \to c)$ or give an $a$
 and return a function $b \to c$, this process is called partial application
 cite:haskellpartialapplication.
-Capital letters indicate sets.\todo{cite the haskell and category theory?}
+Capital letters indicate sets.
 
-\toReview
+\cleared
 To make this process more easy to understand we'll postpone modeling interplay
 between the $f_a$ function attitudes and define a type signature for them working
 individually.
 To do this we will define some terms, with which we will go from the broadest
-definition possible definition towards one that fits the project scope.
+definition possible towards one that just fits the project scope.
 
-\toReview
+\cleared
 Let $\mathcal{B}$ denote the set of all
 possible believes and let $B_t$ with $B_t \subseteq \mathcal{B}$ denote the
 believes of an agent at time $t$. 
@@ -917,9 +918,9 @@ information after which we get a new believe base and a set of actions.
 In this the intentions are encoded in the function used, and the desires are
 part of the believe base.
 We marked the $f_a$ arrow, which indicates the deliberation process of the agent,
-in which a process is preferred. So $f_a$ can be any of the function attitudes.
+so $f_a$ can be any of the function attitudes.
 
-\toReview
+\cleared
 This definition is however too general for our domain.
 First of all the set of sensory information can be reduced to a String,
 since this is the information we get from a user.
@@ -938,25 +939,24 @@ In the previous version this mapping was entirely done by AIML.
 How this is done in this version will be discussed in the implementation
 section [[From strings to meanings]].
 
-\toReview
+\cleared
 So the simplification is now as follows,
-so firstly we note that $\mathcal{M} \subset \mathcal{S}$,
+firstly we note that $\mathcal{M} \subset \mathcal{S}$,
 since understanding meaning is a form of sensation.
 Then we can define $M_t \subseteq \mathcal{M}$ which stands for the meanings
 the agent received at time $t$.
-To ensure a reactive and proactive agent we also have to pass the current time
+To ensure a reactive and proactive we also have to pass the current time
 as argument.
 This allows the agent to do deliberation without having received a meaning
 (ie an empty set).
 This produces the following type signature:
 \[ B_t \to t \to M_t \overset{f_a}{\to} (B_{t+1}, A_{t+1}) \]
 
-\toReview
+\cleared
 $\mathcal{A}$ is also to broad in definition.
 For our domain we are not interested in every possible action.
 Instead we just want to have another meaning as output,
 since these correspond to strings. 
-To do this 
 Therefore we constrain $\mathcal{A}$ by introducing yet another set
 $\mathcal{R}$ which stands for the set of a possible reply messages,
 or the replies encoded by the programmer.
@@ -966,8 +966,8 @@ Now we can define $R_t$ with $R_t \subseteq \mathcal{R}$ which is a set of
 replies at time $t$. This produces the type signature:
 \[ B_t \to t \to M_t \overset{f_a}{\to} (B_{t+1}, R_{t+1}) \]
 
-\toReview
-Se we have some believes, time and meaning going in, some deliberation
+\cleared
+We have some believes, time and meaning going in, some deliberation
 going on and a new set of believes and replies going out.
 The new believes can be used for the next iteration.
 However this type signature isn't enough.
@@ -980,25 +980,25 @@ meaning,
 or if he is in extreme pain he would like to see the /GivePainKiller/ meaning
 uttered.
 
-\toReview
-Therefore we introduce $D$ a dialogue tree immutable data structure:
+\cleared
+Therefore we introduce $D$ a dialogue tree:
 \[ D = (m, [D])\]
 Where $m \in \mathcal{M}$ for the meaning,
-and $[D]$ is the ordered list of children.
+and $[D]$ is the ordered list of dialogue children.
 The initial dialogue just has a meaning with an empty list of children.
 A reply would be the same except with a list of children that is bigger than zero.
 The most preferred reply is the first element in the list of children.
 With this in place we can model the following type signature:
 \[ B_t \to t \to D_t \overset{f_a}{\to} (B_{t+1}, D_{t+1}) \]
 So we receive a dialogue tree from the user, which can just be a root node,
-and then we put out a dialogue tree plus the replies.
+and then we put out a dialogue tree plus the replies which are the children.
 
-\toReview
+\cleared
 Now we should note that this type signature heavily constrains our agent.
 It for example can't handle being punched in the face by the doctor unless
 there is a meaning encoded for that. 
 It also runs into trouble when the agent is asked to sit on the counter.
-Movement should be possible for example but movement like one does during sky
+Movement should be possible, but movement like one does during sky
 diving is not interesting because we have the informal constraint of the
 [[social practice]].
 However once movement becomes a requirement we can just create a new function
@@ -1006,7 +1006,7 @@ type signature that is less restrictive, but still has the option to use these
 functions for meaning full replies.
 
 *** Composing type dynamics
-\toReview
+\cleared
 The first thing a commendable programmer may think of when trying to combine
 behavior is of course functional composition.
 However there is an important requirement for this to work.
@@ -1015,7 +1015,7 @@ want to combine.
 Our current type signature has this feature almost except for the time
 argument, it is not difficult to work around this.
 What is problematic however is that using functional composition in this
-way would make it impossible for function attitudes to inspect resuls
+way would make it impossible for function attitudes to inspect results
 of their auxiliary functions.
 This is an important feature we want to keep because if for example a
 judgement function is first in the order of functions and receives
@@ -1023,7 +1023,7 @@ the user meaning it can't do its job yet, more on his in this section
 [[Rational and irrational]].
 Therefore we consider another approach.
 
-\toReview
+\cleared
 In this approach we will give $f_a$ another argument which is the next $f_a$.
 This looks like the following:
 \[ \left (\overset{next}{B_t \to t \to D_t \to (B_{t+1}, D_{t+1})}\right ) \to B_t \to t \to D_t \overset{f_a}{\to} (B_{t+1}, D_{t+1}) \]
@@ -1033,7 +1033,7 @@ A unit function can be defined that produces empty sets as results for both
 believes and action.
 By unit function we mean the initial /next/ function.
 
-\toReview
+\cleared
 To illustrate the use of this type signature design more clearly we'll sketch
 an example with the first two function attitudes of the INTJ type:
 \[N_i > T_e \]
