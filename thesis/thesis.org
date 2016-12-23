@@ -1097,7 +1097,7 @@ This structure still works with SL-TDI's non alternation.
 
 ** Mapping function attitudes to a process 
 <<Mapping to process>>
-\drafting
+\toReview
 Now you may argue at this point we haven't refined our types a lot, since
 the believe structure was defined as "Every possible believe",
 which is basically analogous to "Anything you can think of" or in a Object
@@ -1113,7 +1113,7 @@ less broad in scope.
 To do this we will start analyzing the Jungian functions and see what
 "extra" information require to function to perform their duties.
 
-\drafting
+\toReview
 So $T_e$ uses just one ply in the meaning tree and then applies a static
 evaluation to determine if uttering a certain meaning will get it closer
 to its goal (its more like a heuristic).
@@ -1121,7 +1121,7 @@ $T_i$ uses alpha beta pruning on the meaning tree to
 determine the best goal. Therefore both $T$ functions don't need any
 additional information to perform their processes.
 
-\drafting
+\toReview
 Both $F$ functions need a valuation function $h$:
 \[ m \overset{h}{\to} i \]
 where $i \in \mathbb{N}$.
@@ -1138,7 +1138,7 @@ repeated (the actions may differ per deliberation cycle),
 therefore as an easier alternatives we can make two variants
 of $h$ that produce group values and personal values.
 
-\drafting
+\toReview
 N uses a meaning graph where $N_e$ goes breath first and $N_i$ goes depth first.
 So $N_e$ produces the results of connected meanings of the input meaning,
 but $N_i$ creates a deeper tree, using the /next/ function to decide
@@ -1146,12 +1146,12 @@ where to go on crossroads.
 Alternatively reinforcement learning can be used $N$ like responses
 cite:li2016deep. However this is out of the scope of this thesis.
 
-\drafting
+\toReview
 S_i uses memories, which are just responses from previous conversations to the
 current meaning.
 S_e uses sense information, just some meanings that are in the environment.
 
-\drafting
+\toReview
 We listed the function attitudes $f_a$ and their required information into
 table [[tab:fa-and-data]]. To finish modeling the believes we just need to
 the meaning graph. The meaning graph $G$ is a set of connections $(m_1, m_2)$
@@ -1207,11 +1207,6 @@ INTJ and INTP are different in attitudes, but have the same order.
 Since attitudes produce a different process by definition
 (see section [[Mapping to process]]),
 we can conclude that they will also behave differently.
-
-** TODO Encoding goals
-   Judgment is mainly about figuring out which actions are going into the right
-   direction of a goal.
-   \todo[inline]{Can we leave goals implicit to the social context?}
 
 * Implementation
 \todo[inline]{How to go from process orientated to selecting an anwser?}
