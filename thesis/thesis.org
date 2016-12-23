@@ -1095,20 +1095,8 @@ This could happen if a rational function was the first function for example
 and didn't have any choices available to decide upon.
 This structure still works with SL-TDI's non alternation.
 
-*** Extroversion and introversion
-<<Extraversion introversion>>
-\drafting
-We can model extroversion and introversion as a preference for using a depth first
-or breadth first search in the data structures used to either make a decision or
-generate possibilities.
-So for example when an extroverted irrational function wants to generate
-possibilities, it will look at its data source (meaning graphs that are either
-ideas or objects) and then look at each possibility around the current one to
-make a reply. 
-
-\todo[inline]{This may work for irrational, but how to do this on rational? We can't do depth first ordering on the tree it would make no sense. Perhaps we can do /e/ as just ordering the my own preferences wheras i goes to the predicted other's prefernces?}
-\todo[inline]{alternativly I just may drop this...}
 ** Mapping function attitudes to a process 
+<<Mapping to process>>
 \drafting
 Now you may argue at this point we haven't refined our types a lot, since
 the believe structure was defined as "Every possible believe",
@@ -1143,8 +1131,12 @@ To illustrate the difference between $F_e$ and $F_i$ we can use different
 strategies.
 $F_e$ could try to model what the other agent values by performing fictitious
 play cite:berger2007brown,
-whereas $F_i$ could use sacrificing play cite:stimpson2003learning.
+whereas $F_i$ could use satisficing play cite:stimpson2003learning.
 The intermediate results of the plays can be written into the believe structure.
+However doing this may be difficult since the games aren't completly
+repeated (the actions may differ per deliberation cycle),
+therefore as an easier alternatives we can make two variants
+of $h$ that produce group values and personal values.
 
 \drafting
 N uses a meaning graph where $N_e$ goes breath first and $N_i$ goes depth first.
@@ -1164,16 +1156,16 @@ We listed the function attitudes $f_a$ and their required information into
 table [[tab:fa-and-data]]. To finish modeling the believes we just need to
 the meaning graph. The meaning graph $G$ is a set of connections $(m_1, m_2)$
 where $m_1, m_2 \in \mathcal{M} \wedge m_1 \neq m_2$.
-Therefore $B = (m, h, [m], [D], G)$
+Therefore $B = (m, h, h', [m], [D], G)$
 \todo{lacks satisficing and fictitious play values}
 
-#+CAPTION: $f_a$ and their required data
+#+CAPTION: function attitudes and their required data
 #+NAME:   tab:fa-and-data
 | Function | required data         |
 | $T_e$    | A goal $m$            |
 | $T_i$    | A goal $m$            |
 | $F_e$    | Group values $h$      |
-| $F_i$    | Personal values  $h$  |
+| $F_i$    | Personal values  $h'$ |
 | $S_e$    | Sense information $[m]$ |
 | $S_i$    | Memories $[D]$        |
 | $N_e$    | Meaning graph         |
@@ -1213,7 +1205,7 @@ ENTJ it is always just a final judgement.
 \toReview
 INTJ and INTP are different in attitudes, but have the same order.
 Since attitudes produce a different process by definition
-(see section [[Extraversion introversion]]),
+(see section [[Mapping to process]]),
 we can conclude that they will also behave differently.
 
 ** TODO Encoding goals
