@@ -1126,22 +1126,60 @@ To do this we will start analyzing the Jungian functions and see what
 "extra" information require to function to perform their duties.
 
 \drafting
-How does each individual function effect the planning process?
-What (initial) believes
-as are necessary to accomplish this.
-The $F_i$ function needs its personal value structure for example.
+So $T_e$ uses just one ply in the meaning tree and then applies a static
+evaluation to determine if uttering a certain meaning will get it closer
+to its goal (its more like a heuristic).
+$T_i$ uses alpha beta pruning on the meaning tree to
+determine the best goal. Therefore both $T$ functions don't need any
+additional information to perform their processes.
 
-| Function | required data                                     |
-| $T_e$    | Knowing which objects are available               |
-| $T_i$    | The logic structure (axioms)                      |
-| $F_e$    | The group values (walking in someone else's shoes |
-| $F_i$    | The personal values                               |
-| $S_e$    | Information from the senses                       |
-| $S_i$    | Memories from the senses                          |
-| $N_e$    | A situation graph to jump to?                     |
-| $N_i$    | An idea graph?                                    |
+\drafting
+Both $F$ functions need a valuation function $h$:
+\[ m \overset{h}{\to} i \]
+where $i \in \mathbb{N}$.
+The encoding of this system is similar of the existing work on /drools/.
+Since they included mostly value based scoring.
+To illustrate the difference between $F_e$ and $F_i$ we can use different
+strategies.
+$F_e$ could try to model what the other agent values by performing fictitious
+play cite:berger2007brown,
+whereas $F_i$ could use sacrificing play cite:stimpson2003learning.
+The intermediate results of the plays can be written into the believe structure.
 
-\todo[inline]{what is N? Right now I'm thinking the difference between S and N is just two different graphs of connected meanings, Or perhaps N uses a meaning graph and S uses sensory information somehow?}
+\drafting
+N uses a meaning graph where $N_e$ goes breath first and $N_i$ goes depth first.
+So $N_e$ produces the results of connected meanings of the input meaning,
+but $N_i$ creates a deeper tree, using the /next/ function to decide
+where to go on crossroads.
+Alternatively reinforcement learning can be used $N$ like responses
+cite:li2016deep. However this is out of the scope of this thesis.
+
+\drafting
+S_i uses memories, which are just responses from previous conversations to the
+current meaning.
+S_e uses sense information, just some meanings that are in the environment.
+
+\drafting
+We listed the function attitudes $f_a$ and their required information into
+table [[tab:fa-and-data]]. To finish modeling the believes we just need to
+the meaning graph. The meaning graph $G$ is a set of connections $(m_1, m_2)$
+where $m_1, m_2 \in \mathcal{M} \wedge m_1 \neq m_2$.
+Therefore $B = (m, h, [m], [D], G)$
+\todo{lacks satisficing and fictitious play values}
+
+#+CAPTION: $f_a$ and their required data
+#+NAME:   tab:fa-and-data
+| Function | required data         |
+| $T_e$    | A goal $m$            |
+| $T_i$    | A goal $m$            |
+| $F_e$    | Group values $h$      |
+| $F_i$    | Personal values  $h$  |
+| $S_e$    | Sense information $[m]$ |
+| $S_i$    | Memories $[D]$        |
+| $N_e$    | Meaning graph         |
+| $N_i$    | Meaning graph         |
+
+\newpage
 
 **  Consistency with theory
 \toReview
@@ -1177,7 +1215,6 @@ INTJ and INTP are different in attitudes, but have the same order.
 Since attitudes produce a different process by definition
 (see section [[Extraversion introversion]]),
 we can conclude that they will also behave differently.
-
 
 ** TODO Encoding goals
    Judgment is mainly about figuring out which actions are going into the right
