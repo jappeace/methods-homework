@@ -41,6 +41,7 @@
 #+END_CENTER
 \todo{keywords}
 
+\todo[inline]{Read: The art of dialogue 2006, center of applications of psycology type}
 \newpage
 #+TOC: headlines 2
 
@@ -135,13 +136,23 @@ in which personality will be processed orientated rather than content
 orientated.
 
 * Background
+
 \cleared
 In this chapter we will discuss the work that is the foundation of this thesis.
 First we will look at personality theories developed by psychology.
 Then we will look at some to the literature in AI and argue for the
 methodologies used,
 and finally we will look at the serious game in its existing form.
+
 ** Personality theories
+\todo[inline]{What is personlaity? (wiki ref can be used even, but I think its in the handbook)}
+\todo{for example: Personality identifiers that can be used with reasonable consistency to predict behavior}
+
+\todo[inline]{What do we want form personality theories? We just want a model to implement.}
+\todo[inline]{There is no "best" personality theory, its just something to argue about}
+\todo[inline]{Personality is just an approach, there doesn't exist a best model}
+\todo[inline]{Give some examples where we expect personality to be different per model? This then can be used as test casus for the eventual bot}
+
  \cleared
  The field of psychology has been somewhat active in trying to model human
  personality cite:pervin2008handbook. 
@@ -174,7 +185,7 @@ and finally we will look at the serious game in its existing form.
  The methodology used is something which is called factor analyses[fn::
  In the paper the term 'varimax rotational program' is used,
  but if we look this term in wikipedia, we can see the result is called factor
- analyses cite:varymaxrotanonalprogram].
+ analyses cite:varymaxrotanonalprogram]. \todo{What data did they use? What did they look at? what did they do?}
  Factor analyses is a statistical methodology that tries to find underlying
  hidden variables.
  This methodology has become widely used in psychology cite:fabrigar1999evaluating.
@@ -202,7 +213,8 @@ and finally we will look at the serious game in its existing form.
  words every time cite:pervin2008handbookp114..116.
 
  \cleared
- The big five as in the OCEAN definition has the following units of measurement:
+ The big five as in the OCEAN definition \todo{Isn't this interpretation?}
+ has the following units of measurement:
  - Openness or originality, if you score high on this you enjoy learning new
    things just for the sake of learning. If you score low then you don't enjoy
    this
@@ -226,7 +238,7 @@ and finally we will look at the serious game in its existing form.
  it does not have any theoretical foundation cite:eysenck1992four.
  This means it becomes difficult to speak about implementation.
  To make this more clear we use a thought experiment:
- Lets say you have a score of 0.8 for Neuroticism,
+ Lets say you have a score of 0.8 for Neuroticism, \todo[inline]{How can thesescores be used? Is there a standard intrepertation from psycology? Or are there examples of how much work it is to do this yourself?}
  how does this influence my decision for selecting action $a$ or $b$?
  Now you could say, use a mixed strategy where in you choose 80% of the time
  the neurotic typical neurotic approach.
@@ -270,6 +282,7 @@ and finally we will look at the serious game in its existing form.
  It should also be noted that the unconsciousness according to Jung is
  flipped in attitude. cite:hall1973primer97-98attitude
 
+\todo[inline]{extend the examples more}
  \cleared
  Then there are four functions.
  The first two functions are called the /rational functions/
@@ -297,7 +310,8 @@ and finally we will look at the serious game in its existing form.
  cite:hall1973primer100-101combo
  We can now imagine what this means,
  an extroverted thinker will for example make judgement about the real world,
- and therefore be more like a scientist,
+ and therefore be more like a scientist, \todo{Why is this the case?}
+ \todo{This i too unclear because it doesn't it for biology scientists for example}
  whereas an introverted thinker will make judgement about ideas in his mind,
  and therfore will be an excelent philosopher.
 
@@ -402,6 +416,7 @@ and finally we will look at the serious game in its existing form.
  (OD) cite:sample2004myers. 
  But it has gotton some heavy critism in from the field of psycology.
 
+ \todo[inline]{Change these critisims to be more out of the references rather than that we agree with them}
  \cleared
  Since MBTI reduces the test scores to type,
  it is expected that most of the population would fall into either proposed
@@ -411,7 +426,8 @@ and finally we will look at the serious game in its existing form.
  but this could be the result of the scores being biderictional
  cite:salter2005two.
  An extended investigation into weather jungian constructs are truly categorial
- however concluded that this was not the case and a continues scale is required
+ however concluded that this was not the case and a continues scale \todo{ Why is this a critique, dignum got a scale like result? we should explain what's happenning here}
+ is required
  cite:arnau2003jungian.
 
  \cleared
@@ -437,6 +453,7 @@ and finally we will look at the serious game in its existing form.
  if for example two tests produce starkly different results but a long time
  has passed between them its not considered a big issue.
  However for the MBTI it has been shown that after a period of 5 weeks 50%
+ \todo[inline]{Is there any research showing a year consitency? Perhaps users would change their outcome becuase they didn't like the results and changed their input cause they remember?}
  of the participants changed in score cite:pittenger1993measuring.
  Since Jung basically said that type is decided very early on in life
  this result is rather bad cite:hall1973primer106inborn.
@@ -450,10 +467,15 @@ and finally we will look at the serious game in its existing form.
  cite:melancon1996measurement.
  A word pair checklist looks like:
 
- | Word          |   |   |   | Word      |
+ | Word          |   |   |  | Word      |
  |---------------+---+---+---+-----------|
  | Empathy       | 1 | 2 | 3 | Logic     |
  | Dispassionate | 1 | 2 | 3 | Emotional |
+
+ \todo{How do you select here?}
+ \todo{In the real test I think they used 5 point}
+ \todo[inline]{How are these word pairs obtained?}
+ \todo[inline]{Explain point bias, 123, 12345}
  The sentence is a statement in which you can agree or disagree. 
  This test method is simple but effective.
 
@@ -787,6 +809,7 @@ combined with the war.
 It would be difficult to modify these files on a running instance.
 
 *** Existing architecture
+\todo[inline]{add archtitecture image}
     \cleared
     The game uses a client server architecture.
     The client is written in unity and the server is a Java servlet running on
@@ -803,8 +826,10 @@ It would be difficult to modify these files on a running instance.
 
 **** Text processing
     \cleared
-     Text processing is done with help of the ALICE chat bot. This bot does the
-     parsing and validation of AIML, after this is done it specifies a response
+     Text processing is done with help of the ALICE chat bot.
+     \todo{chatbot is just a fall trough mechanism and the drools are central}
+     This bot does the parsing and validation of AIML,
+     after this is done it specifies a response
      based on the AIML.
      The ALICE bot is used as a library by the wildfly application that
      handles web socket comminucation and game tracking.
@@ -821,7 +846,13 @@ It would be difficult to modify these files on a running instance.
      The only "extra" deliberation happens in the drools, which as of right now
      only handles emotions.
 
+\todo[inline]{Drools is the bdi basis but it still lacks the bdi /structure/}
+
 * BDI and Jung
+\todo[inline]{Describe what  am I doing in this chapter?}
+\todo[inline]{We can make an analogy of type towards puzzle pieces, and the thing I'm doing with function combination is just a chain of puzzle pieces that fit together, where the unit is a straight end and the input is left open until there is a user meaning input}
+\todo[inline]{Add an image of architecture, recoginition section (currenlty aiml), delibiration section (perhaps on 3 levels, this is where personality can come in), mk sentence section (go from meaning to string)}
+\todo[inline]{Explain why I want to replace the chatbot, (because there is currently no way to stop it from reacting to something, and since its mostly an xml parser I think its just easier to replace with a new system (also xml is bad?))}
 <<Jungian BDI>>
 \cleared
 In this chapter we will consider how to combine Jungian psycology with BDI,
@@ -853,8 +884,7 @@ something which is already done by MBTI (see [[sec:mbti:order_comparison]]).
 \cleared
 Another consideration to make is what are these function attitudes?
 By which I mean what do they represent in computer science terms: progams,
-objects or functions?
-What should they be?
+objects or functions? What should they be?
 Since Jung wasn't much of a mathematician cite:jungonfunctions its just an
 informal definition.
 However we can make a mapping to certain BDI processes
@@ -1179,6 +1209,8 @@ Therefore $B = (m, h, h', [m], [D], G)$
 | $N_e$    | Meaning graph         |
 | $N_i$    | Meaning graph         |
 
+\todo[inline]{Intuition does backward chaining twards what I want, with milestones to get twoards a goal, can go wrong by getting into a loop}
+\todo[inline]{Sensing does forward chaining, waht do I have and ho do I get there. It is very parnoid of not being able to get the next step, can go wrong trough oversight loss}
 \newpage
 
 **  Consistency with theory
@@ -1345,6 +1377,30 @@ This results in a much more terse definition:
 </patterns>
 #+END_SRC
 
+*** using yml
+Now since the above isn't technically valid xml (you can't have multiple root
+nodes) we can use a more terse langauge
+such as yml:
+
+#+BEGIN_SRC yml
+literal: How are you
+patterns:
+  - How * you
+  - How are you *
+#+END_SRC
+
+Finally we can extend the pattern functionally by simply using regex support.
+This will make the patterns more precise:
+
+#+BEGIN_SRC yml
+literal: How are you
+patterns:
+  - ^How (*.) you$
+  - ^How are you (*.)
+#+END_SRC
+
+This is more verbose but also more precise.
+
 \todo[inline]{If we have time we can compare information per character between the new and old method, going from 251 to 131 is quite an improvement}
 # https://developer.jboss.org/wiki/FunctionalProgrammingInDrools
 ** Ideas
@@ -1364,6 +1420,16 @@ This results in a much more terse definition:
 http://martinfowler.com/bliki/RulesEngine.html
   I think they're just pure functions that use aspect oriented program to
   intercept and modify the application.
+
+*** Security
++ Don't send passwords as plain text over the network.
++ Use SSL.
++ Probably should hire an expert to do an audit.
+
+*** Protocol
+Start game and new game could be merged?
+Why are you logging towards the client? This seems like a security hole and a
+possible performance bottleneck.
 * In conclusion
 \todo[inline]{Discussion, comparison}
 ** Future work
@@ -1575,3 +1641,19 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
   </persistence>
 #+END_SRC
 
+*** Notes
+\toReview
+If you're located in the communicate_server folder, The rebuild everything
+command is:
+
+#+BEGIN_SRC sh
+  rm -R ~/.m2/repository/cnruithof; (cd ../ && mvn clean && mvn install) && mvn wildfly:deploy
+#+END_SRC
+
+\toReview
+This will re-install the entire project thereby also rebuilding all dependencies.
+mvn clean in there for good measure.
+
+\toReview
+There is a python client script for quick debugging, therefore its unnecessary
+to keep unity running (or use at all).
