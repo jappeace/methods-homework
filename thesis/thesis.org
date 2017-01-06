@@ -145,32 +145,45 @@ methodologies used,
 and finally we will look at the serious game in its existing form.
 
 ** Personality theories
-\todo[inline]{What is personlaity? (wiki ref can be used even, but I think its in the handbook)}
-\todo{for example: Personality identifiers that can be used with reasonable consistency to predict behavior}
+   \toReview
+   A personality is a set of identifiers that can be used with
+   reasonable consistency cite:mischel2008introductionp3_definition.
+   What we want from this model is a guideline of implementation for the program,
+   that is to say,
+   the more the theory says about internal workings of a person the better it is.
+   We want it to model to be realistic of course,
+   but we also want it to be implementable.
+   This is where we have a conflict of interest with the field of
+   psychology since they do not necessarily care about implementation details.
 
-\todo[inline]{What do we want form personality theories? We just want a model to implement.}
-\todo[inline]{There is no "best" personality theory, its just something to argue about}
-\todo[inline]{Personality is just an approach, there doesn't exist a best model}
-\todo[inline]{Give some examples where we expect personality to be different per model? This then can be used as test casus for the eventual bot}
+   \toReview
+   This conflict of interest can be seen for example in
+   cite:mischel2008introductionp4_defpoints, where a criteria of personality is
+   that it should be stable and coherent. However this is a poor
+   software specification since there is no unit of measurement
+   (how long should it be stable, and what range is acceptably stable),
+   but for psychology it is a good definition. Since not a program has to work
+   with it but a human, who can determine for himself what these things are.
 
- \cleared
- The field of psychology has been somewhat active in trying to model human
- personality cite:pervin2008handbook. 
- Several frameworks have been developed to figure out people's
- personality and what this in turn would mean for their lives.
- We are interested in two ways in existing personality theories:
- 1. Accuracy, if a personality thoery does not fit the reality at all it won't
-    help anyone in the serious game.
- 2. Ease of implementation. If the personality theory is too hard (or impossible)
-    to implement in the serious game than we can't use it.
- The field of psychology is very interested in the first requirement. 
- However the second requirement not so much.
- Therefore our first job will be to list existing psychology personality
- frameworks,
- and filter out those that are unfeasible to implement.
+   \cleared
+   The field of psychology has been somewhat active in trying to model human
+   personality cite:pervin2008handbook. 
+   Several frameworks have been developed to figure out people's
+   personality and what this in turn would mean for their lives.
+   We are interested in two ways in existing personality theories:
+   1. Accuracy, if a personality thoery does not fit the reality at all it won't
+       help anyone in the serious game.
+   2. Ease of implementation. If the personality theory is too hard (or impossible)
+       to implement in the serious game than we can't use it.
+   The field of psychology is very interested in the first requirement. 
+   However the second requirement not so much.
+   Therefore our first job will be to list existing psychology personality
+   frameworks,
+   and filter out those that are unfeasible to implement.
 
 
 *** The big five
+\todo[inline]{Give some examples where we expect personality to be different per model? This then can be used as test casus for the eventual bot}
  \cleared
  The first framework we'll discuss is called the big five.
  The term big five first coined in 1981 by Goldberg cite:goldberg1981language.
@@ -179,16 +192,26 @@ and finally we will look at the serious game in its existing form.
 
  \cleared
  This framework was not really invented, but rather discovered trough
- lexical analyses cite:tupes1961recurrent.
+ lexical analyses by for example Tupes cite:tupes1961recurrent.
  Although the labels used were different,
  they conveyed the same idea as the big five model used now.
  The methodology used is something which is called factor analyses[fn::
  In the paper the term 'varimax rotational program' is used,
  but if we look this term in wikipedia, we can see the result is called factor
- analyses cite:varymaxrotanonalprogram]. \todo{What data did they use? What did they look at? what did they do?}
+ analyses cite:varymaxrotanonalprogram].
  Factor analyses is a statistical methodology that tries to find underlying
  hidden variables.
  This methodology has become widely used in psychology cite:fabrigar1999evaluating.
+
+ \toReview
+ The data Tupes used is from Catell cite:cattell1947confirmation and several
+ others. Catell used a rating scheme, where a trait was introduced and
+ everyone then had to rate everyone else as average, below or above average.
+ Persons could also use one extreme rating per trait for one person.
+ These traits where based on the /personality sphere/ concept which
+ tried to cover the entire surface of personality by providing many small trait
+ areas. Examples of the traits are: "Attention getting vs Self sufficient", or
+ "Assertive vs Submissive".
 
  \cleared
  In the begining of the 1990's there were many ways to measure personality that
@@ -213,7 +236,7 @@ and finally we will look at the serious game in its existing form.
  words every time cite:pervin2008handbookp114..116.
 
  \cleared
- The big five as in the OCEAN definition \todo{Isn't this interpretation?}
+ The big five as in the OCEAN definition
  has the following units of measurement:
  - Openness or originality, if you score high on this you enjoy learning new
    things just for the sake of learning. If you score low then you don't enjoy
@@ -238,7 +261,7 @@ and finally we will look at the serious game in its existing form.
  it does not have any theoretical foundation cite:eysenck1992four.
  This means it becomes difficult to speak about implementation.
  To make this more clear we use a thought experiment:
- Lets say you have a score of 0.8 for Neuroticism, \todo[inline]{How can thesescores be used? Is there a standard intrepertation from psycology? Or are there examples of how much work it is to do this yourself?}
+ Lets say you have a score of 0.8 for Neuroticism,
  how does this influence my decision for selecting action $a$ or $b$?
  Now you could say, use a mixed strategy where in you choose 80% of the time
  the neurotic typical neurotic approach.
@@ -246,9 +269,25 @@ and finally we will look at the serious game in its existing form.
  neurotic.
  But once we've done this we still haven't taken into account any of the
  other factors.
- Solving this is a non-trivial endeavour.
+ Solving this is a non-trivial endeavor.
 
+ \drafting
+ There are some existing solutions in which OCEAN is implemented, for
+ example allbeck used it as a mapping to the EMOTE system cite:allbeck2002toward,
+ whereas cite:durupinar2008creating used the OCEAN values as a low level mapping
+ in steering behaviors
+ and finally cite:etheredge2016personality used the values for action selection
+ in a dialogue, but extended the descriptions of OCEAN with IPIP
+ with an entire chapter devoted to explaining this.
+ Although these implementation are based on the same OCEAN model,
+ the influence of it has starkley different effects on their
+ respective implementations.
+ Since each of them decide to reduce the OCEAN model in some kind of way
+ we can conclude that although OCEAN is good for discussing the psyche,
+ but it is either incomplete or inssuficuent for a software sepecitifaction role. 
+ 
 *** Personality types
+\todo[inline]{Give some examples where we expect personality to be different per model? This then can be used as test casus for the eventual bot}
  <<sec:types>>
  \cleared
  To address the big five's issue of having no thoeretical foundation we'll
