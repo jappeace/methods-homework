@@ -321,7 +321,6 @@ and finally we will look at the serious game in its existing form.
  It should also be noted that the unconsciousness according to Jung is
  flipped in attitude. cite:hall1973primer97-98attitude
 
-\todo[inline]{extend the examples more}
  \cleared
  Then there are four functions.
  The first two functions are called the /rational functions/
@@ -341,6 +340,7 @@ and finally we will look at the serious game in its existing form.
  by which its explained as "just a hunch" or "I feel it in my bones".
  cite:beauchamp2005communication,hall1973primer98-100functions
 
+ \todo[inline]{extend the examples more}
  \cleared
  To use these functions they have to be combined with attitudes, producing
  /function attitudes/.
