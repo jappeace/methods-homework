@@ -341,7 +341,7 @@ and finally we will look at the serious game in its existing form.
  cite:beauchamp2005communication,hall1973primer98-100functions
 
  \todo[inline]{extend the examples more}
- \cleared
+ \drafting
  To use these functions they have to be combined with attitudes, producing
  /function attitudes/.
  Therefore a person will never be of a thinking type,
@@ -349,12 +349,15 @@ and finally we will look at the serious game in its existing form.
  cite:hall1973primer100-101combo
  We can now imagine what this means,
  an extroverted thinker will for example make judgement about the real world,
- and therefore be more like a scientist, \todo{Why is this the case?}
- \todo{This i too unclear because it doesn't it for biology scientists for example}
- whereas an introverted thinker will make judgement about ideas in his mind,
- and therfore will be an excelent philosopher.
+ and therefore be more like a scientist, where he would devote much of his time
+ on studying natural phenomena, for example a biology researcher would study
+ natural objects and behaviors and is therefore more likely to have extroverted
+ thinking as dominant function.
+ An introverted thinker will make judgement about ideas in his mind,
+ and therefore will be an excellent philosopher, or mathematician, where
+ consistency of the internal reasoning process is most important.
 
- \cleared
+ \toReview
  Let $\mathcal{J}$ denote the set of all possible jungian function attitudes
  such that:
  \[ \mathcal{J} = \{ T_e, T_i, F_e, F_i, S_e, S_i, N_e, N_i\}\]
@@ -362,24 +365,52 @@ and finally we will look at the serious game in its existing form.
  + $T_e$ stands for extraverted thinking, which is thinking about objects in the
    real world. This is thinking with a goal, a problem to solve,
    to check weather certain laws are upheld, or a system to check.
+   As said before a typical example of $T_e$ based reasoning would be a
+   biologist studying natural behavior.
  + $T_i$ stands for introverted thinking,
    this kind of thinking could be called deductive,
    it tries to construct a framework to explain the world.
    This is consistent reasoning based on internal believes,
    which does not necessarily solve a problem.
+   A typical example of $T_i$ based reasoning is a mathematician creating or
+   combining new mathematical structures with help of axiomatic logic.
  + $F_e$ stands for extraverted feeling, where objective or external criteria
    is used to judge, for example something is beautifull or ugly.
    Established standards may be used to decide this and therefore its a
-   conservative function. Decisions are based on interpersonal and cultural values.
+   conservative function.
+   Decisions are based on interpersonal and cultural values.
+   A typical example of $F_e$ based reasoning is about fashion and fads.
+   Deciding what is fashionable at the moment is an $F_e$ based process.
+   A typical profession would be working at a clothes shop,
+   where the knowledge of the latest trends is crucial.
  + $F_i$ stands for introverted feeling, decisions based on personal values and
    believes.
+   People who have this as dominant function attitude could be characterized by
+   "still waters run deep".
+   A typical profession for this type is in counseling or health care, because
+   empathy comes rather natural to them cite:fiproffesionadvice.
  + $S_e$ stands for extroverted sensing, Act on concrete data from the here and
    now. Then lets it go.
+   People of this type are often realistic and practical. A typical
+   profession driver of heavy machinery or athlete cite:seproffesionadvice, 
+   because living in the moment is most important for those professions which
+   comes natural to $S_e$.
  + $S_i$ stands for introverted sensing, acts on concrete data from memories and
    passed experience.
+   A possible profession for the people with $S_i$ as dominant function is in
+    quality assurance, where the perfect model in their mind can be easily
+  compared to the product in question cite:siproffesionadvice.
  + $N_e$ stands for extraverted intuition, try to find possibilities in every
    situation.
+   Extroverted intuition can be very good entrepreneurs, seeing ideas in
+   almost every situation, they also makes them very inspiring leaders because
+   they are very excited about their ideas cite:neproffesionadvice.
  + $N_i$ stands for introverted intuition. Looks new possibilities in ideas.
+   A typical occupation of this type is artist or visionary
+   cite:hall1973primer104nitype,
+  this is because connecting ideas with each other comes natural to this type.
+   However just like the typical artist it may not always be understood why by
+  his peers
 
  \cleared
  <<Jungian alternating functions>>
@@ -1483,6 +1514,8 @@ possible performance bottleneck.
 bibliographystyle:unsrt
 bibliography:refs.bib
 
+
+\newpage
 ** B. Building
 :PROPERTIES:
 :UNNUMBERED: t
@@ -1686,7 +1719,7 @@ If you're located in the communicate_server folder, The rebuild everything
 command is:
 
 #+BEGIN_SRC sh
-  rm -R ~/.m2/repository/cnruithof; (cd ../ && mvn clean && mvn install) && mvn wildfly:deploy
+rm -R ~/.m2/repository/cnruithof; (cd ../ && mvn clean && mvn install) && mvn wildfly:deploy
 #+END_SRC
 
 \toReview
@@ -1696,3 +1729,17 @@ mvn clean in there for good measure.
 \toReview
 There is a python client script for quick debugging, therefore its unnecessary
 to keep unity running (or use at all).
+
+\newpage
+** Test
+\drafting
+test uml
+#+BEGIN_SRC plantuml :file img/sequence1.png :exports results
+  ' this is a comment
+  Alice -> Bob: Authentication Request
+  Bob --> Alice: Authentication Response
+  John --> Alice: another Authentication Request
+  Alice --> John: another Authentication Response
+#+END_SRC
+split
+why would 
