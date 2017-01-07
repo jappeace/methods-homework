@@ -183,7 +183,7 @@ and finally we will look at the serious game in its existing form.
 
 
 *** The big five
-\todo[inline]{Give some examples where we expect personality to be different per model? This then can be used as test casus for the eventual bot}
+  <<OCEAN>>
  \cleared
  The first framework we'll discuss is called the big five.
  The term big five first coined in 1981 by Goldberg cite:goldberg1981language.
@@ -271,7 +271,7 @@ and finally we will look at the serious game in its existing form.
  other factors.
  Solving this is a non-trivial endeavor.
 
- \drafting
+ \toReview
  There are some existing solutions in which OCEAN is implemented, for
  example allbeck used it as a mapping to the EMOTE system cite:allbeck2002toward,
  whereas cite:durupinar2008creating used the OCEAN values as a low level mapping
@@ -340,8 +340,7 @@ and finally we will look at the serious game in its existing form.
  by which its explained as "just a hunch" or "I feel it in my bones".
  cite:beauchamp2005communication,hall1973primer98-100functions
 
- \todo[inline]{extend the examples more}
- \drafting
+ \toReview
  To use these functions they have to be combined with attitudes, producing
  /function attitudes/.
  Therefore a person will never be of a thinking type,
@@ -408,9 +407,9 @@ and finally we will look at the serious game in its existing form.
  + $N_i$ stands for introverted intuition. Looks new possibilities in ideas.
    A typical occupation of this type is artist or visionary
    cite:hall1973primer104nitype,
-  this is because connecting ideas with each other comes natural to this type.
+   this is because connecting ideas with each other comes natural to this type.
    However just like the typical artist it may not always be understood why by
-  his peers
+   his peers.
 
  \cleared
  <<Jungian alternating functions>>
@@ -486,61 +485,71 @@ and finally we will look at the serious game in its existing form.
  (OD) cite:sample2004myers. 
  But it has gotton some heavy critism in from the field of psycology.
 
- \todo[inline]{Change these critisims to be more out of the references rather than that we agree with them}
- \cleared
+ \toReview
+ MBTI has always produced a continues scoring system.
+ However the creators insist that type is enough for making assessment judgments.
  Since MBTI reduces the test scores to type,
  it is expected that most of the population would fall into either proposed
  dimensions. For example $I$ or $E$.
  This is called a bimodal distribution.
- However it has been shown that is not the case cite:bess2002bimodal,
+ However cite:bess2002bimodal suggests this is not the case,
  but this could be the result of the scores being biderictional
  cite:salter2005two.
- An extended investigation into weather jungian constructs are truly categorial
- however concluded that this was not the case and a continues scale \todo{ Why is this a critique, dignum got a scale like result? we should explain what's happenning here}
- is required
- cite:arnau2003jungian.
+ In an extended investigation cite:arnau2003jungian into weather jungian
+ constructs are truly categorical suggested however that this was maybe not
+ the case and a continues scale for assessment judgements is required.
 
- \cleared
- It also fell short on factor analyses and reliability.
+ \toReview
+ In cite:sipps1985item it is put trough a method called factor analyses.
+ This is similiar to the technique where OCEAN is based upon (see section [[OCEAN]]).
  With this technique the desired outcome is that there are 4 question clusters
  (or factors), one for each dimension.
  Secondly these factors should be independent,
  a question that influences I/E score should not influence S/N.
  Finally we expect the factors to indicate differences between individuals.
  Random questions won't do that.
- However it turned out the MBTI had more than 4 factors (6), then there were
- questions that were in different factors than the majority
- and finally there were also some quetions doing no discrimination at all
- (not being scored) cite:sipps1985item. 
+ However the study indicated that the MBTI had more than 4 factors (6),
+ cite:sipps1985item explains the first extra factor as "unconditional positive",
+ but could not explain the other extra factor.
+ Something else of note worth cite:sipps1985item indicated was that there
+ were questions doing no discrimination at all (not being scored). 
 
- \cleared
+ \toReview
  Reliability indicates how often the same result will come out of the test,
  for example if you take the mbti a 100 times you may be classified the same
- type for 70 times.
- Which would be an indication it has a reliablity of arround 70%.
+ type for 70 times,
+ which would be an indication it has a reliability of arround 70%.
  But in psycology another aspect is important,
  namely the interval in between which the tests are taken,
  if for example two tests produce starkly different results but a long time
  has passed between them its not considered a big issue.
- However for the MBTI it has been shown that after a period of 5 weeks 50%
- \todo[inline]{Is there any research showing a year consitency? Perhaps users would change their outcome becuase they didn't like the results and changed their input cause they remember?}
- of the participants changed in score cite:pittenger1993measuring.
- Since Jung basically said that type is decided very early on in life
- this result is rather bad cite:hall1973primer106inborn.
+ In cite:pittenger1993measuring it is suggested that after a period of 5 weeks 50%
+ of the participants changed in score.
+ However one should take into consideration that after taking the test a first time 
+ people could consciously decide to change their opinion because they think its
+ more desirable to have a different type.
+ Jung said that type is decided very early on in life cite:hall1973primer106inborn
+ so having reliable scoring is important.
 
 **** PPSDQ
- \cleared
+ \drafting
  The PPSDQ keeps basically the same theory as MBTI cite:kier1997new,king1999score,
  but uses a different measuring method.
  Instead of forced questions it uses a word-pair checklist for
  $I/E, S/N$ and $T/F$, and for the $J/P$ self describing sentences are used
  cite:melancon1996measurement.
- A word pair checklist looks like:
-
- | Word          |   |   |  | Word      |
- |---------------+---+---+---+-----------|
- | Empathy       | 1 | 2 | 3 | Logic     |
- | Dispassionate | 1 | 2 | 3 | Emotional |
+ An example of a word pair checklist can be found in table [[tab:word-pair-example]].
+ Also note that the amount of available options presented in these kind of
+ test give an inherent bias to the results. If there are 3 choices for
+ example you may pick more extreme answers than a 5 option choice test, since with
+ five options you can go less extreme but still in a direction.
+ 
+#+CAPTION: An example of a word pair checklist, where the test taker should choose the  word that he identifies most with
+#+NAME: tab:word-pair-example
+ | Word          |   |   |   |   |   | Word      |
+ |---------------+---+---+---+---+---+-----------|
+ | Empathy       | 1 | 2 | 3 | 4 | 5 | Logic     |
+ | Dispassionate | 1 | 2 | 3 | 4 | 5 | Emotional |
 
  \todo{How do you select here?}
  \todo{In the real test I think they used 5 point}
@@ -1731,10 +1740,13 @@ There is a python client script for quick debugging, therefore its unnecessary
 to keep unity running (or use at all).
 
 \newpage
-** Test
+** UML Test
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
 \drafting
 test uml
-#+BEGIN_SRC plantuml :file img/sequence1.png :exports results
+#+BEGIN_SRC plantuml :file img/uml/sequence1.png :exports results
   ' this is a comment
   Alice -> Bob: Authentication Request
   Bob --> Alice: Authentication Response
