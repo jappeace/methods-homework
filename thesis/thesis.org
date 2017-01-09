@@ -827,8 +827,7 @@ and finally we will look at the serious game in its existing form.
  
 ** The serious game
  <<The serious game>>
-\todo[inline]{this section is not complete because I haven't gotten the game to work propperly I think (or the game is incomplete which mean I describe it way better than that it actually is)}
-  \cleared
+ \cleared
  This chapter describes the game we inherited from our predecessors.
  We have to discuss precisely what they did for two reasons:
  1. To help understand the design constraints we work under
@@ -857,8 +856,17 @@ and finally we will look at the serious game in its existing form.
  cite:augello2015social.                                            
  The game in this version also has the ability to judge the skills practiced
  cite:augello2016social,
- such as following certain protocols                                
- (for example be polite and follow medical standards) and empathy.  
+ such as following certain protocols (politeness, medical standards), and empathy.  
+
+ \drafting
+ Now there is a difference between the architecture in the published papers and
+ the source code received, in cite:augello2016social the judgement of these
+ practices was for example encoded within the S-AIML langauge,
+ however in the source code AIML has taken a step back,
+ being only used for processing and not deliberation
+ (which is now being taken over by drools as discussed in [[existing architecture]]).
+ We will be using the source code as a guideline in discussing the existing
+ work because its more relevant.
 
 *** Existing functionality
     \cleared
@@ -889,20 +897,63 @@ combined with the war.
 It would be difficult to modify these files on a running instance.
 
 *** Existing architecture
+<<existing architecture>>
 \todo[inline]{add archtitecture image}
     \cleared
-    The game uses a client server architecture.
+    The game uses a client server architecture (see figure [[fig:components]]).
     The client is written in unity and the server is a Java servlet running on
     wildfly.
     Communication between the two applications happens trough a web socket.
     A web socket is used because it allows the chatbot to pro-active, which is not
     possible with a technology such as REST.
 
+#+NAME: fig:components
+#+BEGIN_SRC plantuml :file img/uml/components.png :exports results
+[Unity Client] <--> Websocket : json
+[Wildfly java servlet (server)] <--> Websocket : json
+#+END_SRC
+#+CAPTION: Component diagram of the application
+#+LABEL: fig:components
+#+RESULTS: fig:components
+
 **** Source tree
     \cleared
     There are two major source trees tracked in separate version control systems.
-    The first manages the client and the second the server.
-    The protocol is tracked in the respective client and server folders named dto.
+    The first manages
+    the client[fn::received on commit 40b55c0da1f556ba2b66ea8322d72008c9df1e72]
+    and the second the
+    server[fn:: received on commit 92f12fc26a7da83554903bfe7c6ed1cc64dd5a53].
+    The protocol is tracked in the respective client and server folders and
+    named dto.
+
+**** Protocol
+    \drafting
+    The protocol is setup to be intended for a much larger system.
+    There are hints of a registration system but further inspection
+    revealed that only logging in worked and was required.
+    This is tied into the server's ability to run multiple games. 
+    there is also a limited monitoring functionality, the active games can
+    be listed with a specialized message.
+    A typical happy path scenario is listed in figure [[fig:sequence]]
+
+#+NAME: fig:sequence
+#+BEGIN_SRC plantuml :file img/uml/sequence.png :exports results
+  actor client
+  entity server
+  client -> server : login(userid,password)
+  client -> server : newGameRequest
+  server --> client : newGameResponse(idNewGame)
+  client -> server : startGame(idGame)
+  server --> client : log(text)
+  == Chat start (example) ==
+  client -> server: userUtt(text)
+  server --> client: agentUtt(text)
+  server -> client: agentUtt(text)
+  client --> server: userUtt(text)
+#+END_SRC
+#+CAPTION: Sequence diagram of a typical game
+#+LABEL: fig:sequence
+#+RESULTS: fig:sequence
 
 **** Text processing
     \cleared
@@ -928,6 +979,8 @@ It would be difficult to modify these files on a running instance.
 
 \todo[inline]{Drools is the bdi basis but it still lacks the bdi /structure/}
 
+
+\newpage
 * BDI and Jung
 \todo[inline]{Describe what  am I doing in this chapter?}
 \todo[inline]{We can make an analogy of type towards puzzle pieces, and the thing I'm doing with function combination is just a chain of puzzle pieces that fit together, where the unit is a straight end and the input is left open until there is a user meaning input}
@@ -1293,7 +1346,7 @@ Therefore $B = (m, h, h', [m], [D], G)$
 \todo[inline]{Sensing does forward chaining, waht do I have and ho do I get there. It is very parnoid of not being able to get the next step, can go wrong trough oversight loss}
 \newpage
 
-**  Consistency with theory
+** Consistency with theory
 \toReview
 In this section we will explore if especially INTJ and ENTJ (MBTI) types would
 produce different actions by analyzing when the functions would act.
