@@ -868,7 +868,7 @@ and finally we will look at the serious game in its existing form.
  We will be using the source code as a guideline in discussing the existing
  work because its more relevant.
 
-*** Existing functionality
+*** Functionality
     \cleared
  There are two major functionality perspectives to consider,
  that of the student, and that of the teacher.
@@ -896,7 +896,7 @@ The teacher probably needs an expert to do this since these are right now
 combined with the war.
 It would be difficult to modify these files on a running instance.
 
-*** Existing architecture
+*** Application Architecture
 <<existing architecture>>
 \todo[inline]{add archtitecture image}
     \cleared
@@ -917,7 +917,7 @@ It would be difficult to modify these files on a running instance.
 #+RESULTS: fig:components
 
 **** Source tree
-    \cleared
+    \toReview
     There are two major source trees tracked in separate version control systems.
     The first manages
     the client[fn::received on commit 40b55c0da1f556ba2b66ea8322d72008c9df1e72]
@@ -927,7 +927,7 @@ It would be difficult to modify these files on a running instance.
     named dto.
 
 **** Protocol
-    \drafting
+    \toReview
     The protocol is setup to be intended for a much larger system.
     There are hints of a registration system but further inspection
     revealed that only logging in worked and was required.
@@ -955,16 +955,63 @@ It would be difficult to modify these files on a running instance.
 #+LABEL: fig:sequence
 #+RESULTS: fig:sequence
 
+
+\newpage
+*** Server architecture
+\drafting
+The most important classes are shown in figure [[fig:class]].
+WebSocket is the entry point for the program where the messages from the client
+enter.
+
+#+NAME: fig:class
+#+BEGIN_SRC plantuml :file img/uml/class.png :exports results
+interface ChatBotEngine{
+  +String chat(String request)
+  +void setSession(Session session)
+}
+class ChatBotEngineImpl {
+  -KieSession kSession
+  -Chat chatSession
+  -Session session
+}
+ChatBotEngine <|-- ChatBotEngineImpl
+class WebsocketService{
+  -ChatBotEngine cbe
+  +void onMessage(Session session, String message)
+  -void chat(Session session, Strin message)
+}
+WebsocketService --> ChatBotEngine
+
+package org.kie.api.runtime{
+KieSession <-- ChatBotEngineImpl
+}
+package org.alicebot.ab{
+Chat <-- ChatBotEngineImpl
+}
+#+END_SRC
+#+CAPTION: Class diagram of the server, where kie is the engine that handles the drools
+#+LABEL: fig:class
+#+RESULTS: fig:class
+
+\drafting
+The Websocket uses a ChatBotEngine to determine how to reply to userUtterence's,
+Where ChatBotEngineImpl is the concrete implementation.
+ChatBotEngineImpl uses a KieSession for the drools and a Chat which is the alicebot.
+Once the startGame message is received the kie service is started,
+which runs on a dedicated thread to do drool deliberation.
+This allow drools to take the initiative, for example when the user
+hasn't replied after 20 seconds the agent will ask the user why he hasn't
+replied yet.
+
 **** Text processing
-    \cleared
+    \toReview
      Text processing is done with help of the ALICE chat bot.
      \todo{chatbot is just a fall trough mechanism and the drools are central}
      This bot does the parsing and validation of AIML,
-     after this is done it specifies a response
-     based on the AIML.
+     with help of the knowledge encoded in AIML it can specify a response.
      The ALICE bot is used as a library by the wildfly application that
      handles web socket comminucation and game tracking.
- cite:augello2016social
+
 **** Deliberation
     \cleared
      To do deliberation ALICE was changed to allow for extra tags.
@@ -1794,18 +1841,3 @@ There is a python client script for quick debugging, therefore its unnecessary
 to keep unity running (or use at all).
 
 \newpage
-** UML Test
-:PROPERTIES:
-:UNNUMBERED: t
-:END:
-\drafting
-test uml
-#+BEGIN_SRC plantuml :file img/uml/sequence1.png :exports results
-  ' this is a comment
-  Alice -> Bob: Authentication Request
-  Bob --> Alice: Authentication Response
-  John --> Alice: another Authentication Request
-  Alice --> John: another Authentication Response
-#+END_SRC
-split
-why would 
