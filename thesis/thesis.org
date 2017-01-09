@@ -539,10 +539,20 @@ and finally we will look at the serious game in its existing form.
  $I/E, S/N$ and $T/F$, and for the $J/P$ self describing sentences are used
  cite:melancon1996measurement.
  An example of a word pair checklist can be found in table [[tab:word-pair-example]].
- Also note that the amount of available options presented in these kind of
+ The word pairs themselves were obtained by prescribing an exploratory test(s) to a
+ sample in which the proto PPSDQ was submitted and the MBTI itself, factor
+ analyses was used to determine correlation, this is done in
+ cite:thompson1994concurrent.
+ The optimal amount of points presented is a subject for debate.
+ Common sense would suggest that more points would give more precision,
+ however in cite:matell1971there it is suggested that reliability and validity
+ do not increase with more points. In cite:garland1991mid however they
+ state the importance of an available midpoint.
+ The 5 points in the PPSDQ are not motivated.
+ Note that the amount of available options presented in these kind of
  test give an inherent bias to the results. If there are 3 choices for
  example you may pick more extreme answers than a 5 option choice test, since with
- five options you can go less extreme but still in a direction.
+ five options you can go less extreme but still in a direction. \todo{Cite this?}
  
 #+CAPTION: An example of a word pair checklist, where the test taker should choose the  word that he identifies most with
 #+NAME: tab:word-pair-example
@@ -551,10 +561,7 @@ and finally we will look at the serious game in its existing form.
  | Empathy       | 1 | 2 | 3 | 4 | 5 | Logic     |
  | Dispassionate | 1 | 2 | 3 | 4 | 5 | Emotional |
 
- \todo{How do you select here?}
- \todo{In the real test I think they used 5 point}
  \todo[inline]{How are these word pairs obtained?}
- \todo[inline]{Explain point bias, 123, 12345}
  The sentence is a statement in which you can agree or disagree. 
  This test method is simple but effective.
 
