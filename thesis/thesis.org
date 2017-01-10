@@ -431,7 +431,7 @@ and finally we will look at the serious game in its existing form.
  of measuring personality type is changed. 
  It uses a strutured approach rather than Carl Jungs projective approach.
  The responses to items are finite and therefore can be deduced based on theory.
- In contrast to Jung's technique where he used open ended anwsering with word
+ In contrast to Jung's technique where he used open ended answering with word
  associations cite:hall1973primer23method.
  Then there is the introduction of an extra index used to order function
  attitudes cite:carlson1985recent.
@@ -646,7 +646,7 @@ and finally we will look at the serious game in its existing form.
  what to do?
  Select $S_i$, thereby skipping $T_i$, or select $T_i$ and let it decide to
  select $S_i$, but this would basially give $T_i$ censorship rights.
- This is difficult to anwser therfore it is a lot more difficult to implement
+ This is difficult to answer therfore it is a lot more difficult to implement
  than PPSDQ.
  Since SL-TDI drops an assumption, which is shown with experimental evidence
  to be false cite:loomis1980testing, we can say SL-TDI's theory is most realistic.
@@ -858,8 +858,8 @@ and finally we will look at the serious game in its existing form.
  cite:augello2016social,
  such as following certain protocols (politeness, medical standards), and empathy.  
 
- \drafting
- Now there is a difference between the architecture in the published papers and
+ \toReview
+ There is a difference between the architecture in the published papers and
  the source code received, in cite:augello2016social the judgement of these
  practices was for example encoded within the S-AIML langauge,
  however in the source code AIML has taken a step back,
@@ -958,76 +958,161 @@ It would be difficult to modify these files on a running instance.
 
 \newpage
 *** Server architecture
-\drafting
+\toReview
 The most important classes are shown in figure [[fig:class]].
 WebSocket is the entry point for the program where the messages from the client
 enter.
 
 #+NAME: fig:class
 #+BEGIN_SRC plantuml :file img/uml/class.png :exports results
-interface ChatBotEngine{
-  +String chat(String request)
-  +void setSession(Session session)
-}
-class ChatBotEngineImpl {
-  -KieSession kSession
-  -Chat chatSession
-  -Session session
-}
-ChatBotEngine <|-- ChatBotEngineImpl
-class WebsocketService{
-  -ChatBotEngine cbe
-  +void onMessage(Session session, String message)
-  -void chat(Session session, Strin message)
-}
-WebsocketService --> ChatBotEngine
+  interface ChatBotEngine{
+    +String chat(String request)
+    +void setSession(Session session)
+  }
+  class ChatBotEngineImpl {
+    -KieSession kSession
+    -Chat chatSession
+    -Session session
+  }
+  ChatBotEngine <|-- ChatBotEngineImpl
+  class WebsocketService{
+    -ChatBotEngine cbe
+    +void onMessage(Session session, String message)
+    -void chat(Session session, Strin message)
+  }
+  WebsocketService --> ChatBotEngine
 
-package org.kie.api.runtime{
-KieSession <-- ChatBotEngineImpl
-}
-package org.alicebot.ab{
-Chat <-- ChatBotEngineImpl
-}
+  package org.kie.api.runtime{
+  KieSession <-- ChatBotEngineImpl
+  class KieSession{
+      +Facthandle insert(Object obj)
+      +void setGlobal(String identifier, Object value)
+  }
+  }
+  package org.alicebot.ab{
+  Chat <-- ChatBotEngineImpl
+    class Chat{
+      +HashMap<String, Object> predicates
+      +String multisentenceRespond(String str)
+      +setKieSession(KieSession kie)
+    }
+  }
 #+END_SRC
 #+CAPTION: Class diagram of the server, where kie is the engine that handles the drools
 #+LABEL: fig:class
 #+RESULTS: fig:class
 
-\drafting
+\toReview
 The Websocket uses a ChatBotEngine to determine how to reply to userUtterence's,
 Where ChatBotEngineImpl is the concrete implementation.
 ChatBotEngineImpl uses a KieSession for the drools and a Chat which is the alicebot.
 Once the startGame message is received the kie service is started,
 which runs on a dedicated thread to do drool deliberation.
+At this point facts can be inserted for the drools to react upon, in case
+of the anmnesi scenario the GameStart fact was inserted, which was a marker
+object to indicate that the game has started.
 This allow drools to take the initiative, for example when the user
 hasn't replied after 20 seconds the agent will ask the user why he hasn't
 replied yet.
+A detailed overview of construction can be seen in figure [[fig:construction]].
 
-**** Text processing
-    \toReview
-     Text processing is done with help of the ALICE chat bot.
-     \todo{chatbot is just a fall trough mechanism and the drools are central}
-     This bot does the parsing and validation of AIML,
-     with help of the knowledge encoded in AIML it can specify a response.
-     The ALICE bot is used as a library by the wildfly application that
-     handles web socket comminucation and game tracking.
+\toReview
+In the class diagram (figure [[fig:class]]), we can see an attribute to the Chat
+class called predicates.
+This is a bag of variables the drools can use to keep track of the scenario
+progression.
+The setGlobal method of KieSession is used to expose global objects to drools.
+In this case the ChatBotEngineImpl is exposed.
+Insert can be used to insert facts.
+The difference between facts and globals is that facts are evaluated by
+the  rule base, where as globals are used by the rule base.
+A fact can be considered a value.
+The current program uses globals as comminucation with external libraries
+(for example the websocket and chat session).
 
-**** Deliberation
-    \cleared
-     To do deliberation ALICE was changed to allow for extra tags.
-     These are hooks to determine when specific drools should be used.
-     As of right now the only thing the drools do is modify the emotion of the
-     agent which is reflected in the scenario score.
-     It appears as if the entire bot is only reactive.
-     All deliberation is done in the predefined xml files which is quite limited
-     in scope.
-     The only "extra" deliberation happens in the drools, which as of right now
-     only handles emotions.
-
-\todo[inline]{Drools is the bdi basis but it still lacks the bdi /structure/}
-
+#+NAME: fig:construction
+#+BEGIN_SRC plantuml :file img/uml/construction.png :exports results
+|WebSocket|
+start
+:Receve StartGame message;
+:Construct a chatbotengine;
+|#CCDDDD|Engine|
+:Start kie thread;
+:Register engine as controller in kie;
+:Insert GameStart fact;
+|#AntiqueWhite|Drool|
+:Load aiml files;
+:Construct a Chat object with help of AIML;
+:Chat inserted in controller;
+:Log to client;
+|WebSocket|
+:put game id in websocket user prefs;
+stop
+#+END_SRC
+#+CAPTION: Activity diagram of servergame construction
+#+LABEL: fig:construction
+#+RESULTS: fig:construction
 
 \newpage
+**** Text processing
+
+    \toReview
+     Text processing is done with help of the ALICE chat bot.
+     This bot does the parsing and validation of AIML,
+     with help of the knowledge encoded in AIML it can specify a response.
+     For example:
+#+BEGIN_SRC xml
+	<category>
+		<pattern>
+			What is the problem
+		</pattern>
+		<template>
+			<srai>why are you here</srai>
+		</template>
+	</category>
+	
+    <category>
+		<pattern>
+			* why are you here
+			</pattern>
+		<template>
+			<srai>why are you here</srai>
+		</template>
+	</category>
+#+END_SRC
+\toReview
+     In this example the first category indicates that if a user types
+     "What is the problem" (pattern tags), then the answer can be found in a
+     category with pattern "why are you here".
+     The second category does the same but the star indicates that any
+     characters before the pattern can be ignored to satisfy the category.
+
+**** Deliberation
+\toReview
+     AIML has been extended to allow updating of the drools knowledge base:
+
+#+BEGIN_SRC xml
+<category>
+    <pattern>why are you here</pattern>
+    <preconditions>not healthProblemAsked</preconditions>
+    <template>
+        <insert packageName="sp.anamnesi.health_problem" typeName="HealthProblemAsked" />
+        I'm experiencing a <getDroolsTemplate />. It's quite strong.
+    </template>
+</category>
+#+END_SRC
+
+\toReview
+     In this case if a user utteres the sentence: "why are you here", the bot
+     will check the drool database what his problem is and also update the
+     scenario.
+     Once the scenario is updated the possible responses of the chatbot are
+     changed, as can be seen by the precondition tag.
+     The template tag has some extra tags. The insert tag inserts a fact into
+     the drools knowledge base, the getDroolsTemplate tag queries the drools
+     knowledge base for a string.
+
+
 * BDI and Jung
 \todo[inline]{Describe what  am I doing in this chapter?}
 \todo[inline]{We can make an analogy of type towards puzzle pieces, and the thing I'm doing with function combination is just a chain of puzzle pieces that fit together, where the unit is a straight end and the input is left open until there is a user meaning input}
@@ -1429,7 +1514,7 @@ Since attitudes produce a different process by definition
 we can conclude that they will also behave differently.
 
 * Implementation
-\todo[inline]{How to go from process orientated to selecting an anwser?}
+\todo[inline]{How to go from process orientated to selecting an answer?}
 \drafting
 The communicate game was created to make students able to practice
 communicating cite:jeuring2015demo.
