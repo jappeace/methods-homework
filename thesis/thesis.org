@@ -1,5 +1,5 @@
 #+TITLE: A serious communication game with personalities
-# Pure functional serious comminucation in-game
+# Pure functional serious communication in-game
 #+LaTeX_CLASS: article
 #+LaTeX_CLASS_OPTIONS: [a4paper, drafting]
 
@@ -14,7 +14,7 @@
 #+LATEX_HEADER: \newcommand{\drafting}{\todo[noline, color=gray]{Working draft}}
 #+LATEX_HEADER: \newcommand{\toReview}{\todo[noline, color=yellow]{To review}}
 #+LATEX_HEADER: \newcommand{\underReview}[1]{\todo[noline, color=olive]{Under review by #1}}
-#+LATEX_HEADER: \newcommand{\newlycleared}{\todo[noline, backgroundcolor=white, bordercolor=red]{Cleared*}}
+#+LATEX_HEADER: \newcommand{\newlycleared}{\todo[noline, backgroundcolor=white, bordercolor=red]{Newly cleared}}
 # (something cleared that was under discussion last time)
 #+LATEX_HEADER: \newcommand{\cleared}{\todo[noline, color=white]{Cleared}}
 
@@ -95,11 +95,11 @@ Finally we'll compare the different implementations.
 ** Related work
 <<Related work>>
 \cleared
-  To simulate personality in comminucation games there have been already several
+  To simulate personality in communication games there have been already several
 works proposed.
 Etheredge used the OCEAN personality theory to create argumentative
 agents cite:etheredge2016personality.
-Although argumentation is not the same as comminucation we can consider the
+Although argumentation is not the same as communication we can consider the
 method used to make the personality.
 In this paper a personality model is introduced based on OCEAN.
 To move from personality values in OCEAN towards action selection fuzzy logic
@@ -115,12 +115,12 @@ unwanted behavior many rules need to be inspected before the change can be made.
 \cleared
 In agents with with personalities cocu tried making a complete game based
 on MBTI cite:cocu2015agents.
-However comminucation was never implemented and personality got reduced to
+However communication was never implemented and personality got reduced to
 doing a single action.
 
 \cleared
 Van den bosch also chose to use OCEAN to model characters in a serious
-comminucation game cite:van2012characters.
+communication game cite:van2012characters.
 He used a nested probabilistic if else structure to decide on how agents should
 interact.
 His methodologies had some shortcomings however,
@@ -147,9 +147,10 @@ methodologies used,
 and finally we will look at the serious game in its existing form.
 
 ** Personality theories
-   \toReview
+   \newlycleared
    A personality is a set of identifiers that can be used with
-   reasonable consistency cite:mischel2008introductionp3_definition.
+   reasonable consistency to predict behavior
+   cite:mischel2008introductionp3_definition.
    What we want from this model is a guideline of implementation for the program,
    that is to say,
    the more the theory says about internal workings of a person the better it is.
@@ -158,14 +159,14 @@ and finally we will look at the serious game in its existing form.
    This is where we have a conflict of interest with the field of
    psychology since they do not necessarily care about implementation details.
 
-   \toReview
+   \newlycleared
    This conflict of interest can be seen for example in
    cite:mischel2008introductionp4_defpoints, where a criteria of personality is
    that it should be stable and coherent. However this is a poor
    software specification since there is no unit of measurement
    (how long should it be stable, and what range is acceptably stable),
-   but for psychology it is a good definition. Since not a program has to work
-   with it but a human, who can determine for himself what these things are.
+   but for psychology it is a good definition, because a human can determine out
+   of context what these things are.
 
    \cleared
    The field of psychology has been somewhat active in trying to model human
@@ -205,14 +206,16 @@ and finally we will look at the serious game in its existing form.
  hidden variables.
  This methodology has become widely used in psychology cite:fabrigar1999evaluating.
 
- \toReview
+ \newlycleared
  The data Tupes used is from Catell cite:cattell1947confirmation and several
- others. Catell used a rating scheme, where a trait was introduced and
- everyone then had to rate everyone else as average, below or above average.
+ others. Catell used a rating scheme,
+ where a trait was introduced and all test subjects then had to rate all other
+ test subjects else as average, below or above average for that specific trait.
  Persons could also use one extreme rating per trait for one person.
- These traits where based on the /personality sphere/ concept which
+ These traits in the test were based on the /personality sphere/ concept which
  tried to cover the entire surface of personality by providing many small trait
- areas. Examples of the traits are: "Attention getting vs Self sufficient", or
+ areas.
+ Examples of the traits are: "Attention getting vs Self sufficient", or
  "Assertive vs Submissive".
 
  \cleared
@@ -273,7 +276,7 @@ and finally we will look at the serious game in its existing form.
  other factors.
  Solving this is a non-trivial endeavor.
 
- \toReview
+ \newlycleared
  There are some existing solutions in which OCEAN is implemented, for
  example allbeck used it as a mapping to the EMOTE system cite:allbeck2002toward,
  whereas cite:durupinar2008creating used the OCEAN values as a low level mapping
@@ -284,12 +287,11 @@ and finally we will look at the serious game in its existing form.
  Although these implementation are based on the same OCEAN model,
  the influence of it has starkley different effects on their
  respective implementations.
- Since each of them decide to reduce the OCEAN model in some kind of way
+ Since each of them decided to change the OCEAN model in some kind of way
  we can conclude that although OCEAN is good for discussing the psyche,
- but it is either incomplete or inssuficuent for a software sepecitifaction role. 
+ it is incomplete for a software specification role. 
  
 *** Personality types
-\todo[inline]{Give some examples where we expect personality to be different per model? This then can be used as test casus for the eventual bot}
  <<sec:types>>
  \cleared
  To address the big five's issue of having no thoeretical foundation we'll
@@ -342,7 +344,7 @@ and finally we will look at the serious game in its existing form.
  by which its explained as "just a hunch" or "I feel it in my bones".
  cite:beauchamp2005communication,hall1973primer98-100functions
 
- \toReview
+ \newlycleared
  To use these functions they have to be combined with attitudes, producing
  /function attitudes/.
  Therefore a person will never be of a thinking type,
@@ -350,15 +352,13 @@ and finally we will look at the serious game in its existing form.
  cite:hall1973primer100-101combo
  We can now imagine what this means,
  an extroverted thinker will for example make judgement about the real world,
- and therefore be more like a scientist, where he would devote much of his time
- on studying natural phenomena, for example a biology researcher would study
- natural objects and behaviors and is therefore more likely to have extroverted
- thinking as dominant function.
+ and therefore be more like a natural scientist or biology researcher,
+ where they would study natural objects and behaviors.
  An introverted thinker will make judgement about ideas in his mind,
  and therefore will be an excellent philosopher, or mathematician, where
- consistency of the internal reasoning process is most important.
+ consistency of the internal reasoning process is important.
 
- \toReview
+ \newlycleared
  Let $\mathcal{J}$ denote the set of all possible jungian function attitudes
  such that:
  \[ \mathcal{J} = \{ T_e, T_i, F_e, F_i, S_e, S_i, N_e, N_i\}\]
@@ -392,26 +392,28 @@ and finally we will look at the serious game in its existing form.
    empathy comes rather natural to them cite:fiproffesionadvice.
  + $S_e$ stands for extroverted sensing, Act on concrete data from the here and
    now. Then lets it go.
-   People of this type are often realistic and practical. A typical
-   profession driver of heavy machinery or athlete cite:seproffesionadvice, 
-   because living in the moment is most important for those professions which
-   comes natural to $S_e$.
+   People of this type are often realistic and practical.
+   A typical profession driver of heavy machinery or athlete cite:seproffesionadvice, 
+   because living in the moment is most important for those professions,
+   this comes natural to $S_e$ based personalities.
  + $S_i$ stands for introverted sensing, acts on concrete data from memories and
    passed experience.
    A possible profession for the people with $S_i$ as dominant function is in
-    quality assurance, where the perfect model in their mind can be easily
-  compared to the product in question cite:siproffesionadvice.
+   quality assurance,
+   where the perfect model in their mind can be easily
+   compared to the product in question cite:siproffesionadvice.
  + $N_e$ stands for extraverted intuition, try to find possibilities in every
    situation.
    Extroverted intuition can be very good entrepreneurs, seeing ideas in
-   almost every situation, they also makes them very inspiring leaders because
+   almost every situation,
+   they also makes them very inspiring leaders because
    they are very excited about their ideas cite:neproffesionadvice.
  + $N_i$ stands for introverted intuition. Looks new possibilities in ideas.
    A typical occupation of this type is artist or visionary
    cite:hall1973primer104nitype,
    this is because connecting ideas with each other comes natural to this type.
    However just like the typical artist it may not always be understood why by
-   his peers.
+   his peers or even himself.
 
  \cleared
  <<Jungian alternating functions>>
@@ -487,36 +489,38 @@ and finally we will look at the serious game in its existing form.
  (OD) cite:sample2004myers. 
  But it has gotton some heavy critism in from the field of psycology.
 
- \toReview
- MBTI has always produced a continues scoring system.
+ \newlycleared
+ MBTI has always used a continues scoring system in the results.
  However the creators insist that type is enough for making assessment judgments.
  Since MBTI reduces the test scores to type,
  it is expected that most of the population would fall into either proposed
- dimensions. For example $I$ or $E$.
+ dimensions.
+ For example $I$ or $E$.
  This is called a bimodal distribution.
  However cite:bess2002bimodal suggests this is not the case,
  but this could be the result of the scores being biderictional
  cite:salter2005two.
  In an extended investigation cite:arnau2003jungian into weather jungian
  constructs are truly categorical suggested however that this was maybe not
- the case and a continues scale for assessment judgements is required.
+ the case and a continues scale for assessment judgements are required.
 
- \toReview
- In cite:sipps1985item it is put trough a method called factor analyses.
- This is similiar to the technique where OCEAN is based upon (see section [[OCEAN]]).
+ \newlycleared
+ In cite:sipps1985item the MBTI is put trough a method called factor analyses.
+ This is the same technique where OCEAN is based upon (see section [[OCEAN]]).
  With this technique the desired outcome is that there are 4 question clusters
  (or factors), one for each dimension.
- Secondly these factors should be independent,
+ These factors should also be independent,
  a question that influences I/E score should not influence S/N.
  Finally we expect the factors to indicate differences between individuals.
  Random questions won't do that.
  However the study indicated that the MBTI had more than 4 factors (6),
- cite:sipps1985item explains the first extra factor as "unconditional positive",
+ cite:sipps1985item explains the first extra factor as questions that assessed
+ people being "unconditional positive",
  but could not explain the other extra factor.
  Something else of note worth cite:sipps1985item indicated was that there
  were questions doing no discrimination at all (not being scored). 
 
- \toReview
+ \newlycleared
  Reliability indicates how often the same result will come out of the test,
  for example if you take the mbti a 100 times you may be classified the same
  type for 70 times,
@@ -534,7 +538,7 @@ and finally we will look at the serious game in its existing form.
  so having reliable scoring is important.
 
 **** PPSDQ
- \toReview
+ \newlycleared
  The PPSDQ keeps basically the same theory as MBTI cite:kier1997new,king1999score,
  but uses a different measuring method.
  Instead of forced questions it uses a word-pair checklist for
@@ -542,12 +546,13 @@ and finally we will look at the serious game in its existing form.
  cite:melancon1996measurement.
  An example of a word pair checklist can be found in table [[tab:word-pair-example]].
  The word pairs themselves were obtained by prescribing an exploratory test(s) to a
- sample in which the proto PPSDQ was submitted and the MBTI itself, factor
+ sample in which the proto PPSDQ was submitted and also the MBTI itself, factor
  analyses was used to determine correlation, this is done in
  cite:thompson1994concurrent.
- The optimal amount of points presented is a subject for debate.
+ The optimal amount of points (options to choose from)
+ presented in such a test is a subject for debate.
  Common sense would suggest that more points would give more precision,
- however in cite:matell1971there it is suggested that reliability and validity
+ but in cite:matell1971there it is suggested that reliability and validity
  do not increase with more points. In cite:garland1991mid however they
  state the importance of an available midpoint.
  The 5 point choice format in the PPSDQ is not motivated.
@@ -858,15 +863,15 @@ and finally we will look at the serious game in its existing form.
  cite:augello2016social,
  such as following certain protocols (politeness, medical standards), and empathy.  
 
- \toReview
+ \newlycleared
  There is a difference between the architecture in the published papers and
- the source code received, in cite:augello2016social the judgement of these
+ the source code received. In cite:augello2016social the judgement of these
  practices was for example encoded within the S-AIML langauge,
- however in the source code AIML has taken a step back,
- being only used for processing and not deliberation
+ however in the source code AIML has taken a step back
+ It is only used for processing and not deliberation
  (which is now being taken over by drools as discussed in [[existing architecture]]).
  We will be using the source code as a guideline in discussing the existing
- work because its more relevant.
+ work because it is more relevant.
 
 *** Functionality
     \cleared
@@ -898,14 +903,13 @@ It would be difficult to modify these files on a running instance.
 
 *** Application Architecture
 <<existing architecture>>
-\todo[inline]{add archtitecture image}
     \cleared
     The game uses a client server architecture (see figure [[fig:components]]).
     The client is written in unity and the server is a Java servlet running on
     wildfly.
     Communication between the two applications happens trough a web socket.
-    A web socket is used because it allows the chatbot to pro-active, which is not
-    possible with a technology such as REST.
+    A web socket is used because it allows the chatbot to pro-active,
+    which is not possible with a technology such as REST.
 
 #+NAME: fig:components
 #+BEGIN_SRC plantuml :file img/uml/components.png :exports results
@@ -917,24 +921,25 @@ It would be difficult to modify these files on a running instance.
 #+RESULTS: fig:components
 
 **** Source tree
-    \toReview
+    \newlycleared
     There are two major source trees tracked in separate version control systems.
     The first manages
     the client[fn::received on commit 40b55c0da1f556ba2b66ea8322d72008c9df1e72]
     and the second the
     server[fn:: received on commit 92f12fc26a7da83554903bfe7c6ed1cc64dd5a53].
-    The protocol is tracked in the respective client and server folders and
-    named dto.
+    The protocol is tracked separately in the respective client and server
+    folders with the folder name "dto".
 
 **** Protocol
-    \toReview
+    \newlycleared
     The protocol is setup to be intended for a much larger system.
     There are hints of a registration system but further inspection
-    revealed that only logging in worked and was required.
+    revealed that only logging in only worked and but was required.
     This is tied into the server's ability to run multiple games. 
     there is also a limited monitoring functionality, the active games can
     be listed with a specialized message.
-    A typical happy path scenario is listed in figure [[fig:sequence]]
+    A typical happy path scenario of protocol messages is listed in
+    figure [[fig:sequence]].
 
 #+NAME: fig:sequence
 #+BEGIN_SRC plantuml :file img/uml/sequence.png :exports results
@@ -955,10 +960,11 @@ It would be difficult to modify these files on a running instance.
 #+LABEL: fig:sequence
 #+RESULTS: fig:sequence
 
-
 \newpage
 *** Server architecture
-\toReview
+  \newlycleared
+We will discuss the server architecture in more detail since it contains the
+"brains" of the application.
 The most important classes are shown in figure [[fig:class]].
 WebSocket is the entry point for the program where the messages from the client
 enter.
@@ -1002,8 +1008,8 @@ enter.
 #+LABEL: fig:class
 #+RESULTS: fig:class
 
-\toReview
-The Websocket uses a ChatBotEngine to determine how to reply to userUtterence's,
+\newlycleared
+The Websocket uses a ChatBotEngine to determine how to reply to userUtterences,
 Where ChatBotEngineImpl is the concrete implementation.
 ChatBotEngineImpl uses a KieSession for the drools and a Chat which is the alicebot.
 Once the startGame message is received the kie service is started,
@@ -1016,7 +1022,7 @@ hasn't replied after 20 seconds the agent will ask the user why he hasn't
 replied yet.
 A detailed overview of construction can be seen in figure [[fig:construction]].
 
-\toReview
+\newlycleared
 In the class diagram (figure [[fig:class]]), we can see an attribute to the Chat
 class called predicates.
 This is a bag of variables the drools can use to keep track of the scenario
@@ -1026,8 +1032,8 @@ In this case the ChatBotEngineImpl is exposed.
 Insert can be used to insert facts.
 The difference between facts and globals is that facts are evaluated by
 the  rule base, where as globals are used by the rule base.
-A fact can be considered a value.
-The current program uses globals as comminucation with external libraries
+A fact can be considered as "just a value".
+Currently globals are used as communication with external libraries
 (for example the websocket and chat session).
 
 #+NAME: fig:construction
@@ -1049,14 +1055,14 @@ start
 :put game id in websocket user prefs;
 stop
 #+END_SRC
-#+CAPTION: Activity diagram of servergame construction
+#+CAPTION: Activity diagram of a server game construction
 #+LABEL: fig:construction
 #+RESULTS: fig:construction
 
 \newpage
 **** Text processing
 
-    \toReview
+    \newlycleared
      Text processing is done with help of the ALICE chat bot.
      This bot does the parsing and validation of AIML,
      with help of the knowledge encoded in AIML it can specify a response.
@@ -1080,7 +1086,7 @@ stop
 		</template>
 	</category>
 #+END_SRC
-\toReview
+\newlycleared
      In this example the first category indicates that if a user types
      "What is the problem" (pattern tags), then the answer can be found in a
      category with pattern "why are you here".
@@ -1088,7 +1094,7 @@ stop
      characters before the pattern can be ignored to satisfy the category.
 
 **** Deliberation
-\toReview
+\newlycleared
      AIML has been extended to allow updating of the drools knowledge base:
 
 #+BEGIN_SRC xml
@@ -1102,11 +1108,11 @@ stop
 </category>
 #+END_SRC
 
-\toReview
-     In this case if a user utteres the sentence: "why are you here", the bot
+\newlycleared
+     In this case if a user utters the sentence: "why are you here", the bot
      will check the drool database what his problem is and also update the
      scenario.
-     Once the scenario is updated the possible responses of the chatbot are
+     Once the scenario is updated the possible responses of the chat bot are
      changed, as can be seen by the precondition tag.
      The template tag has some extra tags. The insert tag inserts a fact into
      the drools knowledge base, the getDroolsTemplate tag queries the drools
