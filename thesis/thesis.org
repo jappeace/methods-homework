@@ -1125,13 +1125,19 @@ stop
 \todo[inline]{Add an image of architecture, recoginition section (currenlty aiml), delibiration section (perhaps on 3 levels, this is where personality can come in), mk sentence section (go from meaning to string)}
 \todo[inline]{Explain why I want to replace the chatbot, (because there is currently no way to stop it from reacting to something, and since its mostly an xml parser I think its just easier to replace with a new system (also xml is bad?))}
 <<Jungian BDI>>
-\cleared
+\drafting
 In this chapter we will consider how to combine Jungian psycology with BDI,
-as was orignally done by Campos cite:campos_mabs2009.
-We will reduce the scope of the deliberation function by using a haskell like
-syntax (or category theory cite:spivak2013category).
-\todo{Either replace category theory with haskell like syntax or learn it and cite it}
-Then we will also look at how to convert user utterances to objects we can do
+as was originally done by Campos cite:campos_mabs2009.
+We will reason about Jungian function attitudes by considering the
+type signature of a pure function that can represent them.
+A Haskell like syntax is used for this.
+We want to have a type signature that can describe the domain,
+but nothing more, to keep the project as simple as possible.
+Note that a simple function can be infinitely complex because it can have an
+infinite number of arguments and an infinite number of results in a tuple,
+this is of course not desirable (or possible).
+Another issue which is discussed is where this function is supposed to be placed. \todo{Except this isn't done yet}
+Finally We will also look at how to convert user utterances to objects we can do
 reasoning with.
 
 \cleared
@@ -1519,6 +1525,7 @@ Since attitudes produce a different process by definition
 (see section [[Mapping to process]]),
 we can conclude that they will also behave differently.
 
+
 * Implementation
 \todo[inline]{How to go from process orientated to selecting an answer?}
 \drafting
@@ -1674,33 +1681,81 @@ This is more verbose but also more precise.
 
 \todo[inline]{If we have time we can compare information per character between the new and old method, going from 251 to 131 is quite an improvement}
 # https://developer.jboss.org/wiki/FunctionalProgrammingInDrools
-** Ideas
-\todo[inline]{To circumvent typing errors of users we can put input trough a spell checker taking the first correction}
-\todo[inline]{Regex mathing as an extension to existing matching}
-\todo[inline]{How to deal with long inputs? I think sentence splitting was mentioned?}
-*** Tooling stuff
-+ Protocol buffers could be used for protocol. Its strongly typed and has both
-  C# and Java bindings
-+ xml shouldn't be used as a procudual langauge (http://wiki.c2.com/?XmlAbuse)
-  its probably better to replace it with yaml https://en.wikipedia.org/wiki/XML#Criticism
-  (seriously most of the code of alice bot involvelves mapping xml into objects
-  (for which exist libraries https://stackoverflow.com/questions/15881876/mapping-xml-entities-to-java-objects)
-  and valiating it, (which can be done by an xsd better anyway)).
-+ drools: I didn't know rule engines were a thing, explained here:
-  https://access.redhat.com/documentation/en-US/JBoss_Enterprise_SOA_Platform/4.2/html/JBoss_Rules_Manual/sect-JBoss_Rules_Reference_Manual-Why_use_a_Rule_Engine.html
-http://martinfowler.com/bliki/RulesEngine.html
-  I think they're just pure functions that use aspect oriented program to
-  intercept and modify the application.
 
-*** Security
-+ Don't send passwords as plain text over the network.
-+ Use SSL.
-+ Probably should hire an expert to do an audit.
+** Representing actionable meanings
+\drafting
+For our bot to do deliberation we need to be able to tell it which meanings
+can logically follow which other meanings. To do this we use a meaning graph.
+However there are multiple ways to represent this.
+First of all we have intrusive graph representation, where the edges a node goes
+to is put isnide the node. Non intrusive representation is where edges are
+stored as node tupples in a separate list, note that these are usually directed,
+since you can make an edge undirected by just adding another tupple with the
+values swapped, but if they're all undirected you cannot represent directed
+connections without introducing more terms.
 
-*** Protocol
-Start game and new game could be merged?
-Why are you logging towards the client? This seems like a security hole and a
-possible performance bottleneck.
+\drafting
+There are argumetns for both representation, an intrusive graph
+reprsentation is more easy to understand for humans, however a non intrusive
+reprsentation is more elegant and can handle things such as backward chainging
+more easily (since not all nodes have to be searched in this case).
+
+\drafting
+Since we need to do both backward Chaining /and/ make it easy understandable for
+humans, we will reprsent the graph as intrusive in the AIML reprsentation, but
+as non intrusive in memomory for easy backward and forward chaining.
+
+\todo{AIML with graph stuff}
+
+** Reprsenting scoring and emotions
+\drafting
+Once we threw out AIML we also threw out the work on scoring and emotions.
+This is of course not acceptable so we need to re-add this.
+It can be easily done by adding extra meta data to the edges in the graph
+representation.
+
+For example if we go from:
+
+\[ M(Greeting) \to M(StatusInquery) : F(Pleased) \]
+
+If this path is walked by the user the bot will be pleased, however if the bot
+is impatiant and can look at this connection and see what this path results in.
+The context is not treated in the data, this is left to the drools to figure
+out.
+We can elaborate this further by adding protocols that are expected into the
+edges:
+
+\[ M(StatusInquery) \to M(HealthProblemAsked) : F(Neutral), P(HealthAsked) \]
+
+If the user deviates from the meaning graph we can just use a default F
+response of being surprised or confused.
+On the other hand if the user ever tries to re-treat a subject we can just
+become annoyed. Drools can be used to catch these kind of cases effectively.
+
+** Inserting meaning into KIE
+\drafting
+Once the meaning is extracted from the user utterance we can insert it into the
+drool engine to do deliberation upon (see [[fig:insert_meaning]]).
+
+#+NAME: fig:insert_meaning
+#+BEGIN_SRC plantuml :file img/uml/insert_meaning.png :exports results
+|WebSocket|
+start
+:Receve message;
+|#CCDDDD|AIML bot|
+:Pattern match meaning from message;
+:Insert meaning into KIE;
+|#AntiqueWhite|Drool|
+:Fire meaning deliberation rule;
+:Insert Response Dialogue tree;
+:Fire send response rule;
+|#CCDDDD|AIML bot|
+stop
+#+END_SRC
+#+CAPTION: Activity diagram of a server game insert_meaning
+#+LABEL: fig:insert_meaning
+#+RESULTS: fig:insert_meaning
+
 * In conclusion
 \todo[inline]{Discussion, comparison}
 ** Future work
@@ -1915,20 +1970,40 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
 #+END_SRC
 
 *** Notes
-\toReview
+\newlycleared
 If you're located in the communicate_server folder, The rebuild everything
 command is:
-
 #+BEGIN_SRC sh
 rm -R ~/.m2/repository/cnruithof; (cd ../ && mvn clean && mvn install) && mvn wildfly:deploy
 #+END_SRC
-
-\toReview
 This will re-install the entire project thereby also rebuilding all dependencies.
 mvn clean in there for good measure.
 
-\toReview
+\newlycleared
 There is a python client script for quick debugging, therefore its unnecessary
 to keep unity running (or use at all).
 
-\newpage
+** Ideas
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+\todo[inline]{To circumvent typing errors of users we can put input trough a spell checker taking the first correction}
+\todo[inline]{Regex mathing as an extension to existing matching}
+\todo[inline]{How to deal with long inputs? I think sentence splitting was mentioned?}
+*** Tooling stuff
++ Protocol buffers could be used for protocol. Its strongly typed and has both
+  C# and Java bindings
++ xml shouldn't be used as a procudual langauge (http://wiki.c2.com/?XmlAbuse)
+  its probably better to replace it with yaml https://en.wikipedia.org/wiki/XML#Criticism
+  (seriously most of the code of alice bot involvelves mapping xml into objects
+  (for which exist libraries https://stackoverflow.com/questions/15881876/mapping-xml-entities-to-java-objects)
+  and valiating it, (which can be done by an xsd better anyway)).
+*** Security
++ Don't send passwords as plain text over the network.
++ Use SSL.
++ Probably should hire an expert to do an audit.
+
+*** Protocol
+Start game and new game could be merged?
+Why are you logging towards the client? This seems like a security hole and a
+possible performance bottleneck.
