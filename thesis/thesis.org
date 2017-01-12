@@ -147,7 +147,7 @@ methodologies used,
 and finally we will look at the serious game in its existing form.
 
 ** Personality theories
-   \newlycleared
+   \cleared
    A personality is a set of identifiers that can be used with
    reasonable consistency to predict behavior
    cite:mischel2008introductionp3_definition.
@@ -159,7 +159,7 @@ and finally we will look at the serious game in its existing form.
    This is where we have a conflict of interest with the field of
    psychology since they do not necessarily care about implementation details.
 
-   \newlycleared
+   \cleared
    This conflict of interest can be seen for example in
    cite:mischel2008introductionp4_defpoints, where a criteria of personality is
    that it should be stable and coherent. However this is a poor
@@ -206,7 +206,7 @@ and finally we will look at the serious game in its existing form.
  hidden variables.
  This methodology has become widely used in psychology cite:fabrigar1999evaluating.
 
- \newlycleared
+ \cleared
  The data Tupes used is from Catell cite:cattell1947confirmation and several
  others. Catell used a rating scheme,
  where a trait was introduced and all test subjects then had to rate all other
@@ -276,7 +276,7 @@ and finally we will look at the serious game in its existing form.
  other factors.
  Solving this is a non-trivial endeavor.
 
- \newlycleared
+ \cleared
  There are some existing solutions in which OCEAN is implemented, for
  example allbeck used it as a mapping to the EMOTE system cite:allbeck2002toward,
  whereas cite:durupinar2008creating used the OCEAN values as a low level mapping
@@ -344,7 +344,7 @@ and finally we will look at the serious game in its existing form.
  by which its explained as "just a hunch" or "I feel it in my bones".
  cite:beauchamp2005communication,hall1973primer98-100functions
 
- \newlycleared
+ \cleared
  To use these functions they have to be combined with attitudes, producing
  /function attitudes/.
  Therefore a person will never be of a thinking type,
@@ -358,7 +358,7 @@ and finally we will look at the serious game in its existing form.
  and therefore will be an excellent philosopher, or mathematician, where
  consistency of the internal reasoning process is important.
 
- \newlycleared
+ \cleared
  Let $\mathcal{J}$ denote the set of all possible jungian function attitudes
  such that:
  \[ \mathcal{J} = \{ T_e, T_i, F_e, F_i, S_e, S_i, N_e, N_i\}\]
@@ -489,7 +489,7 @@ and finally we will look at the serious game in its existing form.
  (OD) cite:sample2004myers. 
  But it has gotton some heavy critism in from the field of psycology.
 
- \newlycleared
+ \cleared
  MBTI has always used a continues scoring system in the results.
  However the creators insist that type is enough for making assessment judgments.
  Since MBTI reduces the test scores to type,
@@ -504,7 +504,7 @@ and finally we will look at the serious game in its existing form.
  constructs are truly categorical suggested however that this was maybe not
  the case and a continues scale for assessment judgements are required.
 
- \newlycleared
+ \cleared
  In cite:sipps1985item the MBTI is put trough a method called factor analyses.
  This is the same technique where OCEAN is based upon (see section [[OCEAN]]).
  With this technique the desired outcome is that there are 4 question clusters
@@ -520,7 +520,7 @@ and finally we will look at the serious game in its existing form.
  Something else of note worth cite:sipps1985item indicated was that there
  were questions doing no discrimination at all (not being scored). 
 
- \newlycleared
+ \cleared
  Reliability indicates how often the same result will come out of the test,
  for example if you take the mbti a 100 times you may be classified the same
  type for 70 times,
@@ -538,7 +538,7 @@ and finally we will look at the serious game in its existing form.
  so having reliable scoring is important.
 
 **** PPSDQ
- \newlycleared
+ \cleared
  The PPSDQ keeps basically the same theory as MBTI cite:kier1997new,king1999score,
  but uses a different measuring method.
  Instead of forced questions it uses a word-pair checklist for
@@ -761,6 +761,7 @@ and finally we will look at the serious game in its existing form.
 **** Logic of BDI
  <<bdi logics>>
  \cleared
+ \todo[inline]{We can delete this paragraph if we don't have any connections with these things. We may use it by saying for example that beliefs have certain kind of modalities. We probably aren't gonna use it to prove theoroms for example}
  Logic of BDI is an attempt to formalize how agents behave.
  One of the first formalization of Bratman's theory was that of Cohen and
  Levesque cite:cohen1990intention. It was based on linear time logic and
@@ -776,17 +777,19 @@ and finally we will look at the serious game in its existing form.
  This is the logic of actions and computation. They extend this logic with
  epistemics to add believes to it cite:meyer2014logics.
 
- \todo[inline]{decide if I'm gonna use any of these logics, I mean the "why discuss this?" question is now unwansered... Perhaps I should delete this?}
-**** TODO Concrete implementations
-
- \todo{Again perhaps I should consider deleting this?}
- \todo[inline]{2apl}
- \todo[inline]{jade cite:braubach2003jadex}
+**** Concrete implementation
+2apl, jade cite:braubach2003jadex.
+ \todo[inline]{Comment on adding this was: If the work becomes agent like, and we have some very clear commanalities between 2apl for example we can fill in this paragraph to fall back onto that}
+ \todo[inline]{Perhaps it would be a good idea to sketch commanalities between drools and these kind of things, so that if a reader knows about any of these things he can lay the link easily}
 *** Social practices
  <<social practice>>
  \todo[inline]{critques on social practices? To show potential weaknesses}
  \todo[inline]{come back social practices, why these weaknesses are not a problem}
- \cleared
+ \todo[inline]{How do different personalities interact with this, for example does an INTJ have a different plan pattern than an ENFP? Is there research about this?}
+ \todo[inline]{SP's are a shortcut so that we can assume 2 agents think about similiar things, its not a restricting concept but rather a facilitating concept to allow agents to do less reasoning because of common assumptions.}
+ \todo[inline]{There is a connection between this and culture (perhaps I can cite this from somewhere)}
+
+ \drafting
  To limit the domain of the application a theoretical device is used
  called social practices.
  This gives an ordered overview in what domain our program should work.
@@ -796,7 +799,7 @@ and finally we will look at the serious game in its existing form.
  in the following way:
 
  + Practice name: Doctor appointment
- + /Physical context/,
+ + /Physical context/, \todo{As an example we expect sensing personalities to check if everything fits before assuming the SP whereas intiuitve may fill the gaps}
    - Resources: Computer, chair, diagnostic tools..
    - Places: waiting room, doctor's office...
    - Actors: doctor, patient, assistant, ...
@@ -806,13 +809,14 @@ and finally we will look at the serious game in its existing form.
    - Social interpretation: Can sit on chair, cannot sit on table.
  + /Activities/, share information, do diagnostics, minor treatments,
    prescribing drugs...
- + /Plan patterns/, Introduction \to ask complaints \to gather history \dots 
+ + /Plan patterns/, Introduction \to ask complaints \to gather history \dots \todo{These are not concrete plans but rather patterns that still have to be filled in}
  + /Social meaning/, awkwardness, gratitude, ...
  + /Competences/, Give injection, empathetic talk
 
  If the social practices however are defined more formally they could be 
  used in a bigger system such as in cite:augello2015social and
  cite:augello2016model.
+
 *** BDI + Personality
  \cleared
  \todo[inline]{other proposed systems and argue for campos}
@@ -863,7 +867,7 @@ and finally we will look at the serious game in its existing form.
  cite:augello2016social,
  such as following certain protocols (politeness, medical standards), and empathy.  
 
- \newlycleared
+ \cleared
  There is a difference between the architecture in the published papers and
  the source code received. In cite:augello2016social the judgement of these
  practices was for example encoded within the S-AIML langauge,
@@ -901,6 +905,8 @@ The teacher probably needs an expert to do this since these are right now
 combined with the war.
 It would be difficult to modify these files on a running instance.
 
+*** TODO Abstract architecture
+\todo[inline]{Gala 2016 pag 7 add that diagram to here and tell how we used it from that to describe this system}
 *** Application Architecture
 <<existing architecture>>
     \cleared
@@ -921,7 +927,7 @@ It would be difficult to modify these files on a running instance.
 #+RESULTS: fig:components
 
 **** Source tree
-    \newlycleared
+    \cleared
     There are two major source trees tracked in separate version control systems.
     The first manages
     the client[fn::received on commit 40b55c0da1f556ba2b66ea8322d72008c9df1e72]
@@ -931,7 +937,7 @@ It would be difficult to modify these files on a running instance.
     folders with the folder name "dto".
 
 **** Protocol
-    \newlycleared
+    \cleared
     The protocol is setup to be intended for a much larger system.
     There are hints of a registration system but further inspection
     revealed that only logging in only worked and but was required.
@@ -962,7 +968,7 @@ It would be difficult to modify these files on a running instance.
 
 \newpage
 *** Server architecture
-  \newlycleared
+  \cleared
 We will discuss the server architecture in more detail since it contains the
 "brains" of the application.
 The most important classes are shown in figure [[fig:class]].
@@ -1008,7 +1014,7 @@ enter.
 #+LABEL: fig:class
 #+RESULTS: fig:class
 
-\newlycleared
+\cleared
 The Websocket uses a ChatBotEngine to determine how to reply to userUtterences,
 Where ChatBotEngineImpl is the concrete implementation.
 ChatBotEngineImpl uses a KieSession for the drools and a Chat which is the alicebot.
@@ -1022,7 +1028,7 @@ hasn't replied after 20 seconds the agent will ask the user why he hasn't
 replied yet.
 A detailed overview of construction can be seen in figure [[fig:construction]].
 
-\newlycleared
+\cleared
 In the class diagram (figure [[fig:class]]), we can see an attribute to the Chat
 class called predicates.
 This is a bag of variables the drools can use to keep track of the scenario
@@ -1062,7 +1068,7 @@ stop
 \newpage
 **** Text processing
 
-    \newlycleared
+    \cleared
      Text processing is done with help of the ALICE chat bot.
      This bot does the parsing and validation of AIML,
      with help of the knowledge encoded in AIML it can specify a response.
@@ -1086,7 +1092,7 @@ stop
 		</template>
 	</category>
 #+END_SRC
-\newlycleared
+\cleared
      In this example the first category indicates that if a user types
      "What is the problem" (pattern tags), then the answer can be found in a
      category with pattern "why are you here".
@@ -1094,7 +1100,7 @@ stop
      characters before the pattern can be ignored to satisfy the category.
 
 **** Deliberation
-\newlycleared
+\cleared
      AIML has been extended to allow updating of the drools knowledge base:
 
 #+BEGIN_SRC xml
@@ -1108,7 +1114,7 @@ stop
 </category>
 #+END_SRC
 
-\newlycleared
+\cleared
      In this case if a user utters the sentence: "why are you here", the bot
      will check the drool database what his problem is and also update the
      scenario.
@@ -1117,7 +1123,6 @@ stop
      The template tag has some extra tags. The insert tag inserts a fact into
      the drools knowledge base, the getDroolsTemplate tag queries the drools
      knowledge base for a string.
-
 
 * BDI and Jung
 \todo[inline]{Describe what  am I doing in this chapter?}
@@ -1525,7 +1530,6 @@ Since attitudes produce a different process by definition
 (see section [[Mapping to process]]),
 we can conclude that they will also behave differently.
 
-
 * Implementation
 \todo[inline]{How to go from process orientated to selecting an answer?}
 \drafting
@@ -1688,16 +1692,16 @@ For our bot to do deliberation we need to be able to tell it which meanings
 can logically follow which other meanings. To do this we use a meaning graph.
 However there are multiple ways to represent this.
 First of all we have intrusive graph representation, where the edges a node goes
-to is put isnide the node. Non intrusive representation is where edges are
+to is put inside the node. Non intrusive representation is where edges are
 stored as node tupples in a separate list, note that these are usually directed,
 since you can make an edge undirected by just adding another tupple with the
 values swapped, but if they're all undirected you cannot represent directed
 connections without introducing more terms.
 
 \drafting
-There are argumetns for both representation, an intrusive graph
-reprsentation is more easy to understand for humans, however a non intrusive
-reprsentation is more elegant and can handle things such as backward chainging
+There are arguments for both representation, an intrusive graph
+representation is more easy to understand for humans, however a non intrusive
+representation is more elegant and can handle things such as backward chainging
 more easily (since not all nodes have to be searched in this case).
 
 \drafting
@@ -1714,12 +1718,14 @@ This is of course not acceptable so we need to re-add this.
 It can be easily done by adding extra meta data to the edges in the graph
 representation.
 
+\drafting
 For example if we go from:
 
 \[ M(Greeting) \to M(StatusInquery) : F(Pleased) \]
 
+\drafting
 If this path is walked by the user the bot will be pleased, however if the bot
-is impatiant and can look at this connection and see what this path results in.
+is impatient and can look at this connection and see what this path results in.
 The context is not treated in the data, this is left to the drools to figure
 out.
 We can elaborate this further by adding protocols that are expected into the
@@ -1727,6 +1733,7 @@ edges:
 
 \[ M(StatusInquery) \to M(HealthProblemAsked) : F(Neutral), P(HealthAsked) \]
 
+\drafting
 If the user deviates from the meaning graph we can just use a default F
 response of being surprised or confused.
 On the other hand if the user ever tries to re-treat a subject we can just
@@ -1756,6 +1763,7 @@ stop
 #+LABEL: fig:insert_meaning
 #+RESULTS: fig:insert_meaning
 
+\newpage
 * In conclusion
 \todo[inline]{Discussion, comparison}
 ** Future work
@@ -1970,7 +1978,7 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
 #+END_SRC
 
 *** Notes
-\newlycleared
+\cleared
 If you're located in the communicate_server folder, The rebuild everything
 command is:
 #+BEGIN_SRC sh
@@ -1979,7 +1987,7 @@ rm -R ~/.m2/repository/cnruithof; (cd ../ && mvn clean && mvn install) && mvn wi
 This will re-install the entire project thereby also rebuilding all dependencies.
 mvn clean in there for good measure.
 
-\newlycleared
+\cleared
 There is a python client script for quick debugging, therefore its unnecessary
 to keep unity running (or use at all).
 
@@ -1990,6 +1998,7 @@ to keep unity running (or use at all).
 \todo[inline]{To circumvent typing errors of users we can put input trough a spell checker taking the first correction}
 \todo[inline]{Regex mathing as an extension to existing matching}
 \todo[inline]{How to deal with long inputs? I think sentence splitting was mentioned?}
+\todo[inline]{Perhaps we can use argumentation research on top of the graph to figure out more semantics (this statment is attacking that or inquerying this)}
 *** Tooling stuff
 + Protocol buffers could be used for protocol. Its strongly typed and has both
   C# and Java bindings
