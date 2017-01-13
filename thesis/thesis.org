@@ -795,30 +795,22 @@ and finally we will look at the serious game in its existing form.
  A problem with this model however was, how do cultures move activities from the
  collective towards the individual cite:smolka2001social.
  Social practices were therefore introduced to make the notion of activity more
- concrete. As Smolka put:
-
- #+BEGIN_QUOTE
- ... [The social practice] requires the intimate articulation of forms of action
-  and forms of inquery.
-  It anchors knowledge production and the theorizing and analysis of
-  institutional and intervention practices within the actual conditions of
-  human development. -- Smolka
- #+END_QUOTE
- 
- So by using a social practice you have to think about forms of action and
- questions that may be asked. 
+ concrete.
 
  \drafting
- It ten got criticism from ...
- \todo[inline]{critques on social practices? To show potential weaknesses}
+ In cite:dignum2014contextualized a model of social practices for agents was
+ developed.
+ The interest for this comes from  the potential heuristic use of social
+ practices.
+ Once in a particular situation that fits for a social practice the amount of
+ reasoning can be sped up by having actions and their preconditions be grouped
+ under that social practice,
+ if no preconditions match an agent could consider trying other social practices
+ he knows or ask its operator.
 
- \drafting 
- But then X showed they were ...
- \todo[inline]{come back social practices, why these weaknesses are not a problem}
- 
- \todo[inline]{How do different personalities interact with this, for example does an INTJ have a different plan pattern than an ENFP? Is there research about this?}
- \todo[inline]{SP's are a shortcut so that we can assume 2 agents think about similiar things, its not a restricting concept but rather a facilitating concept to allow agents to do less reasoning because of common assumptions.}
- \todo[inline]{There is a connection between this and culture (perhaps I can cite this from somewhere)}
+ The social practice theory in this thesis should be considered as a
+ /foundation/ rather than a separate element.
+
 
  \toReview
  To limit the domain of the application a theoretical device is used
@@ -848,6 +840,7 @@ and finally we will look at the serious game in its existing form.
  used in a bigger system such as in cite:augello2015social and
  cite:augello2016model.
 
+ \todo[inline]{How do different personalities interact with this, for example does an INTJ have a different plan pattern than an ENFP? Is there research about this?}
 *** BDI + Personality
  \cleared
  \todo[inline]{other proposed systems and argue for campos}
