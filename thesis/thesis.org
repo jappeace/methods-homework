@@ -810,14 +810,6 @@ and finally we will look at the serious game in its existing form.
 
  The social practice theory in this thesis should be considered as a
  /foundation/ rather than a separate element.
-
-
- \toReview
- To limit the domain of the application a theoretical device is used
- called social practices.
- This gives an ordered overview in what domain our program should work.
- In other words, rather than some extra element, it will be the
- /foundation/ of the program cite:dignum2014contextualized.
  We can formulate therefore the social practice that is relevant for this thesis 
  in the following way:
 
