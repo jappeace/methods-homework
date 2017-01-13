@@ -783,7 +783,7 @@ and finally we will look at the serious game in its existing form.
  \todo[inline]{Perhaps it would be a good idea to sketch commanalities between drools and these kind of things, so that if a reader knows about any of these things he can lay the link easily}
 *** Social practices
  <<social practice>>
- \drafting
+ \toReview
  In cite:smolka2001social it is stated that the research in activity theory
  led to the development of social practices.
  It was Karl Marx who made the roots who thought of the "roots" of activity
@@ -797,7 +797,9 @@ and finally we will look at the serious game in its existing form.
  Social practices were therefore introduced to make the notion of activity more
  concrete.
 
- \drafting
+ \todo[inline]{How do different personalities interact with this, for example does an INTJ have a different plan pattern than an ENFP? Is there research about this?}
+
+ \toReview
  In cite:dignum2014contextualized a model of social practices for agents was
  developed.
  The interest for this comes from  the potential heuristic use of social
@@ -808,8 +810,14 @@ and finally we will look at the serious game in its existing form.
  if no preconditions match an agent could consider trying other social practices
  he knows or ask its operator.
 
+ \toReview
  The social practice theory in this thesis should be considered as a
  /foundation/ rather than a separate element.
+ We will be using it as a domain limiting device,
+ however it should be noted that it could act as much more than that,
+ potentially it could give the notion of culture to agents.
+ Right now it just gives an ordered overview in what domain our program
+ should work.
  We can formulate therefore the social practice that is relevant for this thesis 
  in the following way:
 
@@ -828,11 +836,12 @@ and finally we will look at the serious game in its existing form.
  + /Social meaning/, awkwardness, gratitude, ...
  + /Competences/, Give injection, empathetic talk
 
+ \todo[inline]{Describe the model better}
+
  If the social practices however are defined more formally they could be 
  used in a bigger system such as in cite:augello2015social and
  cite:augello2016model.
 
- \todo[inline]{How do different personalities interact with this, for example does an INTJ have a different plan pattern than an ENFP? Is there research about this?}
 *** BDI + Personality
  \cleared
  \todo[inline]{other proposed systems and argue for campos}
