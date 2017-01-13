@@ -783,13 +783,22 @@ and finally we will look at the serious game in its existing form.
  \todo[inline]{Perhaps it would be a good idea to sketch commanalities between drools and these kind of things, so that if a reader knows about any of these things he can lay the link easily}
 *** Social practices
  <<social practice>>
+ \drafting
+ Social practice was invented by...
+ 
+ \drafting
+ It ten got criticism from ...
  \todo[inline]{critques on social practices? To show potential weaknesses}
+
+ \drafting 
+ But then X showed they were ...
  \todo[inline]{come back social practices, why these weaknesses are not a problem}
+ 
  \todo[inline]{How do different personalities interact with this, for example does an INTJ have a different plan pattern than an ENFP? Is there research about this?}
  \todo[inline]{SP's are a shortcut so that we can assume 2 agents think about similiar things, its not a restricting concept but rather a facilitating concept to allow agents to do less reasoning because of common assumptions.}
  \todo[inline]{There is a connection between this and culture (perhaps I can cite this from somewhere)}
 
- \drafting
+ \toReview
  To limit the domain of the application a theoretical device is used
  called social practices.
  This gives an ordered overview in what domain our program should work.
@@ -905,8 +914,40 @@ The teacher probably needs an expert to do this since these are right now
 combined with the war.
 It would be difficult to modify these files on a running instance.
 
-*** TODO Abstract architecture
-\todo[inline]{Gala 2016 pag 7 add that diagram to here and tell how we used it from that to describe this system}
+*** Abstract architecture
+\toReview
+A conceptual abstract architecture was already in place and described very well
+by cite:augello2016social. This can be seen in figure [[fig:abstract-architecture]],
+which was directly taken from cite:augello2016social.
+ 
+  #+CAPTION: Abstract architecture as described by cite:augello2016social
+  #+NAME:   fig:abstract-architecture
+  [[./img/abstract-architecture.png]]
+  
+\toReview
+The interaction module handles user interaction, where the GUI can show the
+dialogue and the mood of the agent.
+The Dialogue module inside it however handles low level string interpretation
+with help of AIML (see [[Text Processing]]), this basically works trough string
+matching.
+Note that although represented in the abstract architecture as the same module,
+the GUI resides in  the implementation on the client side whereas the dialogue
+module resides on the server.
+
+\toReview
+The dialogue module calls directly the Representation and interpretation module
+with help of specialized tags (see [[Deliberation]]) information can be inserted in
+the representation and interpretation module.
+
+\toReview
+Both the 'representation and interpretation' module and the score module use
+drools to do their respective tasks.
+The only real separation in implementation is trough directory and file
+structure, but at runtime there is little distinction.
+The only other oddity is the direct connection between the emotion module and
+the GUI, this is because the emotion module sends directly messages to the GUI
+whilst ignoring all of AIML.
+
 *** Application Architecture
 <<existing architecture>>
     \cleared
@@ -967,6 +1008,10 @@ It would be difficult to modify these files on a running instance.
 #+RESULTS: fig:sequence
 
 \newpage
+**** TODO User utterance processing 
+     text here
+
+\todo[inline]{Should also do a message processing activity diagram since we want to compare it against that}
 *** Server architecture
   \cleared
 We will discuss the server architecture in more detail since it contains the
@@ -1067,7 +1112,7 @@ stop
 
 \newpage
 **** Text processing
-
+<<Text Processing>>
     \cleared
      Text processing is done with help of the ALICE chat bot.
      This bot does the parsing and validation of AIML,
@@ -1100,6 +1145,7 @@ stop
      characters before the pattern can be ignored to satisfy the category.
 
 **** Deliberation
+<<Deliberation>>
 \cleared
      AIML has been extended to allow updating of the drools knowledge base:
 
