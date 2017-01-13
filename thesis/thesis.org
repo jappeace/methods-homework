@@ -784,8 +784,30 @@ and finally we will look at the serious game in its existing form.
 *** Social practices
  <<social practice>>
  \drafting
- Social practice was invented by...
+ In cite:smolka2001social it is stated that the research in activity theory
+ led to the development of social practices.
+ It was Karl Marx who made the roots who thought of the "roots" of activity
+ theory cite:engestrom1999perspectivesp3_marx,
+ Activity theory tries to bridge the gap between a single actor and the system
+ it resides in cite:engestrom1999perspectivesp10_broad_definition
+ trough the activity in progress.
+ Another way of describing activity in this sense is "a way of doing things".
+ A problem with this model however was, how do cultures move activities from the
+ collective towards the individual cite:smolka2001social.
+ Social practices were therefore introduced to make the notion of activity more
+ concrete. As Smolka put:
+
+ #+BEGIN_QUOTE
+ ... [The social practice] requires the intimate articulation of forms of action
+  and forms of inquery.
+  It anchors knowledge production and the theorizing and analysis of
+  institutional and intervention practices within the actual conditions of
+  human development. -- Smolka
+ #+END_QUOTE
  
+ So by using a social practice you have to think about forms of action and
+ questions that may be asked. 
+
  \drafting
  It ten got criticism from ...
  \todo[inline]{critques on social practices? To show potential weaknesses}
