@@ -146,6 +146,7 @@ methodologies used,
 and finally we will look at the serious game in its existing form.
 
 ** Personality theories
+ <<personality theories>>
    \cleared
    A personality is a set of identifiers that can be used with
    reasonable consistency to predict behavior
@@ -796,12 +797,47 @@ and finally we will look at the serious game in its existing form.
  Social practices were therefore introduced to make the notion of activity more
  concrete.
 
- \todo[inline]{How do different personalities interact with this, for example does an INTJ have a different plan pattern than an ENFP? Is there research about this?}
+ \drafting
+ An early adoption of social practice can be found in cite:shove2005consumers,
+ where it was used to analyze the spread of Nordic Walking.
+ In his analyses he uses the following overarching concepts to analyze the practice:
+ 1. /Material/, which is just stuff in the real world. Such as cars, lamps etc.
+ 2. /Meanings/, which covers issues that are relevant to the material and/or the
+    practice. Think of health, price or even emotions. Consider the an example
+    practice of cycling.
+    In cite:shove2005consumers meanings and images is used interchangeably,
+    however in cite:holtz2014generating its labeled as just meanings.
+    For clarity we will be using the word /Meanings/ since its more descriptive.
+ 3. /Competence/, it is rather obvious to say you need to be able to cycle to
+    participate in the social practice of cycling. This is why this is
+    introduced.
+
+ \drafting
+In cite:dignum2014contextualized a model of social practices for agents was
+developed.
+This model is extended specifically to allow software agents to use it.
+In this model /physical context/ describes the physical environment,
+it contains resources, places and actors.
+Note that resources is equivelant to material from the model used by
+cite:shove2005consumers,holtz2014generating.
+/Social context/ contains a social interpretation, roles and norms. In the
+previous model this was all part of /Meanings/. /Activities/ are the normal
+activities in the social practice, in nordic waling this can be for example
+talking with your partner, or stopping to get a stone out of your shoe.
+They don't need to all be performed but are there just as options.
+This is the first construct that wasn't covered by the other model.
+/Plan patterns/ apply prequisites and an order to the activities.
+For example you need to first get a stone in your shoe during the walking
+before you can get it out,
+not that getting a stone in your shoe would be part of the plan,
+but the condition of having a stone in your shoe before getting it out is part
+of the plan pattern.
+This construct wasn't represented in the previous model either.
+/Meaning/ in this model is soley related to the social effects of activities,
+and finally /Competences/ is the same as in the previous model.
 
  \toReview
- In cite:dignum2014contextualized a model of social practices for agents was
- developed.
- The interest for this comes from  the potential heuristic use of social
+ The interest for this model comes from  the potential heuristic use of social
  practices.
  Once in a particular situation that fits for a social practice the amount of
  reasoning can be sped up by having actions and their preconditions be grouped
@@ -815,10 +851,12 @@ and finally we will look at the serious game in its existing form.
  We will be using it as a domain limiting device,
  however it should be noted that it could act as much more than that,
  potentially it could give the notion of culture to agents.
- Right now it just gives an ordered overview in what domain our program
+ In this thesis we are interested in implementing personality for a serious game
+ in a single social practice.
+ So right now the social practice just gives an ordered overview in what domain our program
  should work.
- We can formulate therefore the social practice that is relevant for this thesis 
- in the following way:
+ We can formulate the social practice that is relevant for this thesis 
+ in the following manner:
 
  + Practice name: Doctor appointment
  + /Physical context/, \todo{As an example we expect sensing personalities to check if everything fits before assuming the SP whereas intiuitve may fill the gaps}
@@ -841,6 +879,13 @@ and finally we will look at the serious game in its existing form.
  used in a bigger system such as in cite:augello2015social and
  cite:augello2016model.
 
+ \drafting
+ We can imagine personality should have /a/ influence on social practice
+ selection and of course plan influence. As far as the authors are aware however,
+ there hasn't been any prior work on this subject. But we can speculate for
+ example that when considering physical context someone that is domination by a
+ Sensing function would check all artifacts more rigorously than someone
+ dominated by an Intuition.
 *** BDI + Personality
  \cleared
  \todo[inline]{other proposed systems and argue for campos}
@@ -1301,7 +1346,7 @@ However a String is still to broad since going from a textual representation
 to a deliberation process is difficult.
 Therefore we will introduce another mapping function $g$:
 \[ \sigma \overset{g}{\to} m \]
-Where $\sigma$ is a string and $m$ a meaning where $m \in \mathcal{M}$ in which
+Where $\sigma$ is a string and $m$ a meaning where $m \in \mathcal{M}$ in which \todo{add note that these meanings are different than the social practice meaning}
 $\mathcal{M}$ stands for the set of all encoded meanings.
 Conversely  there is another function $g'$:
 \[ m \overset{g'}{\to} \sigma \]
