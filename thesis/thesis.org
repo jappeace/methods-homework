@@ -13,7 +13,6 @@
 #+LATEX_HEADER: \usepackage[obeyFinal, colorinlistoftodos]{todonotes}
 #+LATEX_HEADER: \newcommand{\drafting}{\todo[noline, color=gray]{Working draft}}
 #+LATEX_HEADER: \newcommand{\toReview}{\todo[noline, color=yellow]{To review}}
-#+LATEX_HEADER: \newcommand{\underReview}[1]{\todo[noline, color=olive]{Under review by #1}}
 #+LATEX_HEADER: \newcommand{\newlycleared}{\todo[noline, backgroundcolor=white, bordercolor=red]{Newly cleared}}
 # (something cleared that was under discussion last time)
 #+LATEX_HEADER: \newcommand{\cleared}{\todo[noline, color=white]{Cleared}}
