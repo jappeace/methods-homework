@@ -1095,6 +1095,7 @@ whilst ignoring all of AIML.
 
 \newpage
 **** TODO User utterance processing 
+<<user utterance processing>>
      text here
 
 \todo[inline]{Should also do a message processing activity diagram since we want to compare it against that}
@@ -1322,6 +1323,75 @@ and senses towards an agent action and new believes.
 This is then reduced to the scope of a chatbot in the social practice.
 After this we will look what extra information the function attitudes need
 in an attempt to reduce the amount of possible believes.
+
+** Conceptualized architecture
+\todo{find a good location to put this}
+\drafting
+To give a clear overview of where the elements discussed take place we will
+create another abstract architecture and note  the difference with the
+architecture described in [[The serious game]].
+We want to keep as much of the existing architecture as possible,
+therefore all differences will be stated and given a motivation.
+A deployment diagram of the architecture can bee seen in figure
+[[fig:architecture-concept]].
+
+#+NAME: fig:architecture-concept
+#+BEGIN_SRC plantuml :file img/uml/architecture-concept.png :exports results
+
+  folder bot{
+  cloud drools {
+    component emotions
+    component scenario
+    component personality
+    component score
+    storage facts
+    emotions -- facts
+    scenario -- facts
+    personality -- facts
+    score -- facts
+  }
+  database meanings [
+    meanings
+    ====
+    meaning graph
+  ]
+  entity filereader
+  filereader ..> meanings
+  drools --> meanings
+  }
+  node server
+  node client
+
+  server --> bot
+  server -(0)- client
+#+END_SRC
+#+CAPTION: Deployment diagram of new architecture, where the dashed arrow means constructs, the solid arrow means uses and the other lines mean itneracts.
+#+LABEL: fig:architecture-concept
+#+RESULTS: fig:architecture-concept
+
+\drafting
+The biggest difference from the original architecture is the removal of
+distinction between drools and the chatbot.
+In the new architecture we plan to make all information in the files available to
+the drools in a big database.
+There is a good reason for that, as we can see in section
+[[user utterance processing]]. the reply for a message is already determined
+before drools had a chance to do deliberation.
+Even worse, if the drools want to utter a spontaneous meaning they have to encode
+a string inside the drools.
+Which violates an intend of the previous architecture where business logic and 
+data would be separated.
+In the new architecture we just use a file reader to construct the entire
+meaning database into memory and expose them to the drools.
+This allows the drools to utter spontaneous meanings and allows do deliberation
+on incoming meanings of the user.
+Another advantage of this change is that its a much more simple architecture.
+Only one place does deliberation rather than two and only one api is used for
+generating responses.
+
+\drafting
+What the rest of the chapter does is describing the personality component in the
+drools, and it also discusses the meaning database.
 
 ** A type signature approach
 \cleared
