@@ -797,7 +797,7 @@ and finally we will look at the serious game in its existing form.
  Social practices were therefore introduced to make the notion of activity more
  concrete.
 
- \drafting
+ \toReview
  An early adoption of social practice can be found in cite:shove2005consumers,
  where it was used to analyze the spread of Nordic Walking.
  In his analyses he uses the following overarching concepts to analyze the practice:
@@ -812,7 +812,7 @@ and finally we will look at the serious game in its existing form.
     participate in the social practice of cycling. This is why this is
     introduced.
 
- \drafting
+\toReview
 In cite:dignum2014contextualized a model of social practices for agents was
 developed.
 This model is extended specifically to allow software agents to use it.
@@ -845,6 +845,7 @@ and finally /Competences/ is the same as in the previous model.
  if no preconditions match an agent could consider trying other social practices
  he knows or ask its operator.
 
+
  \toReview
  The social practice theory in this thesis should be considered as a
  /foundation/ rather than a separate element.
@@ -859,7 +860,7 @@ and finally /Competences/ is the same as in the previous model.
  in the following manner:
 
  + Practice name: Doctor appointment
- + /Physical context/, \todo{As an example we expect sensing personalities to check if everything fits before assuming the SP whereas intiuitve may fill the gaps}
+ + /Physical context/,
    - Resources: Computer, chair, diagnostic tools..
    - Places: waiting room, doctor's office...
    - Actors: doctor, patient, assistant, ...
@@ -869,23 +870,48 @@ and finally /Competences/ is the same as in the previous model.
    - Social interpretation: Can sit on chair, cannot sit on table.
  + /Activities/, share information, do diagnostics, minor treatments,
    prescribing drugs...
- + /Plan patterns/, Introduction \to ask complaints \to gather history \dots \todo{These are not concrete plans but rather patterns that still have to be filled in}
+ + /Plan patterns/, see figure [[fig:sp-activity]].
  + /Social meaning/, awkwardness, gratitude, ...
  + /Competences/, Give injection, empathetic talk
 
- \todo[inline]{Describe the model better}
+#+NAME: fig:sp-activity
+#+BEGIN_SRC plantuml :file img/uml/sp-activity.png :exports results
+|WebSocket|
+start
+:Introduction;
+repeat
+fork
+:Share information;
+fork again
+:Do diagnostics;
+endfork
+repeat while (Diagnosed problem?)
+if (Can be treated now?) then (yes)
+  :Perform minor treatment;
+else if (Can be treated with drugs?) then (yes)
+  :Prescribe drugs;
+else (no)
+  :Give bad news;
+endif
+stop
+#+END_SRC
+#+CAPTION: Plan pattern example
+#+LABEL: fig:sp-activity
+#+RESULTS: fig:sp-activity
 
- If the social practices however are defined more formally they could be 
- used in a bigger system such as in cite:augello2015social and
- cite:augello2016model.
 
- \drafting
- We can imagine personality should have /a/ influence on social practice
- selection and of course plan influence. As far as the authors are aware however,
- there hasn't been any prior work on this subject. But we can speculate for
- example that when considering physical context someone that is domination by a
- Sensing function would check all artifacts more rigorously than someone
- dominated by an Intuition.
+  \toReview
+  We can imagine personality should have /a/ influence on social practice
+  selection and of course plan influence. As far as the authors are aware however,
+  there hasn't been any prior work on this subject. But we can speculate for
+  example that when considering physical context someone that is domination by a
+  Sensing function would check all artifacts more rigorously than someone
+  dominated by an Intuition.
+
+  \toReview
+  If the social practices however are defined more formally they could be 
+  used in a bigger system such as in cite:augello2015social and
+  cite:augello2016model.
 *** BDI + Personality
  \cleared
  \todo[inline]{other proposed systems and argue for campos}
