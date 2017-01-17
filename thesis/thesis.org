@@ -1263,7 +1263,6 @@ stop
 \todo[inline]{Describe what  am I doing in this chapter?}
 \todo[inline]{We can make an analogy of type towards puzzle pieces, and the thing I'm doing with function combination is just a chain of puzzle pieces that fit together, where the unit is a straight end and the input is left open until there is a user meaning input}
 \todo[inline]{Add an image of architecture, recoginition section (currenlty aiml), delibiration section (perhaps on 3 levels, this is where personality can come in), mk sentence section (go from meaning to string)}
-\todo[inline]{Explain why I want to replace the chatbot, (because there is currently no way to stop it from reacting to something, and since its mostly an xml parser I think its just easier to replace with a new system (also xml is bad?))}
 <<Jungian BDI>>
 \toReview
 In this chapter we will consider how to combine Jungian psycology with BDI,
@@ -1436,11 +1435,12 @@ uttered.
 \cleared
 Therefore we introduce $D$ a dialogue tree:
 \[ D = (m, [D])\]
+\todo{I think this misses the agent who said the meaning}
 Where $m \in \mathcal{M}$ for the meaning,
 and $[D]$ is the ordered list of dialogue children.
 The initial dialogue just has a meaning with an empty list of children.
 A reply would be the same except with a list of children that is bigger than zero.
-The most preferred reply is the first element in the list of children.
+The most preferred reply is the first element in the list of children. \todo{Perhaps we can use an object diagram to make the treelike nature more clear}
 With this in place we can model the following type signature:
 \[ B_t \to t \to D_t \overset{f_a}{\to} (B_{t+1}, D_{t+1}) \]
 So we receive a dialogue tree from the user, which can just be a root node,
@@ -1562,7 +1562,7 @@ To solve this problem we will apply an order to the replies.
 The highest in the order will be the most preferred reply and the lowest the
 least preferred.
 This results in the following conceptualized architecture:
-/rational/ functions change the order of replies,
+/rational/ functions change the order of possible replies,
 /irrational/ increase the number of options.
 So if we start with an irrational function it produces several related meanings
 to the inputted meaning in a tree like structure.
@@ -1696,11 +1696,10 @@ we can conclude that they will also behave differently.
 * Architectural Changes
 \todo{find a good location to put this}
 \drafting
-To give a clear overview of where the elements discussed take place we will
-create another abstract architecture and note  the difference with the
-architecture described in [[The serious game]].
-We want to keep as much of the existing architecture as possible,
-therefore all differences will be stated and given a motivation.
+In this chapter we will describe the architectural changes between the
+current implementation and the original architecture discussed in section [[
+The serious game]].
+Note that we want to keep as much of the existing architecture as possible.
 A deployment diagram of the architecture can bee seen in figure
 [[fig:architecture-concept]].
 
@@ -1738,29 +1737,39 @@ A deployment diagram of the architecture can bee seen in figure
 #+LABEL: fig:architecture-concept
 #+RESULTS: fig:architecture-concept
 
+\todo[inline]{Explain why I want to replace the chatbot, (because there is currently no way to stop it from reacting to something, and since its mostly an xml parser I think its just easier to replace with a new system (also xml is bad?))}
 \drafting
 The biggest difference from the original architecture is the removal of
 distinction between drools and the chatbot.
 In the new architecture we plan to make all information in the files available to
 the drools in a big database.
 There is a good reason for that, as we can see in section
-[[user utterance processing]]. the reply for a message is already determined
-before drools had a chance to do deliberation.
+[[user utterance processing]].
+The reply for a message is already determined before drools had a chance to
+do deliberation.
 Even worse, if the drools want to utter a spontaneous meaning they have to encode
 a string inside the drools.
-Which violates an intend of the previous architecture where business logic and 
-data would be separated.
+This is messy because now we have data, that is supposed to live in xml files,
+encoded into our drool files.
+
+\drafting
 In the new architecture we just use a file reader to construct the entire
 meaning database into memory and expose them to the drools.
 This allows the drools to utter spontaneous meanings and allows do deliberation
 on incoming meanings of the user.
+The reactionary based scheme where an incoming user response has been replaced
+with a structural scheme. \todo{I find it rather hard to believe I'm the first one to think of this}
+A meaning has connections to other meanings, which should be sensible responses.
+So if a user utters a meaning then rather than having a direct response string
+that uses variables to fill in the gap, we get a meaning, which connected to
+other meanings which in turn are also connected.
+We can do deliberation on this because we have one or more meaning /goals/.
+
+\drafting
 Another advantage of this change is that its a much more simple architecture.
 Only one place does deliberation rather than two and only one api is used for
 generating responses.
 
-\drafting
-What the rest of the chapter does is describing the personality component in the
-drools, and it also discusses the meaning database.
 * Implementation
 \todo[inline]{How to go from process orientated to selecting an answer?}
 \drafting
