@@ -1474,7 +1474,7 @@ the user meaning it can't do its job yet, more on his in this section
 [[Rational and irrational]].
 Therefore we consider another approach.
 
-\cleared
+\toReview
 In this approach we will give $f_a$ another argument which is the next $f_a$.
 This looks like the following:
 \[ \left (\overset{next}{B_t \to t \to D_t \to (B_{t+1}, D_{t+1})}\right ) \to B_t \to t \to D_t \overset{f_a}{\to} (B_{t+1}, D_{t+1}) \]
@@ -1489,18 +1489,20 @@ point an activity diagram can be seen in figure [[fig:faprocessing]].
 #+NAME: fig:faprocessing
 #+BEGIN_SRC plantuml :file img/uml/faprocessing.png :exports results
   start
-  :load first fa;
+  :interpret string into meaning (m);
+  :call first fa in personality sequence;
   repeat
-  :fa logic;
+  :current fa logic;
   repeat while (called next?)
   repeat
   :fa modify results of next;
   repeat while (another fa on stack?)
-  :extract string from results;
+  :extract string from results (D);
   end
 #+END_SRC
-#+CAPTION: Activity diagram of a server game faprocessing
+#+CAPTION: Activity diagram of function attitude (fa) processing.
 #+LABEL: fig:faprocessing
+#+ATTR_LATEX: :width 0.5\textwidth
 #+RESULTS: fig:faprocessing
 
 \cleared
