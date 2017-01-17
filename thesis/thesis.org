@@ -1258,74 +1258,6 @@ stop
      knowledge base for a string.
 
 
-* Conceptualized architecture
-\todo{find a good location to put this}
-\drafting
-To give a clear overview of where the elements discussed take place we will
-create another abstract architecture and note  the difference with the
-architecture described in [[The serious game]].
-We want to keep as much of the existing architecture as possible,
-therefore all differences will be stated and given a motivation.
-A deployment diagram of the architecture can bee seen in figure
-[[fig:architecture-concept]].
-
-#+NAME: fig:architecture-concept
-#+BEGIN_SRC plantuml :file img/uml/architecture-concept.png :exports results
-
-  folder bot{
-  cloud drools {
-    component emotions
-    component scenario
-    component personality
-    component score
-    storage facts
-    emotions -- facts
-    scenario -- facts
-    personality -- facts
-    score -- facts
-  }
-  database meanings [
-    meanings
-    ====
-    meaning graph
-  ]
-  entity filereader
-  filereader ..> meanings
-  drools --> meanings
-  }
-  node server
-  node client
-
-  server --> bot
-  server -(0)- client
-#+END_SRC
-#+CAPTION: Deployment diagram of new architecture, where the dashed arrow means constructs, the solid arrow means uses and the other lines mean itneracts.
-#+LABEL: fig:architecture-concept
-#+RESULTS: fig:architecture-concept
-
-\drafting
-The biggest difference from the original architecture is the removal of
-distinction between drools and the chatbot.
-In the new architecture we plan to make all information in the files available to
-the drools in a big database.
-There is a good reason for that, as we can see in section
-[[user utterance processing]]. the reply for a message is already determined
-before drools had a chance to do deliberation.
-Even worse, if the drools want to utter a spontaneous meaning they have to encode
-a string inside the drools.
-Which violates an intend of the previous architecture where business logic and 
-data would be separated.
-In the new architecture we just use a file reader to construct the entire
-meaning database into memory and expose them to the drools.
-This allows the drools to utter spontaneous meanings and allows do deliberation
-on incoming meanings of the user.
-Another advantage of this change is that its a much more simple architecture.
-Only one place does deliberation rather than two and only one api is used for
-generating responses.
-
-\drafting
-What the rest of the chapter does is describing the personality component in the
-drools, and it also discusses the meaning database.
 
 * BDI and Jung
 \todo[inline]{Describe what  am I doing in this chapter?}
@@ -1336,17 +1268,10 @@ drools, and it also discusses the meaning database.
 \drafting
 In this chapter we will consider how to combine Jungian psycology with BDI,
 as was originally done by Campos cite:campos_mabs2009.
-We will reason about Jungian function attitudes by considering the
-type signature of a pure function that can represent them.
-A Haskell like syntax is used for this.
-We want to have a type signature that can describe the domain,
-but nothing more, to keep the project as simple as possible.
-Note that a simple function can be infinitely complex because it can have an
-infinite number of arguments and an infinite number of results in a tuple,
-this is of course not desirable (or possible).
-Another issue which is discussed is where this function is supposed to be placed. \todo{Except this isn't done yet}
-Finally We will also look at how to convert user utterances to objects we can do
-reasoning with.
+We want to also do this but using Jungian function attitudes rather than
+the measured MBTI dimensions directly.
+This is because Jungian function attitudes are the underlying construct of
+MBTI and several other instruments (such as the PPSDQ and SL-TDI).
 
 \cleared
 There are some differences from the theory discussed in [[sec:types]] and Campos'
@@ -1388,12 +1313,22 @@ This means that we can't just execute all functions and use a do preference
 selection on the result.
 
 \cleared
-We will interpret the Jungian functions as a mapping from an agents believes
-and senses towards an agent action and new believes.
+We will interpret the Jungian functions attitudes as a mapping from an agents
+believes and senses towards an agent action and new believes.
 This is then reduced to the scope of a chatbot in the social practice.
 After this we will look what extra information the function attitudes need
 in an attempt to reduce the amount of possible believes.
 
+\drafting
+We will reason about the function attitudes by considering the
+type signature of a pure function that can represent them.
+A Haskell like syntax is used for this.
+We want to have a type signature that can describe the domain, but nothing more.
+Note that a simple function can be infinitely complex because it can have an
+infinite number of arguments and an infinite number of results in a tuple,
+this is of course not desirable (or computationally possible).
+Finally We will also look at how to convert user utterances to types we can do
+reasoning with.
 
 ** A type signature approach
 \cleared
@@ -1548,6 +1483,25 @@ In this case the /next/ function can play an advisory role to the codomain.
 A unit function can be defined that produces empty sets as results for both
 believes and action.
 By unit function we mean the initial /next/ function.
+Since the notation may be complete foreign to the interested reader at this
+point an activity diagram can be seen in figure [[fig:faprocessing]].
+
+#+NAME: fig:faprocessing
+#+BEGIN_SRC plantuml :file img/uml/faprocessing.png :exports results
+  start
+  :load first fa;
+  repeat
+  :fa logic;
+  repeat while (called next?)
+  repeat
+  :fa modify results of next;
+  repeat while (another fa on stack?)
+  :extract string from results;
+  end
+#+END_SRC
+#+CAPTION: Activity diagram of a server game faprocessing
+#+LABEL: fig:faprocessing
+#+RESULTS: fig:faprocessing
 
 \cleared
 To illustrate the use of this type signature design more clearly we'll sketch
@@ -1734,6 +1688,75 @@ Since attitudes produce a different process by definition
 (see section [[Mapping to process]]),
 we can conclude that they will also behave differently.
 
+
+* Architectural Changes
+\todo{find a good location to put this}
+\drafting
+To give a clear overview of where the elements discussed take place we will
+create another abstract architecture and note  the difference with the
+architecture described in [[The serious game]].
+We want to keep as much of the existing architecture as possible,
+therefore all differences will be stated and given a motivation.
+A deployment diagram of the architecture can bee seen in figure
+[[fig:architecture-concept]].
+
+#+NAME: fig:architecture-concept
+#+BEGIN_SRC plantuml :file img/uml/architecture-concept.png :exports results
+
+  folder bot{
+  cloud drools {
+    component emotions
+    component scenario
+    component personality
+    component score
+    storage facts
+    emotions -- facts
+    scenario -- facts
+    personality -- facts
+    score -- facts
+  }
+  database meanings [
+    meanings
+    ====
+    meaning graph
+  ]
+  entity filereader
+  filereader ..> meanings
+  drools --> meanings
+  }
+  node server
+  node client
+
+  server --> bot
+  server -(0)- client
+#+END_SRC
+#+CAPTION: Deployment diagram of new architecture, where the dashed arrow means constructs, the solid arrow means uses and the other lines mean itneracts.
+#+LABEL: fig:architecture-concept
+#+RESULTS: fig:architecture-concept
+
+\drafting
+The biggest difference from the original architecture is the removal of
+distinction between drools and the chatbot.
+In the new architecture we plan to make all information in the files available to
+the drools in a big database.
+There is a good reason for that, as we can see in section
+[[user utterance processing]]. the reply for a message is already determined
+before drools had a chance to do deliberation.
+Even worse, if the drools want to utter a spontaneous meaning they have to encode
+a string inside the drools.
+Which violates an intend of the previous architecture where business logic and 
+data would be separated.
+In the new architecture we just use a file reader to construct the entire
+meaning database into memory and expose them to the drools.
+This allows the drools to utter spontaneous meanings and allows do deliberation
+on incoming meanings of the user.
+Another advantage of this change is that its a much more simple architecture.
+Only one place does deliberation rather than two and only one api is used for
+generating responses.
+
+\drafting
+What the rest of the chapter does is describing the personality component in the
+drools, and it also discusses the meaning database.
 * Implementation
 \todo[inline]{How to go from process orientated to selecting an answer?}
 \drafting
