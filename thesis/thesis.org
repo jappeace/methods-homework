@@ -1257,74 +1257,8 @@ stop
      the drools knowledge base, the getDroolsTemplate tag queries the drools
      knowledge base for a string.
 
-* BDI and Jung
-\todo[inline]{Describe what  am I doing in this chapter?}
-\todo[inline]{We can make an analogy of type towards puzzle pieces, and the thing I'm doing with function combination is just a chain of puzzle pieces that fit together, where the unit is a straight end and the input is left open until there is a user meaning input}
-\todo[inline]{Add an image of architecture, recoginition section (currenlty aiml), delibiration section (perhaps on 3 levels, this is where personality can come in), mk sentence section (go from meaning to string)}
-\todo[inline]{Explain why I want to replace the chatbot, (because there is currently no way to stop it from reacting to something, and since its mostly an xml parser I think its just easier to replace with a new system (also xml is bad?))}
-<<Jungian BDI>>
-\drafting
-In this chapter we will consider how to combine Jungian psycology with BDI,
-as was originally done by Campos cite:campos_mabs2009.
-We will reason about Jungian function attitudes by considering the
-type signature of a pure function that can represent them.
-A Haskell like syntax is used for this.
-We want to have a type signature that can describe the domain,
-but nothing more, to keep the project as simple as possible.
-Note that a simple function can be infinitely complex because it can have an
-infinite number of arguments and an infinite number of results in a tuple,
-this is of course not desirable (or possible).
-Another issue which is discussed is where this function is supposed to be placed. \todo{Except this isn't done yet}
-Finally We will also look at how to convert user utterances to objects we can do
-reasoning with.
 
-\cleared
-There are some differences from the theory discussed in [[sec:types]] and Campos'
-process.
-The difference is that in the discussed theory we would translate MBTI to the
-underlying Jungian functions, whereas Campos used the measured dimensions.
-Translating to the functions has some advantages,
-by doing so we are for example not bound to just the MBTI.
-We also get more accurate descriptions of what Jungian functions are,
-Jung described in his work people with that particular function as dominant.
-This is harder to do with the dimensions, because if you take an INTJ type and an
-INTP type the semantics of both the N and T change because of the P/J dimension, 
-as can be seen in their respective order (see [[sec:mbti:order_comparison]]).
-Campos avoids this by ignoring the I/E and J/P dimensions, resulting in a
-simplified theory.
-However we would like to note that it is not an easily extendable simplification.
-Therefore we chose to translate types to orders in Jungian function attitudes,
-something which is already done by MBTI (see [[sec:mbti:order_comparison]]).
-
-\cleared
-Another consideration to make is what are these function attitudes?
-By which I mean what do they represent in computer science terms: progams,
-objects or functions? What should they be?
-Since Jung wasn't much of a mathematician cite:jungonfunctions its just an
-informal definition.
-However we can make a mapping to certain BDI processes
-based upon their description,
-but before that is done we need to make several structural observations.
-
-\cleared
-Firstly functions attitudes are not independent, by which I mean that
-if we have a function attitude $a$, followed by $b$ then the resulting
-behavior is different than $b$ followed by $a$ (see [[sec:mbti:order_comparison]]).
-
-\cleared
-Secondly all functions should be used and their order matters.
-The first function used should be most prevalent.
-This means that we can't just execute all functions and use a do preference
-selection on the result.
-
-\cleared
-We will interpret the Jungian functions as a mapping from an agents believes
-and senses towards an agent action and new believes.
-This is then reduced to the scope of a chatbot in the social practice.
-After this we will look what extra information the function attitudes need
-in an attempt to reduce the amount of possible believes.
-
-** Conceptualized architecture
+* Conceptualized architecture
 \todo{find a good location to put this}
 \drafting
 To give a clear overview of where the elements discussed take place we will
@@ -1392,6 +1326,74 @@ generating responses.
 \drafting
 What the rest of the chapter does is describing the personality component in the
 drools, and it also discusses the meaning database.
+
+* BDI and Jung
+\todo[inline]{Describe what  am I doing in this chapter?}
+\todo[inline]{We can make an analogy of type towards puzzle pieces, and the thing I'm doing with function combination is just a chain of puzzle pieces that fit together, where the unit is a straight end and the input is left open until there is a user meaning input}
+\todo[inline]{Add an image of architecture, recoginition section (currenlty aiml), delibiration section (perhaps on 3 levels, this is where personality can come in), mk sentence section (go from meaning to string)}
+\todo[inline]{Explain why I want to replace the chatbot, (because there is currently no way to stop it from reacting to something, and since its mostly an xml parser I think its just easier to replace with a new system (also xml is bad?))}
+<<Jungian BDI>>
+\drafting
+In this chapter we will consider how to combine Jungian psycology with BDI,
+as was originally done by Campos cite:campos_mabs2009.
+We will reason about Jungian function attitudes by considering the
+type signature of a pure function that can represent them.
+A Haskell like syntax is used for this.
+We want to have a type signature that can describe the domain,
+but nothing more, to keep the project as simple as possible.
+Note that a simple function can be infinitely complex because it can have an
+infinite number of arguments and an infinite number of results in a tuple,
+this is of course not desirable (or possible).
+Another issue which is discussed is where this function is supposed to be placed. \todo{Except this isn't done yet}
+Finally We will also look at how to convert user utterances to objects we can do
+reasoning with.
+
+\cleared
+There are some differences from the theory discussed in [[sec:types]] and Campos'
+process.
+The difference is that in the discussed theory we would translate MBTI to the
+underlying Jungian functions, whereas Campos used the measured dimensions.
+Translating to the functions has some advantages,
+by doing so we are for example not bound to just the MBTI.
+We also get more accurate descriptions of what Jungian functions are,
+Jung described in his work people with that particular function as dominant.
+This is harder to do with the dimensions, because if you take an INTJ type and an
+INTP type the semantics of both the N and T change because of the P/J dimension, 
+as can be seen in their respective order (see [[sec:mbti:order_comparison]]).
+Campos avoids this by ignoring the I/E and J/P dimensions, resulting in a
+simplified theory.
+However we would like to note that it is not an easily extendable simplification.
+Therefore we chose to translate types to orders in Jungian function attitudes,
+something which is already done by MBTI (see [[sec:mbti:order_comparison]]).
+
+\cleared
+Another consideration to make is what are these function attitudes?
+By which I mean what do they represent in computer science terms: progams,
+objects or functions? What should they be?
+Since Jung wasn't much of a mathematician cite:jungonfunctions its just an
+informal definition.
+However we can make a mapping to certain BDI processes
+based upon their description,
+but before that is done we need to make several structural observations.
+
+\cleared
+Firstly functions attitudes are not independent, by which I mean that
+if we have a function attitude $a$, followed by $b$ then the resulting
+behavior is different than $b$ followed by $a$ (see [[sec:mbti:order_comparison]]).
+
+\cleared
+Secondly all functions should be used and their order matters.
+The first function used should be most prevalent.
+This means that we can't just execute all functions and use a do preference
+selection on the result.
+
+\cleared
+We will interpret the Jungian functions as a mapping from an agents believes
+and senses towards an agent action and new believes.
+This is then reduced to the scope of a chatbot in the social practice.
+After this we will look what extra information the function attitudes need
+in an attempt to reduce the amount of possible believes.
+
 
 ** A type signature approach
 \cleared
