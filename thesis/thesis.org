@@ -1408,19 +1408,19 @@ individually.
 To do this we will define some terms, with which we will go from the broadest
 definition possible towards one that just fits the project scope.
 
-\cleared
+\toReview
 Let $\mathcal{B}$ denote the set of all
 possible believes and let $B_t$ with $B_t \subseteq \mathcal{B}$ denote the
 believes of an agent at time $t$. 
-$\mathcal{S}$ is the set of all possible sense information, in which $S_t$
-with $S_t \subseteq \mathcal{S}$ denotes the sense information of an agent at
-time $t$.
+$\mathcal{P}$ is the set of all possible sense information, in which $P_t$
+with $P_t \subseteq \mathcal{P}$ denotes the perception information of an agent
+at time $t$.
 $\mathcal{A}$ denotes the set of all possible actions with $A_t$ with
 $A_t \subseteq \mathcal{A}$ denoting the set of actions executed by the agent at
 time $t$.
 With this definition we can define every possible agent configuration as the 
 following pure function type signature
-\[ B_t \to S_t \overset{f_a}{\to} (B_{t+1}, A_{t+1}) \]
+\[ B_t \to P_t \overset{f_a}{\to} (B_{t+1}, A_{t+1}) \]
 This says, we first put in the current believe base, then the sensory
 information after which we get a new believe base and a set of actions.
 In this the intentions are encoded in the function used, and the desires are
@@ -1439,7 +1439,7 @@ Therefore we will introduce another mapping function $g$:
 Where $\sigma$ is a string and $m$ a meaning where $m \in \mathcal{M}$ in which
 $\mathcal{M}$ stands for the set of all encoded meanings[fn::Note that these
 meanings are different than the ones found in the social practice.
-A different word for the meaning we describe here is "symbol".]
+A different word for the meaning we describe here is "symbol".] \todo{Replace meaning with symbol, to avoid confusion with social practice and the delete the footnote}
 Conversely  there is another function $g'$:
 \[ m \overset{g'}{\to} \sigma \]
 This allows meaning $m$ to decoded into string $\sigma$.
@@ -1449,9 +1449,9 @@ In the previous version this mapping was entirely done by AIML.
 How this is done in this version will be discussed in the implementation
 section [[From strings to meanings]].
 
-\cleared
+\toReview
 So the simplification is now as follows,
-firstly we note that $\mathcal{M} \subset \mathcal{S}$,
+firstly we note that $\mathcal{M} \subset \mathcal{P}$,
 since understanding meaning is a form of sensation.
 Then we can define $M_t \subseteq \mathcal{M}$ which stands for the meanings
 the agent received at time $t$.
@@ -1655,16 +1655,18 @@ less broad in scope.
 To do this we will start analyzing the Jungian functions and see what
 "extra" information require to function to perform their duties.
 
-\toReview
+\todo[inline]{Everywhere where a how like tag is added should at least have a reference to somewhere else that explains it (or inline explenation although since this chapter tries to remain abstract perhaps thats not always a good idea)}
+\drafting
 So $T_e$ uses just one ply in the meaning tree and then applies a static
-evaluation to determine if uttering a certain meaning will get it closer
+evaluation \todo{How?}
+to determine if uttering a certain meaning will get it closer
 to its goal (its more like a heuristic).
 $T_i$ uses alpha beta pruning on the meaning tree to
 determine the best goal. Therefore both $T$ functions don't need any
 additional information to perform their processes.
 
-\toReview
-Both $F$ functions need a valuation function $h$:
+\drafting
+Both $F$ functions need a valuation function $h$: \todo{How is this represented in data?}
 \[ m \overset{h}{\to} i \]
 where $i \in \mathbb{N}$.
 The encoding of this system is similar of the existing work on /drools/.
@@ -1680,25 +1682,25 @@ repeated (the actions may differ per deliberation cycle),
 therefore as an easier alternatives we can make two variants
 of $h$ that produce group values and personal values.
 
-\toReview
-N uses a meaning graph where $N_e$ goes breath first and $N_i$ goes depth first.
+\drafting
+N uses a meaning graph where $N_e$ goes breath first and $N_i$ goes depth first. \todo{No}
 So $N_e$ produces the results of connected meanings of the input meaning,
 but $N_i$ creates a deeper tree, using the /next/ function to decide
 where to go on crossroads.
 Alternatively reinforcement learning can be used $N$ like responses
 cite:li2016deep. However this is out of the scope of this thesis.
 
-\toReview
+\drafting
 S_i uses memories, which are just responses from previous conversations to the
 current meaning.
-S_e uses sense information, just some meanings that are in the environment.
+S_e uses sense information, just some meanings that are in the environment. \todo{Also noe}
 
-\toReview
+\drafting
 We listed the function attitudes $f_a$ and their required information into
 table [[tab:fa-and-data]]. To finish modeling the believes we just need to
 the meaning graph. The meaning graph $G$ is a set of connections $(m_1, m_2)$
 where $m_1, m_2 \in \mathcal{M} \wedge m_1 \neq m_2$.
-Therefore $B = (m, h, h', [m], [D], G)$
+Therefore $B = (m, h, h', [m], [D], G)$ \todo{This is just wrong right now (the stuff below needs to be integrated)}
 
 #+CAPTION: function attitudes and their required data
 #+NAME:   tab:fa-and-data
@@ -1830,7 +1832,6 @@ We can do deliberation on this because we have one or more meaning /goals/.
 Another advantage of this change is that its a much more simple architecture.
 Only one place does deliberation rather than two and only one api is used for
 generating responses.
-
 
 * Implementation
 \todo[inline]{How to go from process orientated to selecting an answer?}
@@ -2042,7 +2043,7 @@ On the other hand if the user ever tries to re-treat a subject we can just
 become annoyed. Drools can be used to catch these kind of cases effectively.
 
 ** Inserting meaning into KIE
-\drafting
+\toReview
 Once the meaning is extracted from the user utterance we can insert it into the
 drool engine to do deliberation upon (see [[fig:insert_meaning]]).
 
