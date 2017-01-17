@@ -7,7 +7,7 @@
 #+Options: title:nil
 #+OPTIONS: H:5
 
-#+LATEX_HEADER: \usepackage{natbib}
+#+LATEX_HEADER: \usepackage[square,sort,comma,numbers]{natbib}
 #+LATEX_HEADER: \renewcommand{\bibsection}{}
 
 #+LATEX_HEADER: \usepackage[obeyFinal, colorinlistoftodos]{todonotes}
@@ -875,7 +875,7 @@ and finally /Competences/ is the same as in the previous model.
  + /Competences/, Give injection, empathetic talk
 
 #+NAME: fig:sp-activity
-#+BEGIN_SRC plantuml :file img/uml/sp-activity.png :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/sp-activity.png :exports results
 |WebSocket|
 start
 :Introduction;
@@ -1045,7 +1045,7 @@ whilst ignoring all of AIML.
     which is not possible with a technology such as REST.
 
 #+NAME: fig:components
-#+BEGIN_SRC plantuml :file img/uml/components.png :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/components.png :exports results
 [Unity Client] <--> Websocket : json
 [Wildfly java servlet (server)] <--> Websocket : json
 #+END_SRC
@@ -1075,7 +1075,7 @@ whilst ignoring all of AIML.
     figure [[fig:sequence]].
 
 #+NAME: fig:sequence
-#+BEGIN_SRC plantuml :file img/uml/sequence.png :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/sequence.png :exports results
   actor client
   entity server
   client -> server : login(userid,password)
@@ -1094,11 +1094,6 @@ whilst ignoring all of AIML.
 #+RESULTS: fig:sequence
 
 \newpage
-**** TODO User utterance processing 
-<<user utterance processing>>
-     text here
-
-\todo[inline]{Should also do a message processing activity diagram since we want to compare it against that}
 *** Server architecture
   \cleared
 We will discuss the server architecture in more detail since it contains the
@@ -1108,7 +1103,7 @@ WebSocket is the entry point for the program where the messages from the client
 enter.
 
 #+NAME: fig:class
-#+BEGIN_SRC plantuml :file img/uml/class.png :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/class.png :exports results
   interface ChatBotEngine{
     +String chat(String request)
     +void setSession(Session session)
@@ -1175,7 +1170,7 @@ Currently globals are used as communication with external libraries
 (for example the websocket and chat session).
 
 #+NAME: fig:construction
-#+BEGIN_SRC plantuml :file img/uml/construction.png :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/construction.png :exports results
 |WebSocket|
 start
 :Receve StartGame message;
@@ -1257,18 +1252,75 @@ stop
      the drools knowledge base, the getDroolsTemplate tag queries the drools
      knowledge base for a string.
 
+**** User utterance processing 
+<<user utterance processing>>
 
+\toReview
+An important process to describe is the way currently user messages are processed.
+Figure [[fig:utterance-proccesing]] gives an overview of utterance processing.
+
+#+NAME: fig:utterance-proccesing
+#+BEGIN_SRC plantuml :cache yes :file img/uml/utterance-proccesing.png :exports results
+          |WebSocket|
+          start
+          :Utterance received;
+          :call chat;
+          |#CCDDFF|Alice|
+          if (AIML matched
+          results?) then (No)
+          :Default
+          response;
+          else (Yes)
+          if (Has insert tag?) then (No)
+          else (Yes)
+          |#AntiqueWhite|Drool|
+          :Insert fact into drools;
+          |#CCDDFF|Alice|
+          :Combine droolsting
+                  with AIML;
+          endif
+          if (Has getDroolTemplate tag?) then (No)
+          :Use template text;
+          else (Yes)
+          |#AntiqueWhite|Drool|
+          while (Has reaction fact?) is (No)
+          :Wait;
+          endwhile (found reaction)
+          |#CCDDFF|Alice|
+          :Combine
+            reaction
+            with
+            template;
+          endif
+          endif
+          |WebSocket|
+          :Send response
+          to client;
+          stop
+#+END_SRC
+#+CAPTION: Activity diagram of user utterance processing
+#+LABEL: fig:utterance-proccesing
+#+ATTR_LATEX: :width 1.0\textwidth
+#+RESULTS: fig:utterance-proccesing
+
+\toReview
+As can be seen in the diagram the message processing happens inside the Alice
+bot.
+Tags were added to AIML to allow the drool engine to be updated.
+The drool system can be relatively easily be bypassed.
+If there are no tags in the AIML the drool system will be oblivious of chat
+messages.
+Also note that there is a loop for the getDroolTemplates tag.
+This is because a blocking queue is used,
+which will block the thread until there is an item in the list.
 
 * BDI and Jung
-\todo[inline]{Describe what  am I doing in this chapter?}
-\todo[inline]{We can make an analogy of type towards puzzle pieces, and the thing I'm doing with function combination is just a chain of puzzle pieces that fit together, where the unit is a straight end and the input is left open until there is a user meaning input}
-\todo[inline]{Add an image of architecture, recoginition section (currenlty aiml), delibiration section (perhaps on 3 levels, this is where personality can come in), mk sentence section (go from meaning to string)}
 <<Jungian BDI>>
 \toReview
 In this chapter we will consider how to combine Jungian psycology with BDI,
 as was originally done by Campos cite:campos_mabs2009.
-We want to also do this but using Jungian function attitudes rather than
-the measured MBTI dimensions directly.
+We want to do something similar but using Jungian function attitudes rather than
+the measured MBTI dimensions.
 This is because Jungian function attitudes are the underlying construct of
 MBTI and several other instruments (such as the PPSDQ and SL-TDI).
 
@@ -1489,7 +1541,7 @@ Since the notation may be complete foreign to the interested reader at this
 point an activity diagram can be seen in figure [[fig:faprocessing]].
 
 #+NAME: fig:faprocessing
-#+BEGIN_SRC plantuml :file img/uml/faprocessing.png :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/faprocessing.png :exports results
   start
   :interpret string into meaning (m);
   :call first fa in personality sequence;
@@ -1694,6 +1746,7 @@ we can conclude that they will also behave differently.
 
 
 * Architectural Changes
+\todo[inline]{Add an image of architecture, recoginition section (currenlty aiml), delibiration section (perhaps on 3 levels, this is where personality can come in), mk sentence section (go from meaning to string)}
 \todo{find a good location to put this}
 \drafting
 In this chapter we will describe the architectural changes between the
@@ -1704,7 +1757,7 @@ A deployment diagram of the architecture can bee seen in figure
 [[fig:architecture-concept]].
 
 #+NAME: fig:architecture-concept
-#+BEGIN_SRC plantuml :file img/uml/architecture-concept.png :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/architecture-concept.png :exports results
 
   folder bot{
   cloud drools {
@@ -1769,6 +1822,7 @@ We can do deliberation on this because we have one or more meaning /goals/.
 Another advantage of this change is that its a much more simple architecture.
 Only one place does deliberation rather than two and only one api is used for
 generating responses.
+
 
 * Implementation
 \todo[inline]{How to go from process orientated to selecting an answer?}
@@ -1985,7 +2039,7 @@ Once the meaning is extracted from the user utterance we can insert it into the
 drool engine to do deliberation upon (see [[fig:insert_meaning]]).
 
 #+NAME: fig:insert_meaning
-#+BEGIN_SRC plantuml :file img/uml/insert_meaning.png :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/insert_meaning.png :exports results
 |WebSocket|
 start
 :Receve message;
@@ -2256,3 +2310,4 @@ to keep unity running (or use at all).
 Start game and new game could be merged?
 Why are you logging towards the client? This seems like a security hole and a
 possible performance bottleneck.
+
