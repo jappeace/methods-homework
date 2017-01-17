@@ -897,7 +897,8 @@ stop
 #+END_SRC
 #+CAPTION: Plan pattern example
 #+LABEL: fig:sp-activity
-#+RESULTS: fig:sp-activity
+#+RESULTS[989ab68b4d78c83d14903b2658462d71009d62db]: fig:sp-activity
+[[file:img/uml/sp-activity.png]]
 
 
   \toReview
@@ -1051,7 +1052,8 @@ whilst ignoring all of AIML.
 #+END_SRC
 #+CAPTION: Component diagram of the application
 #+LABEL: fig:components
-#+RESULTS: fig:components
+#+RESULTS[0a6819d9f31cce0a72033a77e9723a6a659dcd51]: fig:components
+[[file:img/uml/components.png]]
 
 **** Source tree
     \cleared
@@ -1091,7 +1093,8 @@ whilst ignoring all of AIML.
 #+END_SRC
 #+CAPTION: Sequence diagram of a typical game
 #+LABEL: fig:sequence
-#+RESULTS: fig:sequence
+#+RESULTS[db5e6bada22b64bf70a330d1219fedc990f11453]: fig:sequence
+[[file:img/uml/sequence.png]]
 
 \newpage
 *** Server architecture
@@ -1139,7 +1142,8 @@ enter.
 #+END_SRC
 #+CAPTION: Class diagram of the server, where kie is the engine that handles the drools
 #+LABEL: fig:class
-#+RESULTS: fig:class
+#+RESULTS[0b594e175f82f51e7db78f2340ecb9fa14f3e0e6]: fig:class
+[[file:img/uml/class.png]]
 
 \cleared
 The Websocket uses a ChatBotEngine to determine how to reply to userUtterences,
@@ -1190,7 +1194,8 @@ stop
 #+END_SRC
 #+CAPTION: Activity diagram of a server game construction
 #+LABEL: fig:construction
-#+RESULTS: fig:construction
+#+RESULTS[3acde42e45cb6f546f0d34b2c135845e8f592a48]: fig:construction
+[[file:img/uml/construction.png]]
 
 \newpage
 **** Text processing
@@ -1301,7 +1306,8 @@ Figure [[fig:utterance-proccesing]] gives an overview of utterance processing.
 #+CAPTION: Activity diagram of user utterance processing
 #+LABEL: fig:utterance-proccesing
 #+ATTR_LATEX: :width 1.0\textwidth
-#+RESULTS: fig:utterance-proccesing
+#+RESULTS[2be41360a975175f4a0734807235d7983de36beb]: fig:utterance-proccesing
+[[file:img/uml/utterance-proccesing.png]]
 
 \toReview
 As can be seen in the diagram the message processing happens inside the Alice
@@ -1557,7 +1563,8 @@ point an activity diagram can be seen in figure [[fig:faprocessing]].
 #+CAPTION: Activity diagram of function attitude (fa) processing.
 #+LABEL: fig:faprocessing
 #+ATTR_LATEX: :width 0.5\textwidth
-#+RESULTS: fig:faprocessing
+#+RESULTS[503d2109720f17ed1daf7cb146e2b6b7ac65f207]: fig:faprocessing
+[[file:img/uml/faprocessing.png]]
 
 \cleared
 To illustrate the use of this type signature design more clearly we'll sketch
@@ -1788,7 +1795,8 @@ A deployment diagram of the architecture can bee seen in figure
 #+END_SRC
 #+CAPTION: Deployment diagram of new architecture, where the dashed arrow means constructs, the solid arrow means uses and the other lines mean itneracts.
 #+LABEL: fig:architecture-concept
-#+RESULTS: fig:architecture-concept
+#+RESULTS[229649447467bceedd0388ab3f03bc220fb0f24b]: fig:architecture-concept
+[[file:img/uml/architecture-concept.png]]
 
 \todo[inline]{Explain why I want to replace the chatbot, (because there is currently no way to stop it from reacting to something, and since its mostly an xml parser I think its just easier to replace with a new system (also xml is bad?))}
 \drafting
@@ -2055,7 +2063,8 @@ stop
 #+END_SRC
 #+CAPTION: Activity diagram of a server game insert_meaning
 #+LABEL: fig:insert_meaning
-#+RESULTS: fig:insert_meaning
+#+RESULTS[30bcd9f9b7de22494e9d8c999d6325757162dceb]: fig:insert_meaning
+[[file:img/uml/insert_meaning.png]]
 
 \newpage
 * In conclusion
