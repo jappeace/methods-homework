@@ -1335,7 +1335,7 @@ reasoning with.
 To give a more deep understanding of the scope of this project we will
 try to come up with a type signature of a pure function that models all the
 function attitudes.
-This is done with a Haskell like syntax (or category theory), \todo{cite the haskell and category theory?}
+This is done with a Haskell like syntax (or category theory),
 in which the arrows indicate a function,
 left of the arrow is called a domain and the right side a codomain.
 The domain is also the argument of a function.
