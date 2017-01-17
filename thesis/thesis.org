@@ -1265,7 +1265,7 @@ stop
 \todo[inline]{Add an image of architecture, recoginition section (currenlty aiml), delibiration section (perhaps on 3 levels, this is where personality can come in), mk sentence section (go from meaning to string)}
 \todo[inline]{Explain why I want to replace the chatbot, (because there is currently no way to stop it from reacting to something, and since its mostly an xml parser I think its just easier to replace with a new system (also xml is bad?))}
 <<Jungian BDI>>
-\drafting
+\toReview
 In this chapter we will consider how to combine Jungian psycology with BDI,
 as was originally done by Campos cite:campos_mabs2009.
 We want to also do this but using Jungian function attitudes rather than
@@ -1319,7 +1319,7 @@ This is then reduced to the scope of a chatbot in the social practice.
 After this we will look what extra information the function attitudes need
 in an attempt to reduce the amount of possible believes.
 
-\drafting
+\toReview
 We will reason about the function attitudes by considering the
 type signature of a pure function that can represent them.
 A Haskell like syntax is used for this.
@@ -1379,8 +1379,10 @@ However a String is still to broad since going from a textual representation
 to a deliberation process is difficult.
 Therefore we will introduce another mapping function $g$:
 \[ \sigma \overset{g}{\to} m \]
-Where $\sigma$ is a string and $m$ a meaning where $m \in \mathcal{M}$ in which \todo{add note that these meanings are different than the social practice meaning}
-$\mathcal{M}$ stands for the set of all encoded meanings.
+Where $\sigma$ is a string and $m$ a meaning where $m \in \mathcal{M}$ in which
+$\mathcal{M}$ stands for the set of all encoded meanings[fn::Note that these
+meanings are different than the ones found in the social practice.
+A different word for the meaning we describe here is "symbol".]
 Conversely  there is another function $g'$:
 \[ m \overset{g'}{\to} \sigma \]
 This allows meaning $m$ to decoded into string $\sigma$.
