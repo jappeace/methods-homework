@@ -1616,21 +1616,21 @@ point an activity diagram can be seen in figure [[fig:faprocessing]].
 #+NAME: fig:faprocessing
 #+BEGIN_SRC plantuml :cache yes :file img/uml/faprocessing.png :exports results
   start
-  :interpret string into symbol (s);
-  :call first fa in personality sequence;
+  :Interpret string into symbol (s);
+  :Call first fa in personality sequence;
   repeat
-  :current fa logic;
-  repeat while (called next?)
+  :Current fa logic;
+  repeat while (Called next?)
   repeat
-  :fa modify results of next;
-  repeat while (another fa on stack?)
-  :extract string from results (D);
+  :Fa modify results of next;
+  repeat while (Another fa on stack?)
+  :Extract string from results (D);
   end
 #+END_SRC
 #+CAPTION: Activity diagram of function attitude (fa) processing.
 #+LABEL: fig:faprocessing
 #+ATTR_LATEX: :width 0.5\textwidth
-#+RESULTS[00269a7ff59de81c42c843e550215a0acf983ea0]: fig:faprocessing
+#+RESULTS[f6dff7c3b2e64b005de74f12e19c7b2917da613c]: fig:faprocessing
 [[file:img/uml/faprocessing.png]]
 
 \cleared
@@ -1660,46 +1660,57 @@ next function.
 However this becomes rather messy because we're modeling pure functions,
 therefore we leave this as an exercise to the reader.
 
-***  Rational and irrational cardinality
+***  Rational and irrational
 <<Rational and irrational>>
-\cleared
-Up till now we have modeled the type signature have consumed sets meanings and
-produced sets of replies.
-However we ignored cardinality.
+\toReview
+Up till now we modeled the type signature to have a dialogue tree as input and
+output.
+However we have not considered yet how children are generated and how the order
+is determined.
 If we look at the definition ([[Jungian types]]) of rational and irrational,
-we can make a design decision about the cardinality.
-Rational functions are about making decisions therefore it should
-consume one or many meaning and produce only one reply,
-irrational are about producing information therefore it should consume
-one meaning and produce many.
-
-\todo[inline]{either say what a reply is in the dialogue tree or rewrite to use the dialogue tree}
-\toReview
-Modeling this idea into type is however easier said than done.
-There are problems with this.
-Lets say the primary function is an irrational one.
-Now we give it a meaning from the user and get out multiple replies.
-How do we decide which should be used?
-Or if it is an rational and we give it a single meaning how should the
-rational function get multiple meanings to make a decision upon?
+we can make a design decision about what these functions should do to the
+children.
+Rational functions are about making decisions therefore they
+should apply order to the children.
+irrational are about producing information therefore they should produce
+children based.
 
 \toReview
-To solve this problem we will apply an order to the replies.
-The highest in the order will be the most preferred reply and the lowest the
-least preferred.
+There are however some edge cases to consider when modeling this idea.
+Say the primary function is a rational one.
+It receives a dialogue with just the root node.
+Currently it cannot apply any order since the children list is empty.
+Luckily it can still use its next function, which is irrational
+(see section [[Jungian alternating functions]]).
+Another situation to consider is what to do when there are already children.
+Should an irrational function extend this list of children or go to some leaf
+node?
+Same question for rational functions should it sort everything or just the
+children list one layer above the leaf nodes.
+In our implementation we will go for the approach where irrational functions will
+go down the left (most preffered) path to a leaf node and then generate more
+meanings, but rational functions will only sort the one layer above the leaf
+layer. However there may be exceptions
+for example when a rational function is primary.
+It can then use the next function to generate some options, on which it can
+apply an order, after which it will give the next function another chance.
+
+\toReview
 This results in the following conceptualized architecture:
-/rational/ functions change the order of possible replies,
-/irrational/ increase the number of options.
+/rational/ functions change the order of possible replies, one layer above the leaf layer,
+/irrational/ increase the number of children at the leaf layer.
+Both will go to the most preffered option (left most).
 So if we start with an irrational function it produces several related meanings
 to the inputted meaning in a tree like structure.
-The original meaning uttered by the user as root node and the produced response
-meanings as children.
+The original meaning uttered by the user is the root node and the produced
+response meanings are the children.
 These then get inserted into the next rational function which modifies the order
 of the children. After doing this it passes this structure to the next
 rational functions (because they alternate [[Jungian alternating functions]]),
 until all functions in the personality had their chance.
-The unit function then makes a reply of this meaning (ie choosing the highest
-ordered child) which then returns trough all functions that can still modify it.
+Finally the unit function just returns the Dialogue and believes without
+modifying them.
+This returns trough all functions from before that can still modify it.
 This could happen if a rational function was the first function for example
 and didn't have any choices available to decide upon.
 This structure still works with SL-TDI's non alternation.
@@ -1848,9 +1859,9 @@ A deployment diagram of the architecture can bee seen in figure
     score -- facts
   }
   database meanings [
-    meanings
+    symbols
     ====
-    meaning graph
+    symbol graph
   ]
   entity filereader
   filereader ..> meanings
@@ -1864,7 +1875,7 @@ A deployment diagram of the architecture can bee seen in figure
 #+END_SRC
 #+CAPTION: Deployment diagram of new architecture, where the dashed arrow means constructs, the solid arrow means uses and the other lines mean itneracts.
 #+LABEL: fig:architecture-concept
-#+RESULTS[229649447467bceedd0388ab3f03bc220fb0f24b]: fig:architecture-concept
+#+RESULTS[bfb3eb88cfd8095269348f4fa1677f4142a78da1]: fig:architecture-concept
 [[file:img/uml/architecture-concept.png]]
 
 \todo[inline]{Explain why I want to replace the chatbot, (because there is currently no way to stop it from reacting to something, and since its mostly an xml parser I think its just easier to replace with a new system (also xml is bad?))}
