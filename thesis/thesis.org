@@ -1387,7 +1387,7 @@ this is of course not desirable (or computationally possible).
 Finally We will also look at how to convert user utterances to types we can do
 reasoning with.
 
-** A type signature approach
+** TODO A type signature approach
 \cleared
 To give a more deep understanding of the scope of this project we will
 try to come up with a type signature of a pure function that models all the
@@ -1428,42 +1428,42 @@ part of the believe base.
 We marked the $f_a$ arrow, which indicates the deliberation process of the agent,
 so $f_a$ can be any of the function attitudes.
 
-\cleared
+\toReview
 This definition is however too general for our domain.
 First of all the set of sensory information can be reduced to a String,
 since this is the information we get from a user.
 However a String is still to broad since going from a textual representation
 to a deliberation process is difficult.
 Therefore we will introduce another mapping function $g$:
-\[ \sigma \overset{g}{\to} m \]
-Where $\sigma$ is a string and $m$ a meaning where $m \in \mathcal{M}$ in which
-$\mathcal{M}$ stands for the set of all encoded meanings[fn::Note that these
-meanings are different than the ones found in the social practice.
-A different word for the meaning we describe here is "symbol".] \todo{Replace meaning with symbol, to avoid confusion with social practice and the delete the footnote}
+\[ \sigma \overset{g}{\to} s \]
+Where $\sigma$ is a string and $s$ a symbol where $s \in \mathcal{S}$ in which
+$\mathcal{S}$ stands for the set of all encoded symbols[fn::Orignally this was
+called meaning with an $m$, but we want to avoid confusion with meaning in the
+social practice, and therefore renamed it to symbol, as in symbolic representation] \todo{Replace meaning with symbol, to avoid confusion with social practice and the delete the footnote}
 Conversely  there is another function $g'$:
-\[ m \overset{g'}{\to} \sigma \]
-This allows meaning $m$ to decoded into string $\sigma$.
+\[ s \overset{g'}{\to} \sigma \]
+This allows symbol $s$ to be decoded into string $\sigma$.
 Note that in this relation there can be multiple $\sigma$ that map to the same
-meaning, but one meaning always produces one string $\sigma$.
+meaning, but one meaning always produces one string $\sigma$. \todo{Can't you do random selection on the result?}
 In the previous version this mapping was entirely done by AIML.
 How this is done in this version will be discussed in the implementation
 section [[From strings to meanings]].
 
 \toReview
 So the simplification is now as follows,
-firstly we note that $\mathcal{M} \subset \mathcal{P}$,
+firstly we note that $\mathcal{S} \subset \mathcal{P}$,
 since understanding meaning is a form of sensation.
-Then we can define $M_t \subseteq \mathcal{M}$ which stands for the meanings
-the agent received at time $t$.
+Then we can define $S_t \subseteq \mathcal{S}$ which stands for the
+symbols the agent understood at time $t$.
 To ensure a reactive and proactive we also have to pass the current time
 as argument.
-This allows the agent to do deliberation without having received a meaning
-(ie an empty set).
+This keeps open the possibility of the agent to do deliberation without having
+received a symbol (ie empty set).
 This produces the following type signature:
-\[ B_t \to t \to M_t \overset{f_a}{\to} (B_{t+1}, A_{t+1}) \]
+\[ B_t \to t \to S_t \overset{f_a}{\to} (B_{t+1}, A_{t+1}) \]
 
-\cleared
-$\mathcal{A}$ is also to broad in definition.
+\toReview 
+$\mathcal{A}$ is also to broad in definition. 
 For our domain we are not interested in every possible action.
 Instead we just want to have another meaning as output,
 since these correspond to strings. 
@@ -1474,7 +1474,8 @@ In this case $\mathcal{R} \subset \mathcal {A}$ since replying to something is a
 action.
 Now we can define $R_t$ with $R_t \subseteq \mathcal{R}$ which is a set of
 replies at time $t$. This produces the type signature:
-\[ B_t \to t \to M_t \overset{f_a}{\to} (B_{t+1}, R_{t+1}) \]
+\[ B_t \to t \to S_t \overset{f_a}{\to} (B_{t+1}, R_{t+1}) \]
+\todo[inline]{Perhaps we need additional transition between R -> D, perhaps the entire R step can be left out even and do A -> D}
 
 \cleared
 We have some believes, time and meaning going in, some deliberation
@@ -1492,9 +1493,9 @@ uttered.
 
 \cleared
 Therefore we introduce $D$ a dialogue tree:
-\[ D = (m, [D])\]
+\[ D = (s, [D])\]
 \todo{I think this misses the agent who said the meaning}
-Where $m \in \mathcal{M}$ for the meaning,
+Where $s \in \mathcal{S}$ for the symbol,
 and $[D]$ is the ordered list of dialogue children.
 The initial dialogue just has a meaning with an empty list of children.
 A reply would be the same except with a list of children that is bigger than zero.
@@ -1549,7 +1550,7 @@ point an activity diagram can be seen in figure [[fig:faprocessing]].
 #+NAME: fig:faprocessing
 #+BEGIN_SRC plantuml :cache yes :file img/uml/faprocessing.png :exports results
   start
-  :interpret string into meaning (m);
+  :interpret string into symbol (s);
   :call first fa in personality sequence;
   repeat
   :current fa logic;
@@ -1563,7 +1564,7 @@ point an activity diagram can be seen in figure [[fig:faprocessing]].
 #+CAPTION: Activity diagram of function attitude (fa) processing.
 #+LABEL: fig:faprocessing
 #+ATTR_LATEX: :width 0.5\textwidth
-#+RESULTS[503d2109720f17ed1daf7cb146e2b6b7ac65f207]: fig:faprocessing
+#+RESULTS[00269a7ff59de81c42c843e550215a0acf983ea0]: fig:faprocessing
 [[file:img/uml/faprocessing.png]]
 
 \cleared
@@ -1658,7 +1659,7 @@ To do this we will start analyzing the Jungian functions and see what
 \todo[inline]{Everywhere where a how like tag is added should at least have a reference to somewhere else that explains it (or inline explenation although since this chapter tries to remain abstract perhaps thats not always a good idea)}
 \drafting
 So $T_e$ uses just one ply in the meaning tree and then applies a static
-evaluation \todo{How?}
+evaluation \todo{How? Perhaps we can use graph drawing of the entire meaning structure and then perform a "as the crow flies" distance check of the goal}
 to determine if uttering a certain meaning will get it closer
 to its goal (its more like a heuristic).
 $T_i$ uses alpha beta pruning on the meaning tree to
@@ -1666,8 +1667,8 @@ determine the best goal. Therefore both $T$ functions don't need any
 additional information to perform their processes.
 
 \drafting
-Both $F$ functions need a valuation function $h$: \todo{How is this represented in data?}
-\[ m \overset{h}{\to} i \]
+Both $F$ functions need a valuation function $h$: \todo{How is this represented in data? Perhaps this can be done on the relation between meanings}
+\[ s \overset{h}{\to} i \]
 where $i \in \mathbb{N}$.
 The encoding of this system is similar of the existing work on /drools/.
 Since they included mostly value based scoring.
@@ -1702,6 +1703,7 @@ the meaning graph. The meaning graph $G$ is a set of connections $(m_1, m_2)$
 where $m_1, m_2 \in \mathcal{M} \wedge m_1 \neq m_2$.
 Therefore $B = (m, h, h', [m], [D], G)$ \todo{This is just wrong right now (the stuff below needs to be integrated)}
 
+
 #+CAPTION: function attitudes and their required data
 #+NAME:   tab:fa-and-data
 | Function | required data         |
@@ -1713,11 +1715,11 @@ Therefore $B = (m, h, h', [m], [D], G)$ \todo{This is just wrong right now (the 
 | $S_i$    | Memories $[D]$        |
 | $N_e$    | Meaning graph         |
 | $N_i$    | Meaning graph         |
+\todo{Fix this table too, its kind off wrong right now}
 
 \todo[inline]{Intuition does backward chaining twards what I want, with milestones to get twoards a goal, can go wrong by getting into a loop}
 \todo[inline]{Sensing does forward chaining, waht do I have and ho do I get there. It is very parnoid of not being able to get the next step, can go wrong trough oversight loss}
 \newpage
-
 ** Consistency with theory
 \toReview
 In this section we will explore if especially INTJ and ENTJ (MBTI) types would
@@ -1753,10 +1755,9 @@ Since attitudes produce a different process by definition
 (see section [[Mapping to process]]),
 we can conclude that they will also behave differently.
 
-
 * Architectural Changes
 \todo[inline]{Add an image of architecture, recoginition section (currenlty aiml), delibiration section (perhaps on 3 levels, this is where personality can come in), mk sentence section (go from meaning to string)}
-\todo{find a good location to put this}
+\todo{find a good location to put this chapter/section}
 \drafting
 In this chapter we will describe the architectural changes between the
 current implementation and the original architecture discussed in section [[
@@ -1860,7 +1861,7 @@ appendix [[building]].
 \todo[inline]{Can we use ontologies for the meaning part?}
 \toReview
 The first step is to map the user input which is of type String at time $t$
-into type $M_t$ for meaning at time $t$.
+into type $S_t$ for meaning at time $t$.
 For this the AIML is used. It can matched, however the langauge has to be
 modified to not just produce a reaction but instead indicate what the meaning
 is of a reaction.
@@ -1963,6 +1964,7 @@ This results in a much more terse definition:
 #+END_SRC
 
 *** using yml
+\toReview
 Now since the above isn't technically valid xml (you can't have multiple root
 nodes) we can use a more terse langauge
 such as yml:
@@ -1974,17 +1976,21 @@ patterns:
   - How are you *
 #+END_SRC
 
+\toReview
 Finally we can extend the pattern functionally by simply using regex support.
-This will make the patterns more precise:
+This will make the patterns more terse and even precise:
 
 #+BEGIN_SRC yml
 literal: How are you
-patterns:
-  - ^How (*.) you$
-  - ^How are you (*.)
+regex: How ([a-z])\w+ you(.*)
 #+END_SRC
 
-This is more verbose but also more precise.
+\toReview
+This only matches a single word and allows for trailing characters.
+Note that the patterns example would've also matched "How did this became you?",
+since any character would've matched the star.
+Regexes can be much more precise in specifying what a star is, although they are
+also a lot more difficult to learn. Therefore both methods will be supported.
 
 \todo[inline]{If we have time we can compare information per character between the new and old method, going from 251 to 131 is quite an improvement}
 # https://developer.jboss.org/wiki/FunctionalProgrammingInDrools
