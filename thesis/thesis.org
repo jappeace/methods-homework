@@ -1387,9 +1387,9 @@ this is of course not desirable (or computationally possible).
 Finally We will also look at how to convert user utterances to types we can do
 reasoning with.
 
-** TODO A type signature approach
+** A type signature approach
 \cleared
-To give a more deep understanding of the scope of this project we will
+To give a better understanding of the scope of this project we will
 try to come up with a type signature of a pure function that models all the
 function attitudes.
 This is done with a Haskell like syntax (or category theory),
@@ -1400,6 +1400,13 @@ If we see a pattern like $a \to b \to c$ means $a \to (b \to c)$ or give an $a$
 and return a function $b \to c$, this process is called partial application
 cite:haskellpartialapplication.
 Capital letters indicate sets.
+
+\toReview
+We will go from an as broad as possible system (while using BDI) to a
+precise as possible definition, while still being able to satisfy the domain.
+This is desirable because it will restrict the amount of things that can happen
+inside the function.
+Therefore making it less complex and easier to understand.
 
 \cleared
 To make this process more easy to understand we'll postpone modeling interplay
@@ -1416,10 +1423,17 @@ $\mathcal{P}$ is the set of all possible sense information, in which $P_t$
 with $P_t \subseteq \mathcal{P}$ denotes the perception information of an agent
 at time $t$.
 $\mathcal{A}$ denotes the set of all possible actions with $A_t$ with
-$A_t \subseteq \mathcal{A}$ denoting the set of actions executed by the agent at
+$\Delta_t \subseteq \mathcal{D}$ denoting the set of actions executed by the agent at
 time $t$.
-With this definition we can define every possible agent configuration as the 
-following pure function type signature
+With this definition we can define every possible agent configuration[fn::Note
+that this is just the deliberation part, there is no memory in a pure function,
+but the agent's memories can be stored in the believes.
+The believes can be reused in the next call,
+its up to the caller to decide how this happens.
+This can be done on the thread of control the agent owns for example.
+Where it will block until a $t$ has passed or a new perception $P$ comes in from
+the environment.]
+as the following pure function type signature:
 \[ B_t \to P_t \overset{f_a}{\to} (B_{t+1}, A_{t+1}) \]
 This says, we first put in the current believe base, then the sensory
 information after which we get a new believe base and a set of actions.
@@ -1437,14 +1451,17 @@ to a deliberation process is difficult.
 Therefore we will introduce another mapping function $g$:
 \[ \sigma \overset{g}{\to} s \]
 Where $\sigma$ is a string and $s$ a symbol where $s \in \mathcal{S}$ in which
-$\mathcal{S}$ stands for the set of all encoded symbols[fn::Orignally this was
+$\mathcal{S}$ stands for the set of all encoded symbols[fn::Originally this was
 called meaning with an $m$, but we want to avoid confusion with meaning in the
-social practice, and therefore renamed it to symbol, as in symbolic representation] \todo{Replace meaning with symbol, to avoid confusion with social practice and the delete the footnote}
+social practice, and therefore renamed it to symbol, as in symbolic
+representation]
 Conversely  there is another function $g'$:
 \[ s \overset{g'}{\to} \sigma \]
 This allows symbol $s$ to be decoded into string $\sigma$.
 Note that in this relation there can be multiple $\sigma$ that map to the same
-meaning, but one meaning always produces one string $\sigma$. \todo{Can't you do random selection on the result?}
+meaning,
+but one meaning produces one string $\sigma$,
+or a random selection is made from a predefined string list.
 In the previous version this mapping was entirely done by AIML.
 How this is done in this version will be discussed in the implementation
 section [[From strings to meanings]].
@@ -1460,26 +1477,11 @@ as argument.
 This keeps open the possibility of the agent to do deliberation without having
 received a symbol (ie empty set).
 This produces the following type signature:
-\[ B_t \to t \to S_t \overset{f_a}{\to} (B_{t+1}, A_{t+1}) \]
+\[ B_t \to t \to S_t \overset{f_a}{\to} (B_{t+1}, \Delta_{t+1}) \]
 
-\toReview 
-$\mathcal{A}$ is also to broad in definition. 
-For our domain we are not interested in every possible action.
-Instead we just want to have another meaning as output,
-since these correspond to strings. 
-Therefore we constrain $\mathcal{A}$ by introducing yet another set
-$\mathcal{R}$ which stands for the set of a possible reply messages,
-or the replies encoded by the programmer.
-In this case $\mathcal{R} \subset \mathcal {A}$ since replying to something is an
-action.
-Now we can define $R_t$ with $R_t \subseteq \mathcal{R}$ which is a set of
-replies at time $t$. This produces the type signature:
-\[ B_t \to t \to S_t \overset{f_a}{\to} (B_{t+1}, R_{t+1}) \]
-\todo[inline]{Perhaps we need additional transition between R -> D, perhaps the entire R step can be left out even and do A -> D}
-
-\cleared
+\toReview
 We have some believes, time and meaning going in, some deliberation
-going on and a new set of believes and replies going out.
+going on and a new set of believes and actions going out.
 The new believes can be used for the next iteration.
 However this type signature isn't enough.
 The current agent has to be able to do a game tree like deliberation process
@@ -1490,20 +1492,84 @@ for example if our agent is sick we want the doctor to utter a /GiveMedicine/
 meaning,
 or if he is in extreme pain he would like to see the /GivePainKiller/ meaning
 uttered.
+We also need to mark which agent uttered, therefore we introduce $\Lambda$ as the set
+of all agents, where $a \in \Lambda$.
 
-\cleared
+\toReview
 Therefore we introduce $D$ a dialogue tree:
-\[ D = (s, [D])\]
-\todo{I think this misses the agent who said the meaning}
+\[ D = (a, s, [D])\]
 Where $s \in \mathcal{S}$ for the symbol,
 and $[D]$ is the ordered list of dialogue children.
 The initial dialogue just has a meaning with an empty list of children.
 A reply would be the same except with a list of children that is bigger than zero.
-The most preferred reply is the first element in the list of children. \todo{Perhaps we can use an object diagram to make the treelike nature more clear}
+The most preferred reply is the first element in the list of children.
+An example of an expended dialogue tree can be seen in figure [[fig:dialoguetree]].
+
+#+NAME: fig:dialoguetree
+#+BEGIN_SRC plantuml :cache yes :file img/uml/dialoguetree.png :exports results
+object D0{
+a = "patient"
+s = "Greeting"
+[D] = [D1, D2, D3]
+}
+object D1 {
+a = "doctor"
+s = "StatusInquery"
+[D] = [D5, D4]
+}
+object D2 {
+a = "doctor"
+s = "QuestionIdentity"
+[D] = [D6]
+}
+object D3{
+a = "doctor"
+s = "Greeting"
+[D] = [D1, D2]
+}
+object D5{
+a = "patient"
+s = "Complaint"
+[D] = []
+}
+object D4{
+a = "patient"
+s = "Cry"
+[D] = []
+}
+object D6{
+a = "patient"
+s = "ShareIdentity"
+[D] = []
+}
+D0 --* D1
+D0 --* D2
+D0 --* D3
+D1 --* D4
+D1 --* D5
+D2 --* D6
+D3 --* D1
+D3 --* D2
+
+note "This node is currenlty \n implicetly selected \n as response \n(because it came first \n in D0 as child)" as response
+response .. D1
+#+END_SRC
+#+CAPTION: Object diagram of an expended dialogue tree. The leafs is where deliberation stopped.
+#+LABEL: fig:dialoguetree
+#+ATTR_LATEX: :width 0.5\textwidth
+#+RESULTS[546fbd1c8989e5cc1c146b7dda332099a6ea8e5a]: fig:dialoguetree
+[[file:img/uml/dialoguetree.png]]
+
+\toReview
+With this in place we can replace both the $S_t$ and $\Delta_{t+1}$ with the $D_t$ and
+$D_{t+1}$ respectively.
+This is convenient because now we can model function attitudes as processing
+units that take a dialogue tree and just modify it.
 With this in place we can model the following type signature:
 \[ B_t \to t \to D_t \overset{f_a}{\to} (B_{t+1}, D_{t+1}) \]
 So we receive a dialogue tree from the user, which can just be a root node,
-and then we put out a dialogue tree plus the replies which are the children.
+and then we put out a dialogue tree plus the replies which are the children,
+whereof the first child is the most preferred.
 
 \cleared
 Now we should note that this type signature heavily constrains our agent.
