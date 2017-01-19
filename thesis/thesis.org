@@ -914,7 +914,8 @@ stop
   used in a bigger system such as in cite:augello2015social and
   cite:augello2016model.
 *** Speech act theory
-\drafting
+<<Speech act thoery>>
+\toReview
 Since a large part of this thesis is about communication we will give here a
 brief overview of speech act theory.
 There are three levels at which speech acts can be analyzed according to
@@ -927,33 +928,22 @@ warning.
 /Perlocutionary/ acts are the acts that bring an effect to the hearer, such as
 scaring or saddening.
 
-\drafting
+\toReview
 There are some basic assumptions of conversation, commonly described as the
 /rules of conversation/ developed by Grice cite:shoham2008multiagent_speechact_p241..245.
 Humans communication happens on the assumption that both parties want to be
 clear to each other, even when other motivations apply.
-This is called the
-/cooperation principle/.
-To accomplish this share goal the following informal rules are used:
+This is called the /cooperation principle/.
+To accomplish this share goal the Grice's maxims cite:gricemaxims are
+used:
 /Quantity/ has to do with the amount of information transferred in a single
-utterance. When going to the barber and the barber asks
-"How do you want your haircut?". A quantitative acceptable answer would be
-"Short but with a dark color", non acceptable would be:
-"Yes, you know, I used to like long hair, 
-but now a days I started to doubt this position. 
-So I guess I will follow the tradition of my ancestors and wear my hair short. 
-But the color, you see, color is mostly determined by the fracturing of light. 
-Therefore I would like to absorb as much as possible to feel more energized by 
-the available light. 
-Therefore I came to the conclusion to have a short dark haircut".
-Giving to little information could also be a problem.
-For example replying with "dark color" isn't enough for the barber to do his
-job.
-He needs to additional inquiry to make sure you just want to have your hair
-colored.
-/Quality/ is the assumption where people will mostly say things they believe to
+utterance, a human wants to transfer just enough to get the right meaning across.
+/Quality/ is the assumption where people will say things they believe to
 be true.
-
+/Relation/ states that the things uttered should be relevant to the subject
+being discussed.
+/Manner/ is about being as brief and clear as possible while avoiding ambiguity
+and being orderly.
 
 *** BDI + Personality
  \cleared
@@ -1430,6 +1420,7 @@ Finally We will also look at how to convert user utterances to types we can do
 reasoning with.
 
 ** A type signature approach
+<<A type signature approach>>
 \cleared
 To give a better understanding of the scope of this project we will
 try to come up with a type signature of a pure function that models all the
@@ -1757,6 +1748,7 @@ This could happen if a rational function was the first function for example
 and didn't have any choices available to decide upon.
 This structure still works with SL-TDI's non alternation.
 
+
 ** Mapping function attitudes to a process 
 <<Mapping to process>>
 \toReview
@@ -1775,59 +1767,77 @@ less broad in scope.
 To do this we will start analyzing the Jungian functions and see what
 "extra" information require to function to perform their duties.
 
-\drafting
-First of all note that although we have a game tree,
-we're not dealing with a zero sum game.
-Dialogue is cooperative rather than competitive.
-So doing an algorithm such as mini-max is out of the question.
+*** Symbol graph
+\toReview
+To make sure the agent stays on topic we will make use of a symbol graph.
+This graphs gives connections to the symbols described in section [[A type signature approach]].
+For a precise description of the implementation see section [[Symbol graph]].
+The meaning graph $G$ is a set of connections $(A, s_1, s_2)$
+where $s_1, s_2 \in \mathcal{S} \wedge s_1 \neq s_2$ and $A \subseteq \Lambda$ is the set of
+agents that can use the connection (to prevent the patient asking the doctor
+about his health problems).
 
-\todo[inline]{Everywhere where a how like tag is added should at least have a reference to somewhere else that explains it (or inline explenation although since this chapter tries to remain abstract perhaps thats not always a good idea)}
-\drafting
-So $T_e$ uses just one ply in the meaning tree and then applies a static
-evaluation \todo{How? Perhaps we can use graph drawing of the entire meaning structure and then perform a "as the crow flies" distance check of the goal}
-to determine if uttering a certain meaning will get it closer
-to its goal (its more like a heuristic).
-$T_i$ uses alpha beta pruning on the meaning tree to
-determine the best goal. Therefore both $T$ functions don't need any
-additional information to perform their processes.
+*** Irrational
+\toReview
+The irrational functions rely heavily on the symbol graph to create new
+children in the dialogue tree.
+This is under the assumption that connections in the symbol graph are always
+on topic.
 
-\drafting
-Both $F$ functions need a valuation function $h$: \todo{How is this represented in data? Perhaps this can be done on the relation between meanings}
-\[ s \overset{h}{\to} i \]
-where $i \in \mathbb{N}$.
-The encoding of this system is similar of the existing work on /drools/.
-Since they included mostly value based scoring.
-To illustrate the difference between $F_e$ and $F_i$ we can use different
-strategies.
-$F_e$ could try to model what the other agent values by performing fictitious
-play cite:berger2007brown,
-whereas $F_i$ could use satisficing play cite:stimpson2003learning.
-The intermediate results of the plays can be written into the believe structure.
-However doing this may be difficult since the games aren't completly
-repeated (the actions may differ per deliberation cycle),
-therefore as an easier alternatives we can make two variants
-of $h$ that produce group values and personal values.
-
-\drafting
-N uses a meaning graph where $N_e$ goes breath first and $N_i$ goes depth first. \todo{No}
-So $N_e$ produces the results of connected meanings of the input meaning,
-but $N_i$ creates a deeper tree, using the /next/ function to decide
-where to go on crossroads.
+\toReview
+Both $N$ use a depth first approach to try and go to the goal. However $N_i$
+starts at the goal and moves towards the matched meaning point,
+whereas $N_e$ starts at the matched meaning point and goes towards the goal.
+the /next/ function is used to determine which direction to go.
 Alternatively reinforcement learning can be used $N$ like responses
 cite:li2016deep. However this is out of the scope of this thesis.
 
-\drafting
-S_i uses memories, which are just responses from previous conversations to the
-current meaning.
-S_e uses sense information, just some meanings that are in the environment. \todo{Also noe}
+\toReview
+The $S_e$ function just receives all possible connections from the current
+meaning and then applies the /next/ function on it.
+The $S_i$ however is more conservative and will only pop 2 random meanings by
+default (ie the first 2 connections),
+however it will construct its own connections of whatever the user said in
+response to the bot. Whenever these connections are available they will be
+used instead of the random 2 or even more whenever it is available.
 
+*** Rational
+\toReview
+First of all note that although we have a game tree,
+we're not dealing with a zero sum game.
+Dialogue is cooperative rather than competitive (see section [[Speech act thoery]]).
+So doing an algorithm such as mini-max is out of the question.
+However we will borrow parts of it.
+Namely whenever a rational function finishing ordering the input set it will
+call the /next/ function to do deliberation on the most preffered item.
+
+\toReview
+The thinking functions $T$ want to go to the goal as soon as possible without
+paying any attention to perlocutionary speech acts.
+To do this it will sort the dialogue children according to as much
+unique symbols as possible.
+If it encounteres a child with a goal in it it will give priority to that.
+The higher the goal is the more priority.
+
+\drafting
+The difference between $T_e$ and $T_i$ is... \todo{Yes what is the difference}
+\todo[inline]{I don't know, perhaps Ti uses memory or something?}
+\todo[inline]{What about Te tries to figure out what the goal is of the doctor and tries to work against that whereas ti just tires to goe its own goal??}
+\todo[inline]{Or perhaps do the graph drawing thingy for Te and the current T thingy for Ti, problem is that the graph drawing has little to do with Te}
+
+\toReview
+Both feeling functions $F$ use the perlocutionary acts to order the children.
+$F_i$ uses a predefined value set.
+This valuation is done by a lookup table on all avalaible perlocutionary speech
+acts.
+However $F_e$ tries to figure out what the conversation partners values by
+picking the perlocutionary act the other chose most.
+
+*** Believes overview
 \drafting
 We listed the function attitudes $f_a$ and their required information into
-table [[tab:fa-and-data]]. To finish modeling the believes we just need to
-the meaning graph. The meaning graph $G$ is a set of connections $(m_1, m_2)$
-where $m_1, m_2 \in \mathcal{M} \wedge m_1 \neq m_2$.
+table [[tab:fa-and-data]]. 
 Therefore $B = (m, h, h', [m], [D], G)$ \todo{This is just wrong right now (the stuff below needs to be integrated)}
-
 
 #+CAPTION: function attitudes and their required data
 #+NAME:   tab:fa-and-data
@@ -1842,8 +1852,6 @@ Therefore $B = (m, h, h', [m], [D], G)$ \todo{This is just wrong right now (the 
 | $N_i$    | Meaning graph         |
 \todo{Fix this table too, its kind off wrong right now}
 
-\todo[inline]{Intuition does backward chaining twards what I want, with milestones to get twoards a goal, can go wrong by getting into a loop}
-\todo[inline]{Sensing does forward chaining, waht do I have and ho do I get there. It is very parnoid of not being able to get the next step, can go wrong trough oversight loss}
 \newpage
 ** Consistency with theory
 \toReview
@@ -1981,7 +1989,7 @@ appendix [[building]].
 
 \todo[inline]{Proposed Extension, why this extension}
 
-** From strings to meanings
+** From strings to symbol
 <<From strings to meanings>>
 \todo[inline]{Can we use ontologies for the meaning part?}
 \toReview
@@ -2120,7 +2128,8 @@ also a lot more difficult to learn. Therefore both methods will be supported.
 \todo[inline]{If we have time we can compare information per character between the new and old method, going from 251 to 131 is quite an improvement}
 # https://developer.jboss.org/wiki/FunctionalProgrammingInDrools
 
-** Meaning graph
+** Symbol graph
+<<Symbol graph>>
 \drafting
 For our bot to do deliberation we need to be able to tell it which meanings
 can logically follow which other meanings. To do this we use a meaning graph.
@@ -2141,16 +2150,19 @@ more easily (since not all nodes have to be searched in this case).
 \drafting
 Since we need to do both backward Chaining /and/ make it easy understandable for
 humans, we will reprsent the graph as intrusive in the AIML reprsentation, but
-as non intrusive in memomory for easy backward and forward chaining.
+as non intrusive in memory for easy backward and forward chaining.
 
 \todo{AIML with graph stuff}
 
 *** Reprsenting scoring and emotions
 \drafting
-Once we threw out AIML we also threw out the work on scoring and emotions.
+Once we decided to replace AIML we also we're committed to replace the work on
+scoring and emotions.
 This is of course not acceptable so we need to re-add this.
 It can be easily done by adding extra meta data to the edges in the graph
 representation.
+The extra information we want to encode is the so called perlocutionary speech
+acts (see section [[Speech act thoery]]).
 
 \drafting
 For example if we go from:
