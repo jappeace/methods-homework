@@ -913,6 +913,48 @@ stop
   If the social practices however are defined more formally they could be 
   used in a bigger system such as in cite:augello2015social and
   cite:augello2016model.
+*** Speech act theory
+\drafting
+Since a large part of this thesis is about communication we will give here a
+brief overview of speech act theory.
+There are three levels at which speech acts can be analyzed according to
+cite:shoham2008multiagent_speechact_p241..245.
+/Locutionary/ acts simply convey information form the speaker to the listener.
+All speech acts do this, as long as they carry meaning.
+/Illocutionary/ acts are the speech acts that do something by saying it.
+It captures the intend of the speaker. This includes giving orders or uttering a
+warning.
+/Perlocutionary/ acts are the acts that bring an effect to the hearer, such as
+scaring or saddening.
+
+\drafting
+There are some basic assumptions of conversation, commonly described as the
+/rules of conversation/ developed by Grice cite:shoham2008multiagent_speechact_p241..245.
+Humans communication happens on the assumption that both parties want to be
+clear to each other, even when other motivations apply.
+This is called the
+/cooperation principle/.
+To accomplish this share goal the following informal rules are used:
+/Quantity/ has to do with the amount of information transferred in a single
+utterance. When going to the barber and the barber asks
+"How do you want your haircut?". A quantitative acceptable answer would be
+"Short but with a dark color", non acceptable would be:
+"Yes, you know, I used to like long hair, 
+but now a days I started to doubt this position. 
+So I guess I will follow the tradition of my ancestors and wear my hair short. 
+But the color, you see, color is mostly determined by the fracturing of light. 
+Therefore I would like to absorb as much as possible to feel more energized by 
+the available light. 
+Therefore I came to the conclusion to have a short dark haircut".
+Giving to little information could also be a problem.
+For example replying with "dark color" isn't enough for the barber to do his
+job.
+He needs to additional inquiry to make sure you just want to have your hair
+colored.
+/Quality/ is the assumption where people will mostly say things they believe to
+be true.
+
+
 *** BDI + Personality
  \cleared
  \todo[inline]{other proposed systems and argue for campos}
@@ -1733,6 +1775,12 @@ less broad in scope.
 To do this we will start analyzing the Jungian functions and see what
 "extra" information require to function to perform their duties.
 
+\drafting
+First of all note that although we have a game tree,
+we're not dealing with a zero sum game.
+Dialogue is cooperative rather than competitive.
+So doing an algorithm such as mini-max is out of the question.
+
 \todo[inline]{Everywhere where a how like tag is added should at least have a reference to somewhere else that explains it (or inline explenation although since this chapter tries to remain abstract perhaps thats not always a good idea)}
 \drafting
 So $T_e$ uses just one ply in the meaning tree and then applies a static
@@ -2072,7 +2120,7 @@ also a lot more difficult to learn. Therefore both methods will be supported.
 \todo[inline]{If we have time we can compare information per character between the new and old method, going from 251 to 131 is quite an improvement}
 # https://developer.jboss.org/wiki/FunctionalProgrammingInDrools
 
-** Representing actionable meanings
+** Meaning graph
 \drafting
 For our bot to do deliberation we need to be able to tell it which meanings
 can logically follow which other meanings. To do this we use a meaning graph.
@@ -2097,7 +2145,7 @@ as non intrusive in memomory for easy backward and forward chaining.
 
 \todo{AIML with graph stuff}
 
-** Reprsenting scoring and emotions
+*** Reprsenting scoring and emotions
 \drafting
 Once we threw out AIML we also threw out the work on scoring and emotions.
 This is of course not acceptable so we need to re-add this.
@@ -2125,7 +2173,7 @@ response of being surprised or confused.
 On the other hand if the user ever tries to re-treat a subject we can just
 become annoyed. Drools can be used to catch these kind of cases effectively.
 
-** Inserting meaning into KIE
+*** Inserting meaning into KIE
 \toReview
 Once the meaning is extracted from the user utterance we can insert it into the
 drool engine to do deliberation upon (see [[fig:insert_meaning]]).
@@ -2151,6 +2199,35 @@ stop
 [[file:img/uml/insert_meaning.png]]
 
 \newpage
+** Static evaluation
+<<static evaluation>>
+\drafting
+Static evaluation is a part of a heuristic.
+Where the tree analyses is stopped and a guess is made about the value of a
+node.
+
+\drafting
+We considered several methods of doing this.
+The most obvious approach is of course just adding some kind of reward to
+meaning uttered and let the path that leads to the most reward be the direction
+we choose.
+However we wish to avoid introducing new terms.
+
+\drafting
+To do this we considered using a technique called graph drawing cite:herman2000graph.
+Where the meaning graph will be projected on a plane and where we can use
+euclidean distance to guess how close we are to the goal.
+The problem with this is approach is however that its compeletly dependent on
+how the graph is drawn.
+Which may misrepresent how closely a meaning is to a goal.
+
+\drafting
+Then we considered using information thoery as a basis.
+So what is a simple good heuristic we could use? Well from a conversational
+point of view a good meaning to be at is one that can lead to many meanings you
+haven't encountered yet.
+If one of those options leads to the goal we of course give it a huge bonus.
+
 * In conclusion
 \todo[inline]{Discussion, comparison}
 ** Future work
