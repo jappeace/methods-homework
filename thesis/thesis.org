@@ -1842,10 +1842,11 @@ call the /next/ function to do deliberation on the most preffered item.
 
 \toReview
 Both feeling functions $F$ use the perlocutionary acts to order the children.
-$F_i$ uses a predefined value set.
+$F_i$ uses a predefined value set $h$: 
+\[ s \overset{h}{\to} i \].
 This valuation is done by a lookup table on all avalaible perlocutionary speech
 acts.
-However $F_e$ tries to figure out what the conversation partners values by
+$F_e$ tries to figure out what the conversation partners values by
 picking the perlocutionary act the other chose most.
 
 \toReview
@@ -1856,44 +1857,44 @@ The thinking functions $T$ do this without paying any attention to
 perlocutionary speech acts.
 
 \toReview
-To start we will describe $T_e$. It sees the problem to solve as the doctor
-appointment itself.
-Therefore it will consistently choose speech acts that could help the doctor to
-progress the scenario.
-So it wants to put the doctor in a position where he has
-as few option as possible except to progress the scenario
-(according to the meaning graph, doctor can of course say anything).
-If it encounteres a child with a goal in it it will give priority to that.
+To start we will describe $T_e$. It sees the problem to solve as the
+conversation itself.
+Therefore it will consistently choose speech acts that could help the partner to
+progress the scenario (according to the symbol graph).
+So it wants to put the partner in a position where he has
+almost no other options except to progress the scenario
+(according to the meaning graph, the partner can of course say anything).
+If it encounteres a child node  with a goal in it it will give priority to that.
 The higher the goal is the more priority.
 
 \toReview
-$T_i$ however uses a different strategy. It wants to help the doctor to analyze
-the problem according to the doctor's own internal logic framework
-and to do this it wants to give as much options as possible to the
-doctor.
+$T_i$ however uses a different strategy. It wants to help the conversation
+partner to analyze the problem according to the partner's own internal
+logic framework
+and to do this it wants to give as much options as possible to the partner.
 Therefore it will choose the speech acts that produce the most symbols for the
-doctor.
-To do this it will sort the dialogue children according to as much
-unique symbols as possible.
+partner.
+To do this it will sort the child nodes according to as much unique symbols as
+possible.
 
 *** Believes overview
-\drafting
+\toReview
 We listed the function attitudes $f_a$ and their required information into
 table [[tab:fa-and-data]]. 
-Therefore $B = (m, h, h', [m], [D], G)$ \todo{This is just wrong right now (the stuff below needs to be integrated)}
+Therefore $B = (h, [s], G)$, which looks like a relatively small believe base,
+except for the incredible amount of information encoded in $G$.
 
 #+CAPTION: function attitudes and their required data
 #+NAME:   tab:fa-and-data
-| Function | required data         |
-| $T_e$    | A goal $m$            |
-| $T_i$    | A goal $m$            |
-| $F_e$    | Group values $h$      |
-| $F_i$    | Personal values  $h'$ |
-| $S_e$    | Sense information $[m]$ |
-| $S_i$    | Memories $[D]$        |
-| $N_e$    | Meaning graph         |
-| $N_i$    | Meaning graph         |
-\todo{Fix this table too, its kind off wrong right now}
+| Function | required data               |
+| $T_e$    | A goal $m$, and G           |
+| $T_i$    | A goal $m$, and G           |
+| $F_e$    | utterance history [s] and G |
+| $F_i$    | Personal values  $h$        |
+| $S_e$    | G                           |
+| $S_i$    | Utterence history [s] and G |
+| $N_e$    | G                           |
+| $N_i$    | G                           |
 
 \newpage
 ** Consistency with theory
