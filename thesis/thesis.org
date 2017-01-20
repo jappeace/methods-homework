@@ -406,7 +406,7 @@ and finally we will look at the serious game in its existing form.
    situation.
    Extroverted intuition can be very good entrepreneurs, seeing ideas in
    almost every situation,
-   they also makes them very inspiring leaders because
+   this also makes them very inspiring leaders because
    they are very excited about their ideas cite:neproffesionadvice.
  + $N_i$ stands for introverted intuition. Looks new possibilities in ideas.
    A typical occupation of this type is artist or visionary
@@ -610,6 +610,8 @@ and finally we will look at the serious game in its existing form.
  that there exist personalities outside of the stucture orignally imposed by
  MBTI and the subsequent PPSDQ cite:loomis1980testing.
 
+ 
+\todo[inline]{ Add An example case section  of different types, how it works in a doctors appointment? For example an INTJ wants the doctor to just get to the point and be out of there wheareas an ENFP wants to share their entire life story? Perhaps we need to make a selection of 3 quite different types, we can refer later to this to as an experiment}
 *** Comparison of theories
  \cleared
  To re-iterate, we are interested in a framework that is realistic, and easy to
@@ -666,6 +668,7 @@ and finally we will look at the serious game in its existing form.
  that of MBTI, and that of SL-TDI can build on that of PPSDQ.
  OCEAN builds on nothing, we'll leave that for future work.
 
+ 
 ** Artificial intelligence literature
  # How do I measure that the persnoality created is in fact in complience with
  # the personality I aimed for?
@@ -1782,14 +1785,14 @@ children in the dialogue tree.
 This is under the assumption that connections in the symbol graph are always
 on topic.
 
-\drafting
+\toReview
 In the initial design of what the $S$ and $N$ functions should do
 allegorically we considered them in the following way.
 $S$ would be analyzing all available options rigorously in a forward chaining
 process, whereas $N$ would do backward chaining, starting at the goal and going
 trough some way points directly to the starting point.
 
-\drafting
+\toReview
 Algorithmically this would translate into $S$ going several plies deep into the
 meaning graph before calling the $next$ function and returning the result.
 And if we assume that the $next$ function brings us closer to the goal we can
@@ -1797,48 +1800,39 @@ use it as a heuristic to let it determine the direction for $N$.
 This of course doesn't allow us to do backward chaining since there is hardly a
 guarantee that  the $next$ function will bring us to the goal.
 
-\drafting
-Now to consider the function attitudes rather than the plain functions. \todo{relevant??}
-This is surprisingly difficult.
-Existing literature either sticks to the previous step of just defining
-$S$ vs $N$,
-it doesn't consider function attitudes in interplay with other
-functions (when to call next) or it uses terms which are just hard to get a
-grip on (Jung himself used primordial images extensively
-cite:hall1973primer104nitype for example).
-So here be dragons.
-
-\drafting
+# http://personalitycafe.com/cognitive-functions/83205-whats-difference-between-ni-ne.html
+\toReview
 We can consider $N_i$ to be a depth first approach. Going several plies deep and
 at each ply consulting the $next$ function which step to take.
 $N_e$ on the other hand just takes the top $x$ of the current dialogue options
 and expands those, but then next step it will again consider the entire existing
 tree to find the best $x$ of each ply.
 This will of course be a much more shallow consideration than $N_i$, but 
-much more broad.
-
-# http://personalitycafe.com/cognitive-functions/83205-whats-difference-between-ni-ne.html
-\toReview
-Both $N$ use a depth first approach to try and go to the goal. However $N_i$
-starts at the goal and moves towards the matched meaning point,
-whereas $N_e$ starts at the matched meaning point and goes towards the goal.
-the /next/ function is used to determine which direction to go.
-Alternatively reinforcement learning can be used $N$ like responses
-cite:li2016deep. However this is out of the scope of this thesis.
+much more broad. Which is of course the behavior we are looking for in both
+$N_i$ and $N_e$ (see section [[Jungian types]]).
 
 \toReview
 The $S_e$ function just receives all possible connections from the current
-meaning and then applies the /next/ function on it.
-The $S_i$ however is more conservative and will only pop 2 random meanings by
-default (ie the first 2 connections),
+meaning for several plies and then applies the /next/ function on it.
+The $S_i$ however is more conservative and will only pop $x$ random meanings by
+default (ie the first $x$ connections),
 however it will construct its own connections of whatever the user said in
-response to the bot. Whenever these connections are available they will be
-used instead of the random 2 or even more whenever it is available.
+response to the bot from previous conversations when at the same meaning (if it
+didn't exists already).
+Whenever these connections are available they will substitute the random $x$.
+So $S_i$ starts of kind off similar to $S_e$ but builds up over time.
 
-\todo[inline]{They all need an agrument to limit processing}
+\todo[inline]{They all need an argument to limit processing}
+
 *** Rational
 \toReview
-First of all note that although we have a game tree,
+In the current design the rational functions apply order to the children of a
+current dialogue node.
+Then once finished they will call the $next$ function on the most preffered
+child. This is to ensure all function attitudes can do some processing.
+
+\toReview
+Please do note that although we have a game tree,
 we're not dealing with a zero sum game.
 Dialogue is cooperative rather than competitive (see section [[Speech act thoery]]).
 So doing an algorithm such as mini-max is out of the question.
@@ -1847,26 +1841,40 @@ Namely whenever a rational function finishing ordering the input set it will
 call the /next/ function to do deliberation on the most preffered item.
 
 \toReview
-The thinking functions $T$ want to go to the goal as soon as possible without
-paying any attention to perlocutionary speech acts.
-To do this it will sort the dialogue children according to as much
-unique symbols as possible.
-If it encounteres a child with a goal in it it will give priority to that.
-The higher the goal is the more priority.
-
-\drafting
-The difference between $T_e$ and $T_i$ is... \todo{Yes what is the difference}
-\todo[inline]{I don't know, perhaps Ti uses memory or something?}
-\todo[inline]{What about Te tries to figure out what the goal is of the doctor and tries to work against that whereas ti just tires to goe its own goal??}
-\todo[inline]{Or perhaps do the graph drawing thingy for Te and the current T thingy for Ti, problem is that the graph drawing has little to do with Te}
-
-\toReview
 Both feeling functions $F$ use the perlocutionary acts to order the children.
 $F_i$ uses a predefined value set.
 This valuation is done by a lookup table on all avalaible perlocutionary speech
 acts.
 However $F_e$ tries to figure out what the conversation partners values by
 picking the perlocutionary act the other chose most.
+
+\toReview
+Normally the $T$ function is about reasoning.
+There is little reasoning to do in our scenario except to get to the goal as
+soon as possible.
+The thinking functions $T$ do this without paying any attention to
+perlocutionary speech acts.
+
+\toReview
+To start we will describe $T_e$. It sees the problem to solve as the doctor
+appointment itself.
+Therefore it will consistently choose speech acts that could help the doctor to
+progress the scenario.
+So it wants to put the doctor in a position where he has
+as few option as possible except to progress the scenario
+(according to the meaning graph, doctor can of course say anything).
+If it encounteres a child with a goal in it it will give priority to that.
+The higher the goal is the more priority.
+
+\toReview
+$T_i$ however uses a different strategy. It wants to help the doctor to analyze
+the problem according to the doctor's own internal logic framework
+and to do this it wants to give as much options as possible to the
+doctor.
+Therefore it will choose the speech acts that produce the most symbols for the
+doctor.
+To do this it will sort the dialogue children according to as much
+unique symbols as possible.
 
 *** Believes overview
 \drafting
@@ -1924,6 +1932,12 @@ Since attitudes produce a different process by definition
 we can conclude that they will also behave differently.
 
 * Architectural Changes
+\drafting
+This chapter is about how do we fit the algorithms discussed in chapter [[BDI and Jung]]
+into the existing game architecture. 
+So this chapter is best to be seen as glue between chapter [[BDI and Jung]] and
+chapter [[Implementation]].
+
 \todo[inline]{Add an image of architecture, recoginition section (currenlty aiml), delibiration section (perhaps on 3 levels, this is where personality can come in), mk sentence section (go from meaning to string)}
 \todo{find a good location to put this chapter/section}
 \drafting
