@@ -1748,7 +1748,6 @@ This could happen if a rational function was the first function for example
 and didn't have any choices available to decide upon.
 This structure still works with SL-TDI's non alternation.
 
-
 ** Mapping function attitudes to a process 
 <<Mapping to process>>
 \toReview
@@ -1776,7 +1775,6 @@ The meaning graph $G$ is a set of connections $(A, s_1, s_2)$
 where $s_1, s_2 \in \mathcal{S} \wedge s_1 \neq s_2$ and $A \subseteq \Lambda$ is the set of
 agents that can use the connection (to prevent the patient asking the doctor
 about his health problems).
-
 *** Irrational
 \toReview
 The irrational functions rely heavily on the symbol graph to create new
@@ -1784,6 +1782,42 @@ children in the dialogue tree.
 This is under the assumption that connections in the symbol graph are always
 on topic.
 
+\drafting
+In the initial design of what the $S$ and $N$ functions should do
+allegorically we considered them in the following way.
+$S$ would be analyzing all available options rigorously in a forward chaining
+process, whereas $N$ would do backward chaining, starting at the goal and going
+trough some way points directly to the starting point.
+
+\drafting
+Algorithmically this would translate into $S$ going several plies deep into the
+meaning graph before calling the $next$ function and returning the result.
+And if we assume that the $next$ function brings us closer to the goal we can
+use it as a heuristic to let it determine the direction for $N$.
+This of course doesn't allow us to do backward chaining since there is hardly a
+guarantee that  the $next$ function will bring us to the goal.
+
+\drafting
+Now to consider the function attitudes rather than the plain functions. \todo{relevant??}
+This is surprisingly difficult.
+Existing literature either sticks to the previous step of just defining
+$S$ vs $N$,
+it doesn't consider function attitudes in interplay with other
+functions (when to call next) or it uses terms which are just hard to get a
+grip on (Jung himself used primordial images extensively
+cite:hall1973primer104nitype for example).
+So here be dragons.
+
+\drafting
+We can consider $N_i$ to be a depth first approach. Going several plies deep and
+at each ply consulting the $next$ function which step to take.
+$N_e$ on the other hand just takes the top $x$ of the current dialogue options
+and expands those, but then next step it will again consider the entire existing
+tree to find the best $x$ of each ply.
+This will of course be a much more shallow consideration than $N_i$, but 
+much more broad.
+
+# http://personalitycafe.com/cognitive-functions/83205-whats-difference-between-ni-ne.html
 \toReview
 Both $N$ use a depth first approach to try and go to the goal. However $N_i$
 starts at the goal and moves towards the matched meaning point,
@@ -1801,6 +1835,7 @@ however it will construct its own connections of whatever the user said in
 response to the bot. Whenever these connections are available they will be
 used instead of the random 2 or even more whenever it is available.
 
+\todo[inline]{They all need an agrument to limit processing}
 *** Rational
 \toReview
 First of all note that although we have a game tree,
@@ -1970,7 +2005,7 @@ generating responses.
 * Implementation
 \todo[inline]{How to go from process orientated to selecting an answer?}
 \drafting
-The communicate game was created to make students able to practice
+The communicate game was created to make students able to practice \todo{better intro}
 communicating cite:jeuring2015demo.
 To put this in game form is ideal because it allows doctors to practice the
 basics without the need for another human patient.
