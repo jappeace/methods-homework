@@ -1133,6 +1133,7 @@ whilst ignoring all of AIML.
 
 \newpage
 *** Server architecture
+<<Server architecture>>
   \cleared
 We will discuss the server architecture in more detail since it contains the
 "brains" of the application.
@@ -1933,15 +1934,12 @@ Since attitudes produce a different process by definition
 we can conclude that they will also behave differently.
 
 * Architectural Changes
-\drafting
+\todo{Perhaps I can merge this into implementation}
+\toReview
 This chapter is about how do we fit the algorithms discussed in chapter [[BDI and Jung]]
 into the existing game architecture. 
 So this chapter is best to be seen as glue between chapter [[BDI and Jung]] and
 chapter [[Implementation]].
-
-\todo[inline]{Add an image of architecture, recoginition section (currenlty aiml), delibiration section (perhaps on 3 levels, this is where personality can come in), mk sentence section (go from meaning to string)}
-\todo{find a good location to put this chapter/section}
-\drafting
 In this chapter we will describe the architectural changes between the
 current implementation and the original architecture discussed in section [[
 The serious game]].
@@ -1984,38 +1982,60 @@ A deployment diagram of the architecture can bee seen in figure
 #+RESULTS[bfb3eb88cfd8095269348f4fa1677f4142a78da1]: fig:architecture-concept
 [[file:img/uml/architecture-concept.png]]
 
-\todo[inline]{Explain why I want to replace the chatbot, (because there is currently no way to stop it from reacting to something, and since its mostly an xml parser I think its just easier to replace with a new system (also xml is bad?))}
-\drafting
+\toReview
 The biggest difference from the original architecture is the removal of
 distinction between drools and the chatbot.
 In the new architecture we plan to make all information in the files available to
 the drools in a big database.
-There is a good reason for that, as we can see in section
-[[user utterance processing]].
-The reply for a message is already determined before drools had a chance to
+This is starkly different than the architecture used in section [[
+Server architecture]].
+As can be see in section [[user utterance processing]], 
+the reply for a message is already determined before drools had a chance to
 do deliberation.
 Even worse, if the drools want to utter a spontaneous meaning they have to encode
 a string inside the drools.
-This is messy because now we have data, that is supposed to live in xml files,
-encoded into our drool files.
+This means the strings facing the user are spread over both the AIML files
+*and* the drools.
+This is confusing for new scenario creators since completely different folders
+have to be accessed to change the strings.
+# This violates the changeability design principle quite heavily and unnecessarily. \todo{cite}
 
-\drafting
+\toReview
 In the new architecture we just use a file reader to construct the entire
 meaning database into memory and expose them to the drools.
 This allows the drools to utter spontaneous meanings and allows do deliberation
 on incoming meanings of the user.
 The reactionary based scheme where an incoming user response has been replaced
-with a structural scheme. \todo{I find it rather hard to believe I'm the first one to think of this}
+with a structural scheme.
 A meaning has connections to other meanings, which should be sensible responses.
 So if a user utters a meaning then rather than having a direct response string
 that uses variables to fill in the gap, we get a meaning, which connected to
 other meanings which in turn are also connected.
 We can do deliberation on this because we have one or more meaning /goals/.
 
-\drafting
+\toReview
 Another advantage of this change is that its a much more simple architecture.
 Only one place does deliberation rather than two and only one api is used for
 generating responses.
+
+** Substitute AIML bot 
+\toReview
+Because we are replacing a rather huge project on which quite a lot of legacy
+code depends we don't want to just throw it away.
+Instead we will be using a trick called a strategy pattern.
+With this we first find a class that connects the chatbot to the rest of the
+system.
+In our case the best candidate for this was the Chat class that contains the
+Chat session.
+We bluntly replace this with an interface and let the Chat class extend that
+interface.
+There was a problem in that the predicates attribute was public,
+since an interface cannot have any attributes in Java, we decided to solve this
+by replacing it by a method getPredicates.
+In fact while doing this we quickly found out that there was no reason for this
+attribute to be public in the first place
+(Common Java dogma requires the use of getters and setters).
+
 
 * Implementation
 \todo[inline]{How to go from process orientated to selecting an answer?}
