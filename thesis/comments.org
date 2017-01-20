@@ -2,3 +2,10 @@
 
 Should I treat UML in the background section?
 Because I use that for most diagrams.
+
+Should I add more diagrams to BDI & Jung? I sortoff don't know about what more to make it?
+
+I didn't add an overview in chapter 3 because it didn't fit in there because its
+to detailed for that chapter.
+I pushed it down to a new chapter instead, is this OK?
+
