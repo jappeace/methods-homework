@@ -1872,7 +1872,7 @@ perlocutionary speech acts.
 To start we will describe $T_e$. It sees the problem to solve as the
 conversation itself.
 Therefore it will consistently choose speech acts that could help the partner to
-progress the scenario (according to the symbol graph). \todo[inline]{this needs to be described in the graph though, which is currently not the case}
+progress the scenario (according to the symbol graph). \todo{this needs to be described in the graph though, which is currently not the case}
 So it wants to put the partner in a position where he has
 almost no other options except to progress the scenario
 (according to the meaning graph, the partner can of course say anything).
