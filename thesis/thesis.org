@@ -1855,7 +1855,7 @@ call the /next/ function to do deliberation on the most preferred item.
 Both feeling functions $F$ use the perlocutionary acts to order the children.
 $F_i$ uses a predefined value set $h$: 
 \[ s \overset{h}{\to} i \].
-\todo{replace s by perlocutionary value which should be encoded in the edges (s is wrong here, its not the meaning that causes percolutionary responses but the edge that are used to get to it)}
+\todo[inline]{replace s by perlocutionary value which should be encoded in the edges (s is wrong here, its not the meaning that causes percolutionary responses but the edge that are used to get to it)}
 This valuation is done by a lookup table on all avalaible perlocutionary speech
 acts.
 $F_e$ tries to figure out what the conversation partners values by
@@ -1872,7 +1872,7 @@ perlocutionary speech acts.
 To start we will describe $T_e$. It sees the problem to solve as the
 conversation itself.
 Therefore it will consistently choose speech acts that could help the partner to
-progress the scenario (according to the symbol graph). \todo{this needs to be described in the graph though, which is currently not the case}
+progress the scenario (according to the symbol graph). \todo[inline]{this needs to be described in the graph though, which is currently not the case}
 So it wants to put the partner in a position where he has
 almost no other options except to progress the scenario
 (according to the meaning graph, the partner can of course say anything).
@@ -1945,7 +1945,6 @@ Since attitudes produce a different process by definition
 we can conclude that they will also behave differently.
 
 * Architectural Changes
-\todo{Perhaps I can merge this into implementation}
 \newlycleared
 This chapter is about how do we fit the algorithms discussed in chapter [[BDI and Jung]]
 into the existing game architecture. 
@@ -2039,20 +2038,20 @@ system.
 In our case the best candidate for this was the Chat class that contains the
 Chat session.
 We bluntly replace this with an interface and let the Chat class extend that
-interface.
-There was a problem in that the predicates attribute was public,
-since an interface cannot have any attributes in Java, we decided to solve this
-by replacing it by a method getPredicates.
-In fact while doing this we quickly found out that there was no reason for this
-attribute to be public in the first place
-(Common Java dogma requires the use of getters and setters).
+interface (see section [[Minor issues]]).
+Now we can inject an alternative 'Chat', which will be a simple bot that
+does the string to meaning conversion and inserts it into the drool system,
+then it forks of a little worker that send the reply from the drools.
 
+\todo[inline]{Add image}
 
 * Implementation
 \drafting
-In this chapter we will be disusing in detail the implementation.
+In this chapter we will be disusing in detail the implementation. ...
+\todo[inline]{describe what can be found in chapter}
+\todo[inline]{describe structure of chapter}
 
-\toReview
+\newlycleared
 Whenever one starts working on an existing software project the first obstacle
 faced is building/executing the project, this is discussed in detail in the
 appendix [[building]].
@@ -2310,6 +2309,15 @@ point of view a good meaning to be at is one that can lead to many meanings you
 haven't encountered yet.
 If one of those options leads to the goal we of course give it a huge bonus.
 
+** Minor issues
+<<Minor issues>>
+\toReview
+There was a problem in that the predicates attribute was public,
+since an interface cannot have any attributes in Java, we decided to solve this
+by replacing it by a method getPredicates.
+In fact while doing this we quickly found out that there was no reason for this
+attribute to be public in the first place
+(common Java dogma requires the use of getters and setters).
 * In conclusion
 \todo[inline]{Discussion, comparison}
 ** Future work
