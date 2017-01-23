@@ -30,6 +30,7 @@
 # smaller code font size (cause mostly boring xml)
 #+LATEX_HEADER: \RequirePackage{fancyvrb}
 #+LATEX_HEADER: \DefineVerbatimEnvironment{verbatim}{Verbatim}{fontsize=\scriptsize}
+
 ** Abstract                                                          
 :PROPERTIES:
 :UNNUMBERED: t
@@ -42,7 +43,6 @@
 #+END_CENTER
 \todo{keywords}
 
-\todo[inline]{Read: The art of dialogue 2006, center of applications of psycology type}
 \newpage
 #+TOC: headlines 2
 
@@ -368,7 +368,7 @@ and finally we will look at the serious game in its existing form.
  such that:
  \[ \mathcal{J} = \{ T_e, T_i, F_e, F_i, S_e, S_i, N_e, N_i\}\]
  Where
- + $T_e$ stands for extraverted thinking, which is thinking about objects in the
+ + $T_e$ stands for extroverted thinking, which is thinking about objects in the
    real world. This is thinking with a goal, a problem to solve,
    to check weather certain laws are upheld, or a system to check.
    As said before a typical example of $T_e$ based reasoning would be a
@@ -380,7 +380,7 @@ and finally we will look at the serious game in its existing form.
    which does not necessarily solve a problem.
    A typical example of $T_i$ based reasoning is a mathematician creating or
    combining new mathematical structures with help of axiomatic logic.
- + $F_e$ stands for extraverted feeling, where objective or external criteria
+ + $F_e$ stands for extroverted feeling, where objective or external criteria
    is used to judge, for example something is beautifull or ugly.
    Established standards may be used to decide this and therefore its a
    conservative function.
@@ -407,7 +407,7 @@ and finally we will look at the serious game in its existing form.
    quality assurance,
    where the perfect model in their mind can be easily
    compared to the product in question cite:siproffesionadvice.
- + $N_e$ stands for extraverted intuition, try to find possibilities in every
+ + $N_e$ stands for extroverted intuition, try to find possibilities in every
    situation.
    Extroverted intuition can be very good entrepreneurs, seeing ideas in
    almost every situation,
@@ -422,12 +422,12 @@ and finally we will look at the serious game in its existing form.
 
  \cleared
  <<Jungian alternating functions>>
- Another important concept is the idea of the /principal/ and /auxilirary/
+ Another important concept is the idea of the /principal/ and /auxiliary/
  function cite:hall1973primer105principal.
  The principal function is the one that is most preferred.
- The auxilirary renders its services to the principal function,
+ The auxiliary renders its services to the principal function,
  however this function cannot be the opposite of the principal.
- So if /Feeling/ is the principal function than thinking connot be the auxilirary.
+ So if /Feeling/ is the principal function than thinking connot be the auxiliary.
  This is also true for the irrational functions.
 
 **** MBTI
@@ -445,14 +445,14 @@ and finally we will look at the serious game in its existing form.
  Which is either a $J$ for judging (rational in jung terms)
  or a $P$ for perceiving (irrational in jung terms).
  This dimension indicates together with the $I/E$ dimension which function
- attitude is dominant and which is auxilirary.
+ attitude is dominant and which is auxiliary.
 
  \cleared
  <<sec:mbti:order_comparison>>
  Once completed with the MBTI you'll get charatcter string as outcome,
  for example "INTJ".
  This label tells you inderectly which of carl jung's functions is dominant,
- auxilirary, tetriary and inferior cite:mccaulley2000myers.
+ auxiliary, tetriary and inferior cite:mccaulley2000myers.
  In other words it provides a sequence of preferences
  cite:website.mbtitypedynamics.
  In case of INTJ it would be:
@@ -616,7 +616,6 @@ and finally we will look at the serious game in its existing form.
  MBTI and the subsequent PPSDQ cite:loomis1980testing.
 
  
-\todo[inline]{ Add An example case section  of different types, how it works in a doctors appointment? For example an INTJ wants the doctor to just get to the point and be out of there wheareas an ENFP wants to share their entire life story? Perhaps we need to make a selection of 3 quite different types, we can refer later to this to as an experiment}
 *** Comparison of theories
  \cleared
  To re-iterate, we are interested in a framework that is realistic, and easy to
@@ -971,6 +970,7 @@ and being orderly.
  We comment more on this in section [[Jungian BDI]].
  
 ** The serious game
+
  <<The serious game>>
  \cleared
  This chapter describes the game we inherited from our predecessors.
@@ -1360,6 +1360,136 @@ messages.
 Also note that there is a loop for the getDroolTemplates tag.
 This is because a blocking queue is used,
 which will block the thread until there is an item in the list.
+
+
+** Personality influence case study
+\toReview
+With the personality theories, AI literature and the serious game discussed
+thoroughly, we can make an expectation of results.
+We want to discuss what would happen if we would give the chat-bot one
+personality over the other.
+
+\toReview
+To analyze this we will make a small case study of several different typed
+people going to the doctor.
+First we have Sander the INTJ, secondly Susie the ENFP and Chris the ISTP.
+This type selection will give a rough overview of most jungian functions.
+In all cases the patients have the same problem, a back pain.
+
+\toReview
+After the dialogue we will also discuss the motivations for saying things the
+way they do.
+This is important since because we are doing AI and not just computer science
+we need to have an understanding what is going on in the mind of our test
+subjects.
+
+*** Sander the INTJ
+\toReview
+First we should note the dominant and auxiliary functions of the INTJ mbti
+type.
+An INTJ has as dominant function introverted intuition $N_i$ and as auxiliary
+thinking extroverted $T_e$.
+We would expect these function to be most dominant in the dialogue.
+$N_i$ mainly focuses on connecting ideas and extroverted analyses objects
+in the external world.
+Combined with each other we get a personality that focuses on getting to goals
+by analyzing situation far ahead of time.
+This results in the expected dialogue which can be seen in table
+[[tab:sander-conv-doct]].
+
+#+CAPTION: Sander in conversation with the doctor
+#+NAME:   tab:sander-conv-doct
+| Who      | what                                              |
+|----------+---------------------------------------------------|
+| Doctor   | Hi                                                |
+| /Sander/ | /Hello/                                           |
+| Doctor   | How can I help you?                               |
+| /Sander/ | /I have a back pain./                             |
+| Doctor   | When did this first occur?                        |
+| /Sander/ | /When I lifted a heavy object./                   |
+| Doctor   | Oh, yes then you need some pain killers for this. |
+| /Sander/ | /Thank you doctor/                                |
+
+\toReview
+Sander gives the doctor the information he needs to come to the conclusion he
+himself probably already had drawn. We could even expect him to ask for the
+medicine immediately,
+however since this could make the doctor question his motives
+(he could be addicted for example) he decides not to do this.
+
+*** Susie the ENFP
+\toReview
+As an ENFP, Susie has the dominant function of extroverted intuition $N_e$ and
+as auxiliary function of introverted feeling $F_i$.
+Therefore these functions should be most dominant in the dialogue.
+$N_e$ focuses on finding possibilities in situations and $F_i$ is a internal
+value based judgement function.
+Combined with each other they make a personality who has strong ideals and is
+enthusiastic about them.
+
+#+CAPTION: Susie in conversation with the doctor
+#+NAME:   tab:sander-conv-doct
+| Who     | what                                                      |
+|---------+-----------------------------------------------------------|
+| Doctor  | Hi                                                        |
+| /Susie/ | /Hello/                                                   |
+| /Susie/ | /How are you today doctor?/                               |
+| Doctor  | I'm good, how can I help you?                             |
+| /Susie/ | /I'm afraid I need some medicine/                         |
+| Doctor  | Medicne? Why do you need that?                            |
+| /Susie/ | /Well, I was watering the plants and all the sudden,/     |
+| /Susie/ | /I got this pain in my back./                             |
+| /Susie/ | /Do you think I'm allergic to plants?/                    |
+| Docotor | Haha, no, perhaps you just lifted the watering can wrong. |
+| Doctor  | I'll subscribe you some pain killers                      |
+| /Susie/ | /Thanks doctor, that surely will help!/                   |
+
+\toReview
+We can now see a stark difference with the INTJ personality.
+First of all being dominated by extroversion it was Susie who took the initiative.
+Secondly she directly asked for medicine, without thinking about the
+consequences but knowing she probably needs it.
+Then when explaining the situation she jumped to an idea of why she could have
+this sudden pain,
+without thinking about if it even makes sense that you are all the sudden
+allergic to plants that have been in your home for a while.
+
+*** Chris the ISTP
+\toReview
+With his ISTP type, Chris has the dominant function of $T_i$ and then the
+auxiliary function of $S_e$.
+We therefore would expect these functions to do most of the work in the dialogue.
+$T_i$ uses an internal reasoning structure to make judgments about the world
+and $S_e$ uses the senses to gather information.
+
+#+CAPTION: Chris in conversation with the doctor
+#+NAME:   tab:sander-conv-doct
+| Who     | what                                              |
+|---------+---------------------------------------------------|
+| Doctor  | Hi                                                |
+| /Chris/ | /Hello/                                           |
+| Doctor  | How can I help?                                   |
+| /Chris/ | /I have back pain doctor./                        |
+| Doctor  | When did this first occur?                        |
+| /Chris/ | /Well I was watering the plants,/                 |
+| /Chris/ | /Perhaps I put to much water in the watering can/ |
+| Doctor  | Yes, that could be the case.                      |
+| Doctor  | I'll give you some pain killers                   |
+| /Chris/ | /Thanks doctor/                                   |
+
+\toReview
+So this dialogue looks a lot more like that Sander (INTJ) than that of Susie (ENFP).
+However the motivation for the responses are quite different than that of Sander.
+Chris hadn't figured out yet that he needed pain killers when he arrived,
+since his auxiliary function is $S_e$, he hadn't thought that deep about the
+problem.
+He just knew he was in much pain, and knew the doctor could help with that.
+
+\toReview
+The difference with the dialogue of Susie is again quite obvious.
+He didn't took the initiative because his dominant function isn't extroverted,
+and unlike Susie he correctly asserted when the doctor asked about it
+that the object he lifted may have been to heavy.
 
 * BDI and Jung
 <<Jungian BDI>>
