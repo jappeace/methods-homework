@@ -1910,20 +1910,27 @@ To do this we will start analyzing the Jungian functions and see what
 Then we will define the believe tuple more formally.
 
 *** Symbol graph
-\newlycleared
+\toReview
 To make sure the agent stays on topic we will make use of a symbol graph.
 This graphs gives connections to the symbols described in section [[A type signature approach]].
 For a precise description of the implementation see section [[Symbol graph]].
-The meaning graph $G$ is a set of connections $(A, s_1, s_2)$
-where $s_1, s_2 \in \mathcal{S} \wedge s_1 \neq s_2$ and $A \subseteq \Lambda$ is the set of
+The meaning graph $G$ is a set of connections $(\pi, A, s_1, s_2)$
+where $s_1, s_2 \in \mathcal{S} \wedge s_1 \neq s_2$, $A \subseteq \Lambda$ is the set of
 agents that can use the connection (to prevent the patient asking the doctor
-about his health problems).
+about his health problems) and $\pi$ is the perlocutionary information about the
+speech act (for example angering or scaring),
+which is encoded in the edges because its not the meaning that causes these
+but the way you get to those meanings.
+
 *** Irrational
 \newlycleared
 The irrational functions rely heavily on the symbol graph to create new
 children in the dialogue tree.
 This is under the assumption that connections in the symbol graph are always
 on topic.
+Please note that all irrational functions need to have an extra argument
+to limit their activities.
+Since considering the entire graph is unrealistic, and unnecessary.
 
 \newlycleared
 In the initial design of what the $S$ and $N$ functions should do
@@ -1963,8 +1970,6 @@ didn't exists already).
 Whenever these connections are available they will substitute the random $x$.
 So $S_i$ starts of kind off similar to $S_e$ but builds up over time.
 
-\todo[inline]{They all need an argument to limit processing}
-
 *** Rational
 \newlycleared
 In the current design the rational functions apply order to the children of a
@@ -1981,15 +1986,17 @@ However we will borrow parts of it.
 Namely whenever a rational function finishing ordering the input set it will
 call the /next/ function to do deliberation on the most preferred item.
 
-\newlycleared
+\toReview
 Both feeling functions $F$ use the perlocutionary acts to order the children.
 $F_i$ uses a predefined value set $h$: 
-\[ s \overset{h}{\to} i \].
-\todo[inline]{replace s by perlocutionary value which should be encoded in the edges (s is wrong here, its not the meaning that causes percolutionary responses but the edge that are used to get to it)}
+\[ \pi \overset{h}{\to} i \].
 This valuation is done by a lookup table on all avalaible perlocutionary speech
 acts.
 $F_e$ tries to figure out what the conversation partners values by
 picking the perlocutionary act the other chose most.
+This is done by simply keeping track on how many of such speech acts the
+partner uttered and picking the that has been uttered most, if that one is not
+available we move to the next one. This is similar to fictitious play.
 
 \newlycleared
 Normally the $T$ function is about reasoning.
@@ -1998,16 +2005,17 @@ soon as possible.
 The thinking functions $T$ do this without paying any attention to
 perlocutionary speech acts.
 
-\newlycleared
+\toReview
 To start we will describe $T_e$. It sees the problem to solve as the
 conversation itself.
 Therefore it will consistently choose speech acts that could help the partner to
-progress the scenario (according to the symbol graph). \todo{this needs to be described in the graph though, which is currently not the case}
+progress the scenario.
 So it wants to put the partner in a position where he has
 almost no other options except to progress the scenario
-(according to the meaning graph, the partner can of course say anything).
 If it encounteres a child node  with a goal in it it will give priority to that.
 The higher the goal is the more priority.
+The information about scenario progression is encoded in the drools itself,
+so this could potentially be acquired by using reflection on the drools.
 
 \newlycleared
 $T_i$ however uses a different strategy. It wants to help the conversation
@@ -2028,15 +2036,15 @@ except for the incredible amount of information encoded in $G$.
 
 #+CAPTION: function attitudes and their required data
 #+NAME:   tab:fa-and-data
-| Function | required data               |
-| $T_e$    | A goal $m$, and G           |
-| $T_i$    | A goal $m$, and G           |
-| $F_e$    | utterance history [s] and G |
-| $F_i$    | Personal values  $h$        |
-| $S_e$    | G                           |
-| $S_i$    | Utterence history [s] and G |
-| $N_e$    | G                           |
-| $N_i$    | G                           |
+| Function | required data                                      |
+| $T_e$    | A goal $m$, scenario progression information and G |
+| $T_i$    | A goal $m$, and G                                  |
+| $F_e$    | utterance history [s] and G                        |
+| $F_i$    | Personal values  $h$                               |
+| $S_e$    | G                                                  |
+| $S_i$    | Utterence history [s] and G                        |
+| $N_e$    | G                                                  |
+| $N_i$    | G                                                  |
 
 \newpage
 ** Consistency with theory
