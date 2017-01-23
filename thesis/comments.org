@@ -9,3 +9,7 @@ I didn't add an overview in chapter 3 because it didn't fit in there because its
 to detailed for that chapter.
 I pushed it down to a new chapter instead, is this OK?
 
+Should I refer to a design practices book (I was thinking head first design patterns)? I mean I do most stuff by heart but
+I'm pretty sure all the stuff I do is written somewhere..
+ Could be in Qaulity attributes?
+ Could be in head first design patterns?
