@@ -1012,7 +1012,7 @@ and being orderly.
  (which is now being taken over by drools as discussed in [[existing architecture]]).
  We will be using the source code as a guideline in discussing the existing
  work because it is more relevant.
-
+ 
 *** Functionality
     \cleared
  There are two major functionality perspectives to consider,
@@ -2682,6 +2682,20 @@ mvn clean in there for good measure.
 \cleared
 There is a python client script for quick debugging, therefore its unnecessary
 to keep unity running (or use at all).
+**** Ubuntu issues
+At some point my laptop crashed and I had to fall back to an ubuntu based
+distribution.
+Installing mysql came with the gotcha, the default root on mysql is only
+accessible from:
+#+BEGIN_SRC sh
+sudo mysql -u root
+#+END_SRC
+I thought I could do this as the normal user but it appears this not the case.
+Also an online forum said that you had to run
+#+BEGIN_SRC sh
+sudo mysql_install_db
+#+END_SRC
+However I think apt handles that for you.
 
 ** Ideas
 :PROPERTIES:
@@ -2691,6 +2705,7 @@ to keep unity running (or use at all).
 \todo[inline]{Regex mathing as an extension to existing matching}
 \todo[inline]{How to deal with long inputs? I think sentence splitting was mentioned?}
 \todo[inline]{Perhaps we can use argumentation research on top of the graph to figure out more semantics (this statment is attacking that or inquerying this)}
+\todo[inline]{Extracting information from meanings isn't very DRY right now, for example saying how is your foot? Could perhaps be splitup into statusInquery + foot. However I don't know how to do this better right now, perhaps it could be a natural result of dubble matching but we lose the order inforamtion.}
 *** Tooling stuff
 + Protocol buffers could be used for protocol. Its strongly typed and has both
   C# and Java bindings
