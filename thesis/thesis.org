@@ -2562,6 +2562,7 @@ stick to that for active devlopment, but if you just want to have
 a quick look at the server you should use look at section [[inmemorydb]].
 
 **** Mariab setup
+<<Mariadb setup>>
 \cleared
 So first install mariadb (or mysql, they are the same, except mariadb has better
 defaults):
@@ -2696,6 +2697,47 @@ Also an online forum said that you had to run
 sudo mysql_install_db
 #+END_SRC
 However I think apt handles that for you.
+
+***** utf8 problem
+\toReview
+I got an error:
+"com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Specified key was too long; max key length is 767 bytes"
+This is because it uses an utf8 encoding (see [[http://stackoverflow.com/questions/10748155/specified-key-was-too-long-max-key-length-is-767-bytes][this]]).
+To solve this change the tables to use a smaller utf8 instead.
+In `/etc/mysql/mariadb.conf.d/50-server.cnf` change the variables to
+
+#+BEGIN_SRC
+character-set-server  = latin1                                                            
+collation-server      = latin1_swedish_ci
+#+END_SRC
+
+\toReview
+We also need to modify `/etc/mysql/mariadb.conf.d/50-client.cnf`
+with:
+#+BEGIN_SRC
+default-character-set = latin1
+#+END_SRC
+
+\toReview
+After which we do a restart of the mysqld:
+
+#+BEGIN_SRC sh
+sudo systemctl restart mysql
+#+END_SRC
+\toReview
+Note: make sure to stop your running wildfly instance, otherwise wildfly will keep it alive
+
+\toReview
+Now drop the entire salve database as root, the tables were created with the
+wrong charset so we need to just remove them all.
+#+BEGIN_SRC sh
+mysql -u root -ppassword -e "DROP DATABASE salve;:
+#+END_SRC
+
+\toReview
+Now recreate the database as was done in section [[Mariadb setup]] (alternativly
+logging in as root and pressing arrow up a couple of times should get you the
+right commands).
 
 ** Ideas
 :PROPERTIES:
