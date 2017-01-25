@@ -42,6 +42,7 @@
 
 #+END_CENTER
 \todo{keywords}
+\todo[inline]{Figures should to be able to be placed in the appendix}
 
 \newpage
 #+TOC: headlines 2
@@ -881,30 +882,27 @@ and finally /Competences/ is the same as in the previous model.
  + /Social meaning/, awkwardness, gratitude, ...
  + /Competences/, Give injection, empathetic talk
 
+\todo[inline]{Describe Plan patterns are declarative not imperative}
+\todo[inline]{They describe just play an supporting role to possible implementaions.}
+\todo[inline]{A plan pattern is a way to describe many possible plans, so its a plan prototype}
+\todo[inline]{The old one didn't work because there would be examples where it wasn't possible to comply (for example if you have a cold)}
 #+NAME: fig:sp-activity
 #+BEGIN_SRC plantuml :cache yes :file img/uml/sp-activity.png :exports results
-|WebSocket|
 start
-:Introduction;
-repeat
+:greeting;
+while (has diagnoses?)
 fork
-:Share information;
-fork again
-:Do diagnostics;
-endfork
-repeat while (Diagnosed problem?)
-if (Can be treated now?) then (yes)
-  :Perform minor treatment;
-else if (Can be treated with drugs?) then (yes)
-  :Prescribe drugs;
-else (no)
-  :Give bad news;
-endif
+:data gathering;
+fork again;
+:diagnoses;
+end fork
+endwhile
+:finishing;
 stop
 #+END_SRC
 #+CAPTION: Plan pattern example
 #+LABEL: fig:sp-activity
-#+RESULTS[989ab68b4d78c83d14903b2658462d71009d62db]: fig:sp-activity
+#+RESULTS[35679ceefcd43b1884cc8c502d27ae59aaa34043]: fig:sp-activity
 [[file:img/uml/sp-activity.png]]
 
 
@@ -1363,6 +1361,10 @@ which will block the thread until there is an item in the list.
 
 
 ** Personality influence case study
+\todo[inline]{Doctor could prescribe different treatments and or medicine because patients give different inforamtion based on the information they shared.}
+\todo[inline]{This would signify the importance of personality within the game}
+\todo[inline]{Patient may acutually have a damaged back, and for example the INTJ is there just to score medicine, whereas the ENFP will tell it by accident and get a scan but the ISTP will just start talking about how he worked in construction or something}
+\todo[inline]{Don't know how it would affect the ISTP}
 \toReview
 With the personality theories, AI literature and the serious game discussed
 thoroughly, we can make an expectation of results.
@@ -1382,6 +1384,7 @@ way they do.
 This is important since because we are doing AI and not just computer science
 we need to have an understanding what is going on in the mind of our test
 subjects.
+
 
 *** Sander the INTJ
 \toReview
@@ -2083,6 +2086,10 @@ Since attitudes produce a different process by definition
 we can conclude that they will also behave differently.
 
 * Architectural Changes
+\todo[inline]{Figure out cardinality of drool subsystems, how many scoring sub systems how many scenario subsystems}
+\todo[inline]{The case for a scenario subsystem per agent is the following: Each agent could have their own interpretation of the scenario}
+\todo[inline]{Scoring system should almost defenitvly be 1}
+\todo[inline]{We should describe a perfect architecture anyway, and then in the implementation we can describe an actual achitecture if there is a different one}
 \newlycleared
 This chapter is about how do we fit the algorithms discussed in chapter [[BDI and Jung]]
 into the existing game architecture. 
@@ -2098,17 +2105,24 @@ A deployment diagram of the architecture can bee seen in figure
 #+NAME: fig:architecture-concept
 #+BEGIN_SRC plantuml :cache yes :file img/uml/architecture-concept.png :exports results
 
+  folder scene{
+    cloud drools {
+      component score
+      component scenario
+      storage facts
+      scenario -- facts
+      score -- facts
+    }
+  }
+
   folder bot{
-  cloud drools {
+  cloud bot.drools {
     component emotions
-    component scenario
     component personality
-    component score
-    storage facts
-    emotions -- facts
-    scenario -- facts
-    personality -- facts
-    score -- facts
+    storage bot.facts
+    emotions -- bot.facts
+    personality -- bot.facts
+    score -- bot.facts
   }
   database meanings [
     symbols
@@ -2117,17 +2131,18 @@ A deployment diagram of the architecture can bee seen in figure
   ]
   entity filereader
   filereader ..> meanings
-  drools --> meanings
+  bot.drools --> meanings
   }
   node server
   node client
 
-  server --> bot
-  server -(0)- client
+  server "1"-- "1..*" bot
+  server  -- scene
+  server  -(0)- client
 #+END_SRC
 #+CAPTION: Deployment diagram of new architecture, where the dashed arrow means constructs, the solid arrow means uses and the other lines mean itneracts.
 #+LABEL: fig:architecture-concept
-#+RESULTS[bfb3eb88cfd8095269348f4fa1677f4142a78da1]: fig:architecture-concept
+#+RESULTS[6f973e79e5120972bc1a91a0e30be1e753fcb59a]: fig:architecture-concept
 [[file:img/uml/architecture-concept.png]]
 
 \newlycleared
@@ -2183,7 +2198,12 @@ then it forks of a little worker that send the reply from the drools.
 
 \todo[inline]{Add image}
 
+
+\todo[inline]{New class diagram}
+\todo[inline]{New message processing activity diagram (see utterance processing)}
+
 * Implementation
+
 \drafting
 In this chapter we will be disusing in detail the implementation. ...
 \todo[inline]{describe what can be found in chapter}
@@ -2197,6 +2217,7 @@ appendix [[building]].
 \todo[inline]{Proposed Extension, why this extension}
 
 ** From strings to symbol
+\todo{Ask about ontologies!!}
 <<From strings to meanings>>
 \todo[inline]{Can we use ontologies for the meaning part?}
 \toReview
