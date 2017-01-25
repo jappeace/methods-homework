@@ -13,7 +13,7 @@
 #+LATEX_HEADER: \usepackage[obeyFinal, colorinlistoftodos]{todonotes}
 #+LATEX_HEADER: \newcommand{\drafting}{\todo[noline, color=gray]{Working draft}}
 #+LATEX_HEADER: \newcommand{\toReview}{\todo[noline, color=yellow]{To review}}
-#+LATEX_HEADER: \newcommand{\newlycleared}{\todo[noline, backgroundcolor=white, bordercolor=red]{Newly cleared}}
+#+LATEX_HEADER: \newcommand{\cleared}{\todo[noline, backgroundcolor=white, bordercolor=red]{Newly cleared}}
 # (something cleared that was under discussion last time)
 #+LATEX_HEADER: \newcommand{\cleared}{\todo[noline, color=white]{Cleared}}
 
@@ -63,7 +63,7 @@ Therefore a general "communicate!" game was developed.
 Wherein teachers can create scenarios to let their students practice with
 communication cite:jeuring2015demo.
 
-\newlycleared
+\cleared
 This game was script based, the teacher made a scenario and the student would
 follow the choices predefined by the teacher.
 A script based game has of course the weakness that a student can't use
@@ -791,7 +791,7 @@ and finally we will look at the serious game in its existing form.
  \todo[inline]{Perhaps it would be a good idea to sketch commanalities between drools and these kind of things, so that if a reader knows about any of these things he can lay the link easily}
 *** Social practices
  <<social practice>>
- \newlycleared
+ \cleared
  In cite:smolka2001social it is stated that the research in activity theory
  led to the development of social practices.
  It was Karl Marx who made the roots who thought of the "roots" of activity
@@ -805,7 +805,7 @@ and finally we will look at the serious game in its existing form.
  Social practices were therefore introduced to make the notion of activity more
  concrete.
 
- \newlycleared
+ \cleared
  An early adoption of social practice can be found in cite:shove2005consumers,
  where it was used to analyze the spread of Nordic Walking.
  In his analyses he uses the following overarching concepts to analyze the practice:
@@ -820,7 +820,7 @@ and finally we will look at the serious game in its existing form.
     participate in the social practice of cycling. This is why this is
     introduced.
 
-\newlycleared
+\cleared
 In cite:dignum2014contextualized a model of social practices for agents was
 developed.
 This model is extended specifically to allow software agents to use it.
@@ -845,7 +845,7 @@ This construct wasn't represented in the previous model either.
 /Meaning/ in this model is soley related to the social effects of activities,
 and finally /Competences/ is the same as in the previous model.
 
- \newlycleared
+ \cleared
  The interest for this model comes from  the potential heuristic use of social
  practices.
  Once in a particular situation that fits for a social practice the amount of
@@ -854,7 +854,7 @@ and finally /Competences/ is the same as in the previous model.
  if no preconditions match an agent could consider trying other social practices
  he knows, or ask its peers for more information.
 
- \newlycleared
+ \cleared
  The social practice theory in this thesis should be considered as a
  /foundation/ rather than a separate element.
  We will be using it as a domain limiting device,
@@ -906,7 +906,7 @@ stop
 [[file:img/uml/sp-activity.png]]
 
 
-  \newlycleared
+  \cleared
   We can imagine personality should have /a/ influence on social practice
   selection and of course plan influence. As far as the authors are aware however,
   there hasn't been any prior work on this subject. But we can speculate for
@@ -914,13 +914,13 @@ stop
   Sensing function would check all artifacts more rigorously than someone
   dominated by an Intuition.
 
-  \newlycleared
+  \cleared
   If the social practices are defined more formally they could be 
   used in a bigger system such as in cite:augello2015social and
   cite:augello2016model.
 *** Speech act theory
 <<Speech act thoery>>
-\newlycleared
+\cleared
 Since a large part of this thesis is about communication we will give here a
 brief overview of speech act theory.
 There are three levels at which speech acts can be analyzed according to
@@ -933,7 +933,7 @@ warning.
 /Perlocutionary/ acts are the acts that bring an effect to the hearer, such as
 scaring or saddening.
 
-\newlycleared
+\cleared
 There are some basic assumptions of conversation, commonly described as the
 /rules of conversation/ developed by Grice cite:shoham2008multiagent_speechact_p241..245.
 Humans communication happens on the assumption that both parties want to be
@@ -1040,7 +1040,7 @@ combined with the war.
 It would be difficult to modify these files on a running instance.
 
 *** Abstract architecture
-\newlycleared
+\cleared
 An abstract architecture was already in place and described very well
 by cite:augello2016social. This can be seen in figure [[fig:abstract-architecture]],
 which was directly taken from cite:augello2016social.
@@ -1049,7 +1049,7 @@ which was directly taken from cite:augello2016social.
   #+NAME:   fig:abstract-architecture
   [[./img/abstract-architecture.png]]
   
-\newlycleared
+\cleared
 The interaction module handles user interaction, where the GUI can show the
 dialogue and the mood of the agent.
 The Dialogue module inside it however handles low level string interpretation
@@ -1059,12 +1059,12 @@ Note that although represented in the abstract architecture as the same module,
 the GUI resides in  the implementation on the client side whereas the dialogue
 module resides on the server.
 
-\newlycleared
+\cleared
 The dialogue module calls directly the Representation and interpretation module
 with help of specialized tags (see [[Deliberation]]) information can be inserted in
 the representation and interpretation module.
 
-\newlycleared
+\cleared
 Both the 'representation and interpretation' module and the score module use
 drools to do their respective tasks.
 The only real separation in implementation is trough directory and file
@@ -1299,7 +1299,7 @@ stop
 **** User utterance processing 
 <<user utterance processing>>
 
-\newlycleared
+\cleared
 An important process to describe is the way currently user messages are processed.
 Figure [[fig:utterance-proccesing]] gives an overview of utterance processing.
 
@@ -1348,7 +1348,7 @@ Figure [[fig:utterance-proccesing]] gives an overview of utterance processing.
 #+RESULTS[2be41360a975175f4a0734807235d7983de36beb]: fig:utterance-proccesing
 [[file:img/uml/utterance-proccesing.png]]
 
-\newlycleared
+\cleared
 As can be seen in the diagram the message processing happens inside the Alice
 bot.
 Tags were added to AIML to allow the drool engine to be updated.
@@ -1496,7 +1496,7 @@ that the object he lifted may have been to heavy.
 
 * BDI and Jung
 <<Jungian BDI>>
-\newlycleared
+\cleared
 In this chapter we will consider how to combine Jungian psycology with BDI,
 as was originally done by Campos cite:campos_mabs2009.
 We want to do something similar but using Jungian function attitudes rather than
@@ -1550,7 +1550,7 @@ This is then reduced to the scope of a chatbot in the social practice.
 After this we will look what extra information the function attitudes need
 in an attempt to reduce the amount of possible believes.
 
-\newlycleared
+\cleared
 We will reason about the function attitudes by considering the
 type signature of a pure function that can represent them.
 A Haskell like syntax is used for this.
@@ -1577,7 +1577,7 @@ and return a function $b \to c$, this process is called partial application
 cite:haskellpartialapplication.
 Capital letters indicate sets.
 
-\newlycleared
+\cleared
 We will go from an as broad as possible system (while using BDI) to a
 precise as possible definition, while still being able to satisfy the domain.
 This is desirable because it will restrict the amount of things that can happen
@@ -1591,7 +1591,7 @@ individually.
 To do this we will define some terms, with which we will go from the broadest
 definition possible towards one that just fits the project scope.
 
-\newlycleared
+\cleared
 Let $\mathcal{B}$ denote the set of all
 possible believes and let $B_t$ with $B_t \subseteq \mathcal{B}$ denote the
 believes of an agent at time $t$. 
@@ -1618,7 +1618,7 @@ part of the believe base.
 We marked the $f_a$ arrow, which indicates the deliberation process of the agent,
 so $f_a$ can be any of the function attitudes.
 
-\newlycleared
+\cleared
 This definition is however too general for our domain.
 First of all the set of sensory information can be reduced to a String,
 since this is the information we get from a user.
@@ -1642,7 +1642,7 @@ In the previous version this mapping was entirely done by AIML.
 How this is done in this version will be discussed in the implementation
 section [[From strings to meanings]].
 
-\newlycleared
+\cleared
 So the simplification is now as follows,
 firstly we note that $\mathcal{S} \subset \mathcal{P}$,
 since understanding meaning is a form of sensation.
@@ -1655,7 +1655,7 @@ received a symbol (ie empty set).
 This produces the following type signature:
 \[ B_t \to t \to S_t \overset{f_a}{\to} (B_{t+1}, \Delta_{t+1}) \]
 
-\newlycleared
+\cleared
 We have some believes, time and meaning going in, some deliberation
 going on and a new set of believes and actions going out.
 The new believes can be used for the next iteration.
@@ -1671,7 +1671,7 @@ uttered.
 We also need to mark which agent uttered, therefore we introduce $\Lambda$ as the set
 of all agents, where $a \in \Lambda$.
 
-\newlycleared
+\cleared
 Therefore we introduce $D$ a dialogue tree:
 \[ D = (a, s, [D])\]
 Where $s \in \mathcal{S}$ for the symbol,
@@ -1736,7 +1736,7 @@ response .. D1
 #+RESULTS[65aeceb37d1b58ff03765f9e305358f4f5427bb9]: fig:dialoguetree
 [[file:img/uml/dialoguetree.png]]
 
-\newlycleared
+\cleared
 With this in place we can replace both the $S_t$ and $\Delta_{t+1}$ with the $D_t$ and
 $D_{t+1}$ respectively.
 This is convenient because now we can model function attitudes as processing
@@ -1777,7 +1777,7 @@ the user meaning it can't do its job yet, more on his in this section
 [[Rational and irrational]].
 Therefore we consider another approach.
 
-\newlycleared
+\cleared
 In this approach we will give $f_a$ another argument which is the next $f_a$.
 This looks like the following:
 \[ \left (\overset{next}{B_t \to t \to D_t \to (B_{t+1}, D_{t+1})}\right ) \to B_t \to t \to D_t \overset{f_a}{\to} (B_{t+1}, D_{t+1}) \]
@@ -1838,7 +1838,7 @@ therefore we leave this as an exercise to the reader.
 
 ***  Rational and irrational
 <<Rational and irrational>>
-\newlycleared
+\cleared
 Up till now we modeled the type signature to have a dialogue tree as input and
 output.
 However we have not considered yet how children are generated and how the order
@@ -1851,7 +1851,7 @@ should apply order to the children.
 irrational are about producing information therefore they should produce
 children based.
 
-\newlycleared
+\cleared
 There are however some edge cases to consider when modeling this idea.
 Say the primary function is a rational one.
 It receives a dialogue with just the root node.
@@ -1871,7 +1871,7 @@ However there may be exceptions for example when a rational function is primary.
 It can then use the next function to generate some options, on which it can
 apply an order, after which it will give the next function another chance.
 
-\newlycleared
+\cleared
 This results in the following conceptualized architecture:
 /rational/ functions change the order of possible replies,
 one layer above the leaf layer,
@@ -1894,7 +1894,7 @@ This structure still works with SL-TDI's non alternation.
 
 ** Mapping function attitudes to a process 
 <<Mapping to process>>
-\newlycleared
+\cleared
 Now you may argue at this point we haven't refined our types a lot, since
 the believe structure was defined as "Every possible believe",
 which is basically analogous to "Anything you can think of" or in a Object
@@ -1926,7 +1926,7 @@ which is encoded in the edges because its not the meaning that causes these
 but the way you get to those meanings.
 
 *** Irrational
-\newlycleared
+\cleared
 The irrational functions rely heavily on the symbol graph to create new
 children in the dialogue tree.
 This is under the assumption that connections in the symbol graph are always
@@ -1935,14 +1935,14 @@ Please note that all irrational functions need to have an extra argument
 to limit their activities.
 Since considering the entire graph is unrealistic, and unnecessary.
 
-\newlycleared
+\cleared
 In the initial design of what the $S$ and $N$ functions should do
 as algorithm we considered them in the following way.
 $S$ would be analyzing all available options rigorously in a forward chaining
 process, whereas $N$ would do backward chaining, starting at the goal and going
 trough some way points directly to the starting point.
 
-\newlycleared
+\cleared
 This would translate into $S$ going several plies deep into the
 meaning graph before calling the $next$ function and returning the result.
 And if we assume that the $next$ function brings us closer to the goal we can
@@ -1952,7 +1952,7 @@ guarantee that the $next$ function will bring us to the goal, in fact we may get
 stuck in a loop.
 
 # http://personalitycafe.com/cognitive-functions/83205-whats-difference-between-ni-ne.html
-\newlycleared
+\cleared
 We can consider $N_i$ to be a depth first approach. Going several plies deep and
 at each ply consulting the $next$ function which step to take.
 $N_e$ on the other hand just takes the top $x$ of the current dialogue options
@@ -1962,7 +1962,7 @@ This will of course be a much more shallow consideration than $N_i$, but
 much more broad. Which is of course the behavior we are looking for in both
 $N_i$ and $N_e$ (see section [[Jungian types]]).
 
-\newlycleared
+\cleared
 The $S_e$ function just receives all possible connections from the current
 meaning for several plies and then applies the /next/ function on it.
 The $S_i$ however is more conservative and will only pop $x$ random meanings by
@@ -1974,13 +1974,13 @@ Whenever these connections are available they will substitute the random $x$.
 So $S_i$ starts of kind off similar to $S_e$ but builds up over time.
 
 *** Rational
-\newlycleared
+\cleared
 In the current design the rational functions apply order to the children of a
 current dialogue node.
 Then once finished they will call the $next$ function on the most preferred
 child. This is to ensure all function attitudes can do some processing.
 
-\newlycleared
+\cleared
 Please do note that although we have a game tree,
 we're not dealing with a zero sum game.
 Dialogue is cooperative rather than competitive (see section [[Speech act thoery]]).
@@ -2001,7 +2001,7 @@ This is done by simply keeping track on how many of such speech acts the
 partner uttered and picking the that has been uttered most, if that one is not
 available we move to the next one. This is similar to fictitious play.
 
-\newlycleared
+\cleared
 Normally the $T$ function is about reasoning.
 There is little reasoning to do in our scenario except to get to the goal as
 soon as possible.
@@ -2020,7 +2020,7 @@ The higher the goal is the more priority.
 The information about scenario progression is encoded in the drools itself,
 so this could potentially be acquired by using reflection on the drools.
 
-\newlycleared
+\cleared
 $T_i$ however uses a different strategy. It wants to help the conversation
 partner to analyze the problem according to the partner's own internal
 logic framework
@@ -2031,7 +2031,7 @@ To do this it will sort the child nodes according to as much unique symbols as
 possible.
 
 *** Believes overview
-\newlycleared
+\cleared
 We listed the function attitudes $f_a$ and their required information into
 table [[tab:fa-and-data]]. 
 Therefore $B = (h, [s], G)$, which looks like a relatively small believe base,
@@ -2051,7 +2051,7 @@ except for the incredible amount of information encoded in $G$.
 
 \newpage
 ** Consistency with theory
-\newlycleared
+\cleared
 In this section we will explore if especially INTJ and ENTJ (MBTI) types would
 produce different actions by analyzing when the functions would act.
 We will only look at the first two functions because it is enough:
@@ -2060,7 +2060,7 @@ The first two functions of INTJ are:
 And of ENTJ they are:
 \[ T_e > N_i \]
 
-\newlycleared
+\cleared
 What we would expect is that the $T_e$ and $N_i$ produce different results
 because of the order they are in the sequence.
 So in case of ENTJ if $T_e$ receives an meaning $M_t$ from the user
@@ -2074,12 +2074,12 @@ to it.
 Then it can either return this result or pass it to the /next/ function and
 judge these results again.
 
-\newlycleared
+\cleared
 In any case the main difference is that an INTJ $T_e$ function gets to
 value before the other functions get a chance to do anything. In case of an
 ENTJ it is always just a final judgement.
 
-\newlycleared
+\cleared
 INTJ and INTP are different in attitudes, but have the same order.
 Since attitudes produce a different process by definition
 (see section [[Mapping to process]]),
@@ -2090,7 +2090,7 @@ we can conclude that they will also behave differently.
 \todo[inline]{The case for a scenario subsystem per agent is the following: Each agent could have their own interpretation of the scenario}
 \todo[inline]{Scoring system should almost defenitvly be 1}
 \todo[inline]{We should describe a perfect architecture anyway, and then in the implementation we can describe an actual achitecture if there is a different one}
-\newlycleared
+\cleared
 This chapter is about how do we fit the algorithms discussed in chapter [[BDI and Jung]]
 into the existing game architecture. 
 So this chapter is best to be seen as glue between chapter [[BDI and Jung]] and
@@ -2145,7 +2145,7 @@ A deployment diagram of the architecture can bee seen in figure
 #+RESULTS[6f973e79e5120972bc1a91a0e30be1e753fcb59a]: fig:architecture-concept
 [[file:img/uml/architecture-concept.png]]
 
-\newlycleared
+\cleared
 The biggest difference from the original architecture is the removal of
 distinction between drools and the chatbot.
 In the new architecture we plan to make all information in the files available to
@@ -2163,7 +2163,7 @@ This is confusing for new scenario creators since completely different folders
 have to be accessed to change the strings.
 # This violates the changeability design principle quite heavily and unnecessarily. \todo{cite}
 
-\newlycleared
+\cleared
 In the new architecture we use a file reader to construct the entire
 meaning database into memory and expose them to the drools.
 This allows the drools to utter spontaneous meanings and allows do deliberation
@@ -2176,7 +2176,7 @@ that uses variables to fill in the gap, we get a meaning, which connected to
 other meanings which in turn are also connected.
 We can do deliberation on this because we have one or more meaning /goals/.
 
-\newlycleared
+\cleared
 Another advantage of this change is that its a much more simple architecture.
 Only one place does deliberation rather than two and only one api is used for
 generating responses.
@@ -2209,7 +2209,7 @@ In this chapter we will be disusing in detail the implementation. ...
 \todo[inline]{describe what can be found in chapter}
 \todo[inline]{describe structure of chapter}
 
-\newlycleared
+\cleared
 Whenever one starts working on an existing software project the first obstacle
 faced is building/executing the project, this is discussed in detail in the
 appendix [[building]].
