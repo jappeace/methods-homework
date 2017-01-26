@@ -820,7 +820,7 @@ and finally we will look at the serious game in its existing form.
     participate in the social practice of cycling. This is why this is
     introduced.
 
-\cleared
+\toReview
 In cite:dignum2014contextualized a model of social practices for agents was
 developed.
 This model is extended specifically to allow software agents to use it.
@@ -835,13 +835,18 @@ in nordic waling this can be for example talking with your partner,
 or stopping to get a stone out of your shoe.
 They don't need to all be performed but are there just as options.
 This is the first construct that wasn't covered by the other model.
-/Plan patterns/ apply prequisites and an order to the activities.
-For example you need to first get a stone in your shoe during the walking
-before you can get it out,
-not that getting a stone in your shoe would be part of the plan,
-but the condition of having a stone in your shoe before getting it out is part
-of the plan pattern.
-This construct wasn't represented in the previous model either.
+/Plan patterns/ are blue prints for the eventual plan.
+An example of a doctor appointment plan pattern can be seen in
+figure [[fig:sp-activity]].
+If you go to the doctor the first thing you do is some kind of greeting.
+Then the doctor goes onto data gathering and diagnoses mode until he figured
+out what's wrong.
+After which he will tell in the finishing phase what to do about it.
+Now what these phases entail is not clear at all.
+Finishing may for example contain the prescription of medicine,
+or an appointment to go to the hospital. 
+However plan patterns do not describe such an implementation.
+The plan pattern construct wasn't represented in the previous model either.
 /Meaning/ in this model is soley related to the social effects of activities,
 and finally /Competences/ is the same as in the previous model.
 
@@ -882,10 +887,6 @@ and finally /Competences/ is the same as in the previous model.
  + /Social meaning/, awkwardness, gratitude, ...
  + /Competences/, Give injection, empathetic talk
 
-\todo[inline]{Describe Plan patterns are declarative not imperative}
-\todo[inline]{They describe just play an supporting role to possible implementaions.}
-\todo[inline]{A plan pattern is a way to describe many possible plans, so its a plan prototype}
-\todo[inline]{The old one didn't work because there would be examples where it wasn't possible to comply (for example if you have a cold)}
 #+NAME: fig:sp-activity
 #+BEGIN_SRC plantuml :cache yes :file img/uml/sp-activity.png :exports results
 start
@@ -1377,6 +1378,7 @@ people going to the doctor.
 First we have Sander the INTJ, secondly Susie the ENFP and Chris the ISTP.
 This type selection will give a rough overview of most jungian functions.
 In all cases the patients have the same problem, a back pain.
+However the cause of this problem in all cases is a worn out back.
 
 \toReview
 After the dialogue we will also discuss the motivations for saying things the
