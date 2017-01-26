@@ -341,7 +341,7 @@ and finally we will look at the serious game in its existing form.
  or unpleasant, beautifull or ugly.
  Note that this is /not/ the same as being emotional,
  although you can be emotional and use this function.
- The /irrational functions/ are called this becuase they require no reason.
+ The /irrational functions/ are called this because they require no reason.
  /Sensation/ is sense perception created by the stimulation of the senses,
  it can always be rooted to a sense,
  such as "I see a balloon" or "I feel hungry".
@@ -1362,10 +1362,6 @@ which will block the thread until there is an item in the list.
 
 
 ** Personality influence case study
-\todo[inline]{Doctor could prescribe different treatments and or medicine because patients give different inforamtion based on the information they shared.}
-\todo[inline]{This would signify the importance of personality within the game}
-\todo[inline]{Patient may acutually have a damaged back, and for example the INTJ is there just to score medicine, whereas the ENFP will tell it by accident and get a scan but the ISTP will just start talking about how he worked in construction or something}
-\todo[inline]{Don't know how it would affect the ISTP}
 \toReview
 With the personality theories, AI literature and the serious game discussed
 thoroughly, we can make an expectation of results.
@@ -1421,6 +1417,9 @@ himself probably already had drawn. We could even expect him to ask for the
 medicine immediately,
 however since this could make the doctor question his motives
 (he could be addicted for example) he decides not to do this.
+Doctor however doesn't go into the source of the problem.
+He just assumed the patient overstretched himself because he lifted something
+heavy.
 
 *** Susie the ENFP
 \toReview
@@ -1434,20 +1433,22 @@ enthusiastic about them.
 
 #+CAPTION: Susie in conversation with the doctor
 #+NAME:   tab:sander-conv-doct
-| Who     | what                                                      |
-|---------+-----------------------------------------------------------|
-| Doctor  | Hi                                                        |
-| /Susie/ | /Hello/                                                   |
-| /Susie/ | /How are you today doctor?/                               |
-| Doctor  | I'm good, how can I help you?                             |
-| /Susie/ | /I'm afraid I need some medicine/                         |
-| Doctor  | Medicne? Why do you need that?                            |
-| /Susie/ | /Well, I was watering the plants and all the sudden,/     |
-| /Susie/ | /I got this pain in my back./                             |
-| /Susie/ | /Do you think I'm allergic to plants?/                    |
-| Docotor | Haha, no, perhaps you just lifted the watering can wrong. |
-| Doctor  | I'll subscribe you some pain killers                      |
-| /Susie/ | /Thanks doctor, that surely will help!/                   |
+| Who     | what                                                               |
+|---------+--------------------------------------------------------------------|
+| Doctor  | Hi                                                                 |
+| /Susie/ | /Hello/                                                            |
+| /Susie/ | /How are you today doctor?/                                        |
+| Doctor  | I'm good, how can I help you?                                      |
+| /Susie/ | /I'm afraid I need some medicine/                                  |
+| Doctor  | Medicne? Why do you need that?                                     |
+| /Susie/ | /Well, I was watering the plants and all the sudden,/              |
+| /Susie/ | /I got this pain in my back./                                      |
+| /Susie/ | /Do you think I'm allergic to plants?/                             |
+| Doctor  | Haha, no, I think we need to make a scan of your back.             |
+| Doctor  | Because a watering can is a little to light to get back-pain from. |
+| /Susie/ | /Of course doctor./                                                |
+| Doctor  | Can you go to the hospital next Friday at 13:00?                   |
+| /Susie/ | /Yes, I will go then./                                             |
 
 \toReview
 We can now see a stark difference with the INTJ personality.
@@ -1459,6 +1460,13 @@ this sudden pain,
 without thinking about if it even makes sense that you are all the sudden
 allergic to plants that have been in your home for a while.
 
+\toReview
+The doctor does however come to the conclusion that something is odd about
+getting a back pain from lifting a watering can.
+So because Susie is more talkative the doctor decides to do more tests rather
+than just giving some pain killers.
+
+
 *** Chris the ISTP
 \toReview
 With his ISTP type, Chris has the dominant function of $T_i$ and then the
@@ -1469,18 +1477,22 @@ and $S_e$ uses the senses to gather information.
 
 #+CAPTION: Chris in conversation with the doctor
 #+NAME:   tab:sander-conv-doct
-| Who     | what                                              |
-|---------+---------------------------------------------------|
-| Doctor  | Hi                                                |
-| /Chris/ | /Hello/                                           |
-| Doctor  | How can I help?                                   |
-| /Chris/ | /I have back pain doctor./                        |
-| Doctor  | When did this first occur?                        |
-| /Chris/ | /Well I was watering the plants,/                 |
-| /Chris/ | /Perhaps I put to much water in the watering can/ |
-| Doctor  | Yes, that could be the case.                      |
-| Doctor  | I'll give you some pain killers                   |
-| /Chris/ | /Thanks doctor/                                   |
+| Who     | what                                                              |
+|---------+-------------------------------------------------------------------|
+| Doctor  | Hi                                                                |
+| /Chris/ | /Hello/                                                           |
+| Doctor  | How can I help?                                                   |
+| /Chris/ | /I have back pain doctor./                                        |
+| Doctor  | When did this first occur?                                        |
+| /Chris/ | /Well I was watering the plants,/                                 |
+| /Chris/ | /Perhaps I put to much water in the watering can/                 |
+| Doctor  | Yes, that could be the case.                                      |
+| Doctor  | However I would like to make a scan of your back just to be sure. |
+| /Chris/ | /Can't you just give some pain killers to help me?/               |
+| Doctor  | Yes but that will only work temporary.                            |
+| Doctor  | So let's plan a scan at the hospital next Friday at 13:00?        |
+| Doctor  | I can give you some pain killers meanwhile.                       |
+| /Chris/ | /Okay, thanks doctor/                                             |
 
 \toReview
 So this dialogue looks a lot more like that Sander (INTJ) than that of Susie (ENFP).
@@ -1495,6 +1507,34 @@ The difference with the dialogue of Susie is again quite obvious.
 He didn't took the initiative because his dominant function isn't extroverted,
 and unlike Susie he correctly asserted when the doctor asked about it
 that the object he lifted may have been to heavy.
+
+\toReview
+The conclusion is again different.
+Because one of the main functions of Chris is $S_e$ he wants to deal with the
+pain /now/.
+Therefore he asks the doctor explicitly for pain killers,
+without considering that only the tests could actually solve the problem
+permanently. 
+However the doctor gives in and besides ordering the test also prescribes
+painkillers.
+
+*** Influence of personality
+\toReview
+So we had 3 different doctor appointments all with the same problem but with
+different personalities being at play.
+The end result was three different outcomes for each patient.
+Sander probably will be back next week with the same complaints at the doctor.
+However this time his situation may have worsened.
+Susie will get her problem eventually diagnosed like Chris,
+however Susie won't have access to painkillers meanwhile.
+Which may be uncomfortable to her.
+
+\toReview
+From this case study we can conclude that training doctors to deal with
+different personalities is in fact very desirable because it can allow
+patients to be treated sooner and more effective.
+Sander could have had his problem diagnosed a week earlier and Susie could have
+had access to pain killers.
 
 * BDI and Jung
 <<Jungian BDI>>
