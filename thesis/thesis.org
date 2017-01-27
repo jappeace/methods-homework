@@ -13,7 +13,7 @@
 #+LATEX_HEADER: \usepackage[obeyFinal, colorinlistoftodos]{todonotes}
 #+LATEX_HEADER: \newcommand{\drafting}{\todo[noline, color=gray]{Working draft}}
 #+LATEX_HEADER: \newcommand{\toReview}{\todo[noline, color=yellow]{To review}}
-#+LATEX_HEADER: \newcommand{\newlycleared}{\todo[noline, backgroundcolor=white, bordercolor=red]{Newly cleared}}
+#+LATEX_HEADER: \newcommand{\newlyCleared}{\todo[noline, backgroundcolor=white, bordercolor=red]{Newly cleared}}
 # (something cleared that was under discussion last time)
 #+LATEX_HEADER: \newcommand{\cleared}{\todo[noline, color=white]{Cleared}}
 
@@ -673,7 +673,6 @@ and finally we will look at the serious game in its existing form.
  that of MBTI, and that of SL-TDI can build on that of PPSDQ.
  OCEAN builds on nothing, we'll leave that for future work.
 
- 
 ** Artificial intelligence literature
  # How do I measure that the persnoality created is in fact in complience with
  # the personality I aimed for?
@@ -820,7 +819,7 @@ and finally we will look at the serious game in its existing form.
     participate in the social practice of cycling. This is why this is
     introduced.
 
-\toReview
+\newlyCleared
 In cite:dignum2014contextualized a model of social practices for agents was
 developed.
 This model is extended specifically to allow software agents to use it.
@@ -1360,23 +1359,19 @@ Also note that there is a loop for the getDroolTemplates tag.
 This is because a blocking queue is used,
 which will block the thread until there is an item in the list.
 
-
 ** Personality influence case study
-\toReview
-With the personality theories, AI literature and the serious game discussed
-thoroughly, we can make an expectation of results.
-We want to discuss what would happen if we would give the chat-bot one
-personality over the other.
 
-\toReview
-To analyze this we will make a small case study of several different typed
-people going to the doctor.
+\newlyCleared
+To make the influence of personality more concrete,
+and to get a possible expectation of what the chat bot should be able to do.
+We want to make a scenario of a doctor appointment where each
+patient has different personalities.
 First we have Sander the INTJ, secondly Susie the ENFP and Chris the ISTP.
-This type selection will give a rough overview of most jungian functions.
+This type selection will give a rough usage of most Jungian functions.
 In all cases the patients have the same problem, a back pain.
-However the cause of this problem in all cases is a worn out back.
+The cause of this problem in all cases is a worn out back.
 
-\toReview
+\newlyCleared
 After the dialogue we will also discuss the motivations for saying things the
 way they do.
 This is important since because we are doing AI and not just computer science
@@ -1385,12 +1380,13 @@ subjects.
 
 
 *** Sander the INTJ
-\toReview
-First we should note the dominant and auxiliary functions of the INTJ mbti
-type.
+\newlyCleared
+First we should note the dominant and auxiliary functions of the someone with an
+INTJ mbti type.
 An INTJ has as dominant function introverted intuition $N_i$ and as auxiliary
 thinking extroverted $T_e$.
-We would expect these function to be most dominant in the dialogue.
+We would expect these function to be most obvious in the dialogue
+(as discussed in section [[sec:types]]).
 $N_i$ mainly focuses on connecting ideas and extroverted analyses objects
 in the external world.
 Combined with each other we get a personality that focuses on getting to goals
@@ -1411,10 +1407,10 @@ This results in the expected dialogue which can be seen in table
 | Doctor   | Oh, yes then you need some pain killers for this. |
 | /Sander/ | /Thank you doctor/                                |
 
-\toReview
+\newlyCleared
 Sander gives the doctor the information he needs to come to the conclusion he
-himself probably already had drawn. We could even expect him to ask for the
-medicine immediately,
+himself probably already had drawn.
+We could even expect him to ask for the medicine immediately,
 however since this could make the doctor question his motives
 (he could be addicted for example) he decides not to do this.
 Doctor however doesn't go into the source of the problem.
@@ -1422,7 +1418,7 @@ He just assumed the patient overstretched himself because he lifted something
 heavy.
 
 *** Susie the ENFP
-\toReview
+\newlyCleared
 As an ENFP, Susie has the dominant function of extroverted intuition $N_e$ and
 as auxiliary function of introverted feeling $F_i$.
 Therefore these functions should be most dominant in the dialogue.
@@ -1430,9 +1426,10 @@ $N_e$ focuses on finding possibilities in situations and $F_i$ is a internal
 value based judgement function.
 Combined with each other they make a personality who has strong ideals and is
 enthusiastic about them.
+The expected dialogue can be seen in [[tab:suzie-conv-doct]].
 
 #+CAPTION: Susie in conversation with the doctor
-#+NAME:   tab:sander-conv-doct
+#+NAME:   tab:suzie-conv-doct
 | Who     | what                                                               |
 |---------+--------------------------------------------------------------------|
 | Doctor  | Hi                                                                 |
@@ -1450,7 +1447,7 @@ enthusiastic about them.
 | Doctor  | Can you go to the hospital next Friday at 13:00?                   |
 | /Susie/ | /Yes, I will go then./                                             |
 
-\toReview
+\newlyCleared
 We can now see a stark difference with the INTJ personality.
 First of all being dominated by extroversion it was Susie who took the initiative.
 Secondly she directly asked for medicine, without thinking about the
@@ -1459,24 +1456,21 @@ Then when explaining the situation she jumped to an idea of why she could have
 this sudden pain,
 without thinking about if it even makes sense that you are all the sudden
 allergic to plants that have been in your home for a while.
-
-\toReview
 The doctor does however come to the conclusion that something is odd about
 getting a back pain from lifting a watering can.
 So because Susie is more talkative the doctor decides to do more tests rather
 than just giving some pain killers.
-
-
 *** Chris the ISTP
-\toReview
+\newlyCleared
 With his ISTP type, Chris has the dominant function of $T_i$ and then the
 auxiliary function of $S_e$.
 We therefore would expect these functions to do most of the work in the dialogue.
 $T_i$ uses an internal reasoning structure to make judgments about the world
 and $S_e$ uses the senses to gather information.
+The conversation can be seen in table [[tab:chris-conv-doct]].
 
 #+CAPTION: Chris in conversation with the doctor
-#+NAME:   tab:sander-conv-doct
+#+NAME:   tab:chris-conv-doct
 | Who     | what                                                              |
 |---------+-------------------------------------------------------------------|
 | Doctor  | Hi                                                                |
@@ -1494,7 +1488,7 @@ and $S_e$ uses the senses to gather information.
 | Doctor  | I can give you some pain killers meanwhile.                       |
 | /Chris/ | /Okay, thanks doctor/                                             |
 
-\toReview
+\newlyCleared
 So this dialogue looks a lot more like that Sander (INTJ) than that of Susie (ENFP).
 However the motivation for the responses are quite different than that of Sander.
 Chris hadn't figured out yet that he needed pain killers when he arrived,
@@ -1502,24 +1496,24 @@ since his auxiliary function is $S_e$, he hadn't thought that deep about the
 problem.
 He just knew he was in much pain, and knew the doctor could help with that.
 
-\toReview
+\newlyCleared
 The difference with the dialogue of Susie is again quite obvious.
 He didn't took the initiative because his dominant function isn't extroverted,
 and unlike Susie he correctly asserted when the doctor asked about it
 that the object he lifted may have been to heavy.
 
-\toReview
+\newlyCleared
 The conclusion is again different.
 Because one of the main functions of Chris is $S_e$ he wants to deal with the
 pain /now/.
 Therefore he asks the doctor explicitly for pain killers,
 without considering that only the tests could actually solve the problem
 permanently. 
-However the doctor gives in and besides ordering the test also prescribes
-painkillers.
+However the doctor comes to a middle ground and besides ordering the test also
+prescribes painkillers.
 
 *** Influence of personality
-\toReview
+\newlyCleared
 So we had 3 different doctor appointments all with the same problem but with
 different personalities being at play.
 The end result was three different outcomes for each patient.
@@ -1529,12 +1523,12 @@ Susie will get her problem eventually diagnosed like Chris,
 however Susie won't have access to painkillers meanwhile.
 Which may be uncomfortable to her.
 
-\toReview
+\newlyCleared
 From this case study we can conclude that training doctors to deal with
 different personalities is in fact very desirable because it can allow
 patients to be treated sooner and more effective.
 Sander could have had his problem diagnosed a week earlier and Susie could have
-had access to pain killers.
+had access to pain killers for example.
 
 * BDI and Jung
 <<Jungian BDI>>
@@ -1955,7 +1949,7 @@ To do this we will start analyzing the Jungian functions and see what
 Then we will define the believe tuple more formally.
 
 *** Symbol graph
-\toReview
+\newlyCleared
 To make sure the agent stays on topic we will make use of a symbol graph.
 This graphs gives connections to the symbols described in section [[A type signature approach]].
 For a precise description of the implementation see section [[Symbol graph]].
@@ -2031,7 +2025,7 @@ However we will borrow parts of it.
 Namely whenever a rational function finishing ordering the input set it will
 call the /next/ function to do deliberation on the most preferred item.
 
-\toReview
+\newlyCleared
 Both feeling functions $F$ use the perlocutionary acts to order the children.
 $F_i$ uses a predefined value set $h$: 
 \[ \pi \overset{h}{\to} i \].
@@ -2050,7 +2044,7 @@ soon as possible.
 The thinking functions $T$ do this without paying any attention to
 perlocutionary speech acts.
 
-\toReview
+\newlyCleared
 To start we will describe $T_e$. It sees the problem to solve as the
 conversation itself.
 Therefore it will consistently choose speech acts that could help the partner to
@@ -2234,14 +2228,71 @@ In our case the best candidate for this was the Chat class that contains the
 Chat session.
 We bluntly replace this with an interface and let the Chat class extend that
 interface (see section [[Minor issues]]).
+The new interface is called ChatSession as can be seen in figure [[fig:
 Now we can inject an alternative 'Chat', which will be a simple bot that
 does the string to meaning conversion and inserts it into the drool system,
 then it forks of a little worker that send the reply from the drools.
 
-\todo[inline]{Add image}
+#+BEGIN_SRC plantuml :cache yes :file img/uml/class-substitute.png :exports results
+  interface ChatBotEngine{
+    +String chat(String request)
+    +void setSession(Session session)
+  }
+  class WebsocketService{
+    -ChatBotEngine cbe
+    +void onMessage(Session session, String message)
+    -void chat(Session session, Strin message)
+  }
+  WebsocketService --> ChatBotEngine
 
+ package nl.japppieklooster{
+   package boterinterface{
+     ChatBotFactory ..> ChatSession
+     interface ChatBotFactory{
+        +ChatSession create(String path, String name)
+     }
+     interface ChatSession{
+      +HashMap<String, Object> getPredicates();
+      +String multisentenceRespond(String str)
+      +setKieSession(KieSession kie)
+     }
+   }
+   package ymlbot{
+     ChatBotFactory <|-- YapFactory 
+     ChatSession <|-- YBot 
+     class YapFactory
+     class YBot
+   }
+ }
+  class ChatBotEngineImpl {
+    -KieSession kSession
+    -ChatSession chatSession
+    -Session session
+  }
+  ChatBotEngineImpl --> ChatSession
+  ChatBotEngine <|-- ChatBotEngineImpl
+  package org.kie.api.runtime{
+  KieSession <-- ChatBotEngineImpl
+  class KieSession{
+      +Facthandle insert(Object obj)
+      +void setGlobal(String identifier, Object value)
+  }
+  }
+  package org.alicebot.ab{
+  ChatSession <|- Chat 
+  ChatBotFactory <|-  AliceFactory 
+    class Chat{
+      -HashMap<String, Object> predicates
+    }
+    class AliceFactory
 
-\todo[inline]{New class diagram}
+  }
+#+END_SRC
+#+CAPTION: Class diagram of the server where the aiml bot can be substitued by an alternative
+#+LABEL: fig:class-substitute
+#+RESULTS[b71504ec6f9fccdf79f1f076d51dfcf7041038e2]:
+[[file:img/uml/class-substitute.png]]
+
 \todo[inline]{New message processing activity diagram (see utterance processing)}
 
 * Implementation
@@ -2829,3 +2880,6 @@ Start game and new game could be merged?
 Why are you logging towards the client? This seems like a security hole and a
 possible performance bottleneck.
 
+*** Thesis
++ Add UML references?
++ Add "architecture quality attribute" references?
