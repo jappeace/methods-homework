@@ -40,12 +40,6 @@ read the paper
 difference is because paper implematation is dead and code is alive. please use
 different words to describe this difference.
 
-no servlet in figure 4.
-
-Read paper, push to git.
-Highlight changes in an email.
-
-Appointment at Friday morning.
 * Manuel
 
 ** Knowledge representation
