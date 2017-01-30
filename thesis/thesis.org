@@ -1001,16 +1001,20 @@ and being orderly.
  cite:augello2016social,
  such as following certain protocols (politeness, medical standards), and empathy.  
 
- \cleared
+ \toReview
  There is a difference between the architecture in the published papers and
- the source code received. In cite:augello2016social the judgement of these
- practices was for example encoded within the S-AIML langauge,
- however in the source code AIML has taken a step back
- It is only used for processing and not deliberation
+ the source code received.
+ This is because the source code is actively being worked on, whereas the
+ papers are snapshots of the source code at the time of publishing.
+ An example of such a difference can be seen if we take cite:augello2016social
+ in consideration,
+ the judgement of these practices was for example encoded within the S-AIML
+ langauge, however in the source code AIML has taken a step back.
+ It is only used for text processing and not deliberation
  (which is now being taken over by drools as discussed in [[existing architecture]]).
  We will be using the source code as a guideline in discussing the existing
- work because it is more relevant.
- 
+ work because it is more relevant and constructive.
+
 *** Functionality
     \cleared
  There are two major functionality perspectives to consider,
@@ -1057,7 +1061,7 @@ with help of AIML (see [[Text Processing]]), this basically works trough string
 matching.
 Note that although represented in the abstract architecture as the same module,
 the GUI resides in  the implementation on the client side whereas the dialogue
-module resides on the server.
+module resides on the server. 
 
 \cleared
 The dialogue module calls directly the Representation and interpretation module
@@ -1069,9 +1073,10 @@ Both the 'representation and interpretation' module and the score module use
 drools to do their respective tasks.
 The only real separation in implementation is trough directory and file
 structure, but at runtime there is little distinction.
-The only other oddity is the direct connection between the emotion module and
-the GUI, this is because the emotion module sends directly messages to the GUI
-whilst ignoring all of AIML.
+The only other thing of note is the direct connection between the emotion module
+and the GUI,
+this is because the emotion module sends directly messages to the GUI whilst
+ignoring all of AIML.
 
 *** Application Architecture
 <<existing architecture>>
@@ -1086,11 +1091,11 @@ whilst ignoring all of AIML.
 #+NAME: fig:components
 #+BEGIN_SRC plantuml :cache yes :file img/uml/components.png :exports results
 [Unity Client] <--> Websocket : json
-[Wildfly java servlet (server)] <--> Websocket : json
+[Server] <--> Websocket : json
 #+END_SRC
 #+CAPTION: Component diagram of the application
 #+LABEL: fig:components
-#+RESULTS[0a6819d9f31cce0a72033a77e9723a6a659dcd51]: fig:components
+#+RESULTS[168429880761ad094689ea9c8143ba24e424ca59]: fig:components
 [[file:img/uml/components.png]]
 
 **** Source tree
