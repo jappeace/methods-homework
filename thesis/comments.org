@@ -14,31 +14,6 @@ I'm pretty sure all the stuff I do is written somewhere..
  Could be in Qaulity attributes?
  Could be in head first design patterns?
 
-* Notes'
-
-information state approach = belief.
-
-social practice and agent should be distinct
-
-probelastic matching o meanings??
-probablistic model for the m graph??
-
-where is Bdi + jung used?
-
-Is there Bdi research for dialogue navigation?
-
-dynamic generation of responses with owl?
- 
-link utt & resp w drools?
-
-action = what happened?
-a language that can describe sp.
-
-read the paper
-
-
-difference is because paper implematation is dead and code is alive. please use
-different words to describe this difference.
 
 * Manuel
 
@@ -65,4 +40,34 @@ of it as just a single instance.
 2. Predicates is unsynchronized and since in thoery drools should be able to be
    ran in parrelel, this could cuase future problems, why aren't these just
    inserted as facts?
-3. 
+3.
+4. 
+
+
+** Conversation notes
+
+*** Thesis
+ where is Bdi + jung used?
+    Perhaps I should add a diagram or discuss this explicitely, where the social
+    contexts operates and where the personality operates
+
+ Is there Bdi research for dialogue navigation?
+
+*** Architecture 
+ social practice and agent should be distinct
+
+*** Meaning handling
+ probelastic matching o meanings??
+ probablistic model for the m graph??
+
+ dynamic generation of responses with owl?
+
+ link utt & resp w drools? <-- this will be done by Miguel 
+
+
+*** Other
+ information state approach = belief.
+
+ action = what happened?
+
+ we want a language that can describe sp. (I mean I don't have to work on this right?)
