@@ -13,7 +13,7 @@
 #+LATEX_HEADER: \usepackage[obeyFinal, colorinlistoftodos]{todonotes}
 #+LATEX_HEADER: \newcommand{\drafting}{\todo[noline, color=gray]{Working draft}}
 #+LATEX_HEADER: \newcommand{\toReview}{\todo[noline, color=yellow]{To review}}
-#+LATEX_HEADER: \newcommand{\newlycleared}{\todo[noline, backgroundcolor=white, bordercolor=red]{Newly cleared}}
+#+LATEX_HEADER: \newcommand{\newlyCleared}{\todo[noline, backgroundcolor=white, bordercolor=red]{Newly cleared}}
 # (something cleared that was under discussion last time)
 #+LATEX_HEADER: \newcommand{\cleared}{\todo[noline, color=white]{Cleared}}
 
@@ -42,6 +42,7 @@
 
 #+END_CENTER
 \todo{keywords}
+\todo[inline]{Figures should to be able to be placed in the appendix}
 
 \newpage
 #+TOC: headlines 2
@@ -62,7 +63,7 @@ Therefore a general "communicate!" game was developed.
 Wherein teachers can create scenarios to let their students practice with
 communication cite:jeuring2015demo.
 
-\newlycleared
+\cleared
 This game was script based, the teacher made a scenario and the student would
 follow the choices predefined by the teacher.
 A script based game has of course the weakness that a student can't use
@@ -340,7 +341,7 @@ and finally we will look at the serious game in its existing form.
  or unpleasant, beautifull or ugly.
  Note that this is /not/ the same as being emotional,
  although you can be emotional and use this function.
- The /irrational functions/ are called this becuase they require no reason.
+ The /irrational functions/ are called this because they require no reason.
  /Sensation/ is sense perception created by the stimulation of the senses,
  it can always be rooted to a sense,
  such as "I see a balloon" or "I feel hungry".
@@ -672,7 +673,6 @@ and finally we will look at the serious game in its existing form.
  that of MBTI, and that of SL-TDI can build on that of PPSDQ.
  OCEAN builds on nothing, we'll leave that for future work.
 
- 
 ** Artificial intelligence literature
  # How do I measure that the persnoality created is in fact in complience with
  # the personality I aimed for?
@@ -790,7 +790,7 @@ and finally we will look at the serious game in its existing form.
  \todo[inline]{Perhaps it would be a good idea to sketch commanalities between drools and these kind of things, so that if a reader knows about any of these things he can lay the link easily}
 *** Social practices
  <<social practice>>
- \newlycleared
+ \cleared
  In cite:smolka2001social it is stated that the research in activity theory
  led to the development of social practices.
  It was Karl Marx who made the roots who thought of the "roots" of activity
@@ -804,7 +804,7 @@ and finally we will look at the serious game in its existing form.
  Social practices were therefore introduced to make the notion of activity more
  concrete.
 
- \newlycleared
+ \cleared
  An early adoption of social practice can be found in cite:shove2005consumers,
  where it was used to analyze the spread of Nordic Walking.
  In his analyses he uses the following overarching concepts to analyze the practice:
@@ -819,7 +819,7 @@ and finally we will look at the serious game in its existing form.
     participate in the social practice of cycling. This is why this is
     introduced.
 
-\newlycleared
+\newlyCleared
 In cite:dignum2014contextualized a model of social practices for agents was
 developed.
 This model is extended specifically to allow software agents to use it.
@@ -834,17 +834,22 @@ in nordic waling this can be for example talking with your partner,
 or stopping to get a stone out of your shoe.
 They don't need to all be performed but are there just as options.
 This is the first construct that wasn't covered by the other model.
-/Plan patterns/ apply prequisites and an order to the activities.
-For example you need to first get a stone in your shoe during the walking
-before you can get it out,
-not that getting a stone in your shoe would be part of the plan,
-but the condition of having a stone in your shoe before getting it out is part
-of the plan pattern.
-This construct wasn't represented in the previous model either.
+/Plan patterns/ are blue prints for the eventual plan.
+An example of a doctor appointment plan pattern can be seen in
+figure [[fig:sp-activity]].
+If you go to the doctor the first thing you do is some kind of greeting.
+Then the doctor goes onto data gathering and diagnoses mode until he figured
+out what's wrong.
+After which he will tell in the finishing phase what to do about it.
+Now what these phases entail is not clear at all.
+Finishing may for example contain the prescription of medicine,
+or an appointment to go to the hospital. 
+However plan patterns do not describe such an implementation.
+The plan pattern construct wasn't represented in the previous model either.
 /Meaning/ in this model is soley related to the social effects of activities,
 and finally /Competences/ is the same as in the previous model.
 
- \newlycleared
+ \cleared
  The interest for this model comes from  the potential heuristic use of social
  practices.
  Once in a particular situation that fits for a social practice the amount of
@@ -853,7 +858,7 @@ and finally /Competences/ is the same as in the previous model.
  if no preconditions match an agent could consider trying other social practices
  he knows, or ask its peers for more information.
 
- \newlycleared
+ \cleared
  The social practice theory in this thesis should be considered as a
  /foundation/ rather than a separate element.
  We will be using it as a domain limiting device,
@@ -883,32 +888,25 @@ and finally /Competences/ is the same as in the previous model.
 
 #+NAME: fig:sp-activity
 #+BEGIN_SRC plantuml :cache yes :file img/uml/sp-activity.png :exports results
-|WebSocket|
 start
-:Introduction;
-repeat
+:greeting;
+while (has diagnoses?)
 fork
-:Share information;
-fork again
-:Do diagnostics;
-endfork
-repeat while (Diagnosed problem?)
-if (Can be treated now?) then (yes)
-  :Perform minor treatment;
-else if (Can be treated with drugs?) then (yes)
-  :Prescribe drugs;
-else (no)
-  :Give bad news;
-endif
+:data gathering;
+fork again;
+:diagnoses;
+end fork
+endwhile
+:finishing;
 stop
 #+END_SRC
 #+CAPTION: Plan pattern example
 #+LABEL: fig:sp-activity
-#+RESULTS[989ab68b4d78c83d14903b2658462d71009d62db]: fig:sp-activity
+#+RESULTS[35679ceefcd43b1884cc8c502d27ae59aaa34043]: fig:sp-activity
 [[file:img/uml/sp-activity.png]]
 
 
-  \newlycleared
+  \cleared
   We can imagine personality should have /a/ influence on social practice
   selection and of course plan influence. As far as the authors are aware however,
   there hasn't been any prior work on this subject. But we can speculate for
@@ -916,13 +914,13 @@ stop
   Sensing function would check all artifacts more rigorously than someone
   dominated by an Intuition.
 
-  \newlycleared
+  \cleared
   If the social practices are defined more formally they could be 
   used in a bigger system such as in cite:augello2015social and
   cite:augello2016model.
 *** Speech act theory
 <<Speech act thoery>>
-\newlycleared
+\cleared
 Since a large part of this thesis is about communication we will give here a
 brief overview of speech act theory.
 There are three levels at which speech acts can be analyzed according to
@@ -935,7 +933,7 @@ warning.
 /Perlocutionary/ acts are the acts that bring an effect to the hearer, such as
 scaring or saddening.
 
-\newlycleared
+\cleared
 There are some basic assumptions of conversation, commonly described as the
 /rules of conversation/ developed by Grice cite:shoham2008multiagent_speechact_p241..245.
 Humans communication happens on the assumption that both parties want to be
@@ -1012,7 +1010,7 @@ and being orderly.
  (which is now being taken over by drools as discussed in [[existing architecture]]).
  We will be using the source code as a guideline in discussing the existing
  work because it is more relevant.
-
+ 
 *** Functionality
     \cleared
  There are two major functionality perspectives to consider,
@@ -1042,7 +1040,7 @@ combined with the war.
 It would be difficult to modify these files on a running instance.
 
 *** Abstract architecture
-\newlycleared
+\cleared
 An abstract architecture was already in place and described very well
 by cite:augello2016social. This can be seen in figure [[fig:abstract-architecture]],
 which was directly taken from cite:augello2016social.
@@ -1051,7 +1049,7 @@ which was directly taken from cite:augello2016social.
   #+NAME:   fig:abstract-architecture
   [[./img/abstract-architecture.png]]
   
-\newlycleared
+\cleared
 The interaction module handles user interaction, where the GUI can show the
 dialogue and the mood of the agent.
 The Dialogue module inside it however handles low level string interpretation
@@ -1061,12 +1059,12 @@ Note that although represented in the abstract architecture as the same module,
 the GUI resides in  the implementation on the client side whereas the dialogue
 module resides on the server.
 
-\newlycleared
+\cleared
 The dialogue module calls directly the Representation and interpretation module
 with help of specialized tags (see [[Deliberation]]) information can be inserted in
 the representation and interpretation module.
 
-\newlycleared
+\cleared
 Both the 'representation and interpretation' module and the score module use
 drools to do their respective tasks.
 The only real separation in implementation is trough directory and file
@@ -1301,7 +1299,7 @@ stop
 **** User utterance processing 
 <<user utterance processing>>
 
-\newlycleared
+\cleared
 An important process to describe is the way currently user messages are processed.
 Figure [[fig:utterance-proccesing]] gives an overview of utterance processing.
 
@@ -1350,7 +1348,7 @@ Figure [[fig:utterance-proccesing]] gives an overview of utterance processing.
 #+RESULTS[2be41360a975175f4a0734807235d7983de36beb]: fig:utterance-proccesing
 [[file:img/uml/utterance-proccesing.png]]
 
-\newlycleared
+\cleared
 As can be seen in the diagram the message processing happens inside the Alice
 bot.
 Tags were added to AIML to allow the drool engine to be updated.
@@ -1361,35 +1359,34 @@ Also note that there is a loop for the getDroolTemplates tag.
 This is because a blocking queue is used,
 which will block the thread until there is an item in the list.
 
-
 ** Personality influence case study
-\toReview
-With the personality theories, AI literature and the serious game discussed
-thoroughly, we can make an expectation of results.
-We want to discuss what would happen if we would give the chat-bot one
-personality over the other.
 
-\toReview
-To analyze this we will make a small case study of several different typed
-people going to the doctor.
+\newlyCleared
+To make the influence of personality more concrete,
+and to get a possible expectation of what the chat bot should be able to do.
+We want to make a scenario of a doctor appointment where each
+patient has different personalities.
 First we have Sander the INTJ, secondly Susie the ENFP and Chris the ISTP.
-This type selection will give a rough overview of most jungian functions.
+This type selection will give a rough usage of most Jungian functions.
 In all cases the patients have the same problem, a back pain.
+The cause of this problem in all cases is a worn out back.
 
-\toReview
+\newlyCleared
 After the dialogue we will also discuss the motivations for saying things the
 way they do.
 This is important since because we are doing AI and not just computer science
 we need to have an understanding what is going on in the mind of our test
 subjects.
 
+
 *** Sander the INTJ
-\toReview
-First we should note the dominant and auxiliary functions of the INTJ mbti
-type.
+\newlyCleared
+First we should note the dominant and auxiliary functions of the someone with an
+INTJ mbti type.
 An INTJ has as dominant function introverted intuition $N_i$ and as auxiliary
 thinking extroverted $T_e$.
-We would expect these function to be most dominant in the dialogue.
+We would expect these function to be most obvious in the dialogue
+(as discussed in section [[sec:types]]).
 $N_i$ mainly focuses on connecting ideas and extroverted analyses objects
 in the external world.
 Combined with each other we get a personality that focuses on getting to goals
@@ -1410,15 +1407,18 @@ This results in the expected dialogue which can be seen in table
 | Doctor   | Oh, yes then you need some pain killers for this. |
 | /Sander/ | /Thank you doctor/                                |
 
-\toReview
+\newlyCleared
 Sander gives the doctor the information he needs to come to the conclusion he
-himself probably already had drawn. We could even expect him to ask for the
-medicine immediately,
+himself probably already had drawn.
+We could even expect him to ask for the medicine immediately,
 however since this could make the doctor question his motives
 (he could be addicted for example) he decides not to do this.
+Doctor however doesn't go into the source of the problem.
+He just assumed the patient overstretched himself because he lifted something
+heavy.
 
 *** Susie the ENFP
-\toReview
+\newlyCleared
 As an ENFP, Susie has the dominant function of extroverted intuition $N_e$ and
 as auxiliary function of introverted feeling $F_i$.
 Therefore these functions should be most dominant in the dialogue.
@@ -1426,25 +1426,28 @@ $N_e$ focuses on finding possibilities in situations and $F_i$ is a internal
 value based judgement function.
 Combined with each other they make a personality who has strong ideals and is
 enthusiastic about them.
+The expected dialogue can be seen in [[tab:suzie-conv-doct]].
 
 #+CAPTION: Susie in conversation with the doctor
-#+NAME:   tab:sander-conv-doct
-| Who     | what                                                      |
-|---------+-----------------------------------------------------------|
-| Doctor  | Hi                                                        |
-| /Susie/ | /Hello/                                                   |
-| /Susie/ | /How are you today doctor?/                               |
-| Doctor  | I'm good, how can I help you?                             |
-| /Susie/ | /I'm afraid I need some medicine/                         |
-| Doctor  | Medicne? Why do you need that?                            |
-| /Susie/ | /Well, I was watering the plants and all the sudden,/     |
-| /Susie/ | /I got this pain in my back./                             |
-| /Susie/ | /Do you think I'm allergic to plants?/                    |
-| Docotor | Haha, no, perhaps you just lifted the watering can wrong. |
-| Doctor  | I'll subscribe you some pain killers                      |
-| /Susie/ | /Thanks doctor, that surely will help!/                   |
+#+NAME:   tab:suzie-conv-doct
+| Who     | what                                                               |
+|---------+--------------------------------------------------------------------|
+| Doctor  | Hi                                                                 |
+| /Susie/ | /Hello/                                                            |
+| /Susie/ | /How are you today doctor?/                                        |
+| Doctor  | I'm good, how can I help you?                                      |
+| /Susie/ | /I'm afraid I need some medicine/                                  |
+| Doctor  | Medicne? Why do you need that?                                     |
+| /Susie/ | /Well, I was watering the plants and all the sudden,/              |
+| /Susie/ | /I got this pain in my back./                                      |
+| /Susie/ | /Do you think I'm allergic to plants?/                             |
+| Doctor  | Haha, no, I think we need to make a scan of your back.             |
+| Doctor  | Because a watering can is a little to light to get back-pain from. |
+| /Susie/ | /Of course doctor./                                                |
+| Doctor  | Can you go to the hospital next Friday at 13:00?                   |
+| /Susie/ | /Yes, I will go then./                                             |
 
-\toReview
+\newlyCleared
 We can now see a stark difference with the INTJ personality.
 First of all being dominated by extroversion it was Susie who took the initiative.
 Secondly she directly asked for medicine, without thinking about the
@@ -1453,31 +1456,39 @@ Then when explaining the situation she jumped to an idea of why she could have
 this sudden pain,
 without thinking about if it even makes sense that you are all the sudden
 allergic to plants that have been in your home for a while.
-
+The doctor does however come to the conclusion that something is odd about
+getting a back pain from lifting a watering can.
+So because Susie is more talkative the doctor decides to do more tests rather
+than just giving some pain killers.
 *** Chris the ISTP
-\toReview
+\newlyCleared
 With his ISTP type, Chris has the dominant function of $T_i$ and then the
 auxiliary function of $S_e$.
 We therefore would expect these functions to do most of the work in the dialogue.
 $T_i$ uses an internal reasoning structure to make judgments about the world
 and $S_e$ uses the senses to gather information.
+The conversation can be seen in table [[tab:chris-conv-doct]].
 
 #+CAPTION: Chris in conversation with the doctor
-#+NAME:   tab:sander-conv-doct
-| Who     | what                                              |
-|---------+---------------------------------------------------|
-| Doctor  | Hi                                                |
-| /Chris/ | /Hello/                                           |
-| Doctor  | How can I help?                                   |
-| /Chris/ | /I have back pain doctor./                        |
-| Doctor  | When did this first occur?                        |
-| /Chris/ | /Well I was watering the plants,/                 |
-| /Chris/ | /Perhaps I put to much water in the watering can/ |
-| Doctor  | Yes, that could be the case.                      |
-| Doctor  | I'll give you some pain killers                   |
-| /Chris/ | /Thanks doctor/                                   |
+#+NAME:   tab:chris-conv-doct
+| Who     | what                                                              |
+|---------+-------------------------------------------------------------------|
+| Doctor  | Hi                                                                |
+| /Chris/ | /Hello/                                                           |
+| Doctor  | How can I help?                                                   |
+| /Chris/ | /I have back pain doctor./                                        |
+| Doctor  | When did this first occur?                                        |
+| /Chris/ | /Well I was watering the plants,/                                 |
+| /Chris/ | /Perhaps I put to much water in the watering can/                 |
+| Doctor  | Yes, that could be the case.                                      |
+| Doctor  | However I would like to make a scan of your back just to be sure. |
+| /Chris/ | /Can't you just give some pain killers to help me?/               |
+| Doctor  | Yes but that will only work temporary.                            |
+| Doctor  | So let's plan a scan at the hospital next Friday at 13:00?        |
+| Doctor  | I can give you some pain killers meanwhile.                       |
+| /Chris/ | /Okay, thanks doctor/                                             |
 
-\toReview
+\newlyCleared
 So this dialogue looks a lot more like that Sander (INTJ) than that of Susie (ENFP).
 However the motivation for the responses are quite different than that of Sander.
 Chris hadn't figured out yet that he needed pain killers when he arrived,
@@ -1485,15 +1496,43 @@ since his auxiliary function is $S_e$, he hadn't thought that deep about the
 problem.
 He just knew he was in much pain, and knew the doctor could help with that.
 
-\toReview
+\newlyCleared
 The difference with the dialogue of Susie is again quite obvious.
 He didn't took the initiative because his dominant function isn't extroverted,
 and unlike Susie he correctly asserted when the doctor asked about it
 that the object he lifted may have been to heavy.
 
+\newlyCleared
+The conclusion is again different.
+Because one of the main functions of Chris is $S_e$ he wants to deal with the
+pain /now/.
+Therefore he asks the doctor explicitly for pain killers,
+without considering that only the tests could actually solve the problem
+permanently. 
+However the doctor comes to a middle ground and besides ordering the test also
+prescribes painkillers.
+
+*** Influence of personality
+\newlyCleared
+So we had 3 different doctor appointments all with the same problem but with
+different personalities being at play.
+The end result was three different outcomes for each patient.
+Sander probably will be back next week with the same complaints at the doctor.
+However this time his situation may have worsened.
+Susie will get her problem eventually diagnosed like Chris,
+however Susie won't have access to painkillers meanwhile.
+Which may be uncomfortable to her.
+
+\newlyCleared
+From this case study we can conclude that training doctors to deal with
+different personalities is in fact very desirable because it can allow
+patients to be treated sooner and more effective.
+Sander could have had his problem diagnosed a week earlier and Susie could have
+had access to pain killers for example.
+
 * BDI and Jung
 <<Jungian BDI>>
-\newlycleared
+\cleared
 In this chapter we will consider how to combine Jungian psycology with BDI,
 as was originally done by Campos cite:campos_mabs2009.
 We want to do something similar but using Jungian function attitudes rather than
@@ -1547,7 +1586,7 @@ This is then reduced to the scope of a chatbot in the social practice.
 After this we will look what extra information the function attitudes need
 in an attempt to reduce the amount of possible believes.
 
-\newlycleared
+\cleared
 We will reason about the function attitudes by considering the
 type signature of a pure function that can represent them.
 A Haskell like syntax is used for this.
@@ -1574,7 +1613,7 @@ and return a function $b \to c$, this process is called partial application
 cite:haskellpartialapplication.
 Capital letters indicate sets.
 
-\newlycleared
+\cleared
 We will go from an as broad as possible system (while using BDI) to a
 precise as possible definition, while still being able to satisfy the domain.
 This is desirable because it will restrict the amount of things that can happen
@@ -1588,7 +1627,7 @@ individually.
 To do this we will define some terms, with which we will go from the broadest
 definition possible towards one that just fits the project scope.
 
-\newlycleared
+\cleared
 Let $\mathcal{B}$ denote the set of all
 possible believes and let $B_t$ with $B_t \subseteq \mathcal{B}$ denote the
 believes of an agent at time $t$. 
@@ -1615,7 +1654,7 @@ part of the believe base.
 We marked the $f_a$ arrow, which indicates the deliberation process of the agent,
 so $f_a$ can be any of the function attitudes.
 
-\newlycleared
+\cleared
 This definition is however too general for our domain.
 First of all the set of sensory information can be reduced to a String,
 since this is the information we get from a user.
@@ -1639,7 +1678,7 @@ In the previous version this mapping was entirely done by AIML.
 How this is done in this version will be discussed in the implementation
 section [[From strings to meanings]].
 
-\newlycleared
+\cleared
 So the simplification is now as follows,
 firstly we note that $\mathcal{S} \subset \mathcal{P}$,
 since understanding meaning is a form of sensation.
@@ -1652,7 +1691,7 @@ received a symbol (ie empty set).
 This produces the following type signature:
 \[ B_t \to t \to S_t \overset{f_a}{\to} (B_{t+1}, \Delta_{t+1}) \]
 
-\newlycleared
+\cleared
 We have some believes, time and meaning going in, some deliberation
 going on and a new set of believes and actions going out.
 The new believes can be used for the next iteration.
@@ -1668,7 +1707,7 @@ uttered.
 We also need to mark which agent uttered, therefore we introduce $\Lambda$ as the set
 of all agents, where $a \in \Lambda$.
 
-\newlycleared
+\cleared
 Therefore we introduce $D$ a dialogue tree:
 \[ D = (a, s, [D])\]
 Where $s \in \mathcal{S}$ for the symbol,
@@ -1733,7 +1772,7 @@ response .. D1
 #+RESULTS[65aeceb37d1b58ff03765f9e305358f4f5427bb9]: fig:dialoguetree
 [[file:img/uml/dialoguetree.png]]
 
-\newlycleared
+\cleared
 With this in place we can replace both the $S_t$ and $\Delta_{t+1}$ with the $D_t$ and
 $D_{t+1}$ respectively.
 This is convenient because now we can model function attitudes as processing
@@ -1774,7 +1813,7 @@ the user meaning it can't do its job yet, more on his in this section
 [[Rational and irrational]].
 Therefore we consider another approach.
 
-\newlycleared
+\cleared
 In this approach we will give $f_a$ another argument which is the next $f_a$.
 This looks like the following:
 \[ \left (\overset{next}{B_t \to t \to D_t \to (B_{t+1}, D_{t+1})}\right ) \to B_t \to t \to D_t \overset{f_a}{\to} (B_{t+1}, D_{t+1}) \]
@@ -1835,7 +1874,7 @@ therefore we leave this as an exercise to the reader.
 
 ***  Rational and irrational
 <<Rational and irrational>>
-\newlycleared
+\cleared
 Up till now we modeled the type signature to have a dialogue tree as input and
 output.
 However we have not considered yet how children are generated and how the order
@@ -1848,7 +1887,7 @@ should apply order to the children.
 irrational are about producing information therefore they should produce
 children based.
 
-\newlycleared
+\cleared
 There are however some edge cases to consider when modeling this idea.
 Say the primary function is a rational one.
 It receives a dialogue with just the root node.
@@ -1868,7 +1907,7 @@ However there may be exceptions for example when a rational function is primary.
 It can then use the next function to generate some options, on which it can
 apply an order, after which it will give the next function another chance.
 
-\newlycleared
+\cleared
 This results in the following conceptualized architecture:
 /rational/ functions change the order of possible replies,
 one layer above the leaf layer,
@@ -1891,7 +1930,7 @@ This structure still works with SL-TDI's non alternation.
 
 ** Mapping function attitudes to a process 
 <<Mapping to process>>
-\newlycleared
+\cleared
 Now you may argue at this point we haven't refined our types a lot, since
 the believe structure was defined as "Every possible believe",
 which is basically analogous to "Anything you can think of" or in a Object
@@ -1910,7 +1949,7 @@ To do this we will start analyzing the Jungian functions and see what
 Then we will define the believe tuple more formally.
 
 *** Symbol graph
-\toReview
+\newlyCleared
 To make sure the agent stays on topic we will make use of a symbol graph.
 This graphs gives connections to the symbols described in section [[A type signature approach]].
 For a precise description of the implementation see section [[Symbol graph]].
@@ -1923,7 +1962,7 @@ which is encoded in the edges because its not the meaning that causes these
 but the way you get to those meanings.
 
 *** Irrational
-\newlycleared
+\cleared
 The irrational functions rely heavily on the symbol graph to create new
 children in the dialogue tree.
 This is under the assumption that connections in the symbol graph are always
@@ -1932,14 +1971,14 @@ Please note that all irrational functions need to have an extra argument
 to limit their activities.
 Since considering the entire graph is unrealistic, and unnecessary.
 
-\newlycleared
+\cleared
 In the initial design of what the $S$ and $N$ functions should do
 as algorithm we considered them in the following way.
 $S$ would be analyzing all available options rigorously in a forward chaining
 process, whereas $N$ would do backward chaining, starting at the goal and going
 trough some way points directly to the starting point.
 
-\newlycleared
+\cleared
 This would translate into $S$ going several plies deep into the
 meaning graph before calling the $next$ function and returning the result.
 And if we assume that the $next$ function brings us closer to the goal we can
@@ -1949,7 +1988,7 @@ guarantee that the $next$ function will bring us to the goal, in fact we may get
 stuck in a loop.
 
 # http://personalitycafe.com/cognitive-functions/83205-whats-difference-between-ni-ne.html
-\newlycleared
+\cleared
 We can consider $N_i$ to be a depth first approach. Going several plies deep and
 at each ply consulting the $next$ function which step to take.
 $N_e$ on the other hand just takes the top $x$ of the current dialogue options
@@ -1959,7 +1998,7 @@ This will of course be a much more shallow consideration than $N_i$, but
 much more broad. Which is of course the behavior we are looking for in both
 $N_i$ and $N_e$ (see section [[Jungian types]]).
 
-\newlycleared
+\cleared
 The $S_e$ function just receives all possible connections from the current
 meaning for several plies and then applies the /next/ function on it.
 The $S_i$ however is more conservative and will only pop $x$ random meanings by
@@ -1971,13 +2010,13 @@ Whenever these connections are available they will substitute the random $x$.
 So $S_i$ starts of kind off similar to $S_e$ but builds up over time.
 
 *** Rational
-\newlycleared
+\cleared
 In the current design the rational functions apply order to the children of a
 current dialogue node.
 Then once finished they will call the $next$ function on the most preferred
 child. This is to ensure all function attitudes can do some processing.
 
-\newlycleared
+\cleared
 Please do note that although we have a game tree,
 we're not dealing with a zero sum game.
 Dialogue is cooperative rather than competitive (see section [[Speech act thoery]]).
@@ -1986,7 +2025,7 @@ However we will borrow parts of it.
 Namely whenever a rational function finishing ordering the input set it will
 call the /next/ function to do deliberation on the most preferred item.
 
-\toReview
+\newlyCleared
 Both feeling functions $F$ use the perlocutionary acts to order the children.
 $F_i$ uses a predefined value set $h$: 
 \[ \pi \overset{h}{\to} i \].
@@ -1998,14 +2037,14 @@ This is done by simply keeping track on how many of such speech acts the
 partner uttered and picking the that has been uttered most, if that one is not
 available we move to the next one. This is similar to fictitious play.
 
-\newlycleared
+\cleared
 Normally the $T$ function is about reasoning.
 There is little reasoning to do in our scenario except to get to the goal as
 soon as possible.
 The thinking functions $T$ do this without paying any attention to
 perlocutionary speech acts.
 
-\toReview
+\newlyCleared
 To start we will describe $T_e$. It sees the problem to solve as the
 conversation itself.
 Therefore it will consistently choose speech acts that could help the partner to
@@ -2017,7 +2056,7 @@ The higher the goal is the more priority.
 The information about scenario progression is encoded in the drools itself,
 so this could potentially be acquired by using reflection on the drools.
 
-\newlycleared
+\cleared
 $T_i$ however uses a different strategy. It wants to help the conversation
 partner to analyze the problem according to the partner's own internal
 logic framework
@@ -2028,7 +2067,7 @@ To do this it will sort the child nodes according to as much unique symbols as
 possible.
 
 *** Believes overview
-\newlycleared
+\cleared
 We listed the function attitudes $f_a$ and their required information into
 table [[tab:fa-and-data]]. 
 Therefore $B = (h, [s], G)$, which looks like a relatively small believe base,
@@ -2048,7 +2087,7 @@ except for the incredible amount of information encoded in $G$.
 
 \newpage
 ** Consistency with theory
-\newlycleared
+\cleared
 In this section we will explore if especially INTJ and ENTJ (MBTI) types would
 produce different actions by analyzing when the functions would act.
 We will only look at the first two functions because it is enough:
@@ -2057,7 +2096,7 @@ The first two functions of INTJ are:
 And of ENTJ they are:
 \[ T_e > N_i \]
 
-\newlycleared
+\cleared
 What we would expect is that the $T_e$ and $N_i$ produce different results
 because of the order they are in the sequence.
 So in case of ENTJ if $T_e$ receives an meaning $M_t$ from the user
@@ -2071,19 +2110,23 @@ to it.
 Then it can either return this result or pass it to the /next/ function and
 judge these results again.
 
-\newlycleared
+\cleared
 In any case the main difference is that an INTJ $T_e$ function gets to
 value before the other functions get a chance to do anything. In case of an
 ENTJ it is always just a final judgement.
 
-\newlycleared
+\cleared
 INTJ and INTP are different in attitudes, but have the same order.
 Since attitudes produce a different process by definition
 (see section [[Mapping to process]]),
 we can conclude that they will also behave differently.
 
 * Architectural Changes
-\newlycleared
+\todo[inline]{Figure out cardinality of drool subsystems, how many scoring sub systems how many scenario subsystems}
+\todo[inline]{The case for a scenario subsystem per agent is the following: Each agent could have their own interpretation of the scenario}
+\todo[inline]{Scoring system should almost defenitvly be 1}
+\todo[inline]{We should describe a perfect architecture anyway, and then in the implementation we can describe an actual achitecture if there is a different one}
+\cleared
 This chapter is about how do we fit the algorithms discussed in chapter [[BDI and Jung]]
 into the existing game architecture. 
 So this chapter is best to be seen as glue between chapter [[BDI and Jung]] and
@@ -2098,17 +2141,24 @@ A deployment diagram of the architecture can bee seen in figure
 #+NAME: fig:architecture-concept
 #+BEGIN_SRC plantuml :cache yes :file img/uml/architecture-concept.png :exports results
 
+  folder scene{
+    cloud drools {
+      component score
+      component scenario
+      storage facts
+      scenario -- facts
+      score -- facts
+    }
+  }
+
   folder bot{
-  cloud drools {
+  cloud bot.drools {
     component emotions
-    component scenario
     component personality
-    component score
-    storage facts
-    emotions -- facts
-    scenario -- facts
-    personality -- facts
-    score -- facts
+    storage bot.facts
+    emotions -- bot.facts
+    personality -- bot.facts
+    score -- bot.facts
   }
   database meanings [
     symbols
@@ -2117,20 +2167,21 @@ A deployment diagram of the architecture can bee seen in figure
   ]
   entity filereader
   filereader ..> meanings
-  drools --> meanings
+  bot.drools --> meanings
   }
   node server
   node client
 
-  server --> bot
-  server -(0)- client
+  server "1"-- "1..*" bot
+  server  -- scene
+  server  -(0)- client
 #+END_SRC
 #+CAPTION: Deployment diagram of new architecture, where the dashed arrow means constructs, the solid arrow means uses and the other lines mean itneracts.
 #+LABEL: fig:architecture-concept
-#+RESULTS[bfb3eb88cfd8095269348f4fa1677f4142a78da1]: fig:architecture-concept
+#+RESULTS[6f973e79e5120972bc1a91a0e30be1e753fcb59a]: fig:architecture-concept
 [[file:img/uml/architecture-concept.png]]
 
-\newlycleared
+\cleared
 The biggest difference from the original architecture is the removal of
 distinction between drools and the chatbot.
 In the new architecture we plan to make all information in the files available to
@@ -2148,7 +2199,7 @@ This is confusing for new scenario creators since completely different folders
 have to be accessed to change the strings.
 # This violates the changeability design principle quite heavily and unnecessarily. \todo{cite}
 
-\newlycleared
+\cleared
 In the new architecture we use a file reader to construct the entire
 meaning database into memory and expose them to the drools.
 This allows the drools to utter spontaneous meanings and allows do deliberation
@@ -2161,7 +2212,7 @@ that uses variables to fill in the gap, we get a meaning, which connected to
 other meanings which in turn are also connected.
 We can do deliberation on this because we have one or more meaning /goals/.
 
-\newlycleared
+\cleared
 Another advantage of this change is that its a much more simple architecture.
 Only one place does deliberation rather than two and only one api is used for
 generating responses.
@@ -2177,19 +2228,81 @@ In our case the best candidate for this was the Chat class that contains the
 Chat session.
 We bluntly replace this with an interface and let the Chat class extend that
 interface (see section [[Minor issues]]).
+The new interface is called ChatSession as can be seen in figure [[fig:
 Now we can inject an alternative 'Chat', which will be a simple bot that
 does the string to meaning conversion and inserts it into the drool system,
 then it forks of a little worker that send the reply from the drools.
 
-\todo[inline]{Add image}
+#+BEGIN_SRC plantuml :cache yes :file img/uml/class-substitute.png :exports results
+  interface ChatBotEngine{
+    +String chat(String request)
+    +void setSession(Session session)
+  }
+  class WebsocketService{
+    -ChatBotEngine cbe
+    +void onMessage(Session session, String message)
+    -void chat(Session session, Strin message)
+  }
+  WebsocketService --> ChatBotEngine
+
+ package nl.japppieklooster{
+   package boterinterface{
+     ChatBotFactory ..> ChatSession
+     interface ChatBotFactory{
+        +ChatSession create(String path, String name)
+     }
+     interface ChatSession{
+      +HashMap<String, Object> getPredicates();
+      +String multisentenceRespond(String str)
+      +setKieSession(KieSession kie)
+     }
+   }
+   package ymlbot{
+     ChatBotFactory <|-- YapFactory 
+     ChatSession <|-- YBot 
+     class YapFactory
+     class YBot
+   }
+ }
+  class ChatBotEngineImpl {
+    -KieSession kSession
+    -ChatSession chatSession
+    -Session session
+  }
+  ChatBotEngineImpl --> ChatSession
+  ChatBotEngine <|-- ChatBotEngineImpl
+  package org.kie.api.runtime{
+  KieSession <-- ChatBotEngineImpl
+  class KieSession{
+      +Facthandle insert(Object obj)
+      +void setGlobal(String identifier, Object value)
+  }
+  }
+  package org.alicebot.ab{
+  ChatSession <|- Chat 
+  ChatBotFactory <|-  AliceFactory 
+    class Chat{
+      -HashMap<String, Object> predicates
+    }
+    class AliceFactory
+
+  }
+#+END_SRC
+#+CAPTION: Class diagram of the server where the aiml bot can be substitued by an alternative
+#+LABEL: fig:class-substitute
+#+RESULTS[b71504ec6f9fccdf79f1f076d51dfcf7041038e2]:
+[[file:img/uml/class-substitute.png]]
+
+\todo[inline]{New message processing activity diagram (see utterance processing)}
 
 * Implementation
+
 \drafting
 In this chapter we will be disusing in detail the implementation. ...
 \todo[inline]{describe what can be found in chapter}
 \todo[inline]{describe structure of chapter}
 
-\newlycleared
+\cleared
 Whenever one starts working on an existing software project the first obstacle
 faced is building/executing the project, this is discussed in detail in the
 appendix [[building]].
@@ -2197,6 +2310,7 @@ appendix [[building]].
 \todo[inline]{Proposed Extension, why this extension}
 
 ** From strings to symbol
+\todo{Ask about ontologies!!}
 <<From strings to meanings>>
 \todo[inline]{Can we use ontologies for the meaning part?}
 \toReview
@@ -2562,6 +2676,7 @@ stick to that for active devlopment, but if you just want to have
 a quick look at the server you should use look at section [[inmemorydb]].
 
 **** Mariab setup
+<<Mariadb setup>>
 \cleared
 So first install mariadb (or mysql, they are the same, except mariadb has better
 defaults):
@@ -2682,6 +2797,61 @@ mvn clean in there for good measure.
 \cleared
 There is a python client script for quick debugging, therefore its unnecessary
 to keep unity running (or use at all).
+**** Ubuntu issues
+At some point my laptop crashed and I had to fall back to an ubuntu based
+distribution.
+Installing mysql came with the gotcha, the default root on mysql is only
+accessible from:
+#+BEGIN_SRC sh
+sudo mysql -u root
+#+END_SRC
+I thought I could do this as the normal user but it appears this not the case.
+Also an online forum said that you had to run
+#+BEGIN_SRC sh
+sudo mysql_install_db
+#+END_SRC
+However I think apt handles that for you.
+
+***** utf8 problem
+\toReview
+I got an error:
+"com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Specified key was too long; max key length is 767 bytes"
+This is because it uses an utf8 encoding (see [[http://stackoverflow.com/questions/10748155/specified-key-was-too-long-max-key-length-is-767-bytes][this]]).
+To solve this change the tables to use a smaller utf8 instead.
+In `/etc/mysql/mariadb.conf.d/50-server.cnf` change the variables to
+
+#+BEGIN_SRC
+character-set-server  = latin1                                                            
+collation-server      = latin1_swedish_ci
+#+END_SRC
+
+\toReview
+We also need to modify `/etc/mysql/mariadb.conf.d/50-client.cnf`
+with:
+#+BEGIN_SRC
+default-character-set = latin1
+#+END_SRC
+
+\toReview
+After which we do a restart of the mysqld:
+
+#+BEGIN_SRC sh
+sudo systemctl restart mysql
+#+END_SRC
+\toReview
+Note: make sure to stop your running wildfly instance, otherwise wildfly will keep it alive
+
+\toReview
+Now drop the entire salve database as root, the tables were created with the
+wrong charset so we need to just remove them all.
+#+BEGIN_SRC sh
+mysql -u root -ppassword -e "DROP DATABASE salve;:
+#+END_SRC
+
+\toReview
+Now recreate the database as was done in section [[Mariadb setup]] (alternativly
+logging in as root and pressing arrow up a couple of times should get you the
+right commands).
 
 ** Ideas
 :PROPERTIES:
@@ -2691,6 +2861,7 @@ to keep unity running (or use at all).
 \todo[inline]{Regex mathing as an extension to existing matching}
 \todo[inline]{How to deal with long inputs? I think sentence splitting was mentioned?}
 \todo[inline]{Perhaps we can use argumentation research on top of the graph to figure out more semantics (this statment is attacking that or inquerying this)}
+\todo[inline]{Extracting information from meanings isn't very DRY right now, for example saying how is your foot? Could perhaps be splitup into statusInquery + foot. However I don't know how to do this better right now, perhaps it could be a natural result of dubble matching but we lose the order inforamtion.}
 *** Tooling stuff
 + Protocol buffers could be used for protocol. Its strongly typed and has both
   C# and Java bindings
@@ -2709,3 +2880,6 @@ Start game and new game could be merged?
 Why are you logging towards the client? This seems like a security hole and a
 possible performance bottleneck.
 
+*** Thesis
++ Add UML references?
++ Add "architecture quality attribute" references?
