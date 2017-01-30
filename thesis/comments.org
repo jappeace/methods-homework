@@ -13,3 +13,62 @@ Should I refer to a design practices book (I was thinking head first design patt
 I'm pretty sure all the stuff I do is written somewhere..
  Could be in Qaulity attributes?
  Could be in head first design patterns?
+
+* Notes'
+
+information state approach = belief.
+
+social practice and agent should be distinct
+
+probelastic matching o meanings??
+probablistic model for the m graph??
+
+where is Bdi + jung used?
+
+Is there Bdi research for dialogue navigation?
+
+dynamic generation of responses with owl?
+ 
+link utt & resp w drools?
+
+action = what happened?
+a language that can describe sp.
+
+read the paper
+
+
+difference is because paper implematation is dead and code is alive. please use
+different words to describe this difference.
+
+no servlet in figure 4.
+
+Read paper, push to git.
+Highlight changes in an email.
+
+Appointment at Friday morning.
+* Manuel
+
+** Knowledge representation
+1. Currently drools can't reason on possible responses since there are no
+   connections encoded anywhere.
+2. The perlocutionary respones (emotions etc) should be encoded somewhere
+  (currenty in rules I believe? Maybe can do this with reflection)
+
+** Architecture
+Dignum wants to be able to run multiple agents.
+So perhaps clustering emotions and personality into 1 kie session and
+another kie session for scenario progression and score.
+
+However he also said that maybe even scenario progression should be part of each
+agent, as in they believe they are something while they're not??
+Seems rather complicated to me.
+He also talked about score for each agent? But I thought that if the score
+drools can just have read access to all the facts they can keep track
+of it as just a single instance.
+*** Details
+1. Drools can't use predifined AIML responeses so they have to be encoded inside
+   the drools themselves as strings which is rather messy
+2. Predicates is unsynchronized and since in thoery drools should be able to be
+   ran in parrelel, this could cuase future problems, why aren't these just
+   inserted as facts?
+3. 
