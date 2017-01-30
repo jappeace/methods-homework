@@ -1091,11 +1091,11 @@ ignoring all of AIML.
 #+NAME: fig:components
 #+BEGIN_SRC plantuml :cache yes :file img/uml/components.png :exports results
 [Unity Client] <--> Websocket : json
-[Server] <--> Websocket : json
+[Wildfly Server] <--> Websocket : json
 #+END_SRC
 #+CAPTION: Component diagram of the application
 #+LABEL: fig:components
-#+RESULTS[168429880761ad094689ea9c8143ba24e424ca59]: fig:components
+#+RESULTS[6554c350da9b80944f22f0c6c29686b4608b9b50]: fig:components
 [[file:img/uml/components.png]]
 
 **** Source tree
