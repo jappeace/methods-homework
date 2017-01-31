@@ -40,11 +40,8 @@ of it as just a single instance.
 2. Predicates is unsynchronized and since in thoery drools should be able to be
    ran in parrelel, this could cuase future problems, why aren't these just
    inserted as facts?
-3.
-4. 
 
-
-** Conversation notes
+** Conversation notes <2017-01-30 Mon> 
 
 *** Thesis
  where is Bdi + jung used?
