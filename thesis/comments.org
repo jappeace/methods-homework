@@ -1,21 +1,13 @@
 #+TITLE: questions
 
-Should I treat UML in the background section?
-Because I use that for most diagrams.
-
+* Dignum
 Should I add more diagrams to BDI & Jung? I sortoff don't know about what more to make it?
-
-I didn't add an overview in chapter 3 because it didn't fit in there because its
-to detailed for that chapter.
-I pushed it down to a new chapter instead, is this OK?
-
-Should I refer to a design practices book (I was thinking head first design patterns)? I mean I do most stuff by heart but
-I'm pretty sure all the stuff I do is written somewhere..
- Could be in Qaulity attributes?
- Could be in head first design patterns?
 
 
 * Manuel
+
+  Probablistic generation of next dialogue moves could be combined with moddeling one
+  of the Jungian Irrational functions??
 
 ** Knowledge representation
 1. Currently drools can't reason on possible responses since there are no
@@ -68,3 +60,5 @@ of it as just a single instance.
  action = what happened?
 
  we want a language that can describe sp. (I mean I don't have to work on this right?)
+
+
