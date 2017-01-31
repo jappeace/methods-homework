@@ -1,0 +1,12 @@
+* Paper Info stat approach to dialogue management
+** Shared private distinction.
+Doesn't allow for misscomunication, for example one agent thinking the QUD is
+about are apples green? wheras the other thinks its about are fire trucks fassed
+(when just a topic change occured such confusion should be moddable).
+
+However it would be possible to do this if the shared believes are just
+believed  to be shared, ie each agents has their own believe base of which a
+part is believed to be shared.
+But then there is no reason to make a distinction.
+
+... although they said its just an example. 
