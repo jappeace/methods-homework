@@ -730,7 +730,7 @@ and finally we will look at the serious game in its existing form.
  to implement the specifications written by the theorists.
  In this paper we won't discuss architectures since we work in an existing
  system described in section [[The serious game]].
- Finally there are the /agent langauges/, which ask the question how to write
+ Finally there are the /agent languages/, which ask the question how to write
  agent programs.
  Again this is mostly preditermined for us, but we will give a small overview.
 
@@ -950,10 +950,12 @@ being discussed.
 /Manner/ is about being as brief and clear as possible while avoiding ambiguity
 and being orderly.
 
-*** Dialogue systems
+*** TODO Dialogue systems
 Information state transition
 BDI based.
+
 *** BDI + Personality
+<<BDI + Personality>>
  \cleared
  \todo[inline]{other proposed systems and argue for campos}
  Campos discussed an architecture in which personality emerged not from things
@@ -995,7 +997,7 @@ BDI based.
  This version was based around the idea of a chatbot, in the form of the ALICE
  bot.
  The AIML language was extended to allow emotional reactions of the agent.
- This new langauge was called S-AIML cite:augello2016model. 
+ This new language was called S-AIML cite:augello2016model. 
 
  \cleared
  A specific scenario was created for doctor/patient interaction     
@@ -1012,7 +1014,7 @@ BDI based.
  An example of such a difference can be seen if we take cite:augello2016social
  in consideration,
  the judgement of these practices was for example encoded within the S-AIML
- langauge, however in the source code AIML has taken a step back.
+ language, however in the source code AIML has taken a step back.
  It is only used for text processing and not deliberation
  (which is now being taken over by drools as discussed in [[existing architecture]]).
  We will be using the source code as a guideline in discussing the existing
@@ -1539,6 +1541,11 @@ Sander could have had his problem diagnosed a week earlier and Susie could have
 had access to pain killers for example.
 
 
+** Software engineering literature
+\todo{I guess this one is for if we have extra time}
+Quality attributes of systems \url{https://en.wikipedia.org/wiki/ISO/IEC_9126}
+\todo[inline]{Optionally discuss some of the patterns used}
+
 * BDI and Jung
 <<Jungian BDI>>
 \toReview
@@ -1547,10 +1554,15 @@ This chapter tries to anwser the question,
 In where we imagine personality being a preference towards a process rather
 than a preference towards content.
 We will however not consider yet how to place this in the existing system,
-but will consider how to combine Jungian psycology with BDI,
-as was originally done by Campos cite:campos_mabs2009.
-We want to do something similar but using Jungian function attitudes rather than
-the measured MBTI dimensions.
+but will consider how to combine Jungian psycology with BDI.
+
+** Differences from campos
+\toReview
+Campos cite:campos_mabs2009 first considered how to combine MBTI with BDI.
+His reasoning domain was however in action space, but we still want to use the
+idea that personality is a preference for a process rather than a preference for
+content as discussed in section [[BDI + Personality]].
+However rather than using MBTI dimensions we want to use Jungian functions.
 This is because Jungian function attitudes are the underlying construct of
 MBTI and several other instruments (such as the PPSDQ and SL-TDI).
 
@@ -1600,17 +1612,125 @@ This is then reduced to the scope of a chatbot in the social practice.
 After this we will look what extra information the function attitudes need
 in an attempt to reduce the amount of possible believes.
 
-\cleared
-We will reason about the function attitudes by considering the
-type signature of a pure function that can represent them.
-A Haskell like syntax is used for this.
-We want to have a type signature that can describe the domain, but nothing more.
-Note that a simple function can be infinitely complex because it can have an
-infinite number of arguments and an infinite number of results in a tuple,
-this is of course not desirable (or computationally possible, unless a lazy
-language is used, but we don't have that).
-Finally We will also look at how to convert user utterances to types we can do
-reasoning with.
+** Informal description of Jung + BDI
+\toReview
+Before diving into the type signature approach, or the formal description we
+want to describe it informally.
+Firstly we see the Jungian functions as a unit of processing.
+Information goes in, the function does its processing and then information goes
+out. This is analogous to a mathematical pure function.
+
+\toReview
+From this we used the MBTI idea that these small processing units are in an
+order, this order determines the personality.
+Then what we set out to do in the rest of the chapter is how to model this
+into /types/.
+On the one hand for the functions, but on the other hand for the data used.
+In our case this contains a believe base too.
+Thus what we explored was what information does the believe base need to contain
+for the Jungian functions to do their operations.
+
+*** Type signature explained
+\todo{Should I move this to background? Perhaps I can place it under software engeneering}
+\toReview
+If the reader is familiar with functional languages he can skip this section.
+In this section we explain type signatures, partial application and functions
+as arguments.
+
+\toReview
+Building upon the idea of pure functions we use the concept of /type signature/.
+A type signature can be seen as a restriction on what goes in and what goes out.
+This is analogous to a set
+[fn::Strictly this is wrong, but in the formal description I use sets anyway],
+or even a type as used in programming languages such as Java.
+If you declare a function for example in Java:
+#+BEGIN_SRC java
+  class A{
+      static int func(int a);
+  }
+#+END_SRC
+What you're really saying is that "this function does not accept anything but 
+int, otherwise the computation breaks".
+
+\toReview
+There are some things to keep in mind. First of all, there is a direct
+correlation with how precise description is and the amount of things you can do
+with the type. The more general the type the less you can do with it.
+Secondly a more precise an type allows a /pure function/ to do less different
+things.
+Say you have the following pure function:
+#+BEGIN_SRC java
+  class A{
+      static int func(boolean a);
+  }
+#+END_SRC
+How many different ints can it return? The answer is 2. Note that the function
+can't just create a Random object to generate more entropy since we said it was
+pure. Java can't enforce this, but a language like Haskell does.
+However Java can enforce it on a return type though.
+
+\toReview
+So if we assume we're dealing with pure functions,
+we can reason about possible computations indirectly.
+We will only start looking at what the function attitudes do precisely in
+section [[Mapping to process]].
+
+\toReview
+Another really important feature of functions to keep in mind is that the
+argument of an function can be a function itself.
+This is how we combine Jungian function with each other to create personalities
+in section [[Composing types]].
+This has an analogy in Java for example:
+#+BEGIN_SRC java
+  interface B{
+      int func(boolean a);
+  }
+  class A{
+      static int func(B otherfunc, boolean a);
+  }
+#+END_SRC
+The interface does not specify what behavior it contains, only the type of the
+function. Because Java is object orientated B can be much more then just that
+function, but according to A its just that one function.
+Since we're assuming pure functions however B can only have read only extra  
+information, however this is not enforceable in Java.
+
+\toReview
+Then finally the last technique we use (implicitly) is a process called partial
+application.
+In which we 
+which fill up some arguments of a function to create another function.
+this is why the /next/ arguments in section [[Composing types]] can be other
+function attitudes, because once inserted as argument the next argument of
+themselves has already been satisfied which changed their type signature.
+The first one was a unit however, which is just
+The Java analogy is:
+#+BEGIN_SRC java
+  interface B{
+      int func(boolean a);
+  }
+  class Unit extends B{
+      int func(boolean a){ return 0; }
+  }
+  class A{
+      static int func(B otherfunc, boolean a){ return a ? otherfunc.func(a) : 2; }
+      public static void main(String[] args){
+          final B partiallyAppliedA = new B {
+              @Override
+              int func(boolean a){ return A.func(new Unit(), a); }
+          }
+      }
+  }
+#+END_SRC
+In this we can see that A becomes an B by using Unit as an argument.
+This is done with help of an anonymous class because the Java programming
+language  does not support partial application naively.
+Therefore the type of A has changed in B by partial application.
+
+\toReview
+At this point we can see the Java verbosity really starting to hurt the point.
+This is a major reason why the Haskell syntax is used to explain the type
+signature in detail.
 
 ** A type signature approach
 <<A type signature approach>>
@@ -1777,7 +1897,7 @@ D2 --* D6
 D3 --* D1
 D3 --* D2
 
-note "This node is currenlty \n implicetly selected \n as response \n(because it came first \n in D0 as child)" as response
+note "This node is currenlty \n implicitly selected \n as response \n(because it came first \n in D0 as child)" as response
 response .. D1
 #+END_SRC
 #+CAPTION: Object diagram of an expended dialogue tree. The leafs is where deliberation stopped.
@@ -1810,6 +1930,7 @@ type signature that is less restrictive, but still has the option to use these
 functions for meaning full replies.
 
 *** Composing type dynamics
+<<Composing types>>
 \cleared
 The first thing a commendable programmer may think of when trying to combine
 behavior is of course functional composition.
@@ -2330,7 +2451,7 @@ appendix [[building]].
 \toReview
 The first step is to map the user input which is of type String at time $t$
 into type $S_t$ for meaning at time $t$.
-For this the AIML is used. It can matched, however the langauge has to be
+For this the AIML is used. It can matched, however the language has to be
 modified to not just produce a reaction but instead indicate what the meaning
 is of a reaction.
 We will use an example to illustrate the differences:
@@ -2434,7 +2555,7 @@ This results in a much more terse definition:
 *** using yml
 \toReview
 Now since the above isn't technically valid xml (you can't have multiple root
-nodes) we can use a more terse langauge
+nodes) we can use a more terse language
 such as yml:
 
 #+BEGIN_SRC yml
@@ -2879,7 +3000,7 @@ right commands).
 *** Tooling stuff
 + Protocol buffers could be used for protocol. Its strongly typed and has both
   C# and Java bindings
-+ xml shouldn't be used as a procudual langauge (http://wiki.c2.com/?XmlAbuse)
++ xml shouldn't be used as a procudual language (http://wiki.c2.com/?XmlAbuse)
   its probably better to replace it with yaml https://en.wikipedia.org/wiki/XML#Criticism
   (seriously most of the code of alice bot involvelves mapping xml into objects
   (for which exist libraries https://stackoverflow.com/questions/15881876/mapping-xml-entities-to-java-objects)
