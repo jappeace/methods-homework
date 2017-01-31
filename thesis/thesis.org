@@ -950,6 +950,9 @@ being discussed.
 /Manner/ is about being as brief and clear as possible while avoiding ambiguity
 and being orderly.
 
+*** Dialogue systems
+Information state transition
+BDI based.
 *** BDI + Personality
  \cleared
  \todo[inline]{other proposed systems and argue for campos}
@@ -1401,7 +1404,7 @@ This results in the expected dialogue which can be seen in table
 
 #+CAPTION: Sander in conversation with the doctor
 #+NAME:   tab:sander-conv-doct
-| Who      | what                                              |
+| Who      | Utterance                                         |
 |----------+---------------------------------------------------|
 | Doctor   | Hi                                                |
 | /Sander/ | /Hello/                                           |
@@ -1435,7 +1438,7 @@ The expected dialogue can be seen in [[tab:suzie-conv-doct]].
 
 #+CAPTION: Susie in conversation with the doctor
 #+NAME:   tab:suzie-conv-doct
-| Who     | what                                                               |
+| Who     | Utterance                                                          |
 |---------+--------------------------------------------------------------------|
 | Doctor  | Hi                                                                 |
 | /Susie/ | /Hello/                                                            |
@@ -1476,7 +1479,7 @@ The conversation can be seen in table [[tab:chris-conv-doct]].
 
 #+CAPTION: Chris in conversation with the doctor
 #+NAME:   tab:chris-conv-doct
-| Who     | what                                                              |
+| Who     | Utterance                                                         |
 |---------+-------------------------------------------------------------------|
 | Doctor  | Hi                                                                |
 | /Chris/ | /Hello/                                                           |
@@ -1535,10 +1538,16 @@ patients to be treated sooner and more effective.
 Sander could have had his problem diagnosed a week earlier and Susie could have
 had access to pain killers for example.
 
+
 * BDI and Jung
 <<Jungian BDI>>
-\cleared
-In this chapter we will consider how to combine Jungian psycology with BDI,
+\toReview
+This chapter tries to anwser the question,
+"what is personality from a computationally perspective".
+In where we imagine personality being a preference towards a process rather
+than a preference towards content.
+We will however not consider yet how to place this in the existing system,
+but will consider how to combine Jungian psycology with BDI,
 as was originally done by Campos cite:campos_mabs2009.
 We want to do something similar but using Jungian function attitudes rather than
 the measured MBTI dimensions.
