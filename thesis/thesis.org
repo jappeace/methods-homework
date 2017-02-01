@@ -143,7 +143,6 @@ in which personality will be processed orientated rather than content
 orientated.
 
 * Background
-
 \cleared
 In this chapter we will discuss the work that is the foundation of this thesis.
 First we will look at personality theories developed by psychology.
@@ -950,9 +949,36 @@ being discussed.
 /Manner/ is about being as brief and clear as possible while avoiding ambiguity
 and being orderly.
 
-*** TODO Dialogue systems
-Information state transition
-BDI based.
+*** Dialogue systems
+\toReview
+Dialogue systems are the systems that try to analyze how dialogue works.
+This is a subfield of AI that tries to combinate linguistics with computer
+science.
+
+\toReview
+First of all are of course the chat bot systems. These are mostly reactive
+systems that use pattern matching rules paired with good responses,
+sometimes with conditions to allow for more variety.
+An example of such a system is eliza bot which is described in
+cite:galvao2004persona, where they also added personality with the OCEAN model.
+
+\toReview
+Traum cite:traum2003information describes the information state approach for
+dialogues. 
+The approach traum proposes is modeling:
++ Informal components, which aren't part
+of the model but are just there. This can include domain knowledge for example.
++ Formal representations, which are data structures.
++ Dialogue moves, which entail the set of possible utterances to make.
++ Update rules, that allow or prohibit the taking of certain moves.
++ Update strategy, to decide what rules to apply at a particular point.
+The dialogue is the information state itself cite:walterapproaches.
+
+\toReview
+In cite:wobcke2005bdi a BDI based methodology is proposed to handle dialogue
+between a user and an agent.
+However we want to point out that this solution fits into the rough model traum
+sketched. So we could say its a information state approach too.
 
 *** BDI + Personality
 <<BDI + Personality>>
@@ -1540,98 +1566,15 @@ patients to be treated sooner and more effective.
 Sander could have had his problem diagnosed a week earlier and Susie could have
 had access to pain killers for example.
 
-
 ** Software engineering literature
 \todo{I guess this one is for if we have extra time}
 Quality attributes of systems \url{https://en.wikipedia.org/wiki/ISO/IEC_9126}
 \todo[inline]{Optionally discuss some of the patterns used}
 
-* BDI and Jung
-<<Jungian BDI>>
-\toReview
-This chapter tries to anwser the question,
-"what is personality from a computationally perspective".
-In where we imagine personality being a preference towards a process rather
-than a preference towards content.
-We will however not consider yet how to place this in the existing system,
-but will consider how to combine Jungian psycology with BDI.
-
-** Differences from campos
-\toReview
-Campos cite:campos_mabs2009 first considered how to combine MBTI with BDI.
-His reasoning domain was however in action space, but we still want to use the
-idea that personality is a preference for a process rather than a preference for
-content as discussed in section [[BDI + Personality]].
-However rather than using MBTI dimensions we want to use Jungian functions.
-This is because Jungian function attitudes are the underlying construct of
-MBTI and several other instruments (such as the PPSDQ and SL-TDI).
-
-\cleared
-There are some differences from the theory discussed in [[sec:types]] and Campos'
-process.
-The difference is that in the discussed theory we would translate MBTI to the
-underlying Jungian functions, whereas Campos used the measured dimensions.
-Translating to the functions has some advantages,
-by doing so we are for example not bound to just the MBTI.
-We also get more accurate descriptions of what Jungian functions are,
-Jung described in his work people with that particular function as dominant.
-This is harder to do with the dimensions, because if you take an INTJ type and an
-INTP type the semantics of both the N and T change because of the P/J dimension, 
-as can be seen in their respective order (see [[sec:mbti:order_comparison]]).
-Campos avoids this by ignoring the I/E and J/P dimensions, resulting in a
-simplified theory.
-However we would like to note that it is not an easily extendable simplification.
-Therefore we chose to translate types to orders in Jungian function attitudes,
-something which is already done by MBTI (see [[sec:mbti:order_comparison]]).
-
-\cleared
-Another consideration to make is what are these function attitudes?
-By which I mean what do they represent in computer science terms: progams,
-objects or functions? What should they be?
-Since Jung wasn't much of a mathematician cite:jungonfunctions its just an
-informal definition.
-However we can make a mapping to certain BDI processes
-based upon their description,
-but before that is done we need to make several structural observations.
-
-\cleared
-Firstly functions attitudes are not independent, by which I mean that
-if we have a function attitude $a$, followed by $b$ then the resulting
-behavior is different than $b$ followed by $a$ (see [[sec:mbti:order_comparison]]).
-
-\cleared
-Secondly all functions should be used and their order matters.
-The first function used should be most prevalent.
-This means that we can't just execute all functions and use a do preference
-selection on the result.
-
-\cleared
-We will interpret the Jungian functions attitudes as a mapping from an agents
-believes and senses towards an agent action and new believes.
-This is then reduced to the scope of a chatbot in the social practice.
-After this we will look what extra information the function attitudes need
-in an attempt to reduce the amount of possible believes.
-
-** Informal description of Jung + BDI
-\toReview
-Before diving into the type signature approach, or the formal description we
-want to describe it informally.
-Firstly we see the Jungian functions as a unit of processing.
-Information goes in, the function does its processing and then information goes
-out. This is analogous to a mathematical pure function.
-
-\toReview
-From this we used the MBTI idea that these small processing units are in an
-order, this order determines the personality.
-Then what we set out to do in the rest of the chapter is how to model this
-into /types/.
-On the one hand for the functions, but on the other hand for the data used.
-In our case this contains a believe base too.
-Thus what we explored was what information does the believe base need to contain
-for the Jungian functions to do their operations.
-
-*** Type signature explained
-\todo{Should I move this to background? Perhaps I can place it under software engeneering}
+*** Type signatures
+<<Type signatures explained>>
+\todo[inline]{Perhaps I should add citations?}
+\todo[inline]{Add haskell prototypes as a reference to clearly mark out difference}
 \toReview
 If the reader is familiar with functional languages he can skip this section.
 In this section we explain type signatures, partial application and functions
@@ -1731,6 +1674,89 @@ Therefore the type of A has changed in B by partial application.
 At this point we can see the Java verbosity really starting to hurt the point.
 This is a major reason why the Haskell syntax is used to explain the type
 signature in detail.
+* BDI and Jung
+<<Jungian BDI>>
+\toReview
+This chapter tries to anwser the question,
+"what is personality from a computationally perspective".
+In where we imagine personality being a preference towards a process rather
+than a preference towards content.
+We will however not consider yet how to place this in the existing system,
+but will consider how to combine Jungian psycology with BDI.
+
+** Differences from campos
+\toReview
+Campos cite:campos_mabs2009 first considered how to combine MBTI with BDI.
+His reasoning domain was however in action space, but we still want to use the
+idea that personality is a preference for a process rather than a preference for
+content as discussed in section [[BDI + Personality]].
+However rather than using MBTI dimensions we want to use Jungian functions.
+This is because Jungian function attitudes are the underlying construct of
+MBTI and several other instruments (such as the PPSDQ and SL-TDI).
+
+\cleared
+There are some differences from the theory discussed in [[sec:types]] and Campos'
+process.
+The difference is that in the discussed theory we would translate MBTI to the
+underlying Jungian functions, whereas Campos used the measured dimensions.
+Translating to the functions has some advantages,
+by doing so we are for example not bound to just the MBTI.
+We also get more accurate descriptions of what Jungian functions are,
+Jung described in his work people with that particular function as dominant.
+This is harder to do with the dimensions, because if you take an INTJ type and an
+INTP type the semantics of both the N and T change because of the P/J dimension, 
+as can be seen in their respective order (see [[sec:mbti:order_comparison]]).
+Campos avoids this by ignoring the I/E and J/P dimensions, resulting in a
+simplified theory.
+However we would like to note that it is not an easily extendable simplification.
+Therefore we chose to translate types to orders in Jungian function attitudes,
+something which is already done by MBTI (see [[sec:mbti:order_comparison]]).
+
+\cleared
+Another consideration to make is what are these function attitudes?
+By which I mean what do they represent in computer science terms: programs,
+objects or functions? What should they be?
+Since Jung wasn't much of a mathematician cite:jungonfunctions its just an
+informal definition.
+However we can make a mapping to certain BDI processes
+based upon their description,
+but before that is done we need to make several structural observations.
+
+\cleared
+Firstly functions attitudes are not independent, by which I mean that
+if we have a function attitude $a$, followed by $b$ then the resulting
+behavior is different than $b$ followed by $a$ (see [[sec:mbti:order_comparison]]).
+
+\cleared
+Secondly all functions should be used and their order matters.
+The first function used should be most prevalent.
+This means that we can't just execute all functions and use a do preference
+selection on the result.
+
+\cleared
+We will interpret the Jungian functions attitudes as a mapping from an agents
+believes and senses towards an agent action and new believes.
+This is then reduced to the scope of a chatbot in the social practice.
+After this we will look what extra information the function attitudes need
+in an attempt to reduce the amount of possible believes.
+
+** Informal description of Jung + BDI
+\toReview
+Before diving into the type signature approach, or the formal description we
+want to describe it informally.
+Firstly we see the Jungian functions as a unit of processing.
+Information goes in, the function does its processing and then information goes
+out. This is analogous to a mathematical pure function.
+
+\toReview
+From this we used the MBTI idea that these small processing units are in an
+order, this order determines the eventual personality.
+Then what we set out to do in the rest of the chapter is how to model this
+into /type signatures/ and /types/.
+On the one hand for the functions, but on the other hand for the data used. \todo{wat?}
+In our case this contains a believe base too.
+Thus what we explored was what information does the believe base need to contain
+for the Jungian functions to do their operations.
 
 ** A type signature approach
 <<A type signature approach>>
@@ -1738,7 +1764,7 @@ signature in detail.
 To give a better understanding of the scope of this project we will
 try to come up with a type signature of a pure function that models all the
 function attitudes.
-This is done with a Haskell like syntax (or category theory),
+This is done with a Haskell like syntax (see section [[Type signatures explained]]),
 in which the arrows indicate a function,
 left of the arrow is called a domain and the right side a codomain.
 The domain is also the argument of a function.
@@ -2709,11 +2735,10 @@ attribute to be public in the first place
 \todo[inline]{Discussion, comparison}
 ** Future work
 \todo[inline]{Depending on the successfulness this chapter becomes smaller and more fine grained}
-* Appendix
-** A. References
-:PROPERTIES:
-:UNNUMBERED: t
-:END:
+
+\newpage
+\appendix
+* References
 <<bibliography link>>
 
 bibliographystyle:unsrt
@@ -2721,10 +2746,7 @@ bibliography:refs.bib
 
 
 \newpage
-** B. Building
-:PROPERTIES:
-:UNNUMBERED: t
-:END:
+* Building
 <<building>>
 \cleared
 To build this project two hurdles need to be overcome, because the
@@ -2988,7 +3010,7 @@ Now recreate the database as was done in section [[Mariadb setup]] (alternativly
 logging in as root and pressing arrow up a couple of times should get you the
 right commands).
 
-** Ideas
+* Ideas
 :PROPERTIES:
 :UNNUMBERED: t
 :END:
@@ -3018,3 +3040,4 @@ possible performance bottleneck.
 *** Thesis
 + Add UML references?
 + Add "architecture quality attribute" references?
+
