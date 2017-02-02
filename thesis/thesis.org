@@ -3041,3 +3041,51 @@ possible performance bottleneck.
 + Add UML references?
 + Add "architecture quality attribute" references?
 
+*** YML
+
+**** Choose 
+We could make symlink connections that link to multiple possible response.
+file reason_here
+#+BEGIN_SRC yml 
+choose:
+  + broken_arms
+  + flue
+  + feel_sick
+  + in_pain
+#+END_SRC
+
+Then in the history of facts the reason_here would get the decison made by the
+bot so reason_here(broken_arms) for example.
+So every future reasone_here reference would also be the same reference.
+
+We could even go as far as making this decision on load time.
+
+**** History connections
+Connections can be extended to add before support as a list, where if the match
+specific items  in the history new responses become possible.
+For example:
+
+#+BEGIN_SRC yml 
+connections:
+ from: greeting
+ to:
+   - symbol: greeting
+---
+connections:
+ before: 
+    - greeting
+ from: greeting
+ to:
+   - symbol: status
+---
+connections:
+ before: 
+    - greeting
+    - greeting
+ from: greeting
+ to:
+   - symbol: why_repeat
+ value:
+   - annoyed
+#+END_SRC
+
