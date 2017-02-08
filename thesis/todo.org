@@ -1,0 +1,9 @@
+#+TITLE: todo
+
+1. Make scenes work?
+2. Emotions working again?
+3. Define believe base?
+   1. Perhaps I should export the symbol definitions etc to a different project. Don't know
+4. Define personality functions
+5. Test them out
+6. Report
