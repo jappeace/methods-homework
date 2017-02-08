@@ -2,6 +2,9 @@
 
 * Dignum
 Should I add more diagrams to BDI & Jung? I sortoff don't know about what more to make it?
+I'm not really sure how to continue except for just implementing what I wrote
+in the thesis..
+Should I just ask manuel to look at the code or what?
 
 
 * Manuel

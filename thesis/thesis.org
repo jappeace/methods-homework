@@ -1749,14 +1749,24 @@ Information goes in, the function does its processing and then information goes
 out. This is analogous to a mathematical pure function.
 
 \toReview
-From this we used the MBTI idea that these small processing units are in an
-order, this order determines the eventual personality.
+From this we used the idea which MBTI uses too, that these small processing
+units are in an order,
+this order determines the eventual personality.
 Then what we set out to do in the rest of the chapter is how to model this
 into /type signatures/ and /types/.
 On the one hand for the functions, but on the other hand for the data used. \todo{wat?}
 In our case this contains a believe base too.
 Thus what we explored was what information does the believe base need to contain
 for the Jungian functions to do their operations.
+
+\drafting
+There are several phases in the bot currently
+Firstly we have user message parsing, where we try to figure out what the user
+said.
+Then, secondly there is action generation, where we use the parsed message to
+determine sensible replies.
+After that there is action selection, of which the best action is chosen.
+This action is finally handled by the surrounding system.
 
 ** A type signature approach
 <<A type signature approach>>
@@ -1922,14 +1932,13 @@ D1 --* D5
 D2 --* D6
 D3 --* D1
 D3 --* D2
-
 note "This node is currenlty \n implicitly selected \n as response \n(because it came first \n in D0 as child)" as response
 response .. D1
 #+END_SRC
 #+CAPTION: Object diagram of an expended dialogue tree. The leafs is where deliberation stopped.
 #+LABEL: fig:dialoguetree
 #+ATTR_LATEX: :width 0.5\textwidth
-#+RESULTS[65aeceb37d1b58ff03765f9e305358f4f5427bb9]: fig:dialoguetree
+#+RESULTS[b1afdd5626e9c343e4f16a7779dff1fe3d8acac2]: fig:dialoguetree
 [[file:img/uml/dialoguetree.png]]
 
 \cleared
@@ -2090,6 +2099,7 @@ and didn't have any choices available to decide upon.
 This structure still works with SL-TDI's non alternation.
 
 ** Mapping function attitudes to a process 
+   \todo[inline]{Entire BDI process, every thinking stap should be analyzed and see how personality could have influenced it. Then give arguments why we do it in a particular way. So owl should for example also be considered for knowledge representation}
 <<Mapping to process>>
 \cleared
 Now you may argue at this point we haven't refined our types a lot, since
@@ -2110,6 +2120,7 @@ To do this we will start analyzing the Jungian functions and see what
 Then we will define the believe tuple more formally.
 
 *** Symbol graph
+\todo{Discuss alternatives}
 \newlyCleared
 To make sure the agent stays on topic we will make use of a symbol graph.
 This graphs gives connections to the symbols described in section [[A type signature approach]].
@@ -2123,7 +2134,7 @@ which is encoded in the edges because its not the meaning that causes these
 but the way you get to those meanings.
 
 *** Irrational
-\cleared
+\todo{Discuss alternatives}
 The irrational functions rely heavily on the symbol graph to create new
 children in the dialogue tree.
 This is under the assumption that connections in the symbol graph are always
@@ -2148,6 +2159,7 @@ This of course doesn't allow us to do backward chaining since there is hardly a
 guarantee that the $next$ function will bring us to the goal, in fact we may get
 stuck in a loop.
 
+**** Intuition
 # http://personalitycafe.com/cognitive-functions/83205-whats-difference-between-ni-ne.html
 \cleared
 We can consider $N_i$ to be a depth first approach. Going several plies deep and
@@ -2159,6 +2171,7 @@ This will of course be a much more shallow consideration than $N_i$, but
 much more broad. Which is of course the behavior we are looking for in both
 $N_i$ and $N_e$ (see section [[Jungian types]]).
 
+**** Sensing
 \cleared
 The $S_e$ function just receives all possible connections from the current
 meaning for several plies and then applies the /next/ function on it.
@@ -2171,6 +2184,7 @@ Whenever these connections are available they will substitute the random $x$.
 So $S_i$ starts of kind off similar to $S_e$ but builds up over time.
 
 *** Rational
+\todo{Discuss alternatives}
 \cleared
 In the current design the rational functions apply order to the children of a
 current dialogue node.
@@ -2186,6 +2200,7 @@ However we will borrow parts of it.
 Namely whenever a rational function finishing ordering the input set it will
 call the /next/ function to do deliberation on the most preferred item.
 
+**** Feeling
 \newlyCleared
 Both feeling functions $F$ use the perlocutionary acts to order the children.
 $F_i$ uses a predefined value set $h$: 
@@ -2198,6 +2213,7 @@ This is done by simply keeping track on how many of such speech acts the
 partner uttered and picking the that has been uttered most, if that one is not
 available we move to the next one. This is similar to fictitious play.
 
+**** Thinking
 \cleared
 Normally the $T$ function is about reasoning.
 There is little reasoning to do in our scenario except to get to the goal as
@@ -2287,6 +2303,7 @@ we can conclude that they will also behave differently.
 \todo[inline]{The case for a scenario subsystem per agent is the following: Each agent could have their own interpretation of the scenario}
 \todo[inline]{Scoring system should almost defenitvly be 1}
 \todo[inline]{We should describe a perfect architecture anyway, and then in the implementation we can describe an actual achitecture if there is a different one}
+\todo{Note that splitting up the architecture is something we may do eventually once personality is implemented}
 \cleared
 This chapter is about how do we fit the algorithms discussed in chapter [[BDI and Jung]]
 into the existing game architecture. 
@@ -2736,6 +2753,17 @@ attribute to be public in the first place
 ** Future work
 \todo[inline]{Depending on the successfulness this chapter becomes smaller and more fine grained}
 
+\drafting 
+A possible alterantive is using cite:moschitti2004study, to parse the semantics
+of a sentence. Then a graph can be used to determine how to predicates
+corrolate logically with the arguments being just fill in.
+
+\drafting
+Could consider extending the symbol graph dynamically.
+For example create a new symbol every time you don't know something,
+then ask about it and if the user replies with something you do know connect
+them.
+
 \newpage
 \appendix
 * References
@@ -3019,7 +3047,7 @@ right commands).
 \todo[inline]{How to deal with long inputs? I think sentence splitting was mentioned?}
 \todo[inline]{Perhaps we can use argumentation research on top of the graph to figure out more semantics (this statment is attacking that or inquerying this)}
 \todo[inline]{Extracting information from meanings isn't very DRY right now, for example saying how is your foot? Could perhaps be splitup into statusInquery + foot. However I don't know how to do this better right now, perhaps it could be a natural result of dubble matching but we lose the order inforamtion.}
-*** Tooling stuff
+** Tooling stuff
 + Protocol buffers could be used for protocol. Its strongly typed and has both
   C# and Java bindings
 + xml shouldn't be used as a procudual language (http://wiki.c2.com/?XmlAbuse)
@@ -3027,22 +3055,22 @@ right commands).
   (seriously most of the code of alice bot involvelves mapping xml into objects
   (for which exist libraries https://stackoverflow.com/questions/15881876/mapping-xml-entities-to-java-objects)
   and valiating it, (which can be done by an xsd better anyway)).
-*** Security
+** Security
 + Don't send passwords as plain text over the network.
 + Use SSL.
 + Probably should hire an expert to do an audit.
 
-*** Protocol
+** Protocol
 Start game and new game could be merged?
 Why are you logging towards the client? This seems like a security hole and a
 possible performance bottleneck.
 
-*** Thesis
+** Thesis
 + Add UML references?
 + Add "architecture quality attribute" references?
 
-*** YML
 
+** YML
 **** Choose 
 We could make symlink connections that link to multiple possible response.
 file reason_here
@@ -3060,6 +3088,10 @@ So every future reasone_here reference would also be the same reference.
 
 We could even go as far as making this decision on load time.
 
+**** Replace names by symbol values directly
+Currently string are used for coupling, but we could replace this by the
+symbol values directly.
+I'm sure its possible for connections, less sure for things such as Choosing
 **** History connections
 Connections can be extended to add before support as a list, where if the match
 specific items  in the history new responses become possible.
@@ -3089,3 +3121,9 @@ connections:
    - annoyed
 #+END_SRC
 
+** Rough planning.
+1. Fix the bdi issues.
+2. Finish implementing it
+3. Once finished think about presenting it
+   1. Show how it works with the discussed dialogue in background
+   2. Perhaps implement mulitple scenarios
