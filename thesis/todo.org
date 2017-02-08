@@ -1,9 +1,8 @@
 #+TITLE: todo
 
-1. Make scenes work?
-2. Emotions working again?
-3. Define believe base?
-   1. Perhaps I should export the symbol definitions etc to a different project. Don't know
-4. Define personality functions
+1. First update thesis after comment cause meeting still fresh in memory.
+2. Test the implemented personality stuff.
+3. Figure out how emotions work with that.
+4. Make scenes work?
 5. Test them out
 6. Report
