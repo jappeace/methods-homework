@@ -1,40 +1,15 @@
 #+TITLE: questions
 
 * Dignum
-Should I add more diagrams to BDI & Jung? I sortoff don't know about what more to make it?
-I'm not really sure how to continue except for just implementing what I wrote
-in the thesis..
-Should I just ask manuel to look at the code or what?
 
+I should prepare a demo for next meeting if I can
+I should make sure to update thesis to recent code base so he can see what I'm
+doing.
 
 * Manuel
 
   Probablistic generation of next dialogue moves could be combined with moddeling one
   of the Jungian Irrational functions??
-
-** Knowledge representation
-1. Currently drools can't reason on possible responses since there are no
-   connections encoded anywhere.
-2. The perlocutionary respones (emotions etc) should be encoded somewhere
-  (currenty in rules I believe? Maybe can do this with reflection)
-
-** Architecture
-Dignum wants to be able to run multiple agents.
-So perhaps clustering emotions and personality into 1 kie session and
-another kie session for scenario progression and score.
-
-However he also said that maybe even scenario progression should be part of each
-agent, as in they believe they are something while they're not??
-Seems rather complicated to me.
-He also talked about score for each agent? But I thought that if the score
-drools can just have read access to all the facts they can keep track
-of it as just a single instance.
-*** Details
-1. Drools can't use predifined AIML responeses so they have to be encoded inside
-   the drools themselves as strings which is rather messy
-2. Predicates is unsynchronized and since in thoery drools should be able to be
-   ran in parrelel, this could cuase future problems, why aren't these just
-   inserted as facts?
 
 ** Conversation notes <2017-01-30 Mon> 
 
