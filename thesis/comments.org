@@ -8,6 +8,20 @@ doing.
 
 * Manuel
 
+Pattern matching layer?
++ Want to do this in drools??
+  I was thinking of just a java pre layer that did this with regexes,
+  because regexes are made for this stuff.
+
+Shouldn't the utterance be immutable?
++ Has nice properties such as
+  + threadsafety.
+  + referential transparantie (its obvious where changes are made)
++ changed copies can still be made.
+
+How about social practices?
++ Should an exact order be imposed?
+
   Probablistic generation of next dialogue moves could be combined with moddeling one
   of the Jungian Irrational functions??
 
@@ -40,3 +54,10 @@ doing.
  we want a language that can describe sp. (I mean I don't have to work on this right?)
 
 
+
+** Conversation notes <2017-02-15 wo>
+
+Move process personality to drools. In a drools personality package.
+(perhaps meanwhile move patternmatching into chatbotengineimpl)
+Move to the master branch.
+Move pattern matching in drools. 
