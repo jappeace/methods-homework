@@ -1,8 +1,16 @@
 #+TITLE: todo
 
-1. First update thesis after comment cause meeting still fresh in memory.
-2. Test the implemented personality stuff.
-3. Figure out how emotions work with that.
-4. Make scenes work?
-5. Test them out
-6. Report
+1. Update documentation
+2. Print it out
+3. Prepare a presentation?
+4. Make unit tests to ensure jungian functions behave
+5. Implement the other functions
+6. Better representation for actors
+7. Better representation for scenes
+   (currently they're just strings with no
+   structure, except an invasive social practice linked list that's one to one,
+   one way. This hardly looks like what I read about them)
+8. Figure out how emotions work with that.
+9. Make scenes work?
+10. Test them out
+11. Report
