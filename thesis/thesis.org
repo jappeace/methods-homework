@@ -2177,7 +2177,7 @@ We think at this point making those steps are to big and probably simply will
 result into failure.
 However the symbol graph provides a good middle ground,
 in which its relatively easy to implement but offers enough freedom to encode
-personality in as a process.
+personality in as a process. \todo{say this idea is similiar to information state transitions??}
 
 
 *** Irrational
@@ -3201,3 +3201,8 @@ connections:
 3. Once finished think about presenting it
    1. Show how it works with the discussed dialogue in background
    2. Perhaps implement mulitple scenarios
+
+** Extra
+Replace java.util.logger* with slfj
+Repalce all std.out with propper logging calls
+  (not that it matters as long as java.util is used)
