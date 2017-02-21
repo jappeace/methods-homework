@@ -5,6 +5,16 @@
 ** Questions
 
 Wasn't there some kind of mid term grade?
+Ik had eerst het idee om de AIML bot the vervangen door een andere implementatie,
+de yml bot.
+Alleen manuel dacht dat ik helemaal van het idee chatbot af wou.
+dus hij had de hele aimlbot verwijdered en de code dusdanig aangepast dat het
+er niet meer tussen past.
+Nu is dat opzich niet zo erg omdat de bot die ik verzonnen had alle informatie 
+al in de drools zette en het de drools liet afhandelen.
+Mijn vraag is nu, ik heb een subhoofdstuk in "Architectual Changes" genaamt
+Substitute AIML bot. Wat moet ik daar nu mee
+(dit hele concept bestaat in principe niet meer).
 
 * Manuel
 
