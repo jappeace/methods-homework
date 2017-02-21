@@ -1796,7 +1796,7 @@ The opportunity for personality exists in practically all phases.
 In the first phase for example we can do filtering based on the type of
 messages received.
 For example Thinking based personality may filter the message "how are you" as
-an inquery based on "how is your disease?", or "why are you here?".
+an inquiry based on "how is your disease?", or "why are you here?".
 Whereas a feeling based personality may retrieve a different meaning,
 as in "how are you doing in live generally"?
 We chose to not do such kind of personality based filtering because it
@@ -1951,7 +1951,7 @@ s = "Greeting"
 }
 object D5{
 a = "doctor"
-s = "StatusInquery"
+s = "StatusInquiry"
 [D] = []
 }
 object D4{
@@ -1978,7 +1978,7 @@ response .. D1
 #+CAPTION: Object diagram of an expended dialogue tree. The leafs is where deliberation stopped.
 #+LABEL: fig:dialoguetree
 #+ATTR_LATEX: :width 0.5\textwidth
-#+RESULTS[b1afdd5626e9c343e4f16a7779dff1fe3d8acac2]: fig:dialoguetree
+#+RESULTS[1f1f673a8fc69adbde74aa1a7aeb115abfb4b09a]: fig:dialoguetree
 [[file:img/uml/dialoguetree.png]]
 
 \cleared
@@ -2287,7 +2287,7 @@ call the /next/ function to do deliberation on the most preferred item.
 \newlyCleared
 Initially we wanted to create two lookup tables for both feeling functions one.
 However this would be confusing to configure,
-the 'teacher' would need to decide which values are "external" and which are
+the scenario creator would need to decide which values are "external" and which are
 "internal".
 Campos however modeled feeling as a prediction of what the other agents will
 do.
@@ -2348,10 +2348,11 @@ To do this it will sort the child nodes according to as much unique symbols as
 possible.
 
 *** Believes overview
+<<Believes overview>>
 \cleared
 We listed the function attitudes $f_a$ and their required information into
 table [[tab:fa-and-data]]. 
-Therefore $B = (h, [s], G)$, which looks like a relatively small believe base,
+Therefore $B = (h, [s], m, G)$, which looks like a relatively small believe base,
 except for the incredible amount of information encoded in $G$.
 
 #+CAPTION: function attitudes and their required data
@@ -2420,6 +2421,7 @@ Note that we want to keep as much of the existing architecture as possible.
 A deployment diagram of the architecture can bee seen in figure
 [[fig:architecture-concept]].
 
+\todo[inline]{Social pracitices are currently not properly represented (or are they scene?)}
 #+NAME: fig:architecture-concept
 #+BEGIN_SRC plantuml :cache yes :file img/uml/architecture-concept.png :exports results
 
@@ -2443,7 +2445,7 @@ A deployment diagram of the architecture can bee seen in figure
     score -- bot.facts
   }
   database meanings [
-    symbols
+    patterns
     ====
     symbol graph
   ]
@@ -2460,7 +2462,7 @@ A deployment diagram of the architecture can bee seen in figure
 #+END_SRC
 #+CAPTION: Deployment diagram of new architecture, where the dashed arrow means constructs, the solid arrow means uses and the other lines mean itneracts.
 #+LABEL: fig:architecture-concept
-#+RESULTS[6f973e79e5120972bc1a91a0e30be1e753fcb59a]: fig:architecture-concept
+#+RESULTS[7c0107f4991bb78b6c01444660ee18dafcfe970e]: fig:architecture-concept
 [[file:img/uml/architecture-concept.png]]
 
 \cleared
@@ -2474,7 +2476,7 @@ As can be see in section [[user utterance processing]],
 the reply for a message is already determined before drools had a chance to
 do deliberation.
 Even worse, if the drools want to utter a spontaneous meaning they have to encode
-a string inside the drools.
+a string inside the drools themselves.
 This means the strings facing the user are spread over both the AIML files
 *and* the drools.
 This is confusing for new scenario creators since completely different folders
@@ -2500,7 +2502,8 @@ Only one place does deliberation rather than two and only one api is used for
 generating responses.
 
 ** Substitute AIML bot 
-\toReview
+\todo[inline]{We no longer do this, the entire bot idea has been removed}
+\newlyCleared
 Because we are replacing a rather huge project on which quite a lot of legacy
 code depends we don't want to just throw it away.
 Instead we will be using a trick called a strategy pattern.
@@ -2577,10 +2580,64 @@ then it forks of a little worker that send the reply from the drools.
 
 \todo[inline]{New message processing activity diagram (see utterance processing)}
 
-* Implementation
+** Life cycle
+There are three main life cycle phases of the program. Initialization,
+Operation, and cleaning up.
+In the initialization phase the websocket is opened and the knowledge is loaded
+into memory, we will talk about this more in section [[Data structures]].
+Operation consists of pattern matching.
+Cleaning up involves closing the websocket and shutting down the KIE session.
+The life cycle itself hasn't changed, just what happens in the life cycle.
 
+** Data structures
 \drafting
-In this chapter we will be disusing in detail the implementation. ...
+<<Data structures>>
+There are 4 main datastructures, however one is forgotton once the
+initialization phase has been completed.
+*** Believes
+\drafting
+We have already quite extensively talked about believes in section
+[[Believes overview]] for example.
+*** Symbol database
+\drafting
+The symbol database is the data structure that is forgotten once construction is
+complete.
+This may seem strange, but it is important to keep in mind that this database
+only refers to symbols by file path.
+The symbols themselves aren't forgotten, just these file paths.
+This database is extensively used during the initialization phase to construct
+both the pattern database and the connection database.
+After the initialization phase the pattern and connection databases both never
+change.
+This is enforced (unless reflection is used to break open private fields)
+
+*** Pattern Database
+\drafting
+The pattern database is a database of pattern lists. These patterns are tied
+to the relevant symbols.
+The lists are tied to scene names. If the active scene does not contain any
+relevant pattern, the other scenes are searched.
+There could be a possible extension where the connected scenes get searched
+first.
+the user utterence gets inserted all associated symbols of the matched patterns
+get inserted as a parsed utterence.
+
+*** Connection database
+\drafting
+With the parsed utterence the connection database can doe actuall deliberation.
+Because this database has as key symbols and as values a list of connections
+which have to field that go to symbols.
+On this game tree deliberation can occur as described in section
+[[Mapping to process]].
+
+* Implementation
+\drafting
+In this chapter we will be disusing in detail the implementation.
+This will include a new representation of the dialogue knowledge.
+Then we will also described how the BDI+Jung chapter came from a theoretical
+construct into realization.
+After this we will show how we tested them to make sure they work properly.
+
 \todo[inline]{describe what can be found in chapter}
 \todo[inline]{describe structure of chapter}
 
@@ -2591,18 +2648,20 @@ appendix [[building]].
 
 \todo[inline]{Proposed Extension, why this extension}
 
-** From strings to symbol
+** Pattern matching
 # Note taht such descriptions are good, show how it was in the old system and
 # the thought process towards the new system, so do more of it like this
-\todo{Ask about ontologies!!}
 <<From strings to meanings>>
-\todo[inline]{Can we use ontologies for the meaning part?}
-\toReview
+\newlyCleared
 The first step is to map the user input which is of type String at time $t$
-into type $S_t$ for meaning at time $t$.
+into type $S_t$ for symbol at time $t$.
 For this the AIML is used. It can matched, however the language has to be
-modified to not just produce a reaction but instead indicate what the meaning
+modified to not just produce a reaction but instead indicate what the symbol 
 is of a reaction.
+This change will loosen the connection between a pattern and a response.
+In other words, it will create some more "space" to do actual deliberation.
+We will discuss later in this chapter how we retain plausible conversation
+connections.
 We will use an example to illustrate the differences:
 
 #+BEGIN_SRC xml
@@ -2633,31 +2692,31 @@ So the modification would now look like:
 		  <pattern>
 			  How are you
 		  </pattern>
-		  <meaning>
-            StatusInquery
-		  </meaning>
+		  <symbol>
+            StatusInquiry
+		  </symbol>
 	  </category>
 	  <category>
 		  <pattern>
 			  How * you
 		  </pattern>
-		  <meaning>
-            StatusInquery
-		  </meaning>
+		  <symbol>
+            StatusInquiry
+		  </symbol>
 	  </category>
   </aiml>
 #+END_SRC
 
-\toReview
+\newlyCleared
 These changes loose reactive nature of the chatbot,
 rather than saying how to reply directly to certain kind of responses we just
 say what they mean in this social context.
 
-*** Meaning to string
-\toReview
-But now what if the agent wants to do a status inquery, well the string
-into a status inquery is already available, we just need to separate the literal
-strings from the catch all patterns:
+*** Symbol to string
+\newlyCleared
+But now what if the agent wants to do a status inquiry,
+well the string into a status inquiry is already available,
+we just need to separate the literal strings from the catch all patterns:
 
 #+BEGIN_SRC xml
   <aiml>
@@ -2669,15 +2728,15 @@ strings from the catch all patterns:
 			  <pattern>How * you</pattern>
 			  <pattern>How are you *</pattern>
 		  </patterns>
-		  <meaning>
-            StatusInquery
-		  </meaning>
+		  <symbol>
+            StatusInquiry
+		  </symbol>
 	  </category>
   </aiml>
 #+END_SRC
 
 \toReview
-If the agent wants to do a status inquery it will use the literal,
+If the agent wants to do a status inquiry it will use the literal,
 if a user string needs to be converted to a meaning we first look at all
 available literals and then we start with the patterns.
 So if the agent wants to reply to this it will use its personality
@@ -2733,6 +2792,48 @@ also a lot more difficult to learn. Therefore both methods will be supported.
 \todo[inline]{If we have time we can compare information per character between the new and old method, going from 251 to 131 is quite an improvement}
 # https://developer.jboss.org/wiki/FunctionalProgrammingInDrools
 
+*** Re-adding connections
+\drafting
+Originally we had the idea to re-add the connections in the following way:
+
+#+BEGIN_SRC yml
+literal: How are you
+to:
+  - reply_good
+  - reply_bad
+  - ask_mediine
+#+END_SRC
+
+where the items in to linked to other symbol files. 
+However we later decided to group all connections of a particular scene into 
+a single file.
+There were two reasons for this, the first one is that we quickly found out
+that connections are much more complex than simple one directional links.
+They for example also need to contain perlocutionary values and a mark for 
+which agent can access the connection (default being all agents).
+The second reason was more incedental, it turns out that if you group all
+connections into a single file you can get a quick glance of which connections
+are made.
+Take as an example the following file:
+#+BEGIN_SRC yml
+from:
+ - ask_reason_here
+to:
+ - restricted_to: patient
+   symbol: need_medicine
+ - restricted_to: patient
+   symbol: broken_arms
+ - restricted_to: patient
+   symbol: feel_sick
+---
+from:
+ - need_medicine
+to:
+ - restricted_to: doctor
+   symbol: why_need
+#+END_SRC
+
+
 ** Symbol graph
 <<Symbol graph>>
 \drafting
@@ -2772,7 +2873,7 @@ acts (see section [[Speech act thoery]]).
 \drafting
 For example if we go from:
 
-\[ M(Greeting) \to M(StatusInquery) : F(Pleased) \]
+\[ M(Greeting) \to M(StatusInquiry) : F(Pleased) \]
 
 \drafting
 If this path is walked by the user the bot will be pleased, however if the bot
@@ -2782,7 +2883,7 @@ out.
 We can elaborate this further by adding protocols that are expected into the
 edges:
 
-\[ M(StatusInquery) \to M(HealthProblemAsked) : F(Neutral), P(HealthAsked) \]
+\[ M(StatusInquiry) \to M(HealthProblemAsked) : F(Neutral), P(HealthAsked) \]
 
 \drafting
 If the user deviates from the meaning graph we can just use a default F
@@ -2889,7 +2990,7 @@ In this appendix we will record how the application can be build.
 It may seem trivial but the Java EE world is incredibly complex.
 We assume a unix-like operating system with a package manager.
 
-*** Client
+** Client
 \cleared
 The client is relatively easy too setup since its build with a
 monolithic environment.
@@ -2899,7 +3000,7 @@ import that produced build errors.
 Also note that there exists a Linux editor,
 its just not officially supported (yet) but the latest version can be found [[https://forum.unity3d.com/threads/unity-on-linux-release-notes-and-known-issues.350256/][here.]]
 
-*** Server
+** Server
 \cleared
 The server runs on Java, therefore the first step is to install Java.
 In our case java 8 was used. If your system uses portage you can use the
@@ -2909,7 +3010,7 @@ following command:
    # emerge dev-java/oracle-jdk-bin
 #+END_SRC
 
-**** Maven
+*** Maven
 \cleared
 Then maven needs to be installed since gradle didn't work ([[Gradle attempt]]):
 
@@ -2941,7 +3042,7 @@ To use this binary, we need an application server.
 Our maven repository and code base has been configured towards /wildfly/,
 so we will use that.
 
-***** Gradle attempt
+**** Gradle attempt
 <<Gradle attempt>>
 \cleared
 it was attempted to replace maven with gradle, since its a lot less verbose
@@ -2949,14 +3050,14 @@ than maven and easier to setup however doesn't have the picketlink extension
 which wildfly requires.
 Therefore gradle was abandoned and the maven tool was used instead.
 
-**** Get wildfly
+*** Get wildfly
 \cleared
 Download wildfly from [[http://wildfly.org/downloads/][here]], choose the full web distribution
 (if you choose the servlet one you'll run into trouble since it doesn't have the
 datasource subsystem, it took about two days to figure that out).
 Extract this download somewhere which we will call hence forth $WILDFLY.
 
-**** Setup datasource
+*** Setup datasource
 \cleared
 Now its time to configure the persistent datasource.
 The code base can handle sessions,
@@ -2966,7 +3067,7 @@ Mariadb is what the online application uses and its probably better to
 stick to that for active devlopment, but if you just want to have
 a quick look at the server you should use look at section [[inmemorydb]].
 
-**** Mariab setup
+*** Mariab setup
 <<Mariadb setup>>
 \cleared
 So first install mariadb (or mysql, they are the same, except mariadb has better
@@ -2983,7 +3084,7 @@ Then we need to setup the user and database:
     IDENTIFIED BY 'salve';
 #+END_SRC
 
-**** Mariadb driver
+*** Mariadb driver
 \cleared
 Now we need to make the application server aware of the database.
 To do this we first need to install a driver from here [[http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.33/mysql-connector-java-5.1.33.jar][here]],
@@ -3003,7 +3104,7 @@ Also create another file called \url{module.xml} with the following content:
 </module>
 #+END_SRC
 
-**** Wildfly datasource
+*** Wildfly datasource
 \cleared
 Now the /driver/ is installed we need to configure it as a datasource.
 To do this we move to \url{$WILDFLY/bin}.
@@ -3027,7 +3128,7 @@ now click: next \to detect driver \to mysql.
 The url should be \url{jdbc:mysql://localhost:3306/salve}, the username and pass
 should both be salve, now click next \to finish.
 
-**** Deploying
+*** Deploying
 \cleared
 first go to the \url{communicate2/communicate/communicate_server} folder.
 Then to deploy the application the following command is used:
@@ -3044,7 +3145,7 @@ internet it can help to go to the root folder and execute:
  $ mvn compile
 #+END_SRC
 
-**** Alternative: in memory db
+*** Alternative: in memory db
 \cleared
 <<inmemorydb>>
 Now there is a choice to be made, you can either choose to use maria db
@@ -3075,20 +3176,7 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
   </persistence>
 #+END_SRC
 
-*** Notes
-\cleared
-If you're located in the communicate_server folder, The rebuild everything
-command is:
-#+BEGIN_SRC sh
-rm -R ~/.m2/repository/cnruithof; (cd ../ && mvn clean && mvn install) && mvn wildfly:deploy
-#+END_SRC
-This will re-install the entire project thereby also rebuilding all dependencies.
-mvn clean in there for good measure.
-
-\cleared
-There is a python client script for quick debugging, therefore its unnecessary
-to keep unity running (or use at all).
-**** Ubuntu issues
+** Ubuntu issues
 At some point my laptop crashed and I had to fall back to an ubuntu based
 distribution.
 Installing mysql came with the gotcha, the default root on mysql is only
@@ -3103,11 +3191,14 @@ sudo mysql_install_db
 #+END_SRC
 However I think apt handles that for you.
 
-***** utf8 problem
-\toReview
-I got an error:
-"com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Specified key was too long; max key length is 767 bytes"
-This is because it uses an utf8 encoding (see [[http://stackoverflow.com/questions/10748155/specified-key-was-too-long-max-key-length-is-767-bytes][this]]).
+**** utf8 problem
+\newlyCleared
+I got an error: \\ 
+#+BEGIN_SRC
+com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException:
+  Specified key was too long; max key length is 767 bytes
+#+END_SRC
+This is because it uses an utf8 encoding (see [[http://stackoverflow.com/questions/10748155/specified-key-was-too-long-max-key-length-is-767-bytes][this website]]).
 To solve this change the tables to use a smaller utf8 instead.
 In `/etc/mysql/mariadb.conf.d/50-server.cnf` change the variables to
 
@@ -3116,34 +3207,48 @@ character-set-server  = latin1
 collation-server      = latin1_swedish_ci
 #+END_SRC
 
-\toReview
+\newlyCleared
 We also need to modify `/etc/mysql/mariadb.conf.d/50-client.cnf`
 with:
 #+BEGIN_SRC
 default-character-set = latin1
 #+END_SRC
 
-\toReview
+\newlyCleared
 After which we do a restart of the mysqld:
 
 #+BEGIN_SRC sh
 sudo systemctl restart mysql
 #+END_SRC
-\toReview
+\newlyCleared
 Note: make sure to stop your running wildfly instance, otherwise wildfly will keep it alive
 
-\toReview
+\newlyCleared
 Now drop the entire salve database as root, the tables were created with the
 wrong charset so we need to just remove them all.
 #+BEGIN_SRC sh
 mysql -u root -ppassword -e "DROP DATABASE salve;:
 #+END_SRC
 
-\toReview
+\newlyCleared
 Now recreate the database as was done in section [[Mariadb setup]] (alternativly
 logging in as root and pressing arrow up a couple of times should get you the
 right commands).
 
+** Notes
+\cleared
+If you're located in the communicate_server folder, The rebuild everything
+command is:
+#+BEGIN_SRC sh
+rm -R ~/.m2/repository/cnruithof; (cd ../ && mvn clean && mvn install) && mvn wildfly:deploy
+#+END_SRC
+There is also a shell script "rebuild.sh".
+This will re-install the entire project thereby also rebuilding all dependencies.
+mvn clean in there for good measure.
+
+\cleared
+There is a python client script for quick debugging, therefore its unnecessary
+to keep unity running (or use at all).
 * Ideas
 :PROPERTIES:
 :UNNUMBERED: t
@@ -3151,8 +3256,8 @@ right commands).
 \todo[inline]{To circumvent typing errors of users we can put input trough a spell checker taking the first correction}
 \todo[inline]{Regex mathing as an extension to existing matching}
 \todo[inline]{How to deal with long inputs? I think sentence splitting was mentioned?}
-\todo[inline]{Perhaps we can use argumentation research on top of the graph to figure out more semantics (this statment is attacking that or inquerying this)}
-\todo[inline]{Extracting information from meanings isn't very DRY right now, for example saying how is your foot? Could perhaps be splitup into statusInquery + foot. However I don't know how to do this better right now, perhaps it could be a natural result of dubble matching but we lose the order inforamtion.}
+\todo[inline]{Perhaps we can use argumentation research on top of the graph to figure out more semantics (this statment is attacking that or inquirying this)}
+\todo[inline]{Extracting information from meanings isn't very DRY right now, for example saying how is your foot? Could perhaps be splitup into statusInquiry + foot. However I don't know how to do this better right now, perhaps it could be a natural result of dubble matching but we lose the order inforamtion.}
 ** Tooling stuff
 + Protocol buffers could be used for protocol. Its strongly typed and has both
   C# and Java bindings
