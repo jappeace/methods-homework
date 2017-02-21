@@ -2,9 +2,9 @@
 
 * Dignum
 
-I should prepare a demo for next meeting if I can
-I should make sure to update thesis to recent code base so he can see what I'm
-doing.
+** Questions
+
+Wasn't there some kind of mid term grade?
 
 * Manuel
 
