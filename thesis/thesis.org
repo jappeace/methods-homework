@@ -2917,35 +2917,6 @@ stop
 [[file:img/uml/insert_meaning.png]]
 
 \newpage
-** Static evaluation
-<<static evaluation>>
-\drafting
-Static evaluation is a part of a heuristic.
-Where the tree analyses is stopped and a guess is made about the value of a
-node.
-
-\drafting
-We considered several methods of doing this.
-The most obvious approach is of course just adding some kind of reward to
-meaning uttered and let the path that leads to the most reward be the direction
-we choose.
-However we wish to avoid introducing new terms.
-
-\drafting
-To do this we considered using a technique called graph drawing cite:herman2000graph.
-Where the meaning graph will be projected on a plane and where we can use
-euclidean distance to guess how close we are to the goal.
-The problem with this is approach is however that its compeletly dependent on
-how the graph is drawn.
-Which may misrepresent how closely a meaning is to a goal.
-
-\drafting
-Then we considered using information thoery as a basis.
-So what is a simple good heuristic we could use? Well from a conversational
-point of view a good meaning to be at is one that can lead to many meanings you
-haven't encountered yet.
-If one of those options leads to the goal we of course give it a huge bonus.
-
 ** Minor issues
 <<Minor issues>>
 \toReview
