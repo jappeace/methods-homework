@@ -2916,16 +2916,6 @@ stop
 #+RESULTS[30bcd9f9b7de22494e9d8c999d6325757162dceb]: fig:insert_meaning
 [[file:img/uml/insert_meaning.png]]
 
-\newpage
-** Minor issues
-<<Minor issues>>
-\toReview
-There was a problem in that the predicates attribute was public,
-since an interface cannot have any attributes in Java, we decided to solve this
-by replacing it by a method getPredicates.
-In fact while doing this we quickly found out that there was no reason for this
-attribute to be public in the first place
-(common Java dogma requires the use of getters and setters).
 * In conclusion
 \todo[inline]{Discussion, comparison}
 ** Future work
