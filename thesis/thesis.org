@@ -2512,7 +2512,7 @@ system.
 In our case the best candidate for this was the Chat class that contains the
 Chat session.
 We bluntly replace this with an interface and let the Chat class extend that
-interface (see section [[Minor issues]]).
+interface.
 The new interface is called ChatSession as can be seen in figure [[fig:
 Now we can inject an alternative 'Chat', which will be a simple bot that
 does the string to meaning conversion and inserts it into the drool system,
@@ -2833,7 +2833,6 @@ to:
    symbol: why_need
 #+END_SRC
 
-
 ** Symbol graph
 <<Symbol graph>>
 \drafting
@@ -2901,19 +2900,29 @@ drool engine to do deliberation upon (see [[fig:insert_meaning]]).
 |WebSocket|
 start
 :Receve message;
-|#CCDDDD|AIML bot|
+:Insert into KIE;
+|#CCDDDD|Drool|
 :Pattern match meaning from message;
-:Insert meaning into KIE;
-|#AntiqueWhite|Drool|
-:Fire meaning deliberation rule;
-:Insert Response Dialogue tree;
-:Fire send response rule;
-|#CCDDDD|AIML bot|
+if (quick response rules?) then (yes)
+:Do quick reply;
+|WebSocket|
+stop
+endif
+|#CCDDDD|Drool|
+:Do quick reply;
+:Create initial dialogue tree;
+repeat
+|#AntiqueWhite|Personality|
+:execute jungian function;
+|#CCDDDD|Drool|
+repeat while (more functions in personality?)
+:Send response;
+|WebSocket|
 stop
 #+END_SRC
 #+CAPTION: Activity diagram of a server game insert_meaning
 #+LABEL: fig:insert_meaning
-#+RESULTS[30bcd9f9b7de22494e9d8c999d6325757162dceb]: fig:insert_meaning
+#+RESULTS[835f7111f76267640386b2c3afa23b91c1383134]: fig:insert_meaning
 [[file:img/uml/insert_meaning.png]]
 
 * In conclusion
