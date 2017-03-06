@@ -2155,6 +2155,8 @@ and didn't have any choices available to decide upon.
 This structure still works with SL-TDI's non alternation.
 
 ** Mapping function attitudes to a process 
+\todo[inline]{The validity of this chapter entirely depends on the result of making a test scenario}
+\todo[inline]{So perhaps we should make integration tests to show that this works}
 <<Mapping to process>>
 \cleared
 Now you may argue at this point we haven't refined our types a lot, since
@@ -2206,7 +2208,6 @@ in which its relatively easy to implement but offers enough freedom to encode
 personality in as a process.
 Note that this approach fits nicely into the information state transitions
 idea discussed in section [[Dialogue systems]].
-
 
 *** Irrational
 The irrational functions rely heavily on the symbol graph to create new
@@ -2502,7 +2503,8 @@ Only one place does deliberation rather than two and only one api is used for
 generating responses.
 
 ** Substitute AIML bot 
-\todo[inline]{We no longer do this, the entire bot idea has been removed}
+\todo[inline]{delete this subsection. }
+\todo[inline]{Indicate that the AIML can be replaced with the new format}
 \newlyCleared
 Because we are replacing a rather huge project on which quite a lot of legacy
 code depends we don't want to just throw it away.
@@ -2909,21 +2911,27 @@ if (quick response rules?) then (yes)
 stop
 endif
 |#CCDDDD|Drool|
-:Do quick reply;
 :Create initial dialogue tree;
-repeat
 |#AntiqueWhite|Personality|
+while (next function in personality)
 :execute jungian function;
 |#CCDDDD|Drool|
-repeat while (more functions in personality?)
-:Send response;
+endwhile
+:Get response from dialogue tree;
 |WebSocket|
 stop
 #+END_SRC
 #+CAPTION: Activity diagram of a server game insert_meaning
 #+LABEL: fig:insert_meaning
-#+RESULTS[835f7111f76267640386b2c3afa23b91c1383134]: fig:insert_meaning
+#+RESULTS[88c69814964b9c55c6360f2bcf0a6a2dc85d0718]: fig:insert_meaning
 [[file:img/uml/insert_meaning.png]]
+
+\drafting
+It should be noted that at the point of quick reply personality could also be at
+play.
+For example people could have alternative ways of pronouncing the response.
+Thinking people may for example respond with a confident yes, whereas feeling
+people would say it by default in a more doubting tone.
 
 * In conclusion
 \todo[inline]{Discussion, comparison}
@@ -2940,6 +2948,31 @@ Could consider extending the symbol graph dynamically.
 For example create a new symbol every time you don't know something,
 then ask about it and if the user replies with something you do know connect
 them.
+Currently there is limited support for "learning". but this is based on knowing
+existing symbols, the extension would make symbols dynamically.
+This could be done by more advanced language parsing techniques in combination
+with an existing knowledge base such as OWL.
+
+\drafting
+Let the bot support multiple conversation partners (including other bots)
+This would require the use of a more advanced agent selection mechanism in
+dialogue tree. THe actor class should also be more specific in this case.
+Connections could for example be restricted to coalitions rather than just
+single actors.
+
+\drafting
+better support for if multiple symbols are matched.
+Currently just the first one is used.
+
+\drafting
+Better social practice support. This is mainly due to a lack of propper
+description of the social practice, but it could eventually make the bot very 
+salable in use cases.
+
+\drafting
+It is also entirely possible to make the bot a lot more faster in response time
+by using the GPU for regex matching.
+
 
 \newpage
 \appendix
