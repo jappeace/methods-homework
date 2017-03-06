@@ -2582,7 +2582,8 @@ then it forks of a little worker that send the reply from the drools.
 
 \todo[inline]{New message processing activity diagram (see utterance processing)}
 
-** Life cycle
+** Application states
+\drafting
 There are three main life cycle phases of the program. Initialization,
 Operation, and cleaning up.
 In the initialization phase the websocket is opened and the knowledge is loaded
@@ -2591,46 +2592,28 @@ Operation consists of pattern matching.
 Cleaning up involves closing the websocket and shutting down the KIE session.
 The life cycle itself hasn't changed, just what happens in the life cycle.
 
-** Data structures
+*** Initialization
 \drafting
-<<Data structures>>
-There are 4 main datastructures, however one is forgotton once the
-initialization phase has been completed.
-*** Believes
++ init game
++ read yml
++ insert yml in drools
+*** Operation
 \drafting
-We have already quite extensively talked about believes in section
-[[Believes overview]] for example.
-*** Symbol database
-\drafting
-The symbol database is the data structure that is forgotten once construction is
-complete.
-This may seem strange, but it is important to keep in mind that this database
-only refers to symbols by file path.
-The symbols themselves aren't forgotten, just these file paths.
-This database is extensively used during the initialization phase to construct
-both the pattern database and the connection database.
-After the initialization phase the pattern and connection databases both never
-change.
-This is enforced (unless reflection is used to break open private fields)
++ Parse user utterence
++ Quick match layer (hello -> hello)
++ Heavy deliberation (if not quick match)
+  + This is where we inserted personality, although it could also play a role in
+    quick matching.
+  + The structure of personality is a list of enums that contain the relevant functions
+  + With this structure other drools could interject in the middle of the
+    deliberation process.
+**** Drools
 
-*** Pattern Database
+*** Destruction
 \drafting
-The pattern database is a database of pattern lists. These patterns are tied
-to the relevant symbols.
-The lists are tied to scene names. If the active scene does not contain any
-relevant pattern, the other scenes are searched.
-There could be a possible extension where the connected scenes get searched
-first.
-the user utterence gets inserted all associated symbols of the matched patterns
-get inserted as a parsed utterence.
-
-*** Connection database
-\drafting
-With the parsed utterence the connection database can doe actuall deliberation.
-Because this database has as key symbols and as values a list of connections
-which have to field that go to symbols.
-On this game tree deliberation can occur as described in section
-[[Mapping to process]].
+Make sure to kill the kie thread.
+Close the websocket.
+GC does the rest
 
 * Implementation
 \drafting
@@ -2650,7 +2633,7 @@ appendix [[building]].
 
 \todo[inline]{Proposed Extension, why this extension}
 
-** Pattern matching
+** Simplifying AIML
 # Note taht such descriptions are good, show how it was in the old system and
 # the thought process towards the new system, so do more of it like this
 <<From strings to meanings>>
@@ -2835,103 +2818,191 @@ to:
    symbol: why_need
 #+END_SRC
 
-** Symbol graph
-<<Symbol graph>>
+
+** Data structures
 \drafting
-For our bot to do deliberation we need to be able to tell it which meanings
-can logically follow which other meanings. To do this we use a meaning graph.
-However there are multiple ways to represent this.
-First of all we have intrusive graph representation, where the edges a node goes
-to is put inside the node. Non intrusive representation is where edges are
-stored as node tupples in a separate list, note that these are usually directed,
-since you can make an edge undirected by just adding another tupple with the
-values swapped, but if they're all undirected you cannot represent directed
-connections without introducing more terms.
+<<Data structures>>
+There are 4 main datastructures, however one is forgotton once the
+initialization phase has been completed.
 
 \drafting
-There are arguments for both representation, an intrusive graph
-representation is more easy to understand for humans, however a non intrusive
-representation is more elegant and can handle things such as backward chainging
-more easily (since not all nodes have to be searched in this case).
+All data structures used in the new implementation are immutable.
+This means that as soon as construction is finished of a data structure,
+the public api never changes.
+To get a change into a data structure a copy has to be made.
 
 \drafting
-Since we need to do both backward Chaining /and/ make it easy understandable for
-humans, we will reprsent the graph as intrusive in the AIML reprsentation, but
-as non intrusive in memory for easy backward and forward chaining.
-
-\todo{AIML with graph stuff}
-
-*** Reprsenting scoring and emotions
-\drafting
-Once we decided to replace AIML we also we're committed to replace the work on
-scoring and emotions.
-This is of course not acceptable so we need to re-add this.
-It can be easily done by adding extra meta data to the edges in the graph
-representation.
-The extra information we want to encode is the so called perlocutionary speech
-acts (see section [[Speech act thoery]]).
+The reason for doing this is that immutable data structures can used amongst
+multiple threads without the use of any locks.
+\todo{cite this}
+This is an extremely desirable property to have especially with the drools
+engine since it can assume arbitrary execution of the rules, depending on which
+scheduler you choose.
 
 \drafting
-For example if we go from:
-
-\[ M(Greeting) \to M(StatusInquiry) : F(Pleased) \]
-
-\drafting
-If this path is walked by the user the bot will be pleased, however if the bot
-is impatient and can look at this connection and see what this path results in.
-The context is not treated in the data, this is left to the drools to figure
-out.
-We can elaborate this further by adding protocols that are expected into the
-edges:
-
-\[ M(StatusInquiry) \to M(HealthProblemAsked) : F(Neutral), P(HealthAsked) \]
+Another advantage is that in combination with pure functions, unit testing
+becomes really easy to do.
+A problem one often has with unit testing is that you need to get your objects
+into the right state to get tested.
+\todo{cite this}
+However since our objects only have ever one state,
+it becomes rather easy to get them in the right state.
 
 \drafting
-If the user deviates from the meaning graph we can just use a default F
-response of being surprised or confused.
-On the other hand if the user ever tries to re-treat a subject we can just
-become annoyed. Drools can be used to catch these kind of cases effectively.
+It should be noted however that trying to do this in java requires quite some
+discipline.
+Practices such as creating getters and setters can be avoided in favour of
+final public fields, if the type of those fields are immutable.
+However since java collections aren't immutable \todo{cite}
+they always need to be private
+and be shallowly copied on construction.
+Then to expose the data one should create a copy of the collection, or, expose a
+stream (which is also immutable). \todo{cite}
 
-*** Inserting meaning into KIE
-\toReview
-Once the meaning is extracted from the user utterance we can insert it into the
-drool engine to do deliberation upon (see [[fig:insert_meaning]]).
 
-#+NAME: fig:insert_meaning
-#+BEGIN_SRC plantuml :cache yes :file img/uml/insert_meaning.png :exports results
-|WebSocket|
-start
-:Receve message;
-:Insert into KIE;
-|#CCDDDD|Drool|
-:Pattern match meaning from message;
-if (quick response rules?) then (yes)
-:Do quick reply;
-|WebSocket|
-stop
-endif
-|#CCDDDD|Drool|
-:Create initial dialogue tree;
-|#AntiqueWhite|Personality|
-while (next function in personality)
-:execute jungian function;
-|#CCDDDD|Drool|
-endwhile
-:Get response from dialogue tree;
-|WebSocket|
-stop
-#+END_SRC
-#+CAPTION: Activity diagram of a server game insert_meaning
-#+LABEL: fig:insert_meaning
-#+RESULTS[88c69814964b9c55c6360f2bcf0a6a2dc85d0718]: fig:insert_meaning
-[[file:img/uml/insert_meaning.png]]
+*** Symbol graph 
+\todo{this is the old chapter on data structures, we should check what can be salvaged}
+ <<Symbol graph>>
+ \drafting
+ For our bot to do deliberation we need to be able to tell it which meanings
+ can logically follow which other meanings. To do this we use a meaning graph.
+ However there are multiple ways to represent this.
+ First of all we have intrusive graph representation, where the edges a node goes
+ to is put inside the node. Non intrusive representation is where edges are
+ stored as node tupples in a separate list, note that these are usually directed,
+ since you can make an edge undirected by just adding another tupple with the
+ values swapped, but if they're all undirected you cannot represent directed
+ connections without introducing more terms.
 
+ \drafting
+ There are arguments for both representation, an intrusive graph
+ representation is more easy to understand for humans, however a non intrusive
+ representation is more elegant and can handle things such as backward chainging
+ more easily (since not all nodes have to be searched in this case).
+
+ \drafting
+ Since we need to do both backward Chaining /and/ make it easy understandable for
+ humans, we will reprsent the graph as intrusive in the AIML reprsentation, but
+ as non intrusive in memory for easy backward and forward chaining.
+
+ \todo{AIML with graph stuff}
+
+**** Reprsenting scoring and emotions
+ \drafting
+ Once we decided to replace AIML we also we're committed to replace the work on
+ scoring and emotions.
+ This is of course not acceptable so we need to re-add this.
+ It can be easily done by adding extra meta data to the edges in the graph
+ representation.
+ The extra information we want to encode is the so called perlocutionary speech
+ acts (see section [[Speech act thoery]]).
+
+ \todo[inline]{update this part}
+ \drafting
+ For example if we go from:
+
+ \[ M(Greeting) \to M(StatusInquiry) : F(Pleased) \]
+
+ \drafting
+ If this path is walked by the user the bot will be pleased, however if the bot
+ is impatient and can look at this connection and see what this path results in.
+ The context is not treated in the data, this is left to the drools to figure
+ out.
+ We can elaborate this further by adding protocols that are expected into the
+ edges:
+
+ \[ M(StatusInquiry) \to M(HealthProblemAsked) : F(Neutral), P(HealthAsked) \]
+
+ \drafting
+ If the user deviates from the meaning graph we can just use a default F
+ response of being surprised or confused.
+ On the other hand if the user ever tries to re-treat a subject we can just
+ become annoyed. Drools can be used to catch these kind of cases effectively.
+
+**** Inserting meaning into KIE
+ \toReview
+ Once the meaning is extracted from the user utterance we can insert it into the
+ drool engine to do deliberation upon (see [[fig:insert_meaning]]).
+
+ #+NAME: fig:insert_meaning
+ #+BEGIN_SRC plantuml :cache yes :file img/uml/insert_meaning.png :exports results
+ |WebSocket|
+ start
+ :Receve message;
+ :Insert into KIE;
+ |#CCDDDD|Drool|
+ :Pattern match meaning from message;
+ if (quick response rules?) then (yes)
+ :Do quick reply;
+ |WebSocket|
+ stop
+ endif
+ |#CCDDDD|Drool|
+ :Create initial dialogue tree;
+ |#AntiqueWhite|Personality|
+ while (next function in personality)
+ :execute jungian function;
+ |#CCDDDD|Drool|
+ endwhile
+ :Get response from dialogue tree;
+ |WebSocket|
+ stop
+ #+END_SRC
+ #+CAPTION: Activity diagram of a server game insert_meaning
+ #+LABEL: fig:insert_meaning
+ #+RESULTS[88c69814964b9c55c6360f2bcf0a6a2dc85d0718]: fig:insert_meaning
+ [[file:img/uml/insert_meaning.png]]
+
+ \drafting
+ It should be noted that at the point of quick reply personality could also be at
+ play.
+ For example people could have alternative ways of pronouncing the response.
+ Thinking people may for example respond with a confident yes, whereas feeling
+ people would say it by default in a more doubting tone.
+
+*** Believes
 \drafting
-It should be noted that at the point of quick reply personality could also be at
-play.
-For example people could have alternative ways of pronouncing the response.
-Thinking people may for example respond with a confident yes, whereas feeling
-people would say it by default in a more doubting tone.
+We have already quite extensively talked about believes in section
+[[Believes overview]] for example.
+*** Symbol database
+\drafting
+The symbol database is the data structure that is forgotten once construction is
+complete.
+This may seem strange, but it is important to keep in mind that this database
+only refers to symbols by file path.
+The symbols themselves aren't forgotten, just these file paths.
+This database is extensively used during the initialization phase to construct
+both the pattern database and the connection database.
+After the initialization phase the pattern and connection databases both never
+change.
+This is enforced (unless reflection is used to break open private fields)
+
+*** Pattern Database
+\drafting
+The pattern database is a database of pattern lists. These patterns are tied
+to the relevant symbols.
+The lists are tied to scene names. If the active scene does not contain any
+relevant pattern, the other scenes are searched.
+There could be a possible extension where the connected scenes get searched
+first.
+the user utterence gets inserted all associated symbols of the matched patterns
+get inserted as a parsed utterence.
+
+*** Connection database
+\drafting
+With the parsed utterence the connection database can doe actuall deliberation.
+Because this database has as key symbols and as values a list of connections
+which have to field that go to symbols.
+On this game tree deliberation can occur as described in section
+[[Mapping to process]].
+
+** Testing
+\drafting
+To verify our implementation's correctness we use several testing methodologies.
+First at the lowest level we use the so called unit tests to verify individual
+Jungian functions work as they were described in the thesis.
+These tests are done in a controlled environment.
+By which we mean the datastructures are constructed.
 
 * In conclusion
 \todo[inline]{Discussion, comparison}
