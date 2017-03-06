@@ -951,12 +951,12 @@ and being orderly.
 
 *** Dialogue systems
 <<Dialogue systems>>
-\newlyCleared
+\cleared
 Dialogue systems are the systems that try to analyze how dialogue works.
 This is a subfield of AI that tries to combinate linguistics with computer
 science.
 
-\newlyCleared
+\cleared
 First of all are of course the chat bot systems, which are based upon case based
 reasoning. A good example of this is the A.L.I.C.E. bot cite:wallace2001dont.
 These are mostly reactive systems that use pattern matching rules paired with
@@ -966,7 +966,7 @@ A more extended example of such a system is eliza bot which is described in
 cite:galvao2004persona,
 where they also added personality to the bot with the OCEAN model.
 
-\newlyCleared
+\cleared
 Traum cite:traum2003information describes the information state approach for
 dialogues. 
 The approach traum proposes is modeling:
@@ -979,7 +979,7 @@ The approach traum proposes is modeling:
 The dialogue is the information state itself cite:walterapproaches.
 This is an extremely general way of describing a dialogue system.
 
-\newlyCleared
+\cleared
 In cite:wobcke2005bdi a BDI based methodology is proposed to handle dialogue
 between a user and an agent.
 However we want to point out that this solution fits into the rough model traum
@@ -1037,7 +1037,7 @@ sketched. So we could say its a information state approach too.
  cite:augello2016social,
  such as following certain protocols (politeness, medical standards), and empathy.  
 
- \newlyCleared
+ \cleared
  There is a difference between the architecture in the published papers and
  the source code received.
  This is because the source code is actively being worked on, whereas the
@@ -1580,12 +1580,12 @@ Quality attributes of systems \url{https://en.wikipedia.org/wiki/ISO/IEC_9126}
 <<Type signatures explained>>
 \todo[inline]{Perhaps I should add citations?}
 \todo[inline]{Add haskell prototypes as a reference to clearly mark out difference}
-\newlyCleared
+\cleared
 If the reader is familiar with functional languages he can skip this section.
 In this section we explain type signatures, partial application and functions
 as arguments.
 
-\newlyCleared
+\cleared
 Building upon the idea of pure functions we use the concept of /type signature/.
 A type signature can be seen as a restriction on what goes in and what goes out.
 This is analogous to a set
@@ -1601,7 +1601,7 @@ What you're really saying is that "this function does not accept anything but
 int, otherwise the computation breaks".
 Not that we define the class A, simply because we have to in Java.
 
-\newlyCleared
+\cleared
 There are some things to keep in mind. First of all, there is a direct
 correlation with how precise description is and the amount of things you can do
 with the type. The more general the type the less you can do with it.
@@ -1617,7 +1617,7 @@ How many different ints can it return? The answer is 2. Note that the function
 can't just create a Random object to generate more entropy since we said it was
 pure. Java can't enforce this, but a language like Haskell does.
 
-\newlyCleared
+\cleared
 Even the return type is deceptive in java, since it can write results to
 other objects or even do input/output operations.
 This is of course a major problem if you want to do any kind of modeling of the 
@@ -1625,7 +1625,7 @@ domain based upon types.
 Only if we assume we're dealing with pure functions,
 we can reason about possible computations indirectly.
 
-\newlyCleared
+\cleared
 Another really important feature of functions to keep in mind is that the
 argument of an function can be a function itself.
 This is how we combine Jungian function with each other to create personalities
@@ -1646,7 +1646,7 @@ The only way to get around this knowledge restriction is trough casting in Java.
 Since we're assuming pure functions however B can only expose read only
 information.
 
-\newlyCleared
+\cleared
 Then finally the last technique we use (implicitly) is a process called partial
 application.
 In which we 
@@ -1678,13 +1678,13 @@ This is done with help of an anonymous class because the Java programming
 language  does not support partial application naively.
 Therefore the type of A has changed in B by partial application.
 
-\newlyCleared
+\cleared
 At this point we can see the Java verbosity really starting to hurt the point.
 This is a major reason why the Haskell syntax is used to explain the type
 signature in detail.
 * BDI and Jung
 <<Jungian BDI>>
-\newlyCleared
+\cleared
 This chapter tries to anwser the question,
 "what is personality from a computationally perspective".
 In where we imagine personality being a preference towards a process rather
@@ -1693,7 +1693,7 @@ We will however not consider yet how to place this in the existing system,
 but will consider how to combine Jungian psycology with BDI.
 
 ** Differences from campos
-\newlyCleared
+\cleared
 Campos cite:campos_mabs2009 first considered how to combine MBTI with BDI.
 His reasoning domain was however in action space (rather than just dialogue),
 but we still want to use the idea that personality is a preference for a
@@ -1750,7 +1750,7 @@ After this we will look what extra information the function attitudes need
 in an attempt to reduce the amount of possible believes.
 
 ** Informal description of Jung + BDI
-\newlyCleared
+\cleared
 Before diving into the type signature approach, or the formal description we
 want to describe it informally.
 Firstly we see the Jungian functions as a unit of processing.
@@ -1759,19 +1759,19 @@ One could for example choose to make a unit of processing for every possible
 combination of jungian functions attitudes which would result in $8!$ different
 functions, or specifically just for MBTI which would result in $16$ functions.
 
-\newlyCleared
+\cleared
 We also chose to model function attitudes, rather than functions and attitudes.
 The reason for taking them as a combination is that there are more precise
 descriptions available for function attitudes, rather than functions and
 attitudes separated.
 
-\newlyCleared
+\cleared
 So a function attitude as a unit of processing is something where information
 goes in, the function does its processing and then information comes out.
 This is analogous to a mathematical pure function.
 Another way of describing such a process is a transformation upon information.
 
-\newlyCleared
+\cleared
 From this we used the idea which MBTI uses too, that these small processing
 units are in an order,
 this order determines the eventual personality.
@@ -1782,7 +1782,7 @@ In our case this usually contains a believe base for example.
 Thus what we explored was what information does the believe base need to contain
 for the Jungian functions to do their operations.
 
-\newlyCleared
+\cleared
 There are several phases of processing going on.
 Firstly we have user message parsing, where we try to figure out what the user
 said.
@@ -1791,7 +1791,7 @@ determine sensible replies.
 After that there is action selection, of which the best action is chosen.
 This action is finally handled by the surrounding system.
 
-\newlyCleared
+\cleared
 The opportunity for personality exists in practically all phases.
 In the first phase for example we can do filtering based on the type of
 messages received.
@@ -2023,7 +2023,7 @@ the user meaning it can't do its job yet, more on his in this section
 [[Rational and irrational]].
 Therefore we consider another approach.
 
-\newlyCleared
+\cleared
 Another architecture that was considered would be to store the functions in a
 list and then let an external control unit decide which function processes next.
 However this would leave the control of the function being called outside of the
@@ -2032,7 +2032,7 @@ therefore personality wouldn't play a role in deciding the function being called
 It will also create another problem of deciding when a function is called.
 So to solve these problems we looked at another possibility.
 
-\newlyCleared
+\cleared
 In this approach we will give $f_a$ another argument which is the next $f_a$.
 This looks like the following:
 \[ \left (\overset{next}{B_t \to t \to D_t \to (B_{t+1}, D_{t+1})}\right ) \to B_t \to t \to D_t \overset{f_a}{\to} (B_{t+1}, D_{t+1}) \]
@@ -2066,7 +2066,7 @@ which can be seen in figure [[fig:faprocessing]].
 #+RESULTS[f6dff7c3b2e64b005de74f12e19c7b2917da613c]: fig:faprocessing
 [[file:img/uml/faprocessing.png]]
 
-\newlyCleared
+\cleared
 To illustrate the use of this type signature design more clearly we'll sketch
 an example with the first two function attitudes of the INTJ type:
 \[N_i > T_e \]
@@ -2189,7 +2189,7 @@ speech act (for example angering or scaring),
 which is encoded in the edges because its not the meaning that causes these
 but the way you get to those meanings.
 
-\newlyCleared
+\cleared
 The introduction of the symbol graph is probably the most radical change this
 thesis proposes.
 It moves chat bots away from the idea that responses are many to one relations
@@ -2234,7 +2234,7 @@ This of course doesn't allow us to do backward chaining since there is hardly a
 guarantee that the $next$ function will bring us to the goal, in fact we may get
 stuck in a loop.
 
-\newlyCleared
+\cleared
 Alternatives to the implementation proposed include the use of
 probabilities to determine appropriate responses. 
 However this introduces a new problem of how to obtain the probability
@@ -2285,7 +2285,7 @@ Namely whenever a rational function finishing ordering the input set it will
 call the /next/ function to do deliberation on the most preferred item.
 
 **** Feeling
-\newlyCleared
+\cleared
 Initially we wanted to create two lookup tables for both feeling functions one.
 However this would be confusing to configure,
 the scenario creator would need to decide which values are "external" and which are
@@ -2328,7 +2328,7 @@ The higher the goal is the more priority.
 The information about scenario progression is encoded in the drools itself,
 so this could potentially be acquired by using reflection on the drools.
 
-\newlyCleared
+\cleared
 To model $T_i$ however the most obvious solution would be to implement an
 axiomatic logic system.
 This is however rather heavy on maintenance.
@@ -2505,7 +2505,7 @@ generating responses.
 ** Substitute AIML bot 
 \todo[inline]{delete this subsection. }
 \todo[inline]{Indicate that the AIML can be replaced with the new format}
-\newlyCleared
+\cleared
 Because we are replacing a rather huge project on which quite a lot of legacy
 code depends we don't want to just throw it away.
 Instead we will be using a trick called a strategy pattern.
@@ -2654,7 +2654,7 @@ appendix [[building]].
 # Note taht such descriptions are good, show how it was in the old system and
 # the thought process towards the new system, so do more of it like this
 <<From strings to meanings>>
-\newlyCleared
+\cleared
 The first step is to map the user input which is of type String at time $t$
 into type $S_t$ for symbol at time $t$.
 For this the AIML is used. It can matched, however the language has to be
@@ -2709,13 +2709,13 @@ So the modification would now look like:
   </aiml>
 #+END_SRC
 
-\newlyCleared
+\cleared
 These changes loose reactive nature of the chatbot,
 rather than saying how to reply directly to certain kind of responses we just
 say what they mean in this social context.
 
 *** Symbol to string
-\newlyCleared
+\cleared
 But now what if the agent wants to do a status inquiry,
 well the string into a status inquiry is already available,
 we just need to separate the literal strings from the catch all patterns:
@@ -3195,7 +3195,7 @@ sudo mysql_install_db
 However I think apt handles that for you.
 
 **** utf8 problem
-\newlyCleared
+\cleared
 I got an error: \\ 
 #+BEGIN_SRC
 com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException:
@@ -3210,30 +3210,30 @@ character-set-server  = latin1
 collation-server      = latin1_swedish_ci
 #+END_SRC
 
-\newlyCleared
+\cleared
 We also need to modify `/etc/mysql/mariadb.conf.d/50-client.cnf`
 with:
 #+BEGIN_SRC
 default-character-set = latin1
 #+END_SRC
 
-\newlyCleared
+\cleared
 After which we do a restart of the mysqld:
 
 #+BEGIN_SRC sh
 sudo systemctl restart mysql
 #+END_SRC
-\newlyCleared
+\cleared
 Note: make sure to stop your running wildfly instance, otherwise wildfly will keep it alive
 
-\newlyCleared
+\cleared
 Now drop the entire salve database as root, the tables were created with the
 wrong charset so we need to just remove them all.
 #+BEGIN_SRC sh
 mysql -u root -ppassword -e "DROP DATABASE salve;:
 #+END_SRC
 
-\newlyCleared
+\cleared
 Now recreate the database as was done in section [[Mariadb setup]] (alternativly
 logging in as root and pressing arrow up a couple of times should get you the
 right commands).
