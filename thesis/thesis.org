@@ -2405,64 +2405,47 @@ Since attitudes produce a different process by definition
 we can conclude that they will also behave differently.
 
 * Architectural Changes
-  
-\drafting
-  There the implmenetation fase major architectural changes have happened
-
-\drafting
-We have thought about making the architecture ready for allowing multiple bots
-to be run on the same server.
-However currently we consider this to be out of the scope of this thesis.
-The reason 
-
-\todo[inline]{Figure out cardinality of drool subsystems, how many scoring sub systems how many scenario subsystems}
-\todo[inline]{The case for a scenario subsystem per agent is the following: Each agent could have their own interpretation of the scenario}
-\todo[inline]{Scoring system should almost defenitvly be 1}
-\todo[inline]{We should describe a perfect architecture anyway, and then in the implementation we can describe an actual achitecture if there is a different one}
-\todo{Note that splitting up the architecture is something we may do eventually once personality is implemented}
-\cleared
-This chapter is about how do we fit the algorithms discussed in chapter [[BDI and Jung]]
-into the existing game architecture. 
+\toReview
+During the implementation phase major architectural changes have happened,
+for example the Alice bot was completely removed in favor of a new less tightly
+coupled scheme.
+The drools have become the center of deliberation (which previously was the AIML).
+We will discuss these changes in this chapter,
+More precisely, this chapter is about how to fit the algorithms discussed in
+chapter [[BDI and Jung]] into the existing game architecture. 
 So this chapter is best to be seen as glue between chapter [[BDI and Jung]] and
 chapter [[Implementation]].
 In this chapter we will describe the architectural changes between the
-current implementation and the original architecture discussed in section [[
-The serious game]].
+current implementation and the original architecture discussed in section [[The serious game]].
 Note that we want to keep as much of the existing architecture as possible.
 A deployment diagram of the architecture can bee seen in figure
 [[fig:architecture-concept]].
 
-\todo[inline]{Social pracitices are currently not properly represented (or are they scene?)}
 #+NAME: fig:architecture-concept
 #+BEGIN_SRC plantuml :cache yes :file img/uml/architecture-concept.png :exports results
 
-  folder scene{
+  folder bot{
     cloud drools {
       component score
       component scenario
+      component interpreter
       storage facts
       scenario -- facts
+      interpreter -- facts
       score -- facts
+      component emotions
+      component personality
+      emotions -- facts
+      personality -- facts
     }
-  }
-
-  folder bot{
-  cloud bot.drools {
-    component emotions
-    component personality
-    storage bot.facts
-    emotions -- bot.facts
-    personality -- bot.facts
-    score -- bot.facts
-  }
-  database meanings [
-    patterns
-    ====
-    symbol graph
-  ]
-  entity filereader
-  filereader ..> meanings
-  bot.drools --> meanings
+    database meanings [
+      patterns
+      ====
+      symbol graph
+    ]
+    entity filereader
+    filereader ..> meanings
+    drools --> meanings
   }
   node server
   node client
@@ -2473,8 +2456,9 @@ A deployment diagram of the architecture can bee seen in figure
 #+END_SRC
 #+CAPTION: Deployment diagram of new architecture, where the dashed arrow means constructs, the solid arrow means uses and the other lines mean itneracts.
 #+LABEL: fig:architecture-concept
-#+RESULTS[7c0107f4991bb78b6c01444660ee18dafcfe970e]: fig:architecture-concept
+#+RESULTS[f680066f7943af2a2abf4c0b6a487ffa49d6b619]: fig:architecture-concept
 [[file:img/uml/architecture-concept.png]]
+
 
 \cleared
 The biggest difference from the original architecture is the removal of
@@ -2492,105 +2476,43 @@ This means the strings facing the user are spread over both the AIML files
 *and* the drools.
 This is confusing for new scenario creators since completely different folders
 have to be accessed to change the strings.
+
+\toReview
+Note that although we removed the ability for the bot to use AIML, it should be
+relatively easy to convert from the old AIML structure to the new format with help
+of a script.
+This is because AIML wasn't really a new language but rather just a specific
+application of XML.
+Therefore any XML reading library can be used to parse the AIML and any YML
+library can be used to generate the new YML based files.
+Although care should be taken to comply with the new format,
+for example connections can be derived from AIML,
+but the concept of a connection is implicitly defined in AIML.
 # This violates the changeability design principle quite heavily and unnecessarily. \todo{cite}
 
-\cleared
+\toReview
 In the new architecture we use a file reader to construct the entire
-meaning database into memory and expose them to the drools.
-This allows the drools to utter spontaneous meanings and allows do deliberation
-on incoming meanings of the user.
+symbol database into memory and expose them to the drools.
+This allows the drools to utter spontaneous symbols and allows do deliberation
+on incoming utterances of the user with help of the interpreter component.
 The reactionary based scheme where an incoming user response has been replaced
 with a structural scheme.
-A meaning has connections to other meanings, which should be sensible responses.
+A symbol has connections to other symbols, which should be sensible responses.
 So if a user utters a meaning then rather than having a direct response string
 that uses variables to fill in the gap, we get a meaning, which connected to
 other meanings which in turn are also connected.
-We can do deliberation on this because we have one or more meaning /goals/.
+We can do deliberation on this because we have one or more /goals/.
 
 \cleared
 Another advantage of this change is that its a much more simple architecture.
 Only one place does deliberation rather than two and only one api is used for
 generating responses.
 
-** Substitute AIML bot 
-\todo[inline]{delete this subsection. }
-\todo[inline]{Indicate that the AIML can be replaced with the new format}
-\cleared
-Because we are replacing a rather huge project on which quite a lot of legacy
-code depends we don't want to just throw it away.
-Instead we will be using a trick called a strategy pattern.
-With this we first find a class that connects the chatbot to the rest of the
-system.
-In our case the best candidate for this was the Chat class that contains the
-Chat session.
-We bluntly replace this with an interface and let the Chat class extend that
-interface.
-The new interface is called ChatSession as can be seen in figure [[fig:
-Now we can inject an alternative 'Chat', which will be a simple bot that
-does the string to meaning conversion and inserts it into the drool system,
-then it forks of a little worker that send the reply from the drools.
-
-#+BEGIN_SRC plantuml :cache yes :file img/uml/class-substitute.png :exports results
-  interface ChatBotEngine{
-    +String chat(String request)
-    +void setSession(Session session)
-  }
-  class WebsocketService{
-    -ChatBotEngine cbe
-    +void onMessage(Session session, String message)
-    -void chat(Session session, Strin message)
-  }
-  WebsocketService --> ChatBotEngine
-
- package nl.japppieklooster{
-   package boterinterface{
-     ChatBotFactory ..> ChatSession
-     interface ChatBotFactory{
-        +ChatSession create(String path, String name)
-     }
-     interface ChatSession{
-      +HashMap<String, Object> getPredicates();
-      +String multisentenceRespond(String str)
-      +setKieSession(KieSession kie)
-     }
-   }
-   package ymlbot{
-     ChatBotFactory <|-- YapFactory 
-     ChatSession <|-- YBot 
-     class YapFactory
-     class YBot
-   }
- }
-  class ChatBotEngineImpl {
-    -KieSession kSession
-    -ChatSession chatSession
-    -Session session
-  }
-  ChatBotEngineImpl --> ChatSession
-  ChatBotEngine <|-- ChatBotEngineImpl
-  package org.kie.api.runtime{
-  KieSession <-- ChatBotEngineImpl
-  class KieSession{
-      +Facthandle insert(Object obj)
-      +void setGlobal(String identifier, Object value)
-  }
-  }
-  package org.alicebot.ab{
-  ChatSession <|- Chat 
-  ChatBotFactory <|-  AliceFactory 
-    class Chat{
-      -HashMap<String, Object> predicates
-    }
-    class AliceFactory
-
-  }
-#+END_SRC
-#+CAPTION: Class diagram of the server where the aiml bot can be substitued by an alternative
-#+LABEL: fig:class-substitute
-#+RESULTS[b71504ec6f9fccdf79f1f076d51dfcf7041038e2]:
-[[file:img/uml/class-substitute.png]]
-
-\todo[inline]{New message processing activity diagram (see utterance processing)}
+\toReview
+We have thought about making the architecture ready for allowing multiple agents
+to be run on the same server.
+However currently we consider this to be out of the scope of this thesis.
+The reason for this is discussed in section [[Multiple conversation partners]].
 
 ** Application states
 \drafting
@@ -3032,7 +2954,7 @@ This could be done by more advanced language parsing techniques in combination
 with an existing knowledge base such as OWL.
 
 *** Multiple conversation partners
-<<multiple conversation partners>>
+<<Multiple conversation partners>>
 \drafting
 This is currently not supported by the architecture because it introduces new
 problems to deliberation.
