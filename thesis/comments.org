@@ -14,12 +14,25 @@
   Als dit af is ga ik denk ik beginnen met integratie tests.
   Dit zou handmatig of automatisch kunnen gebeuren (ie maak een persoonlijkheid
   aan in junit & kijk of het de juiste reacties geeft).
-  
-  Wanneer dat af is ga ik denk ik grondig beginnen met het op peil brengen van
-  het thesis. (wat ik vandaag dus ook al in redelijke mate heb proberen te doen 
 
-  ---
+** Vragen
++ In mijn todo stond dat ik eerst de beste architectuur zou moeten bescrhijven
+  en vervolgens later degene die ik heb geimplementeerd,
+  dit doelt denk ik op ondersteuning van meerdere agents in de chatbot.
+  Maar ik heb hier over nagedacht en denk niet dat dit realistisch is om te
+  implementeren. Moet ik een architectuur voordit alsnog bescrhijven?
+  (lijkt mij een beetje vergezocht)
++ Het is mij niet helemaal duidelijk hoe de social practices nou precies
+  geimplementeerd horen te worden. Ik neem aan dat het niet de "scenes" zijn,
+  die lijken meer op de activities van een social practice.
++ Wat ik precies na het maken van de integratie tests moet doen.
+  + Is het nodig om de OCC module & de score module te reparen
+    (word op het moment niet gebruikt volgens mij).
+  + Moet ik een script maken om AIML om te zetten naar YML
+    (ik heb hier ooit een begin aan gemaakt)
+  + Of moet ik gewoon mijn thesis afmaken op dat punt?
 
+** PhD
   Over het PhD aanbod, ik ben aan het twijfelen over het aanbod.
   Er zijn hier enkele redenen voor,
   ten eerste is het termijn van zes jaar is wel erg lang
