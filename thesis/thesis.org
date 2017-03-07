@@ -2405,6 +2405,16 @@ Since attitudes produce a different process by definition
 we can conclude that they will also behave differently.
 
 * Architectural Changes
+  
+\drafting
+  There the implmenetation fase major architectural changes have happened
+
+\drafting
+We have thought about making the architecture ready for allowing multiple bots
+to be run on the same server.
+However currently we consider this to be out of the scope of this thesis.
+The reason 
+
 \todo[inline]{Figure out cardinality of drool subsystems, how many scoring sub systems how many scenario subsystems}
 \todo[inline]{The case for a scenario subsystem per agent is the following: Each agent could have their own interpretation of the scenario}
 \todo[inline]{Scoring system should almost defenitvly be 1}
@@ -2592,12 +2602,12 @@ Operation consists of pattern matching.
 Cleaning up involves closing the websocket and shutting down the KIE session.
 The life cycle itself hasn't changed, just what happens in the life cycle.
 
-*** Initialization
+** Initialization
 \drafting
 + init game
 + read yml
 + insert yml in drools
-*** Operation
+** Operation
 \drafting
 + Parse user utterence
 + Quick match layer (hello -> hello)
@@ -2609,11 +2619,6 @@ The life cycle itself hasn't changed, just what happens in the life cycle.
     deliberation process.
 **** Drools
 
-*** Destruction
-\drafting
-Make sure to kill the kie thread.
-Close the websocket.
-GC does the rest
 
 * Implementation
 \drafting
@@ -3009,11 +3014,13 @@ By which we mean the datastructures are constructed.
 ** Future work
 \todo[inline]{Depending on the successfulness this chapter becomes smaller and more fine grained}
 
+*** Give the bot some semantic understanding
 \drafting 
 A possible alterantive is using cite:moschitti2004study, to parse the semantics
 of a sentence. Then a graph can be used to determine how to predicates
 corrolate logically with the arguments being just fill in.
 
+*** More advanced learning
 \drafting
 Could consider extending the symbol graph dynamically.
 For example create a new symbol every time you don't know something,
@@ -3024,22 +3031,41 @@ existing symbols, the extension would make symbols dynamically.
 This could be done by more advanced language parsing techniques in combination
 with an existing knowledge base such as OWL.
 
+*** Multiple conversation partners
+<<multiple conversation partners>>
 \drafting
-Let the bot support multiple conversation partners (including other bots)
-This would require the use of a more advanced agent selection mechanism in
-dialogue tree. THe actor class should also be more specific in this case.
-Connections could for example be restricted to coalitions rather than just
+This is currently not supported by the architecture because it introduces new
+problems to deliberation.
+Such as, when in a dialogue tree do we decide which agent speaks.
+But more importantly, it introduces new problems to the pattern matching,
+since it has to be decided at which agent an utterance has been directed.
+
+\drafting
+To add support for this in deliberation,
+it would require the use of a more advanced agent selection mechanism in
+dialogue tree.
+The actor class should also be more specific in this case.
+Connections could for example be restricted to coalitions of actors rather than just
 single actors.
 
+
+*** Multiple symbols matched
 \drafting
 better support for if multiple symbols are matched.
-Currently just the first one is used.
+Currently just the first one is used. So we truncate the rest.
+However if multiple symbols are uttered we could do more advanced heuristics,
+such as trying to figure out which one was really meant by using information
+theory to select the most precise one.
+However this precision also should be encoded or derived somehow
+(for example, more words means more information).
 
+*** Social practice support
 \drafting
 Better social practice support. This is mainly due to a lack of propper
 description of the social practice, but it could eventually make the bot very 
 salable in use cases.
 
+*** Use GPU for pattern matching
 \drafting
 It is also entirely possible to make the bot a lot more faster in response time
 by using the GPU for regex matching.
