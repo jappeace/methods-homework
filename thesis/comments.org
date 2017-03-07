@@ -2,32 +2,69 @@
 
 * Dignum
 
-** Questions
+  Het lijkt erop dat Manuel privé problemen heeft op het moment dus ik heb hem
+  niet echt kunnen updaten van recente ontwikkelingen.
+  Dus ik weet niet of hij het eens is met de manier waarop ik het
+  persoonlijkheids proces heb geïmplementeerd.
+  Ik ben verder gegaan met het implementeren van functies en het schrijven van
+  unit tests voor deze functies.
+  De functies die nog missen zijn Ti en Ne, ik weet vrij zeker dat ik deze
+  functies deze week nog af zou kunnen krijgen.
 
-Wasn't there some kind of mid term grade?
-Ik had eerst het idee om de AIML bot the vervangen door een andere implementatie,
-de yml bot.
-Alleen manuel dacht dat ik helemaal van het idee chatbot af wou.
-dus hij had de hele aimlbot verwijdered en de code dusdanig aangepast dat het
-er niet meer tussen past.
-Nu is dat opzich niet zo erg omdat de bot die ik verzonnen had alle informatie 
-al in de drools zette en het de drools liet afhandelen.
-Mijn vraag is nu, ik heb een subhoofdstuk in "Architectual Changes" genaamt
-Substitute AIML bot. Wat moet ik daar nu mee
-(dit hele concept bestaat in principe niet meer).
+  Als dit af is ga ik denk ik beginnen met integratie tests.
+  Dit zou handmatig of automatisch kunnen gebeuren (ie maak een persoonlijkheid
+  aan in junit & kijk of het de juiste reacties geeft).
+  
+  Wanneer dat af is ga ik denk ik grondig beginnen met het op peil brengen van
+  het thesis. (wat ik vandaag dus ook al in redelijke mate heb proberen te doen 
+
+  ---
+
+  Over het PhD aanbod, ik zit er aan te denken om het aanbod te verwerpen.
+  Er zijn enkele redenen voor dit:
+
+  + Het termijn van zes jaar is erg lang,
+      ik weet niet of ik wel zolang geïnteresseerd kan blijven in een enkel
+      onderwerp.
+  + Ik was voordat dit opkwam al informele plannen aan het maken om naar
+    Australië te gaan.
+    + Nu dit aanbod opkwam heb ik eens goed gekeken naar
+      verschillen in bijvoorbeeld [[https://jappieklooster.nl/compare.html][inkomsten belasting]].
+      Ik heb het tweede deel van de vergelijking nog niet uitgevoerd waarbij ik
+      wil kijken of ik wel werkgevers kon vinden die vergelijkbare lonen zouden
+      aanbieden,
+      hoofdzakelijk omdat ik niet wist hoeveel het loon zou zijn voor het aanbod.
+      In de vergelijking nam ik ongeveer euro 3500 aan (gebaseerd op vacatures van de overheid en een recruiter emailen),
+      wat neerkomt op een verschil van zo'n 40 tot 50 procent (incl btw verschil,
+      excl pensioen[fn::moeilijk om precieze informatie over te vinden]).
+    + Nu zouden het aanbod en dit kunnen worden gecombineerd
+      (ie op afstand werken, iets waar ik hoe dan ook naar opzoek wil gaan),
+      waar ik wel voor open zou staan. Ik weet niet of p-direkt en uzelf er
+      natuurlijk voor open staan.
+      Dit is uiteraard ook enigszins een ironische vraag om te hebben,
+      sinds het programma was bedoeld om talent in Nederland te houden,
+      ik hoop dat ze bedoelden "werken voor Nederland".
+      in plaats van fysiek in Nederland blijven.
+  + Een mindere zorg over werken voor p-direkt is het opdwingen van een
+    software stack.
+    Dit is een van de dingen wat ik zou vragen in een sollicitatie gesprek,
+    het is zeer belangrijk voor mij om dit zelf te kunnen samenstellen
+    [fn::naast mij OS heb ik zo'n 20 individuele software pakketen nodig om
+        enigsinds efficient te zijn, dit varieerd van een window manager (i3)
+        tot vim (text editor)].
+  + Niet zeker weten of het resultaat van een zes jarige tijd investering
+  uberhaupt wel resltaat op levert.
+
+Er zijn natuurlijk ook dingen die me erg bevallen aan het aanbod:
++ Op het moment vind ik het onderwerp leuk om mee te werken
+  (zelfs tot mijn verassing het scrijven van documentatie in de thesis,
+  en het doen van onderzoek, mits sci-hub werkt
+  (wat soms niet het geval is tot mijn frustratie))
++ Het lijkt erop dat chatbot achtige software steeds belangrijker word,
+  een expert zijn op dit gebied kan dus lucratief zijn (over 6 jaar dan)
++ Dingen zoals pensioen opbouw zouden goed kunnen zijn.
 
 * Manuel
-
-Pattern matching layer?
-+ Want to do this in drools??
-  I was thinking of just a java pre layer that did this with regexes,
-  because regexes are made for this stuff.
-
-Shouldn't the utterance be immutable?
-+ Has nice properties such as
-  + threadsafety.
-  + referential transparantie (its obvious where changes are made)
-+ changed copies can still be made.
 
 How about social practices?
 + Should an exact order be imposed?
