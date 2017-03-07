@@ -20,49 +20,21 @@
 
   ---
 
-  Over het PhD aanbod, ik zit er aan te denken om het aanbod te verwerpen.
-  Er zijn enkele redenen voor dit:
-
-  + Het termijn van zes jaar is erg lang,
-      ik weet niet of ik wel zolang geïnteresseerd kan blijven in een enkel
-      onderwerp.
-  + Ik was voordat dit opkwam al informele plannen aan het maken om naar
-    Australië te gaan.
-    + Nu dit aanbod opkwam heb ik eens goed gekeken naar
-      verschillen in bijvoorbeeld [[https://jappieklooster.nl/compare.html][inkomsten belasting]].
-      Ik heb het tweede deel van de vergelijking nog niet uitgevoerd waarbij ik
-      wil kijken of ik wel werkgevers kon vinden die vergelijkbare lonen zouden
-      aanbieden,
-      hoofdzakelijk omdat ik niet wist hoeveel het loon zou zijn voor het aanbod.
-      In de vergelijking nam ik ongeveer euro 3500 aan (gebaseerd op vacatures van de overheid en een recruiter emailen),
-      wat neerkomt op een verschil van zo'n 40 tot 50 procent (incl btw verschil,
-      excl pensioen[fn::moeilijk om precieze informatie over te vinden]).
-    + Nu zouden het aanbod en dit kunnen worden gecombineerd
-      (ie op afstand werken, iets waar ik hoe dan ook naar opzoek wil gaan),
-      waar ik wel voor open zou staan. Ik weet niet of p-direkt en uzelf er
-      natuurlijk voor open staan.
-      Dit is uiteraard ook enigszins een ironische vraag om te hebben,
-      sinds het programma was bedoeld om talent in Nederland te houden,
-      ik hoop dat ze bedoelden "werken voor Nederland".
-      in plaats van fysiek in Nederland blijven.
-  + Een mindere zorg over werken voor p-direkt is het opdwingen van een
-    software stack.
-    Dit is een van de dingen wat ik zou vragen in een sollicitatie gesprek,
-    het is zeer belangrijk voor mij om dit zelf te kunnen samenstellen
-    [fn::naast mij OS heb ik zo'n 20 individuele software pakketen nodig om
-        enigsinds efficient te zijn, dit varieerd van een window manager (i3)
-        tot vim (text editor)].
-  + Niet zeker weten of het resultaat van een zes jarige tijd investering
-  uberhaupt wel resltaat op levert.
-
-Er zijn natuurlijk ook dingen die me erg bevallen aan het aanbod:
-+ Op het moment vind ik het onderwerp leuk om mee te werken
-  (zelfs tot mijn verassing het scrijven van documentatie in de thesis,
-  en het doen van onderzoek, mits sci-hub werkt
-  (wat soms niet het geval is tot mijn frustratie))
-+ Het lijkt erop dat chatbot achtige software steeds belangrijker word,
-  een expert zijn op dit gebied kan dus lucratief zijn (over 6 jaar dan)
-+ Dingen zoals pensioen opbouw zouden goed kunnen zijn.
+  Over het PhD aanbod, ik ben aan het twijfelen over het aanbod.
+  Er zijn hier enkele redenen voor,
+  ten eerste is het termijn van zes jaar is wel erg lang
+  en ik weet niet zeker of ik zo lang gemotiveerd kan blijven over een enkel
+  onderwerp, daarnaast word dit versterkt door de onzekerheid of het wel
+  praktisch wat oplevert.
+  Om een juiste keus te maken zou ik toch meer willen weten over de opdracht:
+  + De werkplek
+    + Waar is het.
+    + Kan ik op afstand werken voor lange periodes (denk enkele maanden).
+  + Vooral voor p-direkt:
+    + Precieze inhoud van het werk.
+    + Softwarestack, ik zou hier het liefst vrije keuze in hebben
+      (denk bijvoorbeeld aan editor en OS keuze).
+  + Het uiteindelijke loon
 
 * Manuel
 
