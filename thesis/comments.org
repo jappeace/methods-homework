@@ -45,9 +45,9 @@
     + Kan ik op afstand werken voor lange periodes (denk enkele maanden).
   + Vooral voor p-direkt:
     + Precieze inhoud van het werk.
-    + Softwarestack, ik zou hier het liefst vrije keuze in hebben
+    + Software stack, ik zou hier het liefst vrije keuze in hebben
       (denk bijvoorbeeld aan editor en OS keuze).
-  + Het uiteindelijke loon
+  + Het uiteindelijke salaris
 
 * Manuel
 
