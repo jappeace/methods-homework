@@ -2355,6 +2355,7 @@ We listed the function attitudes $f_a$ and their required information into
 table [[tab:fa-and-data]]. 
 Therefore $B = (h, [s], m, G)$, which looks like a relatively small believe base,
 except for the incredible amount of information encoded in $G$.
+\todo{this current overview is quite incomplete}
 
 #+CAPTION: function attitudes and their required data
 #+NAME:   tab:fa-and-data
@@ -2369,6 +2370,14 @@ except for the incredible amount of information encoded in $G$.
 | $N_i$    | G                                                  |
 
 \newpage
+
+** N-agent extension
+\drafting
+because in architecture we would like to see n-agent support we should also
+describe how this could work in dialogue tree deliberation and in utterence
+processing.
+\todo[inline]{describe a function that does this}
+\todo[inline]{also a method to figure out which agent an utterence was directed at}
 ** Consistency with theory
 \cleared
 In this section we will explore if especially INTJ and ENTJ (MBTI) types would
@@ -2404,7 +2413,9 @@ Since attitudes produce a different process by definition
 (see section [[Mapping to process]]),
 we can conclude that they will also behave differently.
 
-* Architectural Changes
+
+
+* Architecture
 \toReview
 During the implementation phase major architectural changes have happened,
 for example the Alice bot was completely removed in favor of a new less tightly
@@ -2418,8 +2429,25 @@ chapter [[Implementation]].
 In this chapter we will describe the architectural changes between the
 current implementation and the original architecture discussed in section [[The serious game]].
 Note that we want to keep as much of the existing architecture as possible.
+
+\drafting
+In this chapter we will discuss two architectures, the first one is the N-agent
+architecture which is capable of dealing with more than one agent.
+Secondly we will discuss the architecture which is actually implemented which
+deals with a single agent.
+The reason for discussing both 
+
+** Desired architecture
 A deployment diagram of the architecture can bee seen in figure
 [[fig:architecture-concept]].
+
+\todo[inline]{N-agent stuff}
+\todo[inline]{Social practices (metnion at least, and say that there are elements of it in drools)}
+
+** Implemented architecture
+A deployment diagram of the architecture can bee seen in figure
+[[fig:architecture-concept]].
+
 
 #+NAME: fig:architecture-concept
 #+BEGIN_SRC plantuml :cache yes :file img/uml/architecture-concept.png :exports results
@@ -2514,32 +2542,32 @@ to be run on the same server.
 However currently we consider this to be out of the scope of this thesis.
 The reason for this is discussed in section [[Multiple conversation partners]].
 
-** Application states
-\drafting
-There are three main life cycle phases of the program. Initialization,
-Operation, and cleaning up.
-In the initialization phase the websocket is opened and the knowledge is loaded
-into memory, we will talk about this more in section [[Data structures]].
-Operation consists of pattern matching.
-Cleaning up involves closing the websocket and shutting down the KIE session.
-The life cycle itself hasn't changed, just what happens in the life cycle.
+*** Application states
+ \drafting
+ There are three main life cycle phases of the program. Initialization,
+ Operation, and cleaning up.
+ In the initialization phase the websocket is opened and the knowledge is loaded
+ into memory, we will talk about this more in section [[Data structures]].
+ Operation consists of pattern matching.
+ Cleaning up involves closing the websocket and shutting down the KIE session.
+ The life cycle itself hasn't changed, just what happens in the life cycle.
 
-** Initialization
-\drafting
-+ init game
-+ read yml
-+ insert yml in drools
-** Operation
-\drafting
-+ Parse user utterence
-+ Quick match layer (hello -> hello)
-+ Heavy deliberation (if not quick match)
-  + This is where we inserted personality, although it could also play a role in
-    quick matching.
-  + The structure of personality is a list of enums that contain the relevant functions
-  + With this structure other drools could interject in the middle of the
-    deliberation process.
-**** Drools
+*** Initialization
+ \drafting
+ + init game
+ + read yml
+ + insert yml in drools
+*** Operation
+ \drafting
+ + Parse user utterence
+ + Quick match layer (hello -> hello)
+ + Heavy deliberation (if not quick match)
+   + This is where we inserted personality, although it could also play a role in
+     quick matching.
+   + The structure of personality is a list of enums that contain the relevant functions
+   + With this structure other drools could interject in the middle of the
+     deliberation process.
+***** Drools
 
 
 * Implementation
