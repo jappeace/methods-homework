@@ -1,17 +1,9 @@
 #+TITLE: todo
 
-1. Update documentation
-2. Print it out
-3. Make sure to send a questions email, if any.
-4. Prepare a presentation?
-5. Make unit tests to ensure jungian functions behave
-6. Implement the other functions
-7. Better representation for actors
-8. Better representation for scenes
-   (currently they're just strings with no
-   structure, except an invasive social practice linked list that's one to one,
-   one way. This hardly looks like what I read about them)
-9. Figure out how emotions work with that.
-10. Make scenes work?
-11. Test them out
-12. Report
+1. Implement Ti, and Ne
+2. Unit tests for Ne
+3. Integration tests
+4. Repair OCC module & scoring module
+5. Make a script to convert AIML to YML
+   (perhaps we can sue this for integration or demo)
+6. Report
