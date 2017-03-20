@@ -2390,13 +2390,6 @@ except for the incredible amount of information encoded in $G$.
 
 \newpage
 
-** N-agent extension
-\drafting
-because in architecture we would like to see n-agent support we should also
-describe how this could work in dialogue tree deliberation and in utterence
-processing.
-\todo[inline]{describe a function that does this}
-\todo[inline]{also a method to figure out which agent an utterence was directed at}
 ** Consistency with theory
 \cleared
 In this section we will explore if especially INTJ and ENTJ (MBTI) types would
@@ -3057,19 +3050,15 @@ with an existing knowledge base such as OWL.
 *** Multiple conversation partners
 <<Multiple conversation partners>>
 \drafting
-This is currently not supported by the architecture because it introduces new
-problems to deliberation.
-Such as, when in a dialogue tree do we decide which agent speaks.
-But more importantly, it introduces new problems to the pattern matching,
-since it has to be decided at which agent an utterance has been directed.
-
-\drafting
-To add support for this in deliberation,
-it would require the use of a more advanced agent selection mechanism in
-dialogue tree.
-The actor class should also be more specific in this case.
+This can be supported by the current architecture technically I think.
+Issues that are not addressed for this however are for example timing of replies
+and making sure that the bots won't chit chat with each other forever ignoring
+the user.
+This probably requires that the actor class to be more specific in this case.
 Connections could for example be restricted to coalitions of actors rather than just
 single actors.
+In other words, the yml files shouldn't restrict to any or singular actor,
+but rather to groups of actors.
 
 
 *** Multiple symbols matched
