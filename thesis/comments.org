@@ -2,10 +2,18 @@
 
 * Dignum
 
-* Manuel
+** Status
++ Twee weken geleden functies af gemaakt. (tenminste zover de unit tests aangeven)
++ Gister en eergister documentatie weer wat op peil gebracht.
++ Vandaag en morgen beginnen met het integratie test scenario opzetten.
 
-How about social practices?
-+ Should an exact order be imposed?
+** Vragen
+Hoe gelijk moet ik de notatie houden met wat er in de code staat?
+DialogueTree gebruikt heeft bijvoorbeeld nu wat meer informatie beschikbaar als
+beschreven in BDI+Jung.
+
+
+* Manuel
 
   Probablistic generation of next dialogue moves could be combined with moddeling one
   of the Jungian Irrational functions??
