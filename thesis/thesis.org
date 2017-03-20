@@ -3060,6 +3060,14 @@ single actors.
 In other words, the yml files shouldn't restrict to any or singular actor,
 but rather to groups of actors.
 
+\drafting
+Another major issue would be deciding which agent is being talked to by the
+user. This could maybe be solved by giving very fine grained restrictions,
+but this would become quickly hard to manage with more than 3 agents.
+Perhaps a heuristic can be used where the user would have to address agents
+by name or have separate buttons to talk to specific agents.
+
+
 
 *** Multiple symbols matched
 \drafting
