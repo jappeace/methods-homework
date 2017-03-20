@@ -1,9 +1,15 @@
 #+TITLE: todo
 
-1. Implement Ti, and Ne
-2. Unit tests for Ne
-3. Integration tests
-4. Repair OCC module & scoring module
-5. Make a script to convert AIML to YML
+1. Integration tests
+   1. Make scenario (probably borrow from thesis)
+   2. Test the scenario?
+   3. Perhaps we should look in what cases the deeper functions have effect (if any)
+   4. In thesis we should also mention the effects of values for functions
+2. Repair OCC module & scoring module
+3. Make a script to convert AIML to YML
    (perhaps we can sue this for integration or demo)
-6. Report
+4. Report
+
+
+* Random thoughts
+Do percolutionary values even work all the way
