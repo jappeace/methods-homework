@@ -3347,53 +3347,40 @@ to keep unity running (or use at all).
 :UNNUMBERED: t
 :END:
 \todo[inline]{To circumvent typing errors of users we can put input trough a spell checker taking the first correction}
-\todo[inline]{Regex mathing as an extension to existing matching}
 \todo[inline]{How to deal with long inputs? I think sentence splitting was mentioned?}
 \todo[inline]{Perhaps we can use argumentation research on top of the graph to figure out more semantics (this statment is attacking that or inquirying this)}
 \todo[inline]{Extracting information from meanings isn't very DRY right now, for example saying how is your foot? Could perhaps be splitup into statusInquiry + foot. However I don't know how to do this better right now, perhaps it could be a natural result of dubble matching but we lose the order inforamtion.}
+** Rough planning.
+1. Integration tests
+   1. Make scenario (probably borrow from thesis)
+   2. Test the scenario?
+   3. Perhaps we should look in what cases the deeper functions have effect (if any)
+   4. In thesis we should also mention the effects of values for functions
+2. Repair OCC module & scoring module
+3. Make a script to convert AIML to YML
+   (perhaps we can sue this for integration or demo)
+4. Report
+
+
+*** Random thoughts
+Do percolutionary values even work all the way? could write a test for this.
 ** Tooling stuff
 + Protocol buffers could be used for protocol. Its strongly typed and has both
   C# and Java bindings
-+ xml shouldn't be used as a procudual language (http://wiki.c2.com/?XmlAbuse)
-  its probably better to replace it with yaml https://en.wikipedia.org/wiki/XML#Criticism
-  (seriously most of the code of alice bot involvelves mapping xml into objects
-  (for which exist libraries https://stackoverflow.com/questions/15881876/mapping-xml-entities-to-java-objects)
-  and valiating it, (which can be done by an xsd better anyway)).
 ** Security
 + Don't send passwords as plain text over the network.
 + Use SSL.
-+ Probably should hire an expert to do an audit.
-
++ On release, should get a security expert to do an audit. I'm just vaguely
+  aware of security issues, but I've seen several already (above for example)
 ** Protocol
-Start game and new game could be merged?
-Why are you logging towards the client? This seems like a security hole and a
-possible performance bottleneck.
++ Start game and new game could be merged?
++ Why logging towards the client? This seems like a security hole and a
+  possible performance bottleneck.
 
 ** Thesis
 + Add UML references?
 + Add "architecture quality attribute" references?
 ** YML
-**** Choose 
-We could make symlink connections that link to multiple possible response.
-file reason_here
-#+BEGIN_SRC yml 
-choose:
-  + broken_arms
-  + flue
-  + feel_sick
-  + in_pain
-#+END_SRC
-
-Then in the history of facts the reason_here would get the decison made by the
-bot so reason_here(broken_arms) for example.
-So every future reasone_here reference would also be the same reference.
-
-We could even go as far as making this decision on load time.
-
-**** Replace names by symbol values directly
-Currently string are used for coupling, but we could replace this by the
-symbol values directly.
-I'm sure its possible for connections, less sure for things such as Choosing
 **** History connections
 Connections can be extended to add before support as a list, where if the match
 specific items  in the history new responses become possible.
@@ -3423,21 +3410,11 @@ connections:
    - annoyed
 #+END_SRC
 
-** Rough planning.
+***** Note
+I'm not sure if this is a good idea.
+We kindoff already have actor gaurds anyway but this kind of specification is
+increadibly detailed and probably should be handled by a norm system instead.
 
-1. Integration tests
-   1. Make scenario (probably borrow from thesis)
-   2. Test the scenario?
-   3. Perhaps we should look in what cases the deeper functions have effect (if any)
-   4. In thesis we should also mention the effects of values for functions
-2. Repair OCC module & scoring module
-3. Make a script to convert AIML to YML
-   (perhaps we can sue this for integration or demo)
-4. Report
-
-
-*** Random thoughts
-Do percolutionary values even work all the way?
 ** Extra
 Replace java.util.logger* with slfj
 Repalce all std.out with propper logging calls
