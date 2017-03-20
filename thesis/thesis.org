@@ -1901,6 +1901,7 @@ received a symbol (ie empty set).
 This produces the following type signature:
 \[ B_t \to t \to S_t \overset{f_a}{\to} (B_{t+1}, \Delta_{t+1}) \]
 
+*** The dialogue tree
 \cleared
 We have some believes, time and meaning going in, some deliberation
 going on and a new set of believes and actions going out.
@@ -1914,17 +1915,19 @@ for example if our agent is sick we want the doctor to utter a /GiveMedicine/
 meaning,
 or if he is in extreme pain he would like to see the /GivePainKiller/ meaning
 uttered.
-We also need to mark which agent uttered, therefore we introduce $\Lambda$ as the set
-of all agents, where $a \in \Lambda$.
+We also need to mark which agent uttered the dialogue tree node,
+therefore we introduce $\Lambda$ as the set of all agents, where $a \in \Lambda$.
 
-\cleared
+\toReview
 Therefore we introduce $D$ a dialogue tree:
 \[ D = (a, s, [D])\]
 Where $s \in \mathcal{S}$ for the symbol,
 and $[D]$ is the ordered list of dialogue children.
-The initial dialogue just has a meaning with an empty list of children.
-A reply would be the same except with a list of children that is bigger than zero.
+The initial dialogue is just a symbol with an empty list of children.
+To consider a reply, we would use the same except with a list of children that
+is bigger than zero.
 The most preferred reply is the first element in the list of children.
+How the actor is decided will be discussed in section [[symbol graph]].
 An example of an expended dialogue tree can be seen in figure [[fig:dialoguetree]].
 
 #+NAME: fig:dialoguetree
@@ -2177,17 +2180,33 @@ To do this we will start analyzing the Jungian functions and see what
 Then we will define the believe tuple more formally.
 
 *** Symbol graph
-\cleared
+<<symbol graph>>
+\toReview
 To make sure the agent stays on topic we will make use of a symbol graph.
 This graphs gives connections to the symbols described in section [[A type signature approach]].
 For a precise description of the implementation see section [[Symbol graph]].
-The meaning graph $G$ is a set of connections $(\pi, A, s_1, s_2)$
-where $s_1, s_2 \in \mathcal{S} \wedge s_1 \neq s_2$, $A \subseteq \Lambda$ is the set of
+The meaning graph $G$ is a set of connections $c \in G$ where
+$c = (\pi, A, s_1, s_2)$, $s_1, s_2 \in \mathcal{S} \wedge s_1 \neq s_2$, $A \subseteq \Lambda$ is the set of
 agents that can use the connection (to prevent the patient asking the doctor
 about his health problems) and $\pi$ is the perlocutionary information about the
 speech act (for example angering or scaring),
 which is encoded in the edges because its not the meaning that causes these
 but the way you get to those meanings.
+In other words, being polite and then telling bad news causes different
+perlocutionary values than just telling bad news.
+
+\toReview
+From this we can define a function that gets the allowed connections from
+a symbol and an agent:
+\[ a \to s \to [c] \]
+We can retrieve $a$ and $s$ from the current node we are processing in $D$.
+The result is a list of connections we can go to from that symbol.
+Note that this list still should still be flattened to be attached as option to
+dialogue tree $D$, since connection $c$ contains multiple agents $A$ and $D$
+just a single agent. So a single connection $c$ can create multiple dialogue
+tree $D$ children.
+To determine the first dialogue tree $D$ node's agent an outside sensor is
+required.
 
 \cleared
 The introduction of the symbol graph is probably the most radical change this
@@ -2857,7 +2876,6 @@ and be shallowly copied on construction.
 Then to expose the data one should create a copy of the collection, or, expose a
 stream (which is also immutable). \todo{cite}
 
-
 *** Symbol graph 
 \todo{this is the old chapter on data structures, we should check what can be salvaged}
  <<Symbol graph>>
@@ -2993,6 +3011,18 @@ Because this database has as key symbols and as values a list of connections
 which have to field that go to symbols.
 On this game tree deliberation can occur as described in section
 [[Mapping to process]].
+
+**** Actors
+\drafting
+To make sure certain strange situations don't occur, such as the patient asking
+the doctor if the doctor is sick, we added actor based restrictions on
+connections.
+Currently however this implementation is rather limited, it only allows for an
+"any" actor, which basically means any actor can say this, or a specific actor.
+This could be extended with some kind of role system,
+where more fine grained groups of restrictions can be specified.
+For example both the patient and family member should be able to ask the doctor
+what's wrong with the patient, however the doctor not.
 
 ** Testing
 \drafting
@@ -3363,7 +3393,7 @@ to keep unity running (or use at all).
 
 
 *** Random thoughts
-Do percolutionary values even work all the way? could write a test for this.
+Do perlocutionary values even work all the way? could write a test for this.
 ** Tooling stuff
 + Protocol buffers could be used for protocol. Its strongly typed and has both
   C# and Java bindings
