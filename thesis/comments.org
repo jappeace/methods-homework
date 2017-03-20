@@ -12,6 +12,9 @@ Hoe gelijk moet ik de notatie houden met wat er in de code staat?
 DialogueTree gebruikt heeft bijvoorbeeld nu wat meer informatie beschikbaar als
 beschreven in BDI+Jung.
 
+Volgens mij heb ik de problemen inmidels opgelost voor het maken van een $n$-agent
+architectuur, maar volgens mij is het nog steeds in beter idee om eerst alle
+andere dingen op de todo lijst af te maken.
 
 * Manuel
 
