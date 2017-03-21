@@ -2474,10 +2474,15 @@ between the current implementation and the original architecture discussed in
 section [[The serious game]]. Note that we want to keep as much of the existing
 architecture as possible.
 
+\toReview
+There are also several items we won't discuss in this chapter because they
+haven't changed, these include the protocol,
+and the wildfly server and the unity client.
 ** Implemented architecture
 <<Implemented architecture>>
 A deployment diagram of the architecture can bee seen in figure
-[[fig:architecture-concept]].
+[[fig:architecture-concept]]. This is a rough overview of how everything interacts
+now with each other.
 
 #+NAME: fig:architecture-concept
 #+BEGIN_SRC plantuml :cache yes :file img/uml/architecture-concept.png :exports results
@@ -2521,19 +2526,26 @@ A deployment diagram of the architecture can bee seen in figure
 \cleared
 The biggest difference from the original architecture is the removal of
 distinction between drools and the chatbot.
-In the new architecture we plan to make all information in the files available to
+In the new architecture we make all information in the files available to
 the drools in a big database.
 This is starkly different than the architecture used in section [[
 Server architecture]].
 As can be see in section [[user utterance processing]], 
 the reply for a message is already determined before drools had a chance to
 do deliberation.
-Even worse, if the drools want to utter a spontaneous meaning they have to encode
-a string inside the drools themselves.
+This problem becomes bigger if the drools want to utter a spontaneous meaning
+they have to encode a string inside the drools themselves.
 This means the strings facing the user are spread over both the AIML files
 *and* the drools.
 This is confusing for new scenario creators since completely different folders
 have to be accessed to change the strings.
+# This violates the changeability design principle quite heavily and unnecessarily. \todo{cite}
+
+\toReview
+These changes result in a much more simple architecture.
+Only one place does deliberation rather than two and only one api is used for
+generating responses.
+
 
 \toReview
 Note that although we removed the ability for the bot to use AIML, it should be
@@ -2546,7 +2558,128 @@ library can be used to generate the new YML based files.
 Although care should be taken to comply with the new format,
 for example connections can be derived from AIML,
 but the concept of a connection is implicitly defined in AIML.
-# This violates the changeability design principle quite heavily and unnecessarily. \todo{cite}
+
+*** Jungian class diagram
+
+\newpage
+**** db package
+#+NAME: fig:dbclass
+#+BEGIN_SRC plantuml :cache yes :file img/uml/dbclass.png :exports results
+  package model.db{
+    abstract class Database<Key,Value>{
+      -values:HashMap<Key,Value>
+      +get(key:Key):Optional<Value>
+      +getOrThrow(key:Key):Value
+      +keys():Stream<Key>
+      +values():Stream<Value>
+      +entries():Stream<Map.Entry<Key,Value>>
+    }
+    class ConnectionDatabase<Symbol, {Connection}>{
+      +getAllowedConnections(name:Symbol, role:Actor):Stream<Connection>
+      +getFromTo(from:Symbol, to:Symbol):Optional<Connection>
+      +putInCopy(symbol:Symbol, connections:Connection...):ConnectionDatabase
+    }
+    class PatternDatabase<Scene, {PatternSymbol}>
+    class SymbolDatabase<String, Symbol>
+    ConnectionDatabase --|> Database 
+    PatternDatabase --|> Database 
+    SymbolDatabase --|> Database 
+    ConnectionDatabase -[hidden]-> PatternDatabase
+  }
+#+END_SRC
+#+CAPTION: Dbclass diagram of the server, where kie is the engine that handles the drools
+#+LABEL: fig:dbclass
+#+RESULTS[21d5587cd72af0f635dbf8d8579dd2c7fa664792]: fig:dbclass
+[[file:img/uml/dbclass.png]]
+
+
+\newpage
+**** Model package
+#+NAME: fig:jungclass
+#+BEGIN_SRC plantuml :cache yes :file img/uml/jungclass.png :exports results
+  enum PerlocutionaryValue
+  package db{
+    class ConnectionDatabase
+    class PatternDatabase 
+  }
+  PatternDatabase --* "*" PatternSymbol
+  PatternDatabase --* "*" Scene
+  ConnectionDatabase --* "*" Symbol
+  ConnectionDatabase --* "*" Connection
+  class Actor {
+    +name:String
+  }
+  class Believes{
+    +programmedConnections:ConnectionDatabase
+    +learnedConnections:ConnectionDatabase
+    +goals:{Goal}
+    +values:PersonalValues
+    +learnedValues:PersonalValues
+    +actors:{Actor}
+    +previousUtterences:[Utterance]
+  }
+  Believes -* "2" ConnectionDatabase
+  Believes --* Goal
+  Believes --* "2" PersonalValues
+  Believes --* "1..*" Actor
+  Believes --* "*" Utterance
+  class Connection {
+    +to:Symbol
+    +restricted_to:Actor
+    +perlocuationaryValues:{PerlocationaryValue}
+  }
+  Connection --* Symbol
+  Connection --* Actor
+  Connection --* "*" PerlocutionaryValue
+  class DialogueTree{
+    +options:[DialogueTree]
+    +utterance:Utterance
+    +connection_used:Connection
+  }
+  DialogueTree --* "*" DialogueTree
+  DialogueTree --* Utterance
+  DialogueTree --* Connection
+  class Goal{
+    +utterence:Utterence
+    +utility:int
+    +isGoal(utterence:Utterence):boolean
+  }
+  Goal --* Utterence
+  class PatternSymbol{
+     +pattern:Pattern
+     +symbol:Symbol
+  }
+  PatternSymbol --* Symbol
+  class PersonalValues{
+     -values:EnumMap<PerlocutionaryValue, Integer>
+  }
+  PersonalValues --* "*" PerlocutionaryValue
+  class Scene {
+    +name:String
+  }
+  class Symbol {
+    +name:String
+    +scene:Scene
+  }
+  Symbol --* Scene
+  class Utterance{
+    +byWhom:Actor
+    +what:Symbol
+  }
+  Utterance --* Actor
+  Utterance --* Symbol
+#+END_SRC
+#+CAPTION: Jungclass diagram of the server, where kie is the engine that handles the drools
+#+LABEL: fig:jungclass
+#+RESULTS[66c18f645adfd036279fbbe5486ce35daed247bf]: fig:jungclass
+[[file:img/uml/jungclass.png]]
+
+*** Initialization
+\todo[inline]{Add sequence diagram and discuss how its different from the previous one}
+ \drafting
+ + init game
+ + read yml
+ + insert yml in drools
 
 \toReview
 In the new architecture we use a file reader to construct the entire
@@ -2559,35 +2692,10 @@ A symbol has connections to other symbols, which should be sensible responses.
 So if a user utters a meaning then rather than having a direct response string
 that uses variables to fill in the gap, we get a meaning, which connected to
 other meanings which in turn are also connected.
-We can do deliberation on this because we have one or more /goals/.
+We can do deliberation on this because we have one or more goals.
 
-\cleared
-Another advantage of this change is that its a much more simple architecture.
-Only one place does deliberation rather than two and only one api is used for
-generating responses.
-
-\toReview
-We have thought about making the architecture ready for allowing multiple agents
-to be run on the same server.
-However currently we consider this to be out of the scope of this thesis.
-The reason for this is discussed in section [[Multiple conversation partners]].
-
-*** Application states
- \drafting
- There are three main life cycle phases of the program. Initialization,
- Operation, and cleaning up.
- In the initialization phase the websocket is opened and the knowledge is loaded
- into memory, we will talk about this more in section [[Data structures]].
- Operation consists of pattern matching.
- Cleaning up involves closing the websocket and shutting down the KIE session.
- The life cycle itself hasn't changed, just what happens in the life cycle.
-
-*** Initialization
- \drafting
- + init game
- + read yml
- + insert yml in drools
 *** Operation
+\todo[inline]{sequennce diagram}
  \drafting
  + Parse user utterence
  + Quick match layer (hello -> hello)
@@ -2598,7 +2706,7 @@ The reason for this is discussed in section [[Multiple conversation partners]].
    + With this structure other drools could interject in the middle of the
      deliberation process.
 ***** Drools
-
+      
 ** Desired architecture
 A deployment diagram of the architecture can bee seen in figure
 [[fig:n-agent-arch]].
@@ -2648,6 +2756,12 @@ A deployment diagram of the architecture can bee seen in figure
 #+LABEL: fig:n-agent-arch
 #+RESULTS[dcf9326c7d021dc38efdf65d5dbab06d0277c1df]: fig:n-agent-arch
 [[file:img/uml/n-agent-arch.png]]
+
+
++ Need to change the protocol & userinteface to allow for sending to a particular bot
++ or need to do a hearistic to detect to which agent is talked to
++ Protocol needs to be  able to distinguish which agent says what or which emotional changes occur in which agent.
++ Message processing occurs at either both agents (they need to record history anyway)
 
 * Implementation
 \drafting
