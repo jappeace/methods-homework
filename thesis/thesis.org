@@ -2742,17 +2742,27 @@ We can do deliberation on this because we have one or more goals.
 [[file:img/uml/initjung.png]]
 
 **** Parsing YAML
-\drafting
+\toReview
 To parse the several helper classes are used. These are prepended with the
 keyword raw and are designed to work with the library to parse YAML.
 From this it is rather easy to create the immutable and non primitive based
 objects we want.
+
+\toReview
 First the Symbol files are parsed and converted into a SymbolDatabase.
-Then the patterndatabase is constructed, not that although the rawsymbols
-contain patterns the eventual symbols don't.
-This is because we split up patterns and potential utterances into distinct data
-structures. Where the patterns just point to the complete symbols.
+This is the most easy to do since this database is just the symbol name
+as key with symbols as value as can be seen in figure [[fig:dbclass]].
+The pattern database is also constructed from the raw symbols.
+From these the patterns are striped and with help of the symbol database
+the right symbols are linked to patterns.
+Note that although the rawsymbols
+contain patterns strings the eventual symbols don't.
+This is because we split up patterns and potential (agent) utterances into
+distinct data structures.
+Where the patterns just point to the complete symbols.
 With help of this the connection database can be easily constructed.
+
+\todo[inline]{Diagram??}
 
 *** Operation
  \toReview
@@ -2766,7 +2776,7 @@ With help of this the connection database can be easily constructed.
  Thinking people may for example respond with a confident yes, whereas feeling
  people would say it by default in a more doubting tone.
 
- \drafting
+ \toReview
  To ensure rules are executed in a particular order we often wrap and unwrap
  required data into types.
  For example the initial user utterance gets wrapped into an UnparsedUttarence
@@ -2776,6 +2786,8 @@ With help of this the connection database can be easily constructed.
  From this rules can decide what to do further with this parsed type.
  Currently we just take the first symbol from the ParsedUttarence and convert it
  into a single utterance, while truncating all other utterances.
+ Currently we delete the type after unwrapping it from the facts.
+ This is to prevent double execution of rules.
  
 
  #+NAME: fig:insert_meaning
@@ -2808,6 +2820,7 @@ With help of this the connection database can be easily constructed.
  #+RESULTS[fcf9bac625ae1eadb2adefadc54c87c6381fd7f8]: fig:insert_meaning
  [[file:img/uml/insert_meaning.png]]
 
+ \newpage
 ** Desired architecture
 A deployment diagram of the architecture can bee seen in figure
 [[fig:n-agent-arch]].
