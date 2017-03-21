@@ -2875,7 +2875,13 @@ A deployment diagram of the architecture can bee seen in figure
 + Need to change the protocol & userinteface to allow for sending to a particular bot
 + or need to do a hearistic to detect to which agent is talked to
 + Protocol needs to be  able to distinguish which agent says what or which emotional changes occur in which agent.
-+ Message processing occurs at either both agents (they need to record history anyway)
++ Message processing occurs at either agent or both agents (they need to record history anyway)
++ The functions need to be made aware of dealing with multiple agents, ie generating
+  more options if possible (for example any agent wouldn't result in any option
+  but n distinct options).
++ Agents should be able to talk to each other, but they need to time this
+  properly. Otherwise the user will suddenly see 200 lines of chit chat appear
+  while the agents wait upon input.
 
 * Implementation
 \drafting
