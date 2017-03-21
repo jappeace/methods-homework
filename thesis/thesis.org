@@ -2560,41 +2560,21 @@ for example connections can be derived from AIML,
 but the concept of a connection is implicitly defined in AIML.
 
 *** Jungian class diagram
+\toReview
+A class diagram[fn::note that we use [] for list and {} for set]
+of the model that was used to implement the ideas from section [[BDI and Jung]] can
+be seen in figure [[fig:jungclass]].
+All classes in this diagram are immutable.
+Meaning that once created their values will never change.
+A value can be changed by making a new instance with the modified value.
+Setters are often provided for values that need to change regularly,
+they return a new instance however.
+Using an immutable model has several advantages over the conventional approach.
+The biggest one being that the entire model is thread safe, without the use of
+locks.
+This makes it very easy to use with drools since a drool engine could execute a
+rule at any time.
 
-\newpage
-**** db package
-#+NAME: fig:dbclass
-#+BEGIN_SRC plantuml :cache yes :file img/uml/dbclass.png :exports results
-  package model.db{
-    abstract class Database<Key,Value>{
-      -values:HashMap<Key,Value>
-      +get(key:Key):Optional<Value>
-      +getOrThrow(key:Key):Value
-      +keys():Stream<Key>
-      +values():Stream<Value>
-      +entries():Stream<Map.Entry<Key,Value>>
-    }
-    class ConnectionDatabase<Symbol, {Connection}>{
-      +getAllowedConnections(name:Symbol, role:Actor):Stream<Connection>
-      +getFromTo(from:Symbol, to:Symbol):Optional<Connection>
-      +putInCopy(symbol:Symbol, connections:Connection...):ConnectionDatabase
-    }
-    class PatternDatabase<Scene, {PatternSymbol}>
-    class SymbolDatabase<String, Symbol>
-    ConnectionDatabase --|> Database 
-    PatternDatabase --|> Database 
-    SymbolDatabase --|> Database 
-    ConnectionDatabase -[hidden]-> PatternDatabase
-  }
-#+END_SRC
-#+CAPTION: Dbclass diagram of the server, where kie is the engine that handles the drools
-#+LABEL: fig:dbclass
-#+RESULTS[21d5587cd72af0f635dbf8d8579dd2c7fa664792]: fig:dbclass
-[[file:img/uml/dbclass.png]]
-
-
-\newpage
-**** Model package
 #+NAME: fig:jungclass
 #+BEGIN_SRC plantuml :cache yes :file img/uml/jungclass.png :exports results
   enum PerlocutionaryValue
@@ -2671,11 +2651,54 @@ but the concept of a connection is implicitly defined in AIML.
   Actor -[hidden]-> PersonalValues
   db -[hidden]-> DialogueTree
 #+END_SRC
-#+CAPTION: Jungclass diagram of the server, where kie is the engine that handles the drools
+#+CAPTION: Class diagram of the model
 #+LABEL: fig:jungclass
-#+RESULTS[0a2997f9591ea5ff0b150aa0002e07d96e9be563]: fig:jungclass
+#+RESULTS[443528f6dbfc968d05ecbe4d3056234529a98dbc]: fig:jungclass
 [[file:img/uml/jungclass.png]]
 
+**** db package
+\toReview
+Figure [[fig:jungclass]] only shows part of the db package because it couldn't quite
+fit,
+in figure [[fig:dbclass]] the databases are shown.
+This is a sub package of the model.
+The database is best seen as an immutable hashmap. It also provides some extra
+nice java8 features,
+such as returning an optional rather than null for the get method.
+The concrete implementations of database can add extra behavior once the type
+value of the generic parameters is known which is done by connection database
+for example.
+#+NAME: fig:dbclass
+#+BEGIN_SRC plantuml :cache yes :file img/uml/dbclass.png :exports results
+  package model.db{
+    abstract class Database<Key,Value>{
+      -values:HashMap<Key,Value>
+      +get(key:Key):Optional<Value>
+      +getOrThrow(key:Key):Value
+      +keys():Stream<Key>
+      +values():Stream<Value>
+      +entries():Stream<Map.Entry<Key,Value>>
+    }
+    class ConnectionDatabase<Symbol, {Connection}>{
+      +getAllowedConnections(name:Symbol, role:Actor):Stream<Connection>
+      +getFromTo(from:Symbol, to:Symbol):Optional<Connection>
+      +putInCopy(symbol:Symbol, connections:Connection...):ConnectionDatabase
+    }
+    class PatternDatabase<Scene, {PatternSymbol}>
+    class SymbolDatabase<String, Symbol>
+    ConnectionDatabase --|> Database 
+    PatternDatabase --|> Database 
+    SymbolDatabase --|> Database 
+    ConnectionDatabase -[hidden]-> PatternDatabase
+  }
+#+END_SRC
+#+CAPTION: 
+#+LABEL: fig:dbclass
+#+RESULTS[21d5587cd72af0f635dbf8d8579dd2c7fa664792]: fig:dbclass
+[[file:img/uml/dbclass.png]]
+
+
+\newpage
 *** Initialization
 \todo[inline]{Add sequence diagram and discuss how its different from the previous one}
  \drafting
