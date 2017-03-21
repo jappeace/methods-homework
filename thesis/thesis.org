@@ -2458,10 +2458,11 @@ The drools have become the center of deliberation (which previously was the AIML
 We will discuss these changes in this chapter.
 
 \toReview
-In this chapter we will discuss two architectures, the first one is the N-agent
+In this chapter we will discuss two architectures,
+the first is the architecture which is actually implemented, this deals with a
+single agent and the user.
+Secondly we will discuss the N-agent
 architecture which is capable of dealing with more than one agent (and the user).
-Secondly we will discuss the architecture which is actually implemented which
-deals with a single agent and the user.
 The reason for discussing both is that the ideas discussed in section [[
 BDI and Jung]] could be applied to an N-agent architecture.
 However there are some pragmatic problems with this discussed in section
@@ -2473,62 +2474,10 @@ between the current implementation and the original architecture discussed in
 section [[The serious game]]. Note that we want to keep as much of the existing
 architecture as possible.
 
-
-** Desired architecture
-A deployment diagram of the architecture can bee seen in figure
-[[fig:architecture-concept]].
-
-\todo[inline]{N-agent stuff}
-\todo[inline]{Social practices (metnion at least, and say that there are elements of it in drools)}
-
-#+NAME: fig:n-agent-arch
-#+BEGIN_SRC plantuml :cache yes :file img/uml/n-agent-arch.png :exports results
-
-  folder scene{
-    cloud drools {
-      component score
-      component scenario
-      storage facts
-      scenario -- facts
-      score -- facts
-    }
-  }
-
-  folder bot{
-  cloud bot.drools {
-    component emotions
-    component personality
-    storage bot.facts
-    emotions -- bot.facts
-    personality -- bot.facts
-    score -- bot.facts
-  }
-  database meanings [
-    patterns
-    ====
-    symbol graph
-  ]
-  entity filereader
-  filereader ..> meanings
-  bot.drools --> meanings
-  }
-  node server
-  node client
-
-  server "1"-- "1..*" bot
-  server  -- scene
-  server  -(0)- client
-#+END_SRC
-#+CAPTION: Deployment diagram of new architecture, where the dashed arrow means constructs, the solid arrow means uses and the other lines mean itneracts.
-#+LABEL: fig:n-agent-arch
-#+RESULTS[dcf9326c7d021dc38efdf65d5dbab06d0277c1df]: fig:n-agent-arch
-[[file:img/uml/n-agent-arch.png]]
-
 ** Implemented architecture
 <<Implemented architecture>>
 A deployment diagram of the architecture can bee seen in figure
 [[fig:architecture-concept]].
-
 
 #+NAME: fig:architecture-concept
 #+BEGIN_SRC plantuml :cache yes :file img/uml/architecture-concept.png :exports results
@@ -2649,6 +2598,56 @@ The reason for this is discussed in section [[Multiple conversation partners]].
    + With this structure other drools could interject in the middle of the
      deliberation process.
 ***** Drools
+
+** Desired architecture
+A deployment diagram of the architecture can bee seen in figure
+[[fig:n-agent-arch]].
+
+\todo[inline]{N-agent stuff}
+\todo[inline]{Social practices (metnion at least, and say that there are elements of it in drools)}
+
+#+NAME: fig:n-agent-arch
+#+BEGIN_SRC plantuml :cache yes :file img/uml/n-agent-arch.png :exports results
+
+  folder scene{
+    cloud drools {
+      component score
+      component scenario
+      storage facts
+      scenario -- facts
+      score -- facts
+    }
+  }
+
+  folder bot{
+  cloud bot.drools {
+    component emotions
+    component personality
+    storage bot.facts
+    emotions -- bot.facts
+    personality -- bot.facts
+    score -- bot.facts
+  }
+  database meanings [
+    patterns
+    ====
+    symbol graph
+  ]
+  entity filereader
+  filereader ..> meanings
+  bot.drools --> meanings
+  }
+  node server
+  node client
+
+  server "1"-- "1..*" bot
+  server  -- scene
+  server  -(0)- client
+#+END_SRC
+#+CAPTION: Deployment diagram of new architecture, where the dashed arrow means constructs, the solid arrow means uses and the other lines mean itneracts.
+#+LABEL: fig:n-agent-arch
+#+RESULTS[dcf9326c7d021dc38efdf65d5dbab06d0277c1df]: fig:n-agent-arch
+[[file:img/uml/n-agent-arch.png]]
 
 * Implementation
 \drafting
