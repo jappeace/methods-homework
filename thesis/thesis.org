@@ -3148,38 +3148,6 @@ stream (which is also immutable). \todo{cite}
 
  \todo{AIML with graph stuff}
 
-**** Reprsenting scoring and emotions
- \drafting
- Once we decided to replace AIML we also we're committed to replace the work on
- scoring and emotions.
- This is of course not acceptable so we need to re-add this.
- It can be easily done by adding extra meta data to the edges in the graph
- representation.
- The extra information we want to encode is the so called perlocutionary speech
- acts (see section [[Speech act thoery]]).
-
- \todo[inline]{update this part}
- \drafting
- For example if we go from:
-
- \[ M(Greeting) \to M(StatusInquiry) : F(Pleased) \]
-
- \drafting
- If this path is walked by the user the bot will be pleased, however if the bot
- is impatient and can look at this connection and see what this path results in.
- The context is not treated in the data, this is left to the drools to figure
- out.
- We can elaborate this further by adding protocols that are expected into the
- edges:
-
- \[ M(StatusInquiry) \to M(HealthProblemAsked) : F(Neutral), P(HealthAsked) \]
-
- \drafting
- If the user deviates from the meaning graph we can just use a default F
- response of being surprised or confused.
- On the other hand if the user ever tries to re-treat a subject we can just
- become annoyed. Drools can be used to catch these kind of cases effectively.
-
 *** Believes
 \drafting
 We have already quite extensively talked about believes in section
