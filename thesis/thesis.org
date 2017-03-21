@@ -2702,24 +2702,43 @@ for example.
 \newpage
 
 *** Initialization
-\todo[inline]{Add sequence diagram and discuss how its different from the previous one}
- \drafting
- + init game
- + read yml
- + insert yml in drools
-
 \toReview
-In the new architecture we use a file reader to construct the entire
-symbol database into memory and expose them to the drools.
+In the new architecture we use a file reader to construct the 
+symbol database, pattern database and connection database
+into memory and expose them to the drools as can been seen in figure
+[[fig:initjung]].
 This allows the drools to utter spontaneous symbols and allows do deliberation
 on incoming utterances of the user with help of the interpreter component.
 The reactionary based scheme where an incoming user response has been replaced
 with a structural scheme.
 A symbol has connections to other symbols, which should be sensible responses.
-So if a user utters a meaning then rather than having a direct response string
-that uses variables to fill in the gap, we get a meaning, which connected to
-other meanings which in turn are also connected.
+So if a user utters a symbol then rather than having a direct response string
+that uses variables to fill in the gap, we get a symbol, which connected to
+other symbols which in turn are also connected.
 We can do deliberation on this because we have one or more goals.
+
+#+NAME: fig:initjung
+#+BEGIN_SRC plantuml :cache yes :file img/uml/construction.png :exports results
+  |WebSocket|
+  start
+  :Receve StartGame message;
+  :Construct a chatbotengine;
+  |#CCDDDD|Engine|
+  :Start kie thread;
+  :Register a controller;
+  :Parse YML files and construct databases;
+  :insert databases in drools;
+  :insert startgame fact;
+  |#AntiqueWhite|Drool|
+  :construct believes;
+  |WebSocket|
+  :put game id in websocket user prefs;
+  stop
+#+END_SRC
+#+CAPTION: Activity diagram of a server game construction
+#+LABEL: fig:initjung
+#+RESULTS[d3bd8b3ae8dee454b461ee2329a4d2d09861c54c]: fig:initjung
+[[file:img/uml/construction.png]]
 
 *** Operation
 \todo[inline]{sequennce diagram}
