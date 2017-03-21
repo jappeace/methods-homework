@@ -1226,7 +1226,7 @@ enter.
 [[file:img/uml/class.png]]
 
 \cleared
-The Websocket uses a ChatBotEngine to determine how to reply to userUtterences,
+The Websocket uses a ChatBotEngine to determine how to reply to userUtterances,
 Where ChatBotEngineImpl is the concrete implementation.
 ChatBotEngineImpl uses a KieSession for the drools and a Chat which is the alicebot.
 Once the startGame message is received the kie service is started,
@@ -2409,7 +2409,7 @@ except for the incredible amount of information encoded in $G$.
 | $F_e$    | utterance history [s] and G                   |
 | $F_i$    | Personal values  $h$                          |
 | $S_e$    | G                                             |
-| $S_i$    | Utterence history [s] and G                   |
+| $S_i$    | Utterance history [s] and G                   |
 | $N_e$    | G                                             |
 | $N_i$    | G                                             |
 
@@ -2597,7 +2597,7 @@ rule at any time.
     +values:PersonalValues
     +learnedValues:PersonalValues
     +actors:{Actor}
-    +previousUtterences:[Utterance]
+    +previousUtterances:[Utterance]
   }
   Believes -* "2" ConnectionDatabase
   Believes --* Goal
@@ -2621,9 +2621,9 @@ rule at any time.
   DialogueTree --* Utterance
   DialogueTree --* Connection
   class Goal{
-    +utterence:Utterence
+    +utterance:Utterance
     +utility:int
-    +isGoal(utterence:Utterence):boolean
+    +isGoal(utterance:Utterance):boolean
   }
   Goal --* Utterance
   class PatternSymbol{
@@ -2654,7 +2654,7 @@ rule at any time.
 #+END_SRC
 #+CAPTION: Class diagram of the model
 #+LABEL: fig:jungclass
-#+RESULTS[0a2997f9591ea5ff0b150aa0002e07d96e9be563]: fig:jungclass
+#+RESULTS[f82f6a57ddceddbaf3e480f1aacea3600693a8a9]: fig:jungclass
 [[file:img/uml/jungclass.png]]
 
 **** db package
@@ -2741,44 +2741,42 @@ We can do deliberation on this because we have one or more goals.
 #+RESULTS[27d9aa994f1480545d631ca9c4495d96e891f520]: fig:initjung
 [[file:img/uml/initjung.png]]
 
-**** Parsing YML
+**** Parsing YAML
+\drafting
+To parse the several helper classes are used. These are prepended with the
+keyword raw and are designed to work with the library to parse YAML.
+From this it is rather easy to create the immutable and non primitive based
+objects we want.
+First the Symbol files are parsed and converted into a SymbolDatabase.
+Then the patterndatabase is constructed, not that although the rawsymbols
+contain patterns the eventual symbols don't.
+This is because we split up patterns and potential utterances into distinct data
+structures. Where the patterns just point to the complete symbols.
+With help of this the connection database can be easily constructed.
 
 *** Operation
+ \toReview
+ Once the meaning is extracted from the user utterance we can insert it into the
+ drool engine to do deliberation upon (see [[fig:insert_meaning]]).
 
-#+NAME: fig:newuttProcess
-#+BEGIN_SRC plantuml :cache yes :file img/uml/newuttProcess.png :exports results
-  |WebSocket|
-  start
-  :Utterance received;
-  :call chat;
-  :Insert as UnparsedUtterance;
-  |#AntiqueWhite|Drool|
-  :parse message with patterndb into ParsedUtterence;
-  :record into believes;
-  if(ParsedUtterence) then (is empty)
-  :Give default reply;
-  |WebSocket|
-  :Send response to client;
-  end
-  |#AntiqueWhite|Drool|
-  else (has symbols)
-  endif
-  :Remove parsed utt insert first symbol;
-  :Symbol into Utterence;
-  |#CCDDFF|Personality|
-  :Utterence into personality process;
+ \toReview
+ It should be noted that at the point of quick reply personality could also be at
+ play.
+ For example people could have alternative ways of pronouncing the response.
+ Thinking people may for example respond with a confident yes, whereas feeling
+ people would say it by default in a more doubting tone.
 
-  |#AntiqueWhite|Drool|
-
-  |WebSocket|
-  :Send response to client;
-  stop
-#+END_SRC
-#+CAPTION: Activity diagram of user utterance processing
-#+LABEL: fig:newuttProcess
-#+ATTR_LATEX: :width 1.0\textwidth
-#+RESULTS[0f1df951c3c44a16e61dfda3fa9e6c50bc9df3fe]: fig:newuttProcess
-[[file:img/uml/newuttProcess.png]]
+ \drafting
+ To ensure rules are executed in a particular order we often wrap and unwrap
+ required data into types.
+ For example the initial user utterance gets wrapped into an UnparsedUttarence
+ type. This is to indicate that the plain string should be parsed first.
+ Once this is done all meanings get extracted and inserted into a parsed
+ utterance.
+ From this rules can decide what to do further with this parsed type.
+ Currently we just take the first symbol from the ParsedUttarence and convert it
+ into a single utterance, while truncating all other utterances.
+ 
 
  #+NAME: fig:insert_meaning
  #+BEGIN_SRC plantuml :cache yes :file img/uml/insert_meaning.png :exports results
@@ -2787,7 +2785,7 @@ We can do deliberation on this because we have one or more goals.
  :Receve message;
  :Insert into KIE;
  |#CCDDDD|Drool|
- :Pattern match meaning from message;
+ :Pattern match symbol from message;
  if (quick response rules?) then (yes)
  :Do quick reply;
  |WebSocket|
@@ -2803,23 +2801,13 @@ We can do deliberation on this because we have one or more goals.
  :Get response from dialogue tree;
  |WebSocket|
  stop
+
  #+END_SRC
  #+CAPTION: Activity diagram of a server game insert_meaning
  #+LABEL: fig:insert_meaning
- #+RESULTS[88c69814964b9c55c6360f2bcf0a6a2dc85d0718]: fig:insert_meaning
+ #+RESULTS[fcf9bac625ae1eadb2adefadc54c87c6381fd7f8]: fig:insert_meaning
  [[file:img/uml/insert_meaning.png]]
-\todo[inline]{sequennce diagram}
- \drafting
- + Parse user utterence
- + Quick match layer (hello -> hello)
- + Heavy deliberation (if not quick match)
-   + This is where we inserted personality, although it could also play a role in
-     quick matching.
-   + The structure of personality is a list of enums that contain the relevant functions
-   + With this structure other drools could interject in the middle of the
-     deliberation process.
-***** Drools
-      
+
 ** Desired architecture
 A deployment diagram of the architecture can bee seen in figure
 [[fig:n-agent-arch]].
@@ -3179,24 +3167,12 @@ stream (which is also immutable). \todo{cite}
  On the other hand if the user ever tries to re-treat a subject we can just
  become annoyed. Drools can be used to catch these kind of cases effectively.
 
-**** Inserting meaning into KIE
- \toReview
- Once the meaning is extracted from the user utterance we can insert it into the
- drool engine to do deliberation upon (see [[fig:insert_meaning]]).
-
-
- \drafting
- It should be noted that at the point of quick reply personality could also be at
- play.
- For example people could have alternative ways of pronouncing the response.
- Thinking people may for example respond with a confident yes, whereas feeling
- people would say it by default in a more doubting tone.
-
 *** Believes
 \drafting
 We have already quite extensively talked about believes in section
 [[Believes overview]] for example.
 *** Symbol database
+\todo[inline]{This is just wrong}
 \drafting
 The symbol database is the data structure that is forgotten once construction is
 complete.
@@ -3217,12 +3193,12 @@ The lists are tied to scene names. If the active scene does not contain any
 relevant pattern, the other scenes are searched.
 There could be a possible extension where the connected scenes get searched
 first.
-the user utterence gets inserted all associated symbols of the matched patterns
-get inserted as a parsed utterence.
+the user utterance gets inserted all associated symbols of the matched patterns
+get inserted as a parsed utterance.
 
 *** Connection database
 \drafting
-With the parsed utterence the connection database can doe actuall deliberation.
+With the parsed utterance the connection database can doe actuall deliberation.
 Because this database has as key symbols and as values a list of connections
 which have to field that go to symbols.
 On this game tree deliberation can occur as described in section
