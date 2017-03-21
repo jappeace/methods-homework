@@ -2450,25 +2450,29 @@ we can conclude that they will also behave differently.
 
 * Architecture
 \toReview
-During the implementation phase major architectural changes have happened,
-for example the Alice bot was completely removed in favor of a new less tightly
+To combine the ideas discussed in section [[BDI and Jung]] with the existing program,
+some big architectural changes were introduced.
+For example the Alice bot was completely removed in favor of a new less tightly
 coupled scheme.
 The drools have become the center of deliberation (which previously was the AIML).
-We will discuss these changes in this chapter,
-More precisely, this chapter is about how to fit the algorithms discussed in
-chapter [[BDI and Jung]] into the existing game architecture. 
-So this chapter is best to be seen as glue between chapter [[BDI and Jung]] and
-chapter [[Implementation]].
-In this chapter we will describe the architectural changes between the
-current implementation and the original architecture discussed in section [[The serious game]].
-Note that we want to keep as much of the existing architecture as possible.
+We will discuss these changes in this chapter.
 
-\drafting
+\toReview
 In this chapter we will discuss two architectures, the first one is the N-agent
-architecture which is capable of dealing with more than one agent.
+architecture which is capable of dealing with more than one agent (and the user).
 Secondly we will discuss the architecture which is actually implemented which
-deals with a single agent.
-The reason for discussing both 
+deals with a single agent and the user.
+The reason for discussing both is that the ideas discussed in section [[
+BDI and Jung]] could be applied to an N-agent architecture.
+However there are some pragmatic problems with this discussed in section
+[[Multiple conversation partners]].
+Therefore we held of on implementing this and just describe how it could be done
+instead.
+In section [[Implemented architecture]] we will describe the architectural changes
+between the current implementation and the original architecture discussed in
+section [[The serious game]]. Note that we want to keep as much of the existing
+architecture as possible.
+
 
 ** Desired architecture
 A deployment diagram of the architecture can bee seen in figure
@@ -2521,6 +2525,7 @@ A deployment diagram of the architecture can bee seen in figure
 [[file:img/uml/n-agent-arch.png]]
 
 ** Implemented architecture
+<<Implemented architecture>>
 A deployment diagram of the architecture can bee seen in figure
 [[fig:architecture-concept]].
 
