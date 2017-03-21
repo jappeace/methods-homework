@@ -2397,23 +2397,21 @@ possible.
 \cleared
 We listed the function attitudes $f_a$ and their required information into
 table [[tab:fa-and-data]]. 
-Therefore $B = (h, [s], m, G)$, which looks like a relatively small believe base,
+Therefore $B = (h, [s], \Phi, G)$, which looks like a relatively small believe base,
+\todo{Should I add functions such as goal comparison in here?}
 except for the incredible amount of information encoded in $G$.
-\todo{this current overview is quite incomplete}
 
 #+CAPTION: function attitudes and their required data
 #+NAME:   tab:fa-and-data
-| Function | required data                                      |
-| $T_e$    | A goal $m$, scenario progression information and G |
-| $T_i$    | A goal $m$, and G                                  |
-| $F_e$    | utterance history [s] and G                        |
-| $F_i$    | Personal values  $h$                               |
-| $S_e$    | G                                                  |
-| $S_i$    | Utterence history [s] and G                        |
-| $N_e$    | G                                                  |
-| $N_i$    | G                                                  |
-
-\newpage
+| Function | required data                                 |
+| $T_e$    | the set of goals $\Phi$, scene information and G |
+| $T_i$    | the set of goals $\Phi$, and G                   |
+| $F_e$    | utterance history [s] and G                   |
+| $F_i$    | Personal values  $h$                          |
+| $S_e$    | G                                             |
+| $S_i$    | Utterence history [s] and G                   |
+| $N_e$    | G                                             |
+| $N_i$    | G                                             |
 
 ** Consistency with theory
 \cleared

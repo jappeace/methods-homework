@@ -12,6 +12,8 @@ Hoe gelijk moet ik de notatie houden met wat er in de code staat?
 DialogueTree gebruikt heeft bijvoorbeeld nu wat meer informatie beschikbaar als
 beschreven in BDI+Jung.
 
+Moet ik de functies menemen in de believes tupple?
+
 * Manuel
 
   Probablistic generation of next dialogue moves could be combined with moddeling one
