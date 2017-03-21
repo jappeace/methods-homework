@@ -3205,11 +3205,10 @@ Jungian functions work as they were described in the thesis.
 These tests are done in a controlled environment.
 By which we mean the datastructures are constructed.
 
+\todo[inline]{Pershaps we can show trough experminetation what effect lower functions have?}
 * In conclusion
 \todo[inline]{Discussion, comparison}
 ** Future work
-\todo[inline]{Depending on the successfulness this chapter becomes smaller and more fine grained}
-
 *** Give the bot some semantic understanding
 \drafting 
 A possible alterantive is using cite:moschitti2004study, to parse the semantics
@@ -3246,7 +3245,6 @@ user. This could maybe be solved by giving very fine grained restrictions,
 but this would become quickly hard to manage with more than 3 agents.
 Perhaps a heuristic can be used where the user would have to address agents
 by name or have separate buttons to talk to specific agents.
-
 
 
 *** Multiple symbols matched
