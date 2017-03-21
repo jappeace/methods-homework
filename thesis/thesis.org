@@ -2718,13 +2718,14 @@ other symbols which in turn are also connected.
 We can do deliberation on this because we have one or more goals.
 
 #+NAME: fig:initjung
-#+BEGIN_SRC plantuml :cache yes :file img/uml/construction.png :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/initjung.png :exports results
   |WebSocket|
   start
   :Receve StartGame message;
   :Construct a chatbotengine;
   |#CCDDDD|Engine|
   :Start kie thread;
+  :Create Personality;
   :Register a controller;
   :Parse YML files and construct databases;
   :insert databases in drools;
@@ -2737,10 +2738,76 @@ We can do deliberation on this because we have one or more goals.
 #+END_SRC
 #+CAPTION: Activity diagram of a server game construction
 #+LABEL: fig:initjung
-#+RESULTS[d3bd8b3ae8dee454b461ee2329a4d2d09861c54c]: fig:initjung
-[[file:img/uml/construction.png]]
+#+RESULTS[27d9aa994f1480545d631ca9c4495d96e891f520]: fig:initjung
+[[file:img/uml/initjung.png]]
+
+**** Parsing YML
 
 *** Operation
+
+#+NAME: fig:newuttProcess
+#+BEGIN_SRC plantuml :cache yes :file img/uml/newuttProcess.png :exports results
+  |WebSocket|
+  start
+  :Utterance received;
+  :call chat;
+  :Insert as UnparsedUtterance;
+  |#AntiqueWhite|Drool|
+  :parse message with patterndb into ParsedUtterence;
+  :record into believes;
+  if(ParsedUtterence) then (is empty)
+  :Give default reply;
+  |WebSocket|
+  :Send response to client;
+  end
+  |#AntiqueWhite|Drool|
+  else (has symbols)
+  endif
+  :Remove parsed utt insert first symbol;
+  :Symbol into Utterence;
+  |#CCDDFF|Personality|
+  :Utterence into personality process;
+
+  |#AntiqueWhite|Drool|
+
+  |WebSocket|
+  :Send response to client;
+  stop
+#+END_SRC
+#+CAPTION: Activity diagram of user utterance processing
+#+LABEL: fig:newuttProcess
+#+ATTR_LATEX: :width 1.0\textwidth
+#+RESULTS[0f1df951c3c44a16e61dfda3fa9e6c50bc9df3fe]: fig:newuttProcess
+[[file:img/uml/newuttProcess.png]]
+
+ #+NAME: fig:insert_meaning
+ #+BEGIN_SRC plantuml :cache yes :file img/uml/insert_meaning.png :exports results
+ |WebSocket|
+ start
+ :Receve message;
+ :Insert into KIE;
+ |#CCDDDD|Drool|
+ :Pattern match meaning from message;
+ if (quick response rules?) then (yes)
+ :Do quick reply;
+ |WebSocket|
+ stop
+ endif
+ |#CCDDDD|Drool|
+ :Create initial dialogue tree;
+ |#AntiqueWhite|Personality|
+ while (next function in personality)
+ :execute jungian function;
+ |#CCDDDD|Drool|
+ endwhile
+ :Get response from dialogue tree;
+ |WebSocket|
+ stop
+ #+END_SRC
+ #+CAPTION: Activity diagram of a server game insert_meaning
+ #+LABEL: fig:insert_meaning
+ #+RESULTS[88c69814964b9c55c6360f2bcf0a6a2dc85d0718]: fig:insert_meaning
+ [[file:img/uml/insert_meaning.png]]
 \todo[inline]{sequennce diagram}
  \drafting
  + Parse user utterence
@@ -3117,34 +3184,6 @@ stream (which is also immutable). \todo{cite}
  Once the meaning is extracted from the user utterance we can insert it into the
  drool engine to do deliberation upon (see [[fig:insert_meaning]]).
 
- #+NAME: fig:insert_meaning
- #+BEGIN_SRC plantuml :cache yes :file img/uml/insert_meaning.png :exports results
- |WebSocket|
- start
- :Receve message;
- :Insert into KIE;
- |#CCDDDD|Drool|
- :Pattern match meaning from message;
- if (quick response rules?) then (yes)
- :Do quick reply;
- |WebSocket|
- stop
- endif
- |#CCDDDD|Drool|
- :Create initial dialogue tree;
- |#AntiqueWhite|Personality|
- while (next function in personality)
- :execute jungian function;
- |#CCDDDD|Drool|
- endwhile
- :Get response from dialogue tree;
- |WebSocket|
- stop
- #+END_SRC
- #+CAPTION: Activity diagram of a server game insert_meaning
- #+LABEL: fig:insert_meaning
- #+RESULTS[88c69814964b9c55c6360f2bcf0a6a2dc85d0718]: fig:insert_meaning
- [[file:img/uml/insert_meaning.png]]
 
  \drafting
  It should be noted that at the point of quick reply personality could also be at
@@ -3576,6 +3615,9 @@ to keep unity running (or use at all).
 *** Random thoughts
 + Do perlocutionary values even work all the way? could write a test for this.
 + Goals should perhaps be able to be finished?
++ Shouldn't I ensure the personality goes back and forth, right now it just goes
+  double over the dialogue tree whil'st the functions don't know at wich level to
+  operate So they'll always go lowest or one below the lowest.
 ** Tooling stuff
 + Protocol buffers could be used for protocol. Its strongly typed and has both
   C# and Java bindings
