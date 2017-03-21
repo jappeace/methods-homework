@@ -2644,7 +2644,7 @@ but the concept of a connection is implicitly defined in AIML.
     +utility:int
     +isGoal(utterence:Utterence):boolean
   }
-  Goal --* Utterence
+  Goal --* Utterance
   class PatternSymbol{
      +pattern:Pattern
      +symbol:Symbol
@@ -2668,10 +2668,12 @@ but the concept of a connection is implicitly defined in AIML.
   }
   Utterance --* Actor
   Utterance --* Symbol
+  Actor -[hidden]-> PersonalValues
+  db -[hidden]-> DialogueTree
 #+END_SRC
 #+CAPTION: Jungclass diagram of the server, where kie is the engine that handles the drools
 #+LABEL: fig:jungclass
-#+RESULTS[66c18f645adfd036279fbbe5486ce35daed247bf]: fig:jungclass
+#+RESULTS[0a2997f9591ea5ff0b150aa0002e07d96e9be563]: fig:jungclass
 [[file:img/uml/jungclass.png]]
 
 *** Initialization
