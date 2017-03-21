@@ -1882,7 +1882,7 @@ Conversely  there is another function $g'$:
 This allows symbol $s$ to be decoded into string $\sigma$.
 Note that in this relation there can be multiple $\sigma$ that map to the same
 meaning,
-but one meaning produces one string $\sigma$,
+but one symbol produces one string $\sigma$,
 or a random selection is made from a predefined string list.
 In the previous version this mapping was entirely done by AIML.
 How this is done in this version will be discussed in the implementation
@@ -2228,6 +2228,8 @@ personality in as a process.
 Note that this approach fits nicely into the information state transitions
 idea discussed in section [[Dialogue systems]].
 
+
+
 *** Irrational
 The irrational functions rely heavily on the symbol graph to create new
 children in the dialogue tree.
@@ -2335,17 +2337,32 @@ soon as possible.
 The thinking functions $T$ do this without paying any attention to
 perlocutionary speech acts.
 
-\cleared
-To start we will describe $T_e$. It sees the problem to solve as the
-conversation itself.
+\toReview
+We could say that while feeling is concerned with perlocutionary speech act goals
+thinking on the other is concerned with symbolic goals.
+To model the goals of the thinking functions we will introduce the set of goals
+in an agents believe base $\Phi$. Where a single goals $\phi \in \Phi$ consists of
+$\phi = (a, s)$ a symbol uttered by a particular agent.
+Then there also exists the function that can compare goals with each other:
+\[\phi_1 \to \phi_2 \to b \]
+where $b \in \{ \top, \bot \}$ is a boolean, true or false that determines if the first goal is more
+important then the second. This function is asymmetric.
+Finally there is a function that determines if a goal is completed or not:
+\[\phi \to b\]
+
+\toReview
+Now to begin with $T_e$.
+It sees the problem to solve as the conversation itself.
 Therefore it will consistently choose speech acts that could help the partner to
 progress the scenario.
 So it wants to put the partner in a position where he has
 almost no other options except to progress the scenario
-If it encounteres a child node  with a goal in it it will give priority to that.
-The higher the goal is the more priority.
-The information about scenario progression is encoded in the drools itself,
-so this could potentially be acquired by using reflection on the drools.
+\todo{this is just wrong, we just look at the scenes and see if there are anoyne that change scene if no goals are available}
+If it encounteres a child node with a goal $\phi$ in it it will give priority to that.
+If there are multiple goals in the options the comparison function can be used
+to determine the most important one.
+Scenario progression is measured with help of scenes.
+If an option changes scene we assume it progresses scenario.
 
 \cleared
 To model $T_i$ however the most obvious solution would be to implement an
@@ -2358,9 +2375,8 @@ but this is out of scope of this thesis.
 Therefore we looked for an alternative.
 
 \cleared
-$T_i$ however uses a different strategy. It wants to help the conversation
-partner to analyze the problem according to the partner's own internal
-logic framework
+$T_i$ wants to help the conversation partner to analyze the problem according
+to the partner's own internal logic framework,
 and to do this it wants to give as much options as possible to the partner.
 Therefore it will choose the speech acts that produce the most symbols for the
 partner.
@@ -2424,8 +2440,6 @@ INTJ and INTP are different in attitudes, but have the same order.
 Since attitudes produce a different process by definition
 (see section [[Mapping to process]]),
 we can conclude that they will also behave differently.
-
-
 
 * Architecture
 \toReview
@@ -2623,7 +2637,6 @@ The reason for this is discussed in section [[Multiple conversation partners]].
    + With this structure other drools could interject in the middle of the
      deliberation process.
 ***** Drools
-
 
 * Implementation
 \drafting
@@ -3390,7 +3403,8 @@ to keep unity running (or use at all).
 
 
 *** Random thoughts
-Do perlocutionary values even work all the way? could write a test for this.
++ Do perlocutionary values even work all the way? could write a test for this.
++ Goals should perhaps be able to be finished?
 ** Tooling stuff
 + Protocol buffers could be used for protocol. Its strongly typed and has both
   C# and Java bindings
@@ -3407,6 +3421,8 @@ Do perlocutionary values even work all the way? could write a test for this.
 ** Thesis
 + Add UML references?
 + Add "architecture quality attribute" references?
++ Could try and figure out which symbol medhi's paper used and then use the same
+  ones? I don't know, seems like a little wastefull
 ** YML
 **** History connections
 Connections can be extended to add before support as a list, where if the match
