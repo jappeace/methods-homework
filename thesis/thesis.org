@@ -1877,7 +1877,16 @@ $\mathcal{S}$ stands for the set of all encoded symbols[fn::Originally this was
 called meaning with an $m$, but we want to avoid confusion with meaning in the
 social practice, and therefore renamed it to symbol, as in symbolic
 representation]
-Conversely  there is another function $g'$:
+
+\toReview
+A symbol $s = (\{\sigma\}, \sigma)$, where the first value is a set of potential
+returning strings to utter this symbol in human tongue,
+and the second is the name of the scene the symbol occurs in.
+The scene name is used as a name space and a crude way to measure scenario
+progression.
+
+\toReview
+With this we can define another function $g'$:
 \[ s \overset{g'}{\to} \sigma \]
 This allows symbol $s$ to be decoded into string $\sigma$.
 Note that in this relation there can be multiple $\sigma$ that map to the same
@@ -2356,13 +2365,13 @@ It sees the problem to solve as the conversation itself.
 Therefore it will consistently choose speech acts that could help the partner to
 progress the scenario.
 So it wants to put the partner in a position where he has
-almost no other options except to progress the scenario
-\todo{this is just wrong, we just look at the scenes and see if there are anoyne that change scene if no goals are available}
-If it encounteres a child node with a goal $\phi$ in it it will give priority to that.
+almost no other options except to progress the scenario.
+If it encounters a child node with a goal $\phi$ in it it will give priority to that.
 If there are multiple goals in the options the comparison function can be used
 to determine the most important one.
 Scenario progression is measured with help of scenes.
 If an option changes scene we assume it progresses scenario.
+This comes secondary to finding goals.
 
 \cleared
 To model $T_i$ however the most obvious solution would be to implement an
