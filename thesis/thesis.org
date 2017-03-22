@@ -1684,6 +1684,9 @@ This is a major reason why the Haskell syntax is used to explain the type
 signature in detail.
 * BDI and Jung
 <<Jungian BDI>>
+# In this chapter we talk about the abstract ideas, any information neccasarry
+# to execute the thesis without considering implementation details.
+# so I guess height and node count aren't neccasarry.
 \cleared
 This chapter tries to anwser the question,
 "what is personality from a computationally perspective".
@@ -1691,6 +1694,8 @@ In where we imagine personality being a preference towards a process rather
 than a preference towards content.
 We will however not consider yet how to place this in the existing system,
 but will consider how to combine Jungian psycology with BDI.
+
+\todo[inline]{Check if all logic contains all information we use in the code excluding implementation details}
 
 ** Differences from campos
 \cleared
@@ -1929,6 +1934,7 @@ therefore we introduce $\Lambda$ as the set of all agents, where $a \in \Lambda$
 
 \toReview
 Therefore we introduce $D$ a dialogue tree:
+\todo{I think the idea of utterence should be introduced here since they contain perlocutionary values in the code, this is quite different from the logic we describe now}
 \[ D = (a, s, [D])\]
 Where $s \in \mathcal{S}$ for the symbol,
 and $[D]$ is the ordered list of dialogue children.
@@ -2398,7 +2404,7 @@ possible.
 We listed the function attitudes $f_a$ and their required information into
 table [[tab:fa-and-data]]. 
 Therefore $B = (h, [s], \Phi, G)$, which looks like a relatively small believe base,
-\todo{Should I add functions such as goal comparison in here?}
+\todo{Should contain all data that can change, therefore most functions probably not}
 except for the incredible amount of information encoded in $G$.
 
 #+CAPTION: function attitudes and their required data
@@ -3204,12 +3210,25 @@ For example both the patient and family member should be able to ask the doctor
 what's wrong with the patient, however the doctor not.
 
 ** Testing
-\drafting
+\toReview
 To verify our implementation's correctness we use several testing methodologies.
 First at the lowest level we use the so called unit tests to verify individual
 Jungian functions work as they were described in the thesis.
-These tests are done in a controlled environment.
-By which we mean the datastructures are constructed.
+We test these individually by creating specific believes and a dialogue tree for
+input, then we check the output against an expected believe base and dialogue
+tree.
+
+\toReview
+Integration tests are done by combining parts of the application with each
+other and seeing if the input and output is acceptable.
+For example we would create a full personality and then see if it replies in the
+way we want. By firing up the drools engine.
+
+\toReview
+On the highest level we have the so called validation tests.
+With these we check if the program we created complies to what we described in
+the theory.
+To do this a scenario is implemented and the tests are done upon it.
 
 \todo[inline]{Pershaps we can show trough experminetation what effect lower functions have?}
 * In conclusion
@@ -3252,7 +3271,6 @@ but this would become quickly hard to manage with more than 3 agents.
 Perhaps a heuristic can be used where the user would have to address agents
 by name or have separate buttons to talk to specific agents.
 
-
 *** Multiple symbols matched
 \drafting
 better support for if multiple symbols are matched.
@@ -3270,6 +3288,7 @@ description of the social practice, but it could eventually make the bot very
 salable in use cases.
 
 *** Use GPU for pattern matching
+
 \drafting
 It is also entirely possible to make the bot a lot more faster in response time
 by using the GPU for regex matching.
@@ -3277,6 +3296,8 @@ by using the GPU for regex matching.
 
 \newpage
 \appendix
+
+*** Graphical scenario editor
 * References
 <<bibliography link>>
 
@@ -3567,9 +3588,9 @@ to keep unity running (or use at all).
    2. Test the scenario?
    3. Perhaps we should look in what cases the deeper functions have effect (if any)
    4. In thesis we should also mention the effects of values for functions
-2. Repair OCC module & scoring module
 3. Make a script to convert AIML to YML
-   (perhaps we can sue this for integration or demo)
+   (perhaps we can use this for integration or demo)
+2. Repair OCC module & scoring module
 4. Report
 
 
@@ -3590,7 +3611,7 @@ to keep unity running (or use at all).
 ** Protocol
 + Start game and new game could be merged?
 + Why logging towards the client? This seems like a security hole and a
-  possible performance bottleneck.
+  possible performance bottleneck. (it maybe was Lucas doing debugging)
 
 ** Thesis
 + Add UML references?
