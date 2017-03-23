@@ -1478,7 +1478,7 @@ The expected dialogue can be seen in [[tab:suzie-conv-doct]].
 | /Susie/ | /How are you today doctor?/                                        |
 | Doctor  | I'm good, how can I help you?                                      |
 | /Susie/ | /I'm afraid I need some medicine/                                  |
-| Doctor  | Medicne? Why do you need that?                                     |
+| Doctor  | Medicine? Why do you need that?                                    |
 | /Susie/ | /Well, I was watering the plants and all the sudden,/              |
 | /Susie/ | /I got this pain in my back./                                      |
 | /Susie/ | /Do you think I'm allergic to plants?/                             |
@@ -3605,6 +3605,8 @@ to keep unity running (or use at all).
     and apply the dialgoure tree for one pass,
     then once going back we check on each level if
     the right level is modified (whatever that is)
++ Perhaps we should replace perloctionary values from an enum to just a class
+  like actor. The issue is that this is hard to modify.
 ** Tooling stuff
 + Protocol buffers could be used for protocol. Its strongly typed and has both
   C# and Java bindings
