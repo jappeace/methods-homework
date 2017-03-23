@@ -19,6 +19,10 @@ Moet ik de functies menemen in de believes tupple?
   Probablistic generation of next dialogue moves could be combined with moddeling one
   of the Jungian Irrational functions??
 
+ + Last time we just had the 
+ + Does he have any comments/questions?
+ + Discuss rough planning
+
 ** Conversation notes <2017-01-30 Mon> 
 
 *** Thesis
@@ -48,10 +52,10 @@ Moet ik de functies menemen in de believes tupple?
  we want a language that can describe sp. (I mean I don't have to work on this right?)
 
 
-
 ** Conversation notes <2017-02-15 wo>
 
 Move process personality to drools. In a drools personality package.
 (perhaps meanwhile move patternmatching into chatbotengineimpl)
 Move to the master branch.
 Move pattern matching in drools. 
+** Conversation notes <2017-03-23 do> 
