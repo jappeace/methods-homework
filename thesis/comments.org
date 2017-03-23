@@ -2,14 +2,15 @@
 
 * Dignum
 
+In de voorbeeld scenarios heb ik soms initiatief moment alleen word hier niet
+echt mee rekening gehouden in de deliberatie, moet ik hier met een drool 
+omheen werken of zal ik het voorbeeld aanpassen?
+
+
 * Manuel
 
   Probablistic generation of next dialogue moves could be combined with moddeling one
   of the Jungian Irrational functions??
-
- + Last time we just had the 
- + Does he have any comments/questions?
- + Discuss rough planning
 
 ** Conversation notes <2017-01-30 Mon> 
 
@@ -47,3 +48,15 @@ Move process personality to drools. In a drools personality package.
 Move to the master branch.
 Move pattern matching in drools. 
 ** Conversation notes <2017-03-23 do> 
+
+He seemed overall quite happy with the result. Probably a little to big to fast.
+Validate work with qualitative work.
+Possible social practice integration with personality in the thesis?
++ For example its context isn't taken in consideration.
++ You could counter this by saying that we can wrap the jungian function inside
+  a context care taking function.
+I don't use BDI because there aren't any RETE engines so you can't use logics
+on that?
++ But isn't this countered by the fact the believes get inserted each time a
+  function is called?
++ Perhaps I should discuss this also in the thesis
