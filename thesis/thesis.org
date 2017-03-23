@@ -1401,6 +1401,7 @@ This is because a blocking queue is used,
 which will block the thread until there is an item in the list.
 
 ** Personality influence case study
+<<Personality influence case study>>
 
 \cleared
 To make the influence of personality more concrete,
@@ -3233,6 +3234,11 @@ the theory.
 To do this a scenario is implemented and the tests are done upon it.
 
 \todo[inline]{Pershaps we can show trough experminetation what effect lower functions have?}
+
+*** Validation test
+To do validation tests we will try to model the scenario presented as an example
+in section [[Personality influence case study]].
+
 * In conclusion
 \todo[inline]{Discussion, comparison}
 ** Future work
@@ -3595,8 +3601,7 @@ to keep unity running (or use at all).
 2. Repair OCC module & scoring module
 4. Report
 
-
-*** Random thoughts
+** Random thoughts
 + Goals should perhaps be able to be finished?
   + Ti and Te shouldn't preffer this double
 + Shouldn't I ensure the personality goes back and forth, right now it just goes
@@ -3615,6 +3620,10 @@ to keep unity running (or use at all).
   therefore we could argue that aside from the actual processing step it *is*
   BDI.
   The laborious approach would be to refactor all the code to be in drools.
++ Manuel also said that social practices may not fit with this.
+  For example when you expect an event in a particular scene,
+  but I don't think this isn't true either since at every step of deliberation
+  the information gets reinserted.
 ** Tooling stuff
 + Protocol buffers could be used for protocol. Its strongly typed and has both
   C# and Java bindings
@@ -3634,7 +3643,9 @@ to keep unity running (or use at all).
 + Could try and figure out which symbol medhi's paper used and then use the same
   ones? I don't know, seems like a little wastefull
 ** YML
-**** History connections
+History connections is probably required to make all the stuff from lucas work.
+
+*** History connections
 Connections can be extended to add before support as a list, where if the match
 specific items  in the history new responses become possible.
 For example:
@@ -3668,6 +3679,12 @@ I'm not sure if this is a good idea.
 We kindoff already have actor gaurds anyway but this kind of specification is
 increadibly detailed and probably should be handled by a norm system instead.
 
+*** Inject custom info
+Aditionally I think we could add support to inject custom information.
+Although I don't think this is neccesary since the symbol that gets matched
+already gets inserted by name, therefore rules for particular names can be applied.
+An argument could be made for groups of symbols, but you can use scenes for that
+and exclude.
 ** Extra
 Replace java.util.logger* with slfj
 Repalce all std.out with propper logging calls
