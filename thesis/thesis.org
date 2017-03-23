@@ -1883,21 +1883,22 @@ called meaning with an $m$, but we want to avoid confusion with meaning in the
 social practice, and therefore renamed it to symbol, as in symbolic
 representation]
 
-\toReview
-A symbol $s = (\{\sigma\}, \sigma)$, where the first value is a set of potential
-returning strings to utter this symbol in human tongue,
+\newlyCleared
+A symbol $s$, where $s = (\{\sigma\}, \sigma)$ has the first value as a set of potential
+returning strings to utter,
 and the second is the name of the scene the symbol occurs in.
 The scene name is used as a name space and a crude way to measure scenario
 progression.
 
-\toReview
+\newlyCleared
 With this we can define another function $g'$:
 \[ s \overset{g'}{\to} \sigma \]
 This allows symbol $s$ to be decoded into string $\sigma$.
 Note that in this relation there can be multiple $\sigma$ that map to the same
-meaning,
-but one symbol produces one string $\sigma$,
-or a random selection is made from a predefined string list.
+symbol,
+but one symbol produces only a defined set of strings $\{\sigma\}$,
+that in turn map to itself,
+on this a random selection can be made.
 In the previous version this mapping was entirely done by AIML.
 How this is done in this version will be discussed in the implementation
 section [[From strings to meanings]].
@@ -3595,7 +3596,6 @@ to keep unity running (or use at all).
 
 
 *** Random thoughts
-+ Do perlocutionary values even work all the way? could write a test for this.
 + Goals should perhaps be able to be finished?
 + Shouldn't I ensure the personality goes back and forth, right now it just goes
   double over the dialogue tree whil'st the functions don't know at wich level to
