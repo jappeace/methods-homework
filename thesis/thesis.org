@@ -2834,6 +2834,7 @@ A deployment diagram of the architecture can bee seen in figure
 
 \todo[inline]{N-agent stuff}
 \todo[inline]{Social practices (metnion at least, and say that there are elements of it in drools)}
+\todo[inline]{So there is no social practice context taken in account currenlty, mention how we could do that (for example by wrapping the pure jungian function in a context function, or by wrapping the result of the function processing drool in another type to give other drools a chance to look and modify it, or by analyzing the result of the entire personality process (a bit crude though))}
 
 #+NAME: fig:n-agent-arch
 #+BEGIN_SRC plantuml :cache yes :file img/uml/n-agent-arch.png :exports results
@@ -3607,6 +3608,13 @@ to keep unity running (or use at all).
     the right level is modified (whatever that is)
 + Perhaps we should replace perloctionary values from an enum to just a class
   like actor. The issue is that this is hard to modify.
++ Manuel made the argument this isn't BDI because we don't use a rule based
+  engine. We should find a theoretical source that mentions this and then attack
+  it by saying that we use pure functions or something? Alternatively the result
+  of each function gets inserted at each step in the rule engine,
+  therefore we could argue that aside from the actual processing step it *is*
+  BDI.
+  The laborious approach would be to refactor all the code to be in drools.
 ** Tooling stuff
 + Protocol buffers could be used for protocol. Its strongly typed and has both
   C# and Java bindings
