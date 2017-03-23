@@ -2813,8 +2813,13 @@ With help of this the connection database can be easily constructed.
  endif
  |#CCDDDD|Drool|
  :Create initial dialogue tree;
+ while (has next function in personality)
  |#AntiqueWhite|Personality|
- while (next function in personality)
+ :execute jungian function;
+ |#CCDDDD|Drool|
+ endwhile
+ while (has previous function in personality)
+ |#AntiqueWhite|Personality|
  :execute jungian function;
  |#CCDDDD|Drool|
  endwhile
@@ -2823,12 +2828,13 @@ With help of this the connection database can be easily constructed.
  stop
 
  #+END_SRC
- #+CAPTION: Activity diagram of a server game insert_meaning
+ #+CAPTION: Activity diagram of deliberating on a user message
  #+LABEL: fig:insert_meaning
- #+RESULTS[fcf9bac625ae1eadb2adefadc54c87c6381fd7f8]: fig:insert_meaning
+ #+RESULTS[9e2ca9f29a8e620296912b3f55d13052ac51977b]: fig:insert_meaning
  [[file:img/uml/insert_meaning.png]]
 
  \newpage
+
 ** Desired architecture
 A deployment diagram of the architecture can bee seen in figure
 [[fig:n-agent-arch]].
@@ -3238,6 +3244,7 @@ To do this a scenario is implemented and the tests are done upon it.
 *** Validation test
 To do validation tests we will try to model the scenario presented as an example
 in section [[Personality influence case study]].
+
 
 * In conclusion
 \todo[inline]{Discussion, comparison}
