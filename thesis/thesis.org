@@ -3283,6 +3283,13 @@ are also expended into regexes,
 therefore all possible inputs of the literals should be available at the time
 when the patterndatabase is build.
 
+THere are 3 ways to create these variables, first of all just collect them
+when parsing the symbols and connections,
+secondly we insert them from an external source (ie from drools).
+Thirdly we use a user defined structure.
+For the actors we can collect, but for things such as the healthproblem we need
+a user defined structure since drools is kindoff later in the init cycle.
+
 *** More advanced learning
 \drafting
 Could consider extending the symbol graph dynamically.
