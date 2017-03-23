@@ -3101,7 +3101,6 @@ to:
    symbol: why_need
 #+END_SRC
 
-
 ** Data structures
 \drafting
 <<Data structures>>
@@ -3242,8 +3241,24 @@ To do this a scenario is implemented and the tests are done upon it.
 \todo[inline]{Pershaps we can show trough experminetation what effect lower functions have?}
 
 *** Validation test
+\toReview
 To do validation tests we will try to model the scenario presented as an example
 in section [[Personality influence case study]].
+To do this we go trough each utterence in the dialogue and see if they have
+unique meanings. These we then translate in their respective symbol files.
+If we for example look at the conversation between sander and the doctor seen
+in table [[tab:sander-conv-doct]], we for example have two greetings. "Hi" and "Hello".
+So we put this in a symbol named greeting under the first scene "introduction".
+Therefore greeting is a symbol $s^{\text{greeting}}$ of
+\[s^{\text{greeting}}=(\{\text{"Hi"}, \text{"Hello"}\}, \text{"introduction"})\]
+We continue doing this process for all the utterances in this dialogue and the
+next dialogues until all utterances have at least their own unique symbol, 
+or share one with similar utterances in meaning.
+
+\drafting
+Next up is deciding which of the symbols should be connected with each other
+trough connections.
+To decide this we again take the example dialogue.
 
 
 * In conclusion
@@ -3254,6 +3269,8 @@ in section [[Personality influence case study]].
 A possible alterantive is using cite:moschitti2004study, to parse the semantics
 of a sentence. Then a graph can be used to determine how to predicates
 corrolate logically with the arguments being just fill in.
+
+**** Dynamic sentence construction
 
 *** More advanced learning
 \drafting
