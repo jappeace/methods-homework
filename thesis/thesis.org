@@ -3271,19 +3271,21 @@ of a sentence. Then a graph can be used to determine how to predicates
 corrolate logically with the arguments being just fill in.
 
 **** Dynamic sentence construction
-\drafting
+\toReview
 A first step would be to add variables to the symbols. Such as a name of an
 actor. I guess these things could be extracted from the social practice
 which is still defined kindoff implicitly.
 We could use a framework like this: http://www.stringtemplate.org/ to substitute
 variables with their proper names. (ANTLR seems to strict however).
 
-If this is done in the litereals however, care should be taken, since these
+\toReview
+If this is done in the literals however, care should be taken, since these
 are also expended into regexes,
 therefore all possible inputs of the literals should be available at the time
 when the patterndatabase is build.
 
-THere are 3 ways to create these variables, first of all just collect them
+\toReview
+There are 3 ways to create these variables, first of all just collect them
 when parsing the symbols and connections,
 secondly we insert them from an external source (ie from drools).
 Thirdly we use a user defined structure.
