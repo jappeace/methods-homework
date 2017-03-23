@@ -3271,6 +3271,17 @@ of a sentence. Then a graph can be used to determine how to predicates
 corrolate logically with the arguments being just fill in.
 
 **** Dynamic sentence construction
+\drafting
+A first step would be to add variables to the symbols. Such as a name of an
+actor. I guess these things could be extracted from the social practice
+which is still defined kindoff implicitly.
+We could use a framework like this: http://www.stringtemplate.org/ to substitute
+variables with their proper names. (ANTLR seems to strict however).
+
+If this is done in the litereals however, care should be taken, since these
+are also expended into regexes,
+therefore all possible inputs of the literals should be available at the time
+when the patterndatabase is build.
 
 *** More advanced learning
 \drafting
