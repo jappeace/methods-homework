@@ -3600,6 +3600,9 @@ to keep unity running (or use at all).
 + Shouldn't I ensure the personality goes back and forth, right now it just goes
   double over the dialogue tree whil'st the functions don't know at wich level to
   operate So they'll always go lowest or one below the lowest.
+  + To test this I think we create a personality in the believes and apply the
+    dialgoure tree for one pass, then once going back we check on each level if
+    the right level is modified. (going deep should behave correct right now).
 ** Tooling stuff
 + Protocol buffers could be used for protocol. Its strongly typed and has both
   C# and Java bindings
