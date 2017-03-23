@@ -50,7 +50,7 @@ Move pattern matching in drools.
 ** Conversation notes <2017-03-23 do> 
 
 He seemed overall quite happy with the result. Probably a little to big to fast.
-Validate work with qualitative work.
+Validate work with qualitative tests?
 Possible social practice integration with personality in the thesis?
 + For example its context isn't taken in consideration.
 + You could counter this by saying that we can wrap the jungian function inside
