@@ -1,4 +1,5 @@
 #+TITLE: A serious communication game with personalities
+# TODO: this title is to vague
 # Pure functional serious communication in-game
 #+LaTeX_CLASS: article
 #+LaTeX_CLASS_OPTIONS: [a4paper, drafting]
@@ -2246,7 +2247,6 @@ Note that this approach fits nicely into the information state transitions
 idea discussed in section [[Dialogue systems]].
 
 
-
 *** Irrational
 The irrational functions rely heavily on the symbol graph to create new
 children in the dialogue tree.
@@ -3239,6 +3239,8 @@ the theory.
 To do this a scenario is implemented and the tests are done upon it.
 
 \todo[inline]{Pershaps we can show trough experminetation what effect lower functions have?}
+\todo[inline]{How many of the lower functions are used?}
+\todo[inline]{Are slight differences in order relevant? [Ne, Ti] vs [Ti, Ne]}
 
 *** Validation test
 \toReview
@@ -3270,7 +3272,14 @@ A possible alterantive is using cite:moschitti2004study, to parse the semantics
 of a sentence. Then a graph can be used to determine how to predicates
 corrolate logically with the arguments being just fill in.
 
-**** Dynamic sentence construction
+\drafting
+Something such as cite:mccord1990slot could also be used to get a more deeper 
+"understanding" of the user message. However introducing something like that
+would require a much more advanced reasoning process. No longer are we
+dealing with sentences but instead we use words.
+Symbols then would need to indicate how many arguments they need to be completed.
+
+**** Variables in literals
 \toReview
 A first step would be to add variables to the symbols. Such as a name of an
 actor. I guess these things could be extracted from the social practice
@@ -3635,15 +3644,23 @@ to keep unity running (or use at all).
 \todo[inline]{Perhaps we can use argumentation research on top of the graph to figure out more semantics (this statment is attacking that or inquirying this)}
 \todo[inline]{Extracting information from meanings isn't very DRY right now, for example saying how is your foot? Could perhaps be splitup into statusInquiry + foot. However I don't know how to do this better right now, perhaps it could be a natural result of dubble matching but we lose the order inforamtion.}
 ** Rough planning.
-1. Integration tests
-   1. Make scenario (probably borrow from thesis)
-   2. Test the scenario?
-   3. Perhaps we should look in what cases the deeper functions have effect (if any)
-   4. In thesis we should also mention the effects of values for functions
-3. Make a script to convert AIML to YML
+*** Integration tests
+**** Make scenario (probably borrow from thesis)
+     1. Right now we can't represnt goals we should fix that
+     2. Personal values should be specifiable
+     3. Values shouldn't be an enum, its just annoying to work with
+     4. Perhaps we should tag more values
+**** Test the scenario?
+     For this I wanna setup an experiment like thing, where we research what
+     the system does etc.
+     + Perhaps we should look in what cases the deeper functions have effect (if any)
+     + In thesis we should also mention the effects of values for functions
+*** Make a script to convert AIML to YML
    (perhaps we can use this for integration or demo)
-2. Repair OCC module & scoring module
-4. Report
+   + we need to figure out how to deal with "that" tags.
+   + Explore lucas' work further, see how much we can use the drools.
+*** Repair OCC module & scoring module
+*** Report
 
 ** Random thoughts
 + Goals should perhaps be able to be finished?
@@ -3668,6 +3685,11 @@ to keep unity running (or use at all).
   For example when you expect an event in a particular scene,
   but I don't think this isn't true either since at every step of deliberation
   the information gets reinserted.
+
+*** Implicit actions by bot
++ Perhaps if we should keep popping preffered options until we reach an actor
+  that is not the agent?
++ If the preffered action is not an agent say nothing?
 ** Tooling stuff
 + Protocol buffers could be used for protocol. Its strongly typed and has both
   C# and Java bindings
@@ -3680,15 +3702,24 @@ to keep unity running (or use at all).
 + Start game and new game could be merged?
 + Why logging towards the client? This seems like a security hole and a
   possible performance bottleneck. (it maybe was Lucas doing debugging)
++ Perhaps a command message should be added, in previous version just certain
+  patterns were rigged to do commands (which isn't very pretty). With a
+  separate message you could just create another client (or button) to send
+  commands
 
 ** Thesis
 + Add UML references?
 + Add "architecture quality attribute" references?
 + Could try and figure out which symbol medhi's paper used and then use the same
   ones? I don't know, seems like a little wastefull
++ We could discuss the dilemma of representing values as either class or enum.
+  keeping enum for now cause that's what I already have. However it maybecome a
+  maintenance problem
 ** YML
 History connections is probably required to make all the stuff from lucas work.
 
+Is it neccisary for symbols to have contexts too?
+How generic do you want something like that to be?
 *** History connections
 Connections can be extended to add before support as a list, where if the match
 specific items  in the history new responses become possible.
