@@ -1443,7 +1443,7 @@ This results in the expected dialogue which can be seen in table
 |----------+---------------------------------------------------|
 | Doctor   | Hi                                                |
 | /Sander/ | /Hello/                                           |
-| Doctor   | How can I help you?                               |
+| Doctor   | How can I help you?                               | 
 | /Sander/ | /I have a back pain./                             |
 | Doctor   | When did this first occur?                        |
 | /Sander/ | /When I lifted a heavy object./                   |
@@ -3262,7 +3262,94 @@ Next up is deciding which of the symbols should be connected with each other
 trough connections.
 To decide this we again take the example dialogue.
 
+**** Initial test
+Date:<2017-03-28 di> 
+We believe most of the higher level reasoning is done at this point.
+To confirm this, we implement a scenario such as the case study presented
+in section [[Personality influence case study]].
 
+\todo[inline]{Should probably be moved to appendix}
+***** INTJ
+| Who      | Scripted Utterance                                | Issues |
+|----------+---------------------------------------------------+--------|
+| Doctor   | Hi                                                |        |
+| /Sander/ | /Hello/                                           |      1 |
+| Doctor   | How can I help you?                               |      2 |
+| /Sander/ | /I have a back pain./                             |        |
+| Doctor   | When did this first occur?                        |        |
+| /Sander/ | /When I lifted a heavy object./                   |        |
+| Doctor   | Oh, yes then you need some pain killers for this. |        |
+| /Sander/ | /Thank you doctor/                                |        |
+
+1. Actually said "How are you?", This is unexpected,
+   however since replying with hello is useless to INTJ (it'll just loop back),
+   such a reply may actually be better for progress high level process.
+   However, this doesn't mean this is right, the intention was to make the hello
+   reply be done on a lower level (ie first item said and understanding matches
+   hello short-circiuts into replying hello)
+3. We use the other scripted response (perhaps it thinks its ENFP),
+   this didn't match however,
+   turns out this symbol didn't have any regexes,
+   after adding the regexes it still didn't match,
+   further investigation is required
+   into the regexes why they don't match,
+   I'm suspecting its either a construction problem (not all are added),
+   Or some standard java regex problem.
+
+***** ENFP
+| Who     | Utterance                                                          | Issues |
+|---------+--------------------------------------------------------------------+--------|
+| Doctor  | Hi                                                                 |        |
+| /Susie/ | /Hello/                                                            | 1      |
+| /Susie/ | /How are you today doctor?/                                        | 1      |
+| Doctor  | I'm good, how can I help you?                                      | 2      |
+| /Susie/ | /I'm afraid I need some medicine/                                  |        |
+| Doctor  | Medicine? Why do you need that?                                    |        |
+| /Susie/ | /Well, I was watering the plants and all the sudden,/              | 3      |
+| /Susie/ | /I got this pain in my back./                                      |        |
+| /Susie/ | /Do you think I'm allergic to plants?/                             |        |
+| Doctor  | Haha, no, I think we need to make a scan of your back.             | 4      |
+| Doctor  | Because a watering can is a little to light to get back-pain from. |        |
+| /Susie/ | /Of course doctor./                                                |        |
+| Doctor  | Can you go to the hospital next Friday at 13:00?                   |        |
+| /Susie/ | /Yes, I will go then./                                             |        |
+
+1. Skipped saying hello (again we miss the shortcircuit rule, same as INTJ)
+2. Didn't match with I'm good, probably samme issue as INTJ.
+3. Only says the first sentence. This is because we don't keep on popping
+  sentences from the dialogue tree if the patient actor still is preffered.
+4. We skipped the intermidate sentences (because they didn't pop),
+   What we would expect is to get some confusion back after doing this.
+   This didn't happen so rules to give confusion when skipping parts of the
+   graph should be implemented.
+
+***** ISTP
+| Who     | Utterance                                                         | Issues |
+|---------+-------------------------------------------------------------------+--------|
+| Doctor  | Hi                                                                |        |
+| /Chris/ | /Hello/                                                           |      1 |
+| Doctor  | How can I help?                                                   |        |
+| /Chris/ | /I have back pain doctor./                                        | 2      |
+| Doctor  | When did this first occur?                                        |        |
+| /Chris/ | /Well I was watering the plants,/                                 |  3     |
+| /Chris/ | /Perhaps I put to much water in the watering can/                 |        |
+| Doctor  | Yes, that could be the case.                                      |        |
+| Doctor  | However I would like to make a scan of your back just to be sure. |        |
+| /Chris/ | /Can't you just give some pain killers to help me?/               |        |
+| Doctor  | Yes but that will only work temporary.                            |        |
+| Doctor  | So let's plan a scan at the hospital next Friday at 13:00?        |        |
+| Doctor  | I can give you some pain killers meanwhile.                       |        |
+| /Chris/ | /Okay, thanks doctor/                                             |        |
+
+1. Again no hello
+2. Replied with, I'm afraid I need some medicine, I think this is because Ti
+   is the first function, and I think the two pass effect isn't implemented
+   correctly yet. It just goes deeper now rather than finding the right level
+   to modify. Since telling about back pain is a goal and we have a unit test that
+   ti prefers goals its almost surely this broken two pass behavior.
+3. It says when lifting a heavy object, but I'm pretty sure it just always picks
+   the first option because two pass logic is broken.
+   So I'll end this test prematurely.
 * In conclusion
 \todo[inline]{Discussion, comparison}
 ** Future work
@@ -3685,6 +3772,10 @@ to keep unity running (or use at all).
   For example when you expect an event in a particular scene,
   but I don't think this isn't true either since at every step of deliberation
   the information gets reinserted.
++ We should note the utterence is used by goals a little weird in that
+  percolutionary values aren't used.
+  Actually goals need less information, so an idea would be to splitup
+  Utterences, but the issue is what to name the splitup (protoutterence?)
 
 *** Implicit actions by bot
 + Perhaps if we should keep popping preffered options until we reach an actor
@@ -3761,6 +3852,8 @@ already gets inserted by name, therefore rules for particular names can be appli
 An argument could be made for groups of symbols, but you can use scenes for that
 and exclude.
 ** Extra
-Replace java.util.logger* with slfj
-Repalce all std.out with propper logging calls
++ Replace java.util.logger* with slfj
++ Repalce all std.out with propper logging calls
   (not that it matters as long as java.util is used)
++ I get the regular out of memory exception when deploying, this probaly means
+  that there is a memory leak which doesn't get cleaned up at redoploy
