@@ -2439,6 +2439,8 @@ two options. So irrational would leave out the option that doesn't alternate,
 and rational would prefer alternation when possible.
 
 *** Function plie depth
+\todo[inline]{Discuss why this is necisarry, why don't we just do the entire tree for rational}
+\todo[inline]{Why don't we do from a particular level and then downward? Or why would we do just a particular level (haven't decided)}
 \toReview
 A big issue that turned up was at which level function ought to operate.
 We have a two pass architecture, where functions can inspect the dialogue tree
