@@ -1,7 +1,7 @@
 #+TITLE: A serious communication game with personalities
 # TODO: this title is to vague
-# Jungian functions as an endomorphism:
-  # Personality in a dialogue game
+# Jungian functions as endomorphisms:
+  # Personality for dialogue agents
 # Pure functional serious communication in-game
 #+LaTeX_CLASS: article
 #+LaTeX_CLASS_OPTIONS: [a4paper, drafting]
