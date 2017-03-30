@@ -1,5 +1,7 @@
 #+TITLE: A serious communication game with personalities
 # TODO: this title is to vague
+# Jungian functions as an endomorphism:
+  # Personality in a dialogue game
 # Pure functional serious communication in-game
 #+LaTeX_CLASS: article
 #+LaTeX_CLASS_OPTIONS: [a4paper, drafting]
@@ -1698,6 +1700,8 @@ We will however not consider yet how to place this in the existing system,
 but will consider how to combine Jungian psycology with BDI.
 
 \todo[inline]{Check if all logic contains all information we use in the code excluding implementation details}
+\todo[inline]{Can we make monoids of these?}
+\todo[inline]{We could add uterances as in the code and do time in that, so that we can make complete endomorphisms of these (as it is in the code)}
 
 ** Differences from campos
 \cleared
@@ -2245,7 +2249,6 @@ in which its relatively easy to implement but offers enough freedom to encode
 personality in as a process.
 Note that this approach fits nicely into the information state transitions
 idea discussed in section [[Dialogue systems]].
-
 
 *** Irrational
 The irrational functions rely heavily on the symbol graph to create new
