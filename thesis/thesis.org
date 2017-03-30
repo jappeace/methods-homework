@@ -2424,6 +2424,59 @@ except for the incredible amount of information encoded in $G$.
 | $N_e$    | G                                             |
 | $N_i$    | G                                             |
 
+
+*** Turn taking
+\toReview
+In the naive approach we modeled turn taking with a simple round robin strategy. 
+Basically the irrational functions would only consider options that change
+actor between plies. 
+This makes it however difficult to model agents that hold long monologues,
+which happens to for example Susie from the test scenario.
+You could do it by making just more symbols that hold all these utterances in
+one. However this is very inflexible.
+So to solve this problem we make alternation whenever there is a tie between
+two options. So irrational would leave out the option that doesn't alternate,
+and rational would prefer alternation when possible.
+
+*** Function plie depth
+\toReview
+A big issue that turned up was at which level function ought to operate.
+We have a two pass architecture, where functions can inspect the dialogue tree
+before passing it to the /next/ function, but they can also inspect the result
+of the /next/ function.
+The reason for the two pass architecture is explained in section [[Rational and irrational]].
+However it didn't treat another issue, which is how do function know at which
+level they should operate?
+This information isn't available in the current design.
+We just assumed that rational should always act 1 level above the leaf nodes,
+and irrational at the leaf nodes.
+This would however make a rational function in the first position the least
+relevant function, but it should be the *most* relevant.
+
+\toReview
+The question of at which level should a function operate is surprisingly complex.
+Lets start by analyzing what information is needed.
+Firstly we need to know the function order, then the function itself and finally
+the height of the dialogue tree. Which results in the following:
+\[ [F_a] \to F_a \to i_{D_{\text{height}}} \to i_{\text{operate level}} \]
+Where $F_a$ is the Jungian function,
+$i_{D_{\text{height}}}$ is an integer which indicates the height of the dialogue tree
+and $i_{\text{operate level}}$ is the suggested operation height.
+The (naive) calculation is:
+\[max(0, i_{D_{\text{height}}} - \text{index of }F_a \text{ in } [F_a])\]
+
+\toReview
+This does not take into account that rational functions should operate 
+a level higher than irrational.
+It also doesn't take into account that rational functions don't generate height,
+and therefore their indexes have no effect upon height.
+So obviously we need information about whether or not a function is rational:
+\[ F_a \overset{\text{is rational?}}{\to} b \]
+
+\toReview
+Then with this function we can define a precise calculation:
+\[max(0, i_{D_{\text{height}}} - \text{count not is rational before} F_a \text{ in }[F_a]) \text{if is rational } F_a \text{ then } +1 \]
+This satisfies the properties we want.
 ** Consistency with theory
 \cleared
 In this section we will explore if especially INTJ and ENTJ (MBTI) types would
