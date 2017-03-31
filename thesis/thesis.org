@@ -1834,6 +1834,7 @@ and return a function $b \to c$, this process is called partial application
 cite:haskellpartialapplication.
 Capital letters indicate sets.
 
+*** Narrowing the model
 \cleared
 We will go from an as broad as possible system (while using BDI) to a
 precise as possible definition, while still being able to satisfy the domain.
@@ -1941,7 +1942,7 @@ therefore we introduce $\Lambda$ as the set of all agents, where $a \in \Lambda$
 
 \toReview
 Therefore we introduce $D$ a dialogue tree:
-\todo{I think the idea of utterence should be introduced here since they contain perlocutionary values in the code, this is quite different from the logic we describe now}
+\todo{I think the idea of utterence should be introduced here since they contain perlocutionary values in the code, this is quite different from the logic we describe now, we can also put time in the utterences to create an endomorphism}
 \[ D = (a, s, [D])\]
 Where $s \in \mathcal{S}$ for the symbol,
 and $[D]$ is the ordered list of dialogue children.
@@ -2145,21 +2146,55 @@ It receives a dialogue with just the root node.
 Currently it cannot apply any order since the children list is empty.
 Luckily it can still use its next function, which is irrational
 (see section [[Jungian alternating functions]]).
+
+\cleared
 Another situation to consider is what to do when there are already children.
 Should an irrational function extend this list of children or go to some leaf
 node?
 Same question for a rational functions should it sort everything or just the
 children list one layer above the leaf nodes.
-In our implementation we will go for the approach where irrational functions
+At which level a function should opperate is rather fundamental.
+So there are three ways of deciding this:
+Firstly 
+
+\toReview
+In a naive approach we tried an implementation where irrational functions
 will by default go down the left (most preferred) path to a leaf node and then
 generate more meanings,
 but rational functions will only sort the one layer above the leaf layer.
-However there may be exceptions for example when a rational function is primary.
-It can then use the next function to generate some options, on which it can
-apply an order, after which it will give the next function another chance.
+Doing this approach will make a first rational function basically do nothing,
+unless he were to check if the option list is full or not to generate new options,
+which results in boilerplate code and extra work.
+
+\toReview
+We also could use outside information to determine height.
+Basically we would put into the believes the personality, in other words,
+the order of functions.
+With this information and the dialogue tree we can calculate the
+right level to operate upon.
+A question then remains is if the rational should sort everything even below
+its level or just its level. 
+
+\toReview
+Another approach would be to let the rational functions sort the entire tree,
+and irrational always let the most preferred option be extended.
+At first glance this idea would make order in Jungian functions irrelevant,
+but perhaps this isn't the case.
+A rational function would still guide which part of the tree get extended, which
+again would guide future rational orderings which again would guide extensions.
+Since we have a 2 pass architecture order probably still matters.
+However it should be noted that the functions may operate at unexpected level,
+for example when going back from the second pass the most preferred
+irrational function could find itself operating at the bottom of the tree.
+
+\toReview
+So the only thing that remains to do in deciding which architecture maybe
+better is by coming with experimental evidence, as we did with the naive
+approach to show it will work or not.
 
 \cleared
-This results in the following conceptualized architecture:
+With this in mind we can still say these things about the conceptualized
+architecture:
 /rational/ functions change the order of possible replies,
 one layer above the leaf layer,
 /irrational/ increase the number of children at the left most leaf layer.
@@ -3375,7 +3410,7 @@ in section [[Personality influence case study]].
 1. Skipped saying hello (again we miss the shortcircuit rule, same as INTJ)
 2. Didn't match with I'm good, probably samme issue as INTJ.
 3. Only says the first sentence. This is because we don't keep on popping
-  sentences from the dialogue tree if the patient actor still is preffered.
+  sentences from the dialogue tree if the patient actor still is preferred.
 4. We skipped the intermidate sentences (because they didn't pop),
    What we would expect is to get some confusion back after doing this.
    This didn't happen so rules to give confusion when skipping parts of the
@@ -3836,9 +3871,9 @@ to keep unity running (or use at all).
   Utterences, but the issue is what to name the splitup (protoutterence?)
 
 *** Implicit actions by bot
-+ Perhaps if we should keep popping preffered options until we reach an actor
++ Perhaps if we should keep popping preferred options until we reach an actor
   that is not the agent?
-+ If the preffered action is not an agent say nothing?
++ If the preferred action is not an agent say nothing?
 ** Tooling stuff
 + Protocol buffers could be used for protocol. Its strongly typed and has both
   C# and Java bindings
