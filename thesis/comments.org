@@ -2,10 +2,22 @@
 
 * Dignum
 
-In de voorbeeld scenarios heb ik soms initiatief moment alleen word hier niet
-echt mee rekening gehouden in de deliberatie, moet ik hier met een drool 
-omheen werken of zal ik het voorbeeld aanpassen?
+** Email
+Beste dr. Dignum,
 
+Bij deze een kleine status update.
+
+Daarna bezig gegaan met het implementeren van een test scenario die ik tegen dinsdag kon uitvoeren.
+Hieruit waren enkele fouten voortgekomen:
+
+1. Low level replies waren nog niet geïmplementeerd (voornamelijk voor hallo -> hallo reacties).
+2. Er was altijd maar 1 "symbool" reactie, zelfs als de persoonlijkheid dacht dat er 2 dingen achter elkaar gezegd konden worden.
+3. De hoogte waarop functies zouden moeten werken was niet goed uitgewerkt.
+
+Punt 1 en 2 zijn inmiddels klaar. Als punt 3 af is ben ik van plan nog een integratie test te doen, punt 3 is verrassend complex om goed te doen en heeft zelfs gezorgd voor een uitbreiding in BDI+Jung.
+
+De dag nadat ons gesprek had ik geskyped met manuel. Sindsdien heb ik enkele emails naar hem gestuurd maar alsnog niks van hem gehoord.
+Het probleem waar ik tegen aanliep is dat er 2 dubbele implementaties zijn en hoe ik deze het best kan verenigen (tussen social practice in drools en een java class die ik had geschreven).
 
 * Manuel
 
