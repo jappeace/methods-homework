@@ -2168,12 +2168,18 @@ which results in boilerplate code and extra work.
 
 \toReview
 We also could use outside information to determine height.
-Basically we would put into the believes the personality, in other words,
-the order of functions.
+Basically we would put into the believes the order of functions.
 With this information and the dialogue tree we can calculate the
 right level to operate upon.
 A question then remains is if the rational should sort everything even below
 its level or just its level. 
+This can be answered however.
+Rational should sort its level and everything below it,
+because we can expect possibly multiple responses if the same actor self comes
+up first.
+Then we want the lower level also to be of the most important rational function.
+The 'deeper' less important rational functions only have a guiding role for 
+irrational functions after them.
 
 \toReview
 Another approach would be to let the rational functions sort the entire tree,
