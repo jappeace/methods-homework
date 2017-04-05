@@ -1,4 +1,5 @@
 #+TITLE: A serious communication game with personalities
+#+LANGUAGE: en
 # TODO: this title is to vague
 # Jungian functions as endomorphisms:
   # Personality for dialogue agents
@@ -3362,7 +3363,9 @@ trough connections.
 To decide this we again take the example dialogue.
 
 **** Initial test
-Date:<2017-03-28 di> 
+| Commit | 65e704a0f9ec6f5d7052e0de285a79baf420db7d |
+| Date   | 2017-03-28 |
+
 We believe most of the higher level reasoning is done at this point.
 To confirm this, we implement a scenario such as the case study presented
 in section [[Personality influence case study]].
@@ -3449,6 +3452,97 @@ in section [[Personality influence case study]].
 3. It says when lifting a heavy object, but I'm pretty sure it just always picks
    the first option because two pass logic is broken.
    So I'll end this test prematurely.
+
+**** Second test
+
+| Commit | 1de05450c187c51df780a975cc4f0cec7c69dba1 |
+| Date   |                               2017-04-05 |
+
+After solving the issues from the initial test, we redid them.
+
+\todo[inline]{Should probably be moved to appendix}
+***** INTJ
+| Who      | Scripted Utterance                                | Issues |
+|----------+---------------------------------------------------+--------|
+| Doctor   | Hi                                                |        |
+| /Sander/ | /Hello/                                           |        |
+| Doctor   | How can I help you?                               |        |
+| /Sander/ | /I have a back pain./                             |        |
+| Doctor   | When did this first occur?                        |        |
+| /Sander/ | /When I lifted a heavy object./                   |        |
+| Doctor   | Oh, yes then you need some pain killers for this. |        |
+| /Sander/ | /Thank you doctor/                                |        |
+
+Conversation went according to script.
+
+***** ENFP
+| Who     | Utterance                                                          | Issues |
+|---------+--------------------------------------------------------------------+--------|
+| Doctor  | Hi                                                                 |        |
+| /Susie/ | /Hello/                                                            |        |
+| /Susie/ | /How are you today doctor?/                                        |      1 |
+| Doctor  | I'm good, how can I help you?                                      |      2 |
+| /Susie/ | /I'm afraid I need some medicine/                                  |        |
+| Doctor  | Medicine? Why do you need that?                                    |        |
+| /Susie/ | /Well, I was watering the plants and all the sudden,/              |        |
+| /Susie/ | /I got this pain in my back./                                      |      3 |
+| /Susie/ | /Do you think I'm allergic to plants?/                             |        |
+| Doctor  | Haha, no, I think we need to make a scan of your back.             |        |
+| Doctor  | Because a watering can is a little to light to get back-pain from. |        |
+| /Susie/ | /Of course doctor./                                                |        |
+| Doctor  | Can you go to the hospital next Friday at 13:00?                   |        |
+| /Susie/ | /Yes, I will go then./                                             |        |
+
+
+1. Wasn't uttered, probably because we handle hello as a low level reply.
+   Perhaps we should let replies also be passed to themselves so higher level
+   functions have a chance to interact?
+   (note that alteration is the default, so unless a goal is directly below it
+    nothing will be said)
+2. We just said 'how can I help you' instead.
+3. Goes into "Perhaps I put to much water in the watering can".
+   Probably because ENFP is an Fi rather than Fe, Fi is a learning function.
+   We should analyze what has been learned at this point.
+   It appears also that in either case no values are attached.
+   After this point the bot follows the ISTP script.
+
+***** ISTP
+| Who     | Utterance                                                         | Issues |
+|---------+-------------------------------------------------------------------+--------|
+| Doctor  | Hi                                                                |        |
+| /Chris/ | /Hello/                                                           |        |
+| Doctor  | How can I help?                                                   |        |
+| /Chris/ | /I have back pain doctor./                                        |        |
+| Doctor  | When did this first occur?                                        |        |
+| /Chris/ | /Well I was watering the plants,/                                 |      1 |
+| /Chris/ | /Perhaps I put to much water in the watering can/                 |        |
+| Doctor  | Yes, that could be the case.                                      |        |
+| Doctor  | However I would like to make a scan of your back just to be sure. |        |
+| /Chris/ | /Can't you just give some pain killers to help me?/               |        |
+| Doctor  | Yes but that will only work temporary.                            |        |
+| Doctor  | So let's plan a scan at the hospital next Friday at 13:00?        |        |
+| Doctor  | I can give you some pain killers meanwhile.                       |        |
+| /Chris/ | /Okay, thanks doctor/                                             |        |
+
+
+1. Says 'when lifting a heavy object'.
+   This derails the entire script so the test was stopped.
+   The reason for this became apparent after a full tree dump after each function.
+   First time the Ti function has nothing to sort, so it does nothing.
+   Se generates all available options in the order they came,
+   Ni just goes down whatever Se preferred.
+   Fe sorts everything twice, but most have no perlocutionary value.
+   Then once we come back to Ti, the most obvious choice is of course the first
+   option provided by Se, since it was expended by Ni, twice.
+
+\drafting
+This is obviously not what we want, since Se is deciding which action is taken
+here.
+Se could try and get a sane ordering function. However it only has next
+available and trying to use previous would lead to a stack overflow.
+Ti probably should get a better ordering mechanism.
+For example rather than using the DialogueTree for direct options we just
+list all available options.
 * In conclusion
 \todo[inline]{Discussion, comparison}
 ** Future work
