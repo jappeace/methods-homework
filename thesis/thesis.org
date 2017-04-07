@@ -2367,6 +2367,12 @@ However we will borrow parts of it.
 Namely whenever a rational function finishing ordering the input set it will
 call the /next/ function to do deliberation on the most preferred item.
 
+\drafting
+Also we model the rational functions as local optimizing functions. Only
+the current ply and maybe the next ply is considered, but not the entire tree.
+The primary reason for this is ease of implementation. However there is no
+reason why the entire available tree couldn't be used.
+
 **** Feeling
 \cleared
 Initially we wanted to create two lookup tables for both feeling functions one.
@@ -3925,12 +3931,16 @@ to keep unity running (or use at all).
 \todo[inline]{Extracting information from meanings isn't very DRY right now, for example saying how is your foot? Could perhaps be splitup into statusInquiry + foot. However I don't know how to do this better right now, perhaps it could be a natural result of dubble matching but we lose the order inforamtion.}
 ** Rough planning.
 *** Integration tests
-**** Make scenario (probably borrow from thesis)
-     1. Right now we can't represnt goals we should fix that
-     2. Personal values should be specifiable
-     3. Values shouldn't be an enum, its just annoying to work with
-     4. Perhaps we should tag more values
-**** Test the scenario?
+**** Fix scenario issues
+     1. Perhaps we should tag more values (wherever its necessary according to scenario)
+     2. Change to popping behavior to re-insert a reply utterance and then or do nothing.
+        1. This allows even for low-level replies to think about it.
+        2. We of course then need to block low level replies based upon actors
+     3. Fix the remembered dialogue to store prelocutionary values.
+        1. This is requried for Fi
+     4. Investigate why ENFP goes into the unexpected path.
+     5. Do another test run.
+**** Additional experimentation
      For this I wanna setup an experiment like thing, where we research what
      the system does etc.
      + Perhaps we should look in what cases the deeper functions have effect (if any)
@@ -3969,6 +3979,9 @@ to keep unity running (or use at all).
   percolutionary values aren't used.
   Actually goals need less information, so an idea would be to splitup
   Utterences, but the issue is what to name the splitup (protoutterence?)
++ Perhaps it shouldn't be possible to skip to a certain part of a dialogue
+  without punishment?
+  Although this is handy for debugging right now.
 
 *** Implicit actions by bot
 + Perhaps if we should keep popping preferred options until we reach an actor
