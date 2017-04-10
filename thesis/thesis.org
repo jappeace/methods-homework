@@ -4079,13 +4079,13 @@ to keep unity running (or use at all).
    + we need to figure out how to deal with "that" tags.
    + Explore lucas' work further, see how much we can use the drools.
 *** Repair OCC module & scoring module
+*** Report
+     In thesis we should also mention the effects of values for functions
 *** Additional experimentation?
      For this I wanna setup an experiment like thing, where we research what
      the system does etc.
      + Perhaps we should look in what cases the deeper functions have effect (if any)
      + The order of functions, what effect they have, especially on top level.
-*** Report
-     In thesis we should also mention the effects of values for functions
 
 ** Random thoughts
 + Goals should perhaps be able to be finished?
