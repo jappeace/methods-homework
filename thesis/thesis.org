@@ -3347,6 +3347,7 @@ To do this a scenario is implemented and the tests are done upon it.
 \todo[inline]{Pershaps we can show trough experminetation what effect lower functions have?}
 \todo[inline]{How many of the lower functions are used?}
 \todo[inline]{Are slight differences in order relevant? [Ne, Ti] vs [Ti, Ne]}
+\todo[inline]{I'm pretty sure current design doesn't work that great with 'deeper' levels, because we assumed irir or riri, but now the theory says riir or irri. We should analyze this difference I think}
 
 *** Validation test
 \toReview
@@ -3549,6 +3550,73 @@ available and trying to use previous would lead to a stack overflow.
 Ti probably should get a better ordering mechanism.
 For example rather than using the DialogueTree for direct options we just
 list all available options.
+**** Third test
+After solving the issues from the second test we do anther run of all tests.
+Even though this time we tested quite closely against the issues from the
+previous test, going trough the entire battery is necessary to prevent
+regressions.
+
+| Commit | 893f54f6942a65e3c22126949091d096c3691445 |
+| Date   |                               2017-04-10 |
+
+
+
+\todo[inline]{Should probably be moved to appendix}
+***** INTJ
+| Who      | Scripted Utterance                                | Issues |
+|----------+---------------------------------------------------+--------|
+| Doctor   | Hi                                                |        |
+| /Sander/ | /Hello/                                           |        |
+| Doctor   | How can I help you?                               |        |
+| /Sander/ | /I have a back pain./                             |        |
+| Doctor   | When did this first occur?                        |        |
+| /Sander/ | /When I lifted a heavy object./                   |        |
+| Doctor   | Oh, yes then you need some pain killers for this. |        |
+| /Sander/ | /Thank you doctor/                                |        |
+
+Conversation went according to script.
+
+***** ENFP
+| Who     | Utterance                                                          | Issues |
+|---------+--------------------------------------------------------------------+--------|
+| Doctor  | Hi                                                                 |        |
+| /Susie/ | /Hello/                                                            |        |
+| /Susie/ | /How are you today doctor?/                                        |        |
+| Doctor  | I'm good, how can I help you?                                      |        |
+| /Susie/ | /I'm afraid I need some medicine/                                  |        |
+| Doctor  | Medicine? Why do you need that?                                    |        |
+| /Susie/ | /Well, I was watering the plants and all the sudden,/              |        |
+| /Susie/ | /I got this pain in my back./                                      |        |
+| /Susie/ | /Do you think I'm allergic to plants?/                             |        |
+| Doctor  | Haha, no, I think we need to make a scan of your back.             |        |
+| Doctor  | Because a watering can is a little to light to get back-pain from. |        |
+| /Susie/ | /Of course doctor./                                                |        |
+| Doctor  | Can you go to the hospital next Friday at 13:00?                   |        |
+| /Susie/ | /Yes, I will go then./                                             |        |
+
+Conversation went according to script.
+
+***** ISTP
+| Who     | Utterance                                                         | Issues |
+|---------+-------------------------------------------------------------------+--------|
+| Doctor  | Hi                                                                |        |
+| /Chris/ | /Hello/                                                           |      1 |
+| Doctor  | How can I help?                                                   |        |
+| /Chris/ | /I have back pain doctor./                                        |        |
+| Doctor  | When did this first occur?                                        |        |
+| /Chris/ | /Well I was watering the plants,/                                 |        |
+| /Chris/ | /Perhaps I put to much water in the watering can/                 |        |
+| Doctor  | Yes, that could be the case.                                      |        |
+| Doctor  | However I would like to make a scan of your back just to be sure. |        |
+| /Chris/ | /Can't you just give some pain killers to help me?/               |      2 |
+| Doctor  | Yes but that will only work temporary.                            |        |
+| Doctor  | So let's plan a scan at the hospital next Friday at 13:00?        |        |
+| Doctor  | I can give you some pain killers meanwhile.                       |        |
+| /Chris/ | /Okay, thanks doctor/                                             |        |
+
+1. Said hello twice?!
+2. Said "of course" rather than give me some pain killers
+
 * In conclusion
 \todo[inline]{Discussion, comparison}
 ** Future work
@@ -3932,14 +4000,11 @@ to keep unity running (or use at all).
 ** Rough planning.
 *** Integration tests
 **** Fix scenario issues
-     1. Perhaps we should tag more values (wherever its necessary according to scenario)
-     2. Change to popping behavior to re-insert a reply utterance and then or do nothing.
-        1. This allows even for low-level replies to think about it.
-        2. We of course then need to block low level replies based upon actors
-     3. Fix the remembered dialogue to store prelocutionary values.
-        1. This is requried for Fi
-     4. Investigate why ENFP goes into the unexpected path.
-     5. Do another test run.
+     1. Fix the remembered dialogue to store perlocutionary values.
+        1. This is required for Fi
+     2. Investigate why ENFP goes into the unexpected path.
+        1. We may actually need to add before clauses to fix this properly.
+     3. Do another test run.
 **** Additional experimentation
      For this I wanna setup an experiment like thing, where we research what
      the system does etc.
