@@ -4074,18 +4074,18 @@ to keep unity running (or use at all).
 \todo[inline]{Perhaps we can use argumentation research on top of the graph to figure out more semantics (this statment is attacking that or inquirying this)}
 \todo[inline]{Extracting information from meanings isn't very DRY right now, for example saying how is your foot? Could perhaps be splitup into statusInquiry + foot. However I don't know how to do this better right now, perhaps it could be a natural result of dubble matching but we lose the order inforamtion.}
 ** Rough planning.
-*** Integration tests
-**** Additional experimentation?
-     For this I wanna setup an experiment like thing, where we research what
-     the system does etc.
-     + Perhaps we should look in what cases the deeper functions have effect (if any)
-     + In thesis we should also mention the effects of values for functions
 *** Make a script to convert AIML to YML
    (perhaps we can use this for integration or demo)
    + we need to figure out how to deal with "that" tags.
    + Explore lucas' work further, see how much we can use the drools.
 *** Repair OCC module & scoring module
+*** Additional experimentation?
+     For this I wanna setup an experiment like thing, where we research what
+     the system does etc.
+     + Perhaps we should look in what cases the deeper functions have effect (if any)
+     + The order of functions, what effect they have, especially on top level.
 *** Report
+     In thesis we should also mention the effects of values for functions
 
 ** Random thoughts
 + Goals should perhaps be able to be finished?
