@@ -3611,11 +3611,87 @@ Conversation went according to script.
 | /Chris/ | /Can't you just give some pain killers to help me?/               |      2 |
 | Doctor  | Yes but that will only work temporary.                            |        |
 | Doctor  | So let's plan a scan at the hospital next Friday at 13:00?        |        |
+| /Chris/ | /Yes, I will go then./                                            |        |
 | Doctor  | I can give you some pain killers meanwhile.                       |        |
 | /Chris/ | /Okay, thanks doctor/                                             |        |
 
 1. Said hello twice?!
+   This was caused by the reinserting part of the shortcut, it used anyactor
+   rather than self.
 2. Said "of course" rather than give me some pain killers
+   After inspection of the scenario it appears that there is no reason to say
+   "can't you give me painkillers" because there weren't any connection
+   leading out of it.
+   I also made give painkillers a low priority goal.
+   Because currently there isn't really deep delibrartion going on.
+
+**** Fourth test
+Its the same day and we try another round to pass this relatively simple 
+test.
+
+| Commit | 8ea894d0da28addd8067c341e842ca2d91296586 |
+| Date   |                               2017-04-10 |
+
+
+\todo[inline]{Should probably be moved to appendix}
+***** INTJ
+| Who      | Scripted Utterance                                | Issues |
+|----------+---------------------------------------------------+--------|
+| Doctor   | Hi                                                |        |
+| /Sander/ | /Hello/                                           |        |
+| Doctor   | How can I help you?                               |        |
+| /Sander/ | /I have a back pain./                             |        |
+| Doctor   | When did this first occur?                        |        |
+| /Sander/ | /When I lifted a heavy object./                   |        |
+| Doctor   | Oh, yes then you need some pain killers for this. |        |
+| /Sander/ | /Thank you doctor/                                |        |
+
+Conversation went according to script.
+
+***** ENFP
+| Who     | Utterance                                                          | Issues |
+|---------+--------------------------------------------------------------------+--------|
+| Doctor  | Hi                                                                 |        |
+| /Susie/ | /Hello/                                                            |        |
+| /Susie/ | /How are you today doctor?/                                        |        |
+| Doctor  | I'm good, how can I help you?                                      |        |
+| /Susie/ | /I'm afraid I need some medicine/                                  |        |
+| Doctor  | Medicine? Why do you need that?                                    |        |
+| /Susie/ | /Well, I was watering the plants and all the sudden,/              |        |
+| /Susie/ | /I got this pain in my back./                                      |        |
+| /Susie/ | /Do you think I'm allergic to plants?/                             |        |
+| Doctor  | Haha, no, I think we need to make a scan of your back.             |        |
+| Doctor  | Because a watering can is a little to light to get back-pain from. |        |
+| /Susie/ | /Of course doctor./                                                |        |
+| Doctor  | Can you go to the hospital next Friday at 13:00?                   |        |
+| /Susie/ | /Yes, I will go then./                                             |        |
+
+Conversation went according to script. 
+
+***** ISTP
+| Who     | Utterance                                                         | Issues |
+|---------+-------------------------------------------------------------------+--------|
+| Doctor  | Hi                                                                |        |
+| /Chris/ | /Hello/                                                           |        |
+| Doctor  | How can I help?                                                   |        |
+| /Chris/ | /I have back pain doctor./                                        |        |
+| Doctor  | When did this first occur?                                        |        |
+| /Chris/ | /Well I was watering the plants,/                                 |        |
+| /Chris/ | /Perhaps I put to much water in the watering can/                 |        |
+| Doctor  | Yes, that could be the case.                                      |        |
+| Doctor  | However I would like to make a scan of your back just to be sure. |        |
+| /Chris/ | /Can't you just give some pain killers to help me?/               |        |
+| Doctor  | Yes but that will only work temporary.                            |        |
+| Doctor  | So let's plan a scan at the hospital next Friday at 13:00?        |        |
+| /Chris/ | /Yes, I will go then./                                            |        |
+| Doctor  | I can give you some pain killers meanwhile.                       |        |
+| /Chris/ | /Okay, thanks doctor/                                             |        |
+
+Conversation went according to script. Note however that we split up the
+utterances of the doctor compared to the scenario.
+This is because there were to many different symbols in the input
+(scan and give painkillers), this made the bot reply to both of them.
+
 
 * In conclusion
 \todo[inline]{Discussion, comparison}
