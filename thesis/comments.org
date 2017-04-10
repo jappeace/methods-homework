@@ -12,11 +12,6 @@ Tijdens het uitvoeren waren er wel enkele vrij serieuse fouten tevoorschijn
 gekomen die in het thesis worden besproken.
 
 Het volgende wat op de planning staat is het AIML naar YAML script.
-Maar ik zou ook extra experimenten kunnen gaan uitvoeren en daarop
-reflecteren.
-Mogelijkheden tot experimentatie:
-  + Het effect van de 'lagere functies', zijn lagere functies uberhaupt nodig?
-  + Volgorde van de top level functies: heeft het zin? Wanneer wel wanneer niet?
 
 * Manuel
 
