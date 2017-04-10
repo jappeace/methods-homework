@@ -3364,334 +3364,22 @@ We continue doing this process for all the utterances in this dialogue and the
 next dialogues until all utterances have at least their own unique symbol, 
 or share one with similar utterances in meaning.
 
-\drafting
+\toReview
 Next up is deciding which of the symbols should be connected with each other
 trough connections.
-To decide this we again take the example dialogue.
+To decide this we again take the case study dialogue found in 
+example dialogue.
 
-**** Initial test
-| Commit | 65e704a0f9ec6f5d7052e0de285a79baf420db7d |
-| Date   | 2017-03-28 |
+\toReview
+After this we run the test against the scenario. This can be seen in section:
+[[Test Results]]. There were some issues with the scenario itself,
+however most issues we found were with the functions and their interactions.
+The biggest issues we found were:
 
-We believe most of the higher level reasoning is done at this point.
-To confirm this, we implement a scenario such as the case study presented
-in section [[Personality influence case study]].
-
-\todo[inline]{Should probably be moved to appendix}
-***** INTJ
-| Who      | Scripted Utterance                                | Issues |
-|----------+---------------------------------------------------+--------|
-| Doctor   | Hi                                                |        |
-| /Sander/ | /Hello/                                           |      1 |
-| Doctor   | How can I help you?                               |      2 |
-| /Sander/ | /I have a back pain./                             |        |
-| Doctor   | When did this first occur?                        |        |
-| /Sander/ | /When I lifted a heavy object./                   |        |
-| Doctor   | Oh, yes then you need some pain killers for this. |        |
-| /Sander/ | /Thank you doctor/                                |        |
-
-1. Actually said "How are you?", This is unexpected,
-   however since replying with hello is useless to INTJ (it'll just loop back),
-   such a reply may actually be better for progress high level process.
-   However, this doesn't mean this is right, the intention was to make the hello
-   reply be done on a lower level (ie first item said and understanding matches
-   hello short-circiuts into replying hello)
-3. We use the other scripted response (perhaps it thinks its ENFP),
-   this didn't match however,
-   turns out this symbol didn't have any regexes,
-   after adding the regexes it still didn't match,
-   further investigation is required
-   into the regexes why they don't match,
-   I'm suspecting its either a construction problem (not all are added),
-   Or some standard java regex problem.
-
-***** ENFP
-| Who     | Utterance                                                          | Issues |
-|---------+--------------------------------------------------------------------+--------|
-| Doctor  | Hi                                                                 |        |
-| /Susie/ | /Hello/                                                            | 1      |
-| /Susie/ | /How are you today doctor?/                                        | 1      |
-| Doctor  | I'm good, how can I help you?                                      | 2      |
-| /Susie/ | /I'm afraid I need some medicine/                                  |        |
-| Doctor  | Medicine? Why do you need that?                                    |        |
-| /Susie/ | /Well, I was watering the plants and all the sudden,/              | 3      |
-| /Susie/ | /I got this pain in my back./                                      |        |
-| /Susie/ | /Do you think I'm allergic to plants?/                             |        |
-| Doctor  | Haha, no, I think we need to make a scan of your back.             | 4      |
-| Doctor  | Because a watering can is a little to light to get back-pain from. |        |
-| /Susie/ | /Of course doctor./                                                |        |
-| Doctor  | Can you go to the hospital next Friday at 13:00?                   |        |
-| /Susie/ | /Yes, I will go then./                                             |        |
-
-1. Skipped saying hello (again we miss the shortcircuit rule, same as INTJ)
-2. Didn't match with I'm good, probably samme issue as INTJ.
-3. Only says the first sentence. This is because we don't keep on popping
-  sentences from the dialogue tree if the patient actor still is preferred.
-4. We skipped the intermidate sentences (because they didn't pop),
-   What we would expect is to get some confusion back after doing this.
-   This didn't happen so rules to give confusion when skipping parts of the
-   graph should be implemented.
-
-***** ISTP
-| Who     | Utterance                                                         | Issues |
-|---------+-------------------------------------------------------------------+--------|
-| Doctor  | Hi                                                                |        |
-| /Chris/ | /Hello/                                                           |      1 |
-| Doctor  | How can I help?                                                   |        |
-| /Chris/ | /I have back pain doctor./                                        | 2      |
-| Doctor  | When did this first occur?                                        |        |
-| /Chris/ | /Well I was watering the plants,/                                 |  3     |
-| /Chris/ | /Perhaps I put to much water in the watering can/                 |        |
-| Doctor  | Yes, that could be the case.                                      |        |
-| Doctor  | However I would like to make a scan of your back just to be sure. |        |
-| /Chris/ | /Can't you just give some pain killers to help me?/               |        |
-| Doctor  | Yes but that will only work temporary.                            |        |
-| Doctor  | So let's plan a scan at the hospital next Friday at 13:00?        |        |
-| Doctor  | I can give you some pain killers meanwhile.                       |        |
-| /Chris/ | /Okay, thanks doctor/                                             |        |
-
-1. Again no hello
-2. Replied with, I'm afraid I need some medicine, I think this is because Ti
-   is the first function, and I think the two pass effect isn't implemented
-   correctly yet. It just goes deeper now rather than finding the right level
-   to modify. Since telling about back pain is a goal and we have a unit test that
-   ti prefers goals its almost surely this broken two pass behavior.
-3. It says when lifting a heavy object, but I'm pretty sure it just always picks
-   the first option because two pass logic is broken.
-   So I'll end this test prematurely.
-
-**** Second test
-
-| Commit | 1de05450c187c51df780a975cc4f0cec7c69dba1 |
-| Date   |                               2017-04-05 |
-
-After solving the issues from the initial test, we redid them.
-
-\todo[inline]{Should probably be moved to appendix}
-***** INTJ
-| Who      | Scripted Utterance                                | Issues |
-|----------+---------------------------------------------------+--------|
-| Doctor   | Hi                                                |        |
-| /Sander/ | /Hello/                                           |        |
-| Doctor   | How can I help you?                               |        |
-| /Sander/ | /I have a back pain./                             |        |
-| Doctor   | When did this first occur?                        |        |
-| /Sander/ | /When I lifted a heavy object./                   |        |
-| Doctor   | Oh, yes then you need some pain killers for this. |        |
-| /Sander/ | /Thank you doctor/                                |        |
-
-Conversation went according to script.
-
-***** ENFP
-| Who     | Utterance                                                          | Issues |
-|---------+--------------------------------------------------------------------+--------|
-| Doctor  | Hi                                                                 |        |
-| /Susie/ | /Hello/                                                            |        |
-| /Susie/ | /How are you today doctor?/                                        |      1 |
-| Doctor  | I'm good, how can I help you?                                      |      2 |
-| /Susie/ | /I'm afraid I need some medicine/                                  |        |
-| Doctor  | Medicine? Why do you need that?                                    |        |
-| /Susie/ | /Well, I was watering the plants and all the sudden,/              |        |
-| /Susie/ | /I got this pain in my back./                                      |      3 |
-| /Susie/ | /Do you think I'm allergic to plants?/                             |        |
-| Doctor  | Haha, no, I think we need to make a scan of your back.             |        |
-| Doctor  | Because a watering can is a little to light to get back-pain from. |        |
-| /Susie/ | /Of course doctor./                                                |        |
-| Doctor  | Can you go to the hospital next Friday at 13:00?                   |        |
-| /Susie/ | /Yes, I will go then./                                             |        |
-
-
-1. Wasn't uttered, probably because we handle hello as a low level reply.
-   Perhaps we should let replies also be passed to themselves so higher level
-   functions have a chance to interact?
-   (note that alteration is the default, so unless a goal is directly below it
-    nothing will be said)
-2. We just said 'how can I help you' instead.
-3. Goes into "Perhaps I put to much water in the watering can".
-   Probably because ENFP is an Fi rather than Fe, Fi is a learning function.
-   We should analyze what has been learned at this point.
-   It appears also that in either case no values are attached.
-   After this point the bot follows the ISTP script.
-
-***** ISTP
-| Who     | Utterance                                                         | Issues |
-|---------+-------------------------------------------------------------------+--------|
-| Doctor  | Hi                                                                |        |
-| /Chris/ | /Hello/                                                           |        |
-| Doctor  | How can I help?                                                   |        |
-| /Chris/ | /I have back pain doctor./                                        |        |
-| Doctor  | When did this first occur?                                        |        |
-| /Chris/ | /Well I was watering the plants,/                                 |      1 |
-| /Chris/ | /Perhaps I put to much water in the watering can/                 |        |
-| Doctor  | Yes, that could be the case.                                      |        |
-| Doctor  | However I would like to make a scan of your back just to be sure. |        |
-| /Chris/ | /Can't you just give some pain killers to help me?/               |        |
-| Doctor  | Yes but that will only work temporary.                            |        |
-| Doctor  | So let's plan a scan at the hospital next Friday at 13:00?        |        |
-| Doctor  | I can give you some pain killers meanwhile.                       |        |
-| /Chris/ | /Okay, thanks doctor/                                             |        |
-
-
-1. Says 'when lifting a heavy object'.
-   This derails the entire script so the test was stopped.
-   The reason for this became apparent after a full tree dump after each function.
-   First time the Ti function has nothing to sort, so it does nothing.
-   Se generates all available options in the order they came,
-   Ni just goes down whatever Se preferred.
-   Fe sorts everything twice, but most have no perlocutionary value.
-   Then once we come back to Ti, the most obvious choice is of course the first
-   option provided by Se, since it was expended by Ni, twice.
-
-\drafting
-This is obviously not what we want, since Se is deciding which action is taken
-here.
-Se could try and get a sane ordering function. However it only has next
-available and trying to use previous would lead to a stack overflow.
-Ti probably should get a better ordering mechanism.
-For example rather than using the DialogueTree for direct options we just
-list all available options.
-**** Third test
-After solving the issues from the second test we do anther run of all tests.
-Even though this time we tested quite closely against the issues from the
-previous test, going trough the entire battery is necessary to prevent
-regressions.
-
-| Commit | 893f54f6942a65e3c22126949091d096c3691445 |
-| Date   |                               2017-04-10 |
-
-
-
-\todo[inline]{Should probably be moved to appendix}
-***** INTJ
-| Who      | Scripted Utterance                                | Issues |
-|----------+---------------------------------------------------+--------|
-| Doctor   | Hi                                                |        |
-| /Sander/ | /Hello/                                           |        |
-| Doctor   | How can I help you?                               |        |
-| /Sander/ | /I have a back pain./                             |        |
-| Doctor   | When did this first occur?                        |        |
-| /Sander/ | /When I lifted a heavy object./                   |        |
-| Doctor   | Oh, yes then you need some pain killers for this. |        |
-| /Sander/ | /Thank you doctor/                                |        |
-
-Conversation went according to script.
-
-***** ENFP
-| Who     | Utterance                                                          | Issues |
-|---------+--------------------------------------------------------------------+--------|
-| Doctor  | Hi                                                                 |        |
-| /Susie/ | /Hello/                                                            |        |
-| /Susie/ | /How are you today doctor?/                                        |        |
-| Doctor  | I'm good, how can I help you?                                      |        |
-| /Susie/ | /I'm afraid I need some medicine/                                  |        |
-| Doctor  | Medicine? Why do you need that?                                    |        |
-| /Susie/ | /Well, I was watering the plants and all the sudden,/              |        |
-| /Susie/ | /I got this pain in my back./                                      |        |
-| /Susie/ | /Do you think I'm allergic to plants?/                             |        |
-| Doctor  | Haha, no, I think we need to make a scan of your back.             |        |
-| Doctor  | Because a watering can is a little to light to get back-pain from. |        |
-| /Susie/ | /Of course doctor./                                                |        |
-| Doctor  | Can you go to the hospital next Friday at 13:00?                   |        |
-| /Susie/ | /Yes, I will go then./                                             |        |
-
-Conversation went according to script.
-
-***** ISTP
-| Who     | Utterance                                                         | Issues |
-|---------+-------------------------------------------------------------------+--------|
-| Doctor  | Hi                                                                |        |
-| /Chris/ | /Hello/                                                           |      1 |
-| Doctor  | How can I help?                                                   |        |
-| /Chris/ | /I have back pain doctor./                                        |        |
-| Doctor  | When did this first occur?                                        |        |
-| /Chris/ | /Well I was watering the plants,/                                 |        |
-| /Chris/ | /Perhaps I put to much water in the watering can/                 |        |
-| Doctor  | Yes, that could be the case.                                      |        |
-| Doctor  | However I would like to make a scan of your back just to be sure. |        |
-| /Chris/ | /Can't you just give some pain killers to help me?/               |      2 |
-| Doctor  | Yes but that will only work temporary.                            |        |
-| Doctor  | So let's plan a scan at the hospital next Friday at 13:00?        |        |
-| /Chris/ | /Yes, I will go then./                                            |        |
-| Doctor  | I can give you some pain killers meanwhile.                       |        |
-| /Chris/ | /Okay, thanks doctor/                                             |        |
-
-1. Said hello twice?!
-   This was caused by the reinserting part of the shortcut, it used anyactor
-   rather than self.
-2. Said "of course" rather than give me some pain killers
-   After inspection of the scenario it appears that there is no reason to say
-   "can't you give me painkillers" because there weren't any connection
-   leading out of it.
-   I also made give painkillers a low priority goal.
-   Because currently there isn't really deep delibrartion going on.
-
-**** Fourth test
-Its the same day and we try another round to pass this relatively simple 
-test.
-
-| Commit | 8ea894d0da28addd8067c341e842ca2d91296586 |
-| Date   |                               2017-04-10 |
-
-
-\todo[inline]{Should probably be moved to appendix}
-***** INTJ
-| Who      | Scripted Utterance                                | Issues |
-|----------+---------------------------------------------------+--------|
-| Doctor   | Hi                                                |        |
-| /Sander/ | /Hello/                                           |        |
-| Doctor   | How can I help you?                               |        |
-| /Sander/ | /I have a back pain./                             |        |
-| Doctor   | When did this first occur?                        |        |
-| /Sander/ | /When I lifted a heavy object./                   |        |
-| Doctor   | Oh, yes then you need some pain killers for this. |        |
-| /Sander/ | /Thank you doctor/                                |        |
-
-Conversation went according to script.
-
-***** ENFP
-| Who     | Utterance                                                          | Issues |
-|---------+--------------------------------------------------------------------+--------|
-| Doctor  | Hi                                                                 |        |
-| /Susie/ | /Hello/                                                            |        |
-| /Susie/ | /How are you today doctor?/                                        |        |
-| Doctor  | I'm good, how can I help you?                                      |        |
-| /Susie/ | /I'm afraid I need some medicine/                                  |        |
-| Doctor  | Medicine? Why do you need that?                                    |        |
-| /Susie/ | /Well, I was watering the plants and all the sudden,/              |        |
-| /Susie/ | /I got this pain in my back./                                      |        |
-| /Susie/ | /Do you think I'm allergic to plants?/                             |        |
-| Doctor  | Haha, no, I think we need to make a scan of your back.             |        |
-| Doctor  | Because a watering can is a little to light to get back-pain from. |        |
-| /Susie/ | /Of course doctor./                                                |        |
-| Doctor  | Can you go to the hospital next Friday at 13:00?                   |        |
-| /Susie/ | /Yes, I will go then./                                             |        |
-
-Conversation went according to script. 
-
-***** ISTP
-| Who     | Utterance                                                         | Issues |
-|---------+-------------------------------------------------------------------+--------|
-| Doctor  | Hi                                                                |        |
-| /Chris/ | /Hello/                                                           |        |
-| Doctor  | How can I help?                                                   |        |
-| /Chris/ | /I have back pain doctor./                                        |        |
-| Doctor  | When did this first occur?                                        |        |
-| /Chris/ | /Well I was watering the plants,/                                 |        |
-| /Chris/ | /Perhaps I put to much water in the watering can/                 |        |
-| Doctor  | Yes, that could be the case.                                      |        |
-| Doctor  | However I would like to make a scan of your back just to be sure. |        |
-| /Chris/ | /Can't you just give some pain killers to help me?/               |        |
-| Doctor  | Yes but that will only work temporary.                            |        |
-| Doctor  | So let's plan a scan at the hospital next Friday at 13:00?        |        |
-| /Chris/ | /Yes, I will go then./                                            |        |
-| Doctor  | I can give you some pain killers meanwhile.                       |        |
-| /Chris/ | /Okay, thanks doctor/                                             |        |
-
-Conversation went according to script. Note however that we split up the
-utterances of the doctor compared to the scenario.
-This is because there were to many different symbols in the input
-(scan and give painkillers), this made the bot reply to both of them.
-
+1. No level replies
+2. No way of making the bot utter multiple symbols.
+3. The height of which functions ought to operate wasn't determined
+4. $T_i$ didn't have good default behavior
 
 * In conclusion
 \todo[inline]{Discussion, comparison}
@@ -4065,6 +3753,370 @@ mvn clean in there for good measure.
 \cleared
 There is a python client script for quick debugging, therefore its unnecessary
 to keep unity running (or use at all).
+
+* Test Results
+<<Test Results>>
+\toReview
+All these test follow the scenario which is presented as case study in section
+section [[Personality influence case study]].
+Each time all tests are executed to prevent regressions, even if they did manage
+to pass a test cycle before.
+
+** Initial test
+| Commit | 65e704a0f9ec6f5d7052e0de285a79baf420db7d |
+| Date   | 2017-03-28 |
+
+\toReview
+We believe most of the higher level reasoning is done at this point.
+Therefore we attempted this acceptance test to see how well the system would
+hold up.
+
+*** INTJ
+| Who      | Scripted Utterance                                | Issues |
+|----------+---------------------------------------------------+--------|
+| Doctor   | Hi                                                |        |
+| /Sander/ | /Hello/                                           |      1 |
+| Doctor   | How can I help you?                               |      2 |
+| /Sander/ | /I have a back pain./                             |        |
+| Doctor   | When did this first occur?                        |        |
+| /Sander/ | /When I lifted a heavy object./                   |        |
+| Doctor   | Oh, yes then you need some pain killers for this. |        |
+| /Sander/ | /Thank you doctor/                                |        |
+
+\toReview
+1. Actually said "How are you?", This is unexpected,
+   however since replying with hello is useless to INTJ (it'll just loop back),
+   such a reply may actually be better for progress high level process.
+   However, this doesn't mean this is right, the intention was to make the hello
+   reply be done on a lower level (ie first item said and understanding matches
+   hello short-circiuts into replying hello)
+2. We use the other scripted response (perhaps it thinks its ENFP),
+   this didn't match however,
+   turns out this symbol didn't have any regexes,
+   after adding the regexes it still didn't match,
+   further investigation is required
+   into the regexes why they don't match,
+   I'm suspecting its either a construction problem (not all are added),
+   Or some standard java regex problem.
+
+*** ENFP
+| Who     | Utterance                                                          | Issues |
+|---------+--------------------------------------------------------------------+--------|
+| Doctor  | Hi                                                                 |        |
+| /Susie/ | /Hello/                                                            | 1      |
+| /Susie/ | /How are you today doctor?/                                        | 1      |
+| Doctor  | I'm good, how can I help you?                                      | 2      |
+| /Susie/ | /I'm afraid I need some medicine/                                  |        |
+| Doctor  | Medicine? Why do you need that?                                    |        |
+| /Susie/ | /Well, I was watering the plants and all the sudden,/              | 3      |
+| /Susie/ | /I got this pain in my back./                                      |        |
+| /Susie/ | /Do you think I'm allergic to plants?/                             |        |
+| Doctor  | Haha, no, I think we need to make a scan of your back.             | 4      |
+| Doctor  | Because a watering can is a little to light to get back-pain from. |        |
+| /Susie/ | /Of course doctor./                                                |        |
+| Doctor  | Can you go to the hospital next Friday at 13:00?                   |        |
+| /Susie/ | /Yes, I will go then./                                             |        |
+
+\toReview
+1. Skipped saying hello (again we miss the shortcircuit rule, same as INTJ)
+2. Didn't match with I'm good, probably samme issue as INTJ.
+3. Only says the first sentence. This is because we don't keep on popping
+   sentences from the dialogue tree if the patient actor still is preferred.
+4. We skipped the intermidate sentences (because they didn't pop),
+   What we would expect is to get some confusion back after doing this.
+   This didn't happen so rules to give confusion when skipping parts of the
+   graph should be implemented.
+
+*** ISTP
+| Who     | Utterance                                                         | Issues |
+|---------+-------------------------------------------------------------------+--------|
+| Doctor  | Hi                                                                |        |
+| /Chris/ | /Hello/                                                           |      1 |
+| Doctor  | How can I help?                                                   |        |
+| /Chris/ | /I have back pain doctor./                                        |      2 |
+| Doctor  | When did this first occur?                                        |        |
+| /Chris/ | /Well I was watering the plants,/                                 |      3 |
+| /Chris/ | /Perhaps I put to much water in the watering can/                 |        |
+| Doctor  | Yes, that could be the case.                                      |        |
+| Doctor  | However I would like to make a scan of your back just to be sure. |        |
+| /Chris/ | /Can't you just give some pain killers to help me?/               |        |
+| Doctor  | Yes but that will only work temporary.                            |        |
+| Doctor  | So let's plan a scan at the hospital next Friday at 13:00?        |        |
+| Doctor  | I can give you some pain killers meanwhile.                       |        |
+| /Chris/ | /Okay, thanks doctor/                                             |        |
+
+\toReview
+1. Again no hello
+2. Replied with, I'm afraid I need some medicine, I think this is because Ti
+   is the first function, and I think the two pass effect isn't implemented
+   correctly yet. It just goes deeper now rather than finding the right level
+   to modify. Since telling about back pain is a goal and we have a unit test that
+   ti prefers goals its almost surely this broken two pass behavior.
+3. It says when lifting a heavy object, but I'm pretty sure it just always picks
+   the first option because two pass logic is broken.
+   So I'll end this test prematurely.
+
+** Second test
+
+| Commit | 1de05450c187c51df780a975cc4f0cec7c69dba1 |
+| Date   |                               2017-04-05 |
+
+\toReview
+After solving the issues from the initial test, we redid them.
+
+*** INTJ
+| Who      | Scripted Utterance                                | Issues |
+|----------+---------------------------------------------------+--------|
+| Doctor   | Hi                                                |        |
+| /Sander/ | /Hello/                                           |        |
+| Doctor   | How can I help you?                               |        |
+| /Sander/ | /I have a back pain./                             |        |
+| Doctor   | When did this first occur?                        |        |
+| /Sander/ | /When I lifted a heavy object./                   |        |
+| Doctor   | Oh, yes then you need some pain killers for this. |        |
+| /Sander/ | /Thank you doctor/                                |        |
+
+\cleared
+Conversation went according to script.
+
+*** ENFP
+| Who     | Utterance                                                          | Issues |
+|---------+--------------------------------------------------------------------+--------|
+| Doctor  | Hi                                                                 |        |
+| /Susie/ | /Hello/                                                            |        |
+| /Susie/ | /How are you today doctor?/                                        |      1 |
+| Doctor  | I'm good, how can I help you?                                      |      2 |
+| /Susie/ | /I'm afraid I need some medicine/                                  |        |
+| Doctor  | Medicine? Why do you need that?                                    |        |
+| /Susie/ | /Well, I was watering the plants and all the sudden,/              |        |
+| /Susie/ | /I got this pain in my back./                                      |      3 |
+| /Susie/ | /Do you think I'm allergic to plants?/                             |        |
+| Doctor  | Haha, no, I think we need to make a scan of your back.             |        |
+| Doctor  | Because a watering can is a little to light to get back-pain from. |        |
+| /Susie/ | /Of course doctor./                                                |        |
+| Doctor  | Can you go to the hospital next Friday at 13:00?                   |        |
+| /Susie/ | /Yes, I will go then./                                             |        |
+
+
+\toReview
+1. Wasn't uttered, probably because we handle hello as a low level reply.
+   Perhaps we should let replies also be passed to themselves so higher level
+   functions have a chance to interact?
+   (note that alteration is the default, so unless a goal is directly below it
+    nothing will be said)
+2. We just said 'how can I help you' instead.
+3. Goes into "Perhaps I put to much water in the watering can".
+   Probably because ENFP is an Fi rather than Fe, Fi is a learning function.
+   We should analyze what has been learned at this point.
+   It appears also that in either case no values are attached.
+   After this point the bot follows the ISTP script.
+   This is wrong, Fe is the learning function, Fi uses perlocutionary values.
+   So this was easily fixed by modifying the perlocutionary value utility.
+
+*** ISTP
+| Who     | Utterance                                                         | Issues |
+|---------+-------------------------------------------------------------------+--------|
+| Doctor  | Hi                                                                |        |
+| /Chris/ | /Hello/                                                           |        |
+| Doctor  | How can I help?                                                   |        |
+| /Chris/ | /I have back pain doctor./                                        |        |
+| Doctor  | When did this first occur?                                        |        |
+| /Chris/ | /Well I was watering the plants,/                                 |      1 |
+| /Chris/ | /Perhaps I put to much water in the watering can/                 |        |
+| Doctor  | Yes, that could be the case.                                      |        |
+| Doctor  | However I would like to make a scan of your back just to be sure. |        |
+| /Chris/ | /Can't you just give some pain killers to help me?/               |        |
+| Doctor  | Yes but that will only work temporary.                            |        |
+| Doctor  | So let's plan a scan at the hospital next Friday at 13:00?        |        |
+| Doctor  | I can give you some pain killers meanwhile.                       |        |
+| /Chris/ | /Okay, thanks doctor/                                             |        |
+
+
+\toReview
+1. Says 'when lifting a heavy object'.
+   This derails the entire script so the test was stopped.
+   The reason for this became apparent after a full tree dump after each function.
+   First time the Ti function has nothing to sort, so it does nothing.
+   Se generates all available options in the order they came,
+   Ni just goes down whatever Se preferred.
+   Fe sorts everything twice, but most have no perlocutionary value.
+   Then once we come back to Ti, the most obvious choice is of course the first
+   option provided by Se, since it was expended by Ni, twice.
+
+\toReview
+This is obviously not what we want, since Se is deciding which action is taken
+here.
+Se could try and get a sane ordering function. However it only has next
+available and trying to use previous would lead to a stack overflow.
+Ti probably should get a better ordering mechanism.
+For example rather than using the DialogueTree for direct options we just
+list all available options.
+We ended up doing this but note that this breaks the design idea of the
+architecture. 
+
+\toReview
+To fix this properly we need to reconsider the design at a deeper level,
+for example give ti the opportunity somehow in with direction Ne will go down.
+A potential better way of solving this would to allow irrational to either
+produce on the level of previous irrational,
+or if the produced action already exists, go one lower.
+But since we're starting to run into time constraints we just leave it at this
+'solution'.
+
+** Third test
+
+| Commit | 893f54f6942a65e3c22126949091d096c3691445 |
+| Date   |                               2017-04-10 |
+
+\toReview
+After solving the issues from the second test we did another run of all tests.
+Even though this time we tested quite closely against the issues from the
+previous test, going trough the entire battery is necessary to prevent
+regressions.
+
+
+*** INTJ
+| Who      | Scripted Utterance                                | Issues |
+|----------+---------------------------------------------------+--------|
+| Doctor   | Hi                                                |        |
+| /Sander/ | /Hello/                                           |        |
+| Doctor   | How can I help you?                               |        |
+| /Sander/ | /I have a back pain./                             |        |
+| Doctor   | When did this first occur?                        |        |
+| /Sander/ | /When I lifted a heavy object./                   |        |
+| Doctor   | Oh, yes then you need some pain killers for this. |        |
+| /Sander/ | /Thank you doctor/                                |        |
+
+\cleared
+Conversation went according to script.
+
+*** ENFP
+| Who     | Utterance                                                          | Issues |
+|---------+--------------------------------------------------------------------+--------|
+| Doctor  | Hi                                                                 |        |
+| /Susie/ | /Hello/                                                            |        |
+| /Susie/ | /How are you today doctor?/                                        |        |
+| Doctor  | I'm good, how can I help you?                                      |        |
+| /Susie/ | /I'm afraid I need some medicine/                                  |        |
+| Doctor  | Medicine? Why do you need that?                                    |        |
+| /Susie/ | /Well, I was watering the plants and all the sudden,/              |        |
+| /Susie/ | /I got this pain in my back./                                      |        |
+| /Susie/ | /Do you think I'm allergic to plants?/                             |        |
+| Doctor  | Haha, no, I think we need to make a scan of your back.             |        |
+| Doctor  | Because a watering can is a little to light to get back-pain from. |        |
+| /Susie/ | /Of course doctor./                                                |        |
+| Doctor  | Can you go to the hospital next Friday at 13:00?                   |        |
+| /Susie/ | /Yes, I will go then./                                             |        |
+
+\cleared
+Conversation went according to script.
+
+*** ISTP
+| Who     | Utterance                                                         | Issues |
+|---------+-------------------------------------------------------------------+--------|
+| Doctor  | Hi                                                                |        |
+| /Chris/ | /Hello/                                                           |      1 |
+| Doctor  | How can I help?                                                   |        |
+| /Chris/ | /I have back pain doctor./                                        |        |
+| Doctor  | When did this first occur?                                        |        |
+| /Chris/ | /Well I was watering the plants,/                                 |        |
+| /Chris/ | /Perhaps I put to much water in the watering can/                 |        |
+| Doctor  | Yes, that could be the case.                                      |        |
+| Doctor  | However I would like to make a scan of your back just to be sure. |        |
+| /Chris/ | /Can't you just give some pain killers to help me?/               |      2 |
+| Doctor  | Yes but that will only work temporary.                            |        |
+| Doctor  | So let's plan a scan at the hospital next Friday at 13:00?        |        |
+| /Chris/ | /Yes, I will go then./                                            |        |
+| Doctor  | I can give you some pain killers meanwhile.                       |        |
+| /Chris/ | /Okay, thanks doctor/                                             |        |
+
+\toReview
+1. Said hello twice?!
+   This was caused by the reinserting part of the shortcut, it used anyactor
+   rather than self. Fixing this caused a regression in ENFP which wouldn't
+   ask about the doctor's day anymore.
+   This was solved by adding an extra value to that connection
+   (making it more appealing for Fi).
+2. Said "of course" rather than give me some pain killers
+   After inspection of the scenario it appears that there is no reason to say
+   "can't you give me painkillers" because there weren't any connection
+   leading out of it.
+   I also made give painkillers a low priority goal, to force ISTP in that
+   direction.
+
+** Fourth test
+
+| Commit | 8ea894d0da28addd8067c341e842ca2d91296586 |
+| Date   |                               2017-04-10 |
+
+\toReview
+Its the same day and we try another round to try and pass this.
+Although we modified ISTP slightly, because it had to parse a large amount and
+produce a single reply for no obvious reason. Unlike ENFP which for example is
+expected to produce multiple replies because its talkative.
+
+*** INTJ
+| Who      | Scripted Utterance                                | Issues |
+|----------+---------------------------------------------------+--------|
+| Doctor   | Hi                                                |        |
+| /Sander/ | /Hello/                                           |        |
+| Doctor   | How can I help you?                               |        |
+| /Sander/ | /I have a back pain./                             |        |
+| Doctor   | When did this first occur?                        |        |
+| /Sander/ | /When I lifted a heavy object./                   |        |
+| Doctor   | Oh, yes then you need some pain killers for this. |        |
+| /Sander/ | /Thank you doctor/                                |        |
+
+\cleared
+Conversation went according to script.
+
+*** ENFP
+| Who     | Utterance                                                          | Issues |
+|---------+--------------------------------------------------------------------+--------|
+| Doctor  | Hi                                                                 |        |
+| /Susie/ | /Hello/                                                            |        |
+| /Susie/ | /How are you today doctor?/                                        |        |
+| Doctor  | I'm good, how can I help you?                                      |        |
+| /Susie/ | /I'm afraid I need some medicine/                                  |        |
+| Doctor  | Medicine? Why do you need that?                                    |        |
+| /Susie/ | /Well, I was watering the plants and all the sudden,/              |        |
+| /Susie/ | /I got this pain in my back./                                      |        |
+| /Susie/ | /Do you think I'm allergic to plants?/                             |        |
+| Doctor  | Haha, no, I think we need to make a scan of your back.             |        |
+| Doctor  | Because a watering can is a little to light to get back-pain from. |        |
+| /Susie/ | /Of course doctor./                                                |        |
+| Doctor  | Can you go to the hospital next Friday at 13:00?                   |        |
+| /Susie/ | /Yes, I will go then./                                             |        |
+
+\cleared
+Conversation went according to script. 
+
+*** ISTP
+| Who     | Utterance                                                         | Issues |
+|---------+-------------------------------------------------------------------+--------|
+| Doctor  | Hi                                                                |        |
+| /Chris/ | /Hello/                                                           |        |
+| Doctor  | How can I help?                                                   |        |
+| /Chris/ | /I have back pain doctor./                                        |        |
+| Doctor  | When did this first occur?                                        |        |
+| /Chris/ | /Well I was watering the plants,/                                 |        |
+| /Chris/ | /Perhaps I put to much water in the watering can/                 |        |
+| Doctor  | Yes, that could be the case.                                      |        |
+| Doctor  | However I would like to make a scan of your back just to be sure. |        |
+| /Chris/ | /Can't you just give some pain killers to help me?/               |        |
+| Doctor  | Yes but that will only work temporary.                            |        |
+| Doctor  | So let's plan a scan at the hospital next Friday at 13:00?        |        |
+| /Chris/ | /Yes, I will go then./                                            |        |
+| Doctor  | I can give you some pain killers meanwhile.                       |        |
+| /Chris/ | /Okay, thanks doctor/                                             |        |
+
+\toReview
+Conversation went according to script. Note however that we split up the
+utterances of the doctor compared to the scenario.
+This is because there were to many different symbols in the input
+(scan and give painkillers), this made the bot reply to both of them.
+
+
 * Ideas
 :PROPERTIES:
 :UNNUMBERED: t
