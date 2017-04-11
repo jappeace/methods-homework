@@ -8,3 +8,4 @@ auto
 *.bbl
 *.blg
 *.epub
+_minted-*
