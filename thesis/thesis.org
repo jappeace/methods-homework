@@ -11,6 +11,9 @@
 #+Options: title:nil
 #+OPTIONS: H:5
 
+#+LATEX_HEADER: \usepackage{minted}
+
+
 #+LATEX_HEADER: \usepackage[square,sort,comma,numbers]{natbib}
 #+LATEX_HEADER: \renewcommand{\bibsection}{}
 
@@ -3134,13 +3137,13 @@ This results in a much more terse definition:
 </patterns>
 #+END_SRC
 
-*** using yml
+*** using yaml
 \toReview
 Now since the above isn't technically valid xml (you can't have multiple root
 nodes) we can use a more terse language
 such as yml:
 
-#+BEGIN_SRC yml
+#+BEGIN_SRC yaml
 literal: How are you
 patterns:
   - How * you
@@ -3151,7 +3154,7 @@ patterns:
 Finally we can extend the pattern functionally by simply using regex support.
 This will make the patterns more terse and even precise:
 
-#+BEGIN_SRC yml
+#+BEGIN_SRC yaml
 literal: How are you
 regex: How ([a-z])\w+ you(.*)
 #+END_SRC
@@ -3170,7 +3173,7 @@ also a lot more difficult to learn. Therefore both methods will be supported.
 \drafting
 Originally we had the idea to re-add the connections in the following way:
 
-#+BEGIN_SRC yml
+#+BEGIN_SRC yaml
 literal: How are you
 to:
   - reply_good
@@ -3189,7 +3192,7 @@ The second reason was more incedental, it turns out that if you group all
 connections into a single file you can get a quick glance of which connections
 are made.
 Take as an example the following file:
-#+BEGIN_SRC yml
+#+BEGIN_SRC yaml
 from:
  - ask_reason_here
 to:
@@ -3344,10 +3347,70 @@ With these we check if the program we created complies to what we described in
 the theory.
 To do this a scenario is implemented and the tests are done upon it.
 
-\todo[inline]{Pershaps we can show trough experminetation what effect lower functions have?}
-\todo[inline]{How many of the lower functions are used?}
-\todo[inline]{Are slight differences in order relevant? [Ne, Ti] vs [Ti, Ne]}
-\todo[inline]{I'm pretty sure current design doesn't work that great with 'deeper' levels, because we assumed irir or riri, but now the theory says riir or irri. We should analyze this difference I think}
+*** Unit tests
+\drafting
+Unit tests (code that tests code each build)
+provide extra guarantees upon behavior where type can't do this.
+In essence unit tests are an extension of the type checker.
+
+\drafting
+Static typing provides better correctness guarantees than just unit tests cite:unitvsstatic.
+It follows that if you have a stronger type system you need fewer unit tests,
+Java however has a rather basic type system cite:javavsscala,javavshaskell.
+Therefore we implemented over 70 unit tests in the code.
+These are executed each build.
+A framework called JUnit cite:junit is used to integrate with maven and execute
+the tests on compile time.
+It also has a handy assertion API.
+
+The unit tests don't cover every aspect of the application but are
+mainly focused upon the Jungian Functions and their data structures.
+For example the Te tests look like this:
+
+#+BEGIN_SRC java
+  public class TeTest extends AJungFuncTest {
+      @Override
+      public JungianFunction getTestTarget() {
+          return JungianFunction.Te;
+      }
+
+      @Test
+      public void no_goals_look_for_ones_that_change_scene(){
+          Believes inputBelieves = believes.setGoals(Collections.emptySet());
+          builder.addOption(MockBelievesFactory.hellos);
+          Utterance expected = builder.addOption(MockBelievesFactory.needmedicine);
+          builder.addOption(MockBelievesFactory.whyhere);
+          DialogueTree inputTree = builder.getCurrent();
+
+          JungFuncArgs result = apply(inputBelieves, inputTree);
+
+          believes = inputBelieves;
+          believesShouldRemainTheSame(result.believes);
+
+          Assert.assertEquals("the scene changing dialogue is preffered",
+              Optional.of(expected),
+              result.tree.getPrefferedUtterance()
+          );
+      }
+  }
+
+#+END_SRC
+
+So in getTestTarget we define which function is under test,
+which is handled by the parent class.
+Then as can be seen by the annotation
+
+\drafting
+Testing is one of the few places we use inheritance.
+The reason for this is that testing often involves a lot of boilerplate,
+and inheritance provides a really cheap way of getting rid of that.
+
+\drafting
+We also provide a builder for making the dialogueTree.
+This is a mutable wrapper around the dialogue tree, again to reduce boilerplate.
+This boilerplate isn't so much a problem in the Jungianfunctions themselves
+because they often deal in terms of collections, or just want to add one.
+But with tests you want to be specific.
 
 *** Validation test
 \toReview
@@ -3754,6 +3817,7 @@ mvn clean in there for good measure.
 There is a python client script for quick debugging, therefore its unnecessary
 to keep unity running (or use at all).
 
+\newpage
 * Test Results
 <<Test Results>>
 \toReview
@@ -4137,7 +4201,14 @@ This is because there were to many different symbols in the input
      For this I wanna setup an experiment like thing, where we research what
      the system does etc.
      + Perhaps we should look in what cases the deeper functions have effect (if any)
-     + The order of functions, what effect they have, especially on top level.
+     + Are slight differences in order relevant? [Ne, Ti] vs [Ti, Ne]
+     + 
+
+    I'm pretty sure current design doesn't work that great with 'deeper' levels,
+    because we assumed irir or riri,
+    but now the theory says riir or irri.
+    We should analyze this difference I think
+
 
 ** Random thoughts
 + Goals should perhaps be able to be finished?
@@ -4199,7 +4270,7 @@ This is because there were to many different symbols in the input
 + We could discuss the dilemma of representing values as either class or enum.
   keeping enum for now cause that's what I already have. However it maybecome a
   maintenance problem
-** YML
+** YAML
 History connections is probably required to make all the stuff from lucas work.
 
 Is it neccisary for symbols to have contexts too?
@@ -4209,7 +4280,7 @@ Connections can be extended to add before support as a list, where if the match
 specific items  in the history new responses become possible.
 For example:
 
-#+BEGIN_SRC yml 
+#+BEGIN_SRC yaml 
 connections:
  from: greeting
  to:
