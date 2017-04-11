@@ -11,9 +11,6 @@
 #+Options: title:nil
 #+OPTIONS: H:5
 
-#+LATEX_HEADER: \usepackage{minted}
-
-
 #+LATEX_HEADER: \usepackage[square,sort,comma,numbers]{natbib}
 #+LATEX_HEADER: \renewcommand{\bibsection}{}
 
@@ -50,6 +47,7 @@
 #+END_CENTER
 \todo{keywords}
 \todo[inline]{Figures should to be able to be placed in the appendix}
+\todo[inline]{Manually add minted source code highligting wherever possibe}
 
 \newpage
 #+TOC: headlines 2
@@ -3348,12 +3346,12 @@ the theory.
 To do this a scenario is implemented and the tests are done upon it.
 
 *** Unit tests
-\drafting
+\toReview
 Unit tests (code that tests code each build)
 provide extra guarantees upon behavior where type can't do this.
 In essence unit tests are an extension of the type checker.
 
-\drafting
+\toReview
 Static typing provides better correctness guarantees than just unit tests cite:unitvsstatic.
 It follows that if you have a stronger type system you need fewer unit tests,
 Java however has a rather basic type system cite:javavsscala,javavshaskell.
@@ -3363,6 +3361,7 @@ A framework called JUnit cite:junit is used to integrate with maven and execute
 the tests on compile time.
 It also has a handy assertion API.
 
+\toReview
 The unit tests don't cover every aspect of the application but are
 mainly focused upon the Jungian Functions and their data structures.
 For example the Te tests look like this:
@@ -3373,7 +3372,6 @@ For example the Te tests look like this:
       public JungianFunction getTestTarget() {
           return JungianFunction.Te;
       }
-
       @Test
       public void no_goals_look_for_ones_that_change_scene(){
           Believes inputBelieves = believes.setGoals(Collections.emptySet());
@@ -3396,21 +3394,37 @@ For example the Te tests look like this:
 
 #+END_SRC
 
+\toReview
 So in getTestTarget we define which function is under test,
 which is handled by the parent class.
-Then as can be seen by the annotation
+Then as can be seen by its annotation, the method
+`no_goals_look_for_ones_that_change_scene` defines a test.
 
-\drafting
+\toReview
+Tests generally follow a similiar pattern, first an expectation is build,
+then the input is created, the function to test is called, trough the `apply`
+method in this case, and finally the expectation is asserted.
+If the expectation isn't upheld an error will be shown at compile time.
+
+\toReview
 Testing is one of the few places we use inheritance.
 The reason for this is that testing often involves a lot of boilerplate,
 and inheritance provides a really cheap way of getting rid of that.
 
-\drafting
+\toReview
 We also provide a builder for making the dialogueTree.
 This is a mutable wrapper around the dialogue tree, again to reduce boilerplate.
 This boilerplate isn't so much a problem in the Jungianfunctions themselves
 because they often deal in terms of collections, or just want to add one.
 But with tests you want to be specific.
+
+\toReview
+$T_e$ only has one test that is specifically aimed at it, but there are also
+several shared tests unleased upon it.
+For example we know that rationale functions should preffer alteration if all
+things are equal.
+So we wrote a test for this and just applied the same test on all rationale
+functions.
 
 *** Validation test
 \toReview
@@ -3439,9 +3453,9 @@ After this we run the test against the scenario. This can be seen in section:
 however most issues we found were with the functions and their interactions.
 The biggest issues we found were:
 
-1. No level replies
+1. No low level replies.
 2. No way of making the bot utter multiple symbols.
-3. The height of which functions ought to operate wasn't determined
+3. The height of which functions ought to operate wasn't well thought out.
 4. $T_i$ didn't have good default behavior
 
 * In conclusion
@@ -3761,7 +3775,7 @@ However I think apt handles that for you.
 **** utf8 problem
 \cleared
 I got an error: \\ 
-#+BEGIN_SRC
+#+BEGIN_SRC sh
 com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException:
   Specified key was too long; max key length is 767 bytes
 #+END_SRC
@@ -3769,7 +3783,7 @@ This is because it uses an utf8 encoding (see [[http://stackoverflow.com/questio
 To solve this change the tables to use a smaller utf8 instead.
 In `/etc/mysql/mariadb.conf.d/50-server.cnf` change the variables to
 
-#+BEGIN_SRC
+#+BEGIN_SRC sh
 character-set-server  = latin1                                                            
 collation-server      = latin1_swedish_ci
 #+END_SRC
@@ -3777,7 +3791,7 @@ collation-server      = latin1_swedish_ci
 \cleared
 We also need to modify `/etc/mysql/mariadb.conf.d/50-client.cnf`
 with:
-#+BEGIN_SRC
+#+BEGIN_SRC sh
 default-character-set = latin1
 #+END_SRC
 
@@ -4179,7 +4193,6 @@ Conversation went according to script. Note however that we split up the
 utterances of the doctor compared to the scenario.
 This is because there were to many different symbols in the input
 (scan and give painkillers), this made the bot reply to both of them.
-
 
 * Ideas
 :PROPERTIES:
