@@ -13,6 +13,10 @@ gekomen die in het thesis worden besproken.
 
 Het volgende wat op de planning staat is het AIML naar YAML script.
 
+Mvg,
+
+Jappie Klooster
+
 * Manuel
 
   Probablistic generation of next dialogue moves could be combined with moddeling one
