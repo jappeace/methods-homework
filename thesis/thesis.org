@@ -3237,9 +3237,9 @@ But they are just an additional restriction on the pattern matching,
 ie: If user uttered regex *and* he said /that/ before, we can say template.
 Alternativly you count the injection of types (in S-AIML),
 but this isn't a formal encoding in AIML itself, but rather a way of informing
-drools what's goin on. The injection of types will be treated in section [[Caviats]].
+drools what's goin on.
 
-**** Moddeling AIML
+**** Mapping AIML
 \toReview
 What we can do is extract the patterns, and their respective literals into
 symbols. For example we have the following category:
@@ -3261,13 +3261,26 @@ symbols. For example we have the following category:
 So here there are implicitly defined two symbols and a connection.
 The first symbol is pattern tag.
 The second symbol is the template tag excluding the insertions.
-Tue connection is from the pattern to the template which is restricted to
+The connection is from the pattern to the template which is restricted to
 the patient.
+So from this example we can define the following files:
+#+BEGIN_SRC yaml
+  # for_a_while_now.yml
+  literal: "For a while now"
+  # how_long_*_pain.yml
+  literal: "How long * pain"
+  # _connections.yml
+  from:
+   - "for_a_while_now"
+  to:
+   - symbol: "how_long_*_pain"
+     restricted_to: patient   
+#+END_SRC
 
 \toReview
-There are also cases which simply mean to extend the patterns used:
+A lot of category elements simply mean to add a pattern to a symbol, for example:
 
-#+BEGIN_SRC xml
+#+BEGIN_SRC nxml
   <category>
       <pattern>
           How long * pain *
@@ -3276,13 +3289,12 @@ There are also cases which simply mean to extend the patterns used:
           <srai>How long * pain</srai>
       </template>
   </category>
+
 #+END_SRC
 
 \toReview
-The srai tags simply say: use template for pattern x.
-But we can translate that as just adding a regex to the "How long * pain" symbol.
-
-\toReview
+So what we can do with the srai tags, if they exist, is simply checking if the
+symbol exists and then add the pattern to that symbol.
 Finally we have to consider the /that/ tags:
 
 #+BEGIN_SRC xml
@@ -3302,7 +3314,33 @@ Finally we have to consider the /that/ tags:
 \drafting
 Like we said before this is an extra filter upon the regex.
 At the time of writing there was no way of representing /that/ tags. \todo{inline if this is added delete this}
-So we just ignore them for now.
+A potential way of dealing with that tags is to add an extra field to the
+connections:
+
+#+BEGIN_SRC yaml
+  before:
+     from: "why_is_docter"
+  from:
+   - "surprised_your_doctor"
+  to:
+   - symbol: "expect_him_be_here"
+     restricted_to: patient   
+#+END_SRC
+
+We can make this mechanism even more expressive than the orignal by allowing
+the type of before to be self recursive:
+
+#+BEGIN_SRC yaml
+  before:
+     from: "why_is_docter"
+     before:
+        from: "hello"
+  from:
+   - "surprised_your_doctor"
+  to:
+   - symbol: "expect_him_be_here"
+     restricted_to: patient   
+#+END_SRC
 
 **** S-AIML specifics
 <<Caviats>>
