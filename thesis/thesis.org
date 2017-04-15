@@ -3280,7 +3280,7 @@ So from this example we can define the following files:
 \toReview
 A lot of category elements simply mean to add a pattern to a symbol, for example:
 
-#+BEGIN_SRC nxml
+#+BEGIN_SRC xml
   <category>
       <pattern>
           How long * pain *
@@ -3311,7 +3311,7 @@ Finally we have to consider the /that/ tags:
   </category>
 #+END_SRC
 
-\drafting
+\toReview
 Like we said before this is an extra filter upon the regex.
 At the time of writing there was no way of representing /that/ tags. \todo{inline if this is added delete this}
 A potential way of dealing with that tags is to add an extra field to the
@@ -3327,20 +3327,8 @@ connections:
      restricted_to: patient   
 #+END_SRC
 
-We can make this mechanism even more expressive than the orignal by allowing
-the type of before to be self recursive:
-
-#+BEGIN_SRC yaml
-  before:
-     from: "why_is_docter"
-     before:
-        from: "hello"
-  from:
-   - "surprised_your_doctor"
-  to:
-   - symbol: "expect_him_be_here"
-     restricted_to: patient   
-#+END_SRC
+\toReview
+But such a mechanism isn't implemented yet.
 
 **** S-AIML specifics
 <<Caviats>>
@@ -3366,6 +3354,12 @@ within the insert tags.
 This can be handled inside the drools rules because the inserted types
 always have setters.
 So we can just genarete some java code for that.
+
+\toReview
+Finally the last thing that S-AIML introduced were scenes.
+We already have a way of representing these trough folders.
+So from the scene tag we can just extract the name and create a folder from it.
+Making files from the children as described above.
 
 ** Data structures
 \todo[inline]{ I think this is an architecture thing ... }
@@ -4354,6 +4348,17 @@ utterances of the doctor compared to the scenario.
 This is because there were to many different symbols in the input
 (scan and give painkillers), this made the bot reply to both of them.
 
+
+* Conversion script
+The conversion script is located in the root of the git project, called
+`conversion.py`.
+It is excpected to be executed from command line and provides several command
+line arguments that are documented in the script itself.
+
+Run this script on top of the desired S-AIML project.
+Then rebuild the YAML capable bot, don't forget to update scenario name
+in ChatBotEngineImpl of the server.
+
 * Ideas
 :PROPERTIES:
 :UNNUMBERED: t
@@ -4363,13 +4368,13 @@ This is because there were to many different symbols in the input
 \todo[inline]{Perhaps we can use argumentation research on top of the graph to figure out more semantics (this statment is attacking that or inquirying this)}
 \todo[inline]{Extracting information from meanings isn't very DRY right now, for example saying how is your foot? Could perhaps be splitup into statusInquiry + foot. However I don't know how to do this better right now, perhaps it could be a natural result of dubble matching but we lose the order inforamtion.}
 ** Rough planning.
-*** Make a script to convert AIML to YML
-   (perhaps we can use this for integration or demo)
-   + we need to figure out how to deal with "that" tags.
-   + Explore lucas' work further, see how much we can use the drools.
-*** Repair OCC module & scoring module
+*** Prepare a demo
+   + Fix the double reply bug
+   + Do the integration test once again
+   + Test it in Unity!
 *** Report
      In thesis we should also mention the effects of values for functions
+*** Repair OCC module & scoring module
 *** Additional experimentation?
      For this I wanna setup an experiment like thing, where we research what
      the system does etc.
