@@ -2,21 +2,6 @@
 
 * Dignum
 
-** Email
-Beste dr. Dignum,
-
-Bij deze een kleine status update.
-
-Het test scenario is inmeddels geimplementeerd en de tests slagen.
-Tijdens het uitvoeren waren er wel enkele vrij serieuse fouten tevoorschijn
-gekomen die in het thesis worden besproken.
-
-Het volgende wat op de planning staat is het AIML naar YAML script.
-
-Mvg,
-
-Jappie Klooster
-
 * Manuel
 
   Probablistic generation of next dialogue moves could be combined with moddeling one
