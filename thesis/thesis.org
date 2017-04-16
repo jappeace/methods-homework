@@ -4369,8 +4369,6 @@ in ChatBotEngineImpl of the server.
 \todo[inline]{Extracting information from meanings isn't very DRY right now, for example saying how is your foot? Could perhaps be splitup into statusInquiry + foot. However I don't know how to do this better right now, perhaps it could be a natural result of dubble matching but we lose the order inforamtion.}
 ** Rough planning.
 *** Prepare a demo
-   + Fix the double reply bug, this turned out to just be a double match which we want
-   + Do the integration test once again
    + Test it in Unity!
    + Make a 'script' for giving the demo
    + Print the thesis?
