@@ -3378,10 +3378,57 @@ line arguments that are documented in the script itself.
 
 \toReview
 The usage of the script can be shown with:
-#+BEGIN_SRC
+#+BEGIN_SRC sh
   python main.py --help
 #+END_SRC
 
+\todo[inline]{Describe missing features}
+
+
+** Processing
+
+*** Drools
+
+**** Scheduling in Dialogue
+\toReview
+The naive approach of looking at a dialogue is a round robin scheduling process.
+Where someone utters a single sentence,
+and then a single reply is made by the conversaton partner.
+Even in our simple case study (section [[Personality influence case study]])
+we discovered that a dialogue does not conform to a round robin based scheduling
+process.
+Sometimes the actors would conform,
+but at other times one of the actors would say multiple utterances.
+
+\toReview
+There are several not so elegant ways to implement this without performing
+to much chagnes to the code base.
+First, you could just modify the case study to not do this and let be a
+'coincedental' round robin process.
+Obiously this would 'work',
+but modifying once's predetermined tests is something which ought to be avoided
+unless there is a good reason to do so.
+Second of all you could just create a symbol with a huge,
+multisentence literal reply.
+This isn't really how symbols are meant to be used, but you could do that.
+
+\toReview
+But then our minds started to wonder,
+how difficult would it be to emulate this?
+To just make the bot properly utter multiple symbols.
+What if we just re-insert every reply by the bot into the drool facts,
+and let the personality decide how to reply to itself.
+To prevent an infinite loop we would preffer alteration by default in the
+irrational functions.
+
+\toReview
+So after this change we could model ENFP correctly, 
+but we found another use in this new implementation.
+Since all rational functions now shared a behavrior:
+Preffer alteration of actors between levels default,
+we could make some more general unit tests.
+
+*** Personality
 
 ** Data structures
 \todo[inline]{ I think this is an architecture thing ... }
@@ -3758,6 +3805,10 @@ Also note that there exists a Linux editor,
 its just not officially supported (yet) but the latest version can be found [[https://forum.unity3d.com/threads/unity-on-linux-release-notes-and-known-issues.350256/][here.]]
 Scroll all the way down for the latest release.
 
+\toReview
+Note that the unity client currenlty doesn't support multiple replies from an
+agent, because the reply is just inserted in a label, rather than showing a chat
+history.
 ** Server
 \cleared
 The server runs on Java, therefore the first step is to install Java.
@@ -4382,7 +4433,7 @@ This is because there were to many different symbols in the input
 \todo[inline]{Extracting information from meanings isn't very DRY right now, for example saying how is your foot? Could perhaps be splitup into statusInquiry + foot. However I don't know how to do this better right now, perhaps it could be a natural result of dubble matching but we lose the order inforamtion.}
 ** Rough planning.
 *** Prepare a demo
-   + Test it in Unity!
+   + Test it in Unity! 
    + Make a 'script' for giving the demo
    + Run trough 'script'
    + Print the thesis?
@@ -4394,7 +4445,6 @@ This is because there were to many different symbols in the input
      the system does etc.
      + Perhaps we should look in what cases the deeper functions have effect (if any)
      + Are slight differences in order relevant? [Ne, Ti] vs [Ti, Ne]
-     + 
 
     I'm pretty sure current design doesn't work that great with 'deeper' levels,
     because we assumed irir or riri,
@@ -4513,3 +4563,4 @@ and exclude.
   (not that it matters as long as java.util is used)
 + I get the regular out of memory exception when deploying, this probaly means
   that there is a memory leak which doesn't get cleaned up at redoploy
+

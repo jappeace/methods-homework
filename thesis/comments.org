@@ -2,6 +2,25 @@
 
 * Dignum
 
+** Script
+1. Start server
+2. zet persoonlijkheid die in believes.yml op INTJ
+3. Build
+4. Open test gedeelte van thesis
+5. Open Unity client en ga INTJ test af
+6. Voor ENFP moeten we python gebruiken omdat Unity client niet uttrences achter
+   elkaar kan laten zien.
+7. ISTP ook python.
+8. Eventueel ook nog over convert.py
+
+** Vragen
+Ik weet nu niet even wat het belangrijkst is om eerst te doen,
+thesis afmaken,
+implemantatie verbeteren van persoonlijkheid,
+implementatie verbeteren van AIML features.
+Ik dacht zelf thesis afmaken, en dan als er tijd over is 1 van de implementatie
+mogelijkheden.
+
 * Manuel
 
   Probablistic generation of next dialogue moves could be combined with moddeling one
