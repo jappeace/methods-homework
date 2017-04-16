@@ -2646,10 +2646,10 @@ the drools in a big database.
 This is starkly different than the architecture used in section [[
 Server architecture]].
 As can be see in section [[user utterance processing]], 
-the reply for a message is already determined before drools had a chance to
-do deliberation.
-This problem becomes bigger if the drools want to utter a spontaneous meaning
-they have to encode a string inside the drools themselves.
+int the old architecture, the reply for a message is already determined before
+drools had a chance to do deliberation.
+What's even worse is that if the drools want to utter a spontaneous utterance,
+then it has to be encoded in a string inside the drools themselves.
 This means the strings facing the user are spread over both the AIML files
 *and* the drools.
 This is confusing for new scenario creators since completely different folders
@@ -2657,22 +2657,15 @@ have to be accessed to change the strings.
 # This violates the changeability design principle quite heavily and unnecessarily. \todo{cite}
 
 \toReview
-These changes result in a much more simple architecture.
+The changes proposed here, result in a much more simple architecture.
 Only one place does deliberation rather than two and only one api is used for
 generating responses.
-
 
 \toReview
 Note that although we removed the ability for the bot to use AIML, it should be
 relatively easy to convert from the old AIML structure to the new format with help
 of a script.
-This is because AIML wasn't really a new language but rather just a specific
-application of XML.
-Therefore any XML reading library can be used to parse the AIML and any YML
-library can be used to generate the new YML based files.
-Although care should be taken to comply with the new format,
-for example connections can be derived from AIML,
-but the concept of a connection is implicitly defined in AIML.
+A proof of concept has been made of this in section [[Conversion script]].
 
 *** Jungian class diagram
 \toReview
@@ -3209,12 +3202,25 @@ to:
 #+END_SRC
 
 
-*** Legacy AIML
+*** Automatic AIML to YAML
+\toReview
+AIML is a standard cite:aimlspec.
+Note that the spec says: "AIML shall be compatible with XML.",
+and xml is also a standard cite:xmlspec.
+YAML happens to also be a standard format cite:yamlspec.
+although its not a markup langauge, unlike XML and AIML,
+but rather a data format cite:yamlvsxml.
+The advantage of being "just a dataformat" is
+that the syntax can become a lot more terse, while maintaining readability.
+Because we have all these standards, its relativly easy to convert between
+them. Because libraries exist for parsing them.
+
+**** Legacy AIML
 \toReview
 An introduction of a new format is nice, but when this is done,
 all the work in the old format can become obsolete.
 This is obviously not desirable.
-There are two ways of circumventing this.
+There are several ways of circumventing this.
 First of all, one could add support of the legacy format to the code base.
 The second method is creating a script that will help along the way with
 conversion.
@@ -3353,13 +3359,29 @@ Something which complicates this is that attributes can be set trough json
 within the insert tags.
 This can be handled inside the drools rules because the inserted types
 always have setters.
-So we can just genarete some java code for that.
+So there could be java code generated for that.
 
 \toReview
-Finally the last thing that S-AIML introduced were scenes.
-We already have a way of representing these trough folders.
+Scene tags can be represented trough folders.
 So from the scene tag we can just extract the name and create a folder from it.
 Making files from the children as described above.
+
+**** Proof of concept
+<<Conversion script>>
+\toReview
+To show that it is indeed easy to write a conversion script,
+with above restrictions kept in mind we made a proof of concept.
+This conversion script is located in the conversion folder from the root project
+of the git project.
+It is excpected to be executed from command line and provides several command
+line arguments that are documented in the script itself.
+
+\toReview
+The usage of the script can be shown with:
+#+BEGIN_SRC
+  python main.py --help
+#+END_SRC
+
 
 ** Data structures
 \todo[inline]{ I think this is an architecture thing ... }
@@ -3734,6 +3756,7 @@ The only issues with the client were an incomplete merge and a dangling
 import that produced build errors.
 Also note that there exists a Linux editor,
 its just not officially supported (yet) but the latest version can be found [[https://forum.unity3d.com/threads/unity-on-linux-release-notes-and-known-issues.350256/][here.]]
+Scroll all the way down for the latest release.
 
 ** Server
 \cleared
@@ -4349,16 +4372,6 @@ This is because there were to many different symbols in the input
 (scan and give painkillers), this made the bot reply to both of them.
 
 
-* Conversion script
-The conversion script is located in the root of the git project, called
-`conversion.py`.
-It is excpected to be executed from command line and provides several command
-line arguments that are documented in the script itself.
-
-Run this script on top of the desired S-AIML project.
-Then rebuild the YAML capable bot, don't forget to update scenario name
-in ChatBotEngineImpl of the server.
-
 * Ideas
 :PROPERTIES:
 :UNNUMBERED: t
@@ -4371,6 +4384,7 @@ in ChatBotEngineImpl of the server.
 *** Prepare a demo
    + Test it in Unity!
    + Make a 'script' for giving the demo
+   + Run trough 'script'
    + Print the thesis?
 *** Report
      In thesis we should also mention the effects of values for functions
