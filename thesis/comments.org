@@ -8,10 +8,18 @@
 3. Build
 4. Open test gedeelte van thesis
 5. Open Unity client en ga INTJ test af
-6. Voor ENFP moeten we python gebruiken omdat Unity client niet uttrences achter
-   elkaar kan laten zien.
-7. ISTP ook python.
-8. Eventueel ook nog over convert.py
+6. Stel believes.yml in op ENFP
+7. Rebuild
+8. Ga ENFP test af met de python client.
+9. zelfde voor ISTP?
+*** Convert
+1. Verwijder salve/anamnesi/large & small
+2. Voer convert script uit
+3. Open introduction.aiml & introduction converted folder
+   1. symbols: patronen of templates
+   2. verschil in verbosity: connections
+   3. Zoek 'I am an intern in gegenereerde' drools
+
 
 ** Vragen
 Ik weet nu niet even wat het belangrijkst is om eerst te doen,
