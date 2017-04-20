@@ -3272,7 +3272,8 @@ The first symbol is pattern tag.
 The second symbol is the template tag excluding the insertions.
 The connection is from the pattern to the template which is restricted to
 the patient.
-So from this example we can define the following files:
+So from this example we can define the following files,
+with the file names in comments above:
 #+BEGIN_SRC yaml
   # for_a_while_now.yml
   literal: "For a while now"
@@ -3328,7 +3329,8 @@ connections:
 
 #+BEGIN_SRC yaml
   before:
-     from: "why_is_docter"
+     who: patient
+     said: "why_is_docter"
   from:
    - "surprised_your_doctor"
   to:
@@ -3386,7 +3388,6 @@ The usage of the script can be shown with:
 #+END_SRC
 
 \todo[inline]{Describe missing features}
-
 
 ** Processing
 
@@ -4438,6 +4439,60 @@ This is because there were to many different symbols in the input
 ** Rough planning.
 *** Implement
 **** that tags
+\drafting
+The that tags in AIML have a rather unforntunate name.
+They refer to something *that* was said before the current pattern.
+Therefore in our YAML semantics, they are a restiriction on connections.
+
+\drafting
+To model that tags we add an extra optional field to the RawConnections called
+before, with two required fields, `who' and `said', who indicates the actor
+and said indicates what was said:
+
+#+BEGIN_SRC yaml
+  before:
+     who: patient
+     said: "why_is_docter"
+  from:
+   - "surprised_your_doctor"
+  to:
+   - symbol: "expect_him_be_here"
+     restricted_to: patient   
+#+END_SRC
+
+\drafting
+However we can easily extend this mechanism by making the rawbefore type self
+recursive with an optinal field before of its own type:
+
+#+BEGIN_SRC yaml
+  before:
+     who: patient
+     said: "why_is_docter"
+     before:
+        who: doctor
+        said: "im_the_doctor"
+  from:
+   - "surprised_your_doctor"
+  to:
+   - symbol: "expect_him_be_here"
+     restricted_to: patient   
+#+END_SRC
+
+\drafting
+The default value of the before field will be no before. Which just means no
+additional restrictions.
+In this example making such an explicit definition won't be very constructive.
+However since we need an identity (no-op) before value anyway for the default
+restriction. Adding a recursive definition isn't that big of an extension.
+
+\drafting
+The AIML tag specification never defined when a that tag match would be
+active cite:aimlspec_that. However it can be derived implicitly from the
+reference cite:aimleference_that that it should always be on the previous
+utterance.
+We could add options for when an utterance was made, for example just now or
+any previous utterence. However in the interest of time we won't do this.
+
 **** scene switching
 1. Make sure to retest
 **** star
@@ -4499,15 +4554,6 @@ But that's just syntax
 ** Random thoughts
 + Goals should perhaps be able to be finished?
   + Ti and Te shouldn't preffer this double
-+ Shouldn't I ensure the personality goes back and forth, right now it just goes
-  double over the dialogue tree whil'st the functions don't know at wich level to
-  operate So they'll always go lowest or one below the lowest.
-  + To test this repass problem I think we create a personality in the believes
-    and apply the dialgoure tree for one pass,
-    then once going back we check on each level if
-    the right level is modified (whatever that is)
-+ Perhaps we should replace perloctionary values from an enum to just a class
-  like actor. The issue is that this is hard to modify.
 + Manuel made the argument this isn't BDI because we don't use a rule based
   engine. We should find a theoretical source that mentions this and then attack
   it by saying that we use pure functions or something? Alternatively the result
@@ -4527,10 +4573,6 @@ But that's just syntax
   without punishment?
   Although this is handy for debugging right now.
 
-*** Implicit actions by bot
-+ Perhaps if we should keep popping preferred options until we reach an actor
-  that is not the agent?
-+ If the preferred action is not an agent say nothing?
 ** Tooling stuff
 + Protocol buffers could be used for protocol. Its strongly typed and has both
   C# and Java bindings
@@ -4556,51 +4598,6 @@ But that's just syntax
 + We could discuss the dilemma of representing values as either class or enum.
   keeping enum for now cause that's what I already have. However it maybecome a
   maintenance problem
-** YAML
-History connections is probably required to make all the stuff from lucas work.
-
-Is it neccisary for symbols to have contexts too?
-How generic do you want something like that to be?
-*** History connections
-Connections can be extended to add before support as a list, where if the match
-specific items  in the history new responses become possible.
-For example:
-
-#+BEGIN_SRC yaml 
-connections:
- from: greeting
- to:
-   - symbol: greeting
----
-connections:
- before: 
-    - greeting
- from: greeting
- to:
-   - symbol: status
----
-connections:
- before: 
-    - greeting
-    - greeting
- from: greeting
- to:
-   - symbol: why_repeat
- value:
-   - annoyed
-#+END_SRC
-
-***** Note
-I'm not sure if this is a good idea.
-We kindoff already have actor gaurds anyway but this kind of specification is
-increadibly detailed and probably should be handled by a norm system instead.
-
-*** Inject custom info
-Aditionally I think we could add support to inject custom information.
-Although I don't think this is neccesary since the symbol that gets matched
-already gets inserted by name, therefore rules for particular names can be applied.
-An argument could be made for groups of symbols, but you can use scenes for that
-and exclude.
 ** Extra
 + Replace java.util.logger* with slfj
 + Repalce all std.out with propper logging calls
@@ -4608,3 +4605,4 @@ and exclude.
 + I get the regular out of memory exception when deploying, this probaly means
   that there is a memory leak which doesn't get cleaned up at redoploy
 
+  
