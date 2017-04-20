@@ -794,6 +794,9 @@ and finally we will look at the serious game in its existing form.
  \todo[inline]{Perhaps it would be a good idea to sketch commanalities between drools and these kind of things, so that if a reader knows about any of these things he can lay the link easily}
 *** Social practices
  <<social practice>>
+
+ \todo[inline]{(extra) possible sources: Weber, Durkleim, Hobermas, latour/reckwitz}
+ \todo[inline]{ difference between norms and sp is that sp has no moral value, but you *violate* norms }
  \cleared
  In cite:smolka2001social it is stated that the research in activity theory
  led to the development of social practices.
@@ -3786,6 +3789,7 @@ bibliography:refs.bib
 
 \newpage
 * Building
+\todo[inline]{Document about python scripts & shell scripts (how to use), make sure succerrer can take it on easily}
 <<building>>
 \cleared
 To build this project two hurdles need to be overcome, because the
@@ -4432,11 +4436,51 @@ This is because there were to many different symbols in the input
 \todo[inline]{Perhaps we can use argumentation research on top of the graph to figure out more semantics (this statment is attacking that or inquirying this)}
 \todo[inline]{Extracting information from meanings isn't very DRY right now, for example saying how is your foot? Could perhaps be splitup into statusInquiry + foot. However I don't know how to do this better right now, perhaps it could be a natural result of dubble matching but we lose the order inforamtion.}
 ** Rough planning.
-*** Prepare a demo
-   + Test it in Unity! 
-   + Make a 'script' for giving the demo
-   + Run trough 'script'
-   + Print the thesis?
+*** Implement
+**** that tags
+**** scene switching
+1. Make sure to retest
+**** star
+1. Find precise definition
+***** match on symbol A, fill in symbol B problem
+Figure out how to solve the "match at symbol A, fill in template from symbol B"
+problem.
+For example we do this with symbols as nameaspaces of the filled in
+template.
+But this becomes more difficult when an agent says "what is your name?",
+which is replied with "my name is X", now in "hello X, how are you today",
+how do we locate X from within a symbol?
+Because the symbol isn't aware of different agents.
+It could be done from "connection", where we say:
+#+BEGIN_SRC yaml
+from:
+- my_name_is
+to:
+- symbol: hello_x
+  restricted_to: patient
+  templates:
+    x: doctor.name # ??
+#+END_SRC
+
+But now we run into the problem how does the template name doctor.name get
+filled in the first place?
+We could say something like, okay, symbol templates that are matched are
+always uttered by "somebody", so our namespace is just the
+name of the utterer + symbol name:
+#+BEGIN_SRC yaml
+from:
+- my_name_is
+to:
+- symbol: hello_x
+  restricted_to: patient
+  templates:
+    x: doctor.my_name_is
+#+END_SRC
+
+So there still needs to be a mechanism for extracting multiple variables
+from the regexes, because regexes support that.
+But that's just syntax
+
 *** Report
      In thesis we should also mention the effects of values for functions
 *** Repair OCC module & scoring module
