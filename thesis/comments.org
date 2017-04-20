@@ -2,37 +2,13 @@
 
 * Dignum
 
-** Script
-1. Start server
-2. zet persoonlijkheid die in believes.yml op INTJ
-3. Build
-4. Open test gedeelte van thesis
-5. Open Unity client en ga INTJ test af
-6. Stel believes.yml in op ENFP
-7. Rebuild
-8. Ga ENFP test af met de python client.
-9. zelfde voor ISTP?
-*** Convert
-1. Verwijder salve/anamnesi/large & small
-2. Voer convert script uit
-3. Open introduction.aiml & introduction converted folder
-   1. symbols: patronen of templates
-   2. verschil in verbosity: connections
-   3. Zoek 'I am an intern in gegenereerde' drools
-
-
-** Vragen
-Ik weet nu niet even wat het belangrijkst is om eerst te doen,
-thesis afmaken,
-implemantatie verbeteren van persoonlijkheid,
-implementatie verbeteren van AIML features.
-Ik dacht zelf thesis afmaken, en dan als er tijd over is 1 van de implementatie
-mogelijkheden.
-
 * Manuel
 
   Probablistic generation of next dialogue moves could be combined with moddeling one
   of the Jungian Irrational functions??
+
+** Questions
+1. Are you familiar with unity to make it show multiple ansers or just the awnser log?
 
 ** Conversation notes <2017-01-30 Mon> 
 
