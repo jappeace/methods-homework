@@ -3167,7 +3167,7 @@ But it does specify what we want, and it does so very tersely.
 Since we are changing the semantics of AIML drastically we may as well use a
 more terse format such as JSON, or YAML.
 
-**** XML vs JSON vs YAML, vsTOML
+**** XML vs JSON vs YAML, vs TOML
 \toReview
 All these langagues are standards cite:jsonspec,yamlspec,xmlspec,tomlspec.
 However there is a major difference between XML and JSON or YAML, and that is
@@ -3251,9 +3251,17 @@ also a lot more difficult to learn. Therefore both methods will be supported.
 \todo[inline]{If we have time we can compare information per character between the new and old method, going from 251 to 131 is quite an improvement}
 # https://developer.jboss.org/wiki/FunctionalProgrammingInDrools
 
-*** Re-adding connections
-\drafting
-Originally we had the idea to re-add the connections in the following way:
+**** Connections
+\toReview
+So once we split up the template from the patterns,
+and grouped the patterns with what they uttered.
+We lost the connections between the two.
+If you just have symbols the bot won't know what to do when one of these 
+is inserted without extra information.
+This is what we represent with connections.
+What sensible replies can we give if a symbol is uttered.
+Originally we just wanted to stick to the AIML approach of connections,
+and add them within the symbol files like so:
 
 #+BEGIN_SRC yaml
 literal: How are you
@@ -3263,9 +3271,9 @@ to:
   - ask_mediine
 #+END_SRC
 
-where the items in to linked to other symbol files. 
-However we later decided to group all connections of a particular scene into 
-a single file.
+\toReview
+However we quickly decided against such an approach in fovour of grouping
+connections into their own configuration file.
 There were two reasons for this, the first one is that we quickly found out
 that connections are much more complex than simple one directional links.
 They for example also need to contain perlocutionary values and a mark for 
@@ -3274,6 +3282,7 @@ The second reason was more incedental, it turns out that if you group all
 connections into a single file you can get a quick glance of which connections
 are made.
 Take as an example the following file:
+
 #+BEGIN_SRC yaml
 from:
  - ask_reason_here
@@ -3291,6 +3300,55 @@ to:
  - restricted_to: doctor
    symbol: why_need
 #+END_SRC
+
+\toReview
+We can quickly see in which direction this conversation goes once from is
+matched. From ask reason here to need medicine, from need medicine to why need
+etc.
+This is where the new approach offers much more ergonomic moddeling abilities
+than AIML, we know what's going on without searching for it.
+Of course once the connection file starts to grow we begin to loose this,
+but for this scenes can be used to still keep overview.
+
+**** Scenes
+\toReview
+In the S-AIML extension, scenes were used to enable and disable certain patterns.
+Unlike the topic mechanism of AIML which just gives prefference,
+something from another scene wouldn't be used at all.
+This is in a way makes it much easier to write dialogues,
+we don't have to worry about patterns from other scenes,
+so we can use much more generalized patterns.
+The way we represent scenes is rather simple.
+We just use the directory structure of the filesystem to group symbols in a
+particular scene.
+Connections are implicitly assumed to be between symbols in the scene,
+unless stated otherwise, such as:
+
+#+BEGIN_SRC yaml
+from:
+ - status
+to:
+ - symbol: ask_reason_here
+   scene: information_gathering
+   restricted_to: doctor
+   values:
+     - Impatient
+ - symbol: good
+   restricted_to: doctor
+   values:
+     - Polite
+     - Happy
+#+END_SRC
+
+\toReview
+From here we can see the model presenting two options from a status inquery,
+the doctor either tells the patient he feels good staying in the introduction scene,
+or goes to the information_gathering scene and asks why he is here.
+We break away from the idea of S-AIML that scenes are linear.
+We believe that scenes are a weakly connected cyclic graph.
+Note that by cyclic, we mean there can be cycles, but there don't have to be.
+Its weakly connected because it wouldn't make much sense to model scenes
+that can't get to other scenes trough connections.
 
 
 *** Automatic AIML to YAML
@@ -3477,6 +3535,19 @@ The usage of the script can be shown with:
 
 \todo[inline]{Describe missing features}
 
+
+** Intialization
+\drafting
+With the basic structure of knowledge  explained we can start explaning how
+we load this into memory.
+First of all note that we could just use the existing code for loading drools
+and setting up the websocket, so we won't treat those subjects here.
+
+*** Symbols 
+
+*** Connections 
+
+*** Patterns
 ** Processing
 
 *** Drools
@@ -4662,6 +4733,8 @@ But that's just syntax
 + Perhaps it shouldn't be possible to skip to a certain part of a dialogue
   without punishment?
   Although this is handy for debugging right now.
++ We should add support for start and terminal nodes in the connections.
+  So that these siutation can be modelled gracefully.
 
 ** Tooling stuff
 + Protocol buffers could be used for protocol. Its strongly typed and has both
