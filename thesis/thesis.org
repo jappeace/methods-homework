@@ -3543,11 +3543,41 @@ we load this into memory.
 First of all note that we could just use the existing code for loading drools
 and setting up the websocket, so we won't treat those subjects here.
 
-*** Symbols 
+*** Symbols
+\todo[inline]{This is just wrong}
+\drafting
+The symbol database is the data structure that is forgotten once construction is
+complete.
+This may seem strange, but it is important to keep in mind that this database
+only refers to symbols by file path.
+The symbols themselves aren't forgotten, just these file paths.
+This database is extensively used during the initialization phase to construct
+both the pattern database and the connection database.
+After the initialization phase the pattern and connection databases both never
+change.
+This is enforced (unless reflection is used to break open private fields)
 
-*** Connections 
+*** Pattern Database
+\drafting
+The pattern database is a database of pattern lists. These patterns are tied
+to the relevant symbols.
+The lists are tied to scene names. If the active scene does not contain any
+relevant pattern, the other scenes are searched.
+There could be a possible extension where the connected scenes get searched
+first.
+the user utterance gets inserted all associated symbols of the matched patterns
+get inserted as a parsed utterance.
 
-*** Patterns
+*** Connection database
+\drafting
+With the parsed utterance the connection database can doe actuall deliberation.
+Because this database has as key symbols and as values a list of connections
+which have to field that go to symbols.
+On this game tree deliberation can occur as described in section
+[[Mapping to process]].
+
+**** Scenes
+
 ** Processing
 
 *** Drools
@@ -3593,12 +3623,95 @@ we could make some more general unit tests.
 
 *** Personality
 
-** Data structures
-\todo[inline]{ I think this is an architecture thing ... }
+** Programming paradigm
 \drafting
+We want to say a few words about the programming paradigm used in the
+realization of the ideas discussed in this thesis.
+
+*** Java
+\todo[inline]{IDK add references or decide to keep this? Perhaps ask dignum?}
+\drafting
+First note that although the project was written in Java,
+a langauge which strongly was in favor of the object oriented programming
+paradigm, we wrote most of the code in a functional paradigm style.
+What we mean by this is that we preffer logical substition over in place writes.
+
+\drafting
+Java makes this relativly hard to do. It has a `final` keyword,
+which prevents assignment, but this keyword does noet enforce writing into
+underlying data structure.
+The awkardness of this keyword is best demonstrated by hacking the lambda
+limitation of disalowwing enclosment of variables that are not final:
+
+#+BEGIN_SRC java
+	class LamdaHack<T>{
+		T value;
+	}
+	@Test
+	public void rationale_preffers_recursive_alternation(){
+		// note that builder by default lets the doctor utter first
+		final LamdaHack<Utterance> hack = new LamdaHack<>();
+		builder.addOptionAndWith(hellos, actor_patient, deeper -> {
+			hack.value = deeper.addOption(hellos, actor_doctor, PerlocutionaryValueSet.create("Joyfull"));
+			deeper.addOption(hellos, actor_patient);
+		});
+		Utterance expected = hack.value;
+        ...
+    }
+#+END_SRC
+
+\drafting
+So one can only have immutable structures by making data strcutures enterly
+consist either of values, or other immutable strctures:
+
+#+BEGIN_SRC java
+@Immutable
+public class Symbol {
+	public final String name; // filename
+	public final Scene scene;
+
+	private final List<String> literals;
+	private final int hash_value;
+	public Symbol(String name, List<String> literals, Scene scene) {
+		this.name = name;
+		this.literals = copy(literals);
+		// since the object is immutable, we can do this on construction
+		this.hash_value = scene.hashCode()*3+name.hashCode()*7;
+		this.scene = scene;
+	}
+	public final List<String> getLiterals() {
+		return copy(literals);
+	}
+	private static <E> List<E> copy(List<E> from){
+		return new ArrayList<>(from);
+	}
+    ...
+}
+#+END_SRC
+
+\drafting
+Note that because of the fact that Java collections themselves are mutable we
+have to make them private and to access it we need to either make a copy or
+provide a stream (a stream is readonly in Java).
+Also note that upon assignment we directly make a copy of the litteral list,
+because we don't know where that refference has come from and if the
+reference has been unnasigned.
+So if you don't do this you can do the following thing:
+
+#+BEGIN_SRC java
+List<String> literals = Lists.newArrayList("one", "two")
+Symbol symbol = new Symbol("unimportant", literals, new Scene("unimportant"));
+literals.add("Not so immutable now are you?");
+#+END_SRC
+
+\drafting
+This is of course unexpected, and even worse it will make symbol thread unsafe,
+there is no way for the symbol class to gaurantee the literal list isn't used
+because its owned outside of its scope.
+However if we make a shallow copy of the collection the mutation doesn't occur.
+
+*** Data structures
 <<Data structures>>
-There are 4 main datastructures, however one is forgotton once the
-initialization phase has been completed.
 
 \drafting
 All data structures used in the new implementation are immutable.
@@ -3634,71 +3747,8 @@ and be shallowly copied on construction.
 Then to expose the data one should create a copy of the collection, or, expose a
 stream (which is also immutable). \todo{cite}
 
-*** Symbol graph 
-\todo{this is the old chapter on data structures, we should check what can be salvaged}
- <<Symbol graph>>
- \drafting
- For our bot to do deliberation we need to be able to tell it which meanings
- can logically follow which other meanings. To do this we use a meaning graph.
- However there are multiple ways to represent this.
- First of all we have intrusive graph representation, where the edges a node goes
- to is put inside the node. Non intrusive representation is where edges are
- stored as node tupples in a separate list, note that these are usually directed,
- since you can make an edge undirected by just adding another tupple with the
- values swapped, but if they're all undirected you cannot represent directed
- connections without introducing more terms.
-
- \drafting
- There are arguments for both representation, an intrusive graph
- representation is more easy to understand for humans, however a non intrusive
- representation is more elegant and can handle things such as backward chainging
- more easily (since not all nodes have to be searched in this case).
-
- \drafting
- Since we need to do both backward Chaining /and/ make it easy understandable for
- humans, we will reprsent the graph as intrusive in the AIML reprsentation, but
- as non intrusive in memory for easy backward and forward chaining.
-
- \todo{AIML with graph stuff}
-
-*** Believes
-\drafting
-We have already quite extensively talked about believes in section
-[[Believes overview]] for example.
-*** Symbol database
-\todo[inline]{This is just wrong}
-\drafting
-The symbol database is the data structure that is forgotten once construction is
-complete.
-This may seem strange, but it is important to keep in mind that this database
-only refers to symbols by file path.
-The symbols themselves aren't forgotten, just these file paths.
-This database is extensively used during the initialization phase to construct
-both the pattern database and the connection database.
-After the initialization phase the pattern and connection databases both never
-change.
-This is enforced (unless reflection is used to break open private fields)
-
-*** Pattern Database
-\drafting
-The pattern database is a database of pattern lists. These patterns are tied
-to the relevant symbols.
-The lists are tied to scene names. If the active scene does not contain any
-relevant pattern, the other scenes are searched.
-There could be a possible extension where the connected scenes get searched
-first.
-the user utterance gets inserted all associated symbols of the matched patterns
-get inserted as a parsed utterance.
-
-*** Connection database
-\drafting
-With the parsed utterance the connection database can doe actuall deliberation.
-Because this database has as key symbols and as values a list of connections
-which have to field that go to symbols.
-On this game tree deliberation can occur as described in section
-[[Mapping to process]].
-
-**** Actors
+** Actors
+\todo[inline]{Find a place for this section which shouldn't be a section}
 \drafting
 To make sure certain strange situations don't occur, such as the patient asking
 the doctor if the doctor is sick, we added actor based restrictions on
