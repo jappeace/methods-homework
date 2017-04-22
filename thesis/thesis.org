@@ -47,7 +47,6 @@
 #+END_CENTER
 \todo{keywords}
 \todo[inline]{Figures should to be able to be placed in the appendix}
-\todo[inline]{Manually add minted source code highligting wherever possibe}
 
 \newpage
 #+TOC: headlines 2
@@ -2567,6 +2566,7 @@ Since attitudes produce a different process by definition
 we can conclude that they will also behave differently.
 
 * Architecture
+<<Architecture>>
 \toReview
 To combine the ideas discussed in section [[BDI and Jung]] with the existing program,
 some big architectural changes were introduced.
@@ -3019,16 +3019,37 @@ appendix [[building]].
 
 \todo[inline]{Proposed Extension, why this extension}
 
-** Simplifying AIML
+** Replacing AIML
+<<From strings to meanings>>
+\toReview
+Originally, AIML was used for mapping user input to a reply.
+However, as explained in section [[Architecture]],
+AIML has some problems for our particular use case.
+The major two issues are:
++ No way of giving drools space to do deliberation asside from updating the scenario. 
++ No way of accessing the knowledge base from inside drools.
+So what needs to happen is either to either modify AIML,
+or outright replace it with something else.
+We eventually chose for the latter, however,
+we did so by first carefully analyzing AIML and deciding which parts we want to
+keep,
+and which other parts we wanted to remove or change.
+
+
+*** Analyzing AIML
 # Note taht such descriptions are good, show how it was in the old system and
 # the thought process towards the new system, so do more of it like this
-<<From strings to meanings>>
-\cleared
-The first step is to map the user input which is of type String at time $t$
-into type $S_t$ for symbol at time $t$.
-For this the AIML is used. It can matched, however the language has to be
-modified to not just produce a reaction but instead indicate what the symbol 
-is of a reaction.
+\toReview
+What we want to do is to map the user input which is of type string $\sigma$
+at time $t$ into type $s_t$ for symbol at time $t$
+(see section [[A type signature approach]]).
+We will start by using AIML for this.
+AIML is primarly a case based reasoner.
+It will match on predifined strings or patterns and then "say" the string
+that was attached to the pattern.
+So we can use AIML to match,
+however the language has to be modified to not just produce a reaction but
+instead indicate what the symbol is of a reaction.
 This change will loosen the connection between a pattern and a response.
 In other words, it will create some more "space" to do actual deliberation.
 We will discuss later in this chapter how we retain plausible conversation
@@ -3078,14 +3099,21 @@ So the modification would now look like:
   </aiml>
 #+END_SRC
 
-\cleared
+\toReview
 These changes loose reactive nature of the chatbot,
 rather than saying how to reply directly to certain kind of responses we just
 say what they mean in this social context.
 
-*** Symbol to string
+\toReview
+So we would have almost solved the first problem of not being able to do true
+deliberation.
+Of course we can't make a reply of this yet since we still have the second
+problem to deal with,
+how to access information stored in the "statusInquiry" symbol.
+
+**** Symbol to string
 \cleared
-But now what if the agent wants to do a status inquiry,
+Now what if the agent wants to do a status inquiry,
 well the string into a status inquiry is already available,
 we just need to separate the literal strings from the catch all patterns:
 
@@ -3115,10 +3143,11 @@ functions to put in the meaning out of which comes a reply, which contains
 a meaning and therefore also a literal with the text it needs to say.
 
 \toReview
-Finally we can remove both the aiml tags and category tags and use the value
-of the meaning tags as the file name to ensure there is always one meaning.
-Thereby we leave the aiml tags and category tags implicit and the meaning
-name derived since you need to have a filename anyway.
+However we can do much more to simplyfy,
+observe how one category always will have one sybmol.
+If we were to extract the value of this tag and use it as a filename,
+we can ensure that each sybmol is only declared once.
+Then we can also assume that the aiml tags and category tags are implicit.
 This results in a much more terse definition:
 
 #+BEGIN_SRC xml
@@ -3131,11 +3160,70 @@ This results in a much more terse definition:
 </patterns>
 #+END_SRC
 
-*** using yaml
 \toReview
-Now since the above isn't technically valid xml (you can't have multiple root
-nodes) we can use a more terse language
-such as yml:
+However the observent reader will know this isn't valid XML
+(and by extension AIML), since XML requires a single document root.
+But it does specify what we want, and it does so very tersely.
+Since we are changing the semantics of AIML drastically we may as well use a
+more terse format such as JSON, or YAML.
+
+**** XML vs JSON vs YAML, vsTOML
+\toReview
+All these langagues are standards cite:jsonspec,yamlspec,xmlspec,tomlspec.
+However there is a major difference between XML and JSON or YAML, and that is
+their intention.
+XML is a markup langauge, whereas both JSON and YAML are data formats
+cite:yamlvsxml.
+What they all share in common is that they are supposed to be both
+human readable and parsable by a computer program.
+
+\toReview
+So what we mean by human and program readable is that with relativly little
+effort, a human or program can understand what's going on.
+Unlike say a binary format,
+which first needs to be parsed by a program before a human can understand it
+(or with great amount of effort).
+Alternativly unlike a human document, such as a book,
+a computer program needs to do lots of effort to extract information from that,
+whereas a human can just understand it "naturally".
+
+\toReview
+Markup langauges provide a nice middleground between human readable and
+program readable.
+XML does this by inserting tags (ie metadata, which are usally just annotated
+words), that gives meaning for the program,
+so that authors can focus on the structure and content of the document
+cite:coombs1987markup.
+
+\toReview
+In AIML however, no document is constructed.
+Its not a story with a lead, middle ground and conclusion,
+its more like a key-value pair database or big configuration file.
+So since XML was intended to be used for inline document markup,
+I will argue that there are better alternatives that focus on key-value based
+configuration in particular, such as YAML, JSON or even TOML.
+
+\toReview
+JSON is by far the best known format of these three remaining
+contenders.
+However JSON has a few significant dissatvantages,
+for one it doesn't allow comments and it is quite strict.
+For example a common acceptable mistake is to have an array with a trailing
+comma like: [1,23,4,]. This is an error in JSON cite:jsonconfig,
+while its relativly easy for a program to notice this is erronious.
+The syntax of JSON can be also more terse, which is shown by both YAML and TOML.
+The reason for choosing YAML over TOML is that YAML is stable,
+wheras TOML hasn't reached stabalization yet cite:tomlreadme.
+Although the argument TOML has over YAML is that YAML is much more complex,
+and can in certain cases be not as human readable cite:yamldisatvantages.
+If TOML were to stabalize, its probably better to move to that instead.
+
+*** Using yaml
+
+\toReview
+So we decided conclusivly to use YAML for replacing AIML.
+Going back to the problem we tried to solve is how to represent these
+symbols in YAML:
 
 #+BEGIN_SRC yaml
 literal: How are you
@@ -3790,7 +3878,7 @@ bibliography:refs.bib
 
 \newpage
 * Building
-\todo[inline]{Document about python scripts & shell scripts (how to use), make sure succerrer can take it on easily}
+\todo[inline]{Document about python scripts and shell scripts (how to use), make sure succerrer can take it on easily}
 <<building>>
 \cleared
 To build this project two hurdles need to be overcome, because the
@@ -4460,6 +4548,9 @@ and said indicates what was said:
      restricted_to: patient   
 #+END_SRC
 
+Note that this will add a before tag to each connection that the from to lists
+generate.
+
 \drafting
 However we can easily extend this mechanism by making the rawbefore type self
 recursive with an optinal field before of its own type:
@@ -4549,7 +4640,6 @@ But that's just syntax
     because we assumed irir or riri,
     but now the theory says riir or irri.
     We should analyze this difference I think
-
 
 ** Random thoughts
 + Goals should perhaps be able to be finished?
