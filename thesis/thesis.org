@@ -3350,7 +3350,6 @@ Note that by cyclic, we mean there can be cycles, but there don't have to be.
 Its weakly connected because it wouldn't make much sense to model scenes
 that can't get to other scenes trough connections.
 
-
 *** Automatic AIML to YAML
 \toReview
 AIML is a standard cite:aimlspec.
@@ -3535,48 +3534,101 @@ The usage of the script can be shown with:
 
 \todo[inline]{Describe missing features}
 
-
 ** Intialization
-\drafting
-With the basic structure of knowledge  explained we can start explaning how
+\toReview
+With the basic user faced structure explained we can start explaning how
 we load this into memory.
 First of all note that we could just use the existing code for loading drools
 and setting up the websocket, so we won't treat those subjects here.
+Secondly note that we just use a library to deal with YAML,
+we will not be writing a parser similarly to what the ALICE bot did for AIML.
+So we will briefly discuss how YAML is loaded trough an example.
+Then we'll describe how we setup the eventual used data structure for
+that makes reasoning easy to do.
+
+*** Loading YAML
+\todo[inline]{Discuss how yaml is loaded into a raw format, and how raw format gets converted to final format}
 
 *** Symbols
-\todo[inline]{This is just wrong}
-\drafting
-The symbol database is the data structure that is forgotten once construction is
-complete.
-This may seem strange, but it is important to keep in mind that this database
-only refers to symbols by file path.
-The symbols themselves aren't forgotten, just these file paths.
-This database is extensively used during the initialization phase to construct
-both the pattern database and the connection database.
-After the initialization phase the pattern and connection databases both never
-change.
-This is enforced (unless reflection is used to break open private fields)
+\toReview
+We begin by parsing all symbol files. The reason for this is that the symbols
+don't have any dependencies of themselves. 
+From these files we create a symbol database.
+This is a temporary structure that uses a concatination of scene and the
+filename to point to the created symbol.
+A symbol no longer contains patterns.
 
-*** Pattern Database
-\drafting
-The pattern database is a database of pattern lists. These patterns are tied
-to the relevant symbols.
-The lists are tied to scene names. If the active scene does not contain any
-relevant pattern, the other scenes are searched.
-There could be a possible extension where the connected scenes get searched
-first.
-the user utterance gets inserted all associated symbols of the matched patterns
-get inserted as a parsed utterance.
+**** Patterns
+\toReview
+From the patterns we create another structure called the pattern database.
+This structure has as key a scene and as value a list of pattern symbol pairs.
+The patterns are regexes, the are generated from the various enteries in
+the yaml files from the symbols. Not only the regex field is used, but also
+the literal field, since a literal is just a very precise regex.
+
+\toReview
+With this structure it becomes really easy to figure out a user utterence.
+We just take the active scene, get back a list of pattern symbol, go trough
+each pattern to see if its a match with the user utterence
+(potentially asyncrhonusly), and insert all matched symbols.
+
+\toReview
+If we don't have a match for the active scene we have some choices.
+Initially we behaved like the AIML topic tags,
+only if there was no match in the current active scene we'd search the rest.
+But this isn't how S-AIML scenes behaved, S-AIML disable all other patterns
+and only use the onces from the active scene.
+It expected types to be inserted to deal with scene changing trough drools.
+This is very involved because it requires the user to write drools for each
+scene change.
+
+\toReview
+We can therefore do better,
+if a pattern isn't matched on the current active scene,
+we can use the scene attribute described in the connection yaml file 
+to try and match patterns on neighbouring scenes.
+If they don't match we don't have a scene transition and default behavior
+can ensue.
 
 *** Connection database
-\drafting
-With the parsed utterance the connection database can doe actuall deliberation.
-Because this database has as key symbols and as values a list of connections
-which have to field that go to symbols.
-On this game tree deliberation can occur as described in section
-[[Mapping to process]].
+\toReview
+Next are the connections,
+these are explicitly done after symbol loading,
+because connections consist of symbols. 
+From this we want to make a database that has symbols as keys, and a set of
+connections as value.
+The connection in themselves are just symbols, but with addition to the symbol
+some meta data such as perlocutionary values and the actor to which this
+connection is restricted.
+
+\toReview
+In the Initial design the keys were strings, however,
+using symbols directly as keys ensures trough type checking that the right
+lookups are done.
+It is also faster, in a micro optimizing way.
+The hashcodes can be cached and the equal check can often be done by
+identity,
+because practically all symbols will be used from the initial symbol database.
 
 **** Scenes
+\toReview
+Once the connection database is constructed we can start working on the scene
+database.
+This is to support scene transitions from the active scenes,
+to neigbouring scenes.
+What we want is another pattern database,
+but this does for the scene key not contain the patterns of the current scene,
+but the patterns of symbols of neigbouring scene's it goes to.
+So this pattern database will be used as a last effort, if the active scene
+doesn't contain the pattern.
+
+\toReview
+If a match is found in this database we can start thinking about making a
+transition.
+We can transition as soon as this happens,
+however this has problems because multiple mathces can be found.
+Therefore we just let the bot decide what to do with the match and only
+transition if a reply is made from within a new scene.
 
 ** Processing
 
@@ -3625,8 +3677,8 @@ we could make some more general unit tests.
 
 ** Programming paradigm
 \drafting
-We want to say a few words about the programming paradigm used in the
-realization of the ideas discussed in this thesis.
+We want to say a few words about the programming paradigm used \todo{Do we? Really? Perhaps move this to the appendix}
+in the realization of the ideas discussed in this thesis.
 
 *** Java
 \todo[inline]{IDK add references or decide to keep this? Perhaps ask dignum?}
