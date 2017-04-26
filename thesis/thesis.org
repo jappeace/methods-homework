@@ -4754,7 +4754,8 @@ This is because there were to many different symbols in the input
 \todo[inline]{Extracting information from meanings isn't very DRY right now, for example saying how is your foot? Could perhaps be splitup into statusInquiry + foot. However I don't know how to do this better right now, perhaps it could be a natural result of dubble matching but we lose the order inforamtion.}
 ** Rough planning.
 *** Implement
-+ Retest and debug scene switching
++ Debug scene switching: 'I'm good, why are you here?' doesn't work right now.
++ Cleanup the log, remove diadumps and database dumps
 **** star
 1. Find precise definition
 ***** match on symbol A, fill in symbol B problem
