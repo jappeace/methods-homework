@@ -7,13 +7,20 @@
 #+LaTeX_CLASS: article
 #+LaTeX_CLASS_OPTIONS: [a4paper, drafting]
 
+# disable toc so it doesn't appear at the top but where we want it instead
 #+Options: toc:nil ^:nil 
+
+# we have our own title
 #+Options: title:nil
+
+# we don't want numbering to appear in front of headings untill
 #+OPTIONS: H:5
 
+# bibtex stuff
 #+LATEX_HEADER: \usepackage[square,sort,comma,numbers]{natbib}
 #+LATEX_HEADER: \renewcommand{\bibsection}{}
 
+# todo notes
 #+LATEX_HEADER: \usepackage[obeyFinal, colorinlistoftodos]{todonotes}
 #+LATEX_HEADER: \newcommand{\drafting}{\todo[noline, color=gray]{Working draft}}
 #+LATEX_HEADER: \newcommand{\toReview}{\todo[noline, color=yellow]{To review}}
@@ -34,6 +41,11 @@
 # smaller code font size (cause mostly boring xml)
 #+LATEX_HEADER: \RequirePackage{fancyvrb}
 #+LATEX_HEADER: \DefineVerbatimEnvironment{verbatim}{Verbatim}{fontsize=\scriptsize}
+# Make listing captions smaller, to fit with smaller code size
+#+LATEX_HEADER: \usepackage[skip=0pt]{caption}
+#+LATEX_HEADER: \captionsetup[listing]{font=footnotesize}
+#+LATEX_HEADER: \captionsetup[table]{skip=5pt}
+#+LATEX_HEADER: \captionsetup[figure]{skip=10pt}
 
 ** Abstract                                                          
 :PROPERTIES:
@@ -46,6 +58,7 @@
 
 #+END_CENTER
 \todo{keywords}
+\todo[inline]{All code (listings) should have captions and be reffered to by name}
 \todo[inline]{Figures should to be able to be placed in the appendix}
 
 \newpage
@@ -3310,148 +3323,144 @@ than AIML, we know what's going on without searching for it.
 Of course once the connection file starts to grow we begin to loose this,
 but for this scenes can be used to still keep overview.
 
-**** Scenes
+**** Star tags
 \toReview
-In the S-AIML extension, scenes were used to enable and disable certain patterns.
-Unlike the topic mechanism of AIML which just gives prefference,
-something from another scene wouldn't be used at all.
-This is in a way makes it much easier to write dialogues,
-we don't have to worry about patterns from other scenes,
-so we can use much more generalized patterns.
-The way we represent scenes is rather simple.
-We just use the directory structure of the filesystem to group symbols in a
-particular scene.
-Connections are implicitly assumed to be between symbols in the scene,
-unless stated otherwise, such as:
+Star tags are soley template focused, they capture the content of a wildcard
+at a particular index and allow them to occur in the bots reply.
+For example:
 
+#+BEGIN_SRC xml
+<category>
+    <pattern>
+        name is *
+    </pattern>
+    <template>
+        Okay, <star index="1" />. Can we get started?
+    </template>
+</category>
+#+END_SRC
+
+\toReview
+The standard specifies cite:aimlspec it as an one based index scheme.
+Wildcards are defined as any string in $L(N)$ where $L(N)$ is all normal words.
+This would imply that it would not include spaces or other special symbols.
+Since this definition is rather vague we did some experimentation.
+Basically we tried to introduce ourselves to the bot over and over again with
+different names as can be seen in table [[tab:alice-normal-words]].
+
+#+CAPTION: Test attempts at what would pass for normal words according to ALICE.
+#+NAME: tab:alice-normal-words
+| Inserted              | What the bot accepted |
+|-----------------------+-----------------------|
+| jap34! gee!@          | jap34                 |
+| jap gee23             | jap gee23             |
+| jap_23_flap ddd dfadf | jap_23_flap ddd dfadf |
+| blah *. blah          | blah *                |
+| blah * ahah           | blah * ahah           |
+
+\toReview
+So quite arbitrarly some characters are accepted while others aren't, ALLICE
+happily accepts $\_$ but an exclemation mark is to much.
+We would argue that these are /not/ normal words, therefore ALICE does not
+comply to the AIML standard.
+There are several ways to improve this system.
+Such as trying to add context to what the star should be.
+In our example case we wanted to match on names, so we know that
+numbers ought not to be allowed, or at least that it would be highly unusual.
+Social practice and norms could help with this.
+
+\toReview
+We already improved on the star matching system by using regexes,
+which would allow scenario writers to be much more precise in what they want
+to match.
+However we want to also be able to store what is matched and access it later.
+The java regex api already provides a method of extracting information from
+wildcard trough something called groups cite:regexgroups.
+So the problem is no longer one of extraction,
+but just about organizing that what has been matched,
+and putting it in a template.
+
+\toReview
+We need to observe the key difference between AIML and this implementation.
+Pattern and template tags are expended into their own symbols, as discussed
+in section [[Mapping AIML]]. 
+Therefore we need to device a system that can match in one symbol and
+insert the matched data in another.
+Since we can use regexes to extract data we already solved matching.
+
+\toReview
+To insert data into a symbol we need a templating mechanism.
+So the first thing we did was finding template libraries in Java.
+Three options came up:
+Velocity cite:velocity, Freemarker cite:freemarker
+and StringTemplate cite:stringtemplate.
+Because StringTemplate enforces strict model view seperation,
+and is therefore much more maintanable and easier to understand than freeer
+template engines cite:parr2004enforcing, we chose to use StringTemplate.
+
+\toReview
+So using that engine we can define a naive way of writing a symbol as can be
+seen in listing [[code:naive-template-symbol]].
+#+CAPTION: Naive approach
+#+NAME: code:naive-template-symbol
+#+BEGIN_SRC yaml
+literal: "Hello, my name is <actor.name>"
+#+END_SRC
+
+\toReview
+Here we can see several problems start to appear.
+Is it always the case that the current actor should be used?
+No because we can say something like: "Hey Tim, can I borrow your pen?"
+So we can't put in contextual information in the template, so the best we can
+do is give them a name and leave it at that,
+as can be seen in listing [[code:template-symbol-context]].
+Note that this won't add any /real/ restrictions on the inserted words.
+Its just a hole that can be filled up by an arbitrary string.
+
+#+CAPTION: Context unaware appraoch
+#+NAME: code:template-symbol-context
+#+BEGIN_SRC yaml
+literal: "Hello, my name is <name>"
+--- # another file
+literal: "Can I borrow a <tool>"
+#+END_SRC
+
+\toReview
+So then the question becomes how do we fill in these templates?
+The issue we had with trying to fill these in the symbols was the lack of
+context.
+Context is mainly provided by connections, if we know who is saying
+"Hello, my name is <name>", we know what to fill in for name.
+In this system context is provided by connections.
+An example of how to do this is given in listing [[code:template-connection-fill]],
+where the first one fills the name with a fact retrieved from the drools,
+and the second fills the name by using a previous utterance.
+
+#+CAPTION: Connection syntax for filling templates
+#+NAME: code:template-connection-fill
 #+BEGIN_SRC yaml
 from:
- - status
+- hello
 to:
- - symbol: ask_reason_here
-   scene: information_gathering
-   restricted_to: doctor
-   values:
-     - Impatient
- - symbol: good
-   restricted_to: doctor
-   values:
-     - Polite
-     - Happy
+- symbol: my_name_is_x
+  restricted_to: patient
+  facts:
+    name: botname
+--- # or 
+from:
+- my_name_is_x
+to:
+- symbol: hello_x
+  restricted_to: patient
+  utterances:
+    name: 
+      actor: doctor
+      symbol: introducion/my_name_is_x
+      match: 0 # just to show, obviously default value will be 0
 #+END_SRC
 
+**** That tags
 \toReview
-From here we can see the model presenting two options from a status inquery,
-the doctor either tells the patient he feels good staying in the introduction scene,
-or goes to the information_gathering scene and asks why he is here.
-We break away from the idea of S-AIML that scenes are linear.
-We believe that scenes are a weakly connected cyclic graph.
-Note that by cyclic, we mean there can be cycles, but there don't have to be.
-Its weakly connected because it wouldn't make much sense to model scenes
-that can't get to other scenes trough connections.
-
-*** Automatic AIML to YAML
-\toReview
-AIML is a standard cite:aimlspec.
-Note that the spec says: "AIML shall be compatible with XML.",
-and xml is also a standard cite:xmlspec.
-YAML happens to also be a standard format cite:yamlspec.
-although its not a markup langauge, unlike XML and AIML,
-but rather a data format cite:yamlvsxml.
-The advantage of being "just a dataformat" is
-that the syntax can become a lot more terse, while maintaining readability.
-Because we have all these standards, its relativly easy to convert between
-them. Because libraries exist for parsing them.
-
-**** Legacy AIML
-\toReview
-An introduction of a new format is nice, but when this is done,
-all the work in the old format can become obsolete.
-This is obviously not desirable.
-There are several ways of circumventing this.
-First of all, one could add support of the legacy format to the code base.
-The second method is creating a script that will help along the way with
-conversion.
-
-\toReview
-We chose the second method because the first method will be much harder,
-as it will re-introduce the problems we had with AIML in the first place.
-The second method provides the user an oppertunity to make their AIML script
-comply to the new standard, whilst also reducing the effort it takes.
-
-\toReview
-To make the conversion we need to point out some structural observations about
-differences between AIML and YAML.
-Firstly AIML works strictly from the perspective of the bot.
-There is no deliberation about what the user is thinking.
-Therefore we can't model what we expect the doctor to say after a patient
-uttered something in the test scenario because this information isn't encoded.
-You may argue that the mechanism which could be used for this are the /that/ tags.
-But they are just an additional restriction on the pattern matching,
-ie: If user uttered regex *and* he said /that/ before, we can say template.
-Alternativly you count the injection of types (in S-AIML),
-but this isn't a formal encoding in AIML itself, but rather a way of informing
-drools what's goin on.
-
-**** Mapping AIML
-\toReview
-What we can do is extract the patterns, and their respective literals into
-symbols. For example we have the following category:
-
-#+BEGIN_SRC xml
-  <category>
-      <pattern>
-          How long * pain
-      </pattern>
-      <template>
-          <insert packageName="scenarios.large.global" typeName="SentenceSpoken" />
-          <insert packageName="scenarios.large.timelapse" typeName="DurationPain" />
-          For a while now
-      </template>
-  </category>
-#+END_SRC
-
-\toReview
-So here there are implicitly defined two symbols and a connection.
-The first symbol is pattern tag.
-The second symbol is the template tag excluding the insertions.
-The connection is from the pattern to the template which is restricted to
-the patient.
-So from this example we can define the following files,
-with the file names in comments above:
-#+BEGIN_SRC yaml
-  # for_a_while_now.yml
-  literal: "For a while now"
-  # how_long_*_pain.yml
-  literal: "How long * pain"
-  # _connections.yml
-  from:
-   - "for_a_while_now"
-  to:
-   - symbol: "how_long_*_pain"
-     restricted_to: patient   
-#+END_SRC
-
-\toReview
-A lot of category elements simply mean to add a pattern to a symbol, for example:
-
-#+BEGIN_SRC xml
-  <category>
-      <pattern>
-          How long * pain *
-      </pattern>
-      <template>
-          <srai>How long * pain</srai>
-      </template>
-  </category>
-
-#+END_SRC
-
-\toReview
-So what we can do with the srai tags, if they exist, is simply checking if the
-symbol exists and then add the pattern to that symbol.
-
-***** That tags
 The that tags in AIML have a rather unforntunate name.
 They require the bot to have said something (ie a pattern) before the current
 pattern can be used.
@@ -3535,12 +3544,156 @@ utterance.
 We could add options for when an utterance was made, for example just now or
 any previous utterence. However in the interest of time we won't do this.
 
+**** Scenes
+\toReview
+In the S-AIML extension, scenes were used to enable and disable certain patterns.
+Unlike the topic mechanism of AIML which just gives prefference,
+something from another scene wouldn't be used at all.
+This is in a way makes it much easier to write dialogues,
+we don't have to worry about patterns from other scenes,
+so we can use much more generalized patterns.
+The way we represent scenes is rather simple.
+We just use the directory structure of the filesystem to group symbols in a
+particular scene.
+Connections are implicitly assumed to be between symbols in the scene,
+unless stated otherwise, such as:
 
-**** S-AIML specifics
+#+BEGIN_SRC yaml
+from:
+ - status
+to:
+ - symbol: ask_reason_here
+   scene: information_gathering
+   restricted_to: doctor
+   values:
+     - Impatient
+ - symbol: good
+   restricted_to: doctor
+   values:
+     - Polite
+     - Happy
+#+END_SRC
+
+\toReview
+From here we can see the model presenting two options from a status inquery,
+the doctor either tells the patient he feels good staying in the introduction scene,
+or goes to the information_gathering scene and asks why he is here.
+We break away from the idea of S-AIML that scenes are linear.
+We believe that scenes are a weakly connected cyclic graph.
+Note that by cyclic, we mean there can be cycles, but there don't have to be.
+Its weakly connected because it wouldn't make much sense to model scenes
+that can't get to other scenes trough connections.
+
+
+
+*** Automatic AIML to YAML
+\toReview
+AIML is a standard cite:aimlspec.
+Note that the spec says: "AIML shall be compatible with XML.",
+and xml is also a standard cite:xmlspec.
+YAML happens to also be a standard format cite:yamlspec.
+although its not a markup langauge, unlike XML and AIML,
+but rather a data format cite:yamlvsxml.
+The advantage of being "just a dataformat" is
+that the syntax can become a lot more terse, while maintaining readability.
+Because we have all these standards, its relativly easy to convert between
+them. Because libraries exist for parsing them.
+
+**** Legacy AIML
+\toReview
+An introduction of a new format is nice, but when this is done,
+all the work in the old format can become obsolete.
+This is obviously not desirable.
+There are several ways of circumventing this.
+First of all, one could add support of the legacy format to the code base.
+The second method is creating a script that will help along the way with
+conversion.
+
+\toReview
+We chose the second method because the first method will be much harder,
+as it will re-introduce the problems we had with AIML in the first place.
+The second method provides the user an oppertunity to make their AIML script
+comply to the new standard, whilst also reducing the effort it takes.
+
+\toReview
+To make the conversion we need to point out some structural observations about
+differences between AIML and YAML.
+Firstly AIML works strictly from the perspective of the bot.
+There is no deliberation about what the user is thinking.
+Therefore we can't model what we expect the doctor to say after a patient
+uttered something in the test scenario because this information isn't encoded.
+You may argue that the mechanism which could be used for this are the /that/ tags.
+But they are just an additional restriction on the pattern matching,
+ie: If user uttered regex *and* he said /that/ before, we can say template.
+Alternativly you count the injection of types (in S-AIML),
+but this isn't a formal encoding in AIML itself, but rather a way of informing
+drools what's goin on.
+
+**** Mapping AIML
+<<Mapping AIML>>
+\toReview
+What we can do is extract the patterns, and their respective literals into
+symbols. For example we have the following category:
+
+#+BEGIN_SRC xml
+  <category>
+      <pattern>
+          How long * pain
+      </pattern>
+      <template>
+          <insert packageName="scenarios.large.global" typeName="SentenceSpoken" />
+          <insert packageName="scenarios.large.timelapse" typeName="DurationPain" />
+          For a while now
+      </template>
+  </category>
+#+END_SRC
+
+\toReview
+So here there are implicitly defined two symbols and a connection.
+The first symbol is pattern tag.
+The second symbol is the template tag excluding the insertions.
+The connection is from the pattern to the template which is restricted to
+the patient.
+So from this example we can define the following files,
+with the file names in comments above:
+#+BEGIN_SRC yaml
+  # for_a_while_now.yml
+  literal: "For a while now"
+  # how_long_*_pain.yml
+  literal: "How long * pain"
+  # _connections.yml
+  from:
+   - "for_a_while_now"
+  to:
+   - symbol: "how_long_*_pain"
+     restricted_to: patient   
+#+END_SRC
+
+\toReview
+A lot of category elements simply mean to add a pattern to a symbol, for example:
+
+#+BEGIN_SRC xml
+  <category>
+      <pattern>
+          How long * pain *
+      </pattern>
+      <template>
+          <srai>How long * pain</srai>
+      </template>
+  </category>
+
+#+END_SRC
+
+\toReview
+So what we can do with the srai tags, if they exist, is simply checking if the
+symbol exists and then add the pattern to that symbol.
+
+
+**** Type insertion
 <<Caviats>>
 \toReview
 After the conversion is finished, the bot will mostly work, with the added bonus
-that the dialogue will be more overseeable.
+that the dialogue will be more readable.
 However there are some caveats, especially in the previously introduced variant
 called of AIML called S-AIML.
 
@@ -3553,6 +3706,8 @@ drools in case of a particular symbol inserted.
 For this we can just use the low level reply mechanism, but rather than
 replying we insert the specified type.
 
+\todo[inline]{Add example showing the source S-AIML, and the generated drool from that}
+
 # A rather peculiar design decision to use JSON inside an xml document.
 \toReview
 Something which complicates this is that attributes can be set trough json
@@ -3560,11 +3715,6 @@ within the insert tags.
 This can be handled inside the drools rules because the inserted types
 always have setters.
 So there could be java code generated for that.
-
-\toReview
-Scene tags can be represented trough folders.
-So from the scene tag we can just extract the name and create a folder from it.
-Making files from the children as described above.
 
 **** Proof of concept
 <<Conversion script>>
@@ -4754,48 +4904,9 @@ This is because there were to many different symbols in the input
 \todo[inline]{Extracting information from meanings isn't very DRY right now, for example saying how is your foot? Could perhaps be splitup into statusInquiry + foot. However I don't know how to do this better right now, perhaps it could be a natural result of dubble matching but we lose the order inforamtion.}
 ** Rough planning.
 *** Implement
-+ Debug scene switching: 'I'm good, why are you here?' doesn't work right now.
-+ Cleanup the log, remove diadumps and database dumps
 **** star
 1. Find precise definition
 ***** match on symbol A, fill in symbol B problem
-Figure out how to solve the "match at symbol A, fill in template from symbol B"
-problem.
-For example we do this with symbols as nameaspaces of the filled in
-template.
-But this becomes more difficult when an agent says "what is your name?",
-which is replied with "my name is X", now in "hello X, how are you today",
-how do we locate X from within a symbol?
-Because the symbol isn't aware of different agents.
-It could be done from "connection", where we say:
-#+BEGIN_SRC yaml
-from:
-- my_name_is
-to:
-- symbol: hello_x
-  restricted_to: patient
-  templates:
-    x: doctor.name # ??
-#+END_SRC
-
-But now we run into the problem how does the template name doctor.name get
-filled in the first place?
-We could say something like, okay, symbol templates that are matched are
-always uttered by "somebody", so our namespace is just the
-name of the utterer + symbol name:
-#+BEGIN_SRC yaml
-from:
-- my_name_is
-to:
-- symbol: hello_x
-  restricted_to: patient
-  templates:
-    x: doctor.my_name_is
-#+END_SRC
-
-So there still needs to be a mechanism for extracting multiple variables
-from the regexes, because regexes support that.
-But that's just syntax
 
 *** Report
      In thesis we should also mention the effects of values for functions
@@ -4838,6 +4949,11 @@ But that's just syntax
 ** Tooling stuff
 + Protocol buffers could be used for protocol. Its strongly typed and has both
   C# and Java bindings
++ I think someone should work on better IDE support for drools.
+  Intelij kindoff has support, but not for seperated import files, and it
+  sometimes gets confused about syntax.
+  This would be a time investment, but I think long term it could make
+  developing sp's in drools much nicer.
 ** Security
 + Don't send passwords as plain text over the network.
 + Use SSL.
