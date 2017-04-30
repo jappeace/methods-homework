@@ -3348,7 +3348,7 @@ Since this definition is rather vague we did some experimentation.
 Basically we tried to introduce ourselves to the bot over and over again with
 different names as can be seen in table [[tab:alice-normal-words]].
 
-#+CAPTION: Test attempts at what would pass for normal words according to ALICE.
+#+CAPTION: Attempts at what would pass for 'normal' words according to ALICE.
 #+NAME: tab:alice-normal-words
 | Inserted              | What the bot accepted |
 |-----------------------+-----------------------|
@@ -3361,8 +3361,6 @@ different names as can be seen in table [[tab:alice-normal-words]].
 \toReview
 So quite arbitrarly some characters are accepted while others aren't, ALLICE
 happily accepts $\_$ but an exclemation mark is to much.
-We would argue that these are /not/ normal words, therefore ALICE does not
-comply to the AIML standard.
 There are several ways to improve this system.
 Such as trying to add context to what the star should be.
 In our example case we wanted to match on names, so we know that
@@ -3434,7 +3432,12 @@ Context is mainly provided by connections, if we know who is saying
 In this system context is provided by connections.
 An example of how to do this is given in listing [[code:template-connection-fill]],
 where the first one fills the name with a fact retrieved from the drools,
+\todo{I think we won't do this, because it requires a major overhaul of architecture}
 and the second fills the name by using a previous utterance.
+In the second we use the match label to identify which matchd item needs to be
+extracted, note that regexes support named matching groups.
+We will make these mandatory to extract information, because it doesn't put a
+burden upon order.
 
 #+CAPTION: Connection syntax for filling templates
 #+NAME: code:template-connection-fill
@@ -3455,9 +3458,15 @@ to:
   utterances:
     name: 
       actor: doctor
-      symbol: introducion/my_name_is_x
-      match: 0 # just to show, obviously default value will be 0
+      symbol: my_name_is_x
+      scene: introduction
+      match: name # we can match on named groups
 #+END_SRC
+
+\drafting
++ Note that this system allows retrieving of any matched information at any point in the conversation
++ symbols that require information that aren't being fulfilled throw a compile error
++ at runtime connections that don't have information from previous utterences are disabled
 
 **** That tags
 \toReview
@@ -4894,6 +4903,141 @@ This is because there were to many different symbols in the input
 (scan and give painkillers), this made the bot reply to both of them.
 
 
+** Fifth test
+
+| Commit | ae74151591d0c5a20566d8d74283d4c73e9450d2 |
+| Date   |                               2017-04-30 |
+
+\toReview
+This test was done after completing the major features that were still missing
+in comparison with AIML.
+We wanted to make sure no regressions had occured meanwhile.
+
+*** INTJ
+| Who      | Scripted Utterance                                | Issues |
+|----------+---------------------------------------------------+--------|
+| Doctor   | Hi                                                |        |
+| /Sander/ | /Hello/                                           |        |
+| Doctor   | How can I help you?                               |        |
+| /Sander/ | /I have a back pain./                             |        |
+| Doctor   | When did this first occur?                        |        |
+| /Sander/ | /When I lifted a heavy object./                   |        |
+| Doctor   | Oh, yes then you need some pain killers for this. |        |
+| /Sander/ | /Thank you doctor/                                |        |
+
+\cleared
+Conversation went according to script
+
+*** ENFP
+| Who     | Utterance                                                          | Issues |
+|---------+--------------------------------------------------------------------+--------|
+| Doctor  | Hi                                                                 |        |
+| /Susie/ | /Hello/                                                            |        |
+| /Susie/ | /How are you today doctor?/                                        |        |
+| Doctor  | I'm good, how can I help you?                                      |        |
+| /Susie/ | /I'm afraid I need some medicine/                                  |        |
+| Doctor  | Medicine? Why do you need that?                                    |        |
+| /Susie/ | /Well, I was watering the plants and all the sudden,/              |        |
+| /Susie/ | /I got this pain in my back./                                      |        |
+| /Susie/ | /Do you think I'm allergic to plants?/                             |        |
+| Doctor  | Haha, no, I think we need to make a scan of your back.             |        |
+| Doctor  | Because a watering can is a little to light to get back-pain from. |        |
+| /Susie/ | /Of course doctor./                                                |        |
+| Doctor  | Can you go to the hospital next Friday at 13:00?                   |        |
+| /Susie/ | /Yes, I will go then./                                             |        |
+
+\cleared
+Conversation went according to script
+
+*** ISTP
+| Who     | Utterance                                                         | Issues |
+|---------+-------------------------------------------------------------------+--------|
+| Doctor  | Hi                                                                |        |
+| /Chris/ | /Hello/                                                           |        |
+| Doctor  | How can I help?                                                   |        |
+| /Chris/ | /I have back pain doctor./                                        |        |
+| Doctor  | When did this first occur?                                        |        |
+| /Chris/ | /Well I was watering the plants,/                                 |        |
+| /Chris/ | /Perhaps I put to much water in the watering can/                 |        |
+| Doctor  | Yes, that could be the case.                                      |        |
+| Doctor  | However I would like to make a scan of your back just to be sure. |        |
+| /Chris/ | /Can't you just give some pain killers to help me?/               |        |
+| Doctor  | Yes but that will only work temporary.                            |     1  |
+| Doctor  | So let's plan a scan at the hospital next Friday at 13:00?        |     1  |
+| /Chris/ | /Yes, I will go then./                                            |        |
+| Doctor  | I can give you some pain killers meanwhile.                       |        |
+| /Chris/ | /Okay, thanks doctor/                                             |        |
+
+1. It didn't match these sentences, apprantly because of the new scene system.
+   There was no connection for this transition.
+
+
+** Sixth test
+
+| Commit | e15409ffc37b837a47a9ceb3c183d67f18c3eb17 |
+| Date   |                               2017-04-30 |
+
+\toReview
+Because of the ISTP issues in last test we wanted to try and pass this one.
+
+*** INTJ
+| Who      | Scripted Utterance                                | Issues |
+|----------+---------------------------------------------------+--------|
+| Doctor   | Hi                                                |        |
+| /Sander/ | /Hello/                                           |        |
+| Doctor   | How can I help you?                               |        |
+| /Sander/ | /I have a back pain./                             |        |
+| Doctor   | When did this first occur?                        |        |
+| /Sander/ | /When I lifted a heavy object./                   |        |
+| Doctor   | Oh, yes then you need some pain killers for this. |        |
+| /Sander/ | /Thank you doctor/                                |        |
+
+\cleared
+Conversation went according to script. 
+
+*** ENFP
+| Who     | Utterance                                                          | Issues |
+|---------+--------------------------------------------------------------------+--------|
+| Doctor  | Hi                                                                 |        |
+| /Susie/ | /Hello/                                                            |        |
+| /Susie/ | /How are you today doctor?/                                        |        |
+| Doctor  | I'm good, how can I help you?                                      |        |
+| /Susie/ | /I'm afraid I need some medicine/                                  |        |
+| Doctor  | Medicine? Why do you need that?                                    |        |
+| /Susie/ | /Well, I was watering the plants and all the sudden,/              |        |
+| /Susie/ | /I got this pain in my back./                                      |        |
+| /Susie/ | /Do you think I'm allergic to plants?/                             |        |
+| Doctor  | Haha, no, I think we need to make a scan of your back.             |        |
+| Doctor  | Because a watering can is a little to light to get back-pain from. |        |
+| /Susie/ | /Of course doctor./                                                |        |
+| Doctor  | Can you go to the hospital next Friday at 13:00?                   |        |
+| /Susie/ | /Yes, I will go then./                                             |        |
+
+\cleared
+Conversation went according to script. 
+
+*** ISTP
+| Who     | Utterance                                                         | Issues |
+|---------+-------------------------------------------------------------------+--------|
+| Doctor  | Hi                                                                |        |
+| /Chris/ | /Hello/                                                           |        |
+| Doctor  | How can I help?                                                   |        |
+| /Chris/ | /I have back pain doctor./                                        |        |
+| Doctor  | When did this first occur?                                        |        |
+| /Chris/ | /Well I was watering the plants,/                                 |        |
+| /Chris/ | /Perhaps I put to much water in the watering can/                 |        |
+| Doctor  | Yes, that could be the case.                                      |        |
+| Doctor  | However I would like to make a scan of your back just to be sure. |        |
+| /Chris/ | /Can't you just give some pain killers to help me?/               |        |
+| Doctor  | Yes but that will only work temporary.                            |        |
+| Doctor  | So let's plan a scan at the hospital next Friday at 13:00?        |        |
+| /Chris/ | /Yes, I will go then./                                            |        |
+| Doctor  | I can give you some pain killers meanwhile.                       |        |
+| /Chris/ | /Okay, thanks doctor/                                             |        |
+
+\cleared
+Conversation went according to script. 
+
 * Ideas
 :PROPERTIES:
 :UNNUMBERED: t
@@ -4903,11 +5047,6 @@ This is because there were to many different symbols in the input
 \todo[inline]{Perhaps we can use argumentation research on top of the graph to figure out more semantics (this statment is attacking that or inquirying this)}
 \todo[inline]{Extracting information from meanings isn't very DRY right now, for example saying how is your foot? Could perhaps be splitup into statusInquiry + foot. However I don't know how to do this better right now, perhaps it could be a natural result of dubble matching but we lose the order inforamtion.}
 ** Rough planning.
-*** Implement
-**** star
-1. Find precise definition
-***** match on symbol A, fill in symbol B problem
-
 *** Report
      In thesis we should also mention the effects of values for functions
 *** Repair OCC module & scoring module
