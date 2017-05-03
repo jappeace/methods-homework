@@ -58,7 +58,6 @@
 
 #+END_CENTER
 \todo{keywords}
-\todo[inline]{All code (listings) should have captions and be reffered to by name}
 \todo[inline]{Figures should to be able to be placed in the appendix}
 
 \newpage
