@@ -3305,7 +3305,6 @@ although they are also a lot more difficult to learn and read.
 Therefore both methods will be supported.
 
 \todo[inline]{If we have time we can compare information per character between the new and old method, going from 251 to 131 is quite an improvement}
-# https://developer.jboss.org/wiki/FunctionalProgrammingInDrools
 
 **** Connections
 \toReview
@@ -3317,8 +3316,11 @@ is inserted without extra information.
 This is what we represent with connections.
 What sensible replies can we give if a symbol is uttered.
 Originally we just wanted to stick to the AIML approach of connections,
-and add them within the symbol files like so:
+and add them within the symbol files as can be seen in
+listing [[code:yaml-connections-intrusive]].
 
+#+CAPTION: Intrusive connections
+#+NAME: code:yaml-connections-intrusive
 #+BEGIN_SRC yaml
 literal: How are you
 to:
@@ -3328,7 +3330,7 @@ to:
 #+END_SRC
 
 \toReview
-However we quickly decided against such an approach in fovour of grouping
+However we quickly decided against such an approach in favour of grouping
 connections into their own configuration file.
 There were two reasons for this, the first one is that we quickly found out
 that connections are much more complex than simple one directional links.
@@ -3337,8 +3339,11 @@ which agent can access the connection (default being all agents).
 The second reason was more incedental, it turns out that if you group all
 connections into a single file you can get a quick glance of which connections
 are made.
-Take as an example the following file:
+Take as an example listing [[code:yaml-connections-grouped]] which represents a
+connections file of a scene.
 
+#+CAPTION: Connections grouped into a file
+#+NAME: code:yaml-connections-grouped
 #+BEGIN_SRC yaml
 from:
  - ask_reason_here
@@ -3371,8 +3376,10 @@ but for this scenes can be used to still keep overview.
 \toReview
 Star tags are soley template focused, they capture the content of a wildcard
 at a particular index and allow them to occur in the bots reply.
-For example:
+An example can be seen in listing [[code:aiml-star-tag]].
 
+#+CAPTION: Star tag usage example.
+#+NAME: code:aiml-star-tag
 #+BEGIN_SRC xml
 <category>
     <pattern>
@@ -3518,8 +3525,10 @@ The that tags in AIML have a rather unforntunate name.
 They require the bot to have said something (ie a pattern) before the current
 pattern can be used.
 Therefore in our YAML semantics, they are an additional restiriction on connections.
-They appear in the follwoing example:
+They appear in listing [[code:aiml-that-tag]] as an example.
 
+#+CAPTION: That tags example.
+#+NAME: code:aiml-that-tag
 #+BEGIN_SRC xml
   <category>
       <that>Why is doctor Aarts not here I am one of his patients.</that>
@@ -3540,9 +3549,12 @@ Before this category becomes active, the bot first has to have uttered the
 pattern in the that tags.
 In the new representation we can model such a thing too.
 To model that tags we add an extra optional field to the RawConnections called
-before, with two required fields, `who' and `said', which indicates the actor
-and said indicates what was said:
+before, with two required fields, `who' and `said', who indicates the actor
+and said indicates what was said.
+An example can be seen in listing [[code:yaml-before-field]].
 
+#+CAPTION: That tags as before fields in YAML
+#+NAME: code:yaml-before-field
 #+BEGIN_SRC yaml
   before:
      who: patient
@@ -3566,8 +3578,12 @@ the who in the before tag, and then take the latest utterance from them.
 \toReview
 To surpass the AIML that tags,
 we can extend this mechanism by making the rawbefore type self
-recursive with an optinal field before of its own type:
+recursive with an optinal field before of its own type.
+This is best illustrated with an example which can be seen in listing
+[[code:yaml-before-recurion]].
 
+#+CAPTION: Before recursion
+#+NAME: code:yaml-before-recurion
 #+BEGIN_SRC yaml
   before:
      who: patient
@@ -3609,8 +3625,11 @@ The way we represent scenes is rather simple.
 We just use the directory structure of the filesystem to group symbols in a
 particular scene.
 Connections are implicitly assumed to be between symbols in the scene,
-unless stated otherwise, such as:
+unless stated otherwise, which can be seen for example in listing
+[[code:yaml-scene-example]].
 
+#+CAPTION: Scene example in connections
+#+NAME: code:yaml-scene-example
 #+BEGIN_SRC yaml
 from:
  - status
@@ -3686,8 +3705,10 @@ drools what's goin on.
 <<Mapping AIML>>
 \toReview
 What we can do is extract the patterns, and their respective literals into
-symbols. For example we have the following category:
+symbols. For example we have the following category in listing [[code:aiml-mapping]].
 
+#+CAPTION: AIML mapping example
+#+NAME: code:aiml-mapping
 #+BEGIN_SRC xml
   <category>
       <pattern>
@@ -3707,13 +3728,18 @@ The first symbol is pattern tag.
 The second symbol is the template tag excluding the insertions.
 The connection is from the pattern to the template which is restricted to
 the patient.
-So from this example we can define the following files,
-with the file names in comments above:
+So from this example we can define the mapping result in listing [[code:yaml-mapped]],
+with the respective file names in comments above.
+
+#+CAPTION: Listing [[code:aiml-mapping]] expressed in YAML, with the filenames in comments.
+#+NAME: code:yaml-mapped
 #+BEGIN_SRC yaml
   # for_a_while_now.yml
   literal: "For a while now"
+  ---
   # how_long_*_pain.yml
   literal: "How long * pain"
+  ---
   # _connections.yml
   from:
    - "for_a_while_now"
@@ -3723,8 +3749,11 @@ with the file names in comments above:
 #+END_SRC
 
 \toReview
-A lot of category elements simply mean to add a pattern to a symbol, for example:
+A lot of category elements simply mean to add a pattern to a symbol,
+for example listing [[code:aiml-srai-mapping]].
 
+#+CAPTION: SRAI tag that adds a pattern to a symbol
+#+NAME: code:aiml-srai-mapping
 #+BEGIN_SRC xml
   <category>
       <pattern>
@@ -3780,7 +3809,11 @@ It is excpected to be executed from command line and provides several command
 line arguments that are documented in the script itself.
 
 \toReview
-The usage of the script can be shown with:
+The usage of the script can be shown by passing the help parameter to it.
+As can be seen in listing [[code:sh-conversion-script-help]].
+
+#+CAPTION: Print conversion script usage
+#+NAME: code:sh-conversion-script-help
 #+BEGIN_SRC sh
   python main.py --help
 #+END_SRC
@@ -3951,8 +3984,11 @@ Java makes this relativly hard to do. It has a `final` keyword,
 which prevents assignment, but this keyword does noet enforce writing into
 underlying data structure.
 The awkardness of this keyword is best demonstrated by hacking the lambda
-limitation of disalowwing enclosment of variables that are not final:
+limitation of disalowwing enclosment of variables that are not final in lambdas.
+Which can be seen in listing [[code:java-lambda-hack]].
 
+#+CAPTION: Hack around Java's final variable restriction in lambdas
+#+NAME: code:java-lambda-hack
 #+BEGIN_SRC java
 	class LamdaHack<T>{
 		T value;
@@ -3972,25 +4008,28 @@ limitation of disalowwing enclosment of variables that are not final:
 
 \drafting
 So one can only have immutable structures by making data strcutures enterly
-consist either of values, or other immutable strctures:
+consist either of values, or other immutable strctures.
+An example of this is shown in listing [[code:java-immutable]].
 
+#+CAPTION: An immutable structure
+#+NAME: code:java-immutable
 #+BEGIN_SRC java
 @Immutable
 public class Symbol {
-	public final String name; // filename
-	public final Scene scene;
+	public final String name; // strings are in most languages immutable
+	public final Scene scene; // immutable too
 
-	private final List<String> literals;
-	private final int hash_value;
+	private final List<String> literals; // mutable but private and owned by us
+	private final int hash_value; // immutable but no reason to make public
 	public Symbol(String name, List<String> literals, Scene scene) {
 		this.name = name;
-		this.literals = copy(literals);
+		this.literals = copy(literals); // we must copy to gaurantee immutabilty
 		// since the object is immutable, we can do this on construction
 		this.hash_value = scene.hashCode()*3+name.hashCode()*7;
 		this.scene = scene;
 	}
 	public final List<String> getLiterals() {
-		return copy(literals);
+		return copy(literals); // we must pass a copy to gaurantee immutabilty
 	}
 	private static <E> List<E> copy(List<E> from){
 		return new ArrayList<>(from);
@@ -4006,8 +4045,11 @@ provide a stream (a stream is readonly in Java).
 Also note that upon assignment we directly make a copy of the litteral list,
 because we don't know where that refference has come from and if the
 reference has been unnasigned.
-So if you don't do this you can do the following thing:
+So if you don't do this you can break immutablity as is shown by
+listing [[code:java-must-copy]].
 
+#+CAPTION: Why we must copy mutable lists
+#+NAME: code:java-must-copy
 #+BEGIN_SRC java
 List<String> literals = Lists.newArrayList("one", "two")
 Symbol symbol = new Symbol("unimportant", literals, new Scene("unimportant"));
@@ -4015,10 +4057,16 @@ literals.add("Not so immutable now are you?");
 #+END_SRC
 
 \drafting
-This is of course unexpected, and even worse it will make symbol thread unsafe,
+This is of course unexpected,
+and even worse it will make the object symbol thread unsafe,
 there is no way for the symbol class to gaurantee the literal list isn't used
 because its owned outside of its scope.
-However if we make a shallow copy of the collection the mutation doesn't occur.
+Even if you put the synchronized keyword on the get method,
+you don't get thread safety.
+Because the symbol doesn't own the list.
+The only way to gaurantee ownership is by making a copy.
+If we make a shallow copy of the collection the mutation doesn't occur as shown
+in [[code:java-must-copy]].
 
 *** Data structures
 <<Data structures>>
@@ -4110,8 +4158,10 @@ It also has a handy assertion API.
 \toReview
 The unit tests don't cover every aspect of the application but are
 mainly focused upon the Jungian Functions and their data structures.
-For example the Te tests look like this:
+For example the Te tests can be seen in listing [[code:java-unit-te]].
 
+#+CAPTION: Te test example
+#+NAME: code:java-unit-te
 #+BEGIN_SRC java
   public class TeTest extends AJungFuncTest {
       @Override
@@ -4221,6 +4271,7 @@ dealing with sentences but instead we use words.
 Symbols then would need to indicate how many arguments they need to be completed.
 
 **** Variables in literals
+\todo[inline]{This is partly implemented already but we can't retrieve information from drools, perhaps that should be implemented, although drools can get symbols and insert stuff themselves}
 \toReview
 A first step would be to add variables to the symbols. Such as a name of an
 actor. I guess these things could be extracted from the social practice
