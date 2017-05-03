@@ -1753,7 +1753,6 @@ We will however not consider yet how to place this in the existing system,
 but will consider how to combine Jungian psycology with BDI.
 
 \todo[inline]{Check if all logic contains all information we use in the code excluding implementation details}
-\todo[inline]{Can we make monoids of these?}
 \todo[inline]{We could add uterances as in the code and do time in that, so that we can make complete endomorphisms of these (as it is in the code)}
 
 ** Differences from campos
@@ -4375,6 +4374,13 @@ bibliography:refs.bib
 \newpage
 * List of tables
 \listoftables
+\newpage
+
+# If we can ever figure out how to remove the name from this:
+# https://stackoverflow.com/questions/2709898/change-list-of-listings-text
+# * List of listings
+# \listlessness
+
 \newpage
 * Building
 \todo[inline]{Document about python scripts and shell scripts (how to use), make sure succerrer can take it on easily}
