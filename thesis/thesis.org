@@ -1300,11 +1300,14 @@ stop
 \newpage
 **** Text processing
 <<Text Processing>>
-    \cleared
+    \toReview
      Text processing is done with help of the ALICE chat bot.
      This bot does the parsing and validation of AIML,
      with help of the knowledge encoded in AIML it can specify a response.
-     For example:
+     This can be seen in listing [[code:aiml-example-why-here]].
+
+#+CAPTION: AIML example: why are you here?
+#+NAME: code:aiml-example-why-here
 #+BEGIN_SRC xml
 	<category>
 		<pattern>
@@ -1324,18 +1327,23 @@ stop
 		</template>
 	</category>
 #+END_SRC
-\cleared
+    \toReview
      In this example the first category indicates that if a user types
      "What is the problem" (pattern tags), then the answer can be found in a
      category with pattern "why are you here".
-     The second category does the same but the star indicates that any
-     characters before the pattern can be ignored to satisfy the category.
+     The second category does the same but the star indicates that any amount of
+     characters
+     [fn::Its not really 'any', we investigate this further in section [[Star tags]]]
+     before the pattern can be ignored to satisfy the category.
 
 **** Deliberation
 <<Deliberation>>
-\cleared
-     AIML has been extended to allow updating of the drools knowledge base:
+\toReview
+     AIML has been extended to allow updating of the drools knowledge base,
+     as can be seen in listing [[code:s-aiml-inserts]].
 
+#+CAPTION: Extended AIML that communicate knowledge
+#+NAME: code:s-aiml-inserts
 #+BEGIN_SRC xml
 <category>
     <pattern>why are you here</pattern>
@@ -1599,6 +1607,7 @@ Quality attributes of systems \url{https://en.wikipedia.org/wiki/ISO/IEC_9126}
 
 *** Type signatures
 <<Type signatures explained>>
+\todo[inline]{Isn't this a concern for implmentation? Or find at least some sources}
 \todo[inline]{Perhaps I should add citations?}
 \todo[inline]{Add haskell prototypes as a reference to clearly mark out difference}
 \cleared
@@ -1606,35 +1615,45 @@ If the reader is familiar with functional languages he can skip this section.
 In this section we explain type signatures, partial application and functions
 as arguments.
 
-\cleared
+\toReview
 Building upon the idea of pure functions we use the concept of /type signature/.
 A type signature can be seen as a restriction on what goes in and what goes out.
 This is analogous to a set
 [fn::Strictly this is wrong, but in the formal description I use sets anyway],
 or even a type as used in programming languages such as Java.
-If you declare a function for example in Java:
+If you declare a function for example in Java as can be seen in
+listing [[code:java-a-function]].
+
+#+CAPTION: Java function
+#+NAME: code:java-a-function
 #+BEGIN_SRC java
   class A{
       static int func(int a);
   }
 #+END_SRC
+
+\cleared
 What you're really saying is that "this function does not accept anything but 
 int, otherwise the computation breaks".
 Not that we define the class A, simply because we have to in Java.
 
-\cleared
+\toReview
 There are some things to keep in mind. First of all, there is a direct
 correlation with how precise description is and the amount of things you can do
 with the type. The more general the type the less you can do with it.
 Secondly a more precise an type allows a /pure function/ to do fewer different
 things with the type.
-Say you have the following pure function:
+Say you have the following pure function in listing [[code:java-a-pure-function]].
+
+#+CAPTION: Java function, which we pretend is pure
+#+NAME: code:java-a-pure-function
 #+BEGIN_SRC java
   class A{
       static int func(boolean a);
   }
 #+END_SRC
-How many different ints can it return? The answer is 2. Note that the function
+
+How many different ints can it return? The answer is two. Note that the function
 can't just create a Random object to generate more entropy since we said it was
 pure. Java can't enforce this, but a language like Haskell does.
 
@@ -1646,12 +1665,15 @@ domain based upon types.
 Only if we assume we're dealing with pure functions,
 we can reason about possible computations indirectly.
 
-\cleared
+\toReview
 Another really important feature of functions to keep in mind is that the
 argument of an function can be a function itself.
 This is how we combine Jungian function with each other to create personalities
 in section [[Composing types]].
-This has an analogy in Java for example:
+This has can also be done in Java as can be seen in listing [[code:java-lambdas]].
+
+#+CAPTION: Lambas
+#+NAME: code:java-lambdas
 #+BEGIN_SRC java
   interface B{
       int func(boolean a);
@@ -1667,7 +1689,7 @@ The only way to get around this knowledge restriction is trough casting in Java.
 Since we're assuming pure functions however B can only expose read only
 information.
 
-\cleared
+\toReview
 Then finally the last technique we use (implicitly) is a process called partial
 application.
 In which we 
@@ -1676,7 +1698,10 @@ this is why the /next/ arguments in section [[Composing types]] can be other
 function attitudes, because once inserted as argument the next argument of
 themselves has already been satisfied which changed their type signature.
 The first one was a unit however, which is just
-The Java analogy is:
+The Java analogy can be seen in listing [[code:java-composition]].
+
+#+CAPTION: Java composition
+#+NAME: code:java-composition
 #+BEGIN_SRC java
   interface B{
       int func(boolean a);
@@ -3067,8 +3092,11 @@ This change will loosen the connection between a pattern and a response.
 In other words, it will create some more "space" to do actual deliberation.
 We will discuss later in this chapter how we retain plausible conversation
 connections.
-We will use an example to illustrate the differences:
+We will use an example in listing [[code:aiml-std-cats]]
+and listing [[code:aiml-symbols]] to illustrate the differences.
 
+#+CAPTION: Standard AIML categories
+#+NAME: code:aiml-std-cats
 #+BEGIN_SRC xml
 <aiml>
 	<category>
@@ -3089,8 +3117,9 @@ We will use an example to illustrate the differences:
 	</category>
 </aiml>
 #+END_SRC
-So the modification would now look like:
 
+#+CAPTION: AIML that refers to 'symbols' rather than templates.
+#+NAME: code:aiml-symbols
 #+BEGIN_SRC xml
   <aiml>
 	  <category>
@@ -3128,8 +3157,11 @@ how to access information stored in the "statusInquiry" symbol.
 \cleared
 Now what if the agent wants to do a status inquiry,
 well the string into a status inquiry is already available,
-we just need to separate the literal strings from the catch all patterns:
+we just need to separate the literal strings from the catch all patterns
+as can be seen in listing [[code:ailm-grouped-literal]].
 
+#+CAPTION: AIML with grouped patterns and string literals
+#+NAME: code:ailm-grouped-literal
 #+BEGIN_SRC xml
   <aiml>
 	  <category>
@@ -3161,8 +3193,11 @@ observe how one category always will have one sybmol.
 If we were to extract the value of this tag and use it as a filename,
 we can ensure that each sybmol is only declared once.
 Then we can also assume that the aiml tags and category tags are implicit.
-This results in a much more terse definition:
+This results in a much more terse definition as can be seen in listing
+[[code:aiml-terse]].
 
+#+CAPTION: Terse AIML but illegal XML
+#+NAME: code:aiml-terse
 #+BEGIN_SRC xml
 <literal>
     How are you?
@@ -3234,10 +3269,13 @@ If TOML were to stabalize, its probably better to move to that instead.
 *** Using yaml
 
 \toReview
-So we decided conclusivly to use YAML for replacing AIML.
-Going back to the problem we tried to solve is how to represent these
-symbols in YAML:
+It was decided conclusivly to use YAML for replacing AIML's function of
+symbol representation.
+How these symbols are represented in YAML can be seen in
+listing [[code:yaml-symbol]].
 
+#+CAPTION: YAML symbol representation
+#+NAME: code:yaml-symbol
 #+BEGIN_SRC yaml
 literal: How are you
 patterns:
@@ -3247,19 +3285,29 @@ patterns:
 
 \toReview
 Finally we can extend the pattern functionally by simply using regex support.
-This will make the patterns more terse and even precise:
+This will make the patterns more precise, an example can be seen in
+listing [[code:yaml-regexes]].
 
+#+CAPTION: YAML with regexes
+#+NAME: code:yaml-regexes
 #+BEGIN_SRC yaml
 literal: How are you
 regex: How ([a-z])\w+ you(.*)
 #+END_SRC
 
 \toReview
-This only matches a single word and allows for trailing characters.
-Note that the patterns example would've also matched "How did this became you?",
-since any character would've matched the star.
-Regexes can be much more precise in specifying what a star is, although they are
-also a lot more difficult to learn. Therefore both methods will be supported.
+The example in listing [[code:yaml-regexes]] only matches a single word and allows
+for trailing characters.
+Note that the example in listing [[code:yaml-symbol]] would've also matched
+"How did this became you?", since any character would've matched the star.
+Regexes can be much more precise in specifying what a wildcard star is,
+although they are also a lot more difficult to learn and read.
+Therefore both methods will be supported [fn:: what we really do is just
+replace the stars in pattern fields by (.*),
+which is a regex group that matches anything,
+this does not comply with the experimental results of the ALICE bot,
+however since the AIML standard remains vague about that we can assume they
+actually just meant anything].
 
 \todo[inline]{If we have time we can compare information per character between the new and old method, going from 251 to 131 is quite an improvement}
 # https://developer.jboss.org/wiki/FunctionalProgrammingInDrools
@@ -3324,6 +3372,7 @@ Of course once the connection file starts to grow we begin to loose this,
 but for this scenes can be used to still keep overview.
 
 **** Star tags
+<<Star tags>>
 \toReview
 Star tags are soley template focused, they capture the content of a wildcard
 at a particular index and allow them to occur in the bots reply.
@@ -4968,6 +5017,7 @@ Conversation went according to script
 | Doctor  | I can give you some pain killers meanwhile.                       |        |
 | /Chris/ | /Okay, thanks doctor/                                             |        |
 
+\toReview
 1. It didn't match these sentences, apprantly because of the new scene system.
    There was no connection for this transition.
 
