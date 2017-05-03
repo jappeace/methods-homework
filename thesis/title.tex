@@ -40,4 +40,14 @@ Artificial Intelligence\\[2cm] % Research group name and department name
 \vfill
 \end{center}
 \end{titlepage}
+
+% delete heading of list of figure so that we can use the org-mode one
+\renewcommand\listoffigures{%
+        \@starttoc{lof}%
+}
+
+% same but now for tables (note the T in starttoc)
+\renewcommand\listoftables{%
+        \@starttoc{lot}%
+}
 \makeatother

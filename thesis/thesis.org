@@ -28,6 +28,7 @@
 # (something cleared that was under discussion last time)
 #+LATEX_HEADER: \newcommand{\cleared}{\todo[noline, color=white]{Cleared}}
 
+
 # Title page
 #+LATEX: \input{title}
 
@@ -4357,6 +4358,12 @@ bibliographystyle:unsrt
 bibliography:refs.bib
 
 
+\newpage
+* List of figures
+\listoffigures
+\newpage
+* List of tables
+\listoftables
 \newpage
 * Building
 \todo[inline]{Document about python scripts and shell scripts (how to use), make sure succerrer can take it on easily}
