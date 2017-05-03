@@ -3302,12 +3302,7 @@ Note that the example in listing [[code:yaml-symbol]] would've also matched
 "How did this became you?", since any character would've matched the star.
 Regexes can be much more precise in specifying what a wildcard star is,
 although they are also a lot more difficult to learn and read.
-Therefore both methods will be supported [fn:: what we really do is just
-replace the stars in pattern fields by (.*),
-which is a regex group that matches anything,
-this does not comply with the experimental results of the ALICE bot,
-however since the AIML standard remains vague about that we can assume they
-actually just meant anything].
+Therefore both methods will be supported.
 
 \todo[inline]{If we have time we can compare information per character between the new and old method, going from 251 to 131 is quite an improvement}
 # https://developer.jboss.org/wiki/FunctionalProgrammingInDrools
