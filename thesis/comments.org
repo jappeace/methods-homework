@@ -5,7 +5,12 @@
 1. Kan ik logic of BDI nu verwijderen?
 2. Ik denk dat ik concrete implementations moet uitbreiden omdat drools best
    wel een belangrijk onderdeel is geworden.
-3. Kan ik sectie 2.5.1 als voorkennis beschouwen?
+3. Kan ik sectie 2.5.1 als voorkennis beschouwen? ( )
+4. Dus 3.4 is nu valide omdat 5.6.2? Of moet ik dit nog op een dieper niveau
+   testen? Zelf dacht ik bijvoorbeeld aan het opzetten van een experiment over
+   de invloed van diepere functies. (Ik denk dat het op het moment niet veel
+   invloed heeft omdat de rationele functies alleen maar op een enkel level
+   werken).
 * Manuel
 
   Probablistic generation of next dialogue moves could be combined with moddeling one
