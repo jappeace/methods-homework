@@ -1300,11 +1300,14 @@ stop
 \newpage
 **** Text processing
 <<Text Processing>>
-    \toReview
+    \newlyCleared
      Text processing is done with help of the ALICE chat bot.
      This bot does the parsing and validation of AIML,
      with help of the knowledge encoded in AIML it can specify a response.
-     This can be seen in listing [[code:aiml-example-why-here]].
+     AIML links a pattern to a template, where the pattern is a user input and
+     a template a response.
+     An example of a pattern template pair can be seen in
+     listing [[code:aiml-example-why-here]].
 
 #+CAPTION: AIML example: why are you here?
 #+NAME: code:aiml-example-why-here
@@ -1327,18 +1330,18 @@ stop
 		</template>
 	</category>
 #+END_SRC
-    \toReview
+    \newlyCleared
      In this example the first category indicates that if a user types
      "What is the problem" (pattern tags), then the answer can be found in a
      category with pattern "why are you here".
      The second category does the same but the star indicates that any amount of
      characters
-     [fn::Its not really 'any', we investigate this further in section [[Star tags]]]
-     before the pattern can be ignored to satisfy the category.
+     [fn::It is not really 'any' character, we investigate this further in section [[Star tags]]]
+     before the pattern can be ignored to match with the category.
 
 **** Deliberation
 <<Deliberation>>
-\toReview
+\newlyCleared
      AIML has been extended to allow updating of the drools knowledge base,
      as can be seen in listing [[code:s-aiml-inserts]].
 
@@ -1615,11 +1618,11 @@ If the reader is familiar with functional languages he can skip this section.
 In this section we explain type signatures, partial application and functions
 as arguments.
 
-\toReview
+\newlyCleared
 Building upon the idea of pure functions we use the concept of /type signature/.
 A type signature can be seen as a restriction on what goes in and what goes out.
 This is analogous to a set
-[fn::Strictly this is wrong, but in the formal description I use sets anyway],
+[fn::Strictly this isn't true, but in the formal description I use sets anyway],
 or even a type as used in programming languages such as Java.
 If you declare a function for example in Java as can be seen in
 listing [[code:java-a-function]].
@@ -1635,15 +1638,15 @@ listing [[code:java-a-function]].
 \cleared
 What you're really saying is that "this function does not accept anything but 
 int, otherwise the computation breaks".
-Not that we define the class A, simply because we have to in Java.
+Note that we define the class A, simply because we have to in Java.
 
-\toReview
+\newlyCleared
 There are some things to keep in mind. First of all, there is a direct
 correlation with how precise description is and the amount of things you can do
 with the type. The more general the type the less you can do with it.
-Secondly a more precise an type allows a /pure function/ to do fewer different
+Secondly a more precise type allows a /pure function/ to do fewer different
 things with the type.
-Say you have the following pure function in listing [[code:java-a-pure-function]].
+Say you have the following pure function shown in listing [[code:java-a-pure-function]].
 
 #+CAPTION: Java function, which we pretend is pure
 #+NAME: code:java-a-pure-function
@@ -1653,9 +1656,12 @@ Say you have the following pure function in listing [[code:java-a-pure-function]
   }
 #+END_SRC
 
-How many different ints can it return? The answer is two. Note that the function
-can't just create a Random object to generate more entropy since we said it was
-pure. Java can't enforce this, but a language like Haskell does.
+\newlyCleared
+How many possible different ints can it return?
+The answer is two.
+Note that the function can't just create a Random object to generate more
+entropy since we said it was pure.
+Java can't enforce this, but a language like Haskell does.
 
 \cleared
 Even the return type is deceptive in java, since it can write results to
@@ -1665,9 +1671,9 @@ domain based upon types.
 Only if we assume we're dealing with pure functions,
 we can reason about possible computations indirectly.
 
-\toReview
+\newlyCleared
 Another really important feature of functions to keep in mind is that the
-argument of an function can be a function itself.
+argument of an function can be a function too.
 This is how we combine Jungian function with each other to create personalities
 in section [[Composing types]].
 This has can also be done in Java as can be seen in listing [[code:java-lambdas]].
@@ -1682,22 +1688,27 @@ This has can also be done in Java as can be seen in listing [[code:java-lambdas]
       static int func(B otherfunc, boolean a);
   }
 #+END_SRC
+
+\newlyCleared
 The interface does not specify what behavior it contains, only the type of the
 function. Because Java is object orientated B can be much more then just that
-function, but according to the function in A its just that one function.
-The only way to get around this knowledge restriction is trough casting in Java.
-Since we're assuming pure functions however B can only expose read only
-information.
+function, but according to the function in A, its just that one function.
+The only way to get around this knowledge restriction is trough casting,
+but that is just a way of ignoring the type system cite:whyavoidcasts.
+This is not interesting to explore further because we are making a design based
+upon the type system.
 
-\toReview
+\newlyCleared
 Then finally the last technique we use (implicitly) is a process called partial
 application.
-In which we 
-which fill up some arguments of a function to create another function.
-this is why the /next/ arguments in section [[Composing types]] can be other
-function attitudes, because once inserted as argument the next argument of
-themselves has already been satisfied which changed their type signature.
-The first one was a unit however, which is just
+In which we fill up some arguments of a function to create another function.
+This is why the /next/ arguments in section [[Composing types]] can be other
+function attitudes,
+once the next argument is partially applied,
+the type of the function changes to that of /next/,
+so it can be inserted in another function attitude.
+Now you have a chicken and egg problem which is resolved by using an identity
+function, or unit. This function does nothing.
 The Java analogy can be seen in listing [[code:java-composition]].
 
 #+CAPTION: Java composition
@@ -1932,14 +1943,14 @@ called meaning with an $m$, but we want to avoid confusion with meaning in the
 social practice, and therefore renamed it to symbol, as in symbolic
 representation]
 
-\newlyCleared
+\cleared
 A symbol $s$, where $s = (\{\sigma\}, \sigma)$ has the first value as a set of potential
 returning strings to utter,
 and the second is the name of the scene the symbol occurs in.
 The scene name is used as a name space and a crude way to measure scenario
 progression.
 
-\newlyCleared
+\cleared
 With this we can define another function $g'$:
 \[ s \overset{g'}{\to} \sigma \]
 This allows symbol $s$ to be decoded into string $\sigma$.
@@ -2842,7 +2853,7 @@ for example.
     ConnectionDatabase -[hidden]-> PatternDatabase
   }
 #+END_SRC
-#+CAPTION: 
+#+CAPTION: The database package
 #+LABEL: fig:dbclass
 #+RESULTS[96b2d711babc6789186ccd98dee8488eaa83a349]: fig:dbclass
 [[file:img/uml/dbclass.png]]
