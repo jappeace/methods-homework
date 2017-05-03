@@ -2,6 +2,10 @@
 
 * Dignum
 
+1. Kan ik logic of BDI nu verwijderen?
+2. Ik denk dat ik concrete implementations moet uitbreiden omdat drools best
+   wel een belangrijk onderdeel is geworden.
+3. Kan ik sectie 2.5.1 als voorkennis beschouwen?
 * Manuel
 
   Probablistic generation of next dialogue moves could be combined with moddeling one
