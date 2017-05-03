@@ -9,3 +9,7 @@ auto
 *.blg
 *.epub
 _minted-*
+
+*.lof
+*.lot
+*.pyg
