@@ -22,6 +22,7 @@
 
 # todo notes
 #+LATEX_HEADER: \usepackage[obeyFinal, colorinlistoftodos]{todonotes}
+#+LATEX_HEADER: \newcommand{\ask}[1]{\todo[color=cyan]{#1}}
 #+LATEX_HEADER: \newcommand{\drafting}{\todo[noline, color=gray]{Working draft}}
 #+LATEX_HEADER: \newcommand{\toReview}{\todo[noline, color=yellow]{To review}}
 #+LATEX_HEADER: \newcommand{\newlyCleared}{\todo[noline, backgroundcolor=white, bordercolor=red]{Newly cleared}}
@@ -2554,9 +2555,6 @@ two options. So irrational would leave out the option that doesn't alternate,
 and rational would prefer alternation when possible.
 
 *** Function ply depth
-\todo[inline]{Discuss why this is necisarry, why don't we just do the entire tree for rational}
-\todo[inline]{Why don't we do from a particular level and then downward? Or why would we do just a particular level (haven't decided)}
-
 \toReview
 A big issue that turned up was at which level function ought to operate.
 We have a two pass architecture, where functions can inspect the dialogue tree
@@ -2585,42 +2583,16 @@ downward because then the first rationale function would be most pronounced.
 Note however that deeper rationale functions can still have effect by virtue of
 deciding which actions are generated indirectly.
 
-\drafting
-To find the height, we take the list $[F_a]$ and zip it with list $[F_a]'$, 
-which is $[F_a]$ but with the last element as the first and all other 
-elements shifted one deeper.
-For example if we have:
-\[[F_a] = [T_i, S_e, N_e, F_e] \]
-Then:
-\[[F_a]' = [F_e, T_i, S_e, N_e] \]
-With the zipped result being:
-\[zip [F_a] [F_a]' = [(T_i, F_e), (S_e, T_i), (N_e, S_e), (F_e, N_e)] \]
-
-
 \toReview
-The question of at which level should a function operate is surprisingly complex.
-Lets start by analyzing what information is needed.
-Firstly we need to know the function order, then the function itself and finally
-the height of the dialogue tree. Which results in the following:
+To calculate the operation height, we need to know the function order,
+then the function itself and finally the height of the dialogue tree.
+Which results in the following:
 \[ [F_a] \to F_a \to i_{D_{\text{height}}} \to i_{\text{operate level}} \]
 Where $F_a$ is the Jungian function,
 $i_{D_{\text{height}}}$ is an integer which indicates the height of the dialogue tree
 and $i_{\text{operate level}}$ is the suggested operation height.
-The (naive) calculation is:
-\[max(0, i_{D_{\text{height}}} - \text{index of }F_a \text{ in } [F_a])\]
-
-\toReview
-This does not take into account that rational functions should operate 
-a level higher than irrational.
-It also doesn't take into account that rational functions don't generate height,
-and therefore their indexes have no effect upon height.
-So obviously we need information about whether or not a function is rational:
-\[ F_a \overset{\text{is rational?}}{\to} b \]
-
-\toReview
-Then with this function we can define a precise calculation:
-\[max(0, i_{D_{\text{height}}} - \text{count not is rational before} F_a \text{ in }[F_a]) \text{if is rational } F_a \text{ then } +1 \]
-This satisfies the properties we want.
+For the precise implementation we refer the reader to the code, since
+its rather complex. \ask{Can I do this?}
 
 ** Consistency with theory
 \cleared

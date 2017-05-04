@@ -11,6 +11,7 @@
    de invloed van diepere functies. (Ik denk dat het op het moment niet veel
    invloed heeft omdat de rationele functies alleen maar op een enkel level
    werken).
+5. Kan ik in 3.4.6 de berekening achter wege laten?
 * Manuel
 
   Probablistic generation of next dialogue moves could be combined with moddeling one
