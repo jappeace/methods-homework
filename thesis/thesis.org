@@ -785,6 +785,7 @@ and finally we will look at the serious game in its existing form.
 **** Logic of BDI
  <<bdi logics>>
  \cleared
+ \ask{So I can delete this now?}
  \todo[inline]{We can delete this paragraph if we don't have any connections with these things. We may use it by saying for example that beliefs have certain kind of modalities. We probably aren't gonna use it to prove theoroms for example}
  Logic of BDI is an attempt to formalize how agents behave.
  One of the first formalization of Bratman's theory was that of Cohen and
@@ -805,6 +806,7 @@ and finally we will look at the serious game in its existing form.
 2apl, jade cite:braubach2003jadex.
  \todo[inline]{Comment on adding this was: If the work becomes agent like, and we have some very clear commanalities between 2apl for example we can fill in this paragraph to fall back onto that}
  \todo[inline]{Perhaps it would be a good idea to sketch commanalities between drools and these kind of things, so that if a reader knows about any of these things he can lay the link easily}
+\ask{So I think the work became agentlike (-ish?) so I should expend this?}
 *** Social practices
  <<social practice>>
 
@@ -1611,6 +1613,7 @@ Quality attributes of systems \url{https://en.wikipedia.org/wiki/ISO/IEC_9126}
 
 *** Type signatures
 <<Type signatures explained>>
+\ask{Delete this? because its kindoff pre-knowledge or redundant?}
 \todo[inline]{Isn't this a concern for implmentation? Or find at least some sources}
 \todo[inline]{Perhaps I should add citations?}
 \todo[inline]{Add haskell prototypes as a reference to clearly mark out difference}
@@ -1752,9 +1755,6 @@ In where we imagine personality being a preference towards a process rather
 than a preference towards content.
 We will however not consider yet how to place this in the existing system,
 but will consider how to combine Jungian psycology with BDI.
-
-\todo[inline]{Check if all logic contains all information we use in the code excluding implementation details}
-\todo[inline]{We could add uterances as in the code and do time in that, so that we can make complete endomorphisms of these (as it is in the code)}
 
 ** Differences from campos
 \cleared
@@ -1993,10 +1993,10 @@ uttered.
 We also need to mark which agent uttered the dialogue tree node,
 therefore we introduce $\Lambda$ as the set of all agents, where $a \in \Lambda$.
 
-\toReview
+\newlyCleared
 With an actor $a$ and a symbol $s$ we can start thinking about modeling an
 utterance.
-However to do this its important to remember that an utterance always comes with
+However to do this, its important to remember that an utterance always comes with
 a perlocutionary value set as discussed in section [[Speech act thoery]].
 Therefore we introduce the set of all possible speech acts as $\varrho$ of which 
 a set of speech acts is $P \in \varrho$.
@@ -2006,14 +2006,14 @@ Where $P$ is the set of perlocutionary values uttered, $a$ is the agent that
 uttered, $s$ the symbol that was uttered and $t$ the time at which the utterance
 was made.
 
-\toReview
+\newlyCleared
 Now we introduce $D$ a dialogue tree tuple:
 \[ D = (u, [D])\]
 Where $u$ is the utterance,
 and $[D]$ is the ordered list of dialogue children.
 The initial dialogue is just a symbol with an empty list of children.
-To consider a reply, we would use the same except with a list of children that
-is bigger than zero.
+To consider a reply, we would use the same dialogue tree,
+except with a list of children that is bigger than zero.
 The most preferred reply is the first element in the list of children.
 How the actor is decided will be discussed in section [[symbol graph]].
 An example of an expended dialogue tree can be seen in figure [[fig:dialoguetree]].
@@ -2072,12 +2072,12 @@ response .. D1
 #+RESULTS[1f1f673a8fc69adbde74aa1a7aeb115abfb4b09a]: fig:dialoguetree
 [[file:img/uml/dialoguetree.png]]
 
-\toReview
+\newlyCleared
 With this in place we can replace both the $S_t$ and $\Delta_{t+1}$ with the $D_t$ and
 $D_{t+1}$ respectively, we can also remove $t$, since its now contained in the
 utterance.
 This is convenient because now we can model function attitudes as processing
-units that take a dialogue tree and just modify it.
+units that take a dialogue tree and modify it.
 We are left with the following type signature:
 \[ B_t \to D_t \overset{f_a}{\to} (B_{t+1}, D_{t+1}) \]
 So we receive a dialogue tree from the user, which can just be a root node,
@@ -2227,12 +2227,13 @@ At which level a function should opperate is rather fundamental.
 So there are three ways of deciding this:
 Firstly 
 
+\todo[inline]{Perhaps we should move this into function ply by depth and just refer to that from here}
 \toReview
 In a naive approach we tried an implementation where irrational functions
 will by default go down the left (most preferred) path to a leaf node and then
 generate more meanings,
 but rational functions will only sort the one layer above the leaf layer.
-Doing this approach will make a first rational function basically do nothing,
+Doing this approach will make a rational function that is first do nothing,
 unless he were to check if the option list is full or not to generate new options,
 which results in boilerplate code and extra work.
 
