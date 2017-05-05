@@ -2412,7 +2412,7 @@ This describes $F_e$ rather well, $F_i$ not so much however.
 So we adapted and adopted that idea for $F_e$ and for $F_i$ we used the lookup
 table.
 
-\toReview
+\newlyCleared
 Both feeling functions $F$ use the perlocutionary acts to order the children.
 $F_i$ uses a predefined value set $h$: 
 \[ \pi \overset{h}{\to} i \].
@@ -2576,7 +2576,7 @@ consistent in its choices if it wants to utter lower level replies.
 Note however that deeper rationale functions can still have effect by virtue of
 deciding which actions are generated indirectly.
 
-\toReview
+\newlyCleared
 To calculate an operation height, we need to know the function order,
 then the function itself and finally the height of the dialogue tree.
 Which results in the following:
@@ -2584,8 +2584,11 @@ Which results in the following:
 Where $F_a$ is the Jungian function,
 $i_{D_{\text{height}}}$ is an integer which indicates the height of the dialogue tree
 and $i_{\text{operate level}}$ is the suggested operation height.
-For the precise implementation we refer the reader to the code, since
-its rather complex. \ask{Can I do this?} \todo{I don't think so, just add a gross overview of the calclation}
+To do this we group the functions in function attitude pairs,
+the result is the pair index of the input function function pair,
+plus one if the second value of the pair is rationale,
+/and/ the input function is rationale,
+otherwise its the pair index.
 
 ** Consistency with theory
 \cleared
