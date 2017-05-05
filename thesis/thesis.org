@@ -1,4 +1,6 @@
-#+TITLE: A serious communication game with personalities
+#+TITLE: Composeable personality pieces 
+#+SUBTITLE: Jungian types as endomorphisms in dialogue
+# A serious communication game with personalities
 #+LANGUAGE: en
 # TODO: this title is to vague
 # Jungian functions as endomorphisms:
@@ -89,7 +91,7 @@ creative responses,
 all possible responses are scripted into the scenario
 and replying correctly relies on a simple /abc/ choice.
 To combat this an alternative serious game was made based on the
-chatbot Alice cite:weiderveld2016chatbot.
+chat bot Alice cite:weiderveld2016chat bot.
 To measure performance a rule engine was used, and to limit the domain
 to that of a doctor's appointment social practices were used.
 In this thesis we are interested in extending this work with personalities,
@@ -1048,7 +1050,7 @@ sketched. So we could say its a information state approach too.
 
  \cleared
  To address this issue the a new implementation was made. 
- This version was based around the idea of a chatbot, in the form of the ALICE
+ This version was based around the idea of a chat bot, in the form of the ALICE
  bot.
  The AIML language was extended to allow emotional reactions of the agent.
  This new language was called S-AIML cite:augello2016model. 
@@ -1144,7 +1146,7 @@ ignoring all of AIML.
     The client is written in unity and the server is a Java servlet running on
     wildfly.
     Communication between the two applications happens trough a web socket.
-    A web socket is used because it allows the chatbot to pro-active,
+    A web socket is used because it allows the chat bot to pro-active,
     which is not possible with a technology such as REST.
 
 #+NAME: fig:components
@@ -1249,9 +1251,9 @@ enter.
 [[file:img/uml/class.png]]
 
 \cleared
-The Websocket uses a ChatBotEngine to determine how to reply to userUtterances,
-Where ChatBotEngineImpl is the concrete implementation.
-ChatBotEngineImpl uses a KieSession for the drools and a Chat which is the alicebot.
+The Websocket uses a Chat BotEngine to determine how to reply to userUtterances,
+Where Chat BotEngineImpl is the concrete implementation.
+Chat BotEngineImpl uses a KieSession for the drools and a Chat which is the alicebot.
 Once the startGame message is received the kie service is started,
 which runs on a dedicated thread to do drool deliberation.
 At this point facts can be inserted for the drools to react upon, in case
@@ -1268,7 +1270,7 @@ class called predicates.
 This is a bag of variables the drools can use to keep track of the scenario
 progression.
 The setGlobal method of KieSession is used to expose global objects to drools.
-In this case the ChatBotEngineImpl is exposed.
+In this case the Chat BotEngineImpl is exposed.
 Insert can be used to insert facts.
 The difference between facts and globals is that facts are evaluated by
 the  rule base, where as globals are used by the rule base.
@@ -1281,7 +1283,7 @@ Currently globals are used as communication with external libraries
 |WebSocket|
 start
 :Receve StartGame message;
-:Construct a chatbotengine;
+:Construct a chat botengine;
 |#CCDDDD|Engine|
 :Start kie thread;
 :Register engine as controller in kie;
@@ -1297,7 +1299,7 @@ stop
 #+END_SRC
 #+CAPTION: Activity diagram of a server game construction
 #+LABEL: fig:construction
-#+RESULTS[3acde42e45cb6f546f0d34b2c135845e8f592a48]: fig:construction
+#+RESULTS[d725d50fe0747c0393ea2a3b6e93ac437492271a]: fig:construction
 [[file:img/uml/construction.png]]
 
 \newpage
@@ -1809,7 +1811,7 @@ selection on the result.
 \cleared
 We will interpret the Jungian functions attitudes as a mapping from an agents
 believes and senses towards an agent action and new believes.
-This is then reduced to the scope of a chatbot in the social practice.
+This is then reduced to the scope of a chat bot in the social practice.
 After this we will look what extra information the function attitudes need
 in an attempt to reduce the amount of possible believes.
 
@@ -2627,7 +2629,7 @@ we can conclude that they will also behave differently.
 
 * Architecture
 <<Architecture>>
-\toReview
+\newlyCleared
 To combine the ideas discussed in section [[BDI and Jung]] with the existing program,
 some big architectural changes were introduced.
 For example the Alice bot was completely removed in favor of a new less tightly
@@ -2635,29 +2637,30 @@ coupled scheme.
 The drools have become the center of deliberation (which previously was the AIML).
 We will discuss these changes in this chapter.
 
-\toReview
+\newlyCleared
 In this chapter we will discuss two architectures,
 the first is the architecture which is actually implemented, this deals with a
 single agent and the user.
 Secondly we will discuss the N-agent
 architecture which is capable of dealing with more than one agent (and the user).
-The reason for discussing both is that the ideas discussed in section [[
-BDI and Jung]] could be applied to an N-agent architecture.
+The reason for discussing both is that the ideas discussed in section
+[[BDI and Jung]] could be applied to an N-agent architecture.
 However there are some pragmatic problems with this discussed in section
 [[Multiple conversation partners]].
 Therefore we held of on implementing this and just describe how it could be done
 instead.
 In section [[Implemented architecture]] we will describe the architectural changes
 between the current implementation and the original architecture discussed in
-section [[The serious game]]. Note that we want to keep as much of the existing
-architecture as possible.
+section [[The serious game]].
+Note that we want to keep as much of the existing architecture as possible.
 
-\toReview
+\newlyCleared
 There are also several items we won't discuss in this chapter because they
 haven't changed, these include the protocol,
-and the wildfly server and the unity client.
+and the Wildfly server and the unity client.
 ** Implemented architecture
 <<Implemented architecture>>
+\newlyCleared
 A deployment diagram of the architecture can bee seen in figure
 [[fig:architecture-concept]]. This is a rough overview of how everything interacts
 now with each other.
@@ -2703,7 +2706,7 @@ now with each other.
 
 \cleared
 The biggest difference from the original architecture is the removal of
-distinction between drools and the chatbot.
+distinction between drools and the chat bot.
 In the new architecture we make all information in the files available to
 the drools in a big database.
 This is starkly different than the architecture used in section [[
@@ -2893,7 +2896,7 @@ We can do deliberation on this because we have one or more goals.
   |WebSocket|
   start
   :Receve StartGame message;
-  :Construct a chatbotengine;
+  :Construct a chat botengine;
   |#CCDDDD|Engine|
   :Start kie thread;
   :Create Personality;
@@ -2909,7 +2912,7 @@ We can do deliberation on this because we have one or more goals.
 #+END_SRC
 #+CAPTION: Activity diagram of a server game construction
 #+LABEL: fig:initjung
-#+RESULTS[27d9aa994f1480545d631ca9c4495d96e891f520]: fig:initjung
+#+RESULTS[3aedd73e556c4aa3c802b3c10a249e7b1fae54ea]: fig:initjung
 [[file:img/uml/initjung.png]]
 
 **** Parsing YAML
@@ -3164,7 +3167,7 @@ and listing [[code:aiml-symbols]] to illustrate the differences.
 #+END_SRC
 
 \toReview
-These changes loose reactive nature of the chatbot,
+These changes loose reactive nature of the chat bot,
 rather than saying how to reply directly to certain kind of responses we just
 say what they mean in this social context.
 
