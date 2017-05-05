@@ -1998,8 +1998,8 @@ With an actor $a$ and a symbol $s$ we can start thinking about modeling an
 utterance.
 However to do this, its important to remember that an utterance always comes with
 a perlocutionary value set as discussed in section [[Speech act thoery]].
-Therefore we introduce the set of all possible speech acts as $\varrho$ of which 
-a set of speech acts is $P \in \varrho$.
+Therefore we introduce the set of all possible speech acts as $P$ of which 
+a set of speech acts is $P \subseteq \Pi$.
 With this we can define utterance $u$ as a tuple:
 \[ u = (P,a,s,t) \]
 Where $P$ is the set of perlocutionary values uttered, $a$ is the agent that
@@ -2217,57 +2217,16 @@ Currently it cannot apply any order since the children list is empty.
 Luckily it can still use its next function, which is irrational
 (see section [[Jungian alternating functions]]).
 
-\cleared
+\newlyCleared
 Another situation to consider is what to do when there are already children.
 Should an irrational function extend this list of children or go to some leaf
 node?
 Same question for a rational functions should it sort everything or just the
 children list one layer above the leaf nodes.
-At which level a function should opperate is rather fundamental.
-So there are three ways of deciding this:
-Firstly 
-
-\todo[inline]{Perhaps we should move this into function ply by depth and just refer to that from here}
-\toReview
-In a naive approach we tried an implementation where irrational functions
-will by default go down the left (most preferred) path to a leaf node and then
-generate more meanings,
-but rational functions will only sort the one layer above the leaf layer.
-Doing this approach will make a rational function that is first do nothing,
-unless he were to check if the option list is full or not to generate new options,
-which results in boilerplate code and extra work.
-
-\toReview
-We also could use outside information to determine height.
-Basically we would put into the believes the order of functions.
-With this information and the dialogue tree we can calculate the
-right level to operate upon.
-A question then remains is if the rational should sort everything even below
-its level or just its level. 
-This can be answered however.
-Rational should sort its level and everything below it,
-because we can expect possibly multiple responses if the same actor self comes
-up first.
-Then we want the lower level also to be of the most important rational function.
-The 'deeper' less important rational functions only have a guiding role for 
-irrational functions after them.
-
-\toReview
-Another approach would be to let the rational functions sort the entire tree,
-and irrational always let the most preferred option be extended.
-At first glance this idea would make order in Jungian functions irrelevant,
-but perhaps this isn't the case.
-A rational function would still guide which part of the tree get extended, which
-again would guide future rational orderings which again would guide extensions.
-Since we have a 2 pass architecture order probably still matters.
-However it should be noted that the functions may operate at unexpected level,
-for example when going back from the second pass the most preferred
-irrational function could find itself operating at the bottom of the tree.
-
-\toReview
-So the only thing that remains to do in deciding which architecture maybe
-better is by coming with experimental evidence, as we did with the naive
-approach to show it will work or not.
+At which level a function should operate is rather fundamental.
+We will discuss this level of operation in more detail at section
+[[Function ply depth]], since this discussion is quite complicated and not important
+for the main idea of what rational and irrational ought to do.
 
 \cleared
 With this in mind we can still say these things about the conceptualized
@@ -2292,8 +2251,8 @@ and didn't have any choices available to decide upon.
 This structure still works with SL-TDI's non alternation.
 
 ** Mapping function attitudes to a process 
+\ask{So since we have integration tests now this chapter is valid?}
 \todo[inline]{The validity of this chapter entirely depends on the result of making a test scenario}
-\todo[inline]{So perhaps we should make integration tests to show that this works}
 <<Mapping to process>>
 \cleared
 Now you may argue at this point we haven't refined our types a lot, since
@@ -2315,32 +2274,29 @@ Then we will define the believe tuple more formally.
 
 *** Symbol graph
 <<symbol graph>>
-\toReview
+\newlyCleared
 To make sure the agent stays on topic we will make use of a symbol graph.
 This graphs gives connections to the symbols described in section [[A type signature approach]].
-For a precise description of the implementation see section [[Symbol graph]].
 The meaning graph $G$ is a set of connections $c \in G$ where
-$c = (\pi, A, s_1, s_2)$, $s_1, s_2 \in \mathcal{S} \wedge s_1 \neq s_2$, $A \subseteq \Lambda$ is the set of
-agents that can use the connection (to prevent the patient asking the doctor
-about his health problems) and $\pi$ is the perlocutionary information about the
-speech act (for example angering or scaring),
+$c = (P, A, s_1, s_2)$, $s_1, s_2 \in \mathcal{S} \wedge s_1 \neq s_2$,
+$A \subseteq \Lambda$ is the set of agents that can use the connection,
+to prevent cases where the patient asks the doctor about his health problems.
+$P$ is the perlocutionary value set of the speech act
+(for example angering or scaring),
 which is encoded in the edges because its not the meaning that causes these
 but the way you get to those meanings.
 In other words, being polite and then telling bad news causes different
 perlocutionary values than just telling bad news.
 
-\toReview
+\newlyCleared
 From this we can define a function that gets the allowed connections from
 a symbol and an agent:
 \[ a \to s \to [c] \]
 We can retrieve $a$ and $s$ from the current node we are processing in $D$.
 The result is a list of connections we can go to from that symbol.
-Note that this list still should still be flattened to be attached as option to
-dialogue tree $D$, since connection $c$ contains multiple agents $A$ and $D$
-just a single agent. So a single connection $c$ can create multiple dialogue
-tree $D$ children.
-To determine the first dialogue tree $D$ node's agent an outside sensor is
-required.
+Since connection $c$ contains multiple agents $A$,
+and a dialogue tree as an option can only contain a single agent in the utterance,
+we need to flatten the resulting connection list $[c]$.
 
 \cleared
 The introduction of the symbol graph is probably the most radical change this
@@ -2437,11 +2393,12 @@ However we will borrow parts of it.
 Namely whenever a rational function finishing ordering the input set it will
 call the /next/ function to do deliberation on the most preferred item.
 
-\toReview
-Also we model the rational functions as local optimizing functions. Only
-the current ply and maybe the next ply is considered, but not the entire tree.
-The primary reason for this is ease of implementation. However there is no
-reason why the entire available tree couldn't be used.
+\newlyCleared
+We also model the rational functions as local optimizing functions.
+Only the current ply and maybe the next ply is considered,
+but not the entire tree.
+The primary reason for this is time constraints.
+However there is no reason why the entire available tree couldn't be used.
 
 **** Feeling
 \cleared
@@ -2455,17 +2412,19 @@ This describes $F_e$ rather well, $F_i$ not so much however.
 So we adapted and adopted that idea for $F_e$ and for $F_i$ we used the lookup
 table.
 
-\cleared
+\toReview
 Both feeling functions $F$ use the perlocutionary acts to order the children.
 $F_i$ uses a predefined value set $h$: 
 \[ \pi \overset{h}{\to} i \].
-This valuation is done by a lookup table on all avalaible perlocutionary speech
+Where $\pi \in \Pi$ is a perlocutionary value.
+This valuation is done by a lookup table on all available perlocutionary speech
 acts.
 $F_e$ tries to figure out what the conversation partners values by
 picking the perlocutionary act the other chose most.
 This is done by simply keeping track on how many of such speech acts the
-partner uttered and picking the that has been uttered most, if that one is not
-available we move to the next one. This is similar to fictitious play.
+partner uttered and picking the that has been uttered most,
+if that one is not available we move to the next one.
+This is similar to fictitious play.
 
 **** Thinking
 \cleared
@@ -2475,7 +2434,7 @@ soon as possible.
 The thinking functions $T$ do this without paying any attention to
 perlocutionary speech acts.
 
-\toReview
+\newlyCleared
 We could say that while feeling is concerned with perlocutionary speech act goals
 thinking on the other is concerned with symbolic goals.
 To model the goals of the thinking functions we will introduce the set of goals
@@ -2483,12 +2442,13 @@ in an agents believe base $\Phi$. Where a single goals $\phi \in \Phi$ consists 
 $\phi = (a, s)$ a symbol uttered by a particular agent.
 Then there also exists the function that can compare goals with each other:
 \[\phi_1 \to \phi_2 \to b \]
-where $b \in \{ \top, \bot \}$ is a boolean, true or false that determines if the first goal is more
-important then the second. This function is asymmetric.
+where $b \in \{ \top, \bot \}$ is a boolean, true or false that determines if
+the first goal is more important then the second.
+This function is asymmetric.
 Finally there is a function that determines if a goal is completed or not:
 \[\phi \to b\]
 
-\toReview
+\newlyCleared
 Now to begin with $T_e$.
 It sees the problem to solve as the conversation itself.
 Therefore it will consistently choose speech acts that could help the partner to
@@ -2523,7 +2483,7 @@ possible.
 
 *** Believes overview
 <<Believes overview>>
-\toReview
+\newlyCleared
 We listed the function attitudes $f_a$ and their required information into
 table [[tab:fa-and-data]]. 
 Therefore $B = (h, [u], \Phi, G, a, G', h')$.
@@ -2541,9 +2501,9 @@ Therefore $B = (h, [u], \Phi, G, a, G', h')$.
 | $N_e$    | $G$                                                                  |
 | $N_i$    | $G$                                                                  |
 
-
 *** Turn taking
-\toReview
+<<Turn taking>>
+\newlyCleared
 In the naive approach we modeled turn taking with a simple round robin strategy. 
 Basically the irrational functions would only consider options that change
 actor between plies. 
@@ -2556,36 +2516,68 @@ two options. So irrational would leave out the option that doesn't alternate,
 and rational would prefer alternation when possible.
 
 *** Function ply depth
-\toReview
+<<Function ply depth>>
+\newlyCleared
 A big issue that turned up was at which level function ought to operate.
 We have a two pass architecture, where functions can inspect the dialogue tree
 before passing it to the /next/ function, but they can also inspect the result
 of the /next/ function.
 The reason for the two pass architecture is explained in section [[Rational and irrational]].
-However it didn't treat another issue in dept, which is how does a function know
-at which level it should operate.
-We just assumed that rational should always act 1 level above the leaf nodes,
-and irrational at the leaf nodes.
-This would make a rational function in the first position the least
-relevant function, since in the first pass it does nothing and when everything
+However it didn't treat another issue in dept, which is:
+How does a function know at which level it should operate?
+
+\newlyCleared
+In a naive approach we tried an implementation where irrational functions
+will by default go down the left (most preferred) path to a leaf node and then
+generate more meanings,
+and the rational functions will sort the one layer above the leaf layer.
+This has a problem in that it would make a rational function in the first
+position the least relevant function,
+since in the first pass it does nothing and when everything
 goes back it works at one level above the leaves,
 but it should be the *most* relevant.
 
-\toReview
+\newlyCleared
+Another approach is to use outside information to determine height.
+Basically we would put into the believes the order of functions.
+With this information and the dialogue tree we can calculate the
+right level to operate upon.
+A question then remains is if the rational should sort everything even below
+its level or just its level. 
+This can be answered however,
+rational should sort its level and everything below it,
+because we can expect multiple responses if the same actor comes up first,
+so in this case we want the dominant rational function to sort those replies too.
+Then we want the lower level also to be of the most important rational function.
+The 'deeper' less important rational functions only have a guiding role for 
+irrational functions after them.
+
+\newlyCleared
+We could also let the rational functions sort the entire tree,
+and let irrational always extend the most preferred option.
+At first glance this idea would make order for rational functions irrelevant.
+Perhaps this isn't the case however,
+since a lower level rational function would still guide which part of the tree
+get extended.
+
+\newlyCleared
 So there are two methods of dealing with this issue.
 Firstly we can let rational functions just let everything be sorted,
 but then the deeper rational functions will become less relevant.
 Secondly we can let functions operate at a particular level based upon their
 position in the personality.
-We chose to do the latter.
-Then we can also make a decision about whether a function should operate at a
-particular height, or go downward trough the entire tree, we chose to let it go
-downward because then the first rationale function would be most pronounced.
+We chose to do the latter,
+because we thought this would make earlier rational functions more influential.
+With this particular choice we can also make a decision about whether a function
+should operate at a particular height,
+or go downward trough the entire tree,
+we chose to let it go downward because then the personality will be more
+consistent in its choices if it wants to utter lower level replies.
 Note however that deeper rationale functions can still have effect by virtue of
 deciding which actions are generated indirectly.
 
 \toReview
-To calculate the operation height, we need to know the function order,
+To calculate an operation height, we need to know the function order,
 then the function itself and finally the height of the dialogue tree.
 Which results in the following:
 \[ [F_a] \to F_a \to i_{D_{\text{height}}} \to i_{\text{operate level}} \]
@@ -2593,7 +2585,7 @@ Where $F_a$ is the Jungian function,
 $i_{D_{\text{height}}}$ is an integer which indicates the height of the dialogue tree
 and $i_{\text{operate level}}$ is the suggested operation height.
 For the precise implementation we refer the reader to the code, since
-its rather complex. \ask{Can I do this?}
+its rather complex. \ask{Can I do this?} \todo{I don't think so, just add a gross overview of the calclation}
 
 ** Consistency with theory
 \cleared
