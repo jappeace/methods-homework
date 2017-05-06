@@ -2722,37 +2722,74 @@ This is confusing for new scenario creators since completely different folders
 have to be accessed to change the strings.
 # This violates the changeability design principle quite heavily and unnecessarily. \todo{cite}
 
-\toReview
+\newlyCleared
 The changes proposed here, result in a much more simple architecture.
-Only one place does deliberation rather than two and only one api is used for
-generating responses.
+Only one place does deliberation rather than two and only one API is used for
+generating responses, whereas previously drools could generate replies, /and/
+the AIML bot.
 
-\toReview
+\newlyCleared
 Note that although we removed the ability for the bot to use AIML, it should be
 relatively easy to convert from the old AIML structure to the new format with help
 of a script.
-A proof of concept has been made of this in section [[Conversion script]].
+A proof of concept of this has been made of this in section [[Conversion script]].
 
-*** Jungian class diagram
+*** Data structures
+
+#+BEGIN_QUOTE
+Bad programmers worry about the code.
+Good programmers worry about data structures and their relationships.
+
+  -- Linus Torvalds cite:linusbadgoodprogrammersquote 
+#+END_QUOTE
+
 \toReview
-A class diagram[fn::note that we use $[\dots]$ for list and $\{\dots\}$ for set in the
-class diagrams to save space]
-of the model that was used to implement the ideas from section [[BDI and Jung]] can
-be seen in figure [[fig:jungclass]].
-All classes in this diagram are immutable.
-Meaning that once created their values will never change.
-A value can be changed by making a new instance with the modified value.
-Setters are often provided for values that need to change regularly,
-they return a new instance however.
-Using an immutable model has several advantages over the conventional approach.
-The biggest one being that the entire model is thread safe, without the use of
-locks.
-This makes it very easy to use with drools since a drool engine could execute a
-rule at any time.
+In this subsection we will discuss the main datastructures used to implement
+the ideas from section [[BDI and Jung]].
+We use class diagrams to acomplish this which are based upon UML cite:fowler2004uml.
+Before we do this I would like to point out several things to keep in mind.
 
-#+NAME: fig:jungclass
-#+BEGIN_SRC plantuml :cache yes :file img/uml/jungclass.png :exports results
+\toReview
+Firstly, we do not showeverything precisely such as implemented in the code,
+because that would clutter the screen to much.
+What we do model is all relevant information in structures and the relationship
+between those, follwoing the words of Torvalds.
+
+\toReview
+Secondly, its better to think of the classes shown here as datastructures,
+the fields are set to public in cases where immutability was possible.
+
+\toReview
+Thirdly we split up the class diagram into several because of space,
+the model has become rather big.
+There exists a real seperation like this in the code base, the lower level
+components are in the `salve_drools` projects, whereas the higher level
+components are in the `salve_personality` package.
+The reason for this seperation is that currently, the bot will simply
+not function without the low level components,
+but you can make it function without the high level components.
+Which in practice is done with the low level replies.
+
+\toReview
+Finally note that we use $[\dots]$ for list and $\{\dots\}$ for set in the
+class diagrams, also to save space.
+
+**** Low level diagram
+
+\toReview
+In figure [[fig:droolclass]] the diagram containing the low level data structures
+used. These are the basic asssumptions, or building blocks the implementation
+is constructed from.
+
+
+#+NAME: fig:droolclass
+#+BEGIN_SRC plantuml :cache yes :file img/uml/droolclass.png :exports results
   enum PerlocutionaryValue
+  class PerlocutionaryValueSet{
+    +perlocuationaryValues:{PerlocationaryValue}
+  }
+  PerlocutionaryValueSet --* "*" PerlocutionaryValue
+
   package db{
     class ConnectionDatabase
     class PatternDatabase 
@@ -2760,6 +2797,71 @@ rule at any time.
   PatternDatabase --* "*" PatternSymbol
   PatternDatabase --* "*" Scene
   ConnectionDatabase --* "*" Symbol
+  ConnectionDatabase --* "*" Connection
+
+  class Actor {
+    +name:String
+  }
+  class Connection {
+    +to:Symbol
+    +restricted_to:Actor
+    +values:PerlocationaryValueSet
+  }
+  Connection --* Symbol
+  Connection --* Actor
+  Connection --* PerlocutionaryValueSet
+  class Goal{
+    +toSay:Inforamtive
+    +utility:int
+    +isGoal(utterance:Utterance):boolean
+  }
+  Goal --* Informative
+  class Informative{
+     +what:Symbol
+     +who:Actor
+  }
+  Informative --* Actor
+  Informative --* Symbol
+  class PatternSymbol{
+     +pattern:Pattern
+     +symbol:Symbol
+  }
+  PatternSymbol --* Symbol
+  class PersonalValues{
+     -values:EnumMap<PerlocutionaryValue, Integer>
+  }
+  PersonalValues --* "*" PerlocutionaryValue
+  class Scene {
+    +name:String
+  }
+  class Symbol {
+    +name:String
+    +scene:Scene
+  }
+  Symbol --* Scene
+  class Utterance{
+    +informatvie:Informative
+    +perlocutionaryValues:PerloctionaryValueSet
+    +when:Instant
+  }
+  Utterance --* PerlocutionaryValueSet
+  Utterance --* Informative
+  Actor -[hidden]-> PersonalValues
+#+END_SRC
+#+CAPTION: Class diagram of the low level model
+#+LABEL: fig:droolclass
+#+RESULTS[f4a0216896afd6a4c60975c59fc4274b019d2d57]: fig:droolclass
+
+Fourthly we often introduce types where primitives could've been used,
+for example with the Scenes or Actors, which can be replaced with a Sring in principle.
+However we do this only because we want type safety.
+
+**** Believes and dialoguetree
+#+NAME: fig:jungclass
+#+BEGIN_SRC plantuml :cache yes :file img/uml/jungclass.png :exports results
+  package drools.db{
+    class ConnectionDatabase
+  }
   ConnectionDatabase --* "*" Connection
   class Actor {
     +name:String
@@ -2781,11 +2883,8 @@ rule at any time.
   class Connection {
     +to:Symbol
     +restricted_to:Actor
-    +perlocuationaryValues:{PerlocationaryValue}
   }
-  Connection --* Symbol
   Connection --* Actor
-  Connection --* "*" PerlocutionaryValue
   class DialogueTree{
     +options:[DialogueTree]
     +utterance:Utterance
@@ -2795,41 +2894,19 @@ rule at any time.
   DialogueTree --* Utterance
   DialogueTree --* Connection
   class Goal{
-    +utterance:Utterance
-    +utility:int
-    +isGoal(utterance:Utterance):boolean
   }
   Goal --* Utterance
-  class PatternSymbol{
-     +pattern:Pattern
-     +symbol:Symbol
-  }
-  PatternSymbol --* Symbol
   class PersonalValues{
-     -values:EnumMap<PerlocutionaryValue, Integer>
   }
-  PersonalValues --* "*" PerlocutionaryValue
-  class Scene {
-    +name:String
-  }
-  class Symbol {
-    +name:String
-    +scene:Scene
-  }
-  Symbol --* Scene
   class Utterance{
-    +byWhom:Actor
-    +what:Symbol
   }
   Utterance --* Actor
-  Utterance --* Symbol
-  Actor -[hidden]-> PersonalValues
-  db -[hidden]-> DialogueTree
 #+END_SRC
-#+CAPTION: Class diagram of the model
+#+CAPTION: Class diagram of the high level model
 #+LABEL: fig:jungclass
-#+RESULTS[f82f6a57ddceddbaf3e480f1aacea3600693a8a9]: fig:jungclass
+#+RESULTS[6e958ae8fbd0df7155d49679dfb443b74d79aec3]: fig:jungclass
 [[file:img/uml/jungclass.png]]
+
 
 **** db package
 \toReview
@@ -2872,9 +2949,74 @@ for example.
 #+RESULTS[96b2d711babc6789186ccd98dee8488eaa83a349]: fig:dbclass
 [[file:img/uml/dbclass.png]]
 
+**** Before and templates
+\toReview
+After the personality was implemented, a request came to bring the new chat
+bot up to feature parity with the ALICE bot. 
+To do this several new data strucures had to be introduced which can be seen
+in figure [[fig:templateclass]].
 
+#+NAME: fig:templateclass
+#+BEGIN_SRC plantuml :cache yes :file img/uml/templateclass.png :exports results
+  class Informative{
+     +what:Symbol
+     +who:Actor
+  }
+  package template{
+    abstract class ATemplate{
+      +name:String
+    }
+    TemplateAttribute --|> ATemplate
+    TemplateValue --|> ATemplate
+    class InsertQuery{
+      informative:Informative
+      templateAttribute:Match
+    }
+    InsertQuery --* Informative
+    InsertQuery --* TemplateAttribute
+
+    package db{
+       CapturedMatchDB --* "*" TemplateAttribute
+       CapturedMatchDB --* "*" TemplateValue
+       MatchedQueryDB --* "*" TemplateAttribute
+       MatchedQueryDB --* "*" TemplateValue
+       QueryDatabase --* "*" TemplateAttribute
+       QueryDatabase --* "*" InsertQuery
+       QueryDatabase .> MatchedQueryDB
+    }
+  }
+  class Before{
+     before:Optional<Before>
+     informative:Informative
+  }
+  Before --* "0..1" Before
+  Before --* Informative
+  class Connection {
+    +to:Symbol
+    +restricted_to:Actor
+    +values:PerlocationaryValueSet
+    +before:Optional<Before>
+  }
+  Connection --* Before
+  Connection --* QueryDatabase
+  class Utterance{
+    +informatvie:Informative
+    +perlocutionaryValues:PerloctionaryValueSet
+    +when:Instant
+    +caputeredDB:CapturedMatchDB
+  }
+  Utterance --* Inforamtive
+  Utterance --* CapturedMatchDB
+#+END_SRC
+#+CAPTION: Before and template class diagram
+#+LABEL: fig:templateclass
+#+RESULTS[b43af2dda61014860af6f089ab3b1740705c4a92]: fig:templateclass
+[[file:img/uml/templateclass.png]]
+
+\drafting
+We can see from figure [[fig:templateclass]] th
+# make sure the figures don't spill over into next section
 \newpage
-
 *** Initialization
 \toReview
 In the new architecture we use a file reader to construct the 
@@ -3448,7 +3590,7 @@ We already improved on the star matching system by using regexes,
 which would allow scenario writers to be much more precise in what they want
 to match.
 However we want to also be able to store what is matched and access it later.
-The java regex api already provides a method of extracting information from
+The java regex API already provides a method of extracting information from
 wildcard trough something called groups cite:regexgroups.
 So the problem is no longer one of extraction,
 but just about organizing that what has been matched,
@@ -4099,7 +4241,7 @@ in [[code:java-must-copy]].
 \drafting
 All data structures used in the new implementation are immutable.
 This means that as soon as construction is finished of a data structure,
-the public api never changes.
+the public API never changes.
 To get a change into a data structure a copy has to be made.
 
 \drafting
@@ -4130,6 +4272,21 @@ and be shallowly copied on construction.
 Then to expose the data one should create a copy of the collection, or, expose a
 stream (which is also immutable). \todo{cite}
 
+** Immutablity
+\todo[inline]{IDK find a place for this}
+
+\drafting
+All classes are immutable.
+Meaning that once created their values will never change.
+A value can be changed by making a new instance with the modified value.
+Setters are often provided for values that need to change regularly,
+they return a new modified instance however rather than changing the object in
+place.
+Using an immutable model has several advantages over the conventional approach.
+The biggest one being that the entire model is thread safe, without the use of
+locks.
+This makes it very easy to use with drools since a drool engine could execute a
+rule at any time.
 ** Actors
 \todo[inline]{Find a place for this section which shouldn't be a section}
 \drafting
@@ -4459,7 +4616,7 @@ folder and execute:
 \cleared
 If no errors occur it means the settings are configure right.
 However we are not done yet since the resulting binary is not executable.
-It is something called a servlet which is an api for server like applications.
+It is something called a servlet which is an API for server like applications.
 To use this binary, we need an application server.
 Our maven repository and code base has been configured towards /wildfly/,
 so we will use that.
