@@ -2743,6 +2743,8 @@ Good programmers worry about data structures and their relationships.
   -- Linus Torvalds cite:linusbadgoodprogrammersquote 
 #+END_QUOTE
 
+\todo[inline]{We should say which classes are which symbols in BDI+Jung per diagram}
+
 \toReview
 In this subsection we will discuss the main data structures used to implement
 the ideas from section [[BDI and Jung]].
@@ -3059,17 +3061,24 @@ it made looking up the required patterns much easier.
 
 **** Before and templates
 \toReview
-After the personality was implemented, a request came to bring the new chat
-bot up to feature parity with the ALICE bot. 
+After the personality was implemented, we wanted to bring the bot up too
+feature parity with the ALICE bot. 
 To do this several new data structures had to be introduced which can be seen
 in figure [[fig:templateclass]].
 
 #+NAME: fig:templateclass
 #+BEGIN_SRC plantuml :cache yes :file img/uml/templateclass.png :exports results
+  class Symbol {
+    +name:String
+    +scene:Scene
+    -literals:[String]
+    -required:{TemplateAttribute}
+  }
   class Informative{
      +what:Symbol
      +who:Actor
   }
+  Informative --* Symbol
   package template{
     abstract class ATemplate{
       +name:String
@@ -3093,6 +3102,7 @@ in figure [[fig:templateclass]].
        QueryDatabase .> MatchedQueryDB
     }
   }
+  Symbol --* "*" TemplateAttribute
   class Before{
      before:Optional<Before>
      informative:Informative
@@ -3113,16 +3123,39 @@ in figure [[fig:templateclass]].
     +when:Instant
     +caputeredDB:CapturedMatchDB
   }
-  Utterance --* Inforamtive
+  Utterance --* Informative
   Utterance --* CapturedMatchDB
+  
+  
 #+END_SRC
 #+CAPTION: Before and template class diagram
 #+LABEL: fig:templateclass
-#+RESULTS[b43af2dda61014860af6f089ab3b1740705c4a92]: fig:templateclass
+#+RESULTS[6fc2caef96dffeadc45479279efaa48ded915bd3]: fig:templateclass
 [[file:img/uml/templateclass.png]]
 
 \drafting
-We can see from figure [[fig:templateclass]] th
+We can see from figure [[fig:templateclass]] that the consumers of these extensions
+are the Symbol class, the Utterance class and the Connection class.
+What also can be deduced is that the before extensions was probably a lot
+easier to realize than the template extension, simply by counting the amount
+of classes it introduced and touched.
+Whereas the template required the modification of at least three existing data
+data structures, the before only required to modify the Connection.
+
+\drafting
+So the before class is self recursive, as we've seen several times by now,
+however it just has an optional self recursive relationship.
+What it does is lay a restriction on Connection, the informative in the optional
+before has to be uttered before this connection can be used.
+See section [[That tags]] for a more in depth explanation.
+
+\drafting
+The template system does something else. It introduces the ability to match
+variables from the regex and re-insert these as a template into existing symbols.
+This is explained in depth in section [[Star tags]].
+\todo[inline]{Go over each class explain what they do?}
+
+
 # make sure the figures don't spill over into next section
 \newpage
 *** Initialization
@@ -3795,6 +3828,7 @@ to:
 + at runtime connections that don't have information from previous utterences are disabled
 
 **** That tags
+<<That tags>>
 \toReview
 The that tags in AIML have a rather unforntunate name.
 They require the bot to have said something (ie a pattern) before the current
