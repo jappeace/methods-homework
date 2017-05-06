@@ -2744,28 +2744,28 @@ Good programmers worry about data structures and their relationships.
 #+END_QUOTE
 
 \toReview
-In this subsection we will discuss the main datastructures used to implement
+In this subsection we will discuss the main data structures used to implement
 the ideas from section [[BDI and Jung]].
-We use class diagrams to acomplish this which are based upon UML cite:fowler2004uml.
+We use class diagrams to accomplish this which are based upon UML cite:fowler2004uml.
 Before we do this I would like to point out several things to keep in mind.
 
 \toReview
-Firstly, we do not showeverything precisely such as implemented in the code,
+Firstly, we do not show everything precisely such as implemented in the code,
 because that would clutter the screen to much.
 What we do model is all relevant information in structures and the relationship
-between those, follwoing the words of Torvalds.
+between those, following the words of Torvalds.
 
 \toReview
-Secondly, its better to think of the classes shown here as datastructures,
+Secondly, its better to think of the classes shown here as data structures,
 the fields are set to public in cases where immutability was possible.
 
 \toReview
 Thirdly we split up the class diagram into several because of space,
 the model has become rather big.
-There exists a real seperation like this in the code base, the lower level
+There exists a real separation like this in the code base, the lower level
 components are in the `salve_drools` projects, whereas the higher level
 components are in the `salve_personality` package.
-The reason for this seperation is that currently, the bot will simply
+The reason for this separation is that currently, the bot will simply
 not function without the low level components,
 but you can make it function without the high level components.
 Which in practice is done with the low level replies.
@@ -2780,7 +2780,6 @@ class diagrams, also to save space.
 In figure [[fig:droolclass]] the diagram containing the low level data structures
 used. These are the basic asssumptions, or building blocks the implementation
 is constructed from.
-
 
 #+NAME: fig:droolclass
 #+BEGIN_SRC plantuml :cache yes :file img/uml/droolclass.png :exports results
@@ -2830,13 +2829,14 @@ is constructed from.
   class PersonalValues{
      -values:EnumMap<PerlocutionaryValue, Integer>
   }
-  PersonalValues --* "*" PerlocutionaryValue
+  PersonalValues -* "*" PerlocutionaryValue
   class Scene {
     +name:String
   }
   class Symbol {
     +name:String
     +scene:Scene
+    -literals:[String]
   }
   Symbol --* Scene
   class Utterance{
@@ -2846,26 +2846,64 @@ is constructed from.
   }
   Utterance --* PerlocutionaryValueSet
   Utterance --* Informative
-  Actor -[hidden]-> PersonalValues
+  PerlocutionaryValueSet -[hidden]-> PersonalValues
 #+END_SRC
 #+CAPTION: Class diagram of the low level model
 #+LABEL: fig:droolclass
-#+RESULTS[f4a0216896afd6a4c60975c59fc4274b019d2d57]: fig:droolclass
+#+RESULTS[1c677a21ef92d9dff7fc9ff5dfca6512d4f6c4d0]: fig:droolclass
+[[file:img/uml/droolclass.png]]
 
-Fourthly we often introduce types where primitives could've been used,
-for example with the Scenes or Actors, which can be replaced with a Sring in principle.
-However we do this only because we want type safety.
+
+\toReview
+From figure  [[fig:droolclass]] we can clearly see the importance of the Symbol
+structure in the application.
+Simply by counting the amount of structures that consist of it,
+and of course it is a very important structure because it is the building
+block that gives understanding to the implementation.
+As described in section [[BDI and Jung]] we map strings into user symbols,
+and we can map symbols back to strings again.
+
+\toReview
+Something that was thought about is how similar a connection is to an
+utterance. Except for the instance field, they are the same
+(note that the informative field of utterance is the same as the to and
+restricted_to fields of connection).
+However their semantics are clearly different.
+A connection entails a posibility of an utterence, but it does /not/ mean it
+will be uttered. Whereas an utterance is a used connection, that posibility
+became a realization.
+Therefore, we were right to distinct them at type level.
+
+\toReview
+These kindoff considerations become especially real when structures are
+essentially the same, as we can see with the Scene and Actor classes.
+The only thing they contain are a String.
+Even the field names are the same!
+Are we correct to treat these as distinct classes?
+We would say yes because they entail completely different semantics,
+the Scene class is used to group symbols and patterns,
+whearas the actor class is used to identify actors.
+
+\toReview
+The next question would be: Should we use an inheritance relation to make our
+code more DRY cite:thomas2010orthogonality (don't repeat yourself)?
+For by example introducing an abstract class ANamed and letting
+Actor and Scene be extended from those.
+We argue no, because introduces more complexity than that we would save on code
+reduction.
+It would also open up to positibilty to use the implicit covarient relationship,
+functions that accept an ANamed argument for example.
+As soon as client code uses that, the single inheritance 'slot' Java provides
+is occupied forever, or at least untill a major refactor occurs.
 
 **** Believes and dialoguetree
+\toReview
+In figure [[fig:jungclass]] we can see the higher level structures of Believes and
+DialgoueTree. Note that we significantly simplified all lower level components
+in this figure to save space.
+
 #+NAME: fig:jungclass
 #+BEGIN_SRC plantuml :cache yes :file img/uml/jungclass.png :exports results
-  package drools.db{
-    class ConnectionDatabase
-  }
-  ConnectionDatabase --* "*" Connection
-  class Actor {
-    +name:String
-  }
   class Believes{
     +programmedConnections:ConnectionDatabase
     +learnedConnections:ConnectionDatabase
@@ -2875,54 +2913,94 @@ However we do this only because we want type safety.
     +actors:{Actor}
     +previousUtterances:[Utterance]
   }
-  Believes -* "2" ConnectionDatabase
-  Believes --* Goal
-  Believes --* "2" PersonalValues
-  Believes --* "1..*" Actor
-  Believes --* "*" Utterance
-  class Connection {
-    +to:Symbol
-    +restricted_to:Actor
-  }
-  Connection --* Actor
   class DialogueTree{
     +options:[DialogueTree]
     +utterance:Utterance
     +connection_used:Connection
   }
-  DialogueTree --* "*" DialogueTree
-  DialogueTree --* Utterance
-  DialogueTree --* Connection
-  class Goal{
+  package drools{
+    package drools.db{
+      class ConnectionDatabase
+    }
+    ConnectionDatabase --* "*" Connection
+    class Actor {
+      +name:String
+    }
+    Believes -* "2" ConnectionDatabase
+    Believes --* "*" Goal
+    Believes --* "2" PersonalValues
+    Believes --* "1..*" Actor
+    Believes --* "*" Utterance
+    class Connection {
+      +to:Symbol
+      +restricted_to:Actor
+    }
+    Connection --* Actor
+    DialogueTree --* "*" DialogueTree
+    DialogueTree --* Utterance
+    DialogueTree --* Connection
+    class Goal{
+    }
+    Goal --* Utterance
+    class PersonalValues{
+    }
+    class Utterance{
+    }
+    Utterance --* Actor
   }
-  Goal --* Utterance
-  class PersonalValues{
-  }
-  class Utterance{
-  }
-  Utterance --* Actor
+  DialogueTree -[hidden]-> drools
 #+END_SRC
 #+CAPTION: Class diagram of the high level model
 #+LABEL: fig:jungclass
-#+RESULTS[6e958ae8fbd0df7155d49679dfb443b74d79aec3]: fig:jungclass
+#+RESULTS[212259f430fea1f6c765e388f698bb1c14824598]: fig:jungclass
 [[file:img/uml/jungclass.png]]
 
+\toReview
+From [[fig:jungclass]] we can see the main clients of the low level drool package
+is indeed the believes and after that the DialogueTree.
+Believes provide the JungFunctions with well bounded information about the mind
+of the chat bot as discussed in section [[BDI and Jung]].
+
+\toReview
+The believes structure is very peculiar, because it doesn't represent a single
+idea or use case. Instead its just a combination of various elements that are
+required for the Jungian functions to operate.
+But none of the functions use /all/ fields,
+so they get in essence just too much information.
+In fact, it is extremely similar to how the drools fact base operates.
+But the drools have a built in mechanism to make sure individual rules
+don't get all information (the when clause).
+So an argument can be made to remove the Believes structure and replace it with
+the drool fact base.
+This hasn't been done, because it would be a very invasive operation,
+currently the Jungian functions have the Believe structure in their signature.
+This can then be replaced by what they individually need,
+rather then what they as a whole need.
+With that change the personality functions could be flattened to drool rules,
+which would make the architecture even more simple.
+
+\toReview
+The DialogueTree structure however is a whole other beast then the believes
+structure.
+It provides a well defined structure, and some utility methods that make tree
+navigation much easier.
+These methods aren't shown in the figure because their type signatures are
+rather big. \todo{But we discuss them in the implementation? Refer to that}
 
 **** db package
 \toReview
-Figure [[fig:jungclass]] only shows part of the db package because it couldn't quite
-fit,
-in figure [[fig:dbclass]] the databases are shown.
+In figure [[fig:dbclass]] the databases are shown.
 This is a sub package of the model.
 The database is best seen as an immutable hashmap. It also provides some extra
 nice java8 features,
-such as returning an optional rather than null for the get method.
+such as returning an optional rather than null-able type for the get method.
 The concrete implementations of database can add extra behavior once the type
 value of the generic parameters is known which is done by connection database
 for example.
+
 #+NAME: fig:dbclass
 #+BEGIN_SRC plantuml :cache yes :file img/uml/dbclass.png :exports results
-  package model.db{
+  package drools.db{
     abstract class Database<Key,Value>{
       -values:Map<Key,Value>
       +get(key:Key):Optional<Value>
@@ -2935,6 +3013,7 @@ for example.
       +getAllowedConnections(name:Symbol, role:Actor):Stream<Connection>
       +getFromTo(from:Symbol, to:Symbol):Optional<Connection>
       +putInCopy(symbol:Symbol, connections:Connection...):ConnectionDatabase
+      +createDual():ConnectionDatabase
     }
     class PatternDatabase<Scene, {PatternSymbol}>
     class SymbolDatabase<String, Symbol>
@@ -2946,14 +3025,43 @@ for example.
 #+END_SRC
 #+CAPTION: The database package
 #+LABEL: fig:dbclass
-#+RESULTS[96b2d711babc6789186ccd98dee8488eaa83a349]: fig:dbclass
+#+RESULTS[a2e3cbdbbab42de8a4c6c9d166b2ef419283222c]: fig:dbclass
 [[file:img/uml/dbclass.png]]
+
+\toReview
+SymbolDatabase is the first database constructed during the initialization
+phase.
+From this the other two databases can be more easily constructed since they 
+can lookup symbols in the SymbolDatabase, rather than worrying about construction
+of new ones.
+
+\toReview
+PatternDatabase can store patterns based upon a Scene. There are actually two
+constructed of these, the first one constructs the patterns that are in a scene,
+and the second one constructs patterns that are of scenes where the current
+scene is connected to.
+For example if there exists a connection form a symbol in scene A to a symbol
+in scene B, the patterns from the symbol in scene b are stored in the key of
+scene A.
+This second database allows scene transitions to occur.
+However to construct this second database the connection database is required.
+
+\toReview
+The connection database is a database that stores a connection set from a
+symbol. 
+This class is analogous to the symbol graph $G$ from section [[BDI and Jung]],
+it is used to determine what the bot could say, and what it thinks its speech
+partner can say.
+This database has a special method named createDual which is used to create
+a connection database where all the connections are flipped.
+This is used to create the second pattern database,
+it made looking up the required patterns much easier.
 
 **** Before and templates
 \toReview
 After the personality was implemented, a request came to bring the new chat
 bot up to feature parity with the ALICE bot. 
-To do this several new data strucures had to be introduced which can be seen
+To do this several new data structures had to be introduced which can be seen
 in figure [[fig:templateclass]].
 
 #+NAME: fig:templateclass
@@ -3610,7 +3718,7 @@ So the first thing we did was finding template libraries in Java.
 Three options came up:
 Velocity cite:velocity, Freemarker cite:freemarker
 and StringTemplate cite:stringtemplate.
-Because StringTemplate enforces strict model view seperation,
+Because StringTemplate enforces strict model view separation,
 and is therefore much more maintanable and easier to understand than freeer
 template engines cite:parr2004enforcing, we chose to use StringTemplate.
 
@@ -4379,7 +4487,7 @@ Then as can be seen by its annotation, the method
 `no_goals_look_for_ones_that_change_scene` defines a test.
 
 \toReview
-Tests generally follow a similiar pattern, first an expectation is build,
+Tests generally follow a similar pattern, first an expectation is build,
 then the input is created, the function to test is called, trough the `apply`
 method in this case, and finally the expectation is asserted.
 If the expectation isn't upheld an error will be shown at compile time.
@@ -4390,7 +4498,7 @@ The reason for this is that testing often involves a lot of boilerplate,
 and inheritance provides a really cheap way of getting rid of that.
 
 \toReview
-We also provide a builder for making the dialogueTree.
+We also provide a builder for making the DialogueTree.
 This is a mutable wrapper around the dialogue tree, again to reduce boilerplate.
 This boilerplate isn't so much a problem in the Jungianfunctions themselves
 because they often deal in terms of collections, or just want to add one.
@@ -5414,3 +5522,5 @@ Conversation went according to script.
   that there is a memory leak which doesn't get cleaned up at redoploy
 
   
+
+#  LocalWords:  DialogueTree PatternDatabase
