@@ -1,13 +1,14 @@
-#+TITLE: Composeable personality pieces 
+#+TITLE: Composeable personality parts
 #+SUBTITLE: Jungian types as endomorphisms in dialogue
 # A serious communication game with personalities
-#+LANGUAGE: en
+#+LANGAUGE: english
+
 # TODO: this title is to vague
 # Jungian functions as endomorphisms:
   # Personality for dialogue agents
 # Pure functional serious communication in-game
 #+LaTeX_CLASS: article
-#+LaTeX_CLASS_OPTIONS: [a4paper, drafting]
+#+LaTeX_CLASS_OPTIONS: [a4paper,drafting]
 
 # disable toc so it doesn't appear at the top but where we want it instead
 #+Options: toc:nil ^:nil 
@@ -17,6 +18,9 @@
 
 # we don't want numbering to appear in front of headings untill
 #+OPTIONS: H:5
+
+# table alternating colors
+#+LATEX_HEADER: \usepackage[table,fancyvrb]{xcolor}
 
 # bibtex stuff
 #+LATEX_HEADER: \usepackage[square,sort,comma,numbers]{natbib}
@@ -31,6 +35,8 @@
 # (something cleared that was under discussion last time)
 #+LATEX_HEADER: \newcommand{\cleared}{\todo[noline, color=white]{Cleared}}
 
+# alternating table rows
+#+LATEX: \rowcolors{1}{white}{gray!15}
 
 # Title page
 #+LATEX: \input{title}
@@ -1904,13 +1910,13 @@ individually.
 To do this we will define some terms, with which we will go from the broadest
 definition possible towards one that just fits the project scope.
 
-\cleared
+\toReview
 Let $\mathcal{B}$ denote the set of all
 possible believes and let $B_t$ with $B_t \subseteq \mathcal{B}$ denote the
 believes of an agent at time $t$. 
-$\mathcal{P}$ is the set of all possible sense information, in which $P_t$
-with $P_t \subseteq \mathcal{P}$ denotes the perception information of an agent
-at time $t$.
+$\Pi$ is the set of all possible sense information,
+in which $\pi_t$ with $\pi_t \subseteq \Pi$ denotes the perception information of an
+agent at time $t$.
 $\mathcal{D}$ denotes the set of all possible actions with $\Delta_t$
 $\Delta_t \subseteq \mathcal{D}$ denoting the set of actions executed by the agent at
 time $t$.
@@ -1923,7 +1929,7 @@ This can be done on the thread of control the agent owns for example.
 Where it will block until a time $t$ has passed or a new perception $P$ comes in from
 the environment.]
 as the following pure function type signature:
-\[ B_t \to P_t \overset{f_a}{\to} (B_{t+1}, \Delta_{t+1}) \]
+\[ B_t \to \pi_t \overset{f_a}{\to} (B_{t+1}, \Delta_{t+1}) \]
 This says, we first put in the current believe base, then the sensory
 information after which we get a new believe base and a set of actions.
 In this the intentions are encoded in the function used, and the desires are
@@ -1965,9 +1971,9 @@ In the previous version this mapping was entirely done by AIML.
 How this is done in this version will be discussed in the implementation
 section [[From strings to meanings]].
 
-\cleared
+\toReview
 So the simplification is now as follows,
-firstly we note that $\mathcal{S} \subset \mathcal{P}$,
+firstly we note that $\mathcal{S} \subset \Pi$,
 since understanding meaning is a form of sensation.
 Then we can define $S_t \subseteq \mathcal{S}$ which stands for the
 symbols the agent understood at time $t$.
@@ -1979,6 +1985,7 @@ This produces the following type signature:
 \[ B_t \to t \to S_t \overset{f_a}{\to} (B_{t+1}, \Delta_{t+1}) \]
 
 *** The dialogue tree
+<<Dialogue tree>>
 \cleared
 We have some believes, time and meaning going in, some deliberation
 going on and a new set of believes and actions going out.
@@ -2000,8 +2007,8 @@ With an actor $a$ and a symbol $s$ we can start thinking about modeling an
 utterance.
 However to do this, its important to remember that an utterance always comes with
 a perlocutionary value set as discussed in section [[Speech act thoery]].
-Therefore we introduce the set of all possible speech acts as $P$ of which 
-a set of speech acts is $P \subseteq \Pi$.
+Therefore we introduce the set of all encoded perlocutionary speech acts as
+$\mathcal{P}$ of which a set of speech acts is $P \subseteq \mathcal{P}$.
 With this we can define utterance $u$ as a tuple:
 \[ u = (P,a,s,t) \]
 Where $P$ is the set of perlocutionary values uttered, $a$ is the agent that
@@ -2276,16 +2283,16 @@ Then we will define the believe tuple more formally.
 
 *** Symbol graph
 <<symbol graph>>
-\newlyCleared
+\toReview
 To make sure the agent stays on topic we will make use of a symbol graph.
 This graphs gives connections to the symbols described in section [[A type signature approach]].
 The meaning graph $G$ is a set of connections $c \in G$ where
 $c = (P, A, s_1, s_2)$, $s_1, s_2 \in \mathcal{S} \wedge s_1 \neq s_2$,
 $A \subseteq \Lambda$ is the set of agents that can use the connection,
 to prevent cases where the patient asks the doctor about his health problems.
-$P$ is the perlocutionary value set of the speech act
-(for example angering or scaring),
-which is encoded in the edges because its not the meaning that causes these
+$P$ is the perlocutionary value set of the speech act, as introduced in section
+[[Dialogue tree]].
+This is encoded in the edges because its not the meaning that causes these
 but the way you get to those meanings.
 In other words, being polite and then telling bad news causes different
 perlocutionary values than just telling bad news.
@@ -2417,8 +2424,8 @@ table.
 \newlyCleared
 Both feeling functions $F$ use the perlocutionary acts to order the children.
 $F_i$ uses a predefined value set $h$: 
-\[ \pi \overset{h}{\to} i \].
-Where $\pi \in \Pi$ is a perlocutionary value.
+\[ p \overset{h}{\to} i \].
+Where $p \in \mathcal{P}$ is a perlocutionary value.
 This valuation is done by a lookup table on all available perlocutionary speech
 acts.
 $F_e$ tries to figure out what the conversation partners values by
@@ -2484,21 +2491,30 @@ To do this it will sort the child nodes according to as much unique symbols as
 possible.
 
 *** Symbol overview
-\drafting
-For reference a symbol table of all introduced symbols is shown in table [[tab:symbols]].
 
 #+NAME: tab:symbols
 #+CAPTION: Symbol table
-| Symbol        | Constraints                 | Description                            |   |
-|---------------+-----------------------------+----------------------------------------+---|
-| $f_a$         |                             | Function attitudes                     |   |
-| $\mathcal{B}$ |                             | Set of all possible believes           |   |
-| $t$           |                             | time                                   |   |
-| $B_t$         | $B_t \subseteq \mathcal{B}$ | Believe $B$ at time $t$                |   |
-| $\mathcal{P}$ |                             | Set of all possible sense information  | [fn:not-used:Not used in implementation] |
-| $P_t$         | $P_t \subseteq \mathcal{P}$ | Perception information $P$ at time $t$ | [fn:not-used] |
-| $\mathcal{A}$ |                             | Set of all possible actions | [fn:not-used] |
-| $P_t$         | $P_t \subseteq \mathcal{P}$ | Perception information $P$ at time $t$ | [fn:not-used] |
+| Symbol        | Constraints                    | Description                                   |                                          |
+|---------------+--------------------------------+-----------------------------------------------+------------------------------------------|
+| $f_a$         |                                | Function attitudes                            |                                          |
+| $\mathcal{B}$ |                                | Set of all possible believes                  |                                          |
+| $t$           |                                | time                                          |                                          |
+| $B_t$         | $B_t \subseteq \mathcal{B}$    | Believe $B$ at time $t$                       |                                          |
+| $\Pi$           |                                | Set of all possible sense information         | [fn:not-used:Not used in implementation] |
+| $\pi_t$         | $\pi_t \subseteq \Pi$              | Perception information $\pi$ at time $t$        | [fn:not-used]                            |
+| $\mathcal{D}$ |                                | Set of all possible actions                   | [fn:not-used]                            |
+| $\Delta_t$         | $\Delta_t \subseteq \mathcal{D}$    | Set of actions $\Delta$ executed at time $t$       | [fn:not-used]                            |
+| $\sigma$           |                                | A string                                      |                                          |
+| $\mathcal{S}$ |                                | All encoded symbols                           |                                          |
+| $s$           | $s \in \mathcal{S}, s=(\{\sigma\},\sigma)$ | A symbol $s$                                  |                                          |
+| $g$           | $\sigma \overset{g}{\to} s$           | Mapping function from $\sigma$ to $s$              |                                          |
+| $g'$          | $s \overset{g'}{\to} \sigma$          | Mapping function from $s$ to $\sigma$              |                                          |
+| $\mathcal{P}$ |                                | Set of all encoded perlocutionary speech acts |                                          |
+| $P$           | $P \subseteq \mathcal{P}$      | Set of perlocutionary speech acts             |                                          |
+| $p$           | $p \in \mathcal{P}$              | A perlocutionary speech acts                  |                                          |
+
+\toReview
+For reference a symbol table of all introduced symbols is shown in table [[tab:symbols]].
 
 **** Believes specific
 <<Believes overview>>
