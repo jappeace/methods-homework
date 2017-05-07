@@ -1911,7 +1911,7 @@ believes of an agent at time $t$.
 $\mathcal{P}$ is the set of all possible sense information, in which $P_t$
 with $P_t \subseteq \mathcal{P}$ denotes the perception information of an agent
 at time $t$.
-$\mathcal{A}$ denotes the set of all possible actions with $A_t$ with
+$\mathcal{A}$ denotes the set of all possible actions with $A_t$ with \todo{wut??}
 $\Delta_t \subseteq \mathcal{D}$ denoting the set of actions executed by the agent at
 time $t$.
 With this definition we can define every possible agent configuration[fn::Note
@@ -2483,13 +2483,29 @@ partner.
 To do this it will sort the child nodes according to as much unique symbols as
 possible.
 
-*** Believes overview
+*** Symbol overview
+\drafting
+For reference a symbol table of all introduced symbols is shown in table [[tab:symbols]].
+
+#+NAME: tab:symbols
+#+CAPTION: Symbol table
+| Symbol        | Constraints                 | Description                            |   |
+|---------------+-----------------------------+----------------------------------------+---|
+| $f_a$         |                             | Function attitudes                     |   |
+| $\mathcal{B}$ |                             | Set of all possible believes           |   |
+| $t$           |                             | time                                   |   |
+| $B_t$         | $B_t \subseteq \mathcal{B}$ | Believe $B$ at time $t$                |   |
+| $\mathcal{P}$ |                             | Set of all possible sense information  | [fn:not-used:Not used in implementation] |
+| $P_t$         | $P_t \subseteq \mathcal{P}$ | Perception information $P$ at time $t$ | [fn:not-used] |
+| $\mathcal{A}$ |                             | Set of all possible actions | [fn:not-used] |
+| $P_t$         | $P_t \subseteq \mathcal{P}$ | Perception information $P$ at time $t$ | [fn:not-used] |
+
+**** Believes specific
 <<Believes overview>>
 \newlyCleared
 We listed the function attitudes $f_a$ and their required information into
 table [[tab:fa-and-data]]. 
 Therefore $B = (h, [u], \Phi, G, a, G', h')$.
-
 
 #+CAPTION: Function attitudes and their required data.
 #+NAME:   tab:fa-and-data
@@ -2591,6 +2607,8 @@ the result is the pair index of the input function function pair,
 plus one if the second value of the pair is rationale,
 /and/ the input function is rationale,
 otherwise its the pair index.
+
+
 
 ** Consistency with theory
 \cleared
