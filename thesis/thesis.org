@@ -2000,7 +2000,7 @@ meaning,
 or if he is in extreme pain he would like to see the /GivePainKiller/ meaning
 uttered.
 We also need to mark which agent uttered the dialogue tree node,
-therefore we introduce $\Lambda$ as the set of all agents, where $a \in \Lambda$.
+therefore we introduce $\Lambda$ as the set of all active actors, where $a \in \Lambda$.
 
 \newlyCleared
 With an actor $a$ and a symbol $s$ we can start thinking about modeling an
@@ -2011,7 +2011,7 @@ Therefore we introduce the set of all encoded perlocutionary speech acts as
 $\mathcal{P}$ of which a set of speech acts is $P \subseteq \mathcal{P}$.
 With this we can define utterance $u$ as a tuple:
 \[ u = (P,a,s,t) \]
-Where $P$ is the set of perlocutionary values uttered, $a$ is the agent that
+Where $P$ is the set of perlocutionary values uttered, $a$ is the actor that
 uttered, $s$ the symbol that was uttered and $t$ the time at which the utterance
 was made.
 
@@ -2490,38 +2490,14 @@ partner.
 To do this it will sort the child nodes according to as much unique symbols as
 possible.
 
-*** Symbol overview
-
-#+NAME: tab:symbols
-#+CAPTION: Symbol table
-| Symbol        | Constraints                    | Description                                   |                                          |
-|---------------+--------------------------------+-----------------------------------------------+------------------------------------------|
-| $f_a$         |                                | Function attitudes                            |                                          |
-| $\mathcal{B}$ |                                | Set of all possible believes                  |                                          |
-| $t$           |                                | time                                          |                                          |
-| $B_t$         | $B_t \subseteq \mathcal{B}$    | Believe $B$ at time $t$                       |                                          |
-| $\Pi$           |                                | Set of all possible sense information         | [fn:not-used:Not used in implementation] |
-| $\pi_t$         | $\pi_t \subseteq \Pi$              | Perception information $\pi$ at time $t$        | [fn:not-used]                            |
-| $\mathcal{D}$ |                                | Set of all possible actions                   | [fn:not-used]                            |
-| $\Delta_t$         | $\Delta_t \subseteq \mathcal{D}$    | Set of actions $\Delta$ executed at time $t$       | [fn:not-used]                            |
-| $\sigma$           |                                | A string                                      |                                          |
-| $\mathcal{S}$ |                                | All encoded symbols                           |                                          |
-| $s$           | $s \in \mathcal{S}, s=(\{\sigma\},\sigma)$ | A symbol $s$                                  |                                          |
-| $g$           | $\sigma \overset{g}{\to} s$           | Mapping function from $\sigma$ to $s$              |                                          |
-| $g'$          | $s \overset{g'}{\to} \sigma$          | Mapping function from $s$ to $\sigma$              |                                          |
-| $\mathcal{P}$ |                                | Set of all encoded perlocutionary speech acts |                                          |
-| $P$           | $P \subseteq \mathcal{P}$      | Set of perlocutionary speech acts             |                                          |
-| $p$           | $p \in \mathcal{P}$              | A perlocutionary speech acts                  |                                          |
-
-\toReview
-For reference a symbol table of all introduced symbols is shown in table [[tab:symbols]].
-
-**** Believes specific
+*** Believes overview
 <<Believes overview>>
-\newlyCleared
+\toReview
 We listed the function attitudes $f_a$ and their required information into
 table [[tab:fa-and-data]]. 
 Therefore $B = (h, [u], \Phi, G, a, G', h')$.
+For reference a symbol table of all introduced symbols is shown
+in table [[tab:symbols]] in appendix [[Symbol overview]].
 
 #+CAPTION: Function attitudes and their required data.
 #+NAME:   tab:fa-and-data
@@ -4717,17 +4693,39 @@ bibliography:refs.bib
 
 
 \newpage
+
 * List of figures
 \listoffigures
 \newpage
 * List of tables
 \listoftables
 \newpage
-
-# If we can ever figure out how to remove the name from this:
-# https://stackoverflow.com/questions/2709898/change-list-of-listings-text
-# * List of listings
-# \listlessness
+* Symbol overview
+<<Symbol overview>>
+#+NAME: tab:symbols
+#+CAPTION: Symbol table
+| Symbol        | Constraints                    | Description                                   |                                          |
+|---------------+--------------------------------+-----------------------------------------------+------------------------------------------|
+| $f_a$         |                                | Function attitudes                            |                                          |
+| $\mathcal{B}$ |                                | Set of all possible believes                  |                                          |
+| $t$           |                                | time                                          |                                          |
+| $B_t$         | $B_t \subseteq \mathcal{B}$    | Believe $B$ at time $t$                       |                                          |
+| $\Pi$           |                                | Set of all possible sense information         | [fn:not-used:Not used in implementation] |
+| $\pi_t$         | $\pi_t \subseteq \Pi$              | Perception information $\pi$ at time $t$        | [fn:not-used]                            |
+| $\mathcal{D}$ |                                | Set of all possible actions                   | [fn:not-used]                            |
+| $\Delta_t$         | $\Delta_t \subseteq \mathcal{D}$    | Set of actions $\Delta$ executed at time $t$       | [fn:not-used]                            |
+| $\sigma$           |                                | A string                                      |                                          |
+| $\mathcal{S}$ |                                | All encoded symbols                           |                                          |
+| $s$           | $s \in \mathcal{S}, s=(\{\sigma\},\sigma)$ | A symbol $s$                                  |                                          |
+| $g$           | $\sigma \overset{g}{\to} s$           | Mapping function from $\sigma$ to $s$              |                                          |
+| $g'$          | $s \overset{g'}{\to} \sigma$          | Mapping function from $s$ to $\sigma$              |                                          |
+| $\mathcal{P}$ |                                | Set of all encoded perlocutionary speech acts |                                          |
+| $P$           | $P \subseteq \mathcal{P}$      | Set of perlocutionary speech acts             |                                          |
+| $p$           | $p \in \mathcal{P}$              | A perlocutionary speech acts                  |                                          |
+| $\Lambda$           |                                | Set of all active actors                      |                                          |
+| $a$           | $a \in \Lambda$                        | an actor                                      |                                          |
+| $u$           | $u=(P,a,s,t)$                  | Utterance made by $a$ at time $t$             |                                          |
+| $D$           | $D=(u,[D])$                    | Dialogue tree                                 |                                          |
 
 \newpage
 * Building
@@ -5368,7 +5366,6 @@ utterances of the doctor compared to the scenario.
 This is because there were to many different symbols in the input
 (scan and give painkillers), this made the bot reply to both of them.
 
-
 ** Fifth test
 
 | Commit | ae74151591d0c5a20566d8d74283d4c73e9450d2 |
@@ -5438,7 +5435,6 @@ Conversation went according to script
 1. It didn't match these sentences, apprantly because of the new scene system.
    There was no connection for this transition.
 
-
 ** Sixth test
 
 | Commit | e15409ffc37b837a47a9ceb3c183d67f18c3eb17 |
@@ -5505,6 +5501,13 @@ Conversation went according to script.
 \cleared
 Conversation went according to script. 
 
+
+# If we can ever figure out how to remove the name from this:
+# https://stackoverflow.com/questions/2709898/change-list-of-listings-text
+# * List of listings
+# \listlessness
+
+\newpage
 * Ideas
 :PROPERTIES:
 :UNNUMBERED: t
@@ -5591,4 +5594,5 @@ Conversation went according to script.
 
   
 
-#  LocalWords:  DialogueTree PatternDatabase
+#  LocalWords:  DialogueTree PatternDatabase Immutablity
+
