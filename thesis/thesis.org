@@ -2745,6 +2745,7 @@ relatively easy to convert from the old AIML structure to the new format with he
 of a script.
 A proof of concept of this has been made of this in section [[Conversion script]].
 
+\todo[inline]{Maybe a package overview subsection, where we discuss the packages and their goals}
 *** Data structures
 
 #+BEGIN_QUOTE
@@ -3198,7 +3199,8 @@ This is explained in depth in section [[Star tags]].
 # make sure the figures don't spill over into next section
 \newpage
 *** Initialization
-\toReview
+\todo[inline]{We should keep this section more focused, IDK why I start talking here about connections etc, we should just talk about initialization}
+\newlyCleared
 In the new architecture we use a file reader to construct the 
 symbol database, pattern database and connection database
 into memory and expose them to the drools as can been seen in figure
@@ -3207,7 +3209,7 @@ This allows the drools to utter spontaneous symbols and allows do deliberation
 on incoming utterances of the user with help of the interpreter component.
 The reactionary based scheme where an incoming user response has been replaced
 with a structural scheme.
-A symbol has connections to other symbols, which should be sensible responses.
+A symbol has connections to other symbols, which should be sensible responses. \todo{wut? Discuss this here?? Seems strange}
 So if a user utters a symbol then rather than having a direct response string
 that uses variables to fill in the gap, we get a symbol, which connected to
 other symbols which in turn are also connected.
@@ -3221,20 +3223,20 @@ We can do deliberation on this because we have one or more goals.
   :Construct a chat botengine;
   |#CCDDDD|Engine|
   :Start kie thread;
-  :Create Personality;
   :Register a controller;
-  :Parse YML files and construct databases;
-  :insert databases in drools;
-  :insert startgame fact;
-  |#AntiqueWhite|Drool|
-  :construct believes;
+  |#AntiqueWhite|File reader|
+  :Parse YML files;
+  :Construct initial believes;
+  :Construct pattern DBs;
+  |#CCDDDD|Engine|
+  :Insert file reader results into drools;
   |WebSocket|
   :put game id in websocket user prefs;
   stop
 #+END_SRC
 #+CAPTION: Activity diagram of a server game construction
 #+LABEL: fig:initjung
-#+RESULTS[3aedd73e556c4aa3c802b3c10a249e7b1fae54ea]: fig:initjung
+#+RESULTS[763266e1aab7e13801dca3cbcd932bf353cc39be]: fig:initjung
 [[file:img/uml/initjung.png]]
 
 **** Parsing YAML
