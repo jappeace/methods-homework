@@ -1911,7 +1911,7 @@ believes of an agent at time $t$.
 $\mathcal{P}$ is the set of all possible sense information, in which $P_t$
 with $P_t \subseteq \mathcal{P}$ denotes the perception information of an agent
 at time $t$.
-$\mathcal{A}$ denotes the set of all possible actions with $A_t$ with \todo{wut??}
+$\mathcal{D}$ denotes the set of all possible actions with $\Delta_t$
 $\Delta_t \subseteq \mathcal{D}$ denoting the set of actions executed by the agent at
 time $t$.
 With this definition we can define every possible agent configuration[fn::Note
@@ -1923,7 +1923,7 @@ This can be done on the thread of control the agent owns for example.
 Where it will block until a time $t$ has passed or a new perception $P$ comes in from
 the environment.]
 as the following pure function type signature:
-\[ B_t \to P_t \overset{f_a}{\to} (B_{t+1}, A_{t+1}) \]
+\[ B_t \to P_t \overset{f_a}{\to} (B_{t+1}, \Delta_{t+1}) \]
 This says, we first put in the current believe base, then the sensory
 information after which we get a new believe base and a set of actions.
 In this the intentions are encoded in the function used, and the desires are
