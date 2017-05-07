@@ -1910,16 +1910,16 @@ individually.
 To do this we will define some terms, with which we will go from the broadest
 definition possible towards one that just fits the project scope.
 
-\toReview
+\newlyCleared
 Let $\mathcal{B}$ denote the set of all
 possible believes and let $B_t$ with $B_t \subseteq \mathcal{B}$ denote the
-believes of an agent at time $t$. 
+believes at time $t$. 
 $\Pi$ is the set of all possible sense information,
-in which $\pi_t$ with $\pi_t \subseteq \Pi$ denotes the perception information of an
-agent at time $t$.
-$\mathcal{D}$ denotes the set of all possible actions with $\Delta_t$
-$\Delta_t \subseteq \mathcal{D}$ denoting the set of actions executed by the agent at
+in which $\pi_t$ with $\pi_t \subseteq \Pi$ denotes the perception information at
 time $t$.
+$\mathcal{D}$ denotes the set of all possible actions with $\Delta_t$
+$\Delta_t \subseteq \mathcal{D}$ denoting the set of actions executed at time
+$t$.
 With this definition we can define every possible agent configuration[fn::Note
 that this is just the deliberation part, there is no memory in a pure function,
 but the agent's memories can be stored in the believes.
@@ -1971,7 +1971,7 @@ In the previous version this mapping was entirely done by AIML.
 How this is done in this version will be discussed in the implementation
 section [[From strings to meanings]].
 
-\toReview
+\newlyCleared
 So the simplification is now as follows,
 firstly we note that $\mathcal{S} \subset \Pi$,
 since understanding meaning is a form of sensation.
@@ -1980,7 +1980,7 @@ symbols the agent understood at time $t$.
 To ensure a reactive and proactive we also have to pass the current time
 as argument.
 This keeps open the possibility of the agent to do deliberation without having
-received a symbol (ie empty set).
+received a symbol (empty set).
 This produces the following type signature:
 \[ B_t \to t \to S_t \overset{f_a}{\to} (B_{t+1}, \Delta_{t+1}) \]
 
@@ -2283,7 +2283,7 @@ Then we will define the believe tuple more formally.
 
 *** Symbol graph
 <<symbol graph>>
-\toReview
+\newlyCleared
 To make sure the agent stays on topic we will make use of a symbol graph.
 This graphs gives connections to the symbols described in section [[A type signature approach]].
 The meaning graph $G$ is a set of connections $c \in G$ where
@@ -2492,7 +2492,7 @@ possible.
 
 *** Believes overview
 <<Believes overview>>
-\toReview
+\newlyCleared
 We listed the function attitudes $f_a$ and their required information into
 table [[tab:fa-and-data]]. 
 Therefore $B = (h, [u], \Phi, G, a, G', h')$.
@@ -2672,8 +2672,9 @@ and the Wildfly server and the unity client.
 <<Implemented architecture>>
 \newlyCleared
 A deployment diagram of the architecture can bee seen in figure
-[[fig:architecture-concept]]. This is a rough overview of how everything interacts
-now with each other.
+[[fig:architecture-concept]],
+where the dashed arrow means constructs,
+the solid arrow means uses and the other lines mean interacts.
 
 #+NAME: fig:architecture-concept
 #+BEGIN_SRC plantuml :cache yes :file img/uml/architecture-concept.png :exports results
@@ -2708,7 +2709,7 @@ now with each other.
   server  -- scene
   server  -(0)- client
 #+END_SRC
-#+CAPTION: Deployment diagram of new architecture, where the dashed arrow means constructs, the solid arrow means uses and the other lines mean itneracts.
+#+CAPTION: Deployment diagram of implemented architecture
 #+LABEL: fig:architecture-concept
 #+RESULTS[f680066f7943af2a2abf4c0b6a487ffa49d6b619]: fig:architecture-concept
 [[file:img/uml/architecture-concept.png]]
@@ -2753,44 +2754,42 @@ Good programmers worry about data structures and their relationships.
   -- Linus Torvalds cite:linusbadgoodprogrammersquote 
 #+END_QUOTE
 
-\todo[inline]{We should say which classes are which symbols in BDI+Jung per diagram}
-
-\toReview
+\newlyCleared
 In this subsection we will discuss the main data structures used to implement
 the ideas from section [[BDI and Jung]].
 We use class diagrams to accomplish this which are based upon UML cite:fowler2004uml.
 Before we do this I would like to point out several things to keep in mind.
 
-\toReview
+\newlyCleared
 Firstly, we do not show everything precisely such as implemented in the code,
-because that would clutter the screen to much.
+because that would clutter the diagrams.
 What we do model is all relevant information in structures and the relationship
 between those, following the words of Torvalds.
 
-\toReview
+\newlyCleared
 Secondly, its better to think of the classes shown here as data structures,
 the fields are set to public in cases where immutability was possible.
 
-\toReview
+\newlyCleared
 Thirdly we split up the class diagram into several because of space,
 the model has become rather big.
 There exists a real separation like this in the code base, the lower level
-components are in the `salve_drools` projects, whereas the higher level
-components are in the `salve_personality` package.
+components are in the =salve_drools= projects, whereas the higher level
+components are in the =salve_personality= package.
 The reason for this separation is that currently, the bot will simply
 not function without the low level components,
 but you can make it function without the high level components.
 Which in practice is done with the low level replies.
 
-\toReview
+\newlyCleared
 Finally note that we use $[\dots]$ for list and $\{\dots\}$ for set in the
-class diagrams, also to save space.
+class diagrams, to save space.
 
 **** Low level diagram
 
-\toReview
+\newlyCleared
 In figure [[fig:droolclass]] the diagram containing the low level data structures
-used. These are the basic asssumptions, or building blocks the implementation
+used. These are the basic assumptions, or building blocks the implementation
 is constructed from.
 
 #+NAME: fig:droolclass
@@ -2865,53 +2864,72 @@ is constructed from.
 #+RESULTS[1c677a21ef92d9dff7fc9ff5dfca6512d4f6c4d0]: fig:droolclass
 [[file:img/uml/droolclass.png]]
 
-
-\toReview
-From figure  [[fig:droolclass]] we can clearly see the importance of the Symbol
+\newlyCleared
+From figure  [[fig:droolclass]] we can clearly see the importance of the =Symbol=
 structure in the application.
 Simply by counting the amount of structures that consist of it,
 and of course it is a very important structure because it is the building
 block that gives understanding to the implementation.
 As described in section [[BDI and Jung]] we map strings into user symbols,
 and we can map symbols back to strings again.
+An overview of the relationship between the theoretic representation
+and the implementation for this class diagram can be seen in table
+[[tab:jung-class-relation-drool]].
 
-\toReview
-Something that was thought about is how similar a connection is to an
-utterance. Except for the instance field, they are the same
-(note that the informative field of utterance is the same as the to and
-restricted_to fields of connection).
+#+NAME: tab:jung-class-relation-drool
+#+CAPTION: Overview of section [[BDI and Jung]] symbols and their class representations
+| Symbol | Corresponding Class                                                                                                                               |
+|--------+---------------------------------------------------------------------------------------------------------------------------------------------------|
+| $\sigma$    | =String=                                                                                                                                          |
+| $s$    | =Symbol=                                                                                                                                          |
+| $g$    | =PatternSymbol=                                                                                                                                   |
+| $g'$   | =Symbol=[fn:: The literal strings are used for back conversion, in combination with the MatchedQueryDB described in section [[Before and templates]]] |
+| $P$    | =PerlocutionaryValueSet=                                                                                                                          |
+| $p$    | =PerlocutionaryValue=                                                                                                                             |
+| $a$    | =Actor=                                                                                                                                           |
+| $u$    | =Utterance=                                                                                                                                       |
+| $c$    | =Connection=                                                                                                                                      |
+| $h$    | =PersonalValues=                                                                                                                                  |
+| $\phi$    | =Goal=                                                                                                                                            |
+
+\newlyCleared
+Something that was thought about is how similar a =Connection= is to an
+=Utterance=. Except for the =instant= field, they are the same
+(note that the =informative= field of utterance is the same as the =to= and
+=restricted_to= fields of connection).
 However their semantics are clearly different.
-A connection entails a posibility of an utterence, but it does /not/ mean it
-will be uttered. Whereas an utterance is a used connection, that posibility
+A connection entails a possibility of an utterance, but it does /not/ mean it
+will be uttered. Whereas an utterance is a used connection, that possibility
 became a realization.
 Therefore, we were right to distinct them at type level.
 
-\toReview
-These kindoff considerations become especially real when structures are
-essentially the same, as we can see with the Scene and Actor classes.
+\newlyCleared
+These considerations become especially important when structures are
+essentially the same, as we can see with the =Scene= and =Actor= classes.
 The only thing they contain are a String.
 Even the field names are the same!
 Are we correct to treat these as distinct classes?
-We would say yes because they entail completely different semantics,
-the Scene class is used to group symbols and patterns,
-whearas the actor class is used to identify actors.
+We argue yes because they entail completely different semantics,
+the =Scene= class is used to group symbols and patterns,
+whereas the =Actor= class is used to identify actors.
 
-\toReview
+\newlyCleared
 The next question would be: Should we use an inheritance relation to make our
 code more DRY cite:thomas2010orthogonality (don't repeat yourself)?
-For by example introducing an abstract class ANamed and letting
-Actor and Scene be extended from those.
+For by example introducing an abstract class =ANamed= and letting
+=Actor= and =Scene= be extended from those.
 We argue no, because introduces more complexity than that we would save on code
 reduction.
-It would also open up to positibilty to use the implicit covarient relationship,
-functions that accept an ANamed argument for example.
-As soon as client code uses that, the single inheritance 'slot' Java provides
-is occupied forever, or at least untill a major refactor occurs.
+It would also open up to possibility to use the implicit covariant relationship,
+resulting in functions that could accept an =ANamed= argument for example.
+As soon as client code starts using that, the single inheritance 'slot' Java
+provides is occupied forever,
+or at least until a major refactor occurs.
 
-**** Believes and dialoguetree
-\toReview
-In figure [[fig:jungclass]] we can see the higher level structures of Believes and
-DialgoueTree. Note that we significantly simplified all lower level components
+**** Believes and DialogueTree
+\newlyCleared
+In figure [[fig:jungclass]] we can see the higher level structures of =Believes= and
+=DialogueTree=. Note that we significantly simplified all lower level components
 in this figure to save space.
 
 #+NAME: fig:jungclass
@@ -2967,44 +2985,52 @@ in this figure to save space.
 #+RESULTS[212259f430fea1f6c765e388f698bb1c14824598]: fig:jungclass
 [[file:img/uml/jungclass.png]]
 
-\toReview
+\newlyCleared
 From [[fig:jungclass]] we can see the main clients of the low level drool package
-is indeed the believes and after that the DialogueTree.
-Believes provide the JungFunctions with well bounded information about the mind
+is indeed the =Believes= class and after that the =DialogueTree=.
+=Believes= provide the Jungian functions with bounded information about the mind
 of the chat bot as discussed in section [[BDI and Jung]].
+In table [[tab:jung-class-relation-dialogue]] we can see the relationship
+between theoretic representation and that of this class diagram, excluding
+the ones discussed in previous section.
 
-\toReview
-The believes structure is very peculiar, because it doesn't represent a single
+#+NAME: tab:jung-class-relation-dialogue
+#+CAPTION: Overview of section [[BDI and Jung]] symbols and their class representations
+| Symbol | Corresponding Class |
+| $B$    | Believes            |
+| $D$    | DialogueTree        |
+
+\newlyCleared
+The =Believes= structure is very peculiar, because it doesn't represent a single
 idea or use case. Instead its just a combination of various elements that are
 required for the Jungian functions to operate.
 But none of the functions use /all/ fields,
 so they get in essence just too much information.
 In fact, it is extremely similar to how the drools fact base operates.
 But the drools have a built in mechanism to make sure individual rules
-don't get all information (the when clause).
-So an argument can be made to remove the Believes structure and replace it with
+don't get all information (the when clause) \todo{cite or refer to background}.
+So an argument can be made to remove the =Believes= structure and replace it with
 the drool fact base.
 This hasn't been done, because it would be a very invasive operation,
 currently the Jungian functions have the Believe structure in their signature.
 This can then be replaced by what they individually need,
 rather then what they as a whole need.
 With that change the personality functions could be flattened to drool rules,
-which would make the architecture even more simple.
+which would make the architecture even more simple. \todo{Why is this good? or refer to section that discusses this}
 
-\toReview
-The DialogueTree structure however is a whole other beast then the believes
-structure.
+\newlyCleared
+The =DialogueTree= structure is however a whole other beast.
 It provides a well defined structure, and some utility methods that make tree
 navigation much easier.
 These methods aren't shown in the figure because their type signatures are
 rather big. \todo{But we discuss them in the implementation? Refer to that}
 
 **** db package
-\toReview
+\newlyCleared
 In figure [[fig:dbclass]] the databases are shown.
 This is a sub package of the model.
-The database is best seen as an immutable hashmap. It also provides some extra
-nice java8 features,
+The database is best seen as an immutable hash map. It also provides some extra
+java8 features,
 such as returning an optional rather than null-able type for the get method.
 The concrete implementations of database can add extra behavior once the type
 value of the generic parameters is known which is done by connection database
@@ -3040,16 +3066,18 @@ for example.
 #+RESULTS[a2e3cbdbbab42de8a4c6c9d166b2ef419283222c]: fig:dbclass
 [[file:img/uml/dbclass.png]]
 
-\toReview
-SymbolDatabase is the first database constructed during the initialization
+\newlyCleared
+=SymbolDatabase= is the first database constructed during the initialization
 phase.
 From this the other two databases can be more easily constructed since they 
-can lookup symbols in the SymbolDatabase, rather than worrying about construction
+can lookup symbols in the =SymbolDatabase=, rather than worrying about construction
 of new ones.
+This class is the realization of $\mathcal{S}$ from section [[BDI and Jung]].
 
-\toReview
-PatternDatabase can store patterns based upon a Scene. There are actually two
-constructed of these, the first one constructs the patterns that are in a scene,
+\newlyCleared
+=PatternDatabase= can store patterns based upon a =Scene=.
+There are actually two constructed of these,
+the first one constructs the patterns that are in a scene,
 and the second one constructs patterns that are of scenes where the current
 scene is connected to.
 For example if there exists a connection form a symbol in scene A to a symbol
@@ -3058,25 +3086,26 @@ scene A.
 This second database allows scene transitions to occur.
 However to construct this second database the connection database is required.
 
-\toReview
-The connection database is a database that stores a connection set from a
+\newlyCleared
+=ConnectionDatabase= is a database that stores a connection set from a
 symbol. 
 This class is analogous to the symbol graph $G$ from section [[BDI and Jung]],
 it is used to determine what the bot could say, and what it thinks its speech
 partner can say.
-This database has a special method named createDual which is used to create
+This database has a special method named =createDual= which is used to create
 a connection database where all the connections are flipped.
 This is used to create the second pattern database,
 it made looking up the required patterns much easier.
 
 **** Before and templates
-\toReview
+<<Before and templates>>
+\newlyCleared
 After the personality was implemented, we wanted to bring the bot up too
 feature parity with the ALICE bot. 
 To do this several new data structures had to be introduced which can be seen
 in figure [[fig:templateclass]].
 
-#+NAME: fig:templateclass
+#+NAME: fig:cache notemplateclass
 #+BEGIN_SRC plantuml :cache yes :file img/uml/templateclass.png :exports results
   class Symbol {
     +name:String
@@ -3135,36 +3164,36 @@ in figure [[fig:templateclass]].
   }
   Utterance --* Informative
   Utterance --* CapturedMatchDB
-  
-  
+
 #+END_SRC
+
 #+CAPTION: Before and template class diagram
 #+LABEL: fig:templateclass
-#+RESULTS[6fc2caef96dffeadc45479279efaa48ded915bd3]: fig:templateclass
+#+RESULTS[ee21800363fb4f9f8eb99a40012ae803d4facae7]: fig:cache notemplateclass
 [[file:img/uml/templateclass.png]]
 
-\drafting
+
+\newlyCleared
 We can see from figure [[fig:templateclass]] that the consumers of these extensions
-are the Symbol class, the Utterance class and the Connection class.
+are the =Symbol= class, the =Utterance= class and the =Connection= class.
 What also can be deduced is that the before extensions was probably a lot
 easier to realize than the template extension, simply by counting the amount
-of classes it introduced and touched.
+of classes it introduced and modified.
 Whereas the template required the modification of at least three existing data
-data structures, the before only required to modify the Connection.
+data structures, the before only required to modify the =Connection=.
 
-\drafting
-So the before class is self recursive, as we've seen several times by now,
-however it just has an optional self recursive relationship.
-What it does is lay a restriction on Connection, the informative in the optional
-before has to be uttered before this connection can be used.
+\newlyCleared
+So the before class is self recursive,
+something which we've seen earlier in the =DialogueTree= class for example,
+however this is just an optional self recursive relationship.
+What it does is lay a restriction on =Connection=, the =Informative= in the optional
+=Before= has to be uttered before this connection can be used.
 See section [[That tags]] for a more in depth explanation.
 
-\drafting
+\newlyCleared
 The template system does something else. It introduces the ability to match
 variables from the regex and re-insert these as a template into existing symbols.
 This is explained in depth in section [[Star tags]].
-\todo[inline]{Go over each class explain what they do?}
-
 
 # make sure the figures don't spill over into next section
 \newpage
@@ -3340,7 +3369,7 @@ A deployment diagram of the architecture can bee seen in figure
   server  -- scene
   server  -(0)- client
 #+END_SRC
-#+CAPTION: Deployment diagram of new architecture, where the dashed arrow means constructs, the solid arrow means uses and the other lines mean itneracts.
+#+CAPTION: Deployment diagram of desired architecture
 #+LABEL: fig:n-agent-arch
 #+RESULTS[dcf9326c7d021dc38efdf65d5dbab06d0277c1df]: fig:n-agent-arch
 [[file:img/uml/n-agent-arch.png]]
@@ -3843,7 +3872,7 @@ to:
 The that tags in AIML have a rather unforntunate name.
 They require the bot to have said something (ie a pattern) before the current
 pattern can be used.
-Therefore in our YAML semantics, they are an additional restiriction on connections.
+Therefore in our YAML semantics, they are an additional restriction on connections.
 They appear in listing [[code:aiml-that-tag]] as an example.
 
 #+CAPTION: That tags example.
@@ -4704,29 +4733,34 @@ bibliography:refs.bib
 <<Symbol overview>>
 #+NAME: tab:symbols
 #+CAPTION: Symbol table
-| Symbol        | Constraints                    | Description                                   |                                          |
-|---------------+--------------------------------+-----------------------------------------------+------------------------------------------|
-| $f_a$         |                                | Function attitudes                            |                                          |
-| $\mathcal{B}$ |                                | Set of all possible believes                  |                                          |
-| $t$           |                                | time                                          |                                          |
-| $B_t$         | $B_t \subseteq \mathcal{B}$    | Believe $B$ at time $t$                       |                                          |
-| $\Pi$           |                                | Set of all possible sense information         | [fn:not-used:Not used in implementation] |
-| $\pi_t$         | $\pi_t \subseteq \Pi$              | Perception information $\pi$ at time $t$        | [fn:not-used]                            |
-| $\mathcal{D}$ |                                | Set of all possible actions                   | [fn:not-used]                            |
-| $\Delta_t$         | $\Delta_t \subseteq \mathcal{D}$    | Set of actions $\Delta$ executed at time $t$       | [fn:not-used]                            |
-| $\sigma$           |                                | A string                                      |                                          |
-| $\mathcal{S}$ |                                | All encoded symbols                           |                                          |
-| $s$           | $s \in \mathcal{S}, s=(\{\sigma\},\sigma)$ | A symbol $s$                                  |                                          |
-| $g$           | $\sigma \overset{g}{\to} s$           | Mapping function from $\sigma$ to $s$              |                                          |
-| $g'$          | $s \overset{g'}{\to} \sigma$          | Mapping function from $s$ to $\sigma$              |                                          |
-| $\mathcal{P}$ |                                | Set of all encoded perlocutionary speech acts |                                          |
-| $P$           | $P \subseteq \mathcal{P}$      | Set of perlocutionary speech acts             |                                          |
-| $p$           | $p \in \mathcal{P}$              | A perlocutionary speech acts                  |                                          |
-| $\Lambda$           |                                | Set of all active actors                      |                                          |
-| $a$           | $a \in \Lambda$                        | an actor                                      |                                          |
-| $u$           | $u=(P,a,s,t)$                  | Utterance made by $a$ at time $t$             |                                          |
-| $D$           | $D=(u,[D])$                    | Dialogue tree                                 |                                          |
-
+| Symbol        | Constraints                                                                                | Description                                   |                                          |
+|---------------+--------------------------------------------------------------------------------------------+-----------------------------------------------+------------------------------------------|
+| $f_a$         |                                                                                            | Function attitudes                            |                                          |
+| $\mathcal{B}$ |                                                                                            | Set of all possible believes                  |                                          |
+| $t$           |                                                                                            | time                                          |                                          |
+| $B_t$         | $B_t \subseteq \mathcal{B}$                                                                | Believe $B$ at time $t$                       |                                          |
+| $\Pi$           |                                                                                            | Set of all possible sense information         | [fn:not-used:Not used in implementation] |
+| $\pi_t$         | $\pi_t \subseteq \Pi$                                                                          | Perception information $\pi$ at time $t$        | [fn:not-used]                            |
+| $\mathcal{D}$ |                                                                                            | Set of all possible actions                   | [fn:not-used]                            |
+| $\Delta_t$         | $\Delta_t \subseteq \mathcal{D}$                                                                | Set of actions $\Delta$ executed at time $t$       | [fn:not-used]                            |
+| $\sigma$           |                                                                                            | A string                                      |                                          |
+| $\mathcal{S}$ |                                                                                            | All encoded symbols                           |                                          |
+| $s$           | $s \in \mathcal{S}, s=(\{\sigma\},\sigma)$                                                             | A symbol $s$                                  |                                          |
+| $g$           | $\sigma \overset{g}{\to} s$                                                                       | Mapping function from $\sigma$ to $s$              |                                          |
+| $g'$          | $s \overset{g'}{\to} \sigma$                                                                      | Mapping function from $s$ to $\sigma$              |                                          |
+| $\mathcal{P}$ |                                                                                            | Set of all encoded perlocutionary speech acts |                                          |
+| $P$           | $P \subseteq \mathcal{P}$                                                                  | Set of perlocutionary speech acts             |                                          |
+| $p$           | $p \in \mathcal{P}$                                                                          | A perlocutionary speech act value            |                                          |
+| $\Lambda$           |                                                                                            | Set of all active actors                      |                                          |
+| $a$           | $a \in \Lambda$                                                                                    | an actor                                      |                                          |
+| $u$           | $u=(P,a,s,t)$                                                                              | Utterance made by $a$ at time $t$             |                                          |
+| $D$           | $D=(u,[D])$                                                                                | Dialogue tree                                 |                                          |
+| $G$           |                                                                                            | A set of connections                          |                                          |
+| $c$           | $\begin{matrix} c=(P,A,s_1,s_2), c \in G \\ s_1, s_2 \in \mathcal{S} \wedge s_1 \neq s_2 \end{matrix}$ | Connection, from one symbol to another        |                                          |
+| $i$           |                                                                                            | An integer                                    |                                          |
+| $h$           | $p \overset{h}{\to} i$                                                                     | Mapping function from $p$ to $i$              |                                          |
+| $\Phi$           |                                                                                            | Set of goals in an agents believe base        |                                          |
+| $\phi$           | $\phi \in \Phi, \phi = (a,s)$                                                                         | A single goal, consisting of actor and symbol |                                          |
 \newpage
 * Building
 \todo[inline]{Document about python scripts and shell scripts (how to use), make sure succerrer can take it on easily}
