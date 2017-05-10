@@ -2,6 +2,7 @@
 
 * Dignum
 
+** Vragen
 1. Kan ik logic of BDI nu verwijderen?
 2. Ik denk dat ik concrete implementations moet uitbreiden omdat drools best
    wel een belangrijk onderdeel is geworden.
@@ -12,6 +13,29 @@
    invloed heeft omdat de rationele functies alleen maar op een enkel level
    werken).
 5. Kan ik in 3.4.6 de berekening achter wege laten?
+6. Welke hoofdstukken hebben prioriteit?
+
+** Script
++ Start mysqld =sudo systemctl start mysqld=
++ Start wildfly
++ Open believes.yml, introduction/connections.yaml, en ranger in introduction
+*** Templates
++ Vertel over template matching met regexes, en insertion
++ rebuild
++ open python client
++ zeg "My name is jappie"
++ laat zien resultaat verwacht naar yaml
++ zeg "How are you?"
++ vertel over queries in yaml
+*** Before clauses
++ nu over before clauses
++ zeg "Hello"
+  + laat zien dat nu de before clause gebruikt is
+  + vertel ook over labels in templates
+*** scene transitions
++ Transition scene: "How can I help you?"
++ Zeg nog eens "Hello"
+
 * Manuel
 
   Probablistic generation of next dialogue moves could be combined with moddeling one
