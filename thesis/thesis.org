@@ -5553,6 +5553,18 @@ Conversation went according to script.
 \todo[inline]{Perhaps we can use argumentation research on top of the graph to figure out more semantics (this statment is attacking that or inquirying this)}
 \todo[inline]{Extracting information from meanings isn't very DRY right now, for example saying how is your foot? Could perhaps be splitup into statusInquiry + foot. However I don't know how to do this better right now, perhaps it could be a natural result of dubble matching but we lose the order inforamtion.}
 ** Rough planning.
+*** Meeting
+**** Prepare script
+***** Template stuff
+      In Yaml, the regex and the templating
+      Then run it and show it works
+***** Before tags
+      In Yaml show where you did that
+      Then run it and show it works
+***** Scene transitions
+      Just go to the next scene and show intro stuff doesn't work anymore
+**** Email
+**** Print
 *** Report
      In thesis we should also mention the effects of values for functions
 *** Additional experimentation?
