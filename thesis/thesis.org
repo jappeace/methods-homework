@@ -3199,35 +3199,56 @@ This is explained in depth in section [[Star tags]].
 # make sure the figures don't spill over into next section
 \newpage
 *** Initialization
-\todo[inline]{We should keep this section more focused, IDK why I start talking here about connections etc, we should just talk about initialization}
-\newlyCleared
-In the new architecture we use a file reader to construct the 
-symbol database, pattern database and connection database
-into memory and expose them to the drools as can been seen in figure
-[[fig:initjung]].
-This allows the drools to utter spontaneous symbols and allows do deliberation
-on incoming utterances of the user with help of the interpreter component.
-The reactionary based scheme where an incoming user response has been replaced
-with a structural scheme.
-A symbol has connections to other symbols, which should be sensible responses. \todo{wut? Discuss this here?? Seems strange}
-So if a user utters a symbol then rather than having a direct response string
-that uses variables to fill in the gap, we get a symbol, which connected to
-other symbols which in turn are also connected.
-We can do deliberation on this because we have one or more goals.
+\toReview
+Since we are dealing with a potentially cyclic datastructure,
+which we also want to be immutable, we have a difficult problem.
+A potential way of working around such a problem is having a mutable,
+cooking phase, and after that make the object immutable cite:zibin2010ownership.
+This is in essence what we do with the Database structure.
+We construct its data first with a standard java hashmap,
+and once this is complete we wrap this into the database class.
+Which makes a shallow copy and has no api for mutation (see [[fig:dbclass]]).
+
+\toReview
+This way of doing things is the reason why we chose the order of initialization
+shown in figure [[fig:initjung]].
+The cyclic structure we want to create is the symbol graph $G$.
+So we start with the non-cyclic nodes, the symbols by constructing the symbol
+database.
+All symbols area constructed and put into the symbol database with as key the
+scene and name value.
+
+\toReview
+Once we have the symbol database we can use it to create connections from it.
+As seen in figure [[fig:droolclass]],
+connections consist of a symbol object its going too,
+and the key value of a connection database is a symbol too (see [[fig:dbclass]]).
+So to satisfy these values we just do a lookup in the symbol database.
+
+\toReview
+Finally the patern databases are constructed.
+Patterns were after reading the symbols already put into a hashmap,
+with as key the symbol and as value the set of patterns.
+So the only things that needs to happen for the in scene patterns database is to
+group them by scene.
+For neigbouring scene patterns however connections are required.
+The reason for postponing these to the end of construction is because the
+neigbouring scene patern database requires the knowledge of connections.
 
 #+NAME: fig:initjung
 #+BEGIN_SRC plantuml :cache yes :file img/uml/initjung.png :exports results
   |WebSocket|
   start
   :Receve StartGame message;
-  :Construct a chat botengine;
   |#CCDDDD|Engine|
   :Start kie thread;
-  :Register a controller;
   |#AntiqueWhite|File reader|
-  :Parse YML files;
-  :Construct initial believes;
-  :Construct pattern DBs;
+  :Read symbol files;
+  :Construct symbol db;
+  :Read connection files;
+  :Construct connection db ;
+  :Read believe file;
+  :Construct patttern dbs;
   |#CCDDDD|Engine|
   :Insert file reader results into drools;
   |WebSocket|
@@ -3236,31 +3257,8 @@ We can do deliberation on this because we have one or more goals.
 #+END_SRC
 #+CAPTION: Activity diagram of a server game construction
 #+LABEL: fig:initjung
-#+RESULTS[763266e1aab7e13801dca3cbcd932bf353cc39be]: fig:initjung
+#+RESULTS[c422b040ae5246a7ecdb58bed350e5cb68d716bd]: fig:initjung
 [[file:img/uml/initjung.png]]
-
-**** Parsing YAML
-\toReview
-To parse the several helper classes are used. These are prepended with the
-keyword raw and are designed to work with the library to parse YAML.
-From this it is rather easy to create the immutable and non primitive based
-objects we want.
-
-\toReview
-First the Symbol files are parsed and converted into a SymbolDatabase.
-This is the most easy to do since this database is just the symbol name
-as key with symbols as value as can be seen in figure [[fig:dbclass]].
-The pattern database is also constructed from the raw symbols.
-From these the patterns are striped and with help of the symbol database
-the right symbols are linked to patterns.
-Note that although the rawsymbols
-contain patterns strings the eventual symbols don't.
-This is because we split up patterns and potential (agent) utterances into
-distinct data structures.
-Where the patterns just point to the complete symbols.
-With help of this the connection database can be easily constructed.
-
-\todo[inline]{Diagram??}
 
 *** Operation
  \toReview
