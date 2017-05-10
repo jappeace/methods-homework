@@ -3197,7 +3197,7 @@ variables from the regex and re-insert these as a template into existing symbols
 This is explained in depth in section [[Star tags]].
 
 **** Support types
-\toReview
+\newlyCleared
 Because we are working with drools,
 we often use a technique of wrapping values into other types,
 to signify their progress in drools deliberation.
@@ -3245,17 +3245,17 @@ package drools{
 #+RESULTS[55010ae4b3d6cee5b4d1420c002d4a5dd2704576]: fig:supportclassjava
 [[file:img/uml/supportclassjava.png]]
 
-\toReview
+\newlyCleared
 The classes described in figure [[fig:supportclassjava]] have the primary function
 of starting the deliberation process.
 With =UnparsedUserUtterance= the initial utterance is inserted, and with
 =ParsedUtterance= it is translated to an understood symbol list.
-With these symbols the CaputerMatchDB is stored, which is later used to make an
-utterance from.
-This isn't done imediatly because believes are required to create the
-uttereance.
-We for example need to know which connection was walked to get here to figure
-out the =PerlocationaryValueSet=.
+With these symbols the =CaputerMatchDB= is stored, which is later used to create
+an =Utterance= from.
+This isn't done immediately because the =Believes= structure is
+required to create the utterance.
+We for example need to know which connection was used to get to this point in
+the conversation to figure out the =PerlocationaryValueSet=.
 
 #+NAME: fig:supportclassdrools
 #+BEGIN_SRC plantuml :cache yes :file img/uml/supportclassdrools.png :exports results
@@ -3309,15 +3309,14 @@ package dialogue{
 #+RESULTS[11d3c6965221f225c096b4456d706c30e2bbe884]: fig:supportclassdrools
 [[file:img/uml/supportclassdrools.png]]
 
-\toReview
-By studying figure [[fig:supportclassdrools]] we can start to undrestand what is
+\newlyCleared
+By studying figure [[fig:supportclassdrools]] we can start to understand what is
 going on inside the drools.
 We can for example see that a distinction is made for when a result matches
-an inscene pattern or a neigbouring scene pattern.
+an in scene pattern or a neighbouring scene pattern.
 These structures are of course there to do Scene switching.
-We can also see that to create a reply we need to have a QueryDatabase.
-This is of course the result of the template match searched in the utterance
-history.
+We can also see that to create a reply we need to have a =QueryDatabase=.
+This is the result of the template match searched in the utterance history.
 
 #+NAME: fig:supportclassperson
 #+BEGIN_SRC plantuml :cache yes :file img/uml/supportclassperson.png :exports results
@@ -3344,50 +3343,60 @@ package personality{
 #+RESULTS[b074494c2edcbfd3dacf2340a12faa839b869329]: fig:supportclassperson
 [[file:img/uml/supportclassperson.png]]
 
-\toReview
-In figure [[fig:supportclassperson]] we can see the drool defined PersonalityProcess.
+\newlyCleared
+In figure [[fig:supportclassperson]] we can see the drool defined =PersonalityProcess=.
 This structure tracks traversing the Jungian Functions.
-We manage this inside drools to give other rules the oppertunity to inspect
-the deliberation process.
+We manage this inside drools to give other rules the opportunity to inspect
+the deliberation process while its going.
 
 # make sure the figures don't spill over into next section
 \clearpage
 *** Initialization
-\toReview
-Since we are dealing with a potentially cyclic datastructure,
-which we also want to be immutable, we have a difficult problem.
-A potential way of working around such a problem is having a mutable,
+\newlyCleared
+Dealing with cyclic immutable data structures is a problem.
+If we were to store the connections in the nodes,
+and a cycle would occur,
+updating the first node would invalidate the second node.
+A way of working around this problem is by letting the connections point to an
+address of the node, rather than the object itself.
+Another way of working around such a problem is having a mutable,
 cooking phase, and after that make the object immutable cite:zibin2010ownership.
-This is in essence what we do with the Database structure.
-We construct its data first with a standard java hashmap,
-and once this is complete we wrap this into the database class.
+This is in essence what we do with the =Database= structure.
+We construct its data first with a standard java =HashMap=,
+and once this is complete we wrap this into the =Database= class.
 Which makes a shallow copy and has no api for mutation (see [[fig:dbclass]]).
 
-\toReview
-This way of doing things is the reason why we chose the order of initialization
-shown in figure [[fig:initjung]].
+\newlyCleared
+This initialization problem is the reason why we chose the order of
+initialization shown in figure [[fig:initjung]].
 The cyclic structure we want to create is the symbol graph $G$.
-So we start with the non-cyclic nodes, the symbols by constructing the symbol
-database.
-All symbols area constructed and put into the symbol database with as key the
-scene and name value.
+So we start with the nodes in the graph,
+which are the symbols by constructing the symbol database.
+All symbols are constructed and put into the symbol database with as key a
+string containing the scene name and symbol name.
+In essence we are using now as an address the scene name and symbol name.
 
-\toReview
+\newlyCleared
 Once we have the symbol database we can use it to create connections from it.
 As seen in figure [[fig:droolclass]],
 connections consist of a symbol object its going too,
 and the key value of a connection database is a symbol too (see [[fig:dbclass]]).
 So to satisfy these values we just do a lookup in the symbol database.
+So we changed the address, rather than it being the scene and symbol name,
+its the symbol object in itself.
+Since the connections are not stored in the symbols this is possible
+without making the symbols mutable.
 
-\toReview
-Finally the patern databases are constructed.
-Patterns were after reading the symbols already put into a hashmap,
+\newlyCleared
+Finally the pattern databases are constructed.
+Patterns were after reading the symbols already put into a =HasHmap=,
 with as key the symbol and as value the set of patterns.
 So the only things that needs to happen for the in scene patterns database is to
 group them by scene.
-For neigbouring scene patterns however connections are required.
+For neighbouring scene patterns however connections are required.
 The reason for postponing these to the end of construction is because the
-neigbouring scene patern database requires the knowledge of connections.
+neighbouring scene pattern database requires the knowledge of connections to be
+constructed.
 
 #+NAME: fig:initjung
 #+BEGIN_SRC plantuml :cache yes :file img/uml/initjung.png :exports results
@@ -3416,26 +3425,26 @@ neigbouring scene patern database requires the knowledge of connections.
 
 *** Operation
  \drafting
- To understand how the opperation of a bot works we can look at it best from the
+ To understand how the operation of a bot works we can look at it best from the
  point when a message is received and walk trough the steps it takes.
- An overview of this process is givin in the figure [[fig:insert_meaning]].
+ An overview of this process is giving in the figure [[fig:insert_meaning]].
 
- \toReview
+ \drafting
  It should be noted that at the point of quick reply personality could also be at
  play.
  For example people could have alternative ways of pronouncing the response.
  Thinking people may for example respond with a confident yes, whereas feeling
  people would say it by default in a more doubting tone.
 
- \toReview
+ \drafting
  To ensure rules are executed in a particular order we often wrap and unwrap
  required data into types.
- For example the initial user utterance gets wrapped into an UnparsedUttarence
+ For example the initial user utterance gets wrapped into an =UnparsedUttarence=
  type. This is to indicate that the plain string should be parsed first.
  Once this is done all meanings get extracted and inserted into a parsed
  utterance.
  From this rules can decide what to do further with this parsed type.
- Currently we just take the first symbol from the ParsedUttarence and convert it
+ Currently we just take the first symbol from the =ParsedUttarence= and convert it
  into a single utterance, while truncating all other utterances.
  Currently we delete the type after unwrapping it from the facts.
  This is to prevent double execution of rules.
@@ -4404,14 +4413,14 @@ because practically all symbols will be used from the initial symbol database.
 Once the connection database is constructed we can start working on a scene
 structure.
 This is to support scene transitions from the active scenes,
-to neigbouring scenes.
+to neighbouring scenes.
 The initial idea was to make a simple scene graph that would allow scenes to
-look into neigbouring scenes if they couldn't match an utterence string with
+look into neighbouring scenes if they couldn't match an utterence string with
 their own patterns.
 However we can do a better pre-processed variant.
 What we really want is another pattern database,
 but this does for the scene key not contain the patterns of the current scene,
-instead it contains the patterns of symbols it can go to from neigbouring
+instead it contains the patterns of symbols it can go to from neighbouring
 scenes.
 
 \toReview
