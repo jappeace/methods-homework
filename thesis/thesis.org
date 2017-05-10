@@ -3199,11 +3199,10 @@ This is explained in depth in section [[Star tags]].
 **** Support types
 \toReview
 Because we are working with drools,
-we often use a technique of wrapping around values into other types,
+we often use a technique of wrapping values into other types,
 to signify their progress in drools deliberation.
-Basically we use types to nest progress.
-There is a distinction to be made however,
-these types can either be defined in Java or drools.
+Basically we use types as labels to indicate progress.
+These types can either be defined in Java or drools.
 If they are defined in Java, both Java code and drools code can use it.
 If they are defined in drools, only drools code can use it.
 In figure [[fig:supportclassjava]] we can see the supporting types defined in
@@ -3245,6 +3244,18 @@ package drools{
 #+LABEL: fig:supportclassjava
 #+RESULTS[55010ae4b3d6cee5b4d1420c002d4a5dd2704576]: fig:supportclassjava
 [[file:img/uml/supportclassjava.png]]
+
+\toReview
+The classes described in figure [[fig:supportclassjava]] have the primary function
+of starting the deliberation process.
+With =UnparsedUserUtterance= the initial utterance is inserted, and with
+=ParsedUtterance= it is translated to an understood symbol list.
+With these symbols the CaputerMatchDB is stored, which is later used to make an
+utterance from.
+This isn't done imediatly because believes are required to create the
+uttereance.
+We for example need to know which connection was walked to get here to figure
+out the =PerlocationaryValueSet=.
 
 #+NAME: fig:supportclassdrools
 #+BEGIN_SRC plantuml :cache yes :file img/uml/supportclassdrools.png :exports results
@@ -3298,6 +3309,16 @@ package dialogue{
 #+RESULTS[11d3c6965221f225c096b4456d706c30e2bbe884]: fig:supportclassdrools
 [[file:img/uml/supportclassdrools.png]]
 
+\toReview
+By studying figure [[fig:supportclassdrools]] we can start to undrestand what is
+going on inside the drools.
+We can for example see that a distinction is made for when a result matches
+an inscene pattern or a neigbouring scene pattern.
+These structures are of course there to do Scene switching.
+We can also see that to create a reply we need to have a QueryDatabase.
+This is of course the result of the template match searched in the utterance
+history.
+
 #+NAME: fig:supportclassperson
 #+BEGIN_SRC plantuml :cache yes :file img/uml/supportclassperson.png :exports results
 package model{
@@ -3319,8 +3340,15 @@ package personality{
 
 #+CAPTION: Supporting type in the personality drools package
 #+LABEL: fig:supportclassperson
+#+ATTR_LATEX: :width 0.5\textwidth
 #+RESULTS[b074494c2edcbfd3dacf2340a12faa839b869329]: fig:supportclassperson
 [[file:img/uml/supportclassperson.png]]
+
+\toReview
+In figure [[fig:supportclassperson]] we can see the drool defined PersonalityProcess.
+This structure tracks traversing the Jungian Functions.
+We manage this inside drools to give other rules the oppertunity to inspect
+the deliberation process.
 
 # make sure the figures don't spill over into next section
 \clearpage
@@ -3388,11 +3416,9 @@ neigbouring scene patern database requires the knowledge of connections.
 
 *** Operation
  \drafting
- 
-
- \toReview
- Once the meaning is extracted from the user utterance we can insert it into the
- drool engine to do deliberation upon (see [[fig:insert_meaning]]).
+ To understand how the opperation of a bot works we can look at it best from the
+ point when a message is received and walk trough the steps it takes.
+ An overview of this process is givin in the figure [[fig:insert_meaning]].
 
  \toReview
  It should be noted that at the point of quick reply personality could also be at
