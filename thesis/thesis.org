@@ -3196,8 +3196,134 @@ The template system does something else. It introduces the ability to match
 variables from the regex and re-insert these as a template into existing symbols.
 This is explained in depth in section [[Star tags]].
 
+**** Support types
+\toReview
+Because we are working with drools,
+we often use a technique of wrapping around values into other types,
+to signify their progress in drools deliberation.
+Basically we use types to nest progress.
+There is a distinction to be made however,
+these types can either be defined in Java or drools.
+If they are defined in Java, both Java code and drools code can use it.
+If they are defined in drools, only drools code can use it.
+In figure [[fig:supportclassjava]] we can see the supporting types defined in
+java and the relations they have with types defined in previous sections.
+We can see the types that are defined in the dialogue drools package in figure
+[[fig:supportclassdrools]]
+and that of the personality specific drools in figure [[fig:supportclassperson]].
+
+#+NAME: fig:supportclassjava
+#+BEGIN_SRC plantuml :cache yes :file img/uml/supportclassjava.png :exports results
+
+package model{
+class Symbol
+  package template.db{
+    class CapturedMatchDB
+  }
+}
+
+package drools{
+  class UnparsedUserUtterance{
+    +value:String
+  }
+  class SymbolCapture{
+    +symbol:Symbol
+    +db:CapturedMatchDB
+  }
+  SymbolCapture --* Symbol
+  SymbolCapture --* CapturedMatchDB
+  class ParsedUtterance{
+    +captured:[SymbolCapture]
+  }
+  ParsedUtterance --* "*" SymbolCapture
+
+}
+
+#+END_SRC
+
+#+CAPTION: Supporting types in Java
+#+LABEL: fig:supportclassjava
+#+RESULTS[55010ae4b3d6cee5b4d1420c002d4a5dd2704576]: fig:supportclassjava
+[[file:img/uml/supportclassjava.png]]
+
+#+NAME: fig:supportclassdrools
+#+BEGIN_SRC plantuml :cache yes :file img/uml/supportclassdrools.png :exports results
+
+package drools{
+  package model{
+    class Symbol
+    class Utterance
+    package template.db{
+      class QueryDatabase
+    }
+  }
+  class UnparsedUserUtterance
+}
+package dialogue{
+  class DefaultReply{
+    symbol:Symbol
+  }
+  DefaultReply --* Symbol
+  class PreProcessed{
+    utterance:Utterance
+  }
+  PreProcessed --* Utterance
+  class Reply{
+    with:Utterance
+    insertQueries:QueryDatabase
+  }
+  Reply --* Utterance
+  Reply --* QueryDatabase
+
+  class Parsing
+  class FinshedProcess
+  class InScene{
+    source: UnparsedUserUtterance 
+  }
+  InScene --* UnparsedUserUtterance 
+  class NeigbourScene{
+    source:UnparsedUserUtterance 
+  }
+  NeigbourScene --* UnparsedUserUtterance 
+  
+  Parsing -[hidden]-> NeigbourScene
+  NeigbourScene -[hidden]-> InScene 
+  PreProcessed -[hidden]-> DefaultReply
+
+}
+#+END_SRC
+
+#+CAPTION: Supporting types in the dialogue drools package
+#+LABEL: fig:supportclassdrools
+#+RESULTS[11d3c6965221f225c096b4456d706c30e2bbe884]: fig:supportclassdrools
+[[file:img/uml/supportclassdrools.png]]
+
+#+NAME: fig:supportclassperson
+#+BEGIN_SRC plantuml :cache yes :file img/uml/supportclassperson.png :exports results
+package model{
+  class Believes
+  class DialogueTree
+}
+
+package personality{
+  class PersonalityProcess{
+    +under_consideration: DialogueTree
+    +believes:Believes
+    +functionTasks:[]
+  }
+  PersonalityProcess --* Believes
+  PersonalityProcess --* DialogueTree
+}
+
+#+END_SRC
+
+#+CAPTION: Supporting type in the personality drools package
+#+LABEL: fig:supportclassperson
+#+RESULTS[b074494c2edcbfd3dacf2340a12faa839b869329]: fig:supportclassperson
+[[file:img/uml/supportclassperson.png]]
+
 # make sure the figures don't spill over into next section
-\newpage
+\clearpage
 *** Initialization
 \toReview
 Since we are dealing with a potentially cyclic datastructure,
@@ -3261,6 +3387,9 @@ neigbouring scene patern database requires the knowledge of connections.
 [[file:img/uml/initjung.png]]
 
 *** Operation
+ \drafting
+ 
+
  \toReview
  Once the meaning is extracted from the user utterance we can insert it into the
  drool engine to do deliberation upon (see [[fig:insert_meaning]]).
