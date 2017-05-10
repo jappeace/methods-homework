@@ -5555,7 +5555,6 @@ Conversation went according to script.
 ** Rough planning.
 *** Report
      In thesis we should also mention the effects of values for functions
-*** Repair OCC module & scoring module
 *** Additional experimentation?
      For this I wanna setup an experiment like thing, where we research what
      the system does etc.
