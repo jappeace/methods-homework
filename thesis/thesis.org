@@ -793,8 +793,7 @@ and finally we will look at the serious game in its existing form.
 **** Logic of BDI
  <<bdi logics>>
  \cleared
- \ask{So I can delete this now?}
- \todo[inline]{We can delete this paragraph if we don't have any connections with these things. We may use it by saying for example that beliefs have certain kind of modalities. We probably aren't gonna use it to prove theoroms for example}
+ \todo[inline]{This paragraph can remain either way: 1 we say we didn't use it in this thesis because we didn't quite require it (although a description of the bot should be possible in it) 2. We make an actual description of the bot in the logic, once the description is done we should also make a fact sheet for the scenario (to show it works I guess), this is low priority}
  Logic of BDI is an attempt to formalize how agents behave.
  One of the first formalization of Bratman's theory was that of Cohen and
  Levesque cite:cohen1990intention. It was based on linear time logic and
@@ -812,228 +811,11 @@ and finally we will look at the serious game in its existing form.
 
 **** Concrete implementation
 2apl, jade cite:braubach2003jadex.
+ \todo[inline]{These are important frameworks for if you have to plan, and replan in a larger context, however our bot doesn't have this (so we should delete this subsection I guess)}
  \todo[inline]{Comment on adding this was: If the work becomes agent like, and we have some very clear commanalities between 2apl for example we can fill in this paragraph to fall back onto that}
- \todo[inline]{Perhaps it would be a good idea to sketch commanalities between drools and these kind of things, so that if a reader knows about any of these things he can lay the link easily}
-\ask{So I think the work became agentlike (-ish?) so I should expend this?}
-*** Social practices
- <<social practice>>
-
- \todo[inline]{(extra) possible sources: Weber, Durkleim, Hobermas, latour/reckwitz}
- \todo[inline]{ difference between norms and sp is that sp has no moral value, but you *violate* norms }
- \cleared
- In cite:smolka2001social it is stated that the research in activity theory
- led to the development of social practices.
- It was Karl Marx who made the roots who thought of the "roots" of activity
- theory cite:engestrom1999perspectivesp3_marx,
- Activity theory tries to bridge the gap between a single actor and the system
- it resides in cite:engestrom1999perspectivesp10_broad_definition
- trough the activity in progress.
- Another way of describing activity in this sense is "a way of doing things".
- A problem with this model however was, how do cultures move activities from the
- collective towards the individual cite:smolka2001social.
- Social practices were therefore introduced to make the notion of activity more
- concrete.
-
- \cleared
- An early adoption of social practice can be found in cite:shove2005consumers,
- where it was used to analyze the spread of Nordic Walking.
- In his analyses he uses the following overarching concepts to analyze the practice:
- 1. /Material/, which is just stuff in the real world. Such as cars, lamps etc.
- 2. /Meanings/, which covers issues that are relevant to the material and/or the
-    practice. Think of health, price or even emotions. Consider the an example
-    practice of cycling.
-    In cite:shove2005consumers meanings and images is used interchangeably,
-    however in cite:holtz2014generating its labeled as just meanings.
-    For clarity we will be using the word /Meanings/ since its more descriptive.
- 3. /Competence/, it is rather obvious to say you need to be able to cycle to
-    participate in the social practice of cycling. This is why this is
-    introduced.
-
-\cleared
-In cite:dignum2014contextualized a model of social practices for agents was
-developed.
-This model is extended specifically to allow software agents to use it.
-In this model /physical context/ describes the physical environment,
-it contains resources, places and actors.
-Note that resources is equivelant to material from the model used by
-cite:shove2005consumers,holtz2014generating.
-/Social context/ contains a social interpretation, roles and norms.
-In the previous model this was all part of /Meanings/.
-/Activities/ are the normal activities in the social practice,
-in nordic waling this can be for example talking with your partner,
-or stopping to get a stone out of your shoe.
-They don't need to all be performed but are there just as options.
-This is the first construct that wasn't covered by the other model.
-/Plan patterns/ are blue prints for the eventual plan.
-An example of a doctor appointment plan pattern can be seen in
-figure [[fig:sp-activity]].
-If you go to the doctor the first thing you do is some kind of greeting.
-Then the doctor goes onto data gathering and diagnoses mode until he figured
-out what's wrong.
-After which he will tell in the finishing phase what to do about it.
-Now what these phases entail is not clear at all.
-Finishing may for example contain the prescription of medicine,
-or an appointment to go to the hospital. 
-However plan patterns do not describe such an implementation.
-The plan pattern construct wasn't represented in the previous model either.
-/Meaning/ in this model is soley related to the social effects of activities,
-and finally /Competences/ is the same as in the previous model.
-
- \cleared
- The interest for this model comes from  the potential heuristic use of social
- practices.
- Once in a particular situation that fits for a social practice the amount of
- reasoning can be sped up by having actions and their preconditions be grouped
- under that social practice,
- if no preconditions match an agent could consider trying other social practices
- he knows, or ask its peers for more information.
-
- \cleared
- The social practice theory in this thesis should be considered as a
- /foundation/ rather than a separate element.
- We will be using it as a domain limiting device,
- however it should be noted that it could act as much more than that,
- potentially it could give the notion of culture to agents.
- In this thesis we are interested in implementing personality for a serious game
- in a single social practice.
- So right now the social practice just gives an ordered overview in what domain our program
- should work.
- We can formulate the social practice that is relevant for this thesis 
- in the following manner:
-
- + Practice name: Doctor appointment
- + /Physical context/,
-   - Resources: Computer, chair, diagnostic tools..
-   - Places: waiting room, doctor's office...
-   - Actors: doctor, patient, assistant, ...
- + /Social context/,
-   - Roles: Doctor, Patient...
-   - Norms: doctor is polite, patient is polite, doctor is inquisitive
-   - Social interpretation: Can sit on chair, cannot sit on table.
- + /Activities/, share information, do diagnostics, minor treatments,
-   prescribing drugs...
- + /Plan patterns/, see figure [[fig:sp-activity]].
- + /Social meaning/, awkwardness, gratitude, ...
- + /Competences/, Give injection, empathetic talk
-
-#+NAME: fig:sp-activity
-#+BEGIN_SRC plantuml :cache yes :file img/uml/sp-activity.png :exports results
-start
-:greeting;
-while (has diagnoses?)
-fork
-:data gathering;
-fork again;
-:diagnoses;
-end fork
-endwhile
-:finishing;
-stop
-#+END_SRC
-#+CAPTION: Plan pattern example
-#+LABEL: fig:sp-activity
-#+RESULTS[35679ceefcd43b1884cc8c502d27ae59aaa34043]: fig:sp-activity
-[[file:img/uml/sp-activity.png]]
-
-
-  \cleared
-  We can imagine personality should have /a/ influence on social practice
-  selection and of course plan influence. As far as the authors are aware however,
-  there hasn't been any prior work on this subject. But we can speculate for
-  example that when considering physical context someone that is domination by a
-  Sensing function would check all artifacts more rigorously than someone
-  dominated by an Intuition.
-
-  \cleared
-  If the social practices are defined more formally they could be 
-  used in a bigger system such as in cite:augello2015social and
-  cite:augello2016model.
-*** Speech act theory
-<<Speech act thoery>>
-\cleared
-Since a large part of this thesis is about communication we will give here a
-brief overview of speech act theory.
-There are three levels at which speech acts can be analyzed according to
-cite:shoham2008multiagent_speechact_p241..245.
-/Locutionary/ acts simply convey information form the speaker to the listener.
-All speech acts do this, as long as they carry meaning.
-/Illocutionary/ acts are the speech acts that do something by saying it.
-It captures the intend of the speaker. This includes giving orders or uttering a
-warning.
-/Perlocutionary/ acts are the acts that bring an effect to the hearer, such as
-scaring or saddening.
-
-\cleared
-There are some basic assumptions of conversation, commonly described as the
-/rules of conversation/ developed by Grice cite:shoham2008multiagent_speechact_p241..245.
-Humans communication happens on the assumption that both parties want to be
-clear to each other, even when other motivations apply.
-This is called the /cooperation principle/.
-To accomplish this share goal the Grice's maxims cite:gricemaxims are
-used:
-/Quantity/ has to do with the amount of information transferred in a single
-utterance, a human wants to transfer just enough to get the right meaning across.
-/Quality/ is the assumption where people will say things they believe to
-be true.
-/Relation/ states that the things uttered should be relevant to the subject
-being discussed.
-/Manner/ is about being as brief and clear as possible while avoiding ambiguity
-and being orderly.
-
-*** Dialogue systems
-<<Dialogue systems>>
-\cleared
-Dialogue systems are the systems that try to analyze how dialogue works.
-This is a subfield of AI that tries to combinate linguistics with computer
-science.
-
-\cleared
-First of all are of course the chat bot systems, which are based upon case based
-reasoning. A good example of this is the A.L.I.C.E. bot cite:wallace2001dont.
-These are mostly reactive systems that use pattern matching rules paired with
-"good" responses,
-sometimes with conditions to allow for more variety.
-A more extended example of such a system is eliza bot which is described in
-cite:galvao2004persona,
-where they also added personality to the bot with the OCEAN model.
-
-\cleared
-Traum cite:traum2003information describes the information state approach for
-dialogues. 
-The approach traum proposes is modeling:
-+ Informal components, which aren't part
-  of the model but are just there. This can include domain knowledge for example.
-+ Formal representations, which are data structures.
-+ Dialogue moves, which entail the set of possible utterances to make.
-+ Update rules, that allow or prohibit the taking of certain moves.
-+ Update strategy, to decide what rules to apply at a particular point.
-The dialogue is the information state itself cite:walterapproaches.
-This is an extremely general way of describing a dialogue system.
-
-\cleared
-In cite:wobcke2005bdi a BDI based methodology is proposed to handle dialogue
-between a user and an agent.
-However we want to point out that this solution fits into the rough model traum
-sketched. So we could say its a information state approach too.
-
-*** BDI + Personality
-<<BDI + Personality>>
- \cleared
- \todo[inline]{other proposed systems and argue for campos}
- Campos discussed an architecture in which personality emerged not from things
- you like,
- but rather than trying to determine which content a personality preferred,
- the personality was encoded in the process they preferred.
- This was called /process orientated/ rather than contend orientated.
- cite:campos_mabs2009
- For example in their interpretation of MBTI a Sensing agent would make a plan
- in complete details whereas an intuitive agent would just continue planning as
- needed.
- Thinking agents would base their decision process upon their own believes
- whereas feeling agents would consider what other agents want.
- In our model we conceptualize the Jungian functions also as a process.
- We comment more on this in section [[Jungian BDI]].
  
+**** Drools
+ \todo[inline]{Drools and 2apl are significantly different, so they shouldn't be taken together or compared, we still should describe drools more torougly though}
 ** The serious game
 
  <<The serious game>>
@@ -1615,12 +1397,15 @@ Sander could have had his problem diagnosed a week earlier and Susie could have
 had access to pain killers for example.
 
 ** Software engineering literature
+
+\todo[inline]{This chapter isn't interesting, because it doesn't add anything that is specifically used for this thesis, so it can be removed}
 \todo{I guess this one is for if we have extra time}
 Quality attributes of systems \url{https://en.wikipedia.org/wiki/ISO/IEC_9126}
 \todo[inline]{Optionally discuss some of the patterns used}
 
 *** Type signatures
 <<Type signatures explained>>
+\todo[inline]{This can be removed because it isn't used in any java specific code (inside the thesis)}
 \ask{Delete this? because its kindoff pre-knowledge or redundant?}
 \todo[inline]{Isn't this a concern for implmentation? Or find at least some sources}
 \todo[inline]{Perhaps I should add citations?}
@@ -1751,8 +1536,9 @@ Therefore the type of A has changed in B by partial application.
 At this point we can see the Java verbosity really starting to hurt the point.
 This is a major reason why the Haskell syntax is used to explain the type
 signature in detail.
-* BDI and Jung
+* BDI and Jung 
 <<Jungian BDI>>
+\todo{I think we should remove BDI from bdi and jung}
 # In this chapter we talk about the abstract ideas, any information neccasarry
 # to execute the thesis without considering implementation details.
 # so I guess height and node count aren't neccasarry.
@@ -2260,8 +2046,6 @@ and didn't have any choices available to decide upon.
 This structure still works with SL-TDI's non alternation.
 
 ** Mapping function attitudes to a process 
-\ask{So since we have integration tests now this chapter is valid?}
-\todo[inline]{The validity of this chapter entirely depends on the result of making a test scenario}
 <<Mapping to process>>
 \cleared
 Now you may argue at this point we haven't refined our types a lot, since
@@ -4782,6 +4566,7 @@ The biggest issues we found were:
 4. $T_i$ didn't have good default behavior
 
 * In conclusion
+\todo[inilne]{We need to explicitly say here that Mapping function to attidues to a process (3.4) is valid for the test use cases shown in [[Test Results]]. Although the validity is in no way proven (we just have /a/ instance that is correct, which is different from saying that all instances are correct)}
 \todo[inline]{Discussion, comparison}
 ** Future work
 *** Give the bot some semantic understanding
