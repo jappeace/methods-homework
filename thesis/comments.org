@@ -3,6 +3,7 @@
 * Dignum
 
 1. Kan ik de code opensourcen onder AGPL?
+2. Ik zou het een stuk makkelijker kunnen maken om de code te gebruiken door wildfly en mysql te dumpen.
 
 * Manuel
 

@@ -5506,12 +5506,13 @@ Conversation went according to script.
 - Document about python scripts and shell scripts (how to use),
   make sure succerrer can take it on easily.
 - Another student should be able to work with this,
-  so perhaps we should make a docker image for wildfly mysql etc?
+  +so perhaps we should make a docker image for wildfly mysql etc?+
+  What about dumping wildfly and mysql, don't use it anyway..
+  Just create a stripped down version that starts the websocket and stops.
 - You know, we should just test the idea by letting an other student execute the
   instructions I wrote.
 - This probably also includes fixing recursive before, almost certain that doesn't work.
   (maybe include unit tests for that because its recursion which never works as expected)
-
 
 
 *** Additional experimentation?
