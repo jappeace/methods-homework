@@ -791,7 +791,6 @@ and finally we will look at the serious game in its existing form.
  # A case study is presented as proof of these claims.
 
 **** Logic of BDI
-
  <<bdi logics>>
  \cleared
  \ask{So I can delete this now?}
@@ -4928,8 +4927,6 @@ bibliography:refs.bib
 | $\phi$           | $\phi \in \Phi, \phi = (a,s)$                                                                         | A single goal, consisting of actor and symbol |                                          |
 \newpage
 * Building
-\todo[inline]{Document about python scripts and shell scripts (how to use), make sure succerrer can take it on easily}
-\todo[inline]{Another student should be able to work with this, so perhaps we should make a docker image for wildfly mysql etc?}
 <<building>>
 \cleared
 To build this project two hurdles need to be overcome, because the
@@ -5717,20 +5714,21 @@ Conversation went according to script.
 \todo[inline]{Perhaps we can use argumentation research on top of the graph to figure out more semantics (this statment is attacking that or inquirying this)}
 \todo[inline]{Extracting information from meanings isn't very DRY right now, for example saying how is your foot? Could perhaps be splitup into statusInquiry + foot. However I don't know how to do this better right now, perhaps it could be a natural result of dubble matching but we lose the order inforamtion.}
 ** Rough planning.
-*** Meeting
-**** Prepare script
-***** Template stuff
-      In Yaml, the regex and the templating
-      Then run it and show it works
-***** Before tags
-      In Yaml show where you did that
-      Then run it and show it works
-***** Scene transitions
-      Just go to the next scene and show intro stuff doesn't work anymore
-**** Email
-**** Print
 *** Report
      In thesis we should also mention the effects of values for functions
+
+*** Make usable for other student
+- Document about python scripts and shell scripts (how to use),
+  make sure succerrer can take it on easily.
+- Another student should be able to work with this,
+  so perhaps we should make a docker image for wildfly mysql etc?
+- You know, we should just test the idea by letting an other student execute the
+  instructions I wrote.
+- This probably also includes fixing recursive before, almost certain that doesn't work.
+  (maybe include unit tests for that because its recursion which never works as expected)
+
+
+
 *** Additional experimentation?
      For this I wanna setup an experiment like thing, where we research what
      the system does etc.
