@@ -791,6 +791,7 @@ and finally we will look at the serious game in its existing form.
  # A case study is presented as proof of these claims.
 
 **** Logic of BDI
+
  <<bdi logics>>
  \cleared
  \ask{So I can delete this now?}
@@ -1311,7 +1312,7 @@ stop
 \newpage
 **** Text processing
 <<Text Processing>>
-    \newlyCleared
+    \cleared
      Text processing is done with help of the ALICE chat bot.
      This bot does the parsing and validation of AIML,
      with help of the knowledge encoded in AIML it can specify a response.
@@ -1341,7 +1342,7 @@ stop
 		</template>
 	</category>
 #+END_SRC
-    \newlyCleared
+    \cleared
      In this example the first category indicates that if a user types
      "What is the problem" (pattern tags), then the answer can be found in a
      category with pattern "why are you here".
@@ -1352,7 +1353,7 @@ stop
 
 **** Deliberation
 <<Deliberation>>
-\newlyCleared
+\cleared
      AIML has been extended to allow updating of the drools knowledge base,
      as can be seen in listing [[code:s-aiml-inserts]].
 
@@ -1630,7 +1631,7 @@ If the reader is familiar with functional languages he can skip this section.
 In this section we explain type signatures, partial application and functions
 as arguments.
 
-\newlyCleared
+\cleared
 Building upon the idea of pure functions we use the concept of /type signature/.
 A type signature can be seen as a restriction on what goes in and what goes out.
 This is analogous to a set
@@ -1652,7 +1653,7 @@ What you're really saying is that "this function does not accept anything but
 int, otherwise the computation breaks".
 Note that we define the class A, simply because we have to in Java.
 
-\newlyCleared
+\cleared
 There are some things to keep in mind. First of all, there is a direct
 correlation with how precise description is and the amount of things you can do
 with the type. The more general the type the less you can do with it.
@@ -1668,7 +1669,7 @@ Say you have the following pure function shown in listing [[code:java-a-pure-fun
   }
 #+END_SRC
 
-\newlyCleared
+\cleared
 How many possible different ints can it return?
 The answer is two.
 Note that the function can't just create a Random object to generate more
@@ -1683,7 +1684,7 @@ domain based upon types.
 Only if we assume we're dealing with pure functions,
 we can reason about possible computations indirectly.
 
-\newlyCleared
+\cleared
 Another really important feature of functions to keep in mind is that the
 argument of an function can be a function too.
 This is how we combine Jungian function with each other to create personalities
@@ -1701,7 +1702,7 @@ This has can also be done in Java as can be seen in listing [[code:java-lambdas]
   }
 #+END_SRC
 
-\newlyCleared
+\cleared
 The interface does not specify what behavior it contains, only the type of the
 function. Because Java is object orientated B can be much more then just that
 function, but according to the function in A, its just that one function.
@@ -1710,7 +1711,7 @@ but that is just a way of ignoring the type system cite:whyavoidcasts.
 This is not interesting to explore further because we are making a design based
 upon the type system.
 
-\newlyCleared
+\cleared
 Then finally the last technique we use (implicitly) is a process called partial
 application.
 In which we fill up some arguments of a function to create another function.
@@ -1910,7 +1911,7 @@ individually.
 To do this we will define some terms, with which we will go from the broadest
 definition possible towards one that just fits the project scope.
 
-\newlyCleared
+\cleared
 Let $\mathcal{B}$ denote the set of all
 possible believes and let $B_t$ with $B_t \subseteq \mathcal{B}$ denote the
 believes at time $t$. 
@@ -1971,7 +1972,7 @@ In the previous version this mapping was entirely done by AIML.
 How this is done in this version will be discussed in the implementation
 section [[From strings to meanings]].
 
-\newlyCleared
+\cleared
 So the simplification is now as follows,
 firstly we note that $\mathcal{S} \subset \Pi$,
 since understanding meaning is a form of sensation.
@@ -2002,7 +2003,7 @@ uttered.
 We also need to mark which agent uttered the dialogue tree node,
 therefore we introduce $\Lambda$ as the set of all active actors, where $a \in \Lambda$.
 
-\newlyCleared
+\cleared
 With an actor $a$ and a symbol $s$ we can start thinking about modeling an
 utterance.
 However to do this, its important to remember that an utterance always comes with
@@ -2015,7 +2016,7 @@ Where $P$ is the set of perlocutionary values uttered, $a$ is the actor that
 uttered, $s$ the symbol that was uttered and $t$ the time at which the utterance
 was made.
 
-\newlyCleared
+\cleared
 Now we introduce $D$ a dialogue tree tuple:
 \[ D = (u, [D])\]
 Where $u$ is the utterance,
@@ -2081,7 +2082,7 @@ response .. D1
 #+RESULTS[1f1f673a8fc69adbde74aa1a7aeb115abfb4b09a]: fig:dialoguetree
 [[file:img/uml/dialoguetree.png]]
 
-\newlyCleared
+\cleared
 With this in place we can replace both the $S_t$ and $\Delta_{t+1}$ with the $D_t$ and
 $D_{t+1}$ respectively, we can also remove $t$, since its now contained in the
 utterance.
@@ -2226,7 +2227,7 @@ Currently it cannot apply any order since the children list is empty.
 Luckily it can still use its next function, which is irrational
 (see section [[Jungian alternating functions]]).
 
-\newlyCleared
+\cleared
 Another situation to consider is what to do when there are already children.
 Should an irrational function extend this list of children or go to some leaf
 node?
@@ -2283,7 +2284,7 @@ Then we will define the believe tuple more formally.
 
 *** Symbol graph
 <<symbol graph>>
-\newlyCleared
+\cleared
 To make sure the agent stays on topic we will make use of a symbol graph.
 This graphs gives connections to the symbols described in section [[A type signature approach]].
 The meaning graph $G$ is a set of connections $c \in G$ where
@@ -2297,7 +2298,7 @@ but the way you get to those meanings.
 In other words, being polite and then telling bad news causes different
 perlocutionary values than just telling bad news.
 
-\newlyCleared
+\cleared
 From this we can define a function that gets the allowed connections from
 a symbol and an agent:
 \[ a \to s \to [c] \]
@@ -2402,7 +2403,7 @@ However we will borrow parts of it.
 Namely whenever a rational function finishing ordering the input set it will
 call the /next/ function to do deliberation on the most preferred item.
 
-\newlyCleared
+\cleared
 We also model the rational functions as local optimizing functions.
 Only the current ply and maybe the next ply is considered,
 but not the entire tree.
@@ -2421,7 +2422,7 @@ This describes $F_e$ rather well, $F_i$ not so much however.
 So we adapted and adopted that idea for $F_e$ and for $F_i$ we used the lookup
 table.
 
-\newlyCleared
+\cleared
 Both feeling functions $F$ use the perlocutionary acts to order the children.
 $F_i$ uses a predefined value set $h$: 
 \[ p \overset{h}{\to} i \].
@@ -2443,7 +2444,7 @@ soon as possible.
 The thinking functions $T$ do this without paying any attention to
 perlocutionary speech acts.
 
-\newlyCleared
+\cleared
 We could say that while feeling is concerned with perlocutionary speech act goals
 thinking on the other is concerned with symbolic goals.
 To model the goals of the thinking functions we will introduce the set of goals
@@ -2457,7 +2458,7 @@ This function is asymmetric.
 Finally there is a function that determines if a goal is completed or not:
 \[\phi \to b\]
 
-\newlyCleared
+\cleared
 Now to begin with $T_e$.
 It sees the problem to solve as the conversation itself.
 Therefore it will consistently choose speech acts that could help the partner to
@@ -2492,7 +2493,7 @@ possible.
 
 *** Believes overview
 <<Believes overview>>
-\newlyCleared
+\cleared
 We listed the function attitudes $f_a$ and their required information into
 table [[tab:fa-and-data]]. 
 Therefore $B = (h, [u], \Phi, G, a, G', h')$.
@@ -2513,7 +2514,7 @@ in table [[tab:symbols]] in appendix [[Symbol overview]].
 
 *** Turn taking
 <<Turn taking>>
-\newlyCleared
+\cleared
 In the naive approach we modeled turn taking with a simple round robin strategy. 
 Basically the irrational functions would only consider options that change
 actor between plies. 
@@ -2527,7 +2528,7 @@ and rational would prefer alternation when possible.
 
 *** Function ply depth
 <<Function ply depth>>
-\newlyCleared
+\cleared
 A big issue that turned up was at which level function ought to operate.
 We have a two pass architecture, where functions can inspect the dialogue tree
 before passing it to the /next/ function, but they can also inspect the result
@@ -2536,7 +2537,7 @@ The reason for the two pass architecture is explained in section [[Rational and 
 However it didn't treat another issue in dept, which is:
 How does a function know at which level it should operate?
 
-\newlyCleared
+\cleared
 In a naive approach we tried an implementation where irrational functions
 will by default go down the left (most preferred) path to a leaf node and then
 generate more meanings,
@@ -2547,7 +2548,7 @@ since in the first pass it does nothing and when everything
 goes back it works at one level above the leaves,
 but it should be the *most* relevant.
 
-\newlyCleared
+\cleared
 Another approach is to use outside information to determine height.
 Basically we would put into the believes the order of functions.
 With this information and the dialogue tree we can calculate the
@@ -2562,7 +2563,7 @@ Then we want the lower level also to be of the most important rational function.
 The 'deeper' less important rational functions only have a guiding role for 
 irrational functions after them.
 
-\newlyCleared
+\cleared
 We could also let the rational functions sort the entire tree,
 and let irrational always extend the most preferred option.
 At first glance this idea would make order for rational functions irrelevant.
@@ -2570,7 +2571,7 @@ Perhaps this isn't the case however,
 since a lower level rational function would still guide which part of the tree
 get extended.
 
-\newlyCleared
+\cleared
 So there are two methods of dealing with this issue.
 Firstly we can let rational functions just let everything be sorted,
 but then the deeper rational functions will become less relevant.
@@ -2586,7 +2587,7 @@ consistent in its choices if it wants to utter lower level replies.
 Note however that deeper rationale functions can still have effect by virtue of
 deciding which actions are generated indirectly.
 
-\newlyCleared
+\cleared
 To calculate an operation height, we need to know the function order,
 then the function itself and finally the height of the dialogue tree.
 Which results in the following:
@@ -2639,7 +2640,7 @@ we can conclude that they will also behave differently.
 
 * Architecture
 <<Architecture>>
-\newlyCleared
+\cleared
 To combine the ideas discussed in section [[BDI and Jung]] with the existing program,
 some big architectural changes were introduced.
 For example the Alice bot was completely removed in favor of a new less tightly
@@ -2647,7 +2648,7 @@ coupled scheme.
 The drools have become the center of deliberation (which previously was the AIML).
 We will discuss these changes in this chapter.
 
-\newlyCleared
+\cleared
 In this chapter we will discuss two architectures,
 the first is the architecture which is actually implemented, this deals with a
 single agent and the user.
@@ -2664,13 +2665,13 @@ between the current implementation and the original architecture discussed in
 section [[The serious game]].
 Note that we want to keep as much of the existing architecture as possible.
 
-\newlyCleared
+\cleared
 There are also several items we won't discuss in this chapter because they
 haven't changed, these include the protocol,
 and the Wildfly server and the unity client.
 ** Implemented architecture
 <<Implemented architecture>>
-\newlyCleared
+\cleared
 A deployment diagram of the architecture can bee seen in figure
 [[fig:architecture-concept]],
 where the dashed arrow means constructs,
@@ -2733,13 +2734,13 @@ This is confusing for new scenario creators since completely different folders
 have to be accessed to change the strings.
 # This violates the changeability design principle quite heavily and unnecessarily. \todo{cite}
 
-\newlyCleared
+\cleared
 The changes proposed here, result in a much more simple architecture.
 Only one place does deliberation rather than two and only one API is used for
 generating responses, whereas previously drools could generate replies, /and/
 the AIML bot.
 
-\newlyCleared
+\cleared
 Note that although we removed the ability for the bot to use AIML, it should be
 relatively easy to convert from the old AIML structure to the new format with help
 of a script.
@@ -2755,23 +2756,23 @@ Good programmers worry about data structures and their relationships.
   -- Linus Torvalds cite:linusbadgoodprogrammersquote 
 #+END_QUOTE
 
-\newlyCleared
+\cleared
 In this subsection we will discuss the main data structures used to implement
 the ideas from section [[BDI and Jung]].
 We use class diagrams to accomplish this which are based upon UML cite:fowler2004uml.
 Before we do this I would like to point out several things to keep in mind.
 
-\newlyCleared
+\cleared
 Firstly, we do not show everything precisely such as implemented in the code,
 because that would clutter the diagrams.
 What we do model is all relevant information in structures and the relationship
 between those, following the words of Torvalds.
 
-\newlyCleared
+\cleared
 Secondly, its better to think of the classes shown here as data structures,
 the fields are set to public in cases where immutability was possible.
 
-\newlyCleared
+\cleared
 Thirdly we split up the class diagram into several because of space,
 the model has become rather big.
 There exists a real separation like this in the code base, the lower level
@@ -2782,13 +2783,13 @@ not function without the low level components,
 but you can make it function without the high level components.
 Which in practice is done with the low level replies.
 
-\newlyCleared
+\cleared
 Finally note that we use $[\dots]$ for list and $\{\dots\}$ for set in the
 class diagrams, to save space.
 
 **** Low level diagram
 
-\newlyCleared
+\cleared
 In figure [[fig:droolclass]] the diagram containing the low level data structures
 used. These are the basic assumptions, or building blocks the implementation
 is constructed from.
@@ -2865,7 +2866,7 @@ is constructed from.
 #+RESULTS[1c677a21ef92d9dff7fc9ff5dfca6512d4f6c4d0]: fig:droolclass
 [[file:img/uml/droolclass.png]]
 
-\newlyCleared
+\cleared
 From figure  [[fig:droolclass]] we can clearly see the importance of the =Symbol=
 structure in the application.
 Simply by counting the amount of structures that consist of it,
@@ -2893,7 +2894,7 @@ and the implementation for this class diagram can be seen in table
 | $h$    | =PersonalValues=                                                                                                                                  |
 | $\phi$    | =Goal=                                                                                                                                            |
 
-\newlyCleared
+\cleared
 Something that was thought about is how similar a =Connection= is to an
 =Utterance=. Except for the =instant= field, they are the same
 (note that the =informative= field of utterance is the same as the =to= and
@@ -2904,7 +2905,7 @@ will be uttered. Whereas an utterance is a used connection, that possibility
 became a realization.
 Therefore, we were right to distinct them at type level.
 
-\newlyCleared
+\cleared
 These considerations become especially important when structures are
 essentially the same, as we can see with the =Scene= and =Actor= classes.
 The only thing they contain are a String.
@@ -2914,7 +2915,7 @@ We argue yes because they entail completely different semantics,
 the =Scene= class is used to group symbols and patterns,
 whereas the =Actor= class is used to identify actors.
 
-\newlyCleared
+\cleared
 The next question would be: Should we use an inheritance relation to make our
 code more DRY cite:thomas2010orthogonality (don't repeat yourself)?
 For by example introducing an abstract class =ANamed= and letting
@@ -2928,7 +2929,7 @@ provides is occupied forever,
 or at least until a major refactor occurs.
 
 **** Believes and DialogueTree
-\newlyCleared
+\cleared
 In figure [[fig:jungclass]] we can see the higher level structures of =Believes= and
 =DialogueTree=. Note that we significantly simplified all lower level components
 in this figure to save space.
@@ -2986,7 +2987,7 @@ in this figure to save space.
 #+RESULTS[212259f430fea1f6c765e388f698bb1c14824598]: fig:jungclass
 [[file:img/uml/jungclass.png]]
 
-\newlyCleared
+\cleared
 From [[fig:jungclass]] we can see the main clients of the low level drool package
 is indeed the =Believes= class and after that the =DialogueTree=.
 =Believes= provide the Jungian functions with bounded information about the mind
@@ -3001,7 +3002,7 @@ the ones discussed in previous section.
 | $B$    | Believes            |
 | $D$    | DialogueTree        |
 
-\newlyCleared
+\cleared
 The =Believes= structure is very peculiar, because it doesn't represent a single
 idea or use case. Instead its just a combination of various elements that are
 required for the Jungian functions to operate.
@@ -3019,7 +3020,7 @@ rather then what they as a whole need.
 With that change the personality functions could be flattened to drool rules,
 which would make the architecture even more simple. \todo{Why is this good? or refer to section that discusses this}
 
-\newlyCleared
+\cleared
 The =DialogueTree= structure is however a whole other beast.
 It provides a well defined structure, and some utility methods that make tree
 navigation much easier.
@@ -3027,7 +3028,7 @@ These methods aren't shown in the figure because their type signatures are
 rather big. \todo{But we discuss them in the implementation? Refer to that}
 
 **** db package
-\newlyCleared
+\cleared
 In figure [[fig:dbclass]] the databases are shown.
 This is a sub package of the model.
 The database is best seen as an immutable hash map. It also provides some extra
@@ -3067,7 +3068,7 @@ for example.
 #+RESULTS[a2e3cbdbbab42de8a4c6c9d166b2ef419283222c]: fig:dbclass
 [[file:img/uml/dbclass.png]]
 
-\newlyCleared
+\cleared
 =SymbolDatabase= is the first database constructed during the initialization
 phase.
 From this the other two databases can be more easily constructed since they 
@@ -3075,7 +3076,7 @@ can lookup symbols in the =SymbolDatabase=, rather than worrying about construct
 of new ones.
 This class is the realization of $\mathcal{S}$ from section [[BDI and Jung]].
 
-\newlyCleared
+\cleared
 =PatternDatabase= can store patterns based upon a =Scene=.
 There are actually two constructed of these,
 the first one constructs the patterns that are in a scene,
@@ -3087,7 +3088,7 @@ scene A.
 This second database allows scene transitions to occur.
 However to construct this second database the connection database is required.
 
-\newlyCleared
+\cleared
 =ConnectionDatabase= is a database that stores a connection set from a
 symbol. 
 This class is analogous to the symbol graph $G$ from section [[BDI and Jung]],
@@ -3100,7 +3101,7 @@ it made looking up the required patterns much easier.
 
 **** Before and templates
 <<Before and templates>>
-\newlyCleared
+\cleared
 After the personality was implemented, we wanted to bring the bot up too
 feature parity with the ALICE bot. 
 To do this several new data structures had to be introduced which can be seen
@@ -3174,7 +3175,7 @@ in figure [[fig:templateclass]].
 [[file:img/uml/templateclass.png]]
 
 
-\newlyCleared
+\cleared
 We can see from figure [[fig:templateclass]] that the consumers of these extensions
 are the =Symbol= class, the =Utterance= class and the =Connection= class.
 What also can be deduced is that the before extensions was probably a lot
@@ -3183,7 +3184,7 @@ of classes it introduced and modified.
 Whereas the template required the modification of at least three existing data
 data structures, the before only required to modify the =Connection=.
 
-\newlyCleared
+\cleared
 So the before class is self recursive,
 something which we've seen earlier in the =DialogueTree= class for example,
 however this is just an optional self recursive relationship.
@@ -3191,13 +3192,13 @@ What it does is lay a restriction on =Connection=, the =Informative= in the opti
 =Before= has to be uttered before this connection can be used.
 See section [[That tags]] for a more in depth explanation.
 
-\newlyCleared
+\cleared
 The template system does something else. It introduces the ability to match
 variables from the regex and re-insert these as a template into existing symbols.
 This is explained in depth in section [[Star tags]].
 
 **** Support types
-\newlyCleared
+\cleared
 Because we are working with drools,
 we often use a technique of wrapping values into other types,
 to signify their progress in drools deliberation.
@@ -3245,7 +3246,7 @@ package drools{
 #+RESULTS[55010ae4b3d6cee5b4d1420c002d4a5dd2704576]: fig:supportclassjava
 [[file:img/uml/supportclassjava.png]]
 
-\newlyCleared
+\cleared
 The classes described in figure [[fig:supportclassjava]] have the primary function
 of starting the deliberation process.
 With =UnparsedUserUtterance= the initial utterance is inserted, and with
@@ -3309,7 +3310,7 @@ package dialogue{
 #+RESULTS[11d3c6965221f225c096b4456d706c30e2bbe884]: fig:supportclassdrools
 [[file:img/uml/supportclassdrools.png]]
 
-\newlyCleared
+\cleared
 By studying figure [[fig:supportclassdrools]] we can start to understand what is
 going on inside the drools.
 We can for example see that a distinction is made for when a result matches
@@ -3343,7 +3344,7 @@ package personality{
 #+RESULTS[b074494c2edcbfd3dacf2340a12faa839b869329]: fig:supportclassperson
 [[file:img/uml/supportclassperson.png]]
 
-\newlyCleared
+\cleared
 In figure [[fig:supportclassperson]] we can see the drool defined =PersonalityProcess=.
 This structure tracks traversing the Jungian Functions.
 We manage this inside drools to give other rules the opportunity to inspect
@@ -3352,7 +3353,7 @@ the deliberation process while its going.
 # make sure the figures don't spill over into next section
 \clearpage
 *** Initialization
-\newlyCleared
+\cleared
 Dealing with cyclic immutable data structures is a problem.
 If we were to store the connections in the nodes,
 and a cycle would occur,
@@ -3366,7 +3367,7 @@ We construct its data first with a standard java =HashMap=,
 and once this is complete we wrap this into the =Database= class.
 Which makes a shallow copy and has no api for mutation (see [[fig:dbclass]]).
 
-\newlyCleared
+\cleared
 This initialization problem is the reason why we chose the order of
 initialization shown in figure [[fig:initjung]].
 The cyclic structure we want to create is the symbol graph $G$.
@@ -3376,7 +3377,7 @@ All symbols are constructed and put into the symbol database with as key a
 string containing the scene name and symbol name.
 In essence we are using now as an address the scene name and symbol name.
 
-\newlyCleared
+\cleared
 Once we have the symbol database we can use it to create connections from it.
 As seen in figure [[fig:droolclass]],
 connections consist of a symbol object its going too,
@@ -3387,7 +3388,7 @@ its the symbol object in itself.
 Since the connections are not stored in the symbols this is possible
 without making the symbols mutable.
 
-\newlyCleared
+\cleared
 Finally the pattern databases are constructed.
 Patterns were after reading the symbols already put into a =HasHmap=,
 with as key the symbol and as value the set of patterns.
@@ -4928,6 +4929,7 @@ bibliography:refs.bib
 \newpage
 * Building
 \todo[inline]{Document about python scripts and shell scripts (how to use), make sure succerrer can take it on easily}
+\todo[inline]{Another student should be able to work with this, so perhaps we should make a docker image for wildfly mysql etc?}
 <<building>>
 \cleared
 To build this project two hurdles need to be overcome, because the
