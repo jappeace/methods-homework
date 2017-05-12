@@ -809,13 +809,15 @@ and finally we will look at the serious game in its existing form.
  This is the logic of actions and computation. They extend this logic with
  epistemics to add believes to it cite:meyer2014logics.
 
-**** Concrete implementation
-2apl, jade cite:braubach2003jadex.
- \todo[inline]{These are important frameworks for if you have to plan, and replan in a larger context, however our bot doesn't have this (so we should delete this subsection I guess)}
- \todo[inline]{Comment on adding this was: If the work becomes agent like, and we have some very clear commanalities between 2apl for example we can fill in this paragraph to fall back onto that}
- 
 **** Drools
- \todo[inline]{Drools and 2apl are significantly different, so they shouldn't be taken together or compared, we still should describe drools more torougly though}
+\drafting
+what are drools?
+I guess so that we can reffer to this chapter in implementation and architecture.
+So we need to explain at least:
++ Fact base
++ Query mechanism
++ Then is java code
++ commincuation between java and drools?
 
 *** Social practices
  <<social practice>>
