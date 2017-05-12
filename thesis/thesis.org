@@ -1618,146 +1618,6 @@ patients to be treated sooner and more effective.
 Sander could have had his problem diagnosed a week earlier and Susie could have
 had access to pain killers for example.
 
-** Software engineering literature
-
-\todo[inline]{This chapter isn't interesting, because it doesn't add anything that is specifically used for this thesis, so it can be removed}
-\todo{I guess this one is for if we have extra time}
-Quality attributes of systems \url{https://en.wikipedia.org/wiki/ISO/IEC_9126}
-\todo[inline]{Optionally discuss some of the patterns used}
-
-*** Type signatures
-<<Type signatures explained>>
-\todo[inline]{This can be removed because it isn't used in any java specific code (inside the thesis)}
-\ask{Delete this? because its kindoff pre-knowledge or redundant?}
-\todo[inline]{Isn't this a concern for implmentation? Or find at least some sources}
-\todo[inline]{Perhaps I should add citations?}
-\todo[inline]{Add haskell prototypes as a reference to clearly mark out difference}
-\cleared
-If the reader is familiar with functional languages he can skip this section.
-In this section we explain type signatures, partial application and functions
-as arguments.
-
-\cleared
-Building upon the idea of pure functions we use the concept of /type signature/.
-A type signature can be seen as a restriction on what goes in and what goes out.
-This is analogous to a set
-[fn::Strictly this isn't true, but in the formal description I use sets anyway],
-or even a type as used in programming languages such as Java.
-If you declare a function for example in Java as can be seen in
-listing [[code:java-a-function]].
-
-#+CAPTION: Java function
-#+NAME: code:java-a-function
-#+BEGIN_SRC java
-  class A{
-      static int func(int a);
-  }
-#+END_SRC
-
-\cleared
-What you're really saying is that "this function does not accept anything but 
-int, otherwise the computation breaks".
-Note that we define the class A, simply because we have to in Java.
-
-\cleared
-There are some things to keep in mind. First of all, there is a direct
-correlation with how precise description is and the amount of things you can do
-with the type. The more general the type the less you can do with it.
-Secondly a more precise type allows a /pure function/ to do fewer different
-things with the type.
-Say you have the following pure function shown in listing [[code:java-a-pure-function]].
-
-#+CAPTION: Java function, which we pretend is pure
-#+NAME: code:java-a-pure-function
-#+BEGIN_SRC java
-  class A{
-      static int func(boolean a);
-  }
-#+END_SRC
-
-\cleared
-How many possible different ints can it return?
-The answer is two.
-Note that the function can't just create a Random object to generate more
-entropy since we said it was pure.
-Java can't enforce this, but a language like Haskell does.
-
-\cleared
-Even the return type is deceptive in java, since it can write results to
-other objects or even do input/output operations.
-This is of course a major problem if you want to do any kind of modeling of the 
-domain based upon types.
-Only if we assume we're dealing with pure functions,
-we can reason about possible computations indirectly.
-
-\cleared
-Another really important feature of functions to keep in mind is that the
-argument of an function can be a function too.
-This is how we combine Jungian function with each other to create personalities
-in section [[Composing types]].
-This has can also be done in Java as can be seen in listing [[code:java-lambdas]].
-
-#+CAPTION: Lambas
-#+NAME: code:java-lambdas
-#+BEGIN_SRC java
-  interface B{
-      int func(boolean a);
-  }
-  class A{
-      static int func(B otherfunc, boolean a);
-  }
-#+END_SRC
-
-\cleared
-The interface does not specify what behavior it contains, only the type of the
-function. Because Java is object orientated B can be much more then just that
-function, but according to the function in A, its just that one function.
-The only way to get around this knowledge restriction is trough casting,
-but that is just a way of ignoring the type system cite:whyavoidcasts.
-This is not interesting to explore further because we are making a design based
-upon the type system.
-
-\cleared
-Then finally the last technique we use (implicitly) is a process called partial
-application.
-In which we fill up some arguments of a function to create another function.
-This is why the /next/ arguments in section [[Composing types]] can be other
-function attitudes,
-once the next argument is partially applied,
-the type of the function changes to that of /next/,
-so it can be inserted in another function attitude.
-Now you have a chicken and egg problem which is resolved by using an identity
-function, or unit. This function does nothing.
-The Java analogy can be seen in listing [[code:java-composition]].
-
-#+CAPTION: Java composition
-#+NAME: code:java-composition
-#+BEGIN_SRC java
-  interface B{
-      int func(boolean a);
-  }
-  class Unit extends B{
-      int func(boolean a){ return 0; }
-  }
-  class A{
-      static int func(B otherfunc, boolean a){ return a ? otherfunc.func(a) : 2; }
-      public static void main(String[] args){
-          final B partiallyAppliedA = new B {
-              @Override
-              int func(boolean a){ return A.func(new Unit(), a); }
-          }
-      }
-  }
-#+END_SRC
-In this we can see that A becomes an B by using Unit as an argument.
-This is done with help of an anonymous class because the Java programming
-language  does not support partial application naively.
-Therefore the type of A has changed in B by partial application.
-
-\cleared
-At this point we can see the Java verbosity really starting to hurt the point.
-This is a major reason why the Haskell syntax is used to explain the type
-signature in detail.
 * BDI and Jung 
 <<Jungian BDI>>
 \todo{I think we should remove BDI from bdi and jung}
@@ -1890,11 +1750,11 @@ questionable if you can combine them successfully.
 
 ** A type signature approach
 <<A type signature approach>>
-\cleared
+\toReview
 To give a better understanding of the scope of this project we will
 try to come up with a type signature of a pure function that models all the
 function attitudes.
-This is done with a Haskell like syntax (see section [[Type signatures explained]]),
+This is done with a Haskell like syntax,
 in which the arrows indicate a function,
 left of the arrow is called a domain and the right side a codomain.
 The domain is also the argument of a function.
@@ -2605,7 +2465,6 @@ the result is the pair index of the input function function pair,
 plus one if the second value of the pair is rationale,
 /and/ the input function is rationale,
 otherwise its the pair index.
-
 
 
 ** Consistency with theory
