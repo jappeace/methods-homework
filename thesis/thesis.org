@@ -3299,52 +3299,6 @@ An outline of this process is giving in the figure [[fig:insert_meaning]].
 Together with the outline and the figures defined in section [[Support types]],
 we can quite precisely explain what is going on.
  
- \drafting
-To ensure rules are executed in a particular order we often wrap and unwrap
-required data into types, as explained in section [[Support types]].
-For example the initial user utterance gets wrapped into an =UnparsedUttarence=
-type.
-Before its even inserted into the drools,
-this type can be seen in figure [[fig:supportclassjava]].
-We could have just inserted a string and not created the type,
-but the reason for doing this with the initial string is to make it explicit:
-/This string needs to be parsed/.
-
-\drafting
-So in drools we can match on this type (see section [[Drools background]]),
-to do the next step which is parsing this string with pattern matching.
-To do this we use the pattern databases from figure [[fig:dbclass]], 
-on which we use the active scene as a key and then just match against all,
-this results in the =ParsedUtterance= type which can be seen
-in figure [[fig:supportclassjava]].
-This type then gets again inserted.
-
-\drafting
-As a first priority the low level reply rules can be fired.
-What they do when fired is removing the =ParsedUtterance= type,
-so that the high level rules don't get a chance to fire.
-This is modelled in figure [[fig:insert_meaning]] as an if else branch,
-which is true in practice, but no literal if else structure is used.
-
-\drafting
-So the high level processing executes if there is still a  =ParsedUtterance= type
-available.
-With this we create the initial =DialogueTree=, and remove the =Believes=
-from the fact base and put these believes into a =PersonalityProcess= which can
-be seen in figure [[fig:supportclassperson]].
-The reason why we remove the Believes base is to prevent concurrent modifications.
-By removing the Believes structure, rules that use it are no longer executed.
-To create a =PersonalityProcess=, a Believes structure has to be available.
-In this Personality process we also add the JungianFunction list.
-\todo{Refer to relevant figure}
- 
- \drafting
- It should be noted that at the point of quick reply personality could also be at
- play.
- For example people could have alternative ways of pronouncing the response.
- Thinking people may for example respond with a confident yes, whereas feeling
- people would say it by default in a more doubting tone.
-
  #+NAME: fig:insert_meaning
  #+BEGIN_SRC plantuml :cache yes :file img/uml/insert_meaning.png :exports results
  |WebSocket|
@@ -3359,6 +3313,7 @@ In this Personality process we also add the JungianFunction list.
  stop
  endif
  |#CCDDDD|Drool|
+ repeat
  :Create initial dialogue tree;
  while (has next function in personality)
  |#AntiqueWhite|Personality|
@@ -3370,18 +3325,85 @@ In this Personality process we also add the JungianFunction list.
  :execute jungian function;
  |#CCDDDD|Drool|
  endwhile
- :Get response from dialogue tree;
+ :Get reply from dialogue tree;
+ if (Most preffered response is from self?) then (yes)
+ |WebSocket|
+ :Send reply;
+ |#CCDDDD|Drool|
+ else
+ endif
+ repeat while (Reply send?) is (yes)
  |WebSocket|
  stop
 
  #+END_SRC
  #+CAPTION: Activity diagram of deliberating on a user message
  #+LABEL: fig:insert_meaning
- #+RESULTS[9e2ca9f29a8e620296912b3f55d13052ac51977b]: fig:insert_meaning
+ #+RESULTS[ba2ef7b0333cc8277765f73cc81a4e7ac3846b44]: fig:insert_meaning
  [[file:img/uml/insert_meaning.png]]
 
- \newpage
+\toReview
+To ensure rules are executed in a particular order we often wrap and unwrap
+required data into types, as explained in section [[Support types]].
+For example the initial user utterance gets wrapped into an =UnparsedUttarence=
+type.
+Before its even inserted into the drools,
+this type can be seen in figure [[fig:supportclassjava]].
+We could have just inserted a string and not created the type,
+but the reason for doing this with the initial string is to make it explicit:
+/This string needs to be parsed/.
 
+\toReview
+So in drools we can match on this type (see section [[Drools background]]),
+to do the next step which is parsing this string with pattern matching.
+To do this we use the pattern databases from figure [[fig:dbclass]], 
+on which we use the active scene as a key and then just match against all,
+this results in the =ParsedUtterance= type which can be seen
+in figure [[fig:supportclassjava]].
+This type then gets again inserted.
+
+\toReview
+As a first priority the low level reply rules can be fired.
+What they do when fired is removing the =ParsedUtterance= type,
+so that the high level rules don't get a chance to fire.
+This is modelled in figure [[fig:insert_meaning]] as an if else branch,
+which is true in practice, but no literal if else structure is used.
+
+\toReview
+It should be noted that at the point of quick reply personality could also be at
+play.
+For example people could have alternative ways of pronouncing the response.
+Thinking people may for example respond with a confident yes, whereas feeling
+people would say it by default in a more doubting tone.
+
+\toReview
+So the high level processing executes if there is still a  =ParsedUtterance= type
+available.
+With this we create the initial =DialogueTree=, and remove the =Believes=
+from the fact base and put these believes into a =PersonalityProcess= which can
+be seen in figure [[fig:supportclassperson]].
+The reason why we remove the Believes base is to prevent concurrent modifications.
+By removing the Believes structure, rules that use it are no longer executed.
+To create a =PersonalityProcess=, a Believes structure has to be available.
+In this Personality process we also add the JungianFunction list,
+these are the functions that are extensively described in section
+[[Mapping to process]].
+With this list it is determined which function should be executed next upon
+the =DialogueTree= and =Believes=.
+
+\toReview
+After there are no more functions in the list anymore, we know we are done.
+And move to the next step where we get the reply from the DialogueTree.
+This is an =Utterance= structure, if this =Utterance= is the same as the
+self field in the =Believes= structure, we send the reply by wrapping the
+utterance in a =Reply= type.
+If we don't send a reply, we insert a =FinishedProcess= type.
+If we do send a reply we reinsert the selected =Utterance= as a =PreProcessed=
+type.
+These types can be found in figure [[fig:supportclassdrools]]. 
+
+# empty buffer of figures
+\clearpage
 ** Desired architecture
 A deployment diagram of the architecture can bee seen in figure
 [[fig:n-agent-arch]].
