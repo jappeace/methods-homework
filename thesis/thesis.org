@@ -76,6 +76,7 @@
 \newpage
 
 * Introduction
+\todo[inline]{since this was written so long ago, I think we should reread it (some are as old as 2016-12-05)}
 \cleared
 Communication is the foundation of our modern society.
 Having good communication skills can help individuals in both professional as
@@ -2579,7 +2580,6 @@ the solid arrow means uses and the other lines mean interacts.
 #+RESULTS[f680066f7943af2a2abf4c0b6a487ffa49d6b619]: fig:architecture-concept
 [[file:img/uml/architecture-concept.png]]
 
-
 \cleared
 The biggest difference from the original architecture is the removal of
 distinction between drools and the chat bot.
@@ -3422,6 +3422,10 @@ This will include a new representation of the dialogue knowledge.
 Then we will also described how the BDI+Jung chapter came from a theoretical
 construct into realization.
 After this we will show how we tested them to make sure they work properly.
+
+\todo[inline]{The level of detail is around the one we did with the demonstration: Go trough one connection and show how the things are used, such as personality before and template.}
+\todo[inline]{So I guess this is besides other things discovered during implementation such as replacing xml. I think the stuff about immutability etc can be deleted because its not very relevant to the thesis, it just solves practical problems}
+\todo[inline]{I think in here we can also discuss why we did or didn't use logic?}
 
 \todo[inline]{describe what can be found in chapter}
 \todo[inline]{describe structure of chapter}
@@ -4483,6 +4487,7 @@ Then to expose the data one should create a copy of the collection, or, expose a
 stream (which is also immutable). \todo{cite}
 
 ** Immutablity
+\todo{Delte this because not relevant for thesis?}
 \todo[inline]{IDK find a place for this}
 
 \drafting
@@ -4654,6 +4659,19 @@ Although the validity is in no way proven
 (we just have /a/ instance that is correct, which is different from
 saying that all instances are correct)
 
+\drafting
+I think another major conclusion is that we created a viable langauge processing
+bot.
+That just deals with langauge, but does not specify anything about responses.
+A comment in the beginning of my thesis was that AIML was used to
+'just deal with langauge', but this wasn't true,
+AIML defined the entire flow of the application.
+Now there basically is no more 'fixed' way of operating because drools decide
+that.
+It was claimed that drools were the center of the application,
+but they weren't, this thesis showed a method of making it the center of the
+application.
+
 \todo[inline]{Discussion, comparison}
 ** Future work
 *** Give the bot some semantic understanding
@@ -4749,6 +4767,14 @@ by using the GPU for regex matching.
 
 \newpage
 \appendix
+
+*** Alternative matching methods
+\drafting
+The bot can be easily modified to use alternate matching mechanisms such
+as fuzzy matching or probabilty based schemes. \todo{cite such systems}
+Because matching already happens in drools,
+The modification required to do this correctly is to put a set of symbols per scene,
+rather than a set of patternsymbol per scene.
 
 * References
 <<bibliography link>>
