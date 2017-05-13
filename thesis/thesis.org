@@ -3000,9 +3000,9 @@ This allows unit test to check if the next function was called for example,
 but the code also generally becomes more extendable because of this.
 
 \toReview
-Figure [[fig:jungjavaclass]] shows how to apply an $f_a$.
+Figure [[fig:jungjavaclass]] shows the elements required for java to apply an $f_a$.
 To do this we first create a =JungFuncArgs= structure with its =create= method.
-Then we insert the jungian functions we want to apply.
+Then we insert the Jungian functions we want to apply.
 This is a list of elements of the =JungianFunction= enum,
 these elements aren't shown in the figure because they're just the abbreviated
 names of the Jungian functions,
