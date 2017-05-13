@@ -3897,7 +3897,7 @@ effort, a human or program can understand what's going on.
 Unlike say a binary format,
 which first needs to be parsed by a program before a human can understand it
 (or with great amount of effort).
-Alternativly unlike a human document, such as a book,
+Alternatively unlike a human document, such as a book,
 a computer program needs to do lots of effort to extract information from that,
 whereas a human can just understand it "naturally".
 
@@ -4364,7 +4364,7 @@ uttered something in the test scenario because this information isn't encoded.
 You may argue that the mechanism which could be used for this are the /that/ tags.
 But they are just an additional restriction on the pattern matching,
 ie: If user uttered regex *and* he said /that/ before, we can say template.
-Alternativly you count the injection of types (in S-AIML),
+Alternatively you count the injection of types (in S-AIML),
 but this isn't a formal encoding in AIML itself, but rather a way of informing
 drools what's goin on.
 
