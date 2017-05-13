@@ -565,7 +565,7 @@ and finally we will look at the serious game in its existing form.
  Reliability indicates how often the same result will come out of the test,
  for example if you take the mbti a 100 times you may be classified the same
  type for 70 times,
- which would be an indication it has a reliability of arround 70%.
+ which would be an indication it has a reliability of around 70%.
  But in psycology another aspect is important,
  namely the interval in between which the tests are taken,
  if for example two tests produce starkly different results but a long time
@@ -2974,15 +2974,15 @@ This is used to create the second pattern database,
 it made looking up the required patterns much easier.
 
 **** Jung in Java
-\drafting
+\toReview
 To implement the theory presented in section [[BDI and Jung]],
 several issues had to be overcome.
 First of all Java has no native support for doing partial application.
-We worked arround this Issue by introducing a structure that contained the
+We worked around this Issue by introducing a structure that contained the
 arguments of the $f_a$ function described in section [[Mapping to process]].
 The structure is called =JungFuncArgs= and can be seen in figure [[fig:jungjavaclass]].
 The next issue was doing Functional composition,
-and although we can do this in Java with annonymous classes, 
+and although we can do this in Java with anonymous classes, 
 we wanted to make the relation more explicit.
 The =NextFunction= and its respective field in =JungFuncArgs= is this explicit
 relation.
@@ -2995,8 +2995,8 @@ An argument can be made for using the =null= reference instead,
 however this is considered a bad practice cite:nullrefsarebad.
 Finally for testing purposes we needed to be able to inject other functions
 than the ones defined in the =JungianFunction= enum.
-Therefore the =JungFuncAccessor= inteface was introduced.
-This allows unit test to check if the next function was called for exampple,
+Therefore the =JungFuncAccessor= interface was introduced.
+This allows unit test to check if the next function was called for example,
 but the code also generally becomes more extendable because of this.
 
 #+NAME: fig:jungjavaclass
