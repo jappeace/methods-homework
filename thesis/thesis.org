@@ -2999,6 +2999,22 @@ Therefore the =JungFuncAccessor= interface was introduced.
 This allows unit test to check if the next function was called for example,
 but the code also generally becomes more extendable because of this.
 
+\toReview
+Figure [[fig:jungjavaclass]] shows how to apply an $f_a$.
+To do this we first create a =JungFuncArgs= structure with its =create= method.
+Then we insert the jungian functions we want to apply.
+This is a list of elements of the =JungianFunction= enum,
+these elements aren't shown in the figure because they're just the abbreviated
+names of the Jungian functions,
+for example Se for extroverted sensing.
+The =insertNextFuncs= returns a new =JungFuncArgs= object with the inserted
+next functions,
+these next functions are not evaluated.
+Also note that =JungFuncArgs= is an immutable object,
+so the result of the =insertNextFuncs= needs to be used.
+To apply the function we use =applyNext()=,
+which returns a new =JungFuncArgs= object with the resulting values.
+
 #+NAME: fig:jungjavaclass
 #+BEGIN_SRC plantuml :cache yes :file img/uml/jungjavaclass.png :exports results
 
@@ -3481,9 +3497,10 @@ be seen in figure [[fig:supportclassperson]].
 The reason for removing the believes base is to prevent concurrent modifications.
 By removing the Believes structure, rules that use it are no longer executed.
 To create a =PersonalityProcess=, a =Believes= structure has to be available.
-In this Personality process we also add the JungianFunction list,
+In this Personality process we also add the =JungianFunction= list,
 these are the functions that are extensively described in section
-[[Mapping to process]].
+[[Mapping to process]], and its Java adaptation is described in figure
+[[fig:jungjavaclass]].
 With this list it is determined which function should be executed next upon
 the =DialogueTree= and =Believes=.
 
