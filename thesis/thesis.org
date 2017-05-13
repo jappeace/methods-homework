@@ -57,6 +57,15 @@
 #+LATEX_HEADER: \captionsetup[table]{skip=5pt}
 #+LATEX_HEADER: \captionsetup[figure]{skip=10pt}
 
+# Inline code has a light grey background
+#+LATEX_HEADER: \usepackage{xcolor}
+#+LATEX_HEADER: \usepackage{soul}
+#+LATEX_HEADER: \definecolor{Light}{gray}{.95}
+#+LATEX_HEADER: \sethlcolor{Light}
+
+#+LATEX_HEADER: \let\OldTexttt\texttt
+#+LATEX_HEADER: \renewcommand{\texttt}[1]{\OldTexttt{\hl{#1}}}%
+
 ** Abstract                                                          
 :PROPERTIES:
 :UNNUMBERED: t
@@ -3365,7 +3374,7 @@ this results in the =ParsedUtterance= type which can be seen
 in figure [[fig:supportclassjava]].
 This type then gets inserted into the fact base to continue the process.
 
-\toReview
+\newlyCleared
 The =ParsedUtterance= then gets transformed into a =PreProcessed= type.
 During this process the duplicates matches are removed.
 Each element in the =ParsedUtterance= list gets individually inserted as a
@@ -3400,13 +3409,13 @@ For example people could have alternative ways of pronouncing the response.
 Thinking people may for example respond with a confident yes, whereas feeling
 people would say it by default in a more doubting tone.
 
-\toReview
+\newlyCleared
 The high level processing executes if there is still a  =PreProcessed= type
 available, in other words no low level replies were executed.
-With this we create the initial =DialogueTree=, and remove the =Believes=
+We create the initial =DialogueTree=, and remove the =Believes=
 from the fact base and put these believes into a =PersonalityProcess= which can
 be seen in figure [[fig:supportclassperson]].
-The reason why we remove the believes base is to prevent concurrent modifications.
+The reason for removing the believes base is to prevent concurrent modifications.
 By removing the Believes structure, rules that use it are no longer executed.
 To create a =PersonalityProcess=, a =Believes= structure has to be available.
 In this Personality process we also add the JungianFunction list,
@@ -3415,16 +3424,39 @@ these are the functions that are extensively described in section
 With this list it is determined which function should be executed next upon
 the =DialogueTree= and =Believes=.
 
-\toReview
-After there are no more functions in the list anymore, we know we are done.
-And move to the next step where we get the reply from the DialogueTree.
+\newlyCleared
+After there are no more functions in the list, we know we are done.
+We move to the next step where we get the reply from the DialogueTree.
 This is an =Utterance= structure, if this =Utterance= is the same as the
 self field in the =Believes= structure, we send the reply by wrapping the
 utterance in a =Reply= type.
 If we don't send a reply, we insert a =FinishedProcess= type.
-If we do send a reply we reinsert the selected =Utterance= as a =PreProcessed=
-type.
+If we do send a reply we reinsert the selected =Utterance= as a
+=PreProcessed= type.
 These types can be found in figure [[fig:supportclassdrools]]. 
+
+*** Social practice support
+\toReview
+Because this entire process is implemented in Drools, and we use types to track
+progress. Its relativly easy to add other rules that can modify the process,
+without changing the existing ones.
+Priority can be used to intercept a rule, as was done with the low level replies.
+Adding a more refined implementation of social practice therefore would be
+relativly easy.
+There exists already some support for the social practice in Drools,
+for example the scenes logic, 
+but this is of course not complete.
+Better support can easily be added by adding more rules and tweaking with
+priorities.
+
+\drafting
+Besides using extra rules to add more support for social practice logic,
+for personality logic specifically there is another possiblity.
+They can be wrapped in a social practice function,
+that analyzes the result of the personality function and then does social
+practice opperations to the resulting =DialogueTree= or =Believes=.
+So based upon the social practice, and the personality function things may
+chagne.
 
 # empty buffer of figures
 \clearpage
@@ -3433,7 +3465,6 @@ A deployment diagram of the architecture can bee seen in figure
 [[fig:n-agent-arch]].
 
 \todo[inline]{N-agent stuff}
-\todo[inline]{Social practices (metnion at least, and say that there are elements of it in drools)}
 \todo[inline]{So there is no social practice context taken in account currenlty, mention how we could do that (for example by wrapping the pure jungian function in a context function, or by wrapping the result of the function processing drool in another type to give other drools a chance to look and modify it, or by analyzing the result of the entire personality process (a bit crude though))}
 
 #+NAME: fig:n-agent-arch
