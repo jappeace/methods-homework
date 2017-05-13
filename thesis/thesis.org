@@ -1752,20 +1752,21 @@ questionable if you can combine them successfully.
 
 ** A type signature approach
 <<A type signature approach>>
-\toReview
+\newlyCleared
 To give a better understanding of the scope of this project we will
 try to come up with a type signature of a pure function that models all the
 function attitudes.
 This is done with a Haskell like syntax,
 in which the arrows indicate a function,
 left of the arrow is called a domain and the right side a codomain.
-The domain is also the argument of a function.
+The domain is also called the argument of a function.
 If we see a pattern like $a \to b \to c$ means $a \to (b \to c)$ or give an $a$
 and return a function $b \to c$, this process is called partial application
 cite:haskellpartialapplication.
 Capital letters indicate sets.
 
 *** Narrowing the model
+<<Narrowing the model>>
 \cleared
 We will go from an as broad as possible system (while using BDI) to a
 precise as possible definition, while still being able to satisfy the domain.
@@ -3291,7 +3292,7 @@ constructed.
 [[file:img/uml/initjung.png]]
 
 *** Operation
-\toReview
+\newlyCleared
 To understand how the operation of a bot works,
 we can look at it from the point when a message is received
 and walk trough the steps it takes.
@@ -3342,34 +3343,57 @@ we can quite precisely explain what is going on.
  #+RESULTS[ba2ef7b0333cc8277765f73cc81a4e7ac3846b44]: fig:insert_meaning
  [[file:img/uml/insert_meaning.png]]
 
-\toReview
+\newlyCleared
 To ensure rules are executed in a particular order we often wrap and unwrap
 required data into types, as explained in section [[Support types]].
 For example the initial user utterance gets wrapped into an =UnparsedUttarence=
-type.
-Before its even inserted into the drools,
-this type can be seen in figure [[fig:supportclassjava]].
+type, before its even inserted into the drools.
+This type can be seen in figure [[fig:supportclassjava]].
 We could have just inserted a string and not created the type,
 but the reason for doing this with the initial string is to make it explicit:
 /This string needs to be parsed/.
 
-\toReview
-So in drools we can match on this type (see section [[Drools background]]),
-to do the next step which is parsing this string with pattern matching.
+\newlyCleared
+So in drools we can match on this type (see section [[Drools background]]).
+Which we do in the next step,
+parsing this string with pattern (regex) matching.
+This is actually the $\sigma \to s$ operation from section [[Narrowing the model]].
 To do this we use the pattern databases from figure [[fig:dbclass]], 
-on which we use the active scene as a key and then just match against all,
+on which we use the active scene as a key (which is stored in the fact base)
+and then just match against all from the resulting set,
 this results in the =ParsedUtterance= type which can be seen
 in figure [[fig:supportclassjava]].
-This type then gets again inserted.
+This type then gets inserted into the fact base to continue the process.
 
 \toReview
+The =ParsedUtterance= then gets transformed into a =PreProcessed= type.
+During this process the duplicates matches are removed.
+Each element in the =ParsedUtterance= list gets individually inserted as a
+=PreProcessed= type into the fact base.
+The reason for this in-between step is because we don't know how to handle
+multiple matches.
+So we just insert every uniquely matched item.
+In contrast to the initial approach where only the first match was used,
+this approach is more flexible.
+It allows the bot to form opinions about
+utterance where it doesn't necessarily wants to reply upon.
+For example if it asks the doctor "How are you doing?" the answer of
+"I'm good, how can I help you?" or "how can I help you?" should be treated
+differently.
+It now can also give multiple answers to longer user utterances.
+However the disadvantage is that sometimes the bot will give more replies than
+desired.
+
+\newlyCleared
 As a first priority the low level reply rules can be fired.
-What they do when fired is removing the =ParsedUtterance= type,
+What they do when fired is removing the =PreProcessed= type,
 so that the high level rules don't get a chance to fire.
 This is modelled in figure [[fig:insert_meaning]] as an if else branch,
-which is true in practice, but no literal if else structure is used.
+which is true in practice, but no concrete if else structure is used.
+Drools has support for setting priority of execution in rules,
+which was used for this.
 
-\toReview
+\newlyCleared
 It should be noted that at the point of quick reply personality could also be at
 play.
 For example people could have alternative ways of pronouncing the response.
@@ -3377,14 +3401,14 @@ Thinking people may for example respond with a confident yes, whereas feeling
 people would say it by default in a more doubting tone.
 
 \toReview
-So the high level processing executes if there is still a  =ParsedUtterance= type
-available.
+The high level processing executes if there is still a  =PreProcessed= type
+available, in other words no low level replies were executed.
 With this we create the initial =DialogueTree=, and remove the =Believes=
 from the fact base and put these believes into a =PersonalityProcess= which can
 be seen in figure [[fig:supportclassperson]].
-The reason why we remove the Believes base is to prevent concurrent modifications.
+The reason why we remove the believes base is to prevent concurrent modifications.
 By removing the Believes structure, rules that use it are no longer executed.
-To create a =PersonalityProcess=, a Believes structure has to be available.
+To create a =PersonalityProcess=, a =Believes= structure has to be available.
 In this Personality process we also add the JungianFunction list,
 these are the functions that are extensively described in section
 [[Mapping to process]].
