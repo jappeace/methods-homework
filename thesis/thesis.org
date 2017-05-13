@@ -2803,6 +2803,7 @@ provides is occupied forever,
 or at least until a major refactor occurs.
 
 **** Believes and DialogueTree
+<<Believes and DialogueTree>>
 \cleared
 In figure [[fig:jungclass]] we can see the higher level structures of =Believes= and
 =DialogueTree=. Note that we significantly simplified all lower level components
@@ -3541,17 +3542,26 @@ chagne.
 # empty buffer of figures
 \clearpage
 ** Desired architecture
-A deployment diagram of the architecture can bee seen in figure
+\toReview
+The architecture presented in section [[Implemented architecture]] is for a dialogue
+game.
+However a social practice does not put limits on the amount of participants,
+so what we really want is a multilogue architecture.
+Since the presented architecture in section [[Implemented architecture]] is
+relatively close to that we shall discuss here how to finish it.
+What we therefore will discuss in this section is the required changes to
+make it a true multilogue architecture,
+and thereby making it easier to implement social practice theory.
+Sadly there was no time to do the actual implementation of such an architecture.
+A deployment diagram of this architecture can bee seen in figure
 [[fig:n-agent-arch]].
 
-\todo[inline]{N-agent stuff}
-\todo[inline]{So there is no social practice context taken in account currenlty, mention how we could do that (for example by wrapping the pure jungian function in a context function, or by wrapping the result of the function processing drool in another type to give other drools a chance to look and modify it, or by analyzing the result of the entire personality process (a bit crude though))}
 
 #+NAME: fig:n-agent-arch
 #+BEGIN_SRC plantuml :cache yes :file img/uml/n-agent-arch.png :exports results
 
   folder scene{
-    cloud drools {
+    cloud sys.drools {
       component score
       component scenario
       storage facts
@@ -3564,10 +3574,13 @@ A deployment diagram of the architecture can bee seen in figure
   cloud bot.drools {
     component emotions
     component personality
+    component socialPractice
     storage bot.facts
     emotions -- bot.facts
     personality -- bot.facts
+    socialPractice -[hidden]-> emotions
     score -- bot.facts
+    socialPractice -- bot.facts
   }
   database meanings [
     patterns
@@ -3587,12 +3600,95 @@ A deployment diagram of the architecture can bee seen in figure
 #+END_SRC
 #+CAPTION: Deployment diagram of desired architecture
 #+LABEL: fig:n-agent-arch
-#+RESULTS[dcf9326c7d021dc38efdf65d5dbab06d0277c1df]: fig:n-agent-arch
+#+RESULTS[2175bf151e4fe4f5ae54fdba0ca134983678c0d2]: fig:n-agent-arch
 [[file:img/uml/n-agent-arch.png]]
 
+*** System vs thoughts
+\toReview
+What is required of the drools is that we make a separation between the 
+multilogue /system/ and agent /thoughts/.
+A good step in this direction is the =Believes= structure,
+which groups most agent thoughts, at least those used by the high-level system.
+Although it should be noted that the =Believes= structure itself also has
+problems, this is discussed in section [[Believes and DialogueTree]],
+but the gist of its better to replace this structure with a drools fact base
+itself.
+However what is good about this structure is that it has a self field,
+therefore it could be used to identify the agent.
+In other parts of the current architecture this is not the case at all.
+For example the =PatternDatabase=  are just plainly inserted into the fact base.
 
+\toReview
+The naive solution is to just mark every fact with a self field.
+Aside from the fact that you now introduce boilerplate code,
+this has another more serious problem,
+it grands the ability for agents to reach each others minds.
+Since every believe structure, and thus agent, will live in the same fact base.
+This is of course not desirable,
+it would defeat the entire purpose of a multilogue system,
+at least for the agents.
+
+\toReview
+So what we present in figure [[fig:n-agent-arch]] is a different approach.
+Basically what we do is separate the system from the thoughts.
+The system will be in the =sys.drools= engine, whereas the bot will be in the
+=bot.drools=.
+These are separate kie runtimes, but the system has access to the bot.drools
+facts so it can do scoring and actually send responses for the bot.
+The server can then have multiple bot instances.
+In these instances not every fact has to be marked since they have their own
+fact base anyway.
+The only thing that needs happen is a self fact needs to be inserted,
+or the =Believes= structure could be used for that, if that is kept around.
+
+*** Identifying speaker
+\toReview
+Another big issue is figuring out which agent(s) is being talked to.
+There has been some research on this subject,
+for example using hand coded selection mechanisms cite:klotz2011engagement,
+and statistical mechanisms cite:keizer2013training.
+
+\toReview
+Although both these approaches are good options for robots,
+we are dealing with an application,
+in which we can cheat to get basically nearly 100% correct selection.
+What I mean by this is that we can simply modify the user interface,
+to let the user select which agent he talks too.
+Then the only thing that needs to be done is modifying the protocol so that the
+selected agent(s) get the message.
+You can of course extend this to select groups of agents,
+or make the selection based on some kind of abstraction,
+such as the distinction between whisper to an agent or shout to an agent.
+
+\toReview
+In the data structures however a more structural change needs to occur,
+namely in both the connections and the utterances.
+The =Utterance= class need to be extended with to who the utterance was said,
+and the =Connection= class needs to get an additional restriction on to whom
+this connection can be said too.
+These definitions can of course quickly get out of hand,
+especially with larger groups,
+and therefore it would be wise to define some kind of role mechanism,
+for which existing solutions exist cite:sandhu1996role.
+
+*** Practicalities
+\drafting
+Then there are some practicalities to consider.
+For example replies should be timed, so that the user won't see suddenly 200
+lines of chat messages between two of his conversation partners.
+This is relatively complex todo because with multiple bots *and* doing
+timed reactions some kind of communication needs to occur between the bots.
+This is probably a task for the system,
+but it could also be considered a part of the social practice.
+A different way of dealing with this is just preventing the scenario from
+continuing at certain key points until a user reaction occurs.
+
+
+
+\todo[inline]{N-agent stuff}
+\drafting
 + Need to change the protocol & userinteface to allow for sending to a particular bot
-+ or need to do a hearistic to detect to which agent is talked to
++ or need to do a heuristic to detect to which agent is talked to
 + Protocol needs to be  able to distinguish which agent says what or which emotional changes occur in which agent.
 + Message processing occurs at either agent or both agents (they need to record history anyway)
 + The functions need to be made aware of dealing with multiple agents, ie generating
