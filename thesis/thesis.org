@@ -178,6 +178,8 @@ We will use a more fine grained version of MBTI but his architecture is used,
 in which personality will be processed orientated rather than content
 orientated.
 
+
+\clearpage
 * Background
 \cleared
 In this chapter we will discuss the work that is the foundation of this thesis.
@@ -1629,6 +1631,8 @@ patients to be treated sooner and more effective.
 Sander could have had his problem diagnosed a week earlier and Susie could have
 had access to pain killers for example.
 
+
+\clearpage
 * BDI and Jung 
 <<Jungian BDI>>
 \todo{I think we should remove BDI from bdi and jung}
@@ -2514,6 +2518,8 @@ Since attitudes produce a different process by definition
 (see section [[Mapping to process]]),
 we can conclude that they will also behave differently.
 
+
+\clearpage
 * Architecture
 <<Architecture>>
 \cleared
@@ -3672,32 +3678,29 @@ and therefore it would be wise to define some kind of role mechanism,
 for which existing solutions exist cite:sandhu1996role.
 
 *** Practicalities
-\drafting
-Then there are some practicalities to consider.
+\toReview
+Then there are some practicalities to consider, that are more at implementation
+level.
 For example replies should be timed, so that the user won't see suddenly 200
 lines of chat messages between two of his conversation partners.
 This is relatively complex todo because with multiple bots *and* doing
 timed reactions some kind of communication needs to occur between the bots.
 This is probably a task for the system,
 but it could also be considered a part of the social practice.
+Do note that these timed replies should be interruptible by the user.
 A different way of dealing with this is just preventing the scenario from
 continuing at certain key points until a user reaction occurs.
+Deciding which approach is the best is basically a matter of experimentation.
+
+\toReview
+Then it should also be noted that the scenarios of the bots should be
+specified differently. At least for parts of it, while other parts should be
+shareable.
+So the YAML files should be specified distinctly per bot, the drools files
+distinctly per bot *and* there should be a mechanism to share these.
 
 
-
-\todo[inline]{N-agent stuff}
-\drafting
-+ Need to change the protocol & userinteface to allow for sending to a particular bot
-+ or need to do a heuristic to detect to which agent is talked to
-+ Protocol needs to be  able to distinguish which agent says what or which emotional changes occur in which agent.
-+ Message processing occurs at either agent or both agents (they need to record history anyway)
-+ The functions need to be made aware of dealing with multiple agents, ie generating
-  more options if possible (for example any agent wouldn't result in any option
-  but n distinct options).
-+ Agents should be able to talk to each other, but they need to time this
-  properly. Otherwise the user will suddenly see 200 lines of chit chat appear
-  while the agents wait upon input.
-
+\clearpage
 * Implementation
 \drafting
 In this chapter we will be disusing in detail the implementation.
@@ -4934,6 +4937,7 @@ The biggest issues we found were:
 3. The height of which functions ought to operate wasn't well thought out.
 4. $T_i$ didn't have good default behavior
 
+\clearpage
 * In conclusion
 \drafting
 We need to explicitly say here that Mapping function to attidues to a
