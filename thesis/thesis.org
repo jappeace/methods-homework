@@ -2620,7 +2620,6 @@ Note that although we removed the ability for the bot to use AIML, it should be
 relatively easy to convert from the old AIML structure to the new format with help
 of a script.
 A proof of concept of this has been made of this in section [[Conversion script]].
-
 \todo[inline]{Maybe a package overview subsection, where we discuss the packages and their goals}
 *** Data structures
 
@@ -2973,6 +2972,70 @@ This database has a special method named =createDual= which is used to create
 a connection database where all the connections are flipped.
 This is used to create the second pattern database,
 it made looking up the required patterns much easier.
+
+**** Jung in Java
+\drafting
+To implement the theory presented in section [[BDI and Jung]],
+several issues had to be overcome.
+First of all Java has no native support for doing partial application.
+We worked arround this Issue by introducing a structure that contained the
+arguments of the $f_a$ function described in section [[Mapping to process]].
+The structure is called =JungFuncArgs= and can be seen in figure [[fig:jungjavaclass]].
+The next issue was doing Functional composition,
+and although we can do this in Java with annonymous classes, 
+we wanted to make the relation more explicit.
+The =NextFunction= and its respective field in =JungFuncArgs= is this explicit
+relation.
+Adding this field to the =JungFuncArgs= makes the functions a true endomorphism, 
+although it deviates from the theory since the result now also has a next function.
+This actually also introduces an infinite creation sequence,
+there always needs to be a next function.
+To break this the =UnitNextFunction= was introduced.
+An argument can be made for using the =null= reference instead,
+however this is considered a bad practice cite:nullrefsarebad.
+Finally for testing purposes we needed to be able to inject other functions
+than the ones defined in the =JungianFunction= enum.
+Therefore the =JungFuncAccessor= inteface was introduced.
+This allows unit test to check if the next function was called for exampple,
+but the code also generally becomes more extendable because of this.
+
+#+NAME: fig:jungjavaclass
+#+BEGIN_SRC plantuml :cache yes :file img/uml/jungjavaclass.png :exports results
+
+interface JungFuncAccessor{
+  + getFunction() : Function<JungFuncArgs, JungFuncArgs>
+}
+interface NextFunction{
+  + get():Pair<JungFuncAccessor, NextFunction>
+}
+NextFunction ..> NextFunction
+NextFunction ..> JungFuncAccessor
+
+class UnitNextFunction{
+  - result:Pair<JungFuncAccessor, NextFunction>
+}
+UnitNextFunction --|> NextFunction
+class JungFuncArgs{
+  + believes:Believes
+  + tree:DialogueTree
+  + next:NextFunction
+  {static} + create(one:Believes,two:DialogueTree):JungFuncArgs
+  + applyNext() : JungFuncArgs
+  + insertNextFuncs(funcs:[JungFuncAccessor]):JungFuncArgs
+}
+JungFuncArgs --* NextFunction
+JungFuncArgs ..> UnitNextFunction
+enum JungianFunction{
+  - function : : Function<JungFuncArgs, JungFuncArgs>
+  + isRational : boolean
+}
+JungianFunction ..|> JungFuncAccessor
+JungianFunction ..> JungFuncArgs
+#+END_SRC
+#+CAPTION: Jung in Java
+#+LABEL: fig:jungjavaclass
+#+RESULTS[019dc12edde2e80f03b0ae309525edacf716f1a2]: fig:jungjavaclass
+[[file:img/uml/jungjavaclass.png]]
 
 **** Before and templates
 <<Before and templates>>
@@ -3449,9 +3512,9 @@ but this is of course not complete.
 Better support can easily be added by adding more rules and tweaking with
 priorities.
 
-\drafting
-Besides using extra rules to add more support for social practice logic,
-for personality logic specifically there is another possiblity.
+\toReview
+Besides using extra rules to add support for social practice logic,
+for the personality part of the thesis specifically there is another possiblity.
 They can be wrapped in a social practice function,
 that analyzes the result of the personality function and then does social
 practice opperations to the resulting =DialogueTree= or =Believes=.
