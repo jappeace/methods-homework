@@ -4484,6 +4484,27 @@ obstacle faced is building/executing the project.
 This is however not discussed in this chapter,
 but done in detail in the appendix [[building]].
 
+** Demo
+
++ Start mysqld =sudo systemctl start mysqld=
++ Start wildfly
++ Open believes.yml, introduction/connections.yaml, en ranger in introduction
+*** Templates
++ Vertel over template matching met regexes, en insertion
++ rebuild
++ open python client
++ zeg "My name is jappie"
++ laat zien resultaat verwacht naar yaml
++ zeg "How are you?"
++ vertel over queries in yaml
+*** Before clauses
++ nu over before clauses
++ zeg "Hello"
+  + laat zien dat nu de before clause gebruikt is
+  + vertel ook over labels in templates
+*** scene transitions
++ Transition scene: "How can I help you?"
++ Zeg nog eens "Hello"
 ** Setting up the scenario
 \drafting
 To indicate how to use the bot, we will setup a small scenario.
