@@ -3710,7 +3710,7 @@ Originally, AIML was used for mapping user input to a reply.
 However, as explained in section [[Architecture]],
 AIML has some problems for our particular use case.
 The major two issues are:
-+ No way of giving drools space to do deliberation asside from updating the scenario. 
++ No way of giving drools space to do deliberation aside from updating the scenario. 
 + No way of accessing the knowledge base from inside drools.
 So what needs to happen is either to either modify AIML,
 or outright replace it with something else.
@@ -4449,7 +4449,7 @@ To show that it is indeed easy to write a conversion script,
 with above restrictions kept in mind we made a proof of concept.
 This conversion script is located in the conversion folder from the root project
 of the git project.
-It is excpected to be executed from command line and provides several command
+It is expected to be executed from command line and provides several command
 line arguments that are documented in the script itself.
 
 \toReview
@@ -4476,25 +4476,24 @@ Herein we will discuss some of the bigger challenges of implementing the bot.
 To do this we will setup a small test scenario in YAML.
 With this we will walk trough the steps that are interesting or were
 particularly challenging, in both loading and execution.
-
-We will first explain how to setup a small scenario,
-with this in mind we will step trough the interesting pieces of the implementation
-that deal with that.
-Finally we will present the test that indicate that we indeed succeeded.
+Finally we will discuss the tests that show we indeed succeeded.
 
 \toReview
-However, when one starts working on an existing software project the first
-obstacle faced is building/executing the project,
-this is discussed in detail in the appendix [[building]].
-
+When one starts working on an existing software project the first
+obstacle faced is building/executing the project.
+This is however not discussed in this chapter,
+but done in detail in the appendix [[building]].
 
 ** Setting up the scenario
 \drafting
+To indicate how to use the bot, we will setup a small scenario.
 
 
-** Loading with yaml
 
-** 
+** Loading
+\drafting
+Whereas the original ALICE bot was both an XML parser *and* a chat bot.
+We used simply a library for loading.
 
 ** Initialization
 \toReview
