@@ -2533,7 +2533,7 @@ coupled scheme.
 The drools have become the center of deliberation (which previously was the AIML).
 We will discuss these changes in this chapter.
 
-\toReview
+\newlyCleared
 In this chapter we will discuss two architectures,
 the first is the architecture which is actually implemented, this deals with a
 single agent and the user.
@@ -2546,9 +2546,9 @@ However there are some pragmatic problems with this discussed in section
 [[Multiple conversation partners]].
 Therefore we held of on implementing this and just describe how it could be done
 instead.
-In section [[Implemented architecture]] we will describe the architectural changes
-between the current implementation and the original architecture discussed in
-section [[The serious game]].
+In section [[Implemented architecture]] we will describe the main architectural
+changes between the current implementation and the original architecture
+discussed in section [[The serious game]].
 Note that we want to keep as much of the existing architecture as possible.
 
 \cleared
@@ -2630,7 +2630,6 @@ Note that although we removed the ability for the bot to use AIML, it should be
 relatively easy to convert from the old AIML structure to the new format with help
 of a script.
 A proof of concept of this has been made of this in section [[Conversion script]].
-\todo[inline]{Maybe a package overview subsection, where we discuss the packages and their goals}
 ** Data structures
 
 #+BEGIN_QUOTE
