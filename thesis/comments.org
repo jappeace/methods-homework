@@ -2,8 +2,28 @@
 
 * Dignum
 
-1. Kan ik de code opensourcen onder AGPL?
-2. Ik zou het een stuk makkelijker kunnen maken om de code te gebruiken door wildfly en mysql te dumpen.
+1. Wat moet ik precies doen om het makkelijk te maken voor een andere student?
+   1. Er is al een build guide, dus in princiep zou het vrij makkelijk moeten
+      zijn voor een andere student om het over te nemen.
+      Deze bouw gids gaat uit van linux (ubuntu of gentoo)
+      omdat package managment instalatie stukken makkelijker maakt.
+      Je moet bijvoorbeel mariadb (mysql) instaleren en maven instaleren
+      Wat niet triviaal is.
+      Daarnaast word de commandline gebruikt om deze software te gebruiken.
+      Ik weet niet hoe derglijke dingen op windows gaan.
+      Maar gellukig is ubuntu gratis en makkelijk te instaleren.
+   2. De bot is in princiepe niet afhankelijk van mariadb, mysql of maven.
+      Ik zou een variant kunnen maken die deze afhankelijkheden niet langer heeft.
+      Ik had het destijds zo gedaan omdat er een client server achtectuur is.
+      Wat ik dan doe is de bot opzetten als een library.
+   3. Mischien is het beste dan nog wel dit te overleggen met manuel?
+      Zodat die het aan een andere student kan uitleggen?
+      Ik dacht dat manuel het ook zo deployde...
+      Maar volgens mij had hij ook een applicatie ofzo gemaakt om te testen.
+      Het probleem was dat deze niet bij mij werkte omdat javaFX werd gebruikt.
+2. Kan ik de code opensourcen?
+   1. Bijvoorbeeld met LGPL, zelfde licentie als de ALICE bot.
+   2. Moet ik ook overleggen met Manuel..
 
 * Manuel
 
