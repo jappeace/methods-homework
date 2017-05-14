@@ -4486,6 +4486,7 @@ but done in detail in the appendix [[building]].
 
 ** Demo
 \todo[inline]{Delete this subsection}
+\todo[inline]{This is just here to remind myself waht I had shown in the demo (to remember the level of detail)}
 1. Start server
 2. zet persoonlijkheid die in believes.yml op INTJ
 3. Build
@@ -4523,6 +4524,8 @@ but done in detail in the appendix [[building]].
 + Transition scene: "How can I help you?"
 + Zeg nog eens "Hello"
 ** Setting up the scenario
+
+\todo[inline]{I don't know if we should start with yaml here, perhaps we should just discuss how loading works and move on let let all yaml discusion be contained in the replacing AIML chapter, maybe the only thing to do here is discussing believes because I didn't treat that there}
 \toReview
 To indicate how to use the bot, we will setup a small scenario.
 The first thing that needs to happen is setting up the =believes.yml=
@@ -4603,6 +4606,7 @@ literals:
 Finally we need to specify the connections between the symbols.
 This basically gives the bot a raw context to work in,
 which can be seen in listing [[code:sc-connections.yml]].
+\todo{Obviously that listing is way to big}
 
 #+CAPTION: introduction connections YAML file
 #+NAME: code:sc-connections.yml
@@ -4688,7 +4692,6 @@ from:
  - wow_name
 to:
  - symbol: status
-
 ---
 from:
  - made_a_friend
@@ -5973,7 +5976,6 @@ Conversation went according to script.
   instructions I wrote.
 - This probably also includes fixing recursive before, almost certain that doesn't work.
   (maybe include unit tests for that because its recursion which never works as expected)
-
 
 *** Additional experimentation?
      For this I wanna setup an experiment like thing, where we research what
