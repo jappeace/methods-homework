@@ -4485,10 +4485,27 @@ This is however not discussed in this chapter,
 but done in detail in the appendix [[building]].
 
 ** Demo
+1. Start server
+2. zet persoonlijkheid die in believes.yml op INTJ
+3. Build
+4. Open test gedeelte van thesis
+5. Open Unity client en ga INTJ test af
+6. Stel believes.yml in op ENFP
+7. Rebuild
+8. Ga ENFP test af met de python client.
+9. zelfde voor ISTP?
+*** Convert
+1. Verwijder salve/anamnesi/large & small
+2. Voer convert script uit
+3. Open introduction.aiml & introduction converted folder
+   1. symbols: patronen of templates
+   2. verschil in verbosity: connections
+   3. Zoek 'I am an intern in gegenereerde' drools
 
-+ Start mysqld =sudo systemctl start mysqld=
-+ Start wildfly
-+ Open believes.yml, introduction/connections.yaml, en ranger in introduction
+*** second
+4. Start mysqld =sudo systemctl start mysqld=
+5. Start wildfly
+6. Open believes.yml, introduction/connections.yaml, en ranger in introduction
 *** Templates
 + Vertel over template matching met regexes, en insertion
 + rebuild
