@@ -3703,6 +3703,11 @@ distinctly per bot *and* there should be a mechanism to share these.
 \clearpage
 * Implementation
 \drafting
++ We start with replacing AIML I guess
++ Then we go trough the script(s) which we showed dignum and how each component is used?
+  + So for example have a subsection for personality before etc, and each time we encounter each new show what elements are used?
+
+\drafting
 In this chapter we will be disusing in detail the implementation.
 This will include a new representation of the dialogue knowledge.
 Then we will also described how the BDI+Jung chapter came from a theoretical
@@ -4633,161 +4638,6 @@ we could make some more general unit tests.
 
 *** Personality
 
-** Programming paradigm
-\drafting
-We want to say a few words about the programming paradigm used \todo{Do we? Really? Perhaps move this to the appendix}
-in the realization of the ideas discussed in this thesis.
-
-*** Java
-\todo[inline]{IDK add references or decide to keep this? Perhaps ask dignum?}
-\drafting
-First note that although the project was written in Java,
-a langauge which strongly was in favor of the object oriented programming
-paradigm, we wrote most of the code in a functional paradigm style.
-What we mean by this is that we preffer logical substition over in place writes.
-
-\drafting
-Java makes this relativly hard to do. It has a `final` keyword,
-which prevents assignment, but this keyword does noet enforce writing into
-underlying data structure.
-The awkardness of this keyword is best demonstrated by hacking the lambda
-limitation of disalowwing enclosment of variables that are not final in lambdas.
-Which can be seen in listing [[code:java-lambda-hack]].
-
-#+CAPTION: Hack around Java's final variable restriction in lambdas
-#+NAME: code:java-lambda-hack
-#+BEGIN_SRC java
-	class LamdaHack<T>{
-		T value;
-	}
-	@Test
-	public void rationale_preffers_recursive_alternation(){
-		// note that builder by default lets the doctor utter first
-		final LamdaHack<Utterance> hack = new LamdaHack<>();
-		builder.addOptionAndWith(hellos, actor_patient, deeper -> {
-			hack.value = deeper.addOption(hellos, actor_doctor, PerlocutionaryValueSet.create("Joyfull"));
-			deeper.addOption(hellos, actor_patient);
-		});
-		Utterance expected = hack.value;
-        ...
-    }
-#+END_SRC
-
-\drafting
-So one can only have immutable structures by making data strcutures enterly
-consist either of values, or other immutable strctures.
-An example of this is shown in listing [[code:java-immutable]].
-
-#+CAPTION: An immutable structure
-#+NAME: code:java-immutable
-#+BEGIN_SRC java
-@Immutable
-public class Symbol {
-	public final String name; // strings are in most languages immutable
-	public final Scene scene; // immutable too
-
-	private final List<String> literals; // mutable but private and owned by us
-	private final int hash_value; // immutable but no reason to make public
-	public Symbol(String name, List<String> literals, Scene scene) {
-		this.name = name;
-		this.literals = copy(literals); // we must copy to gaurantee immutabilty
-		// since the object is immutable, we can do this on construction
-		this.hash_value = scene.hashCode()*3+name.hashCode()*7;
-		this.scene = scene;
-	}
-	public final List<String> getLiterals() {
-		return copy(literals); // we must pass a copy to gaurantee immutabilty
-	}
-	private static <E> List<E> copy(List<E> from){
-		return new ArrayList<>(from);
-	}
-    ...
-}
-#+END_SRC
-
-\drafting
-Note that because of the fact that Java collections themselves are mutable we
-have to make them private and to access it we need to either make a copy or
-provide a stream (a stream is readonly in Java).
-Also note that upon assignment we directly make a copy of the litteral list,
-because we don't know where that refference has come from and if the
-reference has been unnasigned.
-So if you don't do this you can break immutablity as is shown by
-listing [[code:java-must-copy]].
-
-#+CAPTION: Why we must copy mutable lists
-#+NAME: code:java-must-copy
-#+BEGIN_SRC java
-List<String> literals = Lists.newArrayList("one", "two")
-Symbol symbol = new Symbol("unimportant", literals, new Scene("unimportant"));
-literals.add("Not so immutable now are you?");
-#+END_SRC
-
-\drafting
-This is of course unexpected,
-and even worse it will make the object symbol thread unsafe,
-there is no way for the symbol class to gaurantee the literal list isn't used
-because its owned outside of its scope.
-Even if you put the synchronized keyword on the get method,
-you don't get thread safety.
-Because the symbol doesn't own the list.
-The only way to gaurantee ownership is by making a copy.
-If we make a shallow copy of the collection the mutation doesn't occur as shown
-in [[code:java-must-copy]].
-
-*** Data structures
-<<Data structures>>
-
-\drafting
-All data structures used in the new implementation are immutable.
-This means that as soon as construction is finished of a data structure,
-the public API never changes.
-To get a change into a data structure a copy has to be made.
-
-\drafting
-The reason for doing this is that immutable data structures can used amongst
-multiple threads without the use of any locks.
-\todo{cite this}
-This is an extremely desirable property to have especially with the drools
-engine since it can assume arbitrary execution of the rules, depending on which
-scheduler you choose.
-
-\drafting
-Another advantage is that in combination with pure functions, unit testing
-becomes really easy to do.
-A problem one often has with unit testing is that you need to get your objects
-into the right state to get tested.
-\todo{cite this}
-However since our objects only have ever one state,
-it becomes rather easy to get them in the right state.
-
-\drafting
-It should be noted however that trying to do this in java requires quite some
-discipline.
-Practices such as creating getters and setters can be avoided in favour of
-final public fields, if the type of those fields are immutable.
-However since java collections aren't immutable \todo{cite}
-they always need to be private
-and be shallowly copied on construction.
-Then to expose the data one should create a copy of the collection, or, expose a
-stream (which is also immutable). \todo{cite}
-
-** Immutablity
-\todo{Delte this because not relevant for thesis?}
-\todo[inline]{IDK find a place for this}
-
-\drafting
-All classes are immutable.
-Meaning that once created their values will never change.
-A value can be changed by making a new instance with the modified value.
-Setters are often provided for values that need to change regularly,
-they return a new modified instance however rather than changing the object in
-place.
-Using an immutable model has several advantages over the conventional approach.
-The biggest one being that the entire model is thread safe, without the use of
-locks.
-This makes it very easy to use with drools since a drool engine could execute a
-rule at any time.
 ** Actors
 \todo[inline]{Find a place for this section which shouldn't be a section}
 \drafting
