@@ -4485,6 +4485,7 @@ This is however not discussed in this chapter,
 but done in detail in the appendix [[building]].
 
 ** Demo
+\todo[inline]{Delete this subsection}
 1. Start server
 2. zet persoonlijkheid die in believes.yml op INTJ
 3. Build
@@ -4501,7 +4502,6 @@ but done in detail in the appendix [[building]].
    1. symbols: patronen of templates
    2. verschil in verbosity: connections
    3. Zoek 'I am an intern in gegenereerde' drools
-
 *** second
 4. Start mysqld =sudo systemctl start mysqld=
 5. Start wildfly
@@ -4523,11 +4523,181 @@ but done in detail in the appendix [[building]].
 + Transition scene: "How can I help you?"
 + Zeg nog eens "Hello"
 ** Setting up the scenario
-\drafting
+\toReview
 To indicate how to use the bot, we will setup a small scenario.
+The first thing that needs to happen is setting up the =believes.yml=
+which can be seen in listing [[code:sc-believes.yml]].
+Actually loading the believes inside a YAML file presents us with a first
+design conflict.
+Should believes be loaded from YAML or inside the drools?
+There is a constant pull between these two possibilities.
+Drools is much more flexible, however YAML is usually less verbose.
+Clearly we chose to use YAML, but was this the right choice?
+The issue is that we now indicate that this structure is a standard part of the
+bot, but its only part of the personality component.
+The idea of doing it this way was to provide some kind of scenario descriptor
+file, drools however may have been better suited for that.
 
+#+CAPTION: Believes YAML file
+#+NAME: code:sc-believes.yml
+#+BEGIN_SRC yaml
+goals: []
 
+values:
+  enlightening: 12
 
+self: patient
+
+actors:
+  - patient
+  - doctor
+
+# ENFP
+personality: [Ne, Fi, Te, Si]
+#+END_SRC
+
+\drafting
+Next we require several symbol files that can be seen in listing [[code:sc-symbols.yml]].
+Unlike the believes file,
+usage of YAML for symbols was a good idea.
+
+#+CAPTION: Symbols YAML file
+#+NAME: code:sc-symbols.yml
+#+BEGIN_SRC yaml
+--- # file; introduction/deep_conversation.yml
+literals:
+  - I love this conversation <pall>
+--- # file; introduction/good.yml
+literals:
+  - Good
+regexes:
+  - "good"
+--- # file; introduction/greeting.yml
+literals:
+  - Hello
+  - Hi
+regexes:
+  - "hello (?<name>.*)"
+--- # file; introduction/made_a_friend.yml
+literals:
+  - I just met <friend> today!
+  - I just met <friend> he\'s the best!
+--- # file; introduction/my_name_is.yml
+literals:
+  - My name is agnese # just insert the bot name
+regexes:
+  - "[mM]y name is (?<name>.*)" # capture user name
+--- # file; introduction/status.yml
+literals:
+  - How are you today?
+regexes:
+  - "[hH]ow are you"
+--- # file; introduction/wow_name.yml
+literals:
+  - is <name> spanish?
+  - Wow I've never heard of <name>!
+  - Can you eat <name>?
+#+END_SRC
+
+\drafting
+Finally we need to specify the connections between the symbols.
+This basically gives the bot a raw context to work in,
+which can be seen in listing [[code:sc-connections.yml]].
+
+#+CAPTION: introduction connections YAML file
+#+NAME: code:sc-connections.yml
+#+BEGIN_SRC yaml
+from:
+ - greeting
+to:
+ - symbol: greeting # should this be commented out because of the shortcut?
+   values: # no it shouldn't, this forces Fi to d
+    - Polite
+ - symbol: status
+   restricted_to: patient
+   values:
+    - Polite
+    - Enthusiasm
+ - symbol: ask_reason_here
+   scene: information_gathering
+   restricted_to: doctor
+ - symbol: my_name_is
+---
+from:
+ - status
+to:
+ - symbol: ask_reason_here
+   scene: information_gathering
+   restricted_to: doctor
+   values:
+     - Impatient
+ - symbol: good
+   restricted_to: doctor
+   values:
+     - Polite
+     - Happy
+ - symbol: made_a_friend
+   restricted_to: patient
+   utterances:
+     friend:
+       symbol: my_name_is
+       actor: doctor
+       match: name
+   values:
+     - happy
+     - enlightening
+ - symbol: deep_conversation
+   restricted_to: patient
+   utterances:
+     pall:
+       symbol: my_name_is
+       actor: doctor
+       match: name
+   values:
+     - happy
+     - enlightening
+     - polite
+   before:
+     who: doctor
+     said: greeting
+---
+from:
+ - good
+to:
+ - symbol: ask_reason_here
+   scene: information_gathering
+   restricted_to: doctor
+   values:
+     - Concerned
+---
+from:
+ - my_name_is
+to:
+ - symbol: wow_name
+   restricted_to: patient
+   values:
+     - enlightening
+   utterances:
+     name:
+       symbol: my_name_is
+       actor: doctor
+       match: name
+ # add utterances
+---
+from:
+ - wow_name
+to:
+ - symbol: status
+
+---
+from:
+ - made_a_friend
+to:
+ - symbol: ask_reason_here
+   scene: information_gathering
+#+END_SRC
+
+\FloatBarrier
 ** Loading
 \drafting
 Whereas the original ALICE bot was both an XML parser *and* a chat bot.
