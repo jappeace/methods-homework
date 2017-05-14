@@ -3525,7 +3525,7 @@ If we do send a reply we reinsert the selected =Utterance= as a
 These types can be found in figure [[fig:supportclassdrools]]. 
 
 ** Social practice support
-\toReview
+\newlyCleared
 Because this entire process is implemented in Drools, and we use types to track
 progress. Its relatively easy to add other rules that can modify the process,
 without changing the existing ones.
@@ -3533,22 +3533,21 @@ Priority can be used to intercept a rule, as was done with the low level replies
 Adding a more refined implementation of social practice therefore would be
 relatively easy.
 There exists already some support for the social practice in Drools,
-for example the scenes logic, 
-but this is of course not complete.
+for example the scenes logic, but this is not complete.
 Better support can easily be added by adding more rules and tweaking with
 priorities.
 
-\toReview
+\newlyCleared
 Besides using extra rules to add support for social practice logic,
-for the personality part of the thesis specifically there is another possiblity.
+for the personality part of the thesis specifically there is another possibility.
 They can be wrapped in a social practice function,
 that analyzes the result of the personality function and then does social
-practice opperations to the resulting =DialogueTree= or =Believes=.
+practice operations to the resulting =DialogueTree= or =Believes=.
 So based upon the social practice, and the personality function things may
-chagne.
+change.
 
 ** Multilogue architecture
-\toReview
+\newlyCleared
 The architecture presented in section [[Implemented architecture]] is for a dialogue
 game.
 However a social practice does not put limits on the amount of participants,
@@ -3610,7 +3609,7 @@ A deployment diagram of this architecture can bee seen in figure
 [[file:img/uml/n-agent-arch.png]]
 
 *** System vs thoughts
-\toReview
+\newlyCleared
 What is required of the drools is that we make a separation between the 
 multilogue /system/ and agent /thoughts/.
 A good step in this direction is the =Believes= structure,
@@ -3624,7 +3623,7 @@ therefore it could be used to identify the agent.
 In other parts of the current architecture this is not the case at all.
 For example the =PatternDatabase=  are just plainly inserted into the fact base.
 
-\toReview
+\newlyCleared
 The naive solution is to just mark every fact with a self field.
 Aside from the fact that you now introduce boilerplate code,
 this has another more serious problem,
@@ -3634,12 +3633,12 @@ This is of course not desirable,
 it would defeat the entire purpose of a multilogue system,
 at least for the agents.
 
-\toReview
+\newlyCleared
 So what we present in figure [[fig:n-agent-arch]] is a different approach.
 Basically what we do is separate the system from the thoughts.
 The system will be in the =sys.drools= engine, whereas the bot will be in the
 =bot.drools=.
-These are separate kie runtimes, but the system has access to the bot.drools
+These are separate KIE runtimes, but the system has access to the bot.drools
 facts so it can do scoring and actually send responses for the bot.
 The server can then have multiple bot instances.
 In these instances not every fact has to be marked since they have their own
@@ -3648,13 +3647,13 @@ The only thing that needs happen is a self fact needs to be inserted,
 or the =Believes= structure could be used for that, if that is kept around.
 
 *** Identifying speaker
-\toReview
+\newlyCleared
 Another big issue is figuring out which agent(s) is being talked to.
 There has been some research on this subject,
 for example using hand coded selection mechanisms cite:klotz2011engagement,
 and statistical mechanisms cite:keizer2013training.
 
-\toReview
+\newlyCleared
 Although both these approaches are good options for robots,
 we are dealing with an application,
 in which we can cheat to get basically nearly 100% correct selection.
@@ -3666,7 +3665,7 @@ You can of course extend this to select groups of agents,
 or make the selection based on some kind of abstraction,
 such as the distinction between whisper to an agent or shout to an agent.
 
-\toReview
+\newlyCleared
 In the data structures however a more structural change needs to occur,
 namely in both the connections and the utterances.
 The =Utterance= class need to be extended with to who the utterance was said,
@@ -3675,15 +3674,15 @@ this connection can be said too.
 These definitions can of course quickly get out of hand,
 especially with larger groups,
 and therefore it would be wise to define some kind of role mechanism,
-for which existing solutions exist cite:sandhu1996role.
+for which solutions exist cite:sandhu1996role.
 
 *** Practicalities
-\toReview
+\newlyCleared
 Then there are some practicalities to consider, that are more at implementation
 level.
 For example replies should be timed, so that the user won't see suddenly 200
 lines of chat messages between two of his conversation partners.
-This is relatively complex todo because with multiple bots *and* doing
+This is relatively complex to do because with multiple bots *and* doing
 timed reactions some kind of communication needs to occur between the bots.
 This is probably a task for the system,
 but it could also be considered a part of the social practice.
@@ -3692,7 +3691,7 @@ A different way of dealing with this is just preventing the scenario from
 continuing at certain key points until a user reaction occurs.
 Deciding which approach is the best is basically a matter of experimentation.
 
-\toReview
+\newlyCleared
 Then it should also be noted that the scenarios of the bots should be
 specified differently. At least for parts of it, while other parts should be
 shareable.
