@@ -11,7 +11,6 @@
       Wat niet triviaal is.
       Daarnaast word de commandline gebruikt om deze software te gebruiken.
       Ik weet niet hoe derglijke dingen op windows gaan.
-      Maar gellukig is ubuntu gratis en makkelijk te instaleren.
    2. De bot is in princiepe niet afhankelijk van mariadb, mysql of maven.
       Ik zou een variant kunnen maken die deze afhankelijkheden niet langer heeft.
       Ik had het destijds zo gedaan omdat er een client server achtectuur is.
