@@ -66,6 +66,9 @@
 #+LATEX_HEADER: \let\OldTexttt\texttt
 #+LATEX_HEADER: \renewcommand{\texttt}[1]{\OldTexttt{\hl{#1}}}%
 
+# for \FloatBarrier, prevents figures from floating over sections etc
+#+LATEX_HEADER: \usepackage{placeins}
+
 ** Abstract                                                          
 :PROPERTIES:
 :UNNUMBERED: t
@@ -1223,7 +1226,7 @@ ignoring all of AIML.
 #+RESULTS[db5e6bada22b64bf70a330d1219fedc990f11453]: fig:sequence
 [[file:img/uml/sequence.png]]
 
-\newpage
+\FloatBarrier
 *** Server architecture
 <<Server architecture>>
   \cleared
@@ -1325,7 +1328,7 @@ stop
 #+RESULTS[d725d50fe0747c0393ea2a3b6e93ac437492271a]: fig:construction
 [[file:img/uml/construction.png]]
 
-\newpage
+\FloatBarrier
 **** Text processing
 <<Text Processing>>
     \cleared
@@ -2530,14 +2533,15 @@ coupled scheme.
 The drools have become the center of deliberation (which previously was the AIML).
 We will discuss these changes in this chapter.
 
-\cleared
+\toReview
 In this chapter we will discuss two architectures,
 the first is the architecture which is actually implemented, this deals with a
 single agent and the user.
-Secondly we will discuss the N-agent
-architecture which is capable of dealing with more than one agent (and the user).
+Secondly we will discuss the $N$-agent architecture which is capable of dealing
+with more than one agent (and the user), this is called the multilogue
+architecture.
 The reason for discussing both is that the ideas discussed in section
-[[BDI and Jung]] could be applied to an N-agent architecture.
+[[BDI and Jung]] could be applied to an $N$-agent architecture.
 However there are some pragmatic problems with this discussed in section
 [[Multiple conversation partners]].
 Therefore we held of on implementing this and just describe how it could be done
@@ -2551,7 +2555,7 @@ Note that we want to keep as much of the existing architecture as possible.
 There are also several items we won't discuss in this chapter because they
 haven't changed, these include the protocol,
 and the Wildfly server and the unity client.
-** Implemented architecture
+** Deployment diagram
 <<Implemented architecture>>
 \cleared
 A deployment diagram of the architecture can bee seen in figure
@@ -2627,7 +2631,7 @@ relatively easy to convert from the old AIML structure to the new format with he
 of a script.
 A proof of concept of this has been made of this in section [[Conversion script]].
 \todo[inline]{Maybe a package overview subsection, where we discuss the packages and their goals}
-*** Data structures
+** Data structures
 
 #+BEGIN_QUOTE
 Bad programmers worry about the code.
@@ -2667,7 +2671,7 @@ Which in practice is done with the low level replies.
 Finally note that we use $[\dots]$ for list and $\{\dots\}$ for set in the
 class diagrams, to save space.
 
-**** Low level diagram
+*** Low level diagram
 
 \cleared
 In figure [[fig:droolclass]] the diagram containing the low level data structures
@@ -2808,7 +2812,7 @@ As soon as client code starts using that, the single inheritance 'slot' Java
 provides is occupied forever,
 or at least until a major refactor occurs.
 
-**** Believes and DialogueTree
+*** Believes and DialogueTree
 <<Believes and DialogueTree>>
 \cleared
 In figure [[fig:jungclass]] we can see the higher level structures of =Believes= and
@@ -2908,7 +2912,7 @@ navigation much easier.
 These methods aren't shown in the figure because their type signatures are
 rather big. \todo{But we discuss them in the implementation? Refer to that}
 
-**** db package
+*** db package
 \cleared
 In figure [[fig:dbclass]] the databases are shown.
 This is a sub package of the model.
@@ -2980,7 +2984,7 @@ a connection database where all the connections are flipped.
 This is used to create the second pattern database,
 it made looking up the required patterns much easier.
 
-**** Jung in Java
+*** Jung in Java
 \toReview
 To implement the theory presented in section [[BDI and Jung]],
 several issues had to be overcome.
@@ -3060,7 +3064,7 @@ JungianFunction ..> JungFuncArgs
 #+RESULTS[019dc12edde2e80f03b0ae309525edacf716f1a2]: fig:jungjavaclass
 [[file:img/uml/jungjavaclass.png]]
 
-**** Before and templates
+*** Before and templates
 <<Before and templates>>
 \cleared
 After the personality was implemented, we wanted to bring the bot up too
@@ -3158,7 +3162,7 @@ The template system does something else. It introduces the ability to match
 variables from the regex and re-insert these as a template into existing symbols.
 This is explained in depth in section [[Star tags]].
 
-**** Support types
+*** Support types
 <<Support types>>
 \cleared
 Because we are working with drools,
@@ -3312,9 +3316,8 @@ This structure tracks traversing the Jungian Functions.
 We manage this inside drools to give other rules the opportunity to inspect
 the deliberation process while its going.
 
-# make sure the figures don't spill over into next section
-\clearpage
-*** Initialization
+\FloatBarrier
+** Initialization
 \cleared
 Dealing with cyclic immutable data structures is a problem.
 If we were to store the connections in the nodes,
@@ -3386,7 +3389,7 @@ constructed.
 #+RESULTS[c422b040ae5246a7ecdb58bed350e5cb68d716bd]: fig:initjung
 [[file:img/uml/initjung.png]]
 
-*** Operation
+** Operation
 \newlyCleared
 To understand how the operation of a bot works,
 we can look at it from the point when a message is received
@@ -3522,7 +3525,7 @@ If we do send a reply we reinsert the selected =Utterance= as a
 =PreProcessed= type.
 These types can be found in figure [[fig:supportclassdrools]]. 
 
-*** Social practice support
+** Social practice support
 \toReview
 Because this entire process is implemented in Drools, and we use types to track
 progress. Its relativly easy to add other rules that can modify the process,
@@ -3545,9 +3548,7 @@ practice opperations to the resulting =DialogueTree= or =Believes=.
 So based upon the social practice, and the personality function things may
 chagne.
 
-# empty buffer of figures
-\clearpage
-** Desired architecture
+** Multilogue architecture
 \toReview
 The architecture presented in section [[Implemented architecture]] is for a dialogue
 game.
@@ -3700,27 +3701,9 @@ So the YAML files should be specified distinctly per bot, the drools files
 distinctly per bot *and* there should be a mechanism to share these.
 
 
+# empty buffer of figures
 \clearpage
-* Implementation
-\todo[inline]{The level of detail is around the one we did with the demonstration: Go trough one connection and show how the things are used, such as personality before and template.}
-\todo[inline]{Remember the implementation is in support of thesis, not the other way around, so programming stuff is irrelevant}
-\todo[inline]{I think in here we can also discuss why we did or didn't use logic?}
-
-\toReview
-In this chapter the implementation of the bot is discussed.
-Herein we will discuss some of the bigger chalanges of implementing the bot.
-We first start of with analyzing AIML and clarify our thought process on
-replacing it with another dataformat.
-Then we will go trough a scenario step by step and talk about how the bot does
-some of the thing its supposed to do.
-Finally we will present the test that indicate that we indeed succeeded.
-
-\toReview
-However, when one starts working on an existing software project the first
-obstacle faced is building/executing the project,
-this is discussed in detail in the appendix [[building]].
-
-** Replacing AIML
+* Replacing AIML
 <<From strings to meanings>>
 \toReview
 Originally, AIML was used for mapping user input to a reply.
@@ -3736,8 +3719,7 @@ we did so by first carefully analyzing AIML and deciding which parts we want to
 keep,
 and which other parts we wanted to remove or change.
 
-
-*** Analyzing AIML
+** Analyzing AIML
 # Note taht such descriptions are good, show how it was in the old system and
 # the thought process towards the new system, so do more of it like this
 \toReview
@@ -3816,7 +3798,7 @@ Of course we can't make a reply of this yet since we still have the second
 problem to deal with,
 how to access information stored in the "statusInquiry" symbol.
 
-**** Symbol to string
+*** Symbol to string
 \cleared
 Now what if the agent wants to do a status inquiry,
 well the string into a status inquiry is already available,
@@ -3878,7 +3860,7 @@ But it does specify what we want, and it does so very tersely.
 Since we are changing the semantics of AIML drastically we may as well use a
 more terse format such as JSON, or YAML.
 
-**** XML vs JSON vs YAML, vs TOML
+*** XML vs JSON vs YAML, vs TOML
 \toReview
 All these langagues are standards cite:jsonspec,yamlspec,xmlspec,tomlspec.
 However there is a major difference between XML and JSON or YAML, and that is
@@ -3929,7 +3911,7 @@ Although the argument TOML has over YAML is that YAML is much more complex,
 and can in certain cases be not as human readable cite:yamldisatvantages.
 If TOML were to stabalize, its probably better to move to that instead.
 
-*** Using yaml
+** Using yaml
 
 \toReview
 It was decided conclusivly to use YAML for replacing AIML's function of
@@ -3969,7 +3951,7 @@ Therefore both methods will be supported.
 
 \todo[inline]{If we have time we can compare information per character between the new and old method, going from 251 to 131 is quite an improvement}
 
-**** Connections
+*** Connections
 \toReview
 So once we split up the template from the patterns,
 and grouped the patterns with what they uttered.
@@ -4034,7 +4016,7 @@ than AIML, we know what's going on without searching for it.
 Of course once the connection file starts to grow we begin to loose this,
 but for this scenes can be used to still keep overview.
 
-**** Star tags
+*** Star tags
 <<Star tags>>
 \toReview
 Star tags are soley template focused, they capture the content of a wildcard
@@ -4182,7 +4164,7 @@ to:
 + symbols that require information that aren't being fulfilled throw a compile error
 + at runtime connections that don't have information from previous utterences are disabled
 
-**** That tags
+*** That tags
 <<That tags>>
 \toReview
 The that tags in AIML have a rather unforntunate name.
@@ -4277,7 +4259,7 @@ utterance.
 We could add options for when an utterance was made, for example just now or
 any previous utterence. However in the interest of time we won't do this.
 
-**** Scenes
+*** Scenes
 \toReview
 In the S-AIML extension, scenes were used to enable and disable certain patterns.
 Unlike the topic mechanism of AIML which just gives prefference,
@@ -4320,8 +4302,7 @@ Note that by cyclic, we mean there can be cycles, but there don't have to be.
 Its weakly connected because it wouldn't make much sense to model scenes
 that can't get to other scenes trough connections.
 
-
-*** Automatic AIML to YAML
+** Automatic AIML to YAML
 \toReview
 AIML is a standard cite:aimlspec.
 Note that the spec says: "AIML shall be compatible with XML.",
@@ -4334,7 +4315,7 @@ that the syntax can become a lot more terse, while maintaining readability.
 Because we have all these standards, its relativly easy to convert between
 them. Because libraries exist for parsing them.
 
-**** Legacy AIML
+*** Legacy AIML
 \toReview
 An introduction of a new format is nice, but when this is done,
 all the work in the old format can become obsolete.
@@ -4364,7 +4345,7 @@ Alternatively you count the injection of types (in S-AIML),
 but this isn't a formal encoding in AIML itself, but rather a way of informing
 drools what's goin on.
 
-**** Mapping AIML
+*** Mapping AIML
 <<Mapping AIML>>
 \toReview
 What we can do is extract the patterns, and their respective literals into
@@ -4434,7 +4415,7 @@ So what we can do with the srai tags, if they exist, is simply checking if the
 symbol exists and then add the pattern to that symbol.
 
 
-**** Type insertion
+*** Type insertion
 <<Caviats>>
 \toReview
 After the conversion is finished, the bot will mostly work, with the added bonus
@@ -4461,7 +4442,7 @@ This can be handled inside the drools rules because the inserted types
 always have setters.
 So there could be java code generated for that.
 
-**** Proof of concept
+*** Proof of concept
 <<Conversion script>>
 \toReview
 To show that it is indeed easy to write a conversion script,
@@ -4482,6 +4463,28 @@ As can be seen in listing [[code:sh-conversion-script-help]].
 #+END_SRC
 
 \todo[inline]{Describe missing features}
+
+\clearpage
+* Implementation
+\todo[inline]{The level of detail is around the one we did with the demonstration: Go trough one connection and show how the things are used, such as personality before and template.}
+\todo[inline]{Remember the implementation is in support of thesis, not the other way around, so programming stuff is irrelevant}
+\todo[inline]{I think in here we can also discuss why we did or didn't use logic?}
+
+\toReview
+In this chapter the implementation of the bot is discussed.
+Herein we will discuss some of the bigger chalanges of implementing the bot,
+however as the accaptance tests show the bot is functional.
+We first start of with analyzing AIML and clarify our thought process on
+replacing it with another dataformat.
+Then we will go trough a scenario step by step and talk about how the bot does
+some of the thing its supposed to do.
+Finally we will present the test that indicate that we indeed succeeded.
+
+\toReview
+However, when one starts working on an existing software project the first
+obstacle faced is building/executing the project,
+this is discussed in detail in the appendix [[building]].
+
 
 ** Demonstration
 *** Initialization
@@ -4892,10 +4895,6 @@ It is also entirely possible to make the bot a lot more faster in response time
 by using the GPU for regex matching.
 
 *** Graphical scenario editor
-
-\newpage
-\appendix
-
 *** Alternative matching methods
 \drafting
 The bot can be easily modified to use alternate matching mechanisms such
@@ -4903,6 +4902,10 @@ as fuzzy matching or probabilty based schemes. \todo{cite such systems}
 Because matching already happens in drools,
 The modification required to do this correctly is to put a set of symbols per scene,
 rather than a set of patternsymbol per scene.
+
+# start appendix, dump al floats and leave some room
+\clearpage
+\appendix
 
 * References
 <<bibliography link>>
