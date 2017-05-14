@@ -2984,7 +2984,7 @@ This is used to create the second pattern database,
 it made looking up the required patterns much easier.
 
 *** Jung in Java
-\toReview
+\newlyCleared
 To implement the theory presented in section [[BDI and Jung]],
 several issues had to be overcome.
 First of all Java has no native support for doing partial application.
@@ -2998,7 +2998,7 @@ The =NextFunction= and its respective field in =JungFuncArgs= is this explicit
 relation.
 Adding this field to the =JungFuncArgs= makes the functions a true endomorphism, 
 although it deviates from the theory since the result now also has a next function.
-This actually also introduces an infinite creation sequence,
+This also introduces an infinite creation sequence,
 there always needs to be a next function.
 To break this the =UnitNextFunction= was introduced.
 An argument can be made for using the =null= reference instead,
@@ -3007,9 +3007,9 @@ Finally for testing purposes we needed to be able to inject other functions
 than the ones defined in the =JungianFunction= enum.
 Therefore the =JungFuncAccessor= interface was introduced.
 This allows unit test to check if the next function was called for example,
-but the code also generally becomes more extendable because of this.
+but the architecture also becomes more extendable because of this.
 
-\toReview
+\newlyCleared
 Figure [[fig:jungjavaclass]] shows the elements required for java to apply an $f_a$.
 To do this we first create a =JungFuncArgs= structure with its =create= method.
 Then we insert the Jungian functions we want to apply.
@@ -3527,11 +3527,11 @@ These types can be found in figure [[fig:supportclassdrools]].
 ** Social practice support
 \toReview
 Because this entire process is implemented in Drools, and we use types to track
-progress. Its relativly easy to add other rules that can modify the process,
+progress. Its relatively easy to add other rules that can modify the process,
 without changing the existing ones.
 Priority can be used to intercept a rule, as was done with the low level replies.
 Adding a more refined implementation of social practice therefore would be
-relativly easy.
+relatively easy.
 There exists already some support for the social practice in Drools,
 for example the scenes logic, 
 but this is of course not complete.
@@ -3870,7 +3870,7 @@ What they all share in common is that they are supposed to be both
 human readable and parsable by a computer program.
 
 \toReview
-So what we mean by human and program readable is that with relativly little
+So what we mean by human and program readable is that with relatively little
 effort, a human or program can understand what's going on.
 Unlike say a binary format,
 which first needs to be parsed by a program before a human can understand it
@@ -3902,7 +3902,7 @@ However JSON has a few significant dissatvantages,
 for one it doesn't allow comments and it is quite strict.
 For example a common acceptable mistake is to have an array with a trailing
 comma like: [1,23,4,]. This is an error in JSON cite:jsonconfig,
-while its relativly easy for a program to notice this is erronious.
+while its relatively easy for a program to notice this is erronious.
 The syntax of JSON can be also more terse, which is shown by both YAML and TOML.
 The reason for choosing YAML over TOML is that YAML is stable,
 wheras TOML hasn't reached stabalization yet cite:tomlreadme.
@@ -4311,7 +4311,7 @@ although its not a markup langauge, unlike XML and AIML,
 but rather a data format cite:yamlvsxml.
 The advantage of being "just a dataformat" is
 that the syntax can become a lot more terse, while maintaining readability.
-Because we have all these standards, its relativly easy to convert between
+Because we have all these standards, its relatively easy to convert between
 them. Because libraries exist for parsing them.
 
 *** Legacy AIML
