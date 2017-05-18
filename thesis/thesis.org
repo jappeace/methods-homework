@@ -3790,25 +3790,39 @@ AIML has some problems for our particular use case.
 The major two issues are:
 + No way of giving drools space to do deliberation aside from updating the scenario. 
 + No way of accessing the knowledge base from inside drools.
-So what needs to happen is either to either modify AIML,
-or outright replace it with something else.
-We eventually chose for the latter, however,
-we did so by first carefully analyzing AIML and deciding which parts we want to
-keep,
-and which other parts we wanted to remove or change.
+A relatively simple solution to both of these would be to use an XML parser to
+load AIML into a data structure and insert it into drools,
+however this won't solve the core of our problem:
+The way AIML models a conversation makes it hard if not impossible to list
+possible actions for an agent.
 
-\drafting
-To give a good overview of the problems AIML has with modeling the scenario
-we can look at listing [[code:aiml-std-cats]] and a component diagram of what this
-means in figure [[fig:dep:aimlcats]].
-We use patterns to identify user utterances and attach responses to them.
-There are several important things of note here.
-First of all, we're only modelling half of the conversation.
-There is no way for the bot of knowing that a logical response on the bot's
-reply of hello, should usually be followed with a question of the user
-"how are you?".
+\toReview
+To give a good intuition of this issue, we use an example.
+Listing [[code:aiml-std-cats]] shows a piece of dialogue modelled in AIML.
+This is a pretty standard piece of AIML, no surprises there.
+Patterns are used to identify user utterances and attach responses to them.
+We created a deployment diagram of the situation seen in figure [[fig:dep:aimlcats]],
+which is more obvious.
+
+\toReview
+What we can see is that if the user sais "Hello" then the bot will reply "Hi".
+So what we have here is a mapping function from $\sigma \to \sigma$, where $\sigma$ is a
+string (see section [[BDI and Jung]]).
+The issue is that once Hello is matched, the answer *must* be Hi.
+S-AIML extends this with adding drool tags,
+but these are inside the template tags and therefore cannot truly get out of
+this relationship.
+Unless they were to replace the entire content,
+in which case AIML is no longer used as knowledge representation.
+
+\toReview
+We're also only modelling half of the conversation.
+There is no way for the bot of knowing that his Hi utterance,
+could be followed up reasonably with the question "How are you?" for example.
 Therefore there is no way for the bot to plan ahead in the conversation,
 or have any kind of variations in these plans.
+This is of course a problem, because we imagine personality as variations in a
+process (See section [[BDI + Personality]]).
 
 #+CAPTION: Standard AIML categories
 #+NAME: code:aiml-std-cats
@@ -3859,10 +3873,34 @@ howstar -->> notwell
 Hello -->> Hi
 #+END_SRC
 
-#+CAPTION: The database package
+#+CAPTION: Deployment diagram of AIML example
 #+LABEL: fig:dep:aimlcats
 #+RESULTS[598d6e1c753297bcb1ed5689c603cae3cc14bf55]: fig:dep:aimlcats
 [[file:img/uml/dep:aimlcats.png]]
+
+\toReview
+There are also some other small problems,
+which aren't really that important for this thesis in particular,
+but worth mentioning.
+Such as the fact you're stuck with AIML based patterns, 
+there is no way to use full regular expressions,
+or statistical methods.
+Another issue that we can't access encoded utterances directly,
+so from drools there is no way to do spontaneous utterances unless they're hard
+coded strings.
+Finally, since drools can be skipped all together (see figure [[fig:state:aiml]]),
+the bot could have amnesia about certain utterances,
+to prevent this every template tag would need an insert tag.
+
+\toReview
+What needs to happen is either to either modify the ALICE bot and AIML to 
+work fundamentally different,
+or outright replace it with something else.
+We eventually chose for the latter,
+we did so by first carefully analyzing AIML and deciding which parts we want to
+keep,
+and which other parts we wanted to remove or change.
+The next sections will discuss the thought process to a new representation.
 
 ** Analyzing AIML
 # Note taht such descriptions are good, show how it was in the old system and
