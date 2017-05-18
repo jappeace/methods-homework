@@ -3797,6 +3797,72 @@ we did so by first carefully analyzing AIML and deciding which parts we want to
 keep,
 and which other parts we wanted to remove or change.
 
+\drafting
+To give a good overview of the problems AIML has with modeling the scenario
+we can look at listing [[code:aiml-std-cats]] and a component diagram of what this
+means in figure [[fig:dep:aimlcats]].
+We use patterns to identify user utterances and attach responses to them.
+There are several important things of note here.
+First of all, we're only modelling half of the conversation.
+There is no way for the bot of knowing that a logical response on the bot's
+reply of hello, should usually be followed with a question of the user
+"how are you?".
+Therefore there is no way for the bot to plan ahead in the conversation,
+or have any kind of variations in these plans.
+
+#+CAPTION: Standard AIML categories
+#+NAME: code:aiml-std-cats
+#+BEGIN_SRC xml
+  <aiml>
+      <categroy>
+          <pattern>
+             Hello
+          </pattern>
+          <template>
+             Hi
+          </template>
+      </categroy>
+	  <category>
+		  <pattern>
+			  How are you
+		  </pattern>
+		  <template>
+			  Not doing too well today.
+		  </template>
+	  </category>
+	  <category>
+		  <pattern>
+			  How * you
+		  </pattern>
+		  <template>
+			  <srai>How are you</srai>
+		  </template>
+	  </category>
+  </aiml>
+#+END_SRC
+
+#+NAME: fig:dep:aimlcats
+#+BEGIN_SRC plantuml :cache yes :file img/uml/dep:aimlcats.png :exports results
+frame "user sais"{
+  usecase "How are you" as how
+  usecase "How * you" as howstar
+  usecase Hello
+}
+
+frame "bot replies"{
+  storage "Not doing well today." as notwell
+  storage Hi
+}
+
+how -->> notwell
+howstar -->> notwell
+Hello -->> Hi
+#+END_SRC
+
+#+CAPTION: The database package
+#+LABEL: fig:dep:aimlcats
+#+RESULTS[598d6e1c753297bcb1ed5689c603cae3cc14bf55]: fig:dep:aimlcats
+[[file:img/uml/dep:aimlcats.png]]
 
 ** Analyzing AIML
 # Note taht such descriptions are good, show how it was in the old system and
@@ -3819,28 +3885,6 @@ connections.
 We will use an example in listing [[code:aiml-std-cats]]
 and listing [[code:aiml-symbols]] to illustrate the differences.
 
-#+CAPTION: Standard AIML categories
-#+NAME: code:aiml-std-cats
-#+BEGIN_SRC xml
-<aiml>
-	<category>
-		<pattern>
-			How are you
-		</pattern>
-		<template>
-			Not doing too well today.
-		</template>
-	</category>
-	<category>
-		<pattern>
-			How * you
-		</pattern>
-		<template>
-			<srai>How are you</srai>
-		</template>
-	</category>
-</aiml>
-#+END_SRC
 
 #+CAPTION: AIML that refers to 'symbols' rather than templates.
 #+NAME: code:aiml-symbols
