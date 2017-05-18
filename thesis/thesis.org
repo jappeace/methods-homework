@@ -3773,13 +3773,13 @@ distinctly per bot *and* there should be a mechanism to share these.
 \clearpage
 * Replacing AIML
 <<From strings to meanings>>
-\toReview
+\newlyCleared
 In this chapter we will discuss AIML in detail,
 we will explain why AIML doesn't fit our requirement.
 Then we will start analyzing the structure of AIML and see how we can alter it
 to make it fit our requirements better.
 After that we will introduce a new modeling system,
-that is much more succinct then AIML.
+that is more succinct and flexible then AIML.
 Finally we will present a script to convert from AIML to the new format.
 
 ** AIML issues
@@ -3906,28 +3906,32 @@ The next sections will discuss the thought process to a new representation.
 # Note taht such descriptions are good, show how it was in the old system and
 # the thought process towards the new system, so do more of it like this
 \toReview
-What we want to do is to map the user input which is of type string $\sigma$
-at time $t$ into type $s_t$ for symbol at time $t$
-(see section [[A type signature approach]]).
-We will start by using AIML for this.
-AIML is primarly a case based reasoner.
-It will match on predifined strings or patterns and then "say" the string
+What we want to do is create a mapping function $\sigma \overset{g}{\to} s$
+(see section [[Narrowing the model]]).
+In our first attempt we will modify AIML to do this.
+AIML is primarily a case based reasoner.
+It will match on predefined strings or patterns and then "say" the string
 that was attached to the pattern.
-So we can use AIML to match,
-however the language has to be modified to not just produce a reaction but
-instead indicate what the symbol is of a reaction.
-This change will loosen the connection between a pattern and a response.
-In other words, it will create some more "space" to do actual deliberation.
-We will discuss later in this chapter how we retain plausible conversation
-connections.
-We will use an example in listing [[code:aiml-std-cats]]
-and listing [[code:aiml-symbols]] to illustrate the differences.
-
+So we can use AIML to match user input,
+but the language has to be modified so that instead of producing a reaction,
+it will indicate what the symbol is that was matched.
+An example of these changes can be seen if we compare the
+listing [[code:aiml-std-cats]] from the previous section with
+listing [[code:aiml-symbols]].
+And the deployment diagram can be seen in figure [[fig:dep:aimlsyms]].
 
 #+CAPTION: AIML that refers to 'symbols' rather than templates.
 #+NAME: code:aiml-symbols
 #+BEGIN_SRC xml
   <aiml>
+      <categroy>
+          <pattern>
+             Hello
+          </pattern>
+		  <symbol>
+            Greeting
+		  </symbol>
+      </categroy>
 	  <category>
 		  <pattern>
 			  How are you
@@ -3947,17 +3951,44 @@ and listing [[code:aiml-symbols]] to illustrate the differences.
   </aiml>
 #+END_SRC
 
-\toReview
-These changes loose reactive nature of the chat bot,
-rather than saying how to reply directly to certain kind of responses we just
-say what they mean in this social context.
+#+NAME: fig:dep:aimlsyms
+#+BEGIN_SRC plantuml :cache yes :file img/uml/dep:aimlsyms.png :exports results
+frame "user sais"{
+  usecase "How are you" as how
+  usecase "How * you" as howstar
+  usecase Hello
+}
+
+cloud "symbols"{
+  rectangle Greeting
+  rectangle StatusInquiry
+}
+
+how -->> StatusInquiry
+howstar -->> StatusInquiry
+Hello -->> Greeting
+#+END_SRC
+
+#+CAPTION: Deployment diagram of AIML that maps patterns to symbols
+#+LABEL: fig:dep:aimlsyms
+#+RESULTS[20bc07fb7eb297ea0af12257ea130b0a25180c48]: fig:dep:aimlsyms
+[[file:img/uml/dep:aimlsyms.png]]
 
 \toReview
-So we would have almost solved the first problem of not being able to do true
+These changes remove the reactive nature of the chat bot,
+no longer do patterns indicate what to reply to,
+but instead simply what they are.
+This example is of course can't be functional,
+since the symbol graph hasn't been introduced (see section [[symbol graph]])
+to list any available replies to symbols.
+However we can at least use these to to create the connection graph from.
+
+\toReview
+With this we almost have solved the first problem of not being able to do true
 deliberation.
 Of course we can't make a reply of this yet since we still have the second
 problem to deal with,
-how to access information stored in the "statusInquiry" symbol.
+how to access information stored in the =StatusInquiry= symbol.
 
 *** Symbol to string
 \cleared
