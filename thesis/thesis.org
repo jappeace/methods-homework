@@ -952,6 +952,7 @@ stop
 #+END_SRC
 #+CAPTION: Plan pattern example
 #+LABEL: fig:sp-activity
+#+ATTR_LATEX: :width 0.5\textwidth
 #+RESULTS[35679ceefcd43b1884cc8c502d27ae59aaa34043]: fig:sp-activity
 [[file:img/uml/sp-activity.png]]
 
@@ -1167,13 +1168,13 @@ ignoring all of AIML.
 
 *** Application Architecture
 <<existing architecture>>
-    \cleared
-    The game uses a client server architecture (see figure [[fig:components]]).
-    The client is written in unity and the server is a Java servlet running on
-    wildfly.
-    Communication between the two applications happens trough a web socket.
-    A web socket is used because it allows the chat bot to pro-active,
-    which is not possible with a technology such as REST.
+\cleared
+The game uses a client server architecture (see figure [[fig:components]]).
+The client is written in unity and the server is a Java servlet running on
+wildfly.
+Communication between the two applications happens trough a web socket.
+A web socket is used because it allows the chat bot to pro-active,
+which is not possible with a technology such as REST.
 
 #+NAME: fig:components
 #+BEGIN_SRC plantuml :cache yes :file img/uml/components.png :exports results
@@ -3231,6 +3232,7 @@ package drools{
 
 #+CAPTION: Supporting types in Java
 #+LABEL: fig:supportclassjava
+#+ATTR_LATEX: :width 0.5\textwidth
 #+RESULTS[55010ae4b3d6cee5b4d1420c002d4a5dd2704576]: fig:supportclassjava
 [[file:img/uml/supportclassjava.png]]
 
@@ -3462,6 +3464,51 @@ we can quite precisely explain what is going on.
  #+LABEL: fig:insert_meaning
  #+RESULTS[ba2ef7b0333cc8277765f73cc81a4e7ac3846b44]: fig:insert_meaning
  [[file:img/uml/insert_meaning.png]]
+
+\toReview
+This operation is starkly different from the one presented in section
+[[user utterance processing]],
+particularly if you compare the activity diagrams in
+figure [[fig:utterance-proccesing]] with figure [[fig:insert_meaning]].
+What we can see directly by comparing these is the change in columns,
+or swimming lanes as plant-uml calls it.
+The ALICE swimming lane has been removed completely,
+and in its place we've got drools, which has become the figurative center of
+the application.
+Then the Personality swimming lane was introduced,
+this is of course in light of this thesis.
+
+\toReview
+Since these activity diagrams are quite detailed in their description of what
+is going on,
+we made an overview of the key changes in the state diagrams 
+presented in figure [[fig:state:aiml]] and figure [[fig:state:yaml]].
+In the new architecture, everything happens inside drools.
+Only technical things such as dealing with the protocol and setting up the
+connection are handled outside drools.
+This makes it impossible to bypass it,
+and it also opens up more space to do high level deliberations,
+finally since =PatternMatching= is just the execution of another rule,
+we're not just limited to case based matching in figuring out what the user said.
+As was demonstrated by using regular expressions instead of simple AIML
+wildcard based patterns.
+
+#+NAME: fig:state:yaml
+#+BEGIN_SRC plantuml :cache yes :file img/uml/figstateyaml.png :exports results
+  state Drools{
+  PatternMatching -> LowLevel
+  PatternMatching --> HighLevel
+  HighLevel --> Reply
+  LowLevel --> Reply
+  Reply -> HighLevel
+  }
+  [*] -> PatternMatching
+  Reply -> [*]
+#+END_SRC
+#+CAPTION: State diagram: Utterance processing with drools
+#+LABEL: fig:state:yaml
+#+RESULTS[91c67cdcbc4fe5fd0a81ff9cd72c7eddf5ea00be]: fig:state:yaml
+[[file:img/uml/figstateyaml.png]]
 
 \newlyCleared
 To ensure rules are executed in a particular order we often wrap and unwrap
@@ -3750,23 +3797,6 @@ we did so by first carefully analyzing AIML and deciding which parts we want to
 keep,
 and which other parts we wanted to remove or change.
 
-
-#+NAME: fig:state:yaml
-#+BEGIN_SRC plantuml :cache yes :file img/uml/figstateyaml.png :exports results
-  state Drools{
-  PatternMatching -> LowLevel
-  PatternMatching --> HighLevel
-  HighLevel --> Reply
-  LowLevel --> Reply
-  Reply -> HighLevel
-  }
-  [*] -> PatternMatching
-  Reply -> [*]
-#+END_SRC
-#+CAPTION: State diagram of YAML  approach
-#+LABEL: fig:state:yaml
-#+RESULTS[91c67cdcbc4fe5fd0a81ff9cd72c7eddf5ea00be]: fig:state:yaml
-[[file:img/uml/figstateyaml.png]]
 
 ** Analyzing AIML
 # Note taht such descriptions are good, show how it was in the old system and
