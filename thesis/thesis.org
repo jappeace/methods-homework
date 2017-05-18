@@ -1182,6 +1182,7 @@ ignoring all of AIML.
 #+END_SRC
 #+CAPTION: Component diagram of the application
 #+LABEL: fig:components
+#+ATTR_LATEX: :width 0.5\textwidth
 #+RESULTS[6554c350da9b80944f22f0c6c29686b4608b9b50]: fig:components
 [[file:img/uml/components.png]]
 
@@ -1223,6 +1224,7 @@ ignoring all of AIML.
 #+END_SRC
 #+CAPTION: Sequence diagram of a typical game
 #+LABEL: fig:sequence
+#+ATTR_LATEX: :width 0.5\textwidth
 #+RESULTS[db5e6bada22b64bf70a330d1219fedc990f11453]: fig:sequence
 [[file:img/uml/sequence.png]]
 
@@ -1404,7 +1406,9 @@ stop
 
 \cleared
 An important process to describe is the way currently user messages are processed.
-Figure [[fig:utterance-proccesing]] gives an overview of utterance processing.
+Figure [[fig:utterance-proccesing]] gives a detailed overview of utterance processing.
+
+
 
 #+NAME: fig:utterance-proccesing
 #+BEGIN_SRC plantuml :cache yes :file img/uml/utterance-proccesing.png :exports results
@@ -1451,16 +1455,35 @@ Figure [[fig:utterance-proccesing]] gives an overview of utterance processing.
 #+RESULTS[2be41360a975175f4a0734807235d7983de36beb]: fig:utterance-proccesing
 [[file:img/uml/utterance-proccesing.png]]
 
-\cleared
+\toReview
 As can be seen in the diagram the message processing happens inside the Alice
 bot.
 Tags were added to AIML to allow the drool engine to be updated.
 The drool system can be relatively easily be bypassed.
 If there are no tags in the AIML the drool system will be oblivious of chat
 messages.
-Also note that there is a loop for the getDroolTemplates tag.
+We represented this situation in figure [[fig:state:aiml]],
+there is a clear choice between going from a pattern either to drools or to the
+template (and thus the result).
+Also note that there is a loop for the =getDroolTemplates= tag.
 This is because a blocking queue is used,
 which will block the thread until there is an item in the list.
+
+#+NAME: fig:state:aiml
+#+BEGIN_SRC plantuml :cache yes :file img/uml/figstateaiml.png :exports results
+[*] -> Pattern
+Pattern -> Template
+Pattern --> Drools
+Drools --> Template
+Template --> ReadDroolTag
+ReadDroolTag --> Template
+Template -> [*]
+#+END_SRC
+#+CAPTION: State diagram of utterance processing
+#+LABEL: fig:state:aiml
+#+ATTR_LATEX: :width 0.5\textwidth
+#+RESULTS[e004be8f35a1f147fb2883719a5fb53bf630e02b]: fig:state:aiml
+[[file:img/uml/figstateaiml.png]]
 
 ** Personality influence case study
 <<Personality influence case study>>
@@ -3704,6 +3727,16 @@ distinctly per bot *and* there should be a mechanism to share these.
 * Replacing AIML
 <<From strings to meanings>>
 \toReview
+In this chapter we will discuss AIML in detail,
+we will explain why AIML doesn't fit our requirement.
+Then we will start analyzing the structure of AIML and see how we can alter it
+to make it fit our requirements better.
+After that we will introduce a new modeling system,
+that is much more succinct then AIML.
+Finally we will present a script to convert from AIML to the new format.
+
+** AIML issues
+\toReview
 Originally, AIML was used for mapping user input to a reply.
 However, as explained in section [[Architecture]],
 AIML has some problems for our particular use case.
@@ -3716,6 +3749,24 @@ We eventually chose for the latter, however,
 we did so by first carefully analyzing AIML and deciding which parts we want to
 keep,
 and which other parts we wanted to remove or change.
+
+
+#+NAME: fig:state:yaml
+#+BEGIN_SRC plantuml :cache yes :file img/uml/figstateyaml.png :exports results
+  state Drools{
+  PatternMatching -> LowLevel
+  PatternMatching --> HighLevel
+  HighLevel --> Reply
+  LowLevel --> Reply
+  Reply -> HighLevel
+  }
+  [*] -> PatternMatching
+  Reply -> [*]
+#+END_SRC
+#+CAPTION: State diagram of YAML  approach
+#+LABEL: fig:state:yaml
+#+RESULTS[91c67cdcbc4fe5fd0a81ff9cd72c7eddf5ea00be]: fig:state:yaml
+[[file:img/uml/figstateyaml.png]]
 
 ** Analyzing AIML
 # Note taht such descriptions are good, show how it was in the old system and
@@ -3831,7 +3882,7 @@ functions to put in the meaning out of which comes a reply, which contains
 a meaning and therefore also a literal with the text it needs to say.
 
 \toReview
-However we can do much more to simplyfy,
+However we can do much more to simplify,
 observe how one category always will have one sybmol.
 If we were to extract the value of this tag and use it as a filename,
 we can ensure that each sybmol is only declared once.
@@ -3909,7 +3960,7 @@ Although the argument TOML has over YAML is that YAML is much more complex,
 and can in certain cases be not as human readable cite:yamldisatvantages.
 If TOML were to stabalize, its probably better to move to that instead.
 
-** Using yaml
+** Using YAML
 
 \toReview
 It was decided conclusivly to use YAML for replacing AIML's function of
@@ -4341,7 +4392,7 @@ But they are just an additional restriction on the pattern matching,
 ie: If user uttered regex *and* he said /that/ before, we can say template.
 Alternatively you count the injection of types (in S-AIML),
 but this isn't a formal encoding in AIML itself, but rather a way of informing
-drools what's goin on.
+drools what's going on.
 
 *** Mapping AIML
 <<Mapping AIML>>
@@ -4522,7 +4573,6 @@ but done in detail in the appendix [[building]].
 + Transition scene: "How can I help you?"
 + Zeg nog eens "Hello"
 ** Setting up the scenario
-
 \todo[inline]{I don't know if we should start with yaml here, perhaps we should just discuss how loading works and move on let let all yaml discusion be contained in the replacing AIML chapter, maybe the only thing to do here is discussing believes because I didn't treat that there}
 \toReview
 To indicate how to use the bot, we will setup a small scenario.
