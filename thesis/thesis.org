@@ -1,7 +1,7 @@
 #+TITLE: Composable personality parts
 #+SUBTITLE: Jungian types as endomorphisms in dialogue
 # A serious communication game with personalities
-#+LANGAUGE: english
+#+LANGUAGE: en
 
 # TODO: this title is to vague
 # Jungian functions as endomorphisms:
@@ -3994,7 +3994,7 @@ howstar -->> StatusInquiry
 Hello -->> Greeting
 #+END_SRC
 
-#+CAPTION: Deployment diagram of AIML that maps patterns to symbols
+#+CAPTION: Patterns to symbols
 #+LABEL: fig:dep:aimlsyms
 #+RESULTS[106f5543883a89c0ef55c28146a484e5a0abd7cd]: fig:dep:aimlsyms
 [[file:img/uml/dep:aimlsyms.png]]
@@ -4096,7 +4096,7 @@ Hello -->> Greeting
   
 #+END_SRC
 
-#+CAPTION: Deployment diagram of AIML that maps patterns to symbols
+#+CAPTION: Patterns to symbols with literals
 #+LABEL: fig:dep:aimlliters
 #+RESULTS[1971f2ced37540d56f61cde101aab44ccb11a60b]: fig:dep:aimlliters
 [[file:img/uml/dep:aimlliters.png]]
@@ -4131,16 +4131,16 @@ more terse data format in which such a definition is legal.
 In the next section we will analyze some possible candidates. 
 
 *** XML vs JSON vs YAML, vs TOML
-\toReview
-All these langagues are standards cite:jsonspec,yamlspec,xmlspec,tomlspec.
+\newlyCleared
+All these languages are standards cite:jsonspec,yamlspec,xmlspec,tomlspec.
 However there is a major difference between XML and JSON or YAML, and that is
 their intention.
-XML is a markup langauge, whereas both JSON and YAML are data formats
+XML is a markup language, whereas both JSON and YAML are data formats
 cite:yamlvsxml.
 What they all share in common is that they are supposed to be both
 human readable and parsable by a computer program.
 
-\toReview
+\newlyCleared
 So what we mean by human and program readable is that with relatively little
 effort, a human or program can understand what's going on.
 Unlike say a binary format,
@@ -4150,44 +4150,58 @@ Alternatively unlike a human document, such as a book,
 a computer program needs to do lots of effort to extract information from that,
 whereas a human can just understand it "naturally".
 
-\toReview
-Markup langauges provide a nice middleground between human readable and
+\newlyCleared
+Markup languages provide a nice middle ground between human readable and
 program readable.
-XML does this by inserting tags (ie metadata, which are usally just annotated
+XML does this by inserting tags (metadata, which are usually just annotated
 words), that gives meaning for the program,
 so that authors can focus on the structure and content of the document
 cite:coombs1987markup.
 
-\toReview
+\newlyCleared
 In AIML however, no document is constructed.
 Its not a story with a lead, middle ground and conclusion,
 its more like a key-value pair database or big configuration file.
 So since XML was intended to be used for inline document markup,
 I will argue that there are better alternatives that focus on key-value based
-configuration in particular, such as YAML, JSON or even TOML.
+configuration in particular, such as YAML, JSON or TOML.
 
-\toReview
-JSON is by far the best known format of these three remaining
-contenders.
-However JSON has a few significant dissatvantages,
+\newlyCleared
+JSON is by far the best known format of these three remaining contenders.
+However JSON has a few significant disadvantages,
 for one it doesn't allow comments and it is quite strict.
 For example a common acceptable mistake is to have an array with a trailing
-comma like: [1,23,4,]. This is an error in JSON cite:jsonconfig,
-while its relatively easy for a program to notice this is erronious.
+comma like: =[1,23,4,]=. This is an error in JSON cite:jsonconfig,
+while its relatively easy for a program to notice this is erroneous and
+therefore correct it.
 The syntax of JSON can be also more terse, which is shown by both YAML and TOML.
+Because of these reason we looked at the other two contenders.
+
+\toReview
 The reason for choosing YAML over TOML is that YAML is stable,
-wheras TOML hasn't reached stabalization yet cite:tomlreadme.
+whereas TOML hasn't reached stabilization yet cite:tomlreadme.
 Although the argument TOML has over YAML is that YAML is much more complex,
 and can in certain cases be not as human readable cite:yamldisatvantages.
-If TOML were to stabalize, its probably better to move to that instead.
+If TOML were to stabilize, its probably better to move to that instead.
+Currently the best choice is YAML,
+do note that its relatively easy to move between these standards,
+as is shown in section [[Conversion script]].
 
 ** Using YAML
 
 \toReview
-It was decided conclusivly to use YAML for replacing AIML's function of
-symbol representation.
+It was decided conclusively to use YAML instead of AIML for symbol
+representation.
 How these symbols are represented in YAML can be seen in
 listing [[code:yaml-symbol]].
+This is only a syntactic change, therefore no deployment diagram is made of
+this.
+Rather than having a literal tag open and close to show what the literal is,
+YAML uses a key value structure.
+Lists can be indicated by using dashes in front of each item.
+Note that we still use the idea of having one symbol per file,
+and the symbol name is the filename.
+Therefore no =symbol= item is shown in the example.
 
 #+CAPTION: YAML symbol representation
 #+NAME: code:yaml-symbol
@@ -4199,9 +4213,16 @@ patterns:
 #+END_SRC
 
 \toReview
-Finally we can extend the pattern functionally by simply using regex support.
-This will make the patterns more precise, an example can be seen in
-listing [[code:yaml-regexes]].
+We keep the pattern tags for legacy support.
+However its much more easy to just support regular expresions
+cite:thompson1968programming.
+The reason for this is that they're part of the Java standard library
+cite:regexpattern.
+What we can do is transform AIML patterns into regular expresions,
+and then use the Java standard library to match the patterns.
+This will make the patterns more precise,
+and give less code to maintain,
+an example can be seen in listing [[code:yaml-regexes]].
 
 #+CAPTION: YAML with regexes
 #+NAME: code:yaml-regexes
@@ -4210,50 +4231,59 @@ literal: How are you
 regex: How ([a-z])\w+ you(.*)
 #+END_SRC
 
-\toReview
+\newlyCleared
 The example in listing [[code:yaml-regexes]] only matches a single word and allows
 for trailing characters.
 Note that the example in listing [[code:yaml-symbol]] would've also matched
 "How did this became you?", since any character would've matched the star.
-Regexes can be much more precise in specifying what a wildcard star is,
+Regular expressions can be much more precise in specifying what a wildcard star is,
 although they are also a lot more difficult to learn and read.
 Therefore both methods will be supported.
 
 \todo[inline]{If we have time we can compare information per character between the new and old method, going from 251 to 131 is quite an improvement}
 
-*** Connections
+** Connections
 \toReview
-So once we split up the template from the patterns,
+Now we've figured out how to represent our basic axioms, the symbols, thoroughly,
+we can move on to make our model functional again.
+So what we have lost in the process are our update rules
+(see section [[Dialogue systems]]).
+In section [[symbol graph]] we model these as the symbol graph.
+However we have not made a syntactic representation of this,
+which will be done in this section.
+
+\toReview
+Once we split up the template from the patterns,
 and grouped the patterns with what they uttered.
 We lost the connections between the two.
 If you just have symbols the bot won't know what to do when one of these 
 is inserted without extra information.
 This is what we represent with connections.
 What sensible replies can we give if a symbol is uttered.
-Originally we just wanted to stick to the AIML approach of connections,
+Originally we just wanted to stick to the (implicit) AIML approach of connections,
 and add them within the symbol files as can be seen in
 listing [[code:yaml-connections-intrusive]].
 
 #+CAPTION: Intrusive connections
 #+NAME: code:yaml-connections-intrusive
 #+BEGIN_SRC yaml
-literal: How are you
+literal: Hello
 to:
-  - reply_good
-  - reply_bad
-  - ask_mediine
+  - greeting
+  - status_inquery
 #+END_SRC
 
 \toReview
-However we quickly decided against such an approach in favour of grouping
-connections into their own configuration file.
-There were two reasons for this, the first one is that we quickly found out
-that connections are much more complex than simple one directional links.
+However we decided against such an approach.
+There were two reasons for this,
+the first one is that we found out that connections are much more complex
+than simple one directional links.
 They for example also need to contain perlocutionary values and a mark for 
 which agent can access the connection (default being all agents).
 The second reason was more incedental, it turns out that if you group all
-connections into a single file you can get a quick glance of which connections
+connections into a single file you can get better overview of which connections
 are made.
+What we do now is a grouping of connections into their own special file.
 Take as an example listing [[code:yaml-connections-grouped]] which represents a
 connections file of a scene.
 
@@ -4261,21 +4291,12 @@ connections file of a scene.
 #+NAME: code:yaml-connections-grouped
 #+BEGIN_SRC yaml
 from:
- - ask_reason_here
+ - greeting
 to:
- - restricted_to: patient
-   symbol: need_medicine
- - restricted_to: patient
-   symbol: broken_arms
- - restricted_to: patient
-   symbol: feel_sick
----
-from:
- - need_medicine
-to:
- - restricted_to: doctor
-   symbol: why_need
+ - symbol: status_inquery
+ - symbol: greeting
 #+END_SRC
+
 
 \toReview
 We can quickly see in which direction this conversation goes once from is
@@ -4285,6 +4306,13 @@ This is where the new approach offers much more ergonomic moddeling abilities
 than AIML, we know what's going on without searching for it.
 Of course once the connection file starts to grow we begin to loose this,
 but for this scenes can be used to still keep overview.
+
+** Supporting more exotic features
+\drafting
+AIML is a big standard and has various useful features that need to be
+supported for a competing standard to make any chance.
+We also require to support several features from S-AIML to make social practice
+integration more easy in the future.
 
 *** Star tags
 <<Star tags>>
@@ -4572,13 +4600,25 @@ Note that by cyclic, we mean there can be cycles, but there don't have to be.
 Its weakly connected because it wouldn't make much sense to model scenes
 that can't get to other scenes trough connections.
 
+*** Insert tags
+\drafting
+Insert tags are no longer neccisary because symbols get always inserted.
+We can simply make events happen if a particular event happens by matching a
+symbol on name. \todo{is this true?}
+*** Drool tags
+\drafting
+There is no real mechanism for emulating the behavior of drool tags,
+except for the fact that symbols that have templates can be manually
+filled up by constructing a =MatchedQueryDB= manually in drools and filling it
+up with your own content.
+
 ** Automatic AIML to YAML
 \toReview
 AIML is a standard cite:aimlspec.
 Note that the spec says: "AIML shall be compatible with XML.",
 and xml is also a standard cite:xmlspec.
 YAML happens to also be a standard format cite:yamlspec.
-although its not a markup langauge, unlike XML and AIML,
+although its not a markup language, unlike XML and AIML,
 but rather a data format cite:yamlvsxml.
 The advantage of being "just a dataformat" is
 that the syntax can become a lot more terse, while maintaining readability.
@@ -5272,18 +5312,18 @@ The biggest issues we found were:
 \clearpage
 * In conclusion
 \drafting
-We need to explicitly say here that Mapping function to attidues to a
+We need to explicitly say here that Mapping function to attitudes to a
 process (3.4) is valid for the test use cases shown in [[Test Results]].
 Although the validity is in no way proven
 (we just have /a/ instance that is correct, which is different from
 saying that all instances are correct)
 
 \drafting
-I think another major conclusion is that we created a viable langauge processing
+I think another major conclusion is that we created a viable language processing
 bot.
-That just deals with langauge, but does not specify anything about responses.
+That just deals with language, but does not specify anything about responses.
 A comment in the beginning of my thesis was that AIML was used to
-'just deal with langauge', but this wasn't true,
+'just deal with language', but this wasn't true,
 AIML defined the entire flow of the application.
 Now there basically is no more 'fixed' way of operating because drools decide
 that.
