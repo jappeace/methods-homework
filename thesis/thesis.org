@@ -4089,6 +4089,7 @@ cloud "symbols"{
   ]
 }
 
+
 how -->> StatusInquiry
 howq -->> StatusInquiry
 howstar -->> StatusInquiry
@@ -4098,7 +4099,7 @@ Hello -->> Greeting
 
 #+CAPTION: Patterns to symbols with literals
 #+LABEL: fig:dep:aimlliters
-#+RESULTS[1971f2ced37540d56f61cde101aab44ccb11a60b]: fig:dep:aimlliters
+#+RESULTS[8f9d88e8099c1ee4b136d0f0b0d17eb31a02a660]: fig:dep:aimlliters
 [[file:img/uml/dep:aimlliters.png]]
 
 \toReview
@@ -4188,7 +4189,6 @@ do note that its relatively easy to move between these standards,
 as is shown in section [[Conversion script]].
 
 ** Using YAML
-
 \toReview
 It was decided conclusively to use YAML instead of AIML for symbol
 representation.
@@ -4252,6 +4252,7 @@ In section [[symbol graph]] we model these as the symbol graph.
 However we have not made a syntactic representation of this,
 which will be done in this section.
 
+*** Core idea
 \toReview
 Once we split up the template from the patterns,
 and grouped the patterns with what they uttered.
@@ -4260,6 +4261,63 @@ If you just have symbols the bot won't know what to do when one of these
 is inserted without extra information.
 This is what we represent with connections.
 What sensible replies can we give if a symbol is uttered.
+
+\drafting
+We will show how this works with help of an example.
+In listing [[code:yaml:simple]] we connected the symbols discussed in our orignal
+example from section [[Symbol to string]].
+With these connections we can see the situation illustrated as deployment
+diagram [[fig:dep:connections]].
+
+#+CAPTION: Connections grouped into a file
+#+NAME: code:yaml:simple
+#+BEGIN_SRC yaml
+from:
+ - greeting
+to:
+ - symbol: status_inquery
+ - symbol: greeting
+#+END_SRC
+
+#+NAME: fig:dep:connections
+#+BEGIN_SRC plantuml :cache yes :file img/uml/dep:connections.png :exports results
+frame "user sais"{
+  usecase "How are you?" as howq
+  usecase "How are you *" as how
+  usecase "How * you" as howstar
+  usecase Hello
+}
+
+cloud "symbols"{
+  node Greeting [
+    Greeting
+    ----
+    Hello
+  ]
+  node StatusInquiry[
+    StatusInquiry
+    ----
+    How are you?
+  ]
+}
+
+Greeting .> Greeting
+Greeting .> StatusInquiry
+
+how -->> StatusInquiry
+howq -->> StatusInquiry
+howstar -->> StatusInquiry
+Hello -->> Greeting
+  
+#+END_SRC
+
+#+CAPTION: Patterns to symbols with literals
+#+LABEL: fig:dep:connections
+#+RESULTS[16e838a3d596cccc9d290e17208b8fb00ecb9ef1]: fig:dep:connections
+[[file:img/uml/dep:connections.png]]
+
+*** Single file
+\drafting
 Originally we just wanted to stick to the (implicit) AIML approach of connections,
 and add them within the symbol files as can be seen in
 listing [[code:yaml-connections-intrusive]].
@@ -4267,10 +4325,11 @@ listing [[code:yaml-connections-intrusive]].
 #+CAPTION: Intrusive connections
 #+NAME: code:yaml-connections-intrusive
 #+BEGIN_SRC yaml
-literal: Hello
+literal: Why are you here
 to:
-  - greeting
-  - status_inquery
+  - need_medicine
+  - broken_arms
+  - feel_sick
 #+END_SRC
 
 \toReview
@@ -4284,28 +4343,41 @@ The second reason was more incedental, it turns out that if you group all
 connections into a single file you can get better overview of which connections
 are made.
 What we do now is a grouping of connections into their own special file.
-Take as an example listing [[code:yaml-connections-grouped]] which represents a
+Take as an example listing [[code:yaml:complex]] which represents a
 connections file of a scene.
 
 #+CAPTION: Connections grouped into a file
-#+NAME: code:yaml-connections-grouped
-#+BEGIN_SRC yaml
+ #+NAME: code:yaml:complex
+ #+BEGIN_SRC yaml
 from:
+ - ask_reason_here
+to:
+ - restricted_to: patient
+   symbol: need_medicine
+ - restricted_to: patient
+   symbol: broken_arms
+ - restricted_to: patient
+   symbol: feel_sick
+---
+from:
+ - need_medicine
  - greeting
 to:
+ - restricted_to: doctor
+   symbol: why_need
  - symbol: status_inquery
  - symbol: greeting
-#+END_SRC
-
+ #+END_SRC
 
 \toReview
-We can quickly see in which direction this conversation goes once from is
-matched. From ask reason here to need medicine, from need medicine to why need
-etc.
+In listing [[code:yaml:complex]] we can quickly see in which direction this
+conversation goes once from is matched.
+From ask reason here to need medicine, from need medicine to why need etc.
 This is where the new approach offers much more ergonomic moddeling abilities
 than AIML, we know what's going on without searching for it.
 Of course once the connection file starts to grow we begin to loose this,
 but for this scenes can be used to still keep overview.
+
 
 ** Supporting more exotic features
 \drafting
