@@ -1005,7 +1005,7 @@ and being orderly.
 <<Dialogue systems>>
 \cleared
 Dialogue systems are the systems that try to analyze how dialogue works.
-This is a subfield of AI that tries to combinate linguistics with computer
+This is a sub field of AI that tries to combine linguistics with computer
 science.
 
 \cleared
@@ -1014,14 +1014,14 @@ reasoning. A good example of this is the A.L.I.C.E. bot cite:wallace2001dont.
 These are mostly reactive systems that use pattern matching rules paired with
 "good" responses,
 sometimes with conditions to allow for more variety.
-A more extended example of such a system is eliza bot which is described in
+A more extended example of such a system is Eliza bot which is described in
 cite:galvao2004persona,
 where they also added personality to the bot with the OCEAN model.
 
 \cleared
 Traum cite:traum2003information describes the information state approach for
 dialogues. 
-The approach traum proposes is modeling:
+The approach Traum proposes is modeling:
 + Informal components, which aren't part
   of the model but are just there. This can include domain knowledge for example.
 + Formal representations, which are data structures.
@@ -1034,8 +1034,19 @@ This is an extremely general way of describing a dialogue system.
 \cleared
 In cite:wobcke2005bdi a BDI based methodology is proposed to handle dialogue
 between a user and an agent.
-However we want to point out that this solution fits into the rough model traum
+However we want to point out that this solution fits into the rough model Traum
 sketched. So we could say its a information state approach too.
+
+\toReview
+An interesting paper on dialogue modeling can be found in cite:bilange1991task.
+The innovation presented there was the separation from task knowledge of
+dialogue knowledge.
+What is interesting is that they treat having multiple options available in
+their implementation (see 3.3 in the paper).
+This is similar to what we present in section [[Dialogue tree]].
+Although their solution is quite different,
+rules were made to select according to a single strategy,
+whereas we saw it as an opportunity to make composable strategies.
 
 *** BDI + Personality
 <<BDI + Personality>>
@@ -1456,7 +1467,7 @@ Figure [[fig:utterance-proccesing]] gives a detailed overview of utterance proce
 #+RESULTS[2be41360a975175f4a0734807235d7983de36beb]: fig:utterance-proccesing
 [[file:img/uml/utterance-proccesing.png]]
 
-\toReview
+\newlyCleared
 As can be seen in the diagram the message processing happens inside the Alice
 bot.
 Tags were added to AIML to allow the drool engine to be updated.
@@ -1465,10 +1476,17 @@ If there are no tags in the AIML the drool system will be oblivious of chat
 messages.
 We represented this situation in figure [[fig:state:aiml]],
 there is a clear choice between going from a pattern either to drools or to the
-template (and thus the result).
-Also note that there is a loop for the =getDroolTemplates= tag.
+template.
+If there is an insert tag then the Drools state is visited,
+if not we go directly to the Template state.
+Then the Template state can use =getDroolTemplates= tags to read information
+from drools.
+Note that there is a loop for the =getDroolTemplates= tag
+in figure [[fig:utterance-proccesing]].
 This is because a blocking queue is used,
 which will block the thread until there is an item in the list.
+This is represented in the state diagram as the =ReadDroolTag= state,
+which is a read only operation on drools.
 
 #+NAME: fig:state:aiml
 #+BEGIN_SRC plantuml :cache yes :file img/uml/figstateaiml.png :exports results
@@ -2550,7 +2568,7 @@ we can conclude that they will also behave differently.
 * Architecture
 <<Architecture>>
 \cleared
-To combine the ideas discussed in section [[BDI and Jung]] with the existing program,
+To combine the ideas discussed in section [[Jungian BDI]] with the existing program,
 some big architectural changes were introduced.
 For example the Alice bot was completely removed in favor of a new less tightly
 coupled scheme.
@@ -3465,20 +3483,20 @@ we can quite precisely explain what is going on.
  #+RESULTS[ba2ef7b0333cc8277765f73cc81a4e7ac3846b44]: fig:insert_meaning
  [[file:img/uml/insert_meaning.png]]
 
-\toReview
+\newlyCleared
 This operation is starkly different from the one presented in section
 [[user utterance processing]],
 particularly if you compare the activity diagrams in
 figure [[fig:utterance-proccesing]] with figure [[fig:insert_meaning]].
-What we can see directly by comparing these is the change in columns,
-or swimming lanes as plant-uml calls it.
+What we can see directly by comparing these is the change in swimming lanes
+cite:planumlswimminglanes.
 The ALICE swimming lane has been removed completely,
 and in its place we've got drools, which has become the figurative center of
 the application.
 Then the Personality swimming lane was introduced,
 this is of course in light of this thesis.
 
-\toReview
+\newlyCleared
 Since these activity diagrams are quite detailed in their description of what
 is going on,
 we made an overview of the key changes in the state diagrams 
@@ -3487,11 +3505,12 @@ In the new architecture, everything happens inside drools.
 Only technical things such as dealing with the protocol and setting up the
 connection are handled outside drools.
 This makes it impossible to bypass it,
-and it also opens up more space to do high level deliberations,
-finally since =PatternMatching= is just the execution of another rule,
-we're not just limited to case based matching in figuring out what the user said.
-As was demonstrated by using regular expressions instead of simple AIML
-wildcard based patterns.
+and it also opens up more space to do high level deliberations.
+Finally since =PatternMatching= is just the execution of another rule,
+we're not just limited to just pattern matching schemes in figuring out what
+the user said.
+Statistical methods could also be used for example cite:jin2009opinionminer,
+but this is out of the scope of this thesis.
 
 #+NAME: fig:state:yaml
 #+BEGIN_SRC plantuml :cache yes :file img/uml/figstateyaml.png :exports results
@@ -3695,7 +3714,7 @@ For example the =PatternDatabase=  are just plainly inserted into the fact base.
 
 \newlyCleared
 The naive solution is to just mark every fact with a self field.
-Aside from the fact that you now introduce boilerplate code,
+Aside from the fact that you now introduce boilerplate code cite:lammel2003scrap,
 this has another more serious problem,
 it grands the ability for agents to reach each others minds.
 Since every believe structure, and thus agent, will live in the same fact base.
@@ -3783,7 +3802,7 @@ that is more succinct and flexible then AIML.
 Finally we will present a script to convert from AIML to the new format.
 
 ** AIML issues
-\toReview
+\newlyCleared
 Originally, AIML was used for mapping user input to a reply.
 However, as explained in section [[Architecture]],
 AIML has some problems for our particular use case.
@@ -3794,35 +3813,39 @@ A relatively simple solution to both of these would be to use an XML parser to
 load AIML into a data structure and insert it into drools,
 however this won't solve the core of our problem:
 The way AIML models a conversation makes it hard if not impossible to list
-possible actions for an agent.
+possible actions for an agent at a particular point in a conversation,
+therefore no true deliberation is ever possible as long as AIML is used.
+As we will see in the coming paragraphs,
+trying to adapt AIML to fit the requirements
+will transform AIML into something else.
 
-\toReview
+\newlyCleared
 To give a good intuition of this issue, we use an example.
 Listing [[code:aiml-std-cats]] shows a piece of dialogue modelled in AIML.
 This is a pretty standard piece of AIML, no surprises there.
 Patterns are used to identify user utterances and attach responses to them.
 We created a deployment diagram of the situation seen in figure [[fig:dep:aimlcats]],
-which is more obvious.
+which removes the syntax, so that the situation is more obvious.
 
-\toReview
-What we can see is that if the user sais "Hello" then the bot will reply "Hi".
+\newlyCleared
+What we can see is that if the user says "Hello" then the bot will reply "Hi".
 So what we have here is a mapping function from $\sigma \to \sigma$, where $\sigma$ is a
-string (see section [[BDI and Jung]]).
+string (see section [[Narrowing the model]]).
 The issue is that once Hello is matched, the answer *must* be Hi.
 S-AIML extends this with adding drool tags,
 but these are inside the template tags and therefore cannot truly get out of
 this relationship.
 Unless they were to replace the entire content,
-in which case AIML is no longer used as knowledge representation.
+in which case AIML is no longer used as knowledge representation anyway.
 
-\toReview
-We're also only modelling half of the conversation.
+\newlyCleared
+We're also not modelling the entire conversation.
 There is no way for the bot of knowing that his Hi utterance,
 could be followed up reasonably with the question "How are you?" for example.
 Therefore there is no way for the bot to plan ahead in the conversation,
 or have any kind of variations in these plans.
 This is of course a problem, because we imagine personality as variations in a
-process (See section [[BDI + Personality]]).
+process, or plans (See section [[BDI + Personality]]).
 
 #+CAPTION: Standard AIML categories
 #+NAME: code:aiml-std-cats
@@ -3857,7 +3880,7 @@ process (See section [[BDI + Personality]]).
 
 #+NAME: fig:dep:aimlcats
 #+BEGIN_SRC plantuml :cache yes :file img/uml/dep:aimlcats.png :exports results
-frame "user sais"{
+frame "user says"{
   usecase "How are you" as how
   usecase "How * you" as howstar
   usecase Hello
@@ -3875,14 +3898,15 @@ Hello -->> Hi
 
 #+CAPTION: Deployment diagram of AIML example
 #+LABEL: fig:dep:aimlcats
-#+RESULTS[598d6e1c753297bcb1ed5689c603cae3cc14bf55]: fig:dep:aimlcats
+#+RESULTS[0889516e6ef32d64003ace8ae606a81cc01e305d]: fig:dep:aimlcats
 [[file:img/uml/dep:aimlcats.png]]
 
-\toReview
+\newlyCleared
 There are also some other small problems,
 which aren't really that important for this thesis in particular,
 but worth mentioning.
-Such as the fact you're stuck with AIML based patterns, 
+Such as with AIML one has to use the AIML based patterns defined by the standard
+cite:aimlspec, 
 there is no way to use full regular expressions,
 or statistical methods.
 Another issue that we can't access encoded utterances directly,
@@ -3890,13 +3914,14 @@ so from drools there is no way to do spontaneous utterances unless they're hard
 coded strings.
 Finally, since drools can be skipped all together (see figure [[fig:state:aiml]]),
 the bot could have amnesia about certain utterances,
-to prevent this every template tag would need an insert tag.
+to prevent this every template tag would need an insert tag,
+which is boilerplate code cite:lammel2003scrap.
 
-\toReview
+\newlyCleared
 What needs to happen is either to either modify the ALICE bot and AIML to 
 work fundamentally different,
 or outright replace it with something else.
-We eventually chose for the latter,
+We chose for the latter,
 we did so by first carefully analyzing AIML and deciding which parts we want to
 keep,
 and which other parts we wanted to remove or change.
@@ -3905,7 +3930,7 @@ The next sections will discuss the thought process to a new representation.
 ** Analyzing AIML
 # Note taht such descriptions are good, show how it was in the old system and
 # the thought process towards the new system, so do more of it like this
-\toReview
+\newlyCleared
 What we want to do is create a mapping function $\sigma \overset{g}{\to} s$
 (see section [[Narrowing the model]]).
 In our first attempt we will modify AIML to do this.
@@ -3918,7 +3943,7 @@ it will indicate what the symbol is that was matched.
 An example of these changes can be seen if we compare the
 listing [[code:aiml-std-cats]] from the previous section with
 listing [[code:aiml-symbols]].
-And the deployment diagram can be seen in figure [[fig:dep:aimlsyms]].
+The new deployment diagram can be seen in figure [[fig:dep:aimlsyms]].
 
 #+CAPTION: AIML that refers to 'symbols' rather than templates.
 #+NAME: code:aiml-symbols
@@ -3960,8 +3985,8 @@ frame "user sais"{
 }
 
 cloud "symbols"{
-  rectangle Greeting
-  rectangle StatusInquiry
+  node Greeting
+  node StatusInquiry
 }
 
 how -->> StatusInquiry
@@ -3971,36 +3996,62 @@ Hello -->> Greeting
 
 #+CAPTION: Deployment diagram of AIML that maps patterns to symbols
 #+LABEL: fig:dep:aimlsyms
-#+RESULTS[20bc07fb7eb297ea0af12257ea130b0a25180c48]: fig:dep:aimlsyms
+#+RESULTS[106f5543883a89c0ef55c28146a484e5a0abd7cd]: fig:dep:aimlsyms
 [[file:img/uml/dep:aimlsyms.png]]
 
-\toReview
+\newlyCleared
 These changes remove the reactive nature of the chat bot,
 no longer do patterns indicate what to reply to,
 but instead simply what they are.
-This example is of course can't be functional,
-since the symbol graph hasn't been introduced (see section [[symbol graph]])
-to list any available replies to symbols.
-However we can at least use these to to create the connection graph from.
+This example can't be functional of course,
+since the symbol graph hasn't been introduced (see section [[symbol graph]]),
+so there are no replies.
+However we can at least use these to to create the symbol graph from.
 
-\toReview
+\newlyCleared
 With this we almost have solved the first problem of not being able to do true
 deliberation.
 Of course we can't make a reply of this yet since we still have the second
 problem to deal with,
-how to access information stored in the =StatusInquiry= symbol.
+how to access information stored in these symbols.
+In other words, dealing with the $g'$ function, this is what the next section
+deals with.
 
 *** Symbol to string
-\cleared
-Now what if the agent wants to do a status inquiry,
-well the string into a status inquiry is already available,
-we just need to separate the literal strings from the catch all patterns
+\toReview
+So the next step is to consider how we go from symbols back to strings.
+What we assume is that the agent already found a symbol to utter, for 
+example the status inquiry.
+This string from a status inquiry is already available in AIML,
+they were called template tags.
+We just need to separate the literal strings from the catch all patterns
 as can be seen in listing [[code:ailm-grouped-literal]].
+In this listing we renamed the template tag to literal,
+because the name template is very generic but they function the same:
+Provide the string to utter for that particular category,
+in other words the $s \overset{g'}{\to} \sigma$ function
+(see section [[Narrowing the model]]).
+
+\toReview
+In deployment diagram  [[fig:dep:aimlliters]] we can see how this works in memory.
+Patterns point to symbols, which have the literal utterance available to them.
+Since the names of symbols are not the same as the literal content,
+we can use terse descriptive names for more verbose content.
+Such a property is useful for referring to the symbols from inside the drool
+engine.
 
 #+CAPTION: AIML with grouped patterns and string literals
 #+NAME: code:ailm-grouped-literal
 #+BEGIN_SRC xml
   <aiml>
+      <categroy>
+          <literal>
+             Hello
+          </literal>
+		  <symbol>
+            Greeting
+		  </symbol>
+      </categroy>
 	  <category>
 		  <literal>
 			  How are you?
@@ -4016,21 +4067,47 @@ as can be seen in listing [[code:ailm-grouped-literal]].
   </aiml>
 #+END_SRC
 
-\toReview
-If the agent wants to do a status inquiry it will use the literal,
-if a user string needs to be converted to a meaning we first look at all
-available literals and then we start with the patterns.
-So if the agent wants to reply to this it will use its personality
-functions to put in the meaning out of which comes a reply, which contains
-a meaning and therefore also a literal with the text it needs to say.
+#+NAME: fig:dep:aimlliters
+#+BEGIN_SRC plantuml :cache yes :file img/uml/dep:aimlliters.png :exports results
+frame "user sais"{
+  usecase "How are you?" as howq
+  usecase "How are you *" as how
+  usecase "How * you" as howstar
+  usecase Hello
+}
+
+cloud "symbols"{
+  node Greeting [
+    Greeting
+    ----
+    Hello
+  ]
+  node StatusInquiry[
+    StatusInquiry
+    ----
+    How are you?
+  ]
+}
+
+how -->> StatusInquiry
+howq -->> StatusInquiry
+howstar -->> StatusInquiry
+Hello -->> Greeting
+  
+#+END_SRC
+
+#+CAPTION: Deployment diagram of AIML that maps patterns to symbols
+#+LABEL: fig:dep:aimlliters
+#+RESULTS[1971f2ced37540d56f61cde101aab44ccb11a60b]: fig:dep:aimlliters
+[[file:img/uml/dep:aimlliters.png]]
 
 \toReview
-However we can do much more to simplify,
-observe how one category always will have one sybmol.
+We can make this syntax even more terse.
+Observe how one category always will have one symbol.
 If we were to extract the value of this tag and use it as a filename,
-we can ensure that each sybmol is only declared once.
-Then we can also assume that the aiml tags and category tags are implicit.
-This results in a much more terse definition as can be seen in listing
+we can ensure that each symbol is only declared once.
+Then we can also assume that the AIML tags and category tags are implicit.
+This results a terse definition as can be seen in listing
 [[code:aiml-terse]].
 
 #+CAPTION: Terse AIML but illegal XML
@@ -4046,11 +4123,12 @@ This results in a much more terse definition as can be seen in listing
 #+END_SRC
 
 \toReview
-However the observent reader will know this isn't valid XML
+However the observant reader will know this isn't valid XML
 (and by extension AIML), since XML requires a single document root.
-But it does specify what we want, and it does so very tersely.
+It does specify what we want, and it does so very tersely.
 Since we are changing the semantics of AIML drastically we may as well use a
-more terse format such as JSON, or YAML.
+more terse data format in which such a definition is legal.
+In the next section we will analyze some possible candidates. 
 
 *** XML vs JSON vs YAML, vs TOML
 \toReview
@@ -4618,7 +4696,7 @@ called of AIML called S-AIML.
 \toReview
 In S-AIML types are injected to track progress of the scenario.
 In contrast to the current scheme where the entire user utterance gets
-inserted and its up to drools to make a sybmolic understanding from it.
+inserted and its up to drools to make a symbolic understanding from it.
 To work around the issue of inserting types we actually have to generate
 drools in case of a particular symbol inserted.
 For this we can just use the low level reply mechanism, but rather than
@@ -6242,5 +6320,5 @@ Conversation went according to script.
 
   
 
-#  LocalWords:  DialogueTree PatternDatabase Immutablity
+#  LocalWords:  DialogueTree PatternDatabase Immutablity Traum
 
