@@ -4320,27 +4320,19 @@ cloud "symbols"{
   ]
 }
 
-Greeting .> Greeting
-Greeting ..> StatusInquiry
+Greeting -> Greeting
+Greeting --> StatusInquiry
 
 #+END_SRC
 
 #+CAPTION: Symbol graph deployment diagram
 #+LABEL: fig:dep:connections
 #+ATTR_LATEX: :width 0.3\textwidth
-#+RESULTS[51c9e95a779d463b530be5129d1f6527cc49d302]: fig:dep:connections
+#+RESULTS[a863aaaf9c34d5f26c8abaef929dfa2db002ce5e]: fig:dep:connections
 [[file:img/uml/dep:connections.png]]
 
-\drafting
-However such a representation is too simplistic for various reasons.
-We will discuss this in the next section why this is the case,
-but once this step is made away from implicit connections to explicit
-connections,
-it turns out that the connections are by far the most complex piece in dialogue
-modelling.
-
 *** Single file
-\drafting
+\newlyCleared
 Originally we just wanted to stick to the (implicit) AIML approach of connections,
 and add them within the symbol files as can be seen in
 listing [[code:yaml-connections-intrusive]].
@@ -4360,14 +4352,27 @@ However we decided against such an approach.
 There were two reasons for this,
 the first one is that we found out that connections are much more complex
 than simple one directional links.
-They for example also need to contain perlocutionary values and a mark for 
-which agent can access the connection (default being all agents).
-The second reason was more incedental, it turns out that if you group all
+They for example also need to contain perlocutionary values and be marked for 
+which agent can use the connection (default being all agents).
+The second reason was more incidental, it turns out that if you group all
 connections into a single file you can get better overview of which connections
 are made.
 What we do now is a grouping of connections into their own special file.
 Take as an example listing [[code:yaml:complex]] which represents a
 connections file of a scene.
+
+\toReview
+In figure [[fig:dep:filedconns]] we can see a deployment diagram of the presented
+symbol graph.
+This is not a complete conversation of course just an expert of a larger model.
+Note that its not much harder to read that than the code from listing
+[[code:yaml:complex]].
+What we can see is that already the connections are quite complex,
+as this file grows in size the dialogue becomes harder to manage.
+While editing these, tool in text editors such as searching become quite
+vital.
+In any case it should be less of an issue than in AIML since this syntax is more
+terse.
 
 #+CAPTION: Connections grouped into a file
  #+NAME: code:yaml:complex
@@ -4389,18 +4394,49 @@ to:
  - restricted_to: doctor
    symbol: why_need
  - symbol: status_inquery
+---
+from:
+ - greeting
+to:
  - symbol: greeting
+ - symbol: ask_reason_here
+   restricted_to: doctor
  #+END_SRC
 
-\toReview
-In listing [[code:yaml:complex]] we can quickly see in which direction this
-conversation goes once from is matched.
-From ask reason here to need medicine, from need medicine to why need etc.
-This is where the new approach offers much more ergonomic moddeling abilities
-than AIML, we know what's going on without searching for it.
-Of course once the connection file starts to grow we begin to loose this,
-but for this scenes can be used to still keep overview.
+#+NAME: fig:dep:filedconns
+#+BEGIN_SRC plantuml :cache yes :file img/uml/dep:filedconns.png :exports results
+cloud "symbols"{
+  node ask_reason_here
+  node broken_arms
+  node feel_sick
 
+  node greeting
+  node status_inquery
+  node why_need
+  node need_medicine
+
+  ask_reason_here --> need_medicine : a = patient
+  ask_reason_here --> broken_arms : a = patient
+  ask_reason_here -> feel_sick : a = patient
+
+  need_medicine --> status_inquery
+  need_medicine --> why_need : a = doctor
+  greeting --> status_inquery
+  greeting --> greeting
+  greeting --> why_need : a = doctor
+  greeting --> ask_reason_here : a = doctor
+}
+
+
+#+END_SRC
+
+#+CAPTION: Symbol graph of connections grouped in file
+#+LABEL: fig:dep:filedconns
+#+ATTR_LATEX: :width 0.7\textwidth
+#+RESULTS[6d2e69dda7a01ccf4fbdd9c812ed25859060ff8a]: fig:dep:filedconns
+[[file:img/uml/dep:filedconns.png]]
+
+\FloatBarrier
 ** Supporting more exotic features
 \drafting
 AIML is a big standard and has various useful features that need to be
