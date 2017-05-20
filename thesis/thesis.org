@@ -4427,14 +4427,12 @@ cloud "symbols"{
   greeting --> why_need : a = doctor
   greeting --> ask_reason_here : a = doctor
 }
-
-
 #+END_SRC
 
 #+CAPTION: Symbol graph of connections grouped in file
 #+LABEL: fig:dep:filedconns
 #+ATTR_LATEX: :width 0.7\textwidth
-#+RESULTS[6d2e69dda7a01ccf4fbdd9c812ed25859060ff8a]: fig:dep:filedconns
+#+RESULTS[95cead6c9a6fb358accf6686cac4a2b62f2d9111]: fig:dep:filedconns
 [[file:img/uml/dep:filedconns.png]]
 
 *** Scenes
@@ -4600,19 +4598,24 @@ We could add options for when an utterance was made, for example just now or
 any previous utterance. However in the interest of time we won't do this.
 
 \FloatBarrier
-** Additional useful features
-\drafting
-AIML is a big standard and has various useful features that need to be
-supported for a competing standard to make any chance.
-We also require to support several features from S-AIML to make social practice
-integration more easy in the future.
 
-*** Star tags
+** Templates
 <<Star tags>>
 \toReview
-Star tags are soley template focused, they capture the content of a wildcard
+In AIML, star tags are template focused.
+They capture the content of a wildcard
 at a particular index and allow them to occur in the bots reply.
 An example can be seen in listing [[code:aiml-star-tag]].
+This is a simple trick to make the bot look quite clever,
+and since in AIML patterns and replies are hand in hand, doing this is easy.
+Our system has no such luxury.
+
+\toReview
+To implement these in our new scheme we first need to analyze what star tags are.
+Then we need to figure out how we can implement this in our matching system,
+and finally we need to add a template method to our YAML representation.
+The data structures involved are discussed in section [[Before and templates]].
+What is discussed in this section is the behavior and syntax.
 
 #+CAPTION: Star tag usage example.
 #+NAME: code:aiml-star-tag
@@ -4627,12 +4630,14 @@ An example can be seen in listing [[code:aiml-star-tag]].
 </category>
 #+END_SRC
 
-\toReview
-The standard specifies cite:aimlspec it as an one based index scheme.
+*** AIML stars
+\newlyCleared
+The AIML standard specifies cite:aimlspec stars as a one based index scheme.
 Wildcards are defined as any string in $L(N)$ where $L(N)$ is all normal words.
 This would imply that it would not include spaces or other special symbols.
-Since this definition is rather vague we did some experimentation.
-Basically we tried to introduce ourselves to the bot over and over again with
+Since this definition is rather vague we did some experimentation on the example
+from listing [[code:aiml-star-tag]].
+We tried to introduce ourselves to the bot over and over again with
 different names as can be seen in table [[tab:alice-normal-words]].
 
 #+CAPTION: Attempts at what would pass for 'normal' words according to ALICE.
@@ -4645,45 +4650,52 @@ different names as can be seen in table [[tab:alice-normal-words]].
 | blah *. blah          | blah *                |
 | blah * ahah           | blah * ahah           |
 
-\toReview
-So quite arbitrarly some characters are accepted while others aren't, ALLICE
-happily accepts $\_$ but an exclemation mark is to much.
+\newlyCleared
+So quite arbitrarily some characters are accepted while others aren't,
+ALICE happily accepts an underscore but an exclamation mark is to much.
 There are several ways to improve this system.
 Such as trying to add context to what the star should be.
-In our example case we wanted to match on names, so we know that
-numbers ought not to be allowed, or at least that it would be highly unusual.
+In our example case we wanted to match on names,
+so we know that numbers ought not to be allowed,
+or at least that it would be highly unusual.
 Social practice and norms could help with this.
 
-\toReview
-We already improved on the star matching system by using regexes,
+\newlyCleared
+We already improved on the star matching system by using regular expressions
+cite:thompson1968programming,
 which would allow scenario writers to be much more precise in what they want
 to match.
 However we want to also be able to store what is matched and access it later.
 The java regex API already provides a method of extracting information from
 wildcard trough something called groups cite:regexgroups.
+An example of an regular expression that extracts data can be seen in listing
+[[code:regex:extract]].
 So the problem is no longer one of extraction,
 but just about organizing that what has been matched,
 and putting it in a template.
 
-\toReview
-We need to observe the key difference between AIML and this implementation.
-Pattern and template tags are expended into their own symbols, as discussed
-in section [[Mapping AIML]]. 
-Therefore we need to device a system that can match in one symbol and
-insert the matched data in another.
-Since we can use regexes to extract data we already solved matching.
+#+CAPTION: Extracting data with a regular expression.
+#+NAME: code:regex:extract
+#+BEGIN_SRC yaml
+literal:
+    - "My name is paul" # what the bot would say if symbol used
+regexes:
+    - "My name is (?<name>.*)" # the matching mechanism, store wildcard into name field
+#+END_SRC
 
-\toReview
+
+*** Templates in symbols
+\newlyCleared
 To insert data into a symbol we need a templating mechanism.
 So the first thing we did was finding template libraries in Java.
 Three options came up:
-Velocity cite:velocity, Freemarker cite:freemarker
+Velocity cite:velocity, FreeMarker cite:freemarker
 and StringTemplate cite:stringtemplate.
 Because StringTemplate enforces strict model view separation,
-and is therefore much more maintanable and easier to understand than freeer
+and is therefore much more maintainable and easier to understand than FreeMarker
 template engines cite:parr2004enforcing, we chose to use StringTemplate.
 
-\toReview
+\newlyCleared
 So using that engine we can define a naive way of writing a symbol as can be
 seen in listing [[code:naive-template-symbol]].
 #+CAPTION: Naive approach
@@ -4692,7 +4704,7 @@ seen in listing [[code:naive-template-symbol]].
 literal: "Hello, my name is <actor.name>"
 #+END_SRC
 
-\toReview
+\newlyCleared
 Here we can see several problems start to appear.
 Is it always the case that the current actor should be used?
 No because we can say something like: "Hey Tim, can I borrow your pen?"
@@ -4702,13 +4714,24 @@ as can be seen in listing [[code:template-symbol-context]].
 Note that this won't add any /real/ restrictions on the inserted words.
 Its just a hole that can be filled up by an arbitrary string.
 
-#+CAPTION: Context unaware appraoch
+#+CAPTION: Context unaware approach
 #+NAME: code:template-symbol-context
 #+BEGIN_SRC yaml
 literal: "Hello, my name is <name>"
 --- # another file
 literal: "Can I borrow a <tool>"
 #+END_SRC
+
+*** Tying matches to templates
+\drafting
+Now we know how to extract data from a regular expression,
+and we know how to insert data into a symbol.
+However, we need to observe the key difference between AIML and the YAML
+implementation.
+Pattern and template tags are expended into their own symbols, as discussed
+in section [[Mapping AIML]]. 
+Therefore we need to device a system that can match in one symbol and
+insert the matched data in another.
 
 \toReview
 So then the question becomes how do we fill in these templates?
@@ -4754,6 +4777,12 @@ to:
 + Note that this system allows retrieving of any matched information at any point in the conversation
 + symbols that require information that aren't being fulfilled throw a compile error
 + at runtime connections that don't have information from previous utterances are disabled
+
+** S-AIML specifics
+\drafting
+S-AIML is the exstension on AIML.
+We also require to support several features from S-AIML to make social practice
+integration more easy in the future.
 
 *** Insert tags
 \drafting
@@ -4878,7 +4907,6 @@ for example listing [[code:aiml-srai-mapping]].
 \toReview
 So what we can do with the srai tags, if they exist, is simply checking if the
 symbol exists and then add the pattern to that symbol.
-
 
 *** Type insertion
 <<Caviats>>
