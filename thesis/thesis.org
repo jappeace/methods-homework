@@ -3523,6 +3523,7 @@ but this is out of the scope of this thesis.
   Reply -> [*]
 #+END_SRC
 #+CAPTION: State diagram: Utterance processing with drools
+#+ATTR_LATEX: :width 0.5\textwidth
 #+LABEL: fig:state:yaml
 #+RESULTS[91c67cdcbc4fe5fd0a81ff9cd72c7eddf5ea00be]: fig:state:yaml
 [[file:img/uml/figstateyaml.png]]
@@ -4436,6 +4437,67 @@ cloud "symbols"{
 #+RESULTS[6d2e69dda7a01ccf4fbdd9c812ed25859060ff8a]: fig:dep:filedconns
 [[file:img/uml/dep:filedconns.png]]
 
+*** Scenes
+\newlyCleared
+In the S-AIML extension, scenes were used to enable and disable certain patterns.
+Unlike the topic mechanism of AIML which just gives prefference,
+something from another scene wouldn't be used at all.
+This is makes it easier to write dialogues,
+because we don't have to worry about patterns from other scenes,
+so we can use more generalized patterns in our particular scene.
+
+\toReview
+Although scenes aren't necessary to implement the theory presented in
+section [[BDI and Jung]],
+it is necessary for eventual social practice support.
+It also makes this representation much more modular.
+The part were scenes are actively used is in section [[db package]],
+patterns are grouped based upon scene in the =PatternDatabase=.
+
+\newlyCleared
+The way we represent scenes is rather simple.
+We use directories as scenes, all the symbols within a directory are in that
+scene.
+Connections are implicitly assumed to be between symbols in the same scene
+as where the connection file is in,
+unless stated otherwise, which can be seen for example in listing
+[[code:yaml-scene-example]].
+
+#+CAPTION: Scene example in connections
+#+NAME: code:yaml-scene-example
+#+BEGIN_SRC yaml
+from:
+ - status
+to:
+ - symbol: ask_reason_here
+   scene: information_gathering
+   restricted_to: doctor
+   values:
+     - Impatient
+ - symbol: good
+   restricted_to: doctor
+   values:
+     - Polite
+     - Happy
+#+END_SRC
+
+\newlyCleared
+In listing [[code:yaml-scene-example]] we can see two connections being modelled,
+from the =status= symbol to =ask_reason_here= symbol that transitions to a new
+scene, and from the =status= symbol to the =good= symbol that stays in the same
+scene.
+
+\newlyCleared
+We break away from the idea of S-AIML that scenes are linear.
+We believe that scenes are a weakly connected cyclic graphs.
+Note that by cyclic, we mean there can be cycles, but there don't have to be.
+So we can go back to previous visited scenes for example.
+Its weakly connected because it wouldn't make much sense to model scenes
+that can't get to other scenes trough connections.
+Although there is nothing preventing one from doing so,
+the common sense reasoning is:
+Why would you model a scene that is inaccessible from the rest of your model?
+
 \FloatBarrier
 ** Supporting more exotic features
 \drafting
@@ -4686,49 +4748,6 @@ reference cite:aimleference_that that it should always be on the previous
 utterance.
 We could add options for when an utterance was made, for example just now or
 any previous utterence. However in the interest of time we won't do this.
-
-*** Scenes
-\toReview
-In the S-AIML extension, scenes were used to enable and disable certain patterns.
-Unlike the topic mechanism of AIML which just gives prefference,
-something from another scene wouldn't be used at all.
-This is in a way makes it much easier to write dialogues,
-we don't have to worry about patterns from other scenes,
-so we can use much more generalized patterns.
-The way we represent scenes is rather simple.
-We just use the directory structure of the filesystem to group symbols in a
-particular scene.
-Connections are implicitly assumed to be between symbols in the scene,
-unless stated otherwise, which can be seen for example in listing
-[[code:yaml-scene-example]].
-
-#+CAPTION: Scene example in connections
-#+NAME: code:yaml-scene-example
-#+BEGIN_SRC yaml
-from:
- - status
-to:
- - symbol: ask_reason_here
-   scene: information_gathering
-   restricted_to: doctor
-   values:
-     - Impatient
- - symbol: good
-   restricted_to: doctor
-   values:
-     - Polite
-     - Happy
-#+END_SRC
-
-\toReview
-From here we can see the model presenting two options from a status inquery,
-the doctor either tells the patient he feels good staying in the introduction scene,
-or goes to the information_gathering scene and asks why he is here.
-We break away from the idea of S-AIML that scenes are linear.
-We believe that scenes are a weakly connected cyclic graph.
-Note that by cyclic, we mean there can be cycles, but there don't have to be.
-Its weakly connected because it wouldn't make much sense to model scenes
-that can't get to other scenes trough connections.
 
 *** Insert tags
 \drafting
