@@ -956,7 +956,6 @@ stop
 #+RESULTS[35679ceefcd43b1884cc8c502d27ae59aaa34043]: fig:sp-activity
 [[file:img/uml/sp-activity.png]]
 
-
   \cleared
   We can imagine personality should have /a/ influence on social practice
   selection and of course plan influence. As far as the authors are aware however,
@@ -1037,16 +1036,15 @@ between a user and an agent.
 However we want to point out that this solution fits into the rough model Traum
 sketched. So we could say its a information state approach too.
 
-\toReview
+\newlyCleared
 An interesting paper on dialogue modeling can be found in cite:bilange1991task.
-The innovation presented there was the separation from task knowledge of
-dialogue knowledge.
 What is interesting is that they treat having multiple options available in
 their implementation (see 3.3 in the paper).
 This is similar to what we present in section [[Dialogue tree]].
 Although their solution is quite different,
 rules were made to select according to a single strategy,
 whereas we saw it as an opportunity to make composable strategies.
+This is of course an information state approach too.
 
 *** BDI + Personality
 <<BDI + Personality>>
@@ -4018,22 +4016,23 @@ In other words, dealing with the $g'$ function, this is what the next section
 deals with.
 
 *** Symbol to string
-\toReview
-So the next step is to consider how we go from symbols back to strings.
-What we assume is that the agent already found a symbol to utter, for 
-example the status inquiry.
+\newlyCleared
+The next step is to consider how we go from symbols back to strings.
+What we assume is that the agent already found a symbol to utter,
+for example the status inquiry.
 This string from a status inquiry is already available in AIML,
 they were called template tags.
 We just need to separate the literal strings from the catch all patterns
 as can be seen in listing [[code:ailm-grouped-literal]].
 In this listing we renamed the template tag to literal,
-because the name template is very generic but they function the same:
+because the name template is very generic.
+They function the same:
 Provide the string to utter for that particular category,
 in other words the $s \overset{g'}{\to} \sigma$ function
 (see section [[Narrowing the model]]).
 
-\toReview
-In deployment diagram  [[fig:dep:aimlliters]] we can see how this works in memory.
+\newlyCleared
+In deployment diagram [[fig:dep:aimlliters]] we can see how this works in memory.
 Patterns point to symbols, which have the literal utterance available to them.
 Since the names of symbols are not the same as the literal content,
 we can use terse descriptive names for more verbose content.
@@ -4102,14 +4101,16 @@ Hello -->> Greeting
 #+RESULTS[8f9d88e8099c1ee4b136d0f0b0d17eb31a02a660]: fig:dep:aimlliters
 [[file:img/uml/dep:aimlliters.png]]
 
-\toReview
-We can make this syntax even more terse.
-Observe how one category always will have one symbol.
+\newlyCleared
+We can make the syntax from listing [[code:ailm-grouped-literal]] even more terse.
+Observe how one category always will have one symbol tag.
 If we were to extract the value of this tag and use it as a filename,
 we can ensure that each symbol is only declared once.
 Then we can also assume that the AIML tags and category tags are implicit.
 This results a terse definition as can be seen in listing
 [[code:aiml-terse]].
+This doesn't include the =Hello= code because that was part of another symbol,
+and therefore another file.
 
 #+CAPTION: Terse AIML but illegal XML
 #+NAME: code:aiml-terse
@@ -4123,9 +4124,9 @@ This results a terse definition as can be seen in listing
 </patterns>
 #+END_SRC
 
-\toReview
+\newlyCleared
 However the observant reader will know this isn't valid XML
-(and by extension AIML), since XML requires a single document root.
+and by extension AIML, since XML requires a single document root tag.
 It does specify what we want, and it does so very tersely.
 Since we are changing the semantics of AIML drastically we may as well use a
 more terse data format in which such a definition is legal.
@@ -4178,57 +4179,76 @@ therefore correct it.
 The syntax of JSON can be also more terse, which is shown by both YAML and TOML.
 Because of these reason we looked at the other two contenders.
 
-\toReview
+\newlyCleared
 The reason for choosing YAML over TOML is that YAML is stable,
 whereas TOML hasn't reached stabilization yet cite:tomlreadme.
 Although the argument TOML has over YAML is that YAML is much more complex,
 and can in certain cases be not as human readable cite:yamldisatvantages.
-If TOML were to stabilize, its probably better to move to that instead.
-Currently the best choice is YAML,
-do note that its relatively easy to move between these standards,
+If TOML were to stabilize, its probably better to move to that format instead.
+Its unstablility means that the author thinks the representation may change.
+Therefore currently the best choice is YAML.
+Its relatively easy to move between these standards, if they're stable,
 as is shown in section [[Conversion script]].
+Therefore a possible future move from YAML to TOML should also be easy.
 
 ** Using YAML
-\toReview
+\newlyCleared
 It was decided conclusively to use YAML instead of AIML for symbol
 representation.
 How these symbols are represented in YAML can be seen in
 listing [[code:yaml-symbol]].
 This is only a syntactic change, therefore no deployment diagram is made of
 this.
+
+\toReview
 Rather than having a literal tag open and close to show what the literal is,
 YAML uses a key value structure.
 Lists can be indicated by using dashes in front of each item.
 Note that we still use the idea of having one symbol per file,
 and the symbol name is the filename.
 Therefore no =symbol= item is shown in the example.
+Quotation marks ="=, are to indicate strings, for certain characters this is 
+neccasarry. In other cases YAML does this for you.
+
+\toReview
+Note for example that there are multiple literals to choose from.
+In the current implementation this is similar to using =random= tags in AIML.
+However as can be seen in section [[Low level diagram]],
+this list of strings is just available to the implementation.
+Therefore social practice could use it for example: if a bot came from "the hood",
+he would use "What's up?" instead of "How are you".
+This could of course also be influenced by personality.
 
 #+CAPTION: YAML symbol representation
 #+NAME: code:yaml-symbol
 #+BEGIN_SRC yaml
-literal: How are you
+literals:
+  - How are you
+  - "What's up?"
 patterns:
   - How * you
   - How are you *
 #+END_SRC
 
-\toReview
-We keep the pattern tags for legacy support.
-However its much more easy to just support regular expresions
+\newlyCleared
+We keep the pattern fields for legacy support.
+However its much more easy to just support regular expressions
 cite:thompson1968programming.
 The reason for this is that they're part of the Java standard library
 cite:regexpattern.
-What we can do is transform AIML patterns into regular expresions,
+What we can do is transform AIML patterns into regular expressions,
 and then use the Java standard library to match the patterns.
 This will make the patterns more precise,
 and give less code to maintain,
 an example can be seen in listing [[code:yaml-regexes]].
 
-#+CAPTION: YAML with regexes
+#+CAPTION: YAML with regular expressions
 #+NAME: code:yaml-regexes
 #+BEGIN_SRC yaml
-literal: How are you
-regex: How ([a-z])\w+ you(.*)
+literals:
+  - How are you
+regexes:
+  - "How ([a-z])\w+ you(.*)"
 #+END_SRC
 
 \newlyCleared
@@ -4243,8 +4263,8 @@ Therefore both methods will be supported.
 \todo[inline]{If we have time we can compare information per character between the new and old method, going from 251 to 131 is quite an improvement}
 
 ** Connections
-\toReview
-Now we've figured out how to represent our basic axioms, the symbols, thoroughly,
+\newlyCleared
+Now we've figured out how to represent our basic axioms, the symbols thoroughly,
 we can move on to make our model functional again.
 So what we have lost in the process are our update rules
 (see section [[Dialogue systems]]).
@@ -4254,15 +4274,16 @@ which will be done in this section.
 
 *** Core idea
 \toReview
-Once we split up the template from the patterns,
-and grouped the patterns with what they uttered.
-We lost the connections between the two.
+What we do with the symbol graph is re-adding the implicit connection from
+AIML between patterns and templates.
+Both patterns and templates have now become plain symbols
+(see section [[Mapping AIML]]).
 If you just have symbols the bot won't know what to do when one of these 
 is inserted without extra information.
 This is what we represent with connections.
 What sensible replies can we give if a symbol is uttered.
 
-\drafting
+\toReview
 We will show how this works with help of an example.
 In listing [[code:yaml:simple]] we connected the symbols discussed in our orignal
 example from section [[Symbol to string]].
@@ -4281,13 +4302,6 @@ to:
 
 #+NAME: fig:dep:connections
 #+BEGIN_SRC plantuml :cache yes :file img/uml/dep:connections.png :exports results
-frame "user sais"{
-  usecase "How are you?" as howq
-  usecase "How are you *" as how
-  usecase "How * you" as howstar
-  usecase Hello
-}
-
 cloud "symbols"{
   node Greeting [
     Greeting
@@ -4302,18 +4316,14 @@ cloud "symbols"{
 }
 
 Greeting .> Greeting
-Greeting .> StatusInquiry
+Greeting ..> StatusInquiry
 
-how -->> StatusInquiry
-howq -->> StatusInquiry
-howstar -->> StatusInquiry
-Hello -->> Greeting
-  
 #+END_SRC
 
-#+CAPTION: Patterns to symbols with literals
+#+CAPTION: Symbol graph deployment diagram
 #+LABEL: fig:dep:connections
-#+RESULTS[16e838a3d596cccc9d290e17208b8fb00ecb9ef1]: fig:dep:connections
+#+ATTR_LATEX: :width 0.3\textwidth
+#+RESULTS[51c9e95a779d463b530be5129d1f6527cc49d302]: fig:dep:connections
 [[file:img/uml/dep:connections.png]]
 
 *** Single file
@@ -4377,7 +4387,6 @@ This is where the new approach offers much more ergonomic moddeling abilities
 than AIML, we know what's going on without searching for it.
 Of course once the connection file starts to grow we begin to loose this,
 but for this scenes can be used to still keep overview.
-
 
 ** Supporting more exotic features
 \drafting
@@ -6392,6 +6401,14 @@ Conversation went according to script.
   Although this is handy for debugging right now.
 + We should add support for start and terminal nodes in the connections.
   So that these siutation can be modelled gracefully.
++ So is our symbol graph something along the lines of connectionism?
+  + Nodes are uniform in type, but not in value
+  + https://en.wikipedia.org/wiki/Connectionism
++ Our connections are by default not allowed.
+  + However once allowed they allow everything possible in that connection,
+    unless specified differntly
+  + I think talking about what is allowed and not allowed is the core of doing
+    a description in logic.
 
 ** Tooling stuff
 + Protocol buffers could be used for protocol. Its strongly typed and has both
