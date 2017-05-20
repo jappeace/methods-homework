@@ -4787,54 +4787,37 @@ However one can workaround this limitation by writing drools for this,
 similarly to low level replies.
 A =MatchedQueryDB= can be constructed manually to fill with drool facts.
 
-** S-AIML specifics
-\drafting
-S-AIML is the exstension on AIML.
-We also require to support several features from S-AIML to make social practice
-integration more easy in the future.
-
-*** Insert tags
-\drafting
-Insert tags are no longer necessary because symbols get always inserted.
-We can simply make events happen if a particular event happens by matching a
-symbol on name. \todo{is this true?}
-*** Drool tags
-\drafting
-There is no real mechanism for emulating the behavior of drool tags,
-except for the fact that symbols that have templates can be manually
-filled up by constructing a =MatchedQueryDB= manually in drools and filling it
-up with your own content.
-
 ** Automatic AIML to YAML
-\toReview
+\newlyCleared
 AIML is a standard cite:aimlspec.
 Note that the spec says: "AIML shall be compatible with XML.",
-and xml is also a standard cite:xmlspec.
+and XML is also a standard cite:xmlspec.
 YAML happens to also be a standard format cite:yamlspec.
 although its not a markup language, unlike XML and AIML,
 but rather a data format cite:yamlvsxml.
-The advantage of being "just a dataformat" is
+The advantage of being "just a data format" is
 that the syntax can become a lot more terse, while maintaining readability.
-Because we have all these standards, its relatively easy to convert between
-them. Because libraries exist for parsing them.
+With all these standards, its relatively easy to convert between them,
+because libraries exist for parsing them.
 
 *** Legacy AIML
-\toReview
+\newlyCleared
 An introduction of a new format is nice, but when this is done,
-all the work in the old format can become obsolete.
+all the work in the old format could become obsolete.
 This is obviously not desirable.
 There are several ways of circumventing this.
 First of all, one could add support of the legacy format to the code base.
 The second method is creating a script that will help along the way with
 conversion.
 
-\toReview
+\newlyCleared
 We chose the second method because the first method will be much harder,
 as it will re-introduce the problems we had with AIML in the first place.
-The second method provides the user an oppertunity to make their AIML script
-comply to the new standard, whilst also reducing the effort it takes.
+The second method provides the user an opportunity to make their AIML script
+comply to the new method,
+whilst also reducing the effort it takes.
 
-\toReview
+\newlyCleared
 To make the conversion we need to point out some structural observations about
 differences between AIML and YAML.
 Firstly AIML works strictly from the perspective of the bot.
@@ -4842,17 +4825,25 @@ There is no deliberation about what the user is thinking.
 Therefore we can't model what we expect the doctor to say after a patient
 uttered something in the test scenario because this information isn't encoded.
 You may argue that the mechanism which could be used for this are the /that/ tags.
-But they are just an additional restriction on the pattern matching,
-ie: If user uttered regex *and* he said /that/ before, we can say template.
+But they are just an additional restriction on the pattern matching:
+If user uttered pattern $A$ *and* he said that pattern $B$ before,
+we can say template $C$.
 Alternatively you count the injection of types (in S-AIML),
-but this isn't a formal encoding in AIML itself, but rather a way of informing
-drools what's going on.
+but this isn't a formal encoding in AIML itself,
+but rather a way of informing drools what's going on.
 
 *** Mapping AIML
 <<Mapping AIML>>
-\toReview
+\newlyCleared
 What we can do is extract the patterns, and their respective literals into
 symbols. For example we have the following category in listing [[code:aiml-mapping]].
+In this example there are in terms of YAML two symbols and a connection.
+The first symbol is pattern tag,
+the second symbol is the template tag excluding the insertions,
+and the connection is from the pattern to the template which is restricted to
+the patient.
+So from this example we can define the mapping result in listing [[code:yaml-mapped]],
+with its respective file names in comments above.
 
 #+CAPTION: AIML mapping example
 #+NAME: code:aiml-mapping
@@ -4868,15 +4859,6 @@ symbols. For example we have the following category in listing [[code:aiml-mappi
       </template>
   </category>
 #+END_SRC
-
-\toReview
-So here there are implicitly defined two symbols and a connection.
-The first symbol is pattern tag.
-The second symbol is the template tag excluding the insertions.
-The connection is from the pattern to the template which is restricted to
-the patient.
-So from this example we can define the mapping result in listing [[code:yaml-mapped]],
-with the respective file names in comments above.
 
 #+CAPTION: Listing [[code:aiml-mapping]] expressed in YAML, with the filenames in comments.
 #+NAME: code:yaml-mapped
@@ -4898,6 +4880,11 @@ with the respective file names in comments above.
 \toReview
 A lot of category elements simply mean to add a pattern to a symbol,
 for example listing [[code:aiml-srai-mapping]].
+What we can do with the SRAI tags, if they exist, is simply checking if the
+symbol exists and then add the pattern to that symbol.
+If the symbol does not exists yet, we create it anyway,
+since the content of a SRAI tag is the pattern itself,
+we just add both the pattern and content to the pattern list.
 
 #+CAPTION: SRAI tag that adds a pattern to a symbol
 #+NAME: code:aiml-srai-mapping
@@ -4913,19 +4900,15 @@ for example listing [[code:aiml-srai-mapping]].
 
 #+END_SRC
 
-\toReview
-So what we can do with the srai tags, if they exist, is simply checking if the
-symbol exists and then add the pattern to that symbol.
-
 *** Type insertion
 <<Caviats>>
-\toReview
+\newlyCleared
 After the conversion is finished, the bot will mostly work, with the added bonus
 that the dialogue will be more readable.
 However there are some caveats, especially in the previously introduced variant
 called of AIML called S-AIML.
 
-\toReview
+\newlyCleared
 In S-AIML types are injected to track progress of the scenario.
 In contrast to the current scheme where the entire user utterance gets
 inserted and its up to drools to make a symbolic understanding from it.
@@ -4933,20 +4916,38 @@ To work around the issue of inserting types we actually have to generate
 drools in case of a particular symbol inserted.
 For this we can just use the low level reply mechanism, but rather than
 replying we insert the specified type.
+An example of this can be seen in listing [[code:drool:generated]].
 
-\todo[inline]{Add example showing the source S-AIML, and the generated drool from that}
+#+CAPTION: Generated drools from listing [[code:aiml-mapping]] insert tags
+#+NAME: code:drool:generated
+#+BEGIN_SRC java
+rule "insert types when symbol how_long_pain was uttered"
+when
+	$pre:PreProcessed($symbol:utterance.what, $symbol.name == "timelapse/how_long_pain")
+then
+	log.info(drools.getRule().getName());
+	
+	scenarios.large.global.SentenceSpoken obj1 = new scenarios.large.global.SentenceSpoken();
+	insert(obj1);
+	
+	scenarios.large.timelapse.DurationPain obj2 = new scenarios.large.timelapse.DurationPain();
+	insert(obj2);
+	
+end
+#+END_SRC
 
-# A rather peculiar design decision to use JSON inside an xml document.
 \toReview
-Something which complicates this is that attributes can be set trough json
+Something which complicates this is that attributes can be set trough JSON
 within the insert tags.
 This can be handled inside the drools rules because the inserted types
 always have setters.
 So there could be java code generated for that.
+Although we haven't done this in the actual implementation since this feature
+didn't seemed to be used a lot.
 
 *** Proof of concept
 <<Conversion script>>
-\toReview
+\newlyCleared
 To show that it is indeed easy to write a conversion script,
 with above restrictions kept in mind we made a proof of concept.
 This conversion script is located in the conversion folder from the root project
@@ -4954,17 +4955,17 @@ of the git project.
 It is expected to be executed from command line and provides several command
 line arguments that are documented in the script itself.
 
-\toReview
+\newlyCleared
 The usage of the script can be shown by passing the help parameter to it.
 As can be seen in listing [[code:sh-conversion-script-help]].
+There are some features missing from this script however.
+The help message will display which.
 
 #+CAPTION: Print conversion script usage
 #+NAME: code:sh-conversion-script-help
 #+BEGIN_SRC sh
   python main.py --help
 #+END_SRC
-
-\todo[inline]{Describe missing features}
 
 \clearpage
 * Implementation
