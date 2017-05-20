@@ -4186,7 +4186,7 @@ whereas TOML hasn't reached stabilization yet cite:tomlreadme.
 Although the argument TOML has over YAML is that YAML is much more complex,
 and can in certain cases be not as human readable cite:yamldisatvantages.
 If TOML were to stabilize, its probably better to move to that format instead.
-Its unstablility means that the author thinks the representation may change.
+Its instability means that the author thinks the representation may change.
 Therefore currently the best choice is YAML.
 Its relatively easy to move between these standards, if they're stable,
 as is shown in section [[Conversion script]].
@@ -4972,6 +4972,9 @@ The help message will display which.
 \todo[inline]{The level of detail is around the one we did with the demonstration: Go trough one connection and show how the things are used, such as personality before and template.}
 \todo[inline]{Remember the implementation is in support of thesis, not the other way around, so programming stuff is irrelevant}
 \todo[inline]{I think in here we can also discuss why we did or didn't use logic?}
+
+\todo[inline]{We should anser here: How do I add or change personality?}
+\todo[inline]{How do I steer certain personalities? So perhaps also the stuff we added to YAML specifically for personalities}
 
 \toReview
 In this chapter the implementation of the bot is discussed.
