@@ -4696,22 +4696,25 @@ and is therefore much more maintainable and easier to understand than FreeMarker
 template engines cite:parr2004enforcing, we chose to use StringTemplate.
 
 \newlyCleared
-So using that engine we can define a naive way of writing a symbol as can be
+Using that engine we can define a naive way of writing a symbol as can be
 seen in listing [[code:naive-template-symbol]].
+
 #+CAPTION: Naive approach
 #+NAME: code:naive-template-symbol
 #+BEGIN_SRC yaml
 literal: "Hello, my name is <actor.name>"
 #+END_SRC
 
-\newlyCleared
-Here we can see several problems start to appear.
-Is it always the case that the current actor should be used?
-No because we can say something like: "Hey Tim, can I borrow your pen?"
-So we can't put in contextual information in the template, so the best we can
-do is give them a name and leave it at that,
+\toReview
+In listing there [[code:naive-template-symbol]] is a problem however,
+is it always the case that the current actor should be used if we use a query
+like "<actor.name>"?
+No because we can say something like: "Hey <actor.name>, can I borrow your pen?".
+Therefore it is perhaps unwise to try and select such things at the symbol level.
+Because a lot of context information is not available yet.
+The best we can do is give them a name and leave it at that,
 as can be seen in listing [[code:template-symbol-context]].
-Note that this won't add any /real/ restrictions on the inserted words.
+This won't add any /real/ restrictions on the inserted words.
 Its just a hole that can be filled up by an arbitrary string.
 
 #+CAPTION: Context unaware approach
@@ -4723,7 +4726,7 @@ literal: "Can I borrow a <tool>"
 #+END_SRC
 
 *** Tying matches to templates
-\drafting
+\toReview
 Now we know how to extract data from a regular expression,
 and we know how to insert data into a symbol.
 However, we need to observe the key difference between AIML and the YAML
@@ -4734,6 +4737,11 @@ Therefore we need to device a system that can match in one symbol and
 insert the matched data in another.
 
 \toReview
+As said before the implicit relationship between patterns and template tags in
+AIML is made explicit in this implementation trough connections.
+Its only natural to demand to solve this problem with help of connections.
+
+\newlyCleared
 So then the question becomes how do we fill in these templates?
 The issue we had with trying to fill these in the symbols was the lack of
 context.
@@ -4741,42 +4749,43 @@ Context is mainly provided by connections, if we know who is saying
 "Hello, my name is <name>", we know what to fill in for name.
 In this system context is provided by connections.
 An example of how to do this is given in listing [[code:template-connection-fill]],
-where the first one fills the name with a fact retrieved from the drools,
-\todo{I think we won't do this, because it requires a major overhaul of architecture}
-and the second fills the name by using a previous utterance.
-In the second we use the match label to identify which matchd item needs to be
-extracted, note that regexes support named matching groups.
-We will make these mandatory to extract information, because it doesn't put a
-burden upon order.
+where the name is filled by using a previous utterance.
+We use the match label to identify which matched item needs to be extracted.
 
 #+CAPTION: Connection syntax for filling templates
 #+NAME: code:template-connection-fill
 #+BEGIN_SRC yaml
-from:
-- hello
-to:
-- symbol: my_name_is_x
-  restricted_to: patient
-  facts:
-    name: botname
---- # or 
 from:
 - my_name_is_x
 to:
 - symbol: hello_x
   restricted_to: patient
   utterances:
-    name: 
+    name: # the template name
       actor: doctor
       symbol: my_name_is_x
       scene: introduction
       match: name # we can match on named groups
 #+END_SRC
 
-\drafting
-+ Note that this system allows retrieving of any matched information at any point in the conversation
-+ symbols that require information that aren't being fulfilled throw a compile error
-+ at runtime connections that don't have information from previous utterances are disabled
+\toReview
+There are several important things to note about this implementation.
+First of all its a lot more flexible than AIML stars,
+since information can be retrieved from any previously uttered utterance,
+if a connection has a query that isn't satisfied, it is not available.
+Another advantage over AIML is that regular expressions allow much more precise
+input sanitation than wildcards.
+This could enforce input that is only numeric for example.
+Which in turn can be used within drools as a query.
+Finally we preform checks to make sure that symbols with template names
+only have connections leading up to them that satisfy the template names.
+
+\toReview
+A feature that is missing is retrieving drool facts from the knowledge base
+and inserting them into the template.
+However one can workaround this limitation by writing drools for this,
+similarly to low level replies.
+A =MatchedQueryDB= can be constructed manually to fill with drool facts.
 
 ** S-AIML specifics
 \drafting
