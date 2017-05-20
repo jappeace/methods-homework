@@ -4248,7 +4248,7 @@ an example can be seen in listing [[code:yaml-regexes]].
 literals:
   - How are you
 regexes:
-  - "How ([a-z])\w+ you(.*)"
+  - "How ([a-z])\\w+ you(.*)"
 #+END_SRC
 
 \newlyCleared
@@ -4285,10 +4285,15 @@ What sensible replies can we give if a symbol is uttered.
 
 \toReview
 We will show how this works with help of an example.
-In listing [[code:yaml:simple]] we connected the symbols discussed in our orignal
+In listing [[code:yaml:simple]] we connected the symbols discussed in our original
 example from section [[Symbol to string]].
 With these connections we can see the situation illustrated as deployment
-diagram [[fig:dep:connections]].
+diagram [[fig:dep:connections]],
+note that we removed the patterns because it became to cluttered.
+From this we can see that a =greeting= can be replied to with a =greeting= or
+with a =status_inquery=.
+As we can see there is a choice now once a =greeting= is uttered,
+and choice opens up room for personality as a process.
 
 #+CAPTION: Connections grouped into a file
 #+NAME: code:yaml:simple
@@ -4325,6 +4330,14 @@ Greeting ..> StatusInquiry
 #+ATTR_LATEX: :width 0.3\textwidth
 #+RESULTS[51c9e95a779d463b530be5129d1f6527cc49d302]: fig:dep:connections
 [[file:img/uml/dep:connections.png]]
+
+\drafting
+However such a representation is too simplistic for various reasons.
+We will discuss this in the next section why this is the case,
+but once this step is made away from implicit connections to explicit
+connections,
+it turns out that the connections are by far the most complex piece in dialogue
+modelling.
 
 *** Single file
 \drafting
