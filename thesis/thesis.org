@@ -4440,7 +4440,7 @@ cloud "symbols"{
 *** Scenes
 \newlyCleared
 In the S-AIML extension, scenes were used to enable and disable certain patterns.
-Unlike the topic mechanism of AIML which just gives prefference,
+Unlike the topic mechanism of AIML which just gives preference,
 something from another scene wouldn't be used at all.
 This is makes it easier to write dialogues,
 because we don't have to worry about patterns from other scenes,
@@ -4498,8 +4498,109 @@ Although there is nothing preventing one from doing so,
 the common sense reasoning is:
 Why would you model a scene that is inaccessible from the rest of your model?
 
+*** That tags
+<<That tags>>
+\newlyCleared
+The that tags in AIML have a rather unfortunate name.
+They require the bot to have said something before the current
+pattern can be used.
+Therefore in our YAML semantics, they are an additional restriction on connections.
+They appear in listing [[code:aiml-that-tag]] as an example.
+
+\toReview
+Although supporting this feature isn't necessary to implement the theory
+presented in section [[BDI and Jung]],
+they do allow much more fine grained control over the scenario.
+They are described more extensively in section [[Before and templates]].
+
+#+CAPTION: That tags example.
+#+NAME: code:aiml-that-tag
+#+BEGIN_SRC xml
+  <category>
+      <that>Why is doctor Aarts not here I am one of his patients.</that>
+      <pattern>
+          surprised you're doctor
+      </pattern>
+      <template>
+          <insert packageName="scenarios.large.global" typeName="SentenceSpoken" />
+          <insert packageName="scenarios.large.prehistory" typeName="BadAndLateExplanation" />
+          I did expect him to be here, yes.
+      </template>
+  </category>
+#+END_SRC
+
+\newlyCleared
+That tags act as an extra filter upon the category.
+Before this category becomes active, the bot first has to have uttered the
+pattern in the that tags.
+In the new representation we can model such a thing too.
+To model that tags we add an extra optional field to the =RawConnections= called
+before, with two required fields, `who' and `said', who indicates the actor
+and said indicates what was said.
+An example can be seen in listing [[code:yaml-before-field]].
+
+#+CAPTION: That tags as before fields in YAML
+#+NAME: code:yaml-before-field
+#+BEGIN_SRC yaml
+  before:
+     who: patient
+     said: "why_is_docter"
+  from:
+   - "surprised_your_doctor"
+  to:
+   - symbol: "expect_him_be_here"
+     restricted_to: patient   
+#+END_SRC
+
+\newlyCleared
+Adding the who field was necessary since we no longer model just the
+utterances of the bot,
+we needed to expend it by adding the actor who uttered the utterance.
+We also needed to think about *when* it was uttered, because alternation
+isn't a guarantee in conversation (discussed in section [[Scheduling dialogue]]).
+What is done now, is to filter out the utterances from the person who is not
+the who in the before tag, and then take the latest utterance from them.
+
+\newlyCleared
+To surpass the AIML that tags,
+we can extend this mechanism by making the =RawBefore= type self
+recursive with an optional field before of its own type.
+This is best illustrated with an example which can be seen in listing
+[[code:yaml-before-recurion]].
+
+#+CAPTION: Before recursion
+#+NAME: code:yaml-before-recurion
+#+BEGIN_SRC yaml
+  before:
+     who: patient
+     said: "why_is_docter"
+     before:
+        who: doctor
+        said: "im_the_doctor"
+  from:
+   - "surprised_your_doctor"
+  to:
+   - symbol: "expect_him_be_here"
+     restricted_to: patient   
+#+END_SRC
+
+\newlyCleared
+The default value of the before field will be None. Which just means no
+additional restrictions.
+In this example making such an explicit definition won't be very constructive.
+However since we need an identity (no-op) before value anyway for the default
+restriction. Making a recursive definition isn't that big of an extension.
+
+\newlyCleared
+The AIML tag specification never defined when a that tag match would be
+active cite:aimlspec_that. However it can be derived implicitly from the
+reference cite:aimleference_that that it should always be on the previous
+utterance.
+We could add options for when an utterance was made, for example just now or
+any previous utterance. However in the interest of time we won't do this.
+
 \FloatBarrier
-** Supporting more exotic features
+** Additional useful features
 \drafting
 AIML is a big standard and has various useful features that need to be
 supported for a competing standard to make any chance.
@@ -4652,106 +4753,11 @@ to:
 \drafting
 + Note that this system allows retrieving of any matched information at any point in the conversation
 + symbols that require information that aren't being fulfilled throw a compile error
-+ at runtime connections that don't have information from previous utterences are disabled
-
-*** That tags
-<<That tags>>
-\toReview
-The that tags in AIML have a rather unforntunate name.
-They require the bot to have said something (ie a pattern) before the current
-pattern can be used.
-Therefore in our YAML semantics, they are an additional restriction on connections.
-They appear in listing [[code:aiml-that-tag]] as an example.
-
-#+CAPTION: That tags example.
-#+NAME: code:aiml-that-tag
-#+BEGIN_SRC xml
-  <category>
-      <that>Why is doctor Aarts not here I am one of his patients.</that>
-      <pattern>
-          surprised you're doctor
-      </pattern>
-      <template>
-          <insert packageName="scenarios.large.global" typeName="SentenceSpoken" />
-          <insert packageName="scenarios.large.prehistory" typeName="BadAndLateExplanation" />
-          I did expect him to be here, yes.
-      </template>
-  </category>
-#+END_SRC
-
-\toReview
-That tags act as an extra filter upon the category.
-Before this category becomes active, the bot first has to have uttered the
-pattern in the that tags.
-In the new representation we can model such a thing too.
-To model that tags we add an extra optional field to the RawConnections called
-before, with two required fields, `who' and `said', who indicates the actor
-and said indicates what was said.
-An example can be seen in listing [[code:yaml-before-field]].
-
-#+CAPTION: That tags as before fields in YAML
-#+NAME: code:yaml-before-field
-#+BEGIN_SRC yaml
-  before:
-     who: patient
-     said: "why_is_docter"
-  from:
-   - "surprised_your_doctor"
-  to:
-   - symbol: "expect_him_be_here"
-     restricted_to: patient   
-#+END_SRC
-
-\toReview
-Adding the who field was neccisary since we no longer model just the
-utterences of the bot,
-we needed to expend it by adding the actor who uttered the utterence.
-We also needed to think about *when* it was uttered, because alternation
-isn't a gaurantee in conversation (discussed in section [[Scheduling dialogue]]).
-What is done now, is to filter out the utterences from the person who is not
-the who in the before tag, and then take the latest utterance from them.
-
-\toReview
-To surpass the AIML that tags,
-we can extend this mechanism by making the rawbefore type self
-recursive with an optinal field before of its own type.
-This is best illustrated with an example which can be seen in listing
-[[code:yaml-before-recurion]].
-
-#+CAPTION: Before recursion
-#+NAME: code:yaml-before-recurion
-#+BEGIN_SRC yaml
-  before:
-     who: patient
-     said: "why_is_docter"
-     before:
-        who: doctor
-        said: "im_the_doctor"
-  from:
-   - "surprised_your_doctor"
-  to:
-   - symbol: "expect_him_be_here"
-     restricted_to: patient   
-#+END_SRC
-
-\toReview
-The default value of the before field will be no before. Which just means no
-additional restrictions.
-In this example making such an explicit definition won't be very constructive.
-However since we need an identity (no-op) before value anyway for the default
-restriction. Adding a recursive definition isn't that big of an extension.
-
-\toReview
-The AIML tag specification never defined when a that tag match would be
-active cite:aimlspec_that. However it can be derived implicitly from the
-reference cite:aimleference_that that it should always be on the previous
-utterance.
-We could add options for when an utterance was made, for example just now or
-any previous utterence. However in the interest of time we won't do this.
++ at runtime connections that don't have information from previous utterances are disabled
 
 *** Insert tags
 \drafting
-Insert tags are no longer neccisary because symbols get always inserted.
+Insert tags are no longer necessary because symbols get always inserted.
 We can simply make events happen if a particular event happens by matching a
 symbol on name. \todo{is this true?}
 *** Drool tags
@@ -5197,9 +5203,9 @@ the yaml files from the symbols. Not only the regex field is used, but also
 the literal field, since a literal is just a very precise regex.
 
 \toReview
-With this structure it becomes really easy to figure out a user utterence.
+With this structure it becomes really easy to figure out a user utterance.
 We just take the active scene, get back a list of pattern symbol, go trough
-each pattern to see if its a match with the user utterence
+each pattern to see if its a match with the user utterance
 (potentially asyncrhonusly), and insert all matched symbols.
 
 \toReview
@@ -5247,7 +5253,7 @@ structure.
 This is to support scene transitions from the active scenes,
 to neighbouring scenes.
 The initial idea was to make a simple scene graph that would allow scenes to
-look into neighbouring scenes if they couldn't match an utterence string with
+look into neighbouring scenes if they couldn't match an utterance string with
 their own patterns.
 However we can do a better pre-processed variant.
 What we really want is another pattern database,
@@ -5430,7 +5436,7 @@ functions.
 \toReview
 To do validation tests we will try to model the scenario presented as an example
 in section [[Personality influence case study]].
-To do this we go trough each utterence in the dialogue and see if they have
+To do this we go trough each utterance in the dialogue and see if they have
 unique meanings. These we then translate in their respective symbol files.
 If we for example look at the conversation between sander and the doctor seen
 in table [[tab:sander-conv-doct]], we for example have two greetings. "Hi" and "Hello".
@@ -6460,10 +6466,10 @@ Conversation went according to script.
   For example when you expect an event in a particular scene,
   but I don't think this isn't true either since at every step of deliberation
   the information gets reinserted.
-+ We should note the utterence is used by goals a little weird in that
++ We should note the utterance is used by goals a little weird in that
   percolutionary values aren't used.
   Actually goals need less information, so an idea would be to splitup
-  Utterences, but the issue is what to name the splitup (protoutterence?)
+  Utterances, but the issue is what to name the splitup (protoutterance?)
 + Perhaps it shouldn't be possible to skip to a certain part of a dialogue
   without punishment?
   Although this is handy for debugging right now.
