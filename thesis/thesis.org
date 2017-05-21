@@ -1154,7 +1154,7 @@ which was directly taken from cite:augello2016social.
 The interaction module handles user interaction, where the GUI can show the
 dialogue and the mood of the agent.
 The Dialogue module inside it however handles low level string interpretation
-with help of AIML (see [[Text Processing]]), this basically works trough string
+with help of AIML (see section [[Text Processing]]), this basically works trough string
 matching.
 Note that although represented in the abstract architecture as the same module,
 the GUI resides in  the implementation on the client side whereas the dialogue
@@ -1162,7 +1162,7 @@ module resides on the server.
 
 \cleared
 The dialogue module calls directly the Representation and interpretation module
-with help of specialized tags (see [[Deliberation]]) information can be inserted in
+with help of specialized tags (see section [[Deliberation]]) information can be inserted in
 the representation and interpretation module.
 
 \cleared
@@ -1712,12 +1712,12 @@ We also get more accurate descriptions of what Jungian functions are,
 Jung described in his work people with that particular function as dominant.
 This is harder to do with the dimensions, because if you take an INTJ type and an
 INTP type the semantics of both the N and T change because of the P/J dimension, 
-as can be seen in their respective order (see [[sec:mbti:order_comparison]]).
+as can be seen in their respective order (see section [[sec:mbti:order_comparison]]).
 Campos avoids this by ignoring the I/E and J/P dimensions, resulting in a
 simplified theory.
 However we would like to note that it is not an easily extendable simplification.
 Therefore we chose to translate types to orders in Jungian function attitudes,
-something which is already done by MBTI (see [[sec:mbti:order_comparison]]).
+something which is already done by MBTI (see section [[sec:mbti:order_comparison]]).
 
 \cleared
 Another consideration to make is what are these function attitudes?
@@ -1732,7 +1732,7 @@ but before that is done we need to make several structural observations.
 \cleared
 Firstly functions attitudes are not independent, by which I mean that
 if we have a function attitude $a$, followed by $b$ then the resulting
-behavior is different than $b$ followed by $a$ (see [[sec:mbti:order_comparison]]).
+behavior is different than $b$ followed by $a$ (see section [[sec:mbti:order_comparison]]).
 
 \cleared
 Secondly all functions should be used and their order matters.
@@ -3370,7 +3370,7 @@ cooking phase, and after that make the object immutable cite:zibin2010ownership.
 This is in essence what we do with the =Database= structure.
 We construct its data first with a standard java =HashMap=,
 and once this is complete we wrap this into the =Database= class.
-Which makes a shallow copy and has no api for mutation (see [[fig:dbclass]]).
+Which makes a shallow copy and has no api for mutation (see figure [[fig:dbclass]]).
 
 \cleared
 This initialization problem is the reason why we chose the order of
@@ -3386,7 +3386,7 @@ In essence we are using now as an address the scene name and symbol name.
 Once we have the symbol database we can use it to create connections from it.
 As seen in figure [[fig:droolclass]],
 connections consist of a symbol object its going too,
-and the key value of a connection database is a symbol too (see [[fig:dbclass]]).
+and the key value of a connection database is a symbol too (see figure [[fig:dbclass]]).
 So to satisfy these values we just do a lookup in the symbol database.
 So we changed the address, rather than it being the scene and symbol name,
 its the symbol object in itself.
@@ -4264,6 +4264,7 @@ although they are also a lot more difficult to learn and read.
 Therefore both methods will be supported.
 
 *** Loading YAML
+<<Loading yaml>>
 \toReview
 As explained earlier YAML key value pairs are either directly loaded into a
 =HashMap=, or into a class.
@@ -4708,21 +4709,15 @@ any previous utterance. However in the interest of time we won't do this.
 
 ** Templates
 <<Star tags>>
-\toReview
+\newlyCleared
 In AIML, star tags are template focused.
-They capture the content of a wildcard
-at a particular index and allow them to occur in the bots reply.
+They capture the content of a wildcard at a particular index
+and allow them to occur in the bots reply.
 An example can be seen in listing [[code:aiml-star-tag]].
-This is a simple trick to make the bot look quite clever,
-and since in AIML patterns and replies are hand in hand, doing this is easy.
-Our system has no such luxury.
-
-\toReview
-To implement these in our new scheme we first need to analyze what star tags are.
-Then we need to figure out how we can implement this in our matching system,
-and finally we need to add a template method to our YAML representation.
-The data structures involved are discussed in section [[Before and templates]].
-What is discussed in this section is the behavior and syntax.
+This is a simple trick to make the bot more flexible,
+and since in AIML patterns and templates occur hand in hand, doing this is easy.
+In this system we have not such a close relationship (on purpose),
+and therefore its more difficult to implement.
 
 #+CAPTION: Star tag usage example.
 #+NAME: code:aiml-star-tag
@@ -4736,6 +4731,19 @@ What is discussed in this section is the behavior and syntax.
     </template>
 </category>
 #+END_SRC
+
+\toReview
+Although this feature isn't necessary for personality per se, its a really
+important chat bot feature.
+It allows symbols to become more flexible, and connections more dynamic.
+As we will see it will create an interesting constraint on connections.
+
+\newlyCleared
+To implement these in our new scheme we first need to analyze what star tags are.
+Then we need to figure out how we can implement this in our matching system,
+and finally we need to add a template method to our YAML representation.
+The data structures involved are discussed in section [[Before and templates]].
+What is discussed in this section is the behavior and syntax.
 
 *** AIML stars
 \newlyCleared
@@ -4790,7 +4798,6 @@ regexes:
     - "My name is (?<name>.*)" # the matching mechanism, store wildcard into name field
 #+END_SRC
 
-
 *** Templates in symbols
 \newlyCleared
 To insert data into a symbol we need a templating mechanism.
@@ -4812,16 +4819,16 @@ seen in listing [[code:naive-template-symbol]].
 literal: "Hello, my name is <actor.name>"
 #+END_SRC
 
-\toReview
+\newlyCleared
 In listing there [[code:naive-template-symbol]] is a problem however,
 is it always the case that the current actor should be used if we use a query
 like "<actor.name>"?
 No because we can say something like: "Hey <actor.name>, can I borrow your pen?".
-Therefore it is perhaps unwise to try and select such things at the symbol level.
-Because a lot of context information is not available yet.
+Therefore we should reconsider selecting such things at the symbol level.
+A lot of context information is not available in symbol files.
 The best we can do is give them a name and leave it at that,
 as can be seen in listing [[code:template-symbol-context]].
-This won't add any /real/ restrictions on the inserted words.
+This won't add any restrictions on the inserted value. \todo{So this would be a future work thing? Using linguistics to determine types of inserted stuff??}
 Its just a hole that can be filled up by an arbitrary string.
 
 #+CAPTION: Context unaware approach
@@ -4833,27 +4840,26 @@ literal: "Can I borrow a <tool>"
 #+END_SRC
 
 *** Tying matches to templates
-\toReview
+\newlyCleared
 Now we know how to extract data from a regular expression,
 and we know how to insert data into a symbol.
-However, we need to observe the key difference between AIML and the YAML
-implementation.
+There is a key difference between AIML and the YAML implementation.
 Pattern and template tags are expended into their own symbols, as discussed
 in section [[Mapping AIML]]. 
 Therefore we need to device a system that can match in one symbol and
 insert the matched data in another.
 
-\toReview
+\newlyCleared
 As said before the implicit relationship between patterns and template tags in
 AIML is made explicit in this implementation trough connections.
-Its only natural to demand to solve this problem with help of connections.
+Its only natural to solve this problem with help of connections.
 
 \newlyCleared
 So then the question becomes how do we fill in these templates?
 The issue we had with trying to fill these in the symbols was the lack of
 context.
 Context is mainly provided by connections, if we know who is saying
-"Hello, my name is <name>", we know what to fill in for name.
+"Hello, my name is <name>", we know what to fill in for the template "name".
 In this system context is provided by connections.
 An example of how to do this is given in listing [[code:template-connection-fill]],
 where the name is filled by using a previous utterance.
@@ -4875,7 +4881,7 @@ to:
       match: name # we can match on named groups
 #+END_SRC
 
-\toReview
+\newlyCleared
 There are several important things to note about this implementation.
 First of all its a lot more flexible than AIML stars,
 since information can be retrieved from any previously uttered utterance,
@@ -4886,13 +4892,17 @@ This could enforce input that is only numeric for example.
 Which in turn can be used within drools as a query.
 Finally we preform checks to make sure that symbols with template names
 only have connections leading up to them that satisfy the template names.
+AIML didn't have to do this in the first place of course,
+since stars only acted per category.
 
-\toReview
+\newlyCleared
 A feature that is missing is retrieving drool facts from the knowledge base
 and inserting them into the template.
 However one can workaround this limitation by writing drools for this,
 similarly to low level replies.
 A =MatchedQueryDB= can be constructed manually to fill with drool facts.
+
+\todo[inline]{Another missing feature is inserting raw strings from connections or using other symbols to fill in templates}
 
 ** Automatic AIML to YAML
 \newlyCleared
@@ -4984,7 +4994,7 @@ with its respective file names in comments above.
      restricted_to: patient   
 #+END_SRC
 
-\toReview
+\newlyCleared
 A lot of category elements simply mean to add a pattern to a symbol,
 for example listing [[code:aiml-srai-mapping]].
 What we can do with the SRAI tags, if they exist, is simply checking if the
@@ -5043,7 +5053,7 @@ then
 end
 #+END_SRC
 
-\toReview
+\newlyCleared
 Something which complicates this is that attributes can be set trough JSON
 within the insert tags.
 This can be handled inside the drools rules because the inserted types
@@ -5083,7 +5093,7 @@ The help message will display which.
 \todo[inline]{We should anser here: How do I add or change personality?}
 \todo[inline]{How do I steer certain personalities? So perhaps also the stuff we added to YAML specifically for personalities}
 
-\toReview
+\newlyCleared
 In this chapter the implementation of the bot is discussed.
 Herein we will discuss some of the bigger challenges of implementing the bot.
 To do this we will setup a small test scenario in YAML.
@@ -5091,51 +5101,12 @@ With this we will walk trough the steps that are interesting or were
 particularly challenging, in both loading and execution.
 Finally we will discuss the tests that show we indeed succeeded.
 
-\toReview
+\newlyCleared
 When one starts working on an existing software project the first
 obstacle faced is building/executing the project.
 This is however not discussed in this chapter,
 but done in detail in the appendix [[building]].
 
-** Demo
-\todo[inline]{Delete this subsection}
-\todo[inline]{This is just here to remind myself waht I had shown in the demo (to remember the level of detail)}
-1. Start server
-2. zet persoonlijkheid die in believes.yml op INTJ
-3. Build
-4. Open test gedeelte van thesis
-5. Open Unity client en ga INTJ test af
-6. Stel believes.yml in op ENFP
-7. Rebuild
-8. Ga ENFP test af met de python client.
-9. zelfde voor ISTP?
-*** Convert
-1. Verwijder salve/anamnesi/large & small
-2. Voer convert script uit
-3. Open introduction.aiml & introduction converted folder
-   1. symbols: patronen of templates
-   2. verschil in verbosity: connections
-   3. Zoek 'I am an intern in gegenereerde' drools
-*** second
-4. Start mysqld =sudo systemctl start mysqld=
-5. Start wildfly
-6. Open believes.yml, introduction/connections.yaml, en ranger in introduction
-*** Templates
-+ Vertel over template matching met regexes, en insertion
-+ rebuild
-+ open python client
-+ zeg "My name is jappie"
-+ laat zien resultaat verwacht naar yaml
-+ zeg "How are you?"
-+ vertel over queries in yaml
-*** Before clauses
-+ nu over before clauses
-+ zeg "Hello"
-  + laat zien dat nu de before clause gebruikt is
-  + vertel ook over labels in templates
-*** scene transitions
-+ Transition scene: "How can I help you?"
-+ Zeg nog eens "Hello"
 ** Setting up the scenario
 \todo[inline]{I don't know if we should start with yaml here, perhaps we should just discuss how loading works and move on let let all yaml discusion be contained in the replacing AIML chapter, maybe the only thing to do here is discussing believes because I didn't treat that there}
 \toReview
@@ -5313,12 +5284,6 @@ to:
 #+END_SRC
 
 \FloatBarrier
-** Loading
-<<Loading yaml>>
-\drafting
-Whereas the original ALICE bot was both an XML parser *and* a chat bot.
-We used simply a library for loading.
-
 ** Initialization
 \toReview
 With the basic user faced structure explained we can start explaining how
@@ -5330,9 +5295,6 @@ we will not be writing a parser similarly to what the ALICE bot did for AIML.
 So we will briefly discuss how YAML is loaded trough an example.
 Then we'll describe how we setup the eventual used data structure for
 that makes reasoning easy to do.
-
-*** Loading YAML
-\todo[inline]{Discuss how yaml is loaded into a raw format, and how raw format gets converted to final format}
 
 *** Symbols
 \toReview
@@ -6675,5 +6637,5 @@ Conversation went according to script.
 
   
 
-#  LocalWords:  DialogueTree PatternDatabase Immutablity Traum
+#  LocalWords:  DialogueTree PatternDatabase Immutablity Traum SRAI
 
