@@ -4264,14 +4264,14 @@ although they are also a lot more difficult to learn and read.
 Therefore both methods will be supported.
 
 *** Loading YAML
-\drafting
+\toReview
 As explained earlier YAML key value pairs are either directly loaded into a
 =HashMap=, or into a class.
 We chose to use classes wherever possible becuase it provides type safety.
 This is only possible if the keys are known before hand.
 Which its not in the template system for example, but in most othe cases it is.
 
-\drafting
+\toReview
 In listing [[code:java:rawsym]] the entire field sturcture for symbols is shown.
 So the fields defined there can be used as keys in symbol files.
 Note that over some fields the user has no control, such as =name= and =scene=.
@@ -4292,7 +4292,7 @@ public class RawSymbol {
 }
 #+END_SRC
 
-\drafting
+\toReview
 In listing [[code:java:yamlread]] we show how one can load a yaml structure with a
 raw class. The respective file is simply passed into a specialized function
 shown in listing [[code:java:yamlparse]].
@@ -4314,7 +4314,7 @@ if(syms.size() > 1){
 }
 #+END_SRC
 
-\drafting
+\toReview
 In listing [[code:java:yamlparse]], we show the entire parse code used by our project.
 This is in stark contrast to the ALICE bot which was used previously,
 which had an entire XML parser intertwined with other logic.
@@ -4322,7 +4322,8 @@ So what is done in that listing is we read the file content wrapped in an input
 stream reader, then we use the YAML libraries' =YamlReader= to create a reader,
 which parses the file content into object of the type stored in variable =clas=.
 Which in case of listing [[code:java:yamlread]] the =RawSymbol= class is.
-
+The function shown in listing [[code:java:yamlparse]] can be used to load any YAML
+file with its =Raw*= class.
 
 #+CAPTION: Usinga a library to parse YAML
 #+NAME: code:java:yamlparse
@@ -4365,7 +4366,7 @@ However we have not made a syntactic representation of this,
 which will be done in this section.
 
 *** Core idea
-\toReview
+\newlyCleared
 What we do with the symbol graph is re-adding the implicit connection from
 AIML between patterns and templates.
 Both patterns and templates have now become plain symbols
@@ -4375,16 +4376,17 @@ is inserted without extra information.
 This is what we represent with connections.
 What sensible replies can we give if a symbol is uttered.
 
-\toReview
+\newlyCleared
 We will show how this works with help of an example.
 In listing [[code:yaml:simple]] we connected the symbols discussed in our original
-example from section [[Symbol to string]].
+example from section [[Analyzing AIML]].
 With these connections we can see the situation illustrated as deployment
 diagram [[fig:dep:connections]],
-note that we removed the patterns because it became to cluttered.
 From this we can see that a =greeting= can be replied to with a =greeting= or
 with a =status_inquery=.
-As we can see there is a choice now once a =greeting= is uttered,
+Because we had multiple patterns leading up to these symbols,
+we now have multiple responses to multiple patterns.
+This means there is a choice now once a =greeting= is uttered,
 and choice opens up room for personality as a process.
 
 #+CAPTION: Connections grouped into a file
@@ -4399,28 +4401,40 @@ to:
 
 #+NAME: fig:dep:connections
 #+BEGIN_SRC plantuml :cache yes :file img/uml/dep:connections.png :exports results
-cloud "symbols"{
-  node Greeting [
-    Greeting
-    ----
-    Hello
-  ]
-  node StatusInquiry[
-    StatusInquiry
-    ----
-    How are you?
-  ]
-}
 
-Greeting -> Greeting
-Greeting --> StatusInquiry
+  frame "user sais"{
+    usecase "How are you?" as howq
+    usecase "How are you *" as how
+    usecase "How * you" as howstar
+    usecase Hello
+  }
 
+  cloud "symbols"{
+    node StatusInquiry[
+      StatusInquiry
+      ----
+      How are you?
+    ]
+    node Greeting [
+      Greeting
+      ----
+      Hello
+    ]
+  }
+
+  Greeting => Greeting
+  Greeting =up=> StatusInquiry
+
+  how -->> StatusInquiry
+  howq -->> StatusInquiry
+  howstar -->> StatusInquiry
+  Hello -->> Greeting
 #+END_SRC
 
 #+CAPTION: Symbol graph deployment diagram
 #+LABEL: fig:dep:connections
 #+ATTR_LATEX: :width 0.3\textwidth
-#+RESULTS[a863aaaf9c34d5f26c8abaef929dfa2db002ce5e]: fig:dep:connections
+#+RESULTS[e40a7a65df711e768167e64733acb2fb35e01334]: fig:dep:connections
 [[file:img/uml/dep:connections.png]]
 
 *** Single file
@@ -4439,29 +4453,30 @@ to:
   - feel_sick
 #+END_SRC
 
-\toReview
+\newlyCleared
 However we decided against such an approach.
 There were two reasons for this,
 the first one is that we found out that connections are much more complex
 than simple one directional links.
-They for example also need to contain perlocutionary values and be marked for 
+They for example also need to contain perlocutionary values and be marked with 
 which agent can use the connection (default being all agents).
-The second reason was more incidental, it turns out that if you group all
-connections into a single file you can get better overview of which connections
+The second reason is a practical concern, it turns out that if you group all
+connections into a single file you can get a better overview of which connections
 are made.
+So you get a better sense of what could be said when.
 What we do now is a grouping of connections into their own special file.
-Take as an example listing [[code:yaml:complex]] which represents a
-connections file of a scene.
 
-\toReview
-In figure [[fig:dep:filedconns]] we can see a deployment diagram of the presented
-symbol graph.
+\newlyCleared
+Take as an example listing [[code:yaml:complex]] which is a connections file of a
+scene.
+In figure [[fig:dep:filedconns]] we can see a deployment diagram of that connections
+file.
 This is not a complete conversation of course just an expert of a larger model.
-Note that its not much harder to read that than the code from listing
-[[code:yaml:complex]].
-What we can see is that already the connections are quite complex,
+Note that reading the code from listing [[code:yaml:complex]] is not much harder to
+understand than the deployment diagram.
+We can see that the connections modeled here is already quite complex,
 as this file grows in size the dialogue becomes harder to manage.
-While editing these, tool in text editors such as searching become quite
+While editing these, tools in text editors such as searching become quite
 vital.
 In any case it should be less of an issue than in AIML since this syntax is more
 terse.
@@ -4522,7 +4537,7 @@ cloud "symbols"{
 
 #+CAPTION: Symbol graph of connections grouped in file
 #+LABEL: fig:dep:filedconns
-#+ATTR_LATEX: :width 0.7\textwidth
+#+ATTR_LATEX: :width 0.65\textwidth
 #+RESULTS[95cead6c9a6fb358accf6686cac4a2b62f2d9111]: fig:dep:filedconns
 [[file:img/uml/dep:filedconns.png]]
 
@@ -4535,7 +4550,7 @@ This is makes it easier to write dialogues,
 because we don't have to worry about patterns from other scenes,
 so we can use more generalized patterns in our particular scene.
 
-\toReview
+\newlyCleared
 Although scenes aren't necessary to implement the theory presented in
 section [[BDI and Jung]],
 it is necessary for eventual social practice support.
@@ -4596,10 +4611,11 @@ pattern can be used.
 Therefore in our YAML semantics, they are an additional restriction on connections.
 They appear in listing [[code:aiml-that-tag]] as an example.
 
-\toReview
+\newlyCleared
 Although supporting this feature isn't necessary to implement the theory
 presented in section [[BDI and Jung]],
 they do allow much more fine grained control over the scenario.
+We therefore decided to also implement this AIML feature.
 They are described more extensively in section [[Before and templates]].
 
 #+CAPTION: That tags example.
