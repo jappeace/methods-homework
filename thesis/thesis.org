@@ -2443,7 +2443,7 @@ In the naive approach we modeled turn taking with a simple round robin strategy.
 Basically the irrational functions would only consider options that change
 actor between plies. 
 This makes it however difficult to model agents that hold long monologues,
-which happens to for example Susie from the test scenario.
+which happens to for example Susie in the case study (see section [[Susie the ENFP]]).
 You could do it by making just more symbols that hold all these utterances in
 one. However this is very inflexible.
 So to solve this problem we make alternation whenever there is a tie between
@@ -4663,7 +4663,7 @@ Adding the who field was necessary since we no longer model just the
 utterances of the bot,
 we needed to expend it by adding the actor who uttered the utterance.
 We also needed to think about *when* it was uttered, because alternation
-isn't a guarantee in conversation (discussed in section [[Scheduling dialogue]]).
+isn't a guarantee in conversation (discussed in section [[Turn taking]]).
 What is done now, is to filter out the utterances from the person who is not
 the who in the before tag, and then take the latest utterance from them.
 
