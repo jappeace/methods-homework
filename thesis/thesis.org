@@ -1,5 +1,5 @@
 #+TITLE: Jungian personality in a chat bot
-#+SUBTITLE: A more elegant and flexible method of modeling
+#+SUBTITLE: Better method of modeling chat bot dialogue
 # A serious communication game with personalities
 #+LANGUAGE: en
 #+LaTeX_CLASS: article
@@ -5142,14 +5142,14 @@ One may even not use this at all and leave everything in the introduction.
 What we chose to use was the social practice activities in section
 [[social practice]] as guiding mechanism.
 
-\drafting
+\toReview
 The final step is modeling the connections.
-Laying the connections out that are necessary is one of the more easy steps.
+Laying the connections out that are necessary is the next step.
 We just look at the dialogue and link up the utterances as can be seen in
 listing [[code:yaml:model:initial-connections]].
-Since we stick to the social practice for organazing the scenes we put the
-symbol ask_reason_here in the information_gathering scene (its 
-
+Since we stick to the social practice for organizing the scenes we put the
+symbol =ask_reason_here= in the =information_gathering= scene
+(in section [[social practice]] its called data gathering).
 
 #+CAPTION: Connections in introduction
 #+NAME: code:yaml:model:initial-connections
@@ -5163,11 +5163,19 @@ to:
    scene: information_gathering
 #+END_SRC
 
+\toReview
+Although these connections are valid for conversation,
+the bot has no way to know which personality should choose what path.
+We have two major ways of steering certain personality kinds over certain paths.
+Namely, perlocuationaryValues and goals (see section [[Mapping to process]]).
+However to use these we first need to setup the intial believes of the bot.
+Which will be discussed next.
+
 *** Believes
 \drafting
-setting up =believes.yml= can be seen in listing [[code:sc-believes.yml]].
-Actually loading the believes inside a YAML file presents us with a first
-design conflict.
+setting up =believes.yml= can be seen in listing [[code:yaml:sc-believes]].
+Actually loading the believes inside a YAML file presents us with a design
+conflict.
 Should believes be loaded from YAML or inside the drools?
 There is a constant pull between these two possibilities.
 Drools is much more flexible, however YAML is usually less verbose.
@@ -5178,7 +5186,7 @@ The idea of doing it this way was to provide some kind of scenario descriptor
 file, drools however may have been better suited for that.
 
 #+CAPTION: Believes YAML file
-#+NAME: code:sc-believes.yml
+#+NAME: code:yaml:sc-believes
 #+BEGIN_SRC yaml
 goals: []
 
