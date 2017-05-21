@@ -5119,18 +5119,18 @@ dealing with the same social practice, visiting the doctor.
 Our strategy for modeling these selecting a particular dialogue and then
 deciding per utterance whether they require a unique symbol, or can be merged
 in an existing one, or already have one.
-For example we merge the greetings according to listing [[code:yaml:model:greeting]].
+For example we merge the greetings according to listing [[code:yaml:greeting]].
 
-#+CAPTION:Greeting modeled
-#+NAME: code:yaml:model:greeting
+#+CAPTION: Greeting modeled
+#+NAME: code:yaml:greeting
 #+BEGIN_SRC yaml
-  literals:
-    - Hello
-    - Hi
+literals:
+  - Hello
+  - Hi
 
-  regexes:
-    - "hello (?<name>.*)"
-#+END_SRC
+regexes:
+  - "hello (?<name>.*)"
+#+END_SRC yaml
 
 \toReview
 While putting utterances into symbols, we started thinking about how to group
@@ -5142,26 +5142,6 @@ One may even not use this at all and leave everything in the introduction.
 What we chose to use was the social practice activities in section
 [[social practice]] as guiding mechanism.
 
-\drafting
-The final step is modeling the connections.
-Laying the connections out that are necessary is one of the more easy steps.
-We just look at the dialogue and link up the utterances as can be seen in
-listing [[code:yaml:model:initial-connections]].
-Since we stick to the social practice for organazing the scenes we put the
-symbol ask_reason_here in the information_gathering scene (its 
-
-
-#+CAPTION: Connections in introduction
-#+NAME: code:yaml:model:initial-connections
-#+BEGIN_SRC yaml
-from:
- - greeting
-to:
- - symbol: greeting
- - symbol: status
- - symbol: ask_reason_here
-   scene: information_gathering
-#+END_SRC
 
 *** Believes
 \drafting
