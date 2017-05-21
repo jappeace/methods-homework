@@ -5093,19 +5093,16 @@ The help message will display which.
 \todo[inline]{We should anser here: How do I add or change personality?}
 \todo[inline]{How do I steer certain personalities? So perhaps also the stuff we added to YAML specifically for personalities}
 
-\newlyCleared
-In this chapter the implementation of the bot is discussed.
-Herein we will discuss some of the bigger challenges of implementing the bot.
-To do this we will setup a small test scenario in YAML.
-With this we will walk trough the steps that are interesting or were
-particularly challenging, in both loading and execution.
-Finally we will discuss the tests that show we indeed succeeded.
+\toReview
+In this chapter we will discuss the specific personality implementation details.
+We will show how to setup a scenario and how one can use various tools to steer
+personalities trough particular connections.
+In section [[From strings to meanings]] a lot of implementation specifics were
+already discussed.
+We separated that from this chapter because it became to big,
+and it had a lot more to deal with just getting an environment ready,
+that was flexible enough to deal with personality as a process.
 
-\newlyCleared
-When one starts working on an existing software project the first
-obstacle faced is building/executing the project.
-This is however not discussed in this chapter,
-but done in detail in the appendix [[building]].
 
 ** Setting up the scenario
 \todo[inline]{I don't know if we should start with yaml here, perhaps we should just discuss how loading works and move on let let all yaml discusion be contained in the replacing AIML chapter, maybe the only thing to do here is discussing believes because I didn't treat that there}
@@ -5284,6 +5281,18 @@ to:
 #+END_SRC
 
 \FloatBarrier
+
+** Practicalities
+\newlyCleared
+When one starts working on an existing software project the first
+obstacle faced is building/executing the project.
+This is however not discussed in this chapter,
+but done in detail in the appendix [[building]].
+
+*** Source code
+We made the source code that was written to test this thesis available on
+=SOURCE_LINK_HERE=. \todo{Add link to source}
+
 ** Initialization
 \toReview
 With the basic user faced structure explained we can start explaining how
