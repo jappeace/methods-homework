@@ -4201,24 +4201,26 @@ listing [[code:yaml-symbol]].
 This is only a syntactic change, therefore no deployment diagram is made of
 this.
 
-\toReview
+\newlyCleared
 Rather than having a literal tag open and close to show what the literal is,
 YAML uses a key value structure.
+This key value structure is either a dictionary (in Java =HashMap=),
+or a class (see section [[Loading yaml]]).
 Lists can be indicated by using dashes in front of each item.
 Note that we still use the idea of having one symbol per file,
 and the symbol name is the filename.
 Therefore no =symbol= item is shown in the example.
 Quotation marks ="=, are to indicate strings, for certain characters this is 
-neccasarry. In other cases YAML does this for you.
+neccasarry, in other cases YAML does this for you.
 
-\toReview
-Note for example that there are multiple literals to choose from.
+\newlyCleared
+Note for example that there are multiple literals to choose from in listing
+[[code:yaml-symbol]].
 In the current implementation this is similar to using =random= tags in AIML.
 However as can be seen in section [[Low level diagram]],
 this list of strings is just available to the implementation.
-Therefore social practice could use it for example: if a bot came from "the hood",
-he would use "What's up?" instead of "How are you".
-This could of course also be influenced by personality.
+Therefore social practice could use it for example, making the selection
+situational, and this selection could be influenced by personality.
 
 #+CAPTION: YAML symbol representation
 #+NAME: code:yaml-symbol
@@ -4261,7 +4263,6 @@ Regular expressions can be much more precise in specifying what a wildcard star 
 although they are also a lot more difficult to learn and read.
 Therefore both methods will be supported.
 
-\todo[inline]{If we have time we can compare information per character between the new and old method, going from 251 to 131 is quite an improvement}
 
 ** Connections
 \newlyCleared
@@ -5207,6 +5208,7 @@ to:
 
 \FloatBarrier
 ** Loading
+<<Loading yaml>>
 \drafting
 Whereas the original ALICE bot was both an XML parser *and* a chat bot.
 We used simply a library for loading.
@@ -6493,6 +6495,9 @@ Conversation went according to script.
     but now the theory says riir or irri.
     We should analyze this difference I think
 
+**** charcounting
+    If we have time we can compare infrmation per character between the new and old method,
+    going from 251 to 131 is quite an improvement
 ** Random thoughts
 + Goals should perhaps be able to be finished?
   + Ti and Te shouldn't preffer this double
