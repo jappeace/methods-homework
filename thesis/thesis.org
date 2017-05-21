@@ -5203,6 +5203,38 @@ actors:
 personality: [Ne, Fi, Te, Si]
 #+END_SRC
 
+*** Steering the bot
+\drafting
+To steer the bot we have several tools available to us.
+To steer personality in specific we have: perlocationary values, goals,
+option amount and scene transitions.
+
+\drafting
+There are several other tools for steering avilable too which were
+discussed in [[Replacing AIML]] such as before fields and templates.
+However these can't be used to steer personality,
+but they can of course be combined with the methods discussed before.
+
+\todo[inline]{Steering examples}
+
+**** Actors
+\drafting
+A foreign idea to AIML is the notion of actor restrictions.
+Since AIML will always model from the eyes of the bot, there is no need for this.
+However because we model both bot and user, we do require this.
+this is especially important to prevent the bot from infinitly talking to itself,
+for example (see section [[Turn taking]]).
+
+\drafting
+To make sure certain strange situations don't occur, such as the patient asking
+the doctor if the doctor is sick, we added actor based restrictions on
+connections.
+Currently however this implementation is rather limited, it only allows for an
+"any" actor, which basically means any actor can say this, or a specific actor.
+This could be extended with some kind of role system,
+where more fine grained groups of restrictions can be specified.
+For example both the patient and family member should be able to ask the doctor
+what's wrong with the patient, however the doctor not.
 
 \FloatBarrier
 ** Practicalities
@@ -5215,19 +5247,6 @@ but done in detail in the appendix [[building]].
 *** Source code
 We made the source code that was written to test this thesis available on
 =SOURCE_LINK_HERE=. \todo{Add link to source}
-
-** Actors
-\todo[inline]{Find a place for this section which shouldn't be a section}
-\drafting
-To make sure certain strange situations don't occur, such as the patient asking
-the doctor if the doctor is sick, we added actor based restrictions on
-connections.
-Currently however this implementation is rather limited, it only allows for an
-"any" actor, which basically means any actor can say this, or a specific actor.
-This could be extended with some kind of role system,
-where more fine grained groups of restrictions can be specified.
-For example both the patient and family member should be able to ask the doctor
-what's wrong with the patient, however the doctor not.
 
 ** Testing
 \toReview
