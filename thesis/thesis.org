@@ -5119,18 +5119,18 @@ dealing with the same social practice, visiting the doctor.
 Our strategy for modeling these selecting a particular dialogue and then
 deciding per utterance whether they require a unique symbol, or can be merged
 in an existing one, or already have one.
-For example we merge the greetings according to listing [[code:yaml:greeting]].
+For example we merge the greetings according to listing [[code:yaml:model:greeting]].
 
-#+CAPTION: Greeting modeled
-#+NAME: code:yaml:greeting
+#+CAPTION:Greeting modeled
+#+NAME: code:yaml:model:greeting
 #+BEGIN_SRC yaml
-literals:
-  - Hello
-  - Hi
+  literals:
+    - Hello
+    - Hi
 
-regexes:
-  - "hello (?<name>.*)"
-#+END_SRC yaml
+  regexes:
+    - "hello (?<name>.*)"
+#+END_SRC
 
 \toReview
 While putting utterances into symbols, we started thinking about how to group
