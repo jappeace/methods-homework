@@ -843,7 +843,7 @@ So we need to explain at least:
  \cleared
  In cite:smolka2001social it is stated that the research in activity theory
  led to the development of social practices.
- It was Karl Marx who made the roots who thought of the "roots" of activity
+ It was Karl Marx who made thought of the "roots" of activity
  theory cite:engestrom1999perspectivesp3_marx,
  Activity theory tries to bridge the gap between a single actor and the system
  it resides in cite:engestrom1999perspectivesp10_broad_definition
@@ -5095,21 +5095,62 @@ The help message will display which.
 
 \toReview
 In this chapter we will discuss the specific personality implementation details.
-We will show how to setup a scenario and how one can use various tools to steer
-personalities trough particular connections.
+We will discuss how to setup a scenario, and how we tested our system.
 In section [[From strings to meanings]] a lot of implementation specifics were
 already discussed.
 We separated that from this chapter because it became to big,
 and it had a lot more to deal with just getting an environment ready,
 that was flexible enough to deal with personality as a process.
 
-
-** Setting up the scenario
-\todo[inline]{I don't know if we should start with yaml here, perhaps we should just discuss how loading works and move on let let all yaml discusion be contained in the replacing AIML chapter, maybe the only thing to do here is discussing believes because I didn't treat that there}
+** Making a scenario
 \toReview
-To indicate how to use the bot, we will setup a small scenario.
-The first thing that needs to happen is setting up the =believes.yml=
-which can be seen in listing [[code:sc-believes.yml]].
+Making a realistic dialogue can be difficult.
+Predicting most utterances one actor can make in a particular niche
+and adding answers to those is even more difficult,
+this is what AIML asks of its authors.
+What our modeling system in YAML asks goes even a step further,
+most utterances all actors can make in a particular niche.
+We will discuss how we modeled the dialogue and
+what methods we used to steer particular personalities over particular paths.
+
+*** Dialogue to YAML
+\toReview
+In this section we will discuss how we modeled the scenario discussed in
+section [[Personality influence case study]].
+In that section several dialogues are presented with different personalities
+dealing with the same social practice, visiting the doctor.
+
+\toReview
+Our strategy for modeling these selecting a particular dialogue and then
+deciding per utterance whether they require a unique symbol, or can be merged
+in an existing one, or already have one.
+For example we merge the greetings according to listing [[code:yaml:greeting]].
+
+#+CAPTION: Greeting modeled
+#+NAME: code:yaml:greeting
+#+BEGIN_SRC yaml
+literals:
+  - Hello
+  - Hi
+
+regexes:
+  - "hello (?<name>.*)"
+#+END_SRC yaml
+
+\toReview
+While putting utterances into symbols, we started thinking about how to group
+them in scenes.
+Scenes are available to allow pattern matching to be more general by disabling
+most patterns at a particular point in the conversation (see section [[Scenes]]).
+Its up to the author to decide what is most handy for using this feature.
+One may even not use this at all and leave everything in the introduction.
+What we chose to use was the social practice activities in section
+[[social practice]] as guiding mechanism.
+
+
+*** Believes
+\drafting
+setting up =believes.yml= can be seen in listing [[code:sc-believes.yml]].
 Actually loading the believes inside a YAML file presents us with a first
 design conflict.
 Should believes be loaded from YAML or inside the drools?
@@ -5139,149 +5180,8 @@ actors:
 personality: [Ne, Fi, Te, Si]
 #+END_SRC
 
-\drafting
-Next we require several symbol files that can be seen in listing [[code:sc-symbols.yml]].
-Unlike the believes file,
-usage of YAML for symbols was a good idea.
-
-#+CAPTION: Symbols YAML file
-#+NAME: code:sc-symbols.yml
-#+BEGIN_SRC yaml
---- # file; introduction/deep_conversation.yml
-literals:
-  - I love this conversation <pall>
---- # file; introduction/good.yml
-literals:
-  - Good
-regexes:
-  - "good"
---- # file; introduction/greeting.yml
-literals:
-  - Hello
-  - Hi
-regexes:
-  - "hello (?<name>.*)"
---- # file; introduction/made_a_friend.yml
-literals:
-  - I just met <friend> today!
-  - I just met <friend> he\'s the best!
---- # file; introduction/my_name_is.yml
-literals:
-  - My name is agnese # just insert the bot name
-regexes:
-  - "[mM]y name is (?<name>.*)" # capture user name
---- # file; introduction/status.yml
-literals:
-  - How are you today?
-regexes:
-  - "[hH]ow are you"
---- # file; introduction/wow_name.yml
-literals:
-  - is <name> spanish?
-  - Wow I've never heard of <name>!
-  - Can you eat <name>?
-#+END_SRC
-
-\drafting
-Finally we need to specify the connections between the symbols.
-This basically gives the bot a raw context to work in,
-which can be seen in listing [[code:sc-connections.yml]].
-\todo{Obviously that listing is way to big}
-
-#+CAPTION: introduction connections YAML file
-#+NAME: code:sc-connections.yml
-#+BEGIN_SRC yaml
-from:
- - greeting
-to:
- - symbol: greeting # should this be commented out because of the shortcut?
-   values: # no it shouldn't, this forces Fi to d
-    - Polite
- - symbol: status
-   restricted_to: patient
-   values:
-    - Polite
-    - Enthusiasm
- - symbol: ask_reason_here
-   scene: information_gathering
-   restricted_to: doctor
- - symbol: my_name_is
----
-from:
- - status
-to:
- - symbol: ask_reason_here
-   scene: information_gathering
-   restricted_to: doctor
-   values:
-     - Impatient
- - symbol: good
-   restricted_to: doctor
-   values:
-     - Polite
-     - Happy
- - symbol: made_a_friend
-   restricted_to: patient
-   utterances:
-     friend:
-       symbol: my_name_is
-       actor: doctor
-       match: name
-   values:
-     - happy
-     - enlightening
- - symbol: deep_conversation
-   restricted_to: patient
-   utterances:
-     pall:
-       symbol: my_name_is
-       actor: doctor
-       match: name
-   values:
-     - happy
-     - enlightening
-     - polite
-   before:
-     who: doctor
-     said: greeting
----
-from:
- - good
-to:
- - symbol: ask_reason_here
-   scene: information_gathering
-   restricted_to: doctor
-   values:
-     - Concerned
----
-from:
- - my_name_is
-to:
- - symbol: wow_name
-   restricted_to: patient
-   values:
-     - enlightening
-   utterances:
-     name:
-       symbol: my_name_is
-       actor: doctor
-       match: name
- # add utterances
----
-from:
- - wow_name
-to:
- - symbol: status
----
-from:
- - made_a_friend
-to:
- - symbol: ask_reason_here
-   scene: information_gathering
-#+END_SRC
 
 \FloatBarrier
-
 ** Practicalities
 \newlyCleared
 When one starts working on an existing software project the first
