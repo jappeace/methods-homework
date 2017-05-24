@@ -830,6 +830,9 @@ So we need to explain at least:
 + Then is java code
 + commincuation between java and drools?
 
+\drafting
+Drools is is Turing complete cite:weppenaar2011solving.
+
 *** Social practices
  <<social practice>>
 
@@ -5055,6 +5058,17 @@ We separated that from this chapter because it became to big,
 and it had a lot more to do with just getting an environment ready
 that was flexible enough to deal with personality as a process.
 
+*** Source code
+We made the source code that was written to test this thesis available on
+=SOURCE_LINK_HERE=. \todo{Add link to source}
+
+*** Building
+\cleared
+When one starts working on an existing software project the first
+obstacle faced is building/executing the project.
+This is however not discussed in this chapter,
+but done in detail in the appendix [[building]].
+
 ** Making a scenario
 \newlyCleared
 Making a realistic dialogue can be difficult.
@@ -5129,29 +5143,71 @@ However to use these we first need to setup the initial believes of the bot.
 Which will be discussed next.
 
 *** Believes
-\drafting
-setting up =believes.yml= can be seen in listing [[code:yaml:sc-believes]].
-Actually loading the believes inside a YAML file presents us with a design
-conflict.
-Should believes be loaded from YAML or inside the drools?
-There is a constant pull between these two possibilities.
-Drools is much more flexible, however YAML is usually less verbose.
-Clearly we chose to use YAML, but was this the right choice?
-The issue is that we now indicate that this structure is a standard part of the
-bot, but its only part of the personality component.
-The idea of doing it this way was to provide some kind of scenario descriptor
-file, drools however may have been better suited for that.
+\toReview
+Setting up =believes.yml= can be seen in listing [[code:yaml:sc-believes]].
+This file describes some constants in the chat bot,
+that cannot, or should not be derived.
+This file in cooperation with the symbols and connection will be used
+to create an initial believe base.
+
+\toReview
+We need to setup the goals and values, which are the primary steering
+information sources.
+The higher a goal is in the goals list the more important it is, with this
+representation a goal can never be equal in importance.
+Goals are about informatives being uttered
+(see section [[Low level diagram]] and section [[Thinking]]),
+in our example the bot wants the doctor to utter the symbol =have_painkiller=
+most,
+then after that he wants to tell the doctor he has a back pain.
+Goals are the most powerful method of steering the thinking functions.
+
+\toReview
+Values, unlike goals can have an equal utility.
+Moreover unlike goals their utility can be added upon each other,
+goals are always unique per symbol however,
+which brings us to the next difference.
+Whereas goals are encoded at believes level,
+values can be encoded in connections themselves (as we will see in the next section).
+See section [[Low level diagram]] and section [[Feeling]].
+What we see here is just the utility definition of values,
+higher is more attractive.
+Also note that this is a dictionary definition,
+meaning its up to the scenario implementer to decide which value names he wants
+to use.
+Finally whereas goals were about steering thinking functions, values are about
+steering the feeling functions.
+
+\toReview
+Then we need to determine the available actors and which actor is the bot himself.
+This is required to determine which connections can be used, a connection that
+does not defines this gets expended into the actor list.
+There was an idea of trying to derive the available actors from connection
+definitions, however this wouldn't work in case no actors were ever defined
+(relying on the expension mechanism for every connection).
+
+\toReview
+Finally we need to determine the personality this chat bot will use.
+This is just a sequence of the Jungian function names.
+There are no restrictions on this, except for you machine resources.
+So you could make a personality of 500 levels deep, but that probably won't run
+very well.
 
 #+CAPTION: Believes YAML file
 #+NAME: code:yaml:sc-believes
 #+BEGIN_SRC yaml
-goals: []
-
+goals:
+  - actor: doctor
+    scene: diagnoses
+    symbol: have_painkillers
+  - actor: patient
+    scene: information_gathering
+    symbol: back_pain
 values:
-  enlightening: 12
+  enthusiasm: 8
+  polite: 5
 
 self: patient
-
 actors:
   - patient
   - doctor
@@ -5159,6 +5215,24 @@ actors:
 # ENFP
 personality: [Ne, Fi, Te, Si]
 #+END_SRC
+
+\toReview
+Loading the believes inside a YAML file is a design conflict:
+"Should believes be loaded from YAML or inside the Drools?"
+There is a constant pull between these two possibilities.
+Drools is much more flexible,
+because it is Turing complete cite:weppenaar2011solving,
+however YAML is usually less verbose.
+The issue is that we now indicate that this structure is a standard part of the
+bot, but its only part of the personality component.
+On the other hand one needs to have a method of deciding which connections ought
+to be used anyway,
+if you always want to use the same connections you may as well have chosen to
+use the ALICE bot.
+Doing it this way was also a method of providing a scenario descriptor file,
+drools however may have been better suited for that.
+This decision probably needs to be reconsidered once a multilogue architecture
+will be implemented (see section [[Multilogue architecture]]).
 
 *** Steering the bot
 \drafting
@@ -5194,16 +5268,6 @@ For example both the patient and family member should be able to ask the doctor
 what's wrong with the patient, however the doctor not.
 
 \FloatBarrier
-** Practicalities
-\cleared
-When one starts working on an existing software project the first
-obstacle faced is building/executing the project.
-This is however not discussed in this chapter,
-but done in detail in the appendix [[building]].
-
-*** Source code
-We made the source code that was written to test this thesis available on
-=SOURCE_LINK_HERE=. \todo{Add link to source}
 
 ** Testing
 \toReview
