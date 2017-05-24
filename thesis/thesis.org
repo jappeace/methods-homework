@@ -5465,35 +5465,31 @@ however most issues we found were with the functions and their interactions.
 
 \clearpage
 * In conclusion
+\toReview
+In this work we have shown a possible interpertation of carl Jung's theory of
+types in a chat bot.
+We built on top of the work of an existing chat bot,
+but decided to replace the core moddeling langauge with an alternative
+because there was no space to do deliberation in.
+This effort resulted in drools becoming the center of the new chatbot,
+where each step of processing a user message was decided by buisness rules.
+\todo{This alone opens up a legion of possiblities, however we want the conclusion to be short so discuss it in future work I guess}
+
+\toReview
+Once this was done we could implement our interpretation of Jung and
+set up a test scenario to test the ideas presented in section [[Mapping to process]].
+From the test results in appendix [[final test]],
+we can see that the theory works in the implemented chat bot and scenario
+for the INTJ, ENFP and ISTP personalities.
+
 \drafting
-In this work we have shown a possible interpertation of
-carl jung's theory of types (see section [[Personality types]]).
-We combined it with the idea of personality as a process, 
-where personality is encoded in different strategies,
-rather than objects.
+This is by no means a prove that this will work in all instances.
+A first step towards that would be to model the thoeries in section
+[[BDI and Jung]] in a formal langauge discussed in section [[Logic of BDI]].
+We haven't had a need to do such an effort yet, and were more concerned with
+getting a working implementation.
 
-
-\drafting
-We need to explicitly say here that Mapping function to attitudes to a
-process (3.4) is valid for the test use cases shown in [[Test Results]].
-Although the validity is in no way proven
-(we just have /a/ instance that is correct, which is different from
-saying that all instances are correct)
-
-\drafting
-I think another major conclusion is that we created a viable language processing
-bot.
-That just deals with language, but does not specify anything about responses.
-A comment in the beginning of my thesis was that AIML was used to
-'just deal with language', but this wasn't true,
-AIML defined the entire flow of the application.
-Now there basically is no more 'fixed' way of operating because drools decide
-that.
-It was claimed that drools were the center of the application,
-but they weren't, this thesis showed a method of making it the center of the
-application.
-
-\todo[inline]{Discussion comparison}
+\todo[inline]{Comparison? (Maybe we can compare with ALICE, or other personality based schemes?)}
 ** Discussion
 \toReview
 There are some odds and ends that haven't been adressed.
@@ -6377,6 +6373,7 @@ Conversation went according to script
    There was no connection for this transition.
 
 ** Sixth test
+<<final test>>
 
 | Commit | e15409ffc37b837a47a9ceb3c183d67f18c3eb17 |
 | Date   |                               2017-04-30 |
