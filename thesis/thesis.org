@@ -1031,7 +1031,7 @@ between a user and an agent.
 However we want to point out that this solution fits into the rough model Traum
 sketched. So we could say its a information state approach too.
 
-\newlyCleared
+\cleared
 An interesting paper on dialogue modeling can be found in cite:bilange1991task.
 What is interesting is that they treat having multiple options available in
 their implementation (see 3.3 in the paper).
@@ -1460,7 +1460,7 @@ Figure [[fig:utterance-proccesing]] gives a detailed overview of utterance proce
 #+RESULTS[2be41360a975175f4a0734807235d7983de36beb]: fig:utterance-proccesing
 [[file:img/uml/utterance-proccesing.png]]
 
-\newlyCleared
+\cleared
 As can be seen in the diagram the message processing happens inside the Alice
 bot.
 Tags were added to AIML to allow the drool engine to be updated.
@@ -1803,7 +1803,7 @@ questionable if you can combine them successfully.
 
 ** A type signature approach
 <<A type signature approach>>
-\newlyCleared
+\cleared
 To give a better understanding of the scope of this project we will
 try to come up with a type signature of a pure function that models all the
 function attitudes.
@@ -2520,7 +2520,6 @@ plus one if the second value of the pair is rationale,
 /and/ the input function is rationale,
 otherwise its the pair index.
 
-
 ** Consistency with theory
 \cleared
 In this section we will explore if especially INTJ and ENTJ (MBTI) types would
@@ -2568,7 +2567,7 @@ coupled scheme.
 The drools have become the center of deliberation (which previously was the AIML).
 We will discuss these changes in this chapter.
 
-\newlyCleared
+\cleared
 In this chapter we will discuss two architectures,
 the first is the architecture which is actually implemented, this deals with a
 single agent and the user.
@@ -3019,7 +3018,7 @@ This is used to create the second pattern database,
 it made looking up the required patterns much easier.
 
 *** Jung in Java
-\newlyCleared
+\cleared
 To implement the theory presented in section [[BDI and Jung]],
 several issues had to be overcome.
 First of all Java has no native support for doing partial application.
@@ -3044,7 +3043,7 @@ Therefore the =JungFuncAccessor= interface was introduced.
 This allows unit test to check if the next function was called for example,
 but the architecture also becomes more extendable because of this.
 
-\newlyCleared
+\cleared
 Figure [[fig:jungjavaclass]] shows the elements required for java to apply an $f_a$.
 To do this we first create a =JungFuncArgs= structure with its =create= method.
 Then we insert the Jungian functions we want to apply.
@@ -3425,7 +3424,7 @@ constructed.
 [[file:img/uml/initjung.png]]
 
 ** Operation
-\newlyCleared
+\cleared
 To understand how the operation of a bot works,
 we can look at it from the point when a message is received
 and walk trough the steps it takes.
@@ -3476,7 +3475,7 @@ we can quite precisely explain what is going on.
  #+RESULTS[ba2ef7b0333cc8277765f73cc81a4e7ac3846b44]: fig:insert_meaning
  [[file:img/uml/insert_meaning.png]]
 
-\newlyCleared
+\cleared
 This operation is starkly different from the one presented in section
 [[user utterance processing]],
 particularly if you compare the activity diagrams in
@@ -3489,7 +3488,7 @@ the application.
 Then the Personality swimming lane was introduced,
 this is of course in light of this thesis.
 
-\newlyCleared
+\cleared
 Since these activity diagrams are quite detailed in their description of what
 is going on,
 we made an overview of the key changes in the state diagrams 
@@ -3523,7 +3522,7 @@ but this is out of the scope of this thesis.
 #+RESULTS[91c67cdcbc4fe5fd0a81ff9cd72c7eddf5ea00be]: fig:state:yaml
 [[file:img/uml/figstateyaml.png]]
 
-\newlyCleared
+\cleared
 To ensure rules are executed in a particular order we often wrap and unwrap
 required data into types, as explained in section [[Support types]].
 For example the initial user utterance gets wrapped into an =UnparsedUttarence=
@@ -3533,7 +3532,7 @@ We could have just inserted a string and not created the type,
 but the reason for doing this with the initial string is to make it explicit:
 /This string needs to be parsed/.
 
-\newlyCleared
+\cleared
 So in drools we can match on this type (see section [[Drools background]]).
 Which we do in the next step,
 parsing this string with pattern (regex) matching.
@@ -3545,7 +3544,7 @@ this results in the =ParsedUtterance= type which can be seen
 in figure [[fig:supportclassjava]].
 This type then gets inserted into the fact base to continue the process.
 
-\newlyCleared
+\cleared
 The =ParsedUtterance= then gets transformed into a =PreProcessed= type.
 During this process the duplicates matches are removed.
 Each element in the =ParsedUtterance= list gets individually inserted as a
@@ -3564,7 +3563,7 @@ It now can also give multiple answers to longer user utterances.
 However the disadvantage is that sometimes the bot will give more replies than
 desired.
 
-\newlyCleared
+\cleared
 As a first priority the low level reply rules can be fired.
 What they do when fired is removing the =PreProcessed= type,
 so that the high level rules don't get a chance to fire.
@@ -3573,14 +3572,14 @@ which is true in practice, but no concrete if else structure is used.
 Drools has support for setting priority of execution in rules,
 which was used for this.
 
-\newlyCleared
+\cleared
 It should be noted that at the point of quick reply personality could also be at
 play.
 For example people could have alternative ways of pronouncing the response.
 Thinking people may for example respond with a confident yes, whereas feeling
 people would say it by default in a more doubting tone.
 
-\newlyCleared
+\cleared
 The high level processing executes if there is still a  =PreProcessed= type
 available, in other words no low level replies were executed.
 We create the initial =DialogueTree=, and remove the =Believes=
@@ -3596,7 +3595,7 @@ these are the functions that are extensively described in section
 With this list it is determined which function should be executed next upon
 the =DialogueTree= and =Believes=.
 
-\newlyCleared
+\cleared
 After there are no more functions in the list, we know we are done.
 We move to the next step where we get the reply from the DialogueTree.
 This is an =Utterance= structure, if this =Utterance= is the same as the
@@ -3608,7 +3607,7 @@ If we do send a reply we reinsert the selected =Utterance= as a
 These types can be found in figure [[fig:supportclassdrools]]. 
 
 ** Social practice support
-\newlyCleared
+\cleared
 Because this entire process is implemented in Drools, and we use types to track
 progress. Its relatively easy to add other rules that can modify the process,
 without changing the existing ones.
@@ -3620,7 +3619,7 @@ for example the scenes logic, but this is not complete.
 Better support can easily be added by adding more rules and tweaking with
 priorities.
 
-\newlyCleared
+\cleared
 Besides using extra rules to add support for social practice logic,
 for the personality part of the thesis specifically there is another possibility.
 They can be wrapped in a social practice function,
@@ -3630,7 +3629,7 @@ So based upon the social practice, and the personality function things may
 change.
 
 ** Multilogue architecture
-\newlyCleared
+\cleared
 The architecture presented in section [[Implemented architecture]] is for a dialogue
 game.
 However a social practice does not put limits on the amount of participants,
@@ -3692,7 +3691,7 @@ A deployment diagram of this architecture can bee seen in figure
 [[file:img/uml/n-agent-arch.png]]
 
 *** System vs thoughts
-\newlyCleared
+\cleared
 What is required of the drools is that we make a separation between the 
 multilogue /system/ and agent /thoughts/.
 A good step in this direction is the =Believes= structure,
@@ -3706,7 +3705,7 @@ therefore it could be used to identify the agent.
 In other parts of the current architecture this is not the case at all.
 For example the =PatternDatabase=  are just plainly inserted into the fact base.
 
-\newlyCleared
+\cleared
 The naive solution is to just mark every fact with a self field.
 Aside from the fact that you now introduce boilerplate code cite:lammel2003scrap,
 this has another more serious problem,
@@ -3716,7 +3715,7 @@ This is of course not desirable,
 it would defeat the entire purpose of a multilogue system,
 at least for the agents.
 
-\newlyCleared
+\cleared
 So what we present in figure [[fig:n-agent-arch]] is a different approach.
 Basically what we do is separate the system from the thoughts.
 The system will be in the =sys.drools= engine, whereas the bot will be in the
@@ -3730,13 +3729,13 @@ The only thing that needs happen is a self fact needs to be inserted,
 or the =Believes= structure could be used for that, if that is kept around.
 
 *** Identifying speaker
-\newlyCleared
+\cleared
 Another big issue is figuring out which agent(s) is being talked to.
 There has been some research on this subject,
 for example using hand coded selection mechanisms cite:klotz2011engagement,
 and statistical mechanisms cite:keizer2013training.
 
-\newlyCleared
+\cleared
 Although both these approaches are good options for robots,
 we are dealing with an application,
 in which we can cheat to get basically nearly 100% correct selection.
@@ -3748,7 +3747,7 @@ You can of course extend this to select groups of agents,
 or make the selection based on some kind of abstraction,
 such as the distinction between whisper to an agent or shout to an agent.
 
-\newlyCleared
+\cleared
 In the data structures however a more structural change needs to occur,
 namely in both the connections and the utterances.
 The =Utterance= class need to be extended with to who the utterance was said,
@@ -3760,7 +3759,7 @@ and therefore it would be wise to define some kind of role mechanism,
 for which solutions exist cite:sandhu1996role.
 
 *** Practicalities
-\newlyCleared
+\cleared
 Then there are some practicalities to consider, that are more at implementation
 level.
 For example replies should be timed, so that the user won't see suddenly 200
@@ -3774,7 +3773,7 @@ A different way of dealing with this is just preventing the scenario from
 continuing at certain key points until a user reaction occurs.
 Deciding which approach is the best is basically a matter of experimentation.
 
-\newlyCleared
+\cleared
 Then it should also be noted that the scenarios of the bots should be
 specified differently. At least for parts of it, while other parts should be
 shareable.
@@ -3786,7 +3785,7 @@ distinctly per bot *and* there should be a mechanism to share these.
 \clearpage
 * Replacing AIML
 <<From strings to meanings>>
-\newlyCleared
+\cleared
 In this chapter we will discuss AIML in detail,
 we will explain why AIML doesn't fit our requirement.
 Then we will start analyzing the structure of AIML and see how we can alter it
@@ -3796,7 +3795,7 @@ that is more succinct and flexible then AIML.
 Finally we will present a script to convert from AIML to the new format.
 
 ** AIML issues
-\newlyCleared
+\cleared
 Originally, AIML was used for mapping user input to a reply.
 However, as explained in section [[Architecture]],
 AIML has some problems for our particular use case.
@@ -3813,7 +3812,7 @@ As we will see in the coming paragraphs,
 trying to adapt AIML to fit the requirements
 will transform AIML into something else.
 
-\newlyCleared
+\cleared
 To give a good intuition of this issue, we use an example.
 Listing [[code:aiml-std-cats]] shows a piece of dialogue modelled in AIML.
 This is a pretty standard piece of AIML, no surprises there.
@@ -3821,7 +3820,7 @@ Patterns are used to identify user utterances and attach responses to them.
 We created a deployment diagram of the situation seen in figure [[fig:dep:aimlcats]],
 which removes the syntax, so that the situation is more obvious.
 
-\newlyCleared
+\cleared
 What we can see is that if the user says "Hello" then the bot will reply "Hi".
 So what we have here is a mapping function from $\sigma \to \sigma$, where $\sigma$ is a
 string (see section [[Narrowing the model]]).
@@ -3832,7 +3831,7 @@ this relationship.
 Unless they were to replace the entire content,
 in which case AIML is no longer used as knowledge representation anyway.
 
-\newlyCleared
+\cleared
 We're also not modelling the entire conversation.
 There is no way for the bot of knowing that his Hi utterance,
 could be followed up reasonably with the question "How are you?" for example.
@@ -3895,7 +3894,7 @@ Hello -->> Hi
 #+RESULTS[0889516e6ef32d64003ace8ae606a81cc01e305d]: fig:dep:aimlcats
 [[file:img/uml/dep:aimlcats.png]]
 
-\newlyCleared
+\cleared
 There are also some other small problems,
 which aren't really that important for this thesis in particular,
 but worth mentioning.
@@ -3911,7 +3910,7 @@ the bot could have amnesia about certain utterances,
 to prevent this every template tag would need an insert tag,
 which is boilerplate code cite:lammel2003scrap.
 
-\newlyCleared
+\cleared
 What needs to happen is either to either modify the ALICE bot and AIML to 
 work fundamentally different,
 or outright replace it with something else.
@@ -3924,7 +3923,7 @@ The next sections will discuss the thought process to a new representation.
 ** Analyzing AIML
 # Note taht such descriptions are good, show how it was in the old system and
 # the thought process towards the new system, so do more of it like this
-\newlyCleared
+\cleared
 What we want to do is create a mapping function $\sigma \overset{g}{\to} s$
 (see section [[Narrowing the model]]).
 In our first attempt we will modify AIML to do this.
@@ -3993,7 +3992,7 @@ Hello -->> Greeting
 #+RESULTS[106f5543883a89c0ef55c28146a484e5a0abd7cd]: fig:dep:aimlsyms
 [[file:img/uml/dep:aimlsyms.png]]
 
-\newlyCleared
+\cleared
 These changes remove the reactive nature of the chat bot,
 no longer do patterns indicate what to reply to,
 but instead simply what they are.
@@ -4002,7 +4001,7 @@ since the symbol graph hasn't been introduced (see section [[symbol graph]]),
 so there are no replies.
 However we can at least use these to to create the symbol graph from.
 
-\newlyCleared
+\cleared
 With this we almost have solved the first problem of not being able to do true
 deliberation.
 Of course we can't make a reply of this yet since we still have the second
@@ -4012,7 +4011,7 @@ In other words, dealing with the $g'$ function, this is what the next section
 deals with.
 
 *** Symbol to string
-\newlyCleared
+\cleared
 The next step is to consider how we go from symbols back to strings.
 What we assume is that the agent already found a symbol to utter,
 for example the status inquiry.
@@ -4027,7 +4026,7 @@ Provide the string to utter for that particular category,
 in other words the $s \overset{g'}{\to} \sigma$ function
 (see section [[Narrowing the model]]).
 
-\newlyCleared
+\cleared
 In deployment diagram [[fig:dep:aimlliters]] we can see how this works in memory.
 Patterns point to symbols, which have the literal utterance available to them.
 Since the names of symbols are not the same as the literal content,
@@ -4097,7 +4096,7 @@ Hello -->> Greeting
 #+RESULTS[8f9d88e8099c1ee4b136d0f0b0d17eb31a02a660]: fig:dep:aimlliters
 [[file:img/uml/dep:aimlliters.png]]
 
-\newlyCleared
+\cleared
 We can make the syntax from listing [[code:ailm-grouped-literal]] even more terse.
 Observe how one category always will have one symbol tag.
 If we were to extract the value of this tag and use it as a filename,
@@ -4120,7 +4119,7 @@ and therefore another file.
 </patterns>
 #+END_SRC
 
-\newlyCleared
+\cleared
 However the observant reader will know this isn't valid XML
 and by extension AIML, since XML requires a single document root tag.
 It does specify what we want, and it does so very tersely.
@@ -4129,7 +4128,7 @@ more terse data format in which such a definition is legal.
 In the next section we will analyze some possible candidates. 
 
 *** XML vs JSON vs YAML, vs TOML
-\newlyCleared
+\cleared
 All these languages are standards cite:jsonspec,yamlspec,xmlspec,tomlspec.
 However there is a major difference between XML and JSON or YAML, and that is
 their intention.
@@ -4138,7 +4137,7 @@ cite:yamlvsxml.
 What they all share in common is that they are supposed to be both
 human readable and parsable by a computer program.
 
-\newlyCleared
+\cleared
 So what we mean by human and program readable is that with relatively little
 effort, a human or program can understand what's going on.
 Unlike say a binary format,
@@ -4148,7 +4147,7 @@ Alternatively unlike a human document, such as a book,
 a computer program needs to do lots of effort to extract information from that,
 whereas a human can just understand it "naturally".
 
-\newlyCleared
+\cleared
 Markup languages provide a nice middle ground between human readable and
 program readable.
 XML does this by inserting tags (metadata, which are usually just annotated
@@ -4156,7 +4155,7 @@ words), that gives meaning for the program,
 so that authors can focus on the structure and content of the document
 cite:coombs1987markup.
 
-\newlyCleared
+\cleared
 In AIML however, no document is constructed.
 Its not a story with a lead, middle ground and conclusion,
 its more like a key-value pair database or big configuration file.
@@ -4164,7 +4163,7 @@ So since XML was intended to be used for inline document markup,
 I will argue that there are better alternatives that focus on key-value based
 configuration in particular, such as YAML, JSON or TOML.
 
-\newlyCleared
+\cleared
 JSON is by far the best known format of these three remaining contenders.
 However JSON has a few significant disadvantages,
 for one it doesn't allow comments and it is quite strict.
@@ -4175,7 +4174,7 @@ therefore correct it.
 The syntax of JSON can be also more terse, which is shown by both YAML and TOML.
 Because of these reason we looked at the other two contenders.
 
-\newlyCleared
+\cleared
 The reason for choosing YAML over TOML is that YAML is stable,
 whereas TOML hasn't reached stabilization yet cite:tomlreadme.
 Although the argument TOML has over YAML is that YAML is much more complex,
@@ -4188,7 +4187,7 @@ as is shown in section [[Conversion script]].
 Therefore a possible future move from YAML to TOML should also be easy.
 
 ** Using YAML
-\newlyCleared
+\cleared
 It was decided conclusively to use YAML instead of AIML for symbol
 representation.
 How these symbols are represented in YAML can be seen in
@@ -4196,7 +4195,7 @@ listing [[code:yaml-symbol]].
 This is only a syntactic change, therefore no deployment diagram is made of
 this.
 
-\newlyCleared
+\cleared
 Rather than having a literal tag open and close to show what the literal is,
 YAML uses a key value structure.
 This key value structure is either a dictionary (in Java =HashMap=),
@@ -4208,7 +4207,7 @@ Therefore no =symbol= item is shown in the example.
 Quotation marks ="=, are to indicate strings, for certain characters this is 
 neccasarry, in other cases YAML does this for you.
 
-\newlyCleared
+\cleared
 Note for example that there are multiple literals to choose from in listing
 [[code:yaml-symbol]].
 In the current implementation this is similar to using =random= tags in AIML.
@@ -4228,7 +4227,7 @@ patterns:
   - How are you *
 #+END_SRC
 
-\newlyCleared
+\cleared
 We keep the pattern fields for legacy support.
 However its much more easy to just support regular expressions
 cite:thompson1968programming.
@@ -4249,7 +4248,7 @@ regexes:
   - "How ([a-z])\\w+ you(.*)"
 #+END_SRC
 
-\newlyCleared
+\cleared
 The example in listing [[code:yaml-regexes]] only matches a single word and allows
 for trailing characters.
 Note that the example in listing [[code:yaml-symbol]] would've also matched
@@ -4352,7 +4351,7 @@ static <T> List<T> readAsYML(FileObject file, Class<T> clas){
 
 \FloatBarrier
 ** Connections
-\newlyCleared
+\cleared
 Now we've figured out how to represent our basic axioms, the symbols thoroughly,
 we can move on to make our model functional again.
 So what we have lost in the process are our update rules
@@ -4362,7 +4361,7 @@ However we have not made a syntactic representation of this,
 which will be done in this section.
 
 *** Core idea
-\newlyCleared
+\cleared
 What we do with the symbol graph is re-adding the implicit connection from
 AIML between patterns and templates.
 Both patterns and templates have now become plain symbols
@@ -4372,7 +4371,7 @@ is inserted without extra information.
 This is what we represent with connections.
 What sensible replies can we give if a symbol is uttered.
 
-\newlyCleared
+\cleared
 We will show how this works with help of an example.
 In listing [[code:yaml:simple]] we connected the symbols discussed in our original
 example from section [[Analyzing AIML]].
@@ -4429,12 +4428,11 @@ to:
 
 #+CAPTION: Symbol graph deployment diagram
 #+LABEL: fig:dep:connections
-#+ATTR_LATEX: :width 0.3\textwidth
 #+RESULTS[e40a7a65df711e768167e64733acb2fb35e01334]: fig:dep:connections
 [[file:img/uml/dep:connections.png]]
 
 *** Single file
-\newlyCleared
+\cleared
 Originally we just wanted to stick to the (implicit) AIML approach of connections,
 and add them within the symbol files as can be seen in
 listing [[code:yaml-connections-intrusive]].
@@ -4449,7 +4447,7 @@ to:
   - feel_sick
 #+END_SRC
 
-\newlyCleared
+\cleared
 However we decided against such an approach.
 There were two reasons for this,
 the first one is that we found out that connections are much more complex
@@ -4462,7 +4460,7 @@ are made.
 So you get a better sense of what could be said when.
 What we do now is a grouping of connections into their own special file.
 
-\newlyCleared
+\cleared
 Take as an example listing [[code:yaml:complex]] which is a connections file of a
 scene.
 In figure [[fig:dep:filedconns]] we can see a deployment diagram of that connections
@@ -4538,7 +4536,7 @@ cloud "symbols"{
 [[file:img/uml/dep:filedconns.png]]
 
 *** Scenes
-\newlyCleared
+\cleared
 In the S-AIML extension, scenes were used to enable and disable certain patterns.
 Unlike the topic mechanism of AIML which just gives preference,
 something from another scene wouldn't be used at all.
@@ -4546,7 +4544,7 @@ This is makes it easier to write dialogues,
 because we don't have to worry about patterns from other scenes,
 so we can use more generalized patterns in our particular scene.
 
-\newlyCleared
+\cleared
 Although scenes aren't necessary to implement the theory presented in
 section [[BDI and Jung]],
 it is necessary for eventual social practice support.
@@ -4554,7 +4552,7 @@ It also makes this representation much more modular.
 The part were scenes are actively used is in section [[db package]],
 patterns are grouped based upon scene in the =PatternDatabase=.
 
-\newlyCleared
+\cleared
 The way we represent scenes is rather simple.
 We use directories as scenes, all the symbols within a directory are in that
 scene.
@@ -4581,13 +4579,13 @@ to:
      - Happy
 #+END_SRC
 
-\newlyCleared
+\cleared
 In listing [[code:yaml-scene-example]] we can see two connections being modelled,
 from the =status= symbol to =ask_reason_here= symbol that transitions to a new
 scene, and from the =status= symbol to the =good= symbol that stays in the same
 scene.
 
-\newlyCleared
+\cleared
 We break away from the idea of S-AIML that scenes are linear.
 We believe that scenes are a weakly connected cyclic graphs.
 Note that by cyclic, we mean there can be cycles, but there don't have to be.
@@ -4600,14 +4598,14 @@ Why would you model a scene that is inaccessible from the rest of your model?
 
 *** That tags
 <<That tags>>
-\newlyCleared
+\cleared
 The that tags in AIML have a rather unfortunate name.
 They require the bot to have said something before the current
 pattern can be used.
 Therefore in our YAML semantics, they are an additional restriction on connections.
 They appear in listing [[code:aiml-that-tag]] as an example.
 
-\newlyCleared
+\cleared
 Although supporting this feature isn't necessary to implement the theory
 presented in section [[BDI and Jung]],
 they do allow much more fine grained control over the scenario.
@@ -4630,7 +4628,7 @@ They are described more extensively in section [[Before and templates]].
   </category>
 #+END_SRC
 
-\newlyCleared
+\cleared
 That tags act as an extra filter upon the category.
 Before this category becomes active, the bot first has to have uttered the
 pattern in the that tags.
@@ -4653,7 +4651,7 @@ An example can be seen in listing [[code:yaml-before-field]].
      restricted_to: patient   
 #+END_SRC
 
-\newlyCleared
+\cleared
 Adding the who field was necessary since we no longer model just the
 utterances of the bot,
 we needed to expend it by adding the actor who uttered the utterance.
@@ -4662,7 +4660,7 @@ isn't a guarantee in conversation (discussed in section [[Turn taking]]).
 What is done now, is to filter out the utterances from the person who is not
 the who in the before tag, and then take the latest utterance from them.
 
-\newlyCleared
+\cleared
 To surpass the AIML that tags,
 we can extend this mechanism by making the =RawBefore= type self
 recursive with an optional field before of its own type.
@@ -4685,14 +4683,14 @@ This is best illustrated with an example which can be seen in listing
      restricted_to: patient   
 #+END_SRC
 
-\newlyCleared
+\cleared
 The default value of the before field will be None. Which just means no
 additional restrictions.
 In this example making such an explicit definition won't be very constructive.
 However since we need an identity (no-op) before value anyway for the default
 restriction. Making a recursive definition isn't that big of an extension.
 
-\newlyCleared
+\cleared
 The AIML tag specification never defined when a that tag match would be
 active cite:aimlspec_that. However it can be derived implicitly from the
 reference cite:aimleference_that that it should always be on the previous
@@ -4704,7 +4702,7 @@ any previous utterance. However in the interest of time we won't do this.
 
 ** Templates
 <<Star tags>>
-\newlyCleared
+\cleared
 In AIML, star tags are template focused.
 They capture the content of a wildcard at a particular index
 and allow them to occur in the bots reply.
@@ -4733,7 +4731,7 @@ important chat bot feature.
 It allows symbols to become more flexible, and connections more dynamic.
 As we will see it will create an interesting constraint on connections.
 
-\newlyCleared
+\cleared
 To implement these in our new scheme we first need to analyze what star tags are.
 Then we need to figure out how we can implement this in our matching system,
 and finally we need to add a template method to our YAML representation.
@@ -4741,7 +4739,7 @@ The data structures involved are discussed in section [[Before and templates]].
 What is discussed in this section is the behavior and syntax.
 
 *** AIML stars
-\newlyCleared
+\cleared
 The AIML standard specifies cite:aimlspec stars as a one based index scheme.
 Wildcards are defined as any string in $L(N)$ where $L(N)$ is all normal words.
 This would imply that it would not include spaces or other special symbols.
@@ -4760,7 +4758,7 @@ different names as can be seen in table [[tab:alice-normal-words]].
 | blah *. blah          | blah *                |
 | blah * ahah           | blah * ahah           |
 
-\newlyCleared
+\cleared
 So quite arbitrarily some characters are accepted while others aren't,
 ALICE happily accepts an underscore but an exclamation mark is to much.
 There are several ways to improve this system.
@@ -4770,7 +4768,7 @@ so we know that numbers ought not to be allowed,
 or at least that it would be highly unusual.
 Social practice and norms could help with this.
 
-\newlyCleared
+\cleared
 We already improved on the star matching system by using regular expressions
 cite:thompson1968programming,
 which would allow scenario writers to be much more precise in what they want
@@ -4794,7 +4792,7 @@ regexes:
 #+END_SRC
 
 *** Templates in symbols
-\newlyCleared
+\cleared
 To insert data into a symbol we need a templating mechanism.
 So the first thing we did was finding template libraries in Java.
 Three options came up:
@@ -4804,7 +4802,7 @@ Because StringTemplate enforces strict model view separation,
 and is therefore much more maintainable and easier to understand than FreeMarker
 template engines cite:parr2004enforcing, we chose to use StringTemplate.
 
-\newlyCleared
+\cleared
 Using that engine we can define a naive way of writing a symbol as can be
 seen in listing [[code:naive-template-symbol]].
 
@@ -4814,7 +4812,7 @@ seen in listing [[code:naive-template-symbol]].
 literal: "Hello, my name is <actor.name>"
 #+END_SRC
 
-\newlyCleared
+\cleared
 In listing there [[code:naive-template-symbol]] is a problem however,
 is it always the case that the current actor should be used if we use a query
 like "<actor.name>"?
@@ -4835,7 +4833,7 @@ literal: "Can I borrow a <tool>"
 #+END_SRC
 
 *** Tying matches to templates
-\newlyCleared
+\cleared
 Now we know how to extract data from a regular expression,
 and we know how to insert data into a symbol.
 There is a key difference between AIML and the YAML implementation.
@@ -4844,12 +4842,12 @@ in section [[Mapping AIML]].
 Therefore we need to device a system that can match in one symbol and
 insert the matched data in another.
 
-\newlyCleared
+\cleared
 As said before the implicit relationship between patterns and template tags in
 AIML is made explicit in this implementation trough connections.
 Its only natural to solve this problem with help of connections.
 
-\newlyCleared
+\cleared
 So then the question becomes how do we fill in these templates?
 The issue we had with trying to fill these in the symbols was the lack of
 context.
@@ -4876,7 +4874,7 @@ to:
       match: name # we can match on named groups
 #+END_SRC
 
-\newlyCleared
+\cleared
 There are several important things to note about this implementation.
 First of all its a lot more flexible than AIML stars,
 since information can be retrieved from any previously uttered utterance,
@@ -4890,7 +4888,7 @@ only have connections leading up to them that satisfy the template names.
 AIML didn't have to do this in the first place of course,
 since stars only acted per category.
 
-\newlyCleared
+\cleared
 A feature that is missing is retrieving drool facts from the knowledge base
 and inserting them into the template.
 However one can workaround this limitation by writing drools for this,
@@ -4900,7 +4898,7 @@ A =MatchedQueryDB= can be constructed manually to fill with drool facts.
 \todo[inline]{Another missing feature is inserting raw strings from connections or using other symbols to fill in templates}
 
 ** Automatic AIML to YAML
-\newlyCleared
+\cleared
 AIML is a standard cite:aimlspec.
 Note that the spec says: "AIML shall be compatible with XML.",
 and XML is also a standard cite:xmlspec.
@@ -4913,7 +4911,7 @@ With all these standards, its relatively easy to convert between them,
 because libraries exist for parsing them.
 
 *** Legacy AIML
-\newlyCleared
+\cleared
 An introduction of a new format is nice, but when this is done,
 all the work in the old format could become obsolete.
 This is obviously not desirable.
@@ -4922,14 +4920,14 @@ First of all, one could add support of the legacy format to the code base.
 The second method is creating a script that will help along the way with
 conversion.
 
-\newlyCleared
+\cleared
 We chose the second method because the first method will be much harder,
 as it will re-introduce the problems we had with AIML in the first place.
 The second method provides the user an opportunity to make their AIML script
 comply to the new method,
 whilst also reducing the effort it takes.
 
-\newlyCleared
+\cleared
 To make the conversion we need to point out some structural observations about
 differences between AIML and YAML.
 Firstly AIML works strictly from the perspective of the bot.
@@ -4946,7 +4944,7 @@ but rather a way of informing drools what's going on.
 
 *** Mapping AIML
 <<Mapping AIML>>
-\newlyCleared
+\cleared
 What we can do is extract the patterns, and their respective literals into
 symbols. For example we have the following category in listing [[code:aiml-mapping]].
 In this example there are in terms of YAML two symbols and a connection.
@@ -4989,7 +4987,7 @@ with its respective file names in comments above.
      restricted_to: patient   
 #+END_SRC
 
-\newlyCleared
+\cleared
 A lot of category elements simply mean to add a pattern to a symbol,
 for example listing [[code:aiml-srai-mapping]].
 What we can do with the SRAI tags, if they exist, is simply checking if the
@@ -5014,13 +5012,13 @@ we just add both the pattern and content to the pattern list.
 
 *** Type insertion
 <<Caviats>>
-\newlyCleared
+\cleared
 After the conversion is finished, the bot will mostly work, with the added bonus
 that the dialogue will be more readable.
 However there are some caveats, especially in the previously introduced variant
 called of AIML called S-AIML.
 
-\newlyCleared
+\cleared
 In S-AIML types are injected to track progress of the scenario.
 In contrast to the current scheme where the entire user utterance gets
 inserted and its up to drools to make a symbolic understanding from it.
@@ -5048,7 +5046,7 @@ then
 end
 #+END_SRC
 
-\newlyCleared
+\cleared
 Something which complicates this is that attributes can be set trough JSON
 within the insert tags.
 This can be handled inside the drools rules because the inserted types
@@ -5059,7 +5057,7 @@ didn't seemed to be used a lot.
 
 *** Proof of concept
 <<Conversion script>>
-\newlyCleared
+\cleared
 To show that it is indeed easy to write a conversion script,
 with above restrictions kept in mind we made a proof of concept.
 This conversion script is located in the conversion folder from the root project
@@ -5067,7 +5065,7 @@ of the git project.
 It is expected to be executed from command line and provides several command
 line arguments that are documented in the script itself.
 
-\newlyCleared
+\cleared
 The usage of the script can be shown by passing the help parameter to it.
 As can be seen in listing [[code:sh-conversion-script-help]].
 There are some features missing from this script however.
@@ -5238,7 +5236,7 @@ what's wrong with the patient, however the doctor not.
 
 \FloatBarrier
 ** Practicalities
-\newlyCleared
+\cleared
 When one starts working on an existing software project the first
 obstacle faced is building/executing the project.
 This is however not discussed in this chapter,
