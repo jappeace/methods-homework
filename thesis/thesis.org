@@ -5235,15 +5235,15 @@ This decision probably needs to be reconsidered once a multilogue architecture
 will be implemented (see section [[Multilogue architecture]]).
 
 *** Steering the bot
-\drafting
+\toReview
 As discussed before the primary sources of steering the bot are perlocutionary
 values and goals.
 However these are not our only tools, if we want to make distinctions between
 introversion and extroversion we need to look closely at the behavior of the
 functions in question.
-For example Te has as default behavior, connections that transition to
-another scene, whereas Ti prefers connections that lead to more options
-(see section [[Thinking]]).
+For example Te has as default behavior, meaning no goals present,
+to prefer connections that transition to another scene,
+whereas Ti prefers connections that lead to more options (see section [[Thinking]]).
 
 \drafting
 In listing [[code:yaml:model:connext]] we can see the extended version of
@@ -5327,7 +5327,6 @@ first of all its a scene transition, which is Te enjoys, but more importantly,
 telling about the backpain is a goal in the believes.
 So any personality that can think ahead with its irrational functions would
 probably like this option.
-
 
 #+CAPTION: Connections in =information_gathering=
 #+NAME: code:yaml:model:gathering
@@ -6477,8 +6476,6 @@ Conversation went according to script.
 \todo[inline]{Extracting information from meanings isn't very DRY right now, for example saying how is your foot? Could perhaps be splitup into statusInquiry + foot. However I don't know how to do this better right now, perhaps it could be a natural result of dubble matching but we lose the order inforamtion.}
 ** Rough planning.
 *** Report
-     In thesis we should also mention the effects of values for functions
-
 *** Make usable for other student
 - Document about python scripts and shell scripts (how to use),
   make sure succerrer can take it on easily.
@@ -6560,8 +6557,6 @@ Conversation went according to script.
   commands
 
 ** Thesis
-+ Add UML references?
-+ Add "architecture quality attribute" references?
 + Could try and figure out which symbol medhi's paper used and then use the same
   ones? I don't know, seems like a little wastefull
 + We could discuss the dilemma of representing values as either class or enum.
