@@ -1681,7 +1681,7 @@ had access to pain killers for example.
 # to execute the thesis without considering implementation details.
 # so I guess height and node count aren't neccasarry.
 \cleared
-This chapter tries to anwser the question,
+This chapter tries to answer the question,
 "what is personality from a computationally perspective".
 In where we imagine personality being a preference towards a process rather
 than a preference towards content.
@@ -5238,13 +5238,112 @@ will be implemented (see section [[Multilogue architecture]]).
 \drafting
 As discussed before the primary sources of steering the bot are perlocutionary
 values and goals.
-However these are not our only tools, things become harder especially if we
-want to force different paths between introversion and extroversion of the
-dominant rational function, let alone between irrational functions.
-Because deeper function levels also can have influence,
-the only thing one can do when designing a scenario is test it thoroughly for
-the personalities he wants to use.
+However these are not our only tools, if we want to make distinctions between
+introversion and extroversion we need to look closely at the behavior of the
+functions in question.
+For example Te has as default behavior, connections that transition to
+another scene, whereas Ti prefers connections that lead to more options
+(see section [[Thinking]]).
 
+\drafting
+In listing [[code:yaml:model:connext]] we can see the extended version of
+listing [[code:yaml:model:initial-connections]],
+we can already see how the functions maybe influenced by this,
+we expect for example personalities with a dominant feeling functions to go for
+the status option, because it gives so much utility,
+however to prevent an infinite loop we made sure the doctor can only answer from
+there.
+
+\drafting
+So if the status symbol is liked more by feeling function Fi,
+why did in testing section [[Testing]] Susie (with dominant Fi) utter a greeting
+first?
+The answer is low level replies (see section [[Operation]]),
+of which an example can be seen in listing [[code:drool:lowlevelreply]].
+What this does is execute code upon insertion of a symbol, in this case it just
+returns a reply which is a greeting.
+So that drool rule will force all personalities to reply a greeting with a
+greeting.
+We modelled the connection to add a perlocutionary value to this reply,
+which means the learning function Fe will prefer uttering polite replies in
+future choices.
+
+#+CAPTION: Connections in =introduction= extended with values
+#+NAME: code:yaml:model:connext
+#+BEGIN_SRC yaml
+from:
+ - greeting
+to:
+ - symbol: greeting 
+   values:
+   - Polite
+ - symbol: status
+   restricted_to: patient
+   values:
+   - Polite
+   - Enthusiasm
+ - symbol: ask_reason_here
+   scene: information_gathering
+   restricted_to: doctor
+---
+from:
+ - status
+to:
+ - symbol: ask_reason_here
+   scene: information_gathering
+   restricted_to: doctor
+   values:
+     - Impatient
+ - symbol: good
+   restricted_to: doctor
+   values:
+     - Polite
+     - Happy
+#+END_SRC
+
+#+CAPTION: Low level greeting reply
+#+NAME: code:drool:lowlevelreply
+#+BEGIN_SRC java
+rule "Low level hello replies with hello first time"
+when
+	$pre:PreProcessed($symbol:utterance.what, $symbol.name == "introduction/greeting", $actor:utterance.byWhom)
+	$believes:Believes($actor != self)
+then
+	log.info("low level entry");
+	delete($pre);
+
+	final Informative infor = new Informative($believes.self, $symbol);
+	final Utterance resulting = $believes.findToFromLastUttTo(infor)
+		.map(Utterance::createFromConnection)
+		.orElse(Utterance.create(infor.who, infor.what, PerlocutionaryValueSet.empty));
+	insert(new Reply(resulting.setByWhom(infor.who), QueryDatabase.empty));
+end
+#+END_SRC
+
+\drafting
+If we also take [[code:yaml:model:gathering]] into consideration,
+we can see how thinking functions may like the =ask_reason_here= option,
+first of all its a scene transition, which is Te enjoys, but more importantly, 
+telling about the backpain is a goal in the believes.
+So any personality that can think ahead with its irrational functions would
+probably like this option.
+
+
+#+CAPTION: Connections in =information_gathering=
+#+NAME: code:yaml:model:gathering
+#+BEGIN_SRC yaml
+from:
+ - ask_reason_here
+to:
+ - symbol: back_pain
+   values:
+     - Scary
+ - symbol: need_medicine
+   values:
+     - Concerned
+to_defaults:
+   restricted_to: patient
+#+END_SRC
 \drafting
 To steer the bot we have several tools available to us.
 To steer personality in specific we have: perlocutionary values, goals,
