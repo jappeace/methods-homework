@@ -5482,7 +5482,7 @@ From the test results in appendix [[final test]],
 we can see that the theory works in the implemented chat bot and scenario
 for the INTJ, ENFP and ISTP personalities.
 
-\drafting
+\toReview
 This is by no means a prove that this will work in all instances.
 A first step towards that would be to model the thoeries in section
 [[BDI and Jung]] in a formal langauge discussed in section [[Logic of BDI]].
