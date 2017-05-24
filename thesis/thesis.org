@@ -1997,7 +1997,7 @@ D3 --* D2
 note "This node is currenlty \n implicitly selected \n as response \n(because it came first \n in D0 as child)" as response
 response .. D1
 #+END_SRC
-#+CAPTION: Object diagram of an expended dialogue tree. The leafs is where deliberation stopped.
+#+CAPTION: Object diagram of a dialogue tree, at the leaves deliberation stopped.
 #+LABEL: fig:dialoguetree
 #+ATTR_LATEX: :width 0.5\textwidth
 #+RESULTS[1f1f673a8fc69adbde74aa1a7aeb115abfb4b09a]: fig:dialoguetree
@@ -4298,7 +4298,7 @@ We also add some additional restrictions, we do not want to load
 multiple objects from a symbol file, although YAML supports it.
 This would break the name uniqueness guarantee the file system provides.
 
-#+CAPTION: Reading with the class from listing [[code:java:rawsym]] and parsing with listing [[code:java:yamlparse]]
+#+CAPTION: Reading with the class from listing [[code:java:rawsym]]
 #+NAME: code:java:yamlread
 #+BEGIN_SRC java
 List<RawSymbol> syms = YapFactory.readAsYML(file, RawSymbol.class);
@@ -4307,44 +4307,6 @@ if(syms.size() > 1){
             "objects in symbol file, please use different files " +
             "for symbols so that their names are gauranteed to " +
             "be unique, error in " + file.getName().getBaseName());
-}
-#+END_SRC
-
-\toReview
-In listing [[code:java:yamlparse]], we show all the parse code used by the implementation.
-We read the file content wrapped in an input stream reader,
-then we use the YAML libraries' =YamlReader= to create a reader,
-which parses the file content into object of the type stored in variable =clas=.
-The function shown in listing [[code:java:yamlparse]] can be used to load any YAML
-file with its =Raw*= class.
-This is the =RawSymbol= class in case of listing [[code:java:yamlread]].
-
-#+CAPTION: Using a library to parse YAML
-#+NAME: code:java:yamlparse
-#+BEGIN_SRC java
-static <T> List<T> readAsYML(FileObject file, Class<T> clas){
-    final FileName fileName = file.getName();
-    final String fileName_string = fileName.getBaseName();
-    try {
-        final YamlReader reader = new YamlReader(
-                new InputStreamReader(file.getContent().getInputStream(), "UTF8")
-        );
-        List<T> result = new LinkedList<T>();
-        while(true){
-            T temp = reader.read(clas);
-            if(temp == null){
-                break;
-            }
-            result.add(temp);
-        }
-        return result;
-    } catch (YamlException e) {
-        // user error, crash
-        throw new RuntimeException(
-            "yml invalid of: " + fileName_string + ", reason: " + e.getMessage(), e
-        );
-    }
-    ...
 }
 #+END_SRC
 
@@ -4724,11 +4686,10 @@ and therefore its more difficult to implement.
 </category>
 #+END_SRC
 
-\toReview
+\newlyCleared
 Although this feature isn't necessary for personality per se, its a really
 important chat bot feature.
 It allows symbols to become more flexible, and connections more dynamic.
-As we will see it will create an interesting constraint on connections.
 
 \cleared
 To implement these in our new scheme we first need to analyze what star tags are.
@@ -5085,37 +5046,40 @@ The help message will display which.
 \todo[inline]{We should anser here: How do I add or change personality?}
 \todo[inline]{How do I steer certain personalities? So perhaps also the stuff we added to YAML specifically for personalities}
 
-\toReview
+\newlyCleared
 In this chapter we will discuss the specific personality implementation details.
 We will discuss how to setup a scenario, and how we tested our system.
 In section [[From strings to meanings]] a lot of implementation specifics were
 already discussed.
 We separated that from this chapter because it became to big,
-and it had a lot more to deal with just getting an environment ready,
+and it had a lot more to do with just getting an environment ready
 that was flexible enough to deal with personality as a process.
 
 ** Making a scenario
-\toReview
+\newlyCleared
 Making a realistic dialogue can be difficult.
 Predicting most utterances one actor can make in a particular niche
-and adding answers to those is even more difficult,
-this is what AIML asks of its authors.
-What our modeling system in YAML asks goes even a step further,
-most utterances all actors can make in a particular niche.
-We will discuss how we modeled the dialogue and
+and adding answers to those is even more difficult.
+This is what AIML asks of its authors.
+What our modeling system in YAML asks goes a step further,
+to predict most utterances all actors can make in a particular niche.
+We will discuss in this section how we modeled the dialogue and
 what methods we used to steer particular personalities over particular paths.
 
 *** Dialogue to YAML
 \toReview
-In this section we will discuss how we modeled the scenario discussed in
-section [[Personality influence case study]].
+The first task is just getting the utterances and the connections (without
+steering) into our knowledge base (the YAML files).
+In this section we will discuss how we modeled a part of the scenario discussed
+in section [[Personality influence case study]].
 In that section several dialogues are presented with different personalities
 dealing with the same social practice, visiting the doctor.
 
-\toReview
-Our strategy for modeling these selecting a particular dialogue and then
-deciding per utterance whether they require a unique symbol, or can be merged
-in an existing one, or already have one.
+\newlyCleared
+Our strategy for modeling these is selecting a particular dialogue and then
+deciding per utterance whether they: require a unique symbol,
+can be merged in an existing one,
+or already have one and therefore can be ignored.
 For example we merge the greetings according to listing [[code:yaml:model:greeting]].
 
 #+CAPTION:Greeting modeled
@@ -5124,29 +5088,25 @@ For example we merge the greetings according to listing [[code:yaml:model:greeti
   literals:
     - Hello
     - Hi
-
-  regexes:
-    - "hello (?<name>.*)"
 #+END_SRC
 
-\toReview
-While putting utterances into symbols, we started thinking about how to group
+\newlyCleared
+While putting utterances into symbols, we can start thinking about how to group
 them in scenes.
 Scenes are available to allow pattern matching to be more general by disabling
 most patterns at a particular point in the conversation (see section [[Scenes]]).
 Its up to the author to decide what is most handy for using this feature.
 One may even not use this at all and leave everything in the introduction.
 What we chose to use was the social practice activities in section
-[[social practice]] as guiding mechanism.
+[[social practice]] as guide for determining what to group in which scenes.
 
-\toReview
+\newlyCleared
 The final step is modeling the connections.
-Laying the connections out that are necessary is the next step.
 We just look at the dialogue and link up the utterances as can be seen in
 listing [[code:yaml:model:initial-connections]].
 Since we stick to the social practice for organizing the scenes we put the
 symbol =ask_reason_here= in the =information_gathering= scene
-(in section [[social practice]] its called data gathering).
+(or data gathering in section [[social practice]]).
 
 #+CAPTION: Connections in introduction
 #+NAME: code:yaml:model:initial-connections
@@ -5160,12 +5120,12 @@ to:
    scene: information_gathering
 #+END_SRC
 
-\toReview
+\newlyCleared
 Although these connections are valid for conversation,
 the bot has no way to know which personality should choose what path.
 We have two major ways of steering certain personality kinds over certain paths.
-Namely, perlocuationaryValues and goals (see section [[Mapping to process]]).
-However to use these we first need to setup the intial believes of the bot.
+Namely, perlocutionary values and goals (see section [[Mapping to process]]).
+However to use these we first need to setup the initial believes of the bot.
 Which will be discussed next.
 
 *** Believes
