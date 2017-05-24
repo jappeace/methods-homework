@@ -4259,20 +4259,24 @@ Therefore both methods will be supported.
 
 *** Loading YAML
 <<Loading yaml>>
-\toReview
+\newlyCleared
 As explained earlier YAML key value pairs are either directly loaded into a
 =HashMap=, or into a class.
-We chose to use classes wherever possible becuase it provides type safety.
-This is only possible if the keys are known before hand.
-Which its not in the template system for example, but in most othe cases it is.
+We chose to use classes wherever possible because it provides more type safety.
+This is only possible if all keys are known before hand.
+Which its not in case of the template system for example,
+but in most other cases it is.
 
-\toReview
-In listing [[code:java:rawsym]] the entire field sturcture for symbols is shown.
-So the fields defined there can be used as keys in symbol files.
+\newlyCleared
+In listing [[code:java:rawsym]] the class where the symbols are loaded into is shown.
+The fields defined there can be used as keys in symbol files.
 Note that over some fields the user has no control, such as =name= and =scene=.
-Other fields such as =literal= need to have at least one value
-(although not shown in this structure).
-
+Other fields such as =literal= need to have at least one value,
+although not shown in this structure.
+There are systems that allow declaration of fields and restrictions upon
+them to be shared cite:constraintmodelexample,
+which is more convenient for the user,
+but we didn't do that in the interest of time.
 
 #+CAPTION: Class that deals with symbol files
 #+NAME: code:java:rawsym
@@ -4287,15 +4291,12 @@ public class RawSymbol {
 }
 #+END_SRC
 
-\toReview
-In listing [[code:java:yamlread]] we show how one can load a yaml structure with a
-raw class. The respective file is simply passed into a specialized function
-shown in listing [[code:java:yamlparse]].
-Do note that we can add additional constraints on the model as shown in
-listing [[code:java:yamlread]], YAML supports multiple objects being created
-from a single file,
-however in case of symbols this isn't desirable because
-filename plays a role in enforcing uniqueness.
+\newlyCleared
+In listing [[code:java:yamlread]] we show how one can load a YAML structure into a
+raw class.
+We also add some additional restrictions, we do not want to load 
+multiple objects from a symbol file, although YAML supports it.
+This would break the name uniqueness guarantee the file system provides.
 
 #+CAPTION: Reading with the class from listing [[code:java:rawsym]] and parsing with listing [[code:java:yamlparse]]
 #+NAME: code:java:yamlread
@@ -4310,17 +4311,15 @@ if(syms.size() > 1){
 #+END_SRC
 
 \toReview
-In listing [[code:java:yamlparse]], we show the entire parse code used by our project.
-This is in stark contrast to the ALICE bot which was used previously,
-which had an entire XML parser intertwined with other logic.
-So what is done in that listing is we read the file content wrapped in an input
-stream reader, then we use the YAML libraries' =YamlReader= to create a reader,
+In listing [[code:java:yamlparse]], we show all the parse code used by the implementation.
+We read the file content wrapped in an input stream reader,
+then we use the YAML libraries' =YamlReader= to create a reader,
 which parses the file content into object of the type stored in variable =clas=.
-Which in case of listing [[code:java:yamlread]] the =RawSymbol= class is.
 The function shown in listing [[code:java:yamlparse]] can be used to load any YAML
 file with its =Raw*= class.
+This is the =RawSymbol= class in case of listing [[code:java:yamlread]].
 
-#+CAPTION: Usinga a library to parse YAML
+#+CAPTION: Using a library to parse YAML
 #+NAME: code:java:yamlparse
 #+BEGIN_SRC java
 static <T> List<T> readAsYML(FileObject file, Class<T> clas){
