@@ -5236,8 +5236,18 @@ will be implemented (see section [[Multilogue architecture]]).
 
 *** Steering the bot
 \drafting
+As discussed before the primary sources of steering the bot are perlocutionary
+values and goals.
+However these are not our only tools, things become harder especially if we
+want to force different paths between introversion and extroversion of the
+dominant rational function, let alone between irrational functions.
+Because deeper function levels also can have influence,
+the only thing one can do when designing a scenario is test it thoroughly for
+the personalities he wants to use.
+
+\drafting
 To steer the bot we have several tools available to us.
-To steer personality in specific we have: perlocationary values, goals,
+To steer personality in specific we have: perlocutionary values, goals,
 option amount and scene transitions.
 
 \drafting
