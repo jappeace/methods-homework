@@ -5374,48 +5374,45 @@ although they have influence on the amount of options.
 They can also of course be combined with the methods discussed before.
 
 \FloatBarrier
-
 ** Testing
-\toReview
+\newlyCleared
 To verify our implementation's correctness we use several testing methodologies.
 First at the lowest level we use the so called unit tests to verify individual
-Jungian functions work as they were described in the thesis.
+Jungian functions work as described in this thesis.
 We test these individually by creating specific believes and a dialogue tree for
 input, then we check the output against an expected believe base and dialogue
 tree.
 
 \toReview
-Integration tests are done by combining parts of the application with each
-other and seeing if the input and output is acceptable.
-For example we would create a full personality and then see if it replies in the
-way we want. By firing up the drools engine.
-
-\toReview
 On the highest level we have the so called validation tests.
-With these we check if the program we created complies to what we described in
-the theory.
-To do this a scenario is implemented and the tests are done upon it.
+With these we check if the bot behaves as expected by setting up a scenario,
+and then executing the bot, after which we run trough the scenario manually.
 
 *** Unit tests
-\toReview
-Unit tests (code that tests code each build)
-provide extra guarantees upon behavior where type can't do this.
+\newlyCleared
+Unit tests are executed each build.
+They provide extra guarantees upon behavior where type can't do this.
 In essence unit tests are an extension of the type checker.
 
-\toReview
-Static typing provides better correctness guarantees than just unit tests cite:unitvsstatic.
+\newlyCleared
+Static typing provides better correctness guarantees than unit tests cite:unitvsstatic.
 It follows that if you have a stronger type system you need fewer unit tests,
 Java however has a rather basic type system cite:javavsscala,javavshaskell.
 Therefore we implemented over 70 unit tests in the code.
-These are executed each build.
+
+\newlyCleared
 A framework called JUnit cite:junit is used to integrate with maven and execute
 the tests on compile time.
 It also has a handy assertion API.
 
-\toReview
+\newlyCleared
 The unit tests don't cover every aspect of the application but are
 mainly focused upon the Jungian Functions and their data structures.
 For example the Te tests can be seen in listing [[code:java-unit-te]].
+In =getTestTarget= we define which Jungian function is under test,
+which is handled by the parent class.
+Then as can be seen by its annotation,
+the method =no_goals_look_for_ones_that_change_scene= defines a test.
 
 #+CAPTION: Te test example
 #+NAME: code:java-unit-te
@@ -5447,69 +5444,31 @@ For example the Te tests can be seen in listing [[code:java-unit-te]].
 
 #+END_SRC
 
-\toReview
-So in getTestTarget we define which function is under test,
-which is handled by the parent class.
-Then as can be seen by its annotation, the method
-`no_goals_look_for_ones_that_change_scene` defines a test.
 
-\toReview
+\newlyCleared
 Tests generally follow a similar pattern, first an expectation is build,
-then the input is created, the function to test is called, trough the `apply`
+then the input is created, the function to test is called, trough the =apply=
 method in this case, and finally the expectation is asserted.
-If the expectation isn't upheld an error will be shown at compile time.
+If the expectation isn't upheld an error will be shown when building the
+project.
 
-\toReview
-Testing is one of the few places we use inheritance.
-The reason for this is that testing often involves a lot of boilerplate,
-and inheritance provides a really cheap way of getting rid of that.
-
-\toReview
-We also provide a builder for making the DialogueTree.
-This is a mutable wrapper around the dialogue tree, again to reduce boilerplate.
-This boilerplate isn't so much a problem in the Jungianfunctions themselves
-because they often deal in terms of collections, or just want to add one.
-But with tests you want to be specific.
-
-\toReview
-$T_e$ only has one test that is specifically aimed at it, but there are also
-several shared tests unleased upon it.
+\newlyCleared
+$T_e$ only has one test that is specifically aimed at it,
+but several shared tests also target it.
 For example we know that rationale functions should preffer alteration if all
 things are equal.
 So we wrote a test for this and just applied the same test on all rationale
 functions.
 
 *** Validation test
-\toReview
+\newlyCleared
 To do validation tests we will try to model the scenario presented as an example
 in section [[Personality influence case study]].
-To do this we go trough each utterance in the dialogue and see if they have
-unique meanings. These we then translate in their respective symbol files.
-If we for example look at the conversation between sander and the doctor seen
-in table [[tab:sander-conv-doct]], we for example have two greetings. "Hi" and "Hello".
-So we put this in a symbol named greeting under the first scene "introduction".
-Therefore greeting is a symbol $s^{\text{greeting}}$ of
-\[s^{\text{greeting}}=(\{\text{"Hi"}, \text{"Hello"}\}, \text{"introduction"})\]
-We continue doing this process for all the utterances in this dialogue and the
-next dialogues until all utterances have at least their own unique symbol, 
-or share one with similar utterances in meaning.
-
-\toReview
-Next up is deciding which of the symbols should be connected with each other
-trough connections.
-To decide this we again take the case study dialogue found in 
-example dialogue.
-
-\toReview
-After this we run the test against the scenario. This can be seen in section:
-[[Test Results]]. There were some issues with the scenario itself,
+How this is done is discussed in section [[Making a scenario]].
+After this we run the test against the scenario.
+The results are recorded and can be seen in appendix [[Test Results]].
+There were some issues with the scenario itself,
 however most issues we found were with the functions and their interactions.
-The biggest issues we found were:
-
-1. No low level replies.
-2. No way of making the bot utter multiple symbols.
-3. The height of which functions ought to operate wasn't well thought out.
-4. $T_i$ didn't have good default behavior
 
 \clearpage
 * In conclusion
