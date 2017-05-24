@@ -5061,13 +5061,6 @@ The help message will display which.
 
 \clearpage
 * Implementation
-\todo[inline]{The level of detail is around the one we did with the demonstration: Go trough one connection and show how the things are used, such as personality before and template.}
-\todo[inline]{Remember the implementation is in support of thesis, not the other way around, so programming stuff is irrelevant}
-\todo[inline]{I think in here we can also discuss why we did or didn't use logic?}
-
-\todo[inline]{We should anser here: How do I add or change personality?}
-\todo[inline]{How do I steer certain personalities? So perhaps also the stuff we added to YAML specifically for personalities}
-
 \newlyCleared
 In this chapter we will discuss the specific personality implementation details.
 We will discuss how to setup a scenario, and how we tested our system.
@@ -5465,13 +5458,21 @@ functions.
 To do validation tests we will try to model the scenario presented as an example
 in section [[Personality influence case study]].
 How this is done is discussed in section [[Making a scenario]].
-After this we run the test against the scenario.
+After this we test the bot by playing doctor in the scenario.
 The results are recorded and can be seen in appendix [[Test Results]].
 There were some issues with the scenario itself,
 however most issues we found were with the functions and their interactions.
 
 \clearpage
 * In conclusion
+\drafting
+In this work we have shown a possible interpertation of
+carl jung's theory of types (see section [[Personality types]]).
+We combined it with the idea of personality as a process, 
+where personality is encoded in different strategies,
+rather than objects.
+
+
 \drafting
 We need to explicitly say here that Mapping function to attitudes to a
 process (3.4) is valid for the test use cases shown in [[Test Results]].
@@ -5492,8 +5493,33 @@ It was claimed that drools were the center of the application,
 but they weren't, this thesis showed a method of making it the center of the
 application.
 
-\todo[inline]{Discussion, comparison}
+\todo[inline]{Discussion comparison}
+** Discussion
+\toReview
+There are some odds and ends that haven't been adressed.
+A really major one is the way we expected the function attitude order type to
+be and how it was.
+Section [[Mapping function attitudes to a process]] was expecting an alternating
+order of rational and irrational functions, so $ABAB$. 
+However upon closer inspection of the theory it, turned out to be a rotating order,
+along the lines of $ABBA$.
+Although this has little effect upon the dominant and auxilary functions,
+this may be problematic for the deeper functions.
+We suspect that there may be really only 8 personalities, rather than at least 16.
+Additional experimentation is required to identify this problem,
+and potentially start looking for a solution.
+
+\toReview
+Another issue is that although the bot is functional,
+the way we implemented the rational functions is rather simplistic.
+No actual minimax algorthim is used (or something similiar that would work with
+non zero sum games).
+We instead just use static evaluation at each level.
+So no dialogue tree information is used in the deliberation,
+addressing this issue could lead to more varied personalities.
+
 ** Future work
+\todo[inline]{I think in here we can also discuss why we did or didn't use logic?}
 *** Give the bot some semantic understanding
 \drafting 
 A possible alterantive is using cite:moschitti2004study, to parse the semantics
