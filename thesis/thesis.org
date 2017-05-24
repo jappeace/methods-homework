@@ -260,7 +260,7 @@ and finally we will look at the serious game in its existing form.
  "Assertive vs Submissive".
 
  \cleared
- In the begining of the 1990's there were many ways to measure personality that
+ In the beginning of the 1990's there were many ways to measure personality that
  didn't agree with each other.
  For example at Berkley alone block used a 2 dimensional ego-resilience and
  ego-control method cite:block1980role,
@@ -4499,6 +4499,25 @@ cloud "symbols"{
 #+RESULTS[95cead6c9a6fb358accf6686cac4a2b62f2d9111]: fig:dep:filedconns
 [[file:img/uml/dep:filedconns.png]]
 
+**** Actors
+\toReview
+A foreign idea to AIML is the notion of actor restrictions.
+Since AIML will always model from the eyes of the bot, there is no need for this.
+However because we model both bot and user, we do require this.
+this is especially important to prevent the bot from infinitly talking to itself,
+for example see section [[Turn taking]].
+
+\toReview
+To make sure certain strange situations don't occur, such as the patient asking
+the doctor if the doctor is sick,
+we added actor based restrictions on connections.
+Currently however this implementation is rather limited,
+it only allows for an "any" actor,
+which basically means any actor can say this,
+or a specific actor.
+This could be extended with some kind of role system cite:sandhu1996role.
+
+
 *** Scenes
 \cleared
 In the S-AIML extension, scenes were used to enable and disable certain patterns.
@@ -5245,23 +5264,24 @@ For example Te has as default behavior, meaning no goals present,
 to prefer connections that transition to another scene,
 whereas Ti prefers connections that lead to more options (see section [[Thinking]]).
 
-\drafting
+\toReview
 In listing [[code:yaml:model:connext]] we can see the extended version of
 listing [[code:yaml:model:initial-connections]],
 we can already see how the functions maybe influenced by this,
 we expect for example personalities with a dominant feeling functions to go for
-the status option, because it gives so much utility,
-however to prevent an infinite loop we made sure the doctor can only answer from
-there.
+the status option, because it gives so much utility.
+Leading out from the status option there are only options that can be uttered
+by the doctor, simply because it would be strange to continue talking after
+asking "How are you?".
 
-\drafting
+\toReview
 So if the status symbol is liked more by feeling function Fi,
-why did in testing section [[Testing]] Susie (with dominant Fi) utter a greeting
+why did in section [[Testing]] Susie (with dominant Fi) utter a greeting
 first?
-The answer is low level replies (see section [[Operation]]),
-of which an example can be seen in listing [[code:drool:lowlevelreply]].
+The answer is in low level replies (see section [[Operation]]),
+of which we can see an example in listing [[code:drool:lowlevelreply]].
 What this does is execute code upon insertion of a symbol, in this case it just
-returns a reply which is a greeting.
+replies with a greeting.
 So that drool rule will force all personalities to reply a greeting with a
 greeting.
 We modelled the connection to add a perlocutionary value to this reply,
@@ -5320,9 +5340,10 @@ then
 end
 #+END_SRC
 
-\drafting
-If we also take [[code:yaml:model:gathering]] into consideration,
-we can see how thinking functions may like the =ask_reason_here= option,
+\toReview
+If we also take listing [[code:yaml:model:gathering]] and the believes into
+consideration,
+we can see why thinking functions may like the =ask_reason_here= option,
 first of all its a scene transition, which is Te enjoys, but more importantly, 
 telling about the backpain is a goal in the believes.
 So any personality that can think ahead with its irrational functions would
@@ -5343,37 +5364,14 @@ to:
 to_defaults:
    restricted_to: patient
 #+END_SRC
-\drafting
-To steer the bot we have several tools available to us.
-To steer personality in specific we have: perlocutionary values, goals,
-option amount and scene transitions.
 
-\drafting
-There are several other tools for steering avilable too which were
+
+\toReview
+There are several other tools for steering available too which were
 discussed in [[Replacing AIML]] such as before fields and templates.
-However these can't be used to steer personality,
-but they can of course be combined with the methods discussed before.
-
-\todo[inline]{Steering examples}
-
-**** Actors
-\drafting
-A foreign idea to AIML is the notion of actor restrictions.
-Since AIML will always model from the eyes of the bot, there is no need for this.
-However because we model both bot and user, we do require this.
-this is especially important to prevent the bot from infinitly talking to itself,
-for example (see section [[Turn taking]]).
-
-\drafting
-To make sure certain strange situations don't occur, such as the patient asking
-the doctor if the doctor is sick, we added actor based restrictions on
-connections.
-Currently however this implementation is rather limited, it only allows for an
-"any" actor, which basically means any actor can say this, or a specific actor.
-This could be extended with some kind of role system,
-where more fine grained groups of restrictions can be specified.
-For example both the patient and family member should be able to ask the doctor
-what's wrong with the patient, however the doctor not.
+However these can't be used to steer personality in particular,
+although they have influence on the amount of options.
+They can also of course be combined with the methods discussed before.
 
 \FloatBarrier
 
