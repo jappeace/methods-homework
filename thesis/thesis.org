@@ -831,6 +831,7 @@ Finally there is the right hand side, which is just a piece of java code
 that can modify the facts, or interlope with outside java code trough so called
 global variables.
 Also note that drools is Turing complete cite:weppenaar2011solving.
+An example of a drool rule can be seen in listing [[code:drool:lowlevelreply]].
 
 *** Social practices
  <<social practice>>
