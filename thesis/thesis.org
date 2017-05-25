@@ -803,7 +803,6 @@ and finally we will look at the serious game in its existing form.
 **** Logic of BDI
  <<bdi logics>>
  \cleared
- \todo[inline]{This paragraph can remain either way: 1 we say we didn't use it in this thesis because we didn't quite require it (although a description of the bot should be possible in it) 2. We make an actual description of the bot in the logic, once the description is done we should also make a fact sheet for the scenario (to show it works I guess), this is low priority}
  Logic of BDI is an attempt to formalize how agents behave.
  One of the first formalization of Bratman's theory was that of Cohen and
  Levesque cite:cohen1990intention. It was based on linear time logic and
@@ -814,7 +813,7 @@ and finally we will look at the serious game in its existing form.
  Rao and Georgeff introduced a different formalism that used branching time logic. 
  They use modal operators for belief desires and intentions and then put 
  constraints on them to make interactions meaning full cite:meyer2014logics.
- Therefore this formalism is much closer to that of bratman cite:rao1991modeling.
+ Therefore this formalism is much closer to that of Bratman cite:rao1991modeling.
  Finally there is the KARO formalism which is based on dynamic logic.
  This is the logic of actions and computation. They extend this logic with
  epistemics to add believes to it cite:meyer2014logics.
