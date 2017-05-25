@@ -4519,6 +4519,13 @@ which basically means any actor can say this,
 or a specific actor.
 This could be extended with some kind of role system cite:sandhu1996role.
 
+\toReview
+Note that because AIML does not specify actors,
+it can never be used on its own to model a multilogue system in.
+Although we make actors explicit not because of wanting to implement a
+multilogue system,
+but to make it possible to predict what the other actor will say from the
+agent's perspective.
 
 *** Scenes
 \cleared
@@ -5532,7 +5539,6 @@ there are a legion of possibilities to extend this work.
 We will present in this section a brief overview of the more obvious extensions,
 but we expect there will be many niches we haven't even considered.
 
-
 *** Social practice support
 \toReview
 We already hinted in section [[social practice]] that social practices were a
@@ -5563,63 +5569,70 @@ initiative, but this paper cite:spierling2006towards considered bot-bot
 interaction trough AIML.
 Since AIML was used in that paper we can safely say they weren't planning on
 making a multilogue architecture, because AIML can't do that as discussed in
-section [[
-# seriously, using AIML for bot to bot conversations would be crazy
+section [[Actors]].
 
 *** Better use of linguistic theory
-\drafting
-Currently linguistic theory is only used in name, in case of perlocutionary
-values for example.
-However as 
+\toReview
+Currently linguistic theory is only used on a very basic level,
+in case of perlocutionary values for example.
+If symbols and templates were marked with slot grammar cite:mccord1990slot,
+a more precise use of templates could happen.
+So connections that go to a symbol that require a noun,
+would no longer be able to use symbols that matched a verb.
 
-*** Give the bot some semantic understanding
-\drafting 
-A possible alterantive is using cite:moschitti2004study, to parse the semantics
-of a sentence. Then a graph can be used to determine how to predicates
-corrolate logically with the arguments being just fill in.
-
-\drafting
-Something such as cite:mccord1990slot could also be used to get a more deeper 
-"understanding" of the user message. However introducing something like that
-would require a much more advanced reasoning process. No longer are we
-dealing with sentences but instead we use words.
-Symbols then would need to indicate how many arguments they need to be completed.
+\toReview
+With help of the work of convolution kernels for semantic parsing
+cite:moschitti2004study, a simple knowledge base could be constructed as an
+inspiration for bot about what to fill into the template system.
+So that bot to bot conversations could also use the templated symbols.
+Care must be taken in this case that the connections are still aligned
+properly, and the insertion of a template does not alter the meaning of a symbol
+completely. Although currently this is also a potential problem.
 
 *** More advanced learning
-\drafting
-Could consider extending the symbol graph dynamically.
-For example create a new symbol every time you don't know something,
-then ask about it and if the user replies with something you do know connect
-them.
-Currently there is limited support for "learning". but this is based on knowing
-existing symbols, the extension would make symbols dynamically.
+\toReview
+The idea of dynamically extending the symbol graph, and creating new symbols
+themselves is an interesting one.
+For example a new symbol is created every time the bot doesn't know something,
+then the bot asks about it and if the user replies with something which is known,
+connect them.
+Currently there is limited support for "learning" in the Si function.
+but this is based on knowing existing symbols,
+the extension would add symbols dynamically.
 This could be done by more advanced language parsing techniques in combination
-with an existing knowledge base such as OWL.
+with an existing knowledge base such as OWL cite:world2012owl.
 
-*** Multiple symbols matched
-\drafting
-better support for if multiple symbols are matched.
-Currently just the first one is used. So we truncate the rest.
-However if multiple symbols are uttered we could do more advanced heuristics,
-such as trying to figure out which one was really meant by using information
-theory to select the most precise one.
+*** Matching
+\toReview
+It should be noted that regular expressions is just one of the possible ways
+of determining what symbol the user uttered.
+The bot can be easily modified to use alternate matching mechanisms such
+as fuzzy matching trough a recurrent neural network for example
+cite:vinyals2015neural.
+What needs to be done is just replace the existing pattern matching drool
+rule with an alternative and modify the recurrent neural network to select
+symbols.
+Alternatively the existing regular expression approach could be enhanced,
+for example by executing it in parallel, or even upon the GPU cite:zu2012gpu. 
+Also note that at matching personality could play a role.
+
+\toReview
+The question of what to do when multiple symbols are matched is a difficult one.
+In the initial approach we simply selected the first symbol,
+however currently they are all selected, and we hope the scenario is designed
+properly.
+What should be looked into is if there are ways to combine symbols,
+or perhaps even select one or several based upon personality.
+Another approach would be to try and use information
+theory to select the most precise symbol.
 However this precision also should be encoded or derived somehow
 (for example, more words means more information).
 
-*** Use GPU for pattern matching
-
-\drafting
-It is also entirely possible to make the bot a lot more faster in response time
-by using the GPU for regex matching.
-
 *** Graphical scenario editor
-*** Alternative matching methods
-\drafting
-The bot can be easily modified to use alternate matching mechanisms such
-as fuzzy matching or probabilty based schemes. \todo{cite such systems}
-Because matching already happens in drools,
-The modification required to do this correctly is to put a set of symbols per scene,
-rather than a set of patternsymbol per scene.
+\toReview
+A final possible extension would be to create a graphical scenario editor.
+Doing this always costs more time than expected and probably should be avoided
+until above mentioned systems are in place.
 
 # start appendix, dump al floats and leave some room
 \clearpage
