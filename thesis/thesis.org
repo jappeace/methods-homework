@@ -71,12 +71,24 @@
 
 #+BEGIN_CENTER
 
-In this thesis we explore how to add personality to a chatbot.
-
-\todo[inline]{abstract}
+\toReview
+In this thesis we explore how to add jungian personality to a chatbot.
+An existing serious game was taken over, and closely inspect.
+A strategy was devised for adding personality while leaving as much of the
+orignal architecture in tact.
+In this process we replaced the existing AIML based scheme with a novel approach.
+This made a RETE engine the center of the chatbot,
+and opened up space to have varied responses to a similar utterance
+depending on the personality,
+while making the modelling langauge less verbose and more precise.
+We conclude by demonstarting that in fact this scheme works as expected,
+and sum a whole list of possible extensions including a possible future
+multilogue system.
 
 #+END_CENTER
-\todo{keywords}
+
+\toReview
+chatbot, Jung, drools, YAML, AIML
 \todo[inline]{Figures should to be able to be placed in the appendix}
 
 \newpage
@@ -1336,7 +1348,7 @@ stop
 #+END_SRC
 #+CAPTION: Activity diagram of a server game construction
 #+LABEL: fig:construction
-#+RESULTS[d725d50fe0747c0393ea2a3b6e93ac437492271a]: fig:construction
+#+RESULTS[3acde42e45cb6f546f0d34b2c135845e8f592a48]: fig:construction
 [[file:img/uml/construction.png]]
 
 \FloatBarrier
