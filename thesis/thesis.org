@@ -152,7 +152,7 @@ Having a lot of rule also make maintenance hard, if for example there is an
 unwanted behavior many rules need to be inspected before the change can be made.
 
 \cleared
-In agents with with personalities cocu tried making a complete game based
+In agents with with personalities Cocu tried making a complete game based
 on MBTI cite:cocu2015agents.
 However communication was never implemented and personality got reduced to
 doing a single action.
@@ -335,14 +335,14 @@ and finally we will look at the serious game in its existing form.
 *** Personality types
  <<sec:types>>
  \cleared
- To address the big five's issue of having no thoeretical foundation we'll
+ To address the big five's issue of having no theoretical foundation we'll
  have a look into personality types.
  We begin with the theoretical foundation proposed by the grandfather of
  personality research, Carl Jung.
- After which we'll look at a thoeretical evolution proposed by Myers and
- Myers-Brigs, which also introduced a structered method of measuring types.
+ After which we'll look at a theoretical evolution proposed by Myers and
+ Myers-Brigs, which also introduced a structured method of measuring types.
  Then we'll discuss some critique on this method.
- With this critisim in mind we'll look at alternatives to the MBTI that have been
+ With this criticism in mind we'll look at alternatives to the MBTI that have been
  proposed afterwards.
 
 **** Jung's theory of psychological types
@@ -354,7 +354,7 @@ and finally we will look at the serious game in its existing form.
  objective (or observable).
  Intoversion is the world inside a person, and therefore is subjective,
  or private.
- This privacy however may bo so great that the consiouness can't even access it.
+ This privacy however may be so great that the consciousness can't even access it.
  These attitudes are mutually exclusive,
  you can't do introversion and extroversion at the same time.
  For example if you're day dreaming you're not paying attention to your
@@ -362,7 +362,7 @@ and finally we will look at the serious game in its existing form.
  A person who spends most of his time in the introversion attitude is called
  an /introvert/.
  But he is not totally the one or the other, ie an introvert can still have
- extravert moments and vice versa.
+ extrovert moments and vice versa.
  It should also be noted that the unconsciousness according to Jung is
  flipped in attitude. cite:hall1973primer97-98attitude
 
@@ -372,7 +372,7 @@ and finally we will look at the serious game in its existing form.
  because they act as a method of making judgements.
  /Thinking/ is a function that connects ideas with each other to arrive at
  generalizations or conclusions. 
- /Feeling/ evaluates ideas by determinging if its good or bad, pleasant
+ /Feeling/ evaluates ideas by determining if its good or bad, pleasant
  or unpleasant, beautifull or ugly.
  Note that this is /not/ the same as being emotional,
  although you can be emotional and use this function.
@@ -380,7 +380,7 @@ and finally we will look at the serious game in its existing form.
  /Sensation/ is sense perception created by the stimulation of the senses,
  it can always be rooted to a sense,
  such as "I see a balloon" or "I feel hungry".
- /Intuition/ is like a sensetion but its not produced by a sense.
+ /Intuition/ is like a sensation but its not produced by a sense.
  Therefore it has no origin in the same way as sensation has,
  by which its explained as "just a hunch" or "I feel it in my bones".
  cite:beauchamp2005communication,hall1973primer98-100functions
@@ -463,7 +463,7 @@ and finally we will look at the serious game in its existing form.
  The principal function is the one that is most preferred.
  The auxiliary renders its services to the principal function,
  however this function cannot be the opposite of the principal.
- So if /Feeling/ is the principal function than thinking connot be the auxiliary.
+ So if /Feeling/ is the principal function than thinking cannot be the auxiliary.
  This is also true for the irrational functions.
 
 **** MBTI
@@ -472,7 +472,7 @@ and finally we will look at the serious game in its existing form.
  types.
  However it brings two important changes, first of all the way
  of measuring personality type is changed. 
- It uses a strutured approach rather than Carl Jungs projective approach.
+ It uses a structured approach rather than Carl Jungs projective approach.
  The responses to items are finite and therefore can be deduced based on theory.
  In contrast to Jung's technique where he used open ended answering with word
  associations cite:hall1973primer23method.
@@ -485,10 +485,10 @@ and finally we will look at the serious game in its existing form.
 
  \cleared
  <<sec:mbti:order_comparison>>
- Once completed with the MBTI you'll get charatcter string as outcome,
+ Once completed with the MBTI you'll get character string as outcome,
  for example "INTJ".
- This label tells you inderectly which of carl jung's functions is dominant,
- auxiliary, tetriary and inferior cite:mccaulley2000myers.
+ This label tells you indirectly which of Carl Jung's functions is dominant,
+ auxiliary, tertiary and inferior cite:mccaulley2000myers.
  In other words it provides a sequence of preferences
  cite:website.mbtitypedynamics.
  In case of INTJ it would be:
@@ -499,7 +499,7 @@ and finally we will look at the serious game in its existing form.
  just imposed an order on them cite:mccaulley2000myers,website.mbtisequence.
  How much preference there is for a function is not encoded in MBTI, just an
  order of preference.
- An ENTJ would be simialar to INTJ but with a different order:
+ An ENTJ would be similar to INTJ but with a different order:
  \[T_e > N_i > S_e > F_i\]
  With this definition the interplay of the judging/perceiving dimension becomes
  more obvious if we look at INTP: \[T_i > N_e > S_i > F_e\]
@@ -513,22 +513,22 @@ and finally we will look at the serious game in its existing form.
 
  \cleared
  Before continuing we would like to say a word about a popular
- interpertation of MBTI which is based on Kersey's book "Please understand me",
+ interpretation of MBTI which is based on Kersey's book "Please understand me",
  and later "Please understand me II".
- In this interpertation the sixteen types are also placed in general groups
+ In this interpretation the sixteen types are also placed in general groups
  of four but here the $ST$ and $SF$ distinction is replaced by $SJ$ and $SP$
  cite:keirsey1998please.
  It turns out however that Kersey invented this distinction because
  "He thought it made sense to group them this way" cite:whyaretypesdistinct.
  In doing this he rejected the work of Jung and also that of cognitive functions.
  Which is problematic because the theory he presented then does not make any
- thoeretical sense.
+ theoretical sense.
  Therefore Kersey's MBTI will not be used in this thesis.
 
  \cleared
- The MBTI is extremly popular in a subfield called Organizational Developement
+ The MBTI is extremely popular in a sub field called Organizational Development
  (OD) cite:sample2004myers. 
- But it has gotton some heavy critism in from the field of psycology.
+ But it has gotten some heavy criticism in from the field of psychology.
 
  \cleared
  MBTI has always used a continues scoring system in the results.
@@ -539,9 +539,9 @@ and finally we will look at the serious game in its existing form.
  For example $I$ or $E$.
  This is called a bimodal distribution.
  However cite:bess2002bimodal suggests this is not the case,
- but this could be the result of the scores being biderictional
+ but this could be the result of the scores being bidirectional
  cite:salter2005two.
- In an extended investigation cite:arnau2003jungian into weather jungian
+ In an extended investigation cite:arnau2003jungian into weather Jungian
  constructs are truly categorical suggested however that this was maybe not
  the case and a continues scale for assessment judgements are required.
 
@@ -607,15 +607,15 @@ and finally we will look at the serious game in its existing form.
 
  \cleared
  The result of the PPSDQ would look something like: I-30 N-20 T-80 J-60, with
- a scale of 0 to 100. To calulate the jungian functions as a probability measure
+ a scale of 0 to 100. To calculate the jungian functions as a probability measure
  some math is required. Our subject is $70\%$ of the time introverted and $30\%$ of the 
  time extroverted. $60\%$ of the time judging and $40\%$ of the time perceiving.
- therefore N_i would be calulated as: 0.7 \times 0.4 \times 0.8 = 0.224 or $22.4\%$.
+ therefore N_i would be calculated as: 0.7 \times 0.4 \times 0.8 = 0.224 or $22.4\%$.
  N_e would be $0.3 \times 0.4 \times 0.8 = 0.096$ etc.
  From this you can make a preference sequence or create a mixed strategy.
 
  \cleared
- The PPSDQ is measuring the same thing as MBTI but lacks the critisms of MBTI.
+ The PPSDQ is measuring the same thing as MBTI but lacks the criticisms of MBTI.
  The reliability is for example between 90% to 95% with a delay of two weeks.
  The internal consistency was also measured which proved to be better than
  MBTI but there was still a dependency between S/N and P/J which remains
@@ -631,8 +631,8 @@ and finally we will look at the serious game in its existing form.
  particular action cite:arnau2000reliability.
 
  \cleared
- It becomes rather staight forward to make a function preference of the 
- measurement of SL-TDI since the qeustion directly measure the jungian
+ It becomes rather straight forward to make a function preference of the 
+ measurement of SL-TDI since the question directly measure the jungian
  functions.
  A possible personality type therefore would be:
  \[ S_i \geq T_i \geq S_e \geq F_e \geq N_i \geq T_e \geq N_e \geq F_i \]
@@ -641,14 +641,14 @@ and finally we will look at the serious game in its existing form.
  there is no need for normalization.
 
  \cleared
- This denotion is much less strict than the MBTI or PPSDQ since it does not force
+ This denotation is much less strict than the MBTI or PPSDQ since it does not force
  alternating attitudes or pairing of rational/irrational functions in the
  preference.
  Therefore the amount of personality types SL-TDI supports drastically exceeds
  that of the PPSDQ. In other words, there always exists a mapping from PPSDQ
  to SL-TDI, but not always from SL-TDI to PPSDQ.
  The reason for doing this is because there is experimental evidence
- that there exist personalities outside of the stucture orignally imposed by
+ that there exist personalities outside of the structure originally imposed by
  MBTI and the subsequent PPSDQ cite:loomis1980testing.
 
  
@@ -659,7 +659,7 @@ and finally we will look at the serious game in its existing form.
  The Big Five falls short on the easy to implement,
  there is no underlying theoretical framework to support it cite:eysenck1992four,
  therefore we cannot base our implementation on anything except our own
- interpertation.
+ interpretation.
 
  \cleared
  The MBTI has been criticized a lot from the field of psychology,
@@ -676,7 +676,7 @@ and finally we will look at the serious game in its existing form.
  \cleared
  The PPSDQ is based on the same thoery as MBTI, but with scaled type letters.
  To convert the type to function attitudes some extra work has to be done,
- namely calulate their respective probabilities.
+ namely calculate their respective probabilities.
  To decide which function attitude to use some kind of mixed strategy
  has to be used.
  The PPSDQ is more realistic, but at the cost of being more difficult to
@@ -692,7 +692,7 @@ and finally we will look at the serious game in its existing form.
  We select the first function to work with, but it requires some information now,
  what to do?
  Select $S_i$, thereby skipping $T_i$, or select $T_i$ and let it decide to
- select $S_i$, but this would basially give $T_i$ censorship rights.
+ select $S_i$, but this would basically give $T_i$ censorship rights.
  This is difficult to answer therfore it is a lot more difficult to implement
  than PPSDQ.
  Since SL-TDI drops an assumption, which is shown with experimental evidence
@@ -823,12 +823,12 @@ and finally we will look at the serious game in its existing form.
 <<Drools background>>
 \drafting
 what are drools?
-I guess so that we can reffer to this chapter in implementation and architecture.
+I guess so that we can refer to this chapter in implementation and architecture.
 So we need to explain at least:
 + Fact base
 + Query mechanism
 + Then is java code
-+ commincuation between java and drools?
++ communication between java and drools?
 
 \drafting
 Drools is is Turing complete cite:weppenaar2011solving.
@@ -2580,7 +2580,7 @@ architecture.
 The reason for discussing both is that the ideas discussed in section
 [[BDI and Jung]] could be applied to an $N$-agent architecture.
 However there are some pragmatic problems with this discussed in section
-[[Multiple conversation partners]].
+[[Practicalities]].
 Therefore we held of on implementing this and just describe how it could be done
 instead.
 In section [[Implemented architecture]] we will describe the main architectural
@@ -2680,7 +2680,7 @@ Good programmers worry about data structures and their relationships.
 In this subsection we will discuss the main data structures used to implement
 the ideas from section [[BDI and Jung]].
 We use class diagrams to accomplish this which are based upon UML cite:fowler2004uml.
-Before we do this I would like to point out several things to keep in mind.
+Before this is done we would like to point out several things to keep in mind.
 
 \cleared
 Firstly, we do not show everything precisely such as implemented in the code,
@@ -3742,7 +3742,7 @@ and statistical mechanisms cite:keizer2013training.
 Although both these approaches are good options for robots,
 we are dealing with an application,
 in which we can cheat to get basically nearly 100% correct selection.
-What I mean by this is that we can simply modify the user interface,
+We can simply modify the user interface,
 to let the user select which agent he talks too.
 Then the only thing that needs to be done is modifying the protocol so that the
 selected agent(s) get the message.
@@ -4163,7 +4163,7 @@ In AIML however, no document is constructed.
 Its not a story with a lead, middle ground and conclusion,
 its more like a key-value pair database or big configuration file.
 So since XML was intended to be used for inline document markup,
-I will argue that there are better alternatives that focus on key-value based
+We will argue that there are better alternatives that focus on key-value based
 configuration in particular, such as YAML, JSON or TOML.
 
 \cleared
@@ -5525,7 +5525,53 @@ So no dialogue tree information is used in the deliberation,
 addressing this issue could lead to more varied personalities.
 
 ** Future work
-\todo[inline]{I think in here we can also discuss why we did or didn't use logic?}
+\toReview
+Considering the move to drools to the center of chat bot deliberation,
+and a novel alternate take on modeling chat bot dialogue,
+there are a legion of possibilities to extend this work.
+We will present in this section a brief overview of the more obvious extensions,
+but we expect there will be many niches we haven't even considered.
+
+
+*** Social practice support
+\toReview
+We already hinted in section [[social practice]] that social practices were a
+consideration.
+However during the implementation we haven't looked deep into this,
+except for the fact that drools maybe a good bases to do this.
+Especially in terms of norms.
+
+\toReview
+For example we can consider it to be not normal when someone utters the same
+symbol over and over.
+Since utterances are already recorded into believes for some of the Jungian functions,
+we can define a norm with a drools query.
+Then we can react by moving to a particularly designed scene for repeating one self.
+This way we can work around several of the usual tricks cite:detectachatbot
+people use to detect if they're talking to a chat bot.
+
+*** Multilogue implementation
+\toReview
+We discussed the architectural changes required for this in section
+[[Multilogue architecture]].
+However as discussed in section [[Practicalities]],
+there are some deeper difficulties with doing this,
+the biggest one is timing and interruption.
+Scheduling is hard (although well studied cite:liu1973scheduling).
+Timing is hard, considering there is little research on for example chat bot
+initiative, but this paper cite:spierling2006towards considered bot-bot
+interaction trough AIML.
+Since AIML was used in that paper we can safely say they weren't planning on
+making a multilogue architecture, because AIML can't do that as discussed in
+section [[
+# seriously, using AIML for bot to bot conversations would be crazy
+
+*** Better use of linguistic theory
+\drafting
+Currently linguistic theory is only used in name, in case of perlocutionary
+values for example.
+However as 
+
 *** Give the bot some semantic understanding
 \drafting 
 A possible alterantive is using cite:moschitti2004study, to parse the semantics
@@ -5539,29 +5585,6 @@ would require a much more advanced reasoning process. No longer are we
 dealing with sentences but instead we use words.
 Symbols then would need to indicate how many arguments they need to be completed.
 
-**** Variables in literals
-\todo[inline]{This is partly implemented already but we can't retrieve information from drools, perhaps that should be implemented, although drools can get symbols and insert stuff themselves}
-\toReview
-A first step would be to add variables to the symbols. Such as a name of an
-actor. I guess these things could be extracted from the social practice
-which is still defined kindoff implicitly.
-We could use a framework like this: http://www.stringtemplate.org/ to substitute
-variables with their proper names. (ANTLR seems to strict however).
-
-\toReview
-If this is done in the literals however, care should be taken, since these
-are also expended into regexes,
-therefore all possible inputs of the literals should be available at the time
-when the patterndatabase is build.
-
-\toReview
-There are 3 ways to create these variables, first of all just collect them
-when parsing the symbols and connections,
-secondly we insert them from an external source (ie from drools).
-Thirdly we use a user defined structure.
-For the actors we can collect, but for things such as the healthproblem we need
-a user defined structure since drools is kindoff later in the init cycle.
-
 *** More advanced learning
 \drafting
 Could consider extending the symbol graph dynamically.
@@ -5573,26 +5596,6 @@ existing symbols, the extension would make symbols dynamically.
 This could be done by more advanced language parsing techniques in combination
 with an existing knowledge base such as OWL.
 
-*** Multiple conversation partners
-<<Multiple conversation partners>>
-\drafting
-This can be supported by the current architecture technically I think.
-Issues that are not addressed for this however are for example timing of replies
-and making sure that the bots won't chit chat with each other forever ignoring
-the user.
-This probably requires that the actor class to be more specific in this case.
-Connections could for example be restricted to coalitions of actors rather than just
-single actors.
-In other words, the yml files shouldn't restrict to any or singular actor,
-but rather to groups of actors.
-
-\drafting
-Another major issue would be deciding which agent is being talked to by the
-user. This could maybe be solved by giving very fine grained restrictions,
-but this would become quickly hard to manage with more than 3 agents.
-Perhaps a heuristic can be used where the user would have to address agents
-by name or have separate buttons to talk to specific agents.
-
 *** Multiple symbols matched
 \drafting
 better support for if multiple symbols are matched.
@@ -5602,12 +5605,6 @@ such as trying to figure out which one was really meant by using information
 theory to select the most precise one.
 However this precision also should be encoded or derived somehow
 (for example, more words means more information).
-
-*** Social practice support
-\drafting
-Better social practice support. This is mainly due to a lack of propper
-description of the social practice, but it could eventually make the bot very 
-salable in use cases.
 
 *** Use GPU for pattern matching
 
