@@ -4811,7 +4811,7 @@ Therefore we should reconsider selecting such things at the symbol level.
 A lot of context information is not available in symbol files.
 The best we can do is give them a name and leave it at that,
 as can be seen in listing [[code:template-symbol-context]].
-This won't add any restrictions on the inserted value. \todo{So this would be a future work thing? Using linguistics to determine types of inserted stuff??}
+This won't add any restrictions on the inserted value.
 Its just a hole that can be filled up by an arbitrary string.
 
 #+CAPTION: Context unaware approach
