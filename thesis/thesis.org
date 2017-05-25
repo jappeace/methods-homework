@@ -73,17 +73,15 @@
 
 \toReview
 In this thesis we explore how to add jungian personality to a chatbot.
-An existing serious game was taken over, and closely inspect.
+An existing serious game was taken over, and closely inspected.
 A strategy was devised for adding personality while leaving as much of the
 orignal architecture in tact.
 In this process we replaced the existing AIML based scheme with a novel approach.
-This made a RETE engine the center of the chatbot,
+This made the drools rule engine the center of the chatbot,
 and opened up space to have varied responses to a similar utterance
 depending on the personality,
 while making the modelling langauge less verbose and more precise.
-We conclude by demonstarting that in fact this scheme works as expected,
-and sum a whole list of possible extensions including a possible future
-multilogue system.
+We conclude by demonstarting that in fact this scheme works as expected.
 
 #+END_CENTER
 
