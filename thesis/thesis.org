@@ -821,17 +821,16 @@ and finally we will look at the serious game in its existing form.
 
 **** Drools
 <<Drools background>>
-\drafting
-what are drools?
-I guess so that we can refer to this chapter in implementation and architecture.
-So we need to explain at least:
-+ Fact base
-+ Query mechanism
-+ Then is java code
-+ communication between java and drools?
-
-\drafting
-Drools is is Turing complete cite:weppenaar2011solving.
+\toReview
+Drools consists of three major concepts.
+First of all there is the data model, which are in principle just java classes.
+This data model is called the fact base.
+Then we have the rule queries, or left hand side.
+These indicate when a rule should be executed.
+Finally there is the right hand side, which is just a piece of java code
+that can modify the facts, or interlope with outside java code trough so called
+global variables.
+Also note that drools is Turing complete cite:weppenaar2011solving.
 
 *** Social practices
  <<social practice>>
