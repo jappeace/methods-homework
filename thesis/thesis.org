@@ -1,5 +1,5 @@
-#+TITLE: Jungian personality in a chat bot
-#+SUBTITLE: Better method of modeling chat bot dialogue
+#+TITLE: Jungian personality in a chatbot
+#+SUBTITLE: Better method of modeling chatbot dialogue
 # A serious communication game with personalities
 #+LANGUAGE: en
 #+LaTeX_CLASS: article
@@ -71,6 +71,8 @@
 
 #+BEGIN_CENTER
 
+In this thesis we explore how to add personality to a chatbot.
+
 \todo[inline]{abstract}
 
 #+END_CENTER
@@ -105,7 +107,7 @@ creative responses,
 all possible responses are scripted into the scenario
 and replying correctly relies on a simple /abc/ choice.
 To combat this an alternative serious game was made based on the
-chat bot Alice cite:weiderveld2016chat bot.
+chatbot Alice cite:weiderveld2016chatbot.
 To measure performance a rule engine was used, and to limit the domain
 to that of a doctor's appointment social practices were used.
 In this thesis we are interested in extending this work with personalities,
@@ -1005,7 +1007,7 @@ This is a sub field of AI that tries to combine linguistics with computer
 science.
 
 \cleared
-First of all are of course the chat bot systems, which are based upon case based
+First of all are of course the chatbot systems, which are based upon case based
 reasoning. A good example of this is the A.L.I.C.E. bot cite:wallace2001dont.
 These are mostly reactive systems that use pattern matching rules paired with
 "good" responses,
@@ -1083,7 +1085,7 @@ This is of course an information state approach too.
 
  \cleared
  To address this issue the a new implementation was made. 
- This version was based around the idea of a chat bot, in the form of the ALICE
+ This version was based around the idea of a chatbot, in the form of the ALICE
  bot.
  The AIML language was extended to allow emotional reactions of the agent.
  This new language was called S-AIML cite:augello2016model. 
@@ -1179,7 +1181,7 @@ The game uses a client server architecture (see figure [[fig:components]]).
 The client is written in unity and the server is a Java servlet running on
 wildfly.
 Communication between the two applications happens trough a web socket.
-A web socket is used because it allows the chat bot to pro-active,
+A web socket is used because it allows the chatbot to pro-active,
 which is not possible with a technology such as REST.
 
 #+NAME: fig:components
@@ -1286,9 +1288,9 @@ enter.
 [[file:img/uml/class.png]]
 
 \cleared
-The Websocket uses a Chat BotEngine to determine how to reply to userUtterances,
-Where Chat BotEngineImpl is the concrete implementation.
-Chat BotEngineImpl uses a KieSession for the drools and a Chat which is the alicebot.
+The Websocket uses a ChatbotEngine to determine how to reply to userUtterances,
+Where ChatbotEngineImpl is the concrete implementation.
+ChatbotEngineImpl uses a KieSession for the drools and a Chat which is the alicebot.
 Once the startGame message is received the kie service is started,
 which runs on a dedicated thread to do drool deliberation.
 At this point facts can be inserted for the drools to react upon, in case
@@ -1305,7 +1307,7 @@ class called predicates.
 This is a bag of variables the drools can use to keep track of the scenario
 progression.
 The setGlobal method of KieSession is used to expose global objects to drools.
-In this case the Chat BotEngineImpl is exposed.
+In this case the ChatbotEngineImpl is exposed.
 Insert can be used to insert facts.
 The difference between facts and globals is that facts are evaluated by
 the  rule base, where as globals are used by the rule base.
@@ -1318,7 +1320,7 @@ Currently globals are used as communication with external libraries
 |WebSocket|
 start
 :Receve StartGame message;
-:Construct a chat botengine;
+:Construct a chatbotengine;
 |#CCDDDD|Engine|
 :Start kie thread;
 :Register engine as controller in kie;
@@ -1341,7 +1343,7 @@ stop
 **** Text processing
 <<Text Processing>>
     \cleared
-     Text processing is done with help of the ALICE chat bot.
+     Text processing is done with help of the ALICE chatbot.
      This bot does the parsing and validation of AIML,
      with help of the knowledge encoded in AIML it can specify a response.
      AIML links a pattern to a template, where the pattern is a user input and
@@ -1402,7 +1404,7 @@ stop
      In this case if a user utters the sentence: "why are you here", the bot
      will check the drool database what his problem is and also update the
      scenario.
-     Once the scenario is updated the possible responses of the chat bot are
+     Once the scenario is updated the possible responses of the chatbot are
      changed, as can be seen by the precondition tag.
      The template tag has some extra tags. The insert tag inserts a fact into
      the drools knowledge base, the getDroolsTemplate tag queries the drools
@@ -1504,7 +1506,7 @@ Template -> [*]
 
 \cleared
 To make the influence of personality more concrete,
-and to get a possible expectation of what the chat bot should be able to do.
+and to get a possible expectation of what the chatbot should be able to do.
 We want to make a scenario of a doctor appointment where each
 patient has different personalities.
 First we have Sander the INTJ, secondly Susie the ENFP and Chris the ISTP.
@@ -1740,7 +1742,7 @@ selection on the result.
 \cleared
 We will interpret the Jungian functions attitudes as a mapping from an agents
 believes and senses towards an agent action and new believes.
-This is then reduced to the scope of a chat bot in the social practice.
+This is then reduced to the scope of a chatbot in the social practice.
 After this we will look what extra information the function attitudes need
 in an attempt to reduce the amount of possible believes.
 
@@ -2232,7 +2234,7 @@ we need to flatten the resulting connection list $[c]$.
 \cleared
 The introduction of the symbol graph is probably the most radical change this
 thesis proposes.
-It moves chat bots away from the idea that responses are many to one relations
+It moves chatbots away from the idea that responses are many to one relations
 always and opens up many to many relations.
 Please note that this is probably not only approach available.
 It would have been more robust to use owl cite:world2012owl for example.
@@ -2639,7 +2641,7 @@ the solid arrow means uses and the other lines mean interacts.
 
 \cleared
 The biggest difference from the original architecture is the removal of
-distinction between drools and the chat bot.
+distinction between drools and the chatbot.
 In the new architecture we make all information in the files available to
 the drools in a big database.
 This is starkly different than the architecture used in section [[
@@ -2911,7 +2913,7 @@ in this figure to save space.
 From [[fig:jungclass]] we can see the main clients of the low level drool package
 is indeed the =Believes= class and after that the =DialogueTree=.
 =Believes= provide the Jungian functions with bounded information about the mind
-of the chat bot as discussed in section [[BDI and Jung]].
+of the chatbot as discussed in section [[BDI and Jung]].
 In table [[tab:jung-class-relation-dialogue]] we can see the relationship
 between theoretic representation and that of this class diagram, excluding
 the ones discussed in previous section.
@@ -3995,7 +3997,7 @@ Hello -->> Greeting
 [[file:img/uml/dep:aimlsyms.png]]
 
 \cleared
-These changes remove the reactive nature of the chat bot,
+These changes remove the reactive nature of the chatbot,
 no longer do patterns indicate what to reply to,
 but instead simply what they are.
 This example can't be functional of course,
@@ -4718,7 +4720,7 @@ and therefore its more difficult to implement.
 
 \newlyCleared
 Although this feature isn't necessary for personality per se, its a really
-important chat bot feature.
+important chatbot feature.
 It allows symbols to become more flexible, and connections more dynamic.
 
 \cleared
@@ -5165,7 +5167,7 @@ Which will be discussed next.
 *** Believes
 \newlyCleared
 An example =believes.yml= can be seen in listing [[code:yaml:sc-believes]].
-This file describes several constants in the chat bot,
+This file describes several constants in the chatbot,
 that cannot, or should not be derived.
 This file in cooperation with the symbols and connection will be used
 to create an initial believe base.
@@ -5207,7 +5209,7 @@ definitions, however this wouldn't work in case no actors were ever defined
 (relying on the expansion mechanism for every connection).
 
 \newlyCleared
-Finally we need to determine the personality this chat bot will use.
+Finally we need to determine the personality this chatbot will use.
 This is just a sequence of the Jungian function names.
 There are no restrictions on this, except for your machine resources.
 You could make a personality of 500 levels deep, but that probably won't run
@@ -5482,20 +5484,20 @@ however most issues we found were with the functions and their interactions.
 * In conclusion
 \toReview
 In this work we have shown a possible interpretation of Carl Jung's theory of
-types in a chat bot.
-We built on top of the work of an existing chat bot,
+types in a chatbot.
+We built on top of the work of an existing chatbot,
 but decided to replace the core modeling language with an alternative
 because there was no space to do deliberation in.
 This effort resulted a much more free,
 less verbose and more precise method of modelling dialogue.
-It also made drools the center of the new chat bot,
+It also made drools the center of the new chatbot,
 where each step of processing a user message was decided by business rules.
 
 \newlyCleared
 Once this was done we could implement our interpretation of Jung and
 set up a test scenario to test the ideas presented in section [[Mapping to process]].
 From the test results in appendix [[final test]],
-we can see that the theory works in the implemented chat bot and scenario
+we can see that the theory works in the implemented chatbot and scenario
 for the INTJ, ENFP and ISTP personalities.
 
 \newlyCleared
@@ -5532,8 +5534,8 @@ addressing this issue could lead to more varied personalities.
 
 ** Future work
 \toReview
-Considering the move to drools to the center of chat bot deliberation,
-and a novel alternate take on modeling chat bot dialogue,
+Considering the move to drools to the center of chatbot deliberation,
+and a novel alternate take on modeling chatbot dialogue,
 there are a legion of possibilities to extend this work.
 We will present in this section a brief overview of the more obvious extensions,
 but we expect there will be many niches we haven't even considered.
@@ -5553,7 +5555,7 @@ Since utterances are already recorded into believes for some of the Jungian func
 we can define a norm with a drools query.
 Then we can react by moving to a particularly designed scene for repeating one self.
 This way we can work around several of the usual tricks cite:detectachatbot
-people use to detect if they're talking to a chat bot.
+people use to detect if they're talking to a chatbot.
 
 *** Multilogue implementation
 \toReview
@@ -5563,7 +5565,7 @@ However as discussed in section [[Practicalities]],
 there are some deeper difficulties with doing this,
 the biggest one is timing and interruption.
 Scheduling is hard (although well studied cite:liu1973scheduling).
-Timing is hard, considering there is little research on for example chat bot
+Timing is hard, considering there is little research on for example chatbot
 initiative, but this paper cite:spierling2006towards considered bot-bot
 interaction trough AIML.
 Since AIML was used in that paper we can safely say they weren't planning on
