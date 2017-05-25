@@ -4500,17 +4500,19 @@ cloud "symbols"{
 [[file:img/uml/dep:filedconns.png]]
 
 **** Actors
-\toReview
+\newlyCleared
 A foreign idea to AIML is the notion of actor restrictions.
-Since AIML will always model from the eyes of the bot, there is no need for this.
+Since AIML will always model from the perspective of the bot, there is no need for this.
 However because we model both bot and user, we do require this.
-this is especially important to prevent the bot from infinitly talking to itself,
-for example see section [[Turn taking]].
+this is especially important to prevent the bot from infinitely talking to itself,
+which is discussed more in section [[Turn taking]].
 
-\toReview
+\newlyCleared
 To make sure certain strange situations don't occur, such as the patient asking
 the doctor if the doctor is sick,
 we added actor based restrictions on connections.
+This is done trough the =restricted_to= key,
+which can be seen in listing [[code:yaml:complex]].
 Currently however this implementation is rather limited,
 it only allows for an "any" actor,
 which basically means any actor can say this,
@@ -5093,7 +5095,7 @@ We will discuss in this section how we modeled the dialogue and
 what methods we used to steer particular personalities over particular paths.
 
 *** Dialogue to YAML
-\toReview
+\newlyCleared
 The first task is just getting the utterances and the connections (without
 steering) into our knowledge base (the YAML files).
 In this section we will discuss how we modeled a part of the scenario discussed
@@ -5155,18 +5157,18 @@ However to use these we first need to setup the initial believes of the bot.
 Which will be discussed next.
 
 *** Believes
-\toReview
-Setting up =believes.yml= can be seen in listing [[code:yaml:sc-believes]].
-This file describes some constants in the chat bot,
+\newlyCleared
+An example =believes.yml= can be seen in listing [[code:yaml:sc-believes]].
+This file describes several constants in the chat bot,
 that cannot, or should not be derived.
 This file in cooperation with the symbols and connection will be used
 to create an initial believe base.
 
-\toReview
+\newlyCleared
 We need to setup the goals and values, which are the primary steering
 information sources.
-The higher a goal is in the goals list the more important it is, with this
-representation a goal can never be equal in importance.
+The higher a goal is in the goals list the more important it is,
+with this representation a goal can never be equal in importance.
 Goals are about informatives being uttered
 (see section [[Low level diagram]] and section [[Thinking]]),
 in our example the bot wants the doctor to utter the symbol =have_painkiller=
@@ -5174,35 +5176,35 @@ most,
 then after that he wants to tell the doctor he has a back pain.
 Goals are the most powerful method of steering the thinking functions.
 
-\toReview
+\newlyCleared
+We can also see the utility definition of values,
+higher is more attractive.
 Values, unlike goals can have an equal utility.
 Moreover unlike goals their utility can be added upon each other,
-goals are always unique per symbol however,
+this does not happen for goals,
 which brings us to the next difference.
 Whereas goals are encoded at believes level,
-values can be encoded in connections themselves (as we will see in the next section).
-See section [[Low level diagram]] and section [[Feeling]].
-What we see here is just the utility definition of values,
-higher is more attractive.
+values can be encoded in connections themselves
+(see section [[Low level diagram]] and section [[Feeling]]).
 Also note that this is a dictionary definition,
 meaning its up to the scenario implementer to decide which value names he wants
 to use.
-Finally whereas goals were about steering thinking functions, values are about
-steering the feeling functions.
+Finally whereas goals were about steering thinking functions,
+values are about steering the feeling functions.
 
-\toReview
+\newlyCleared
 Then we need to determine the available actors and which actor is the bot himself.
-This is required to determine which connections can be used, a connection that
-does not defines this gets expended into the actor list.
+This is required to determine which connections can be used,
+a connection that does not defines restrictions gets expended into the actor list.
 There was an idea of trying to derive the available actors from connection
 definitions, however this wouldn't work in case no actors were ever defined
-(relying on the expension mechanism for every connection).
+(relying on the expansion mechanism for every connection).
 
-\toReview
+\newlyCleared
 Finally we need to determine the personality this chat bot will use.
 This is just a sequence of the Jungian function names.
-There are no restrictions on this, except for you machine resources.
-So you could make a personality of 500 levels deep, but that probably won't run
+There are no restrictions on this, except for your machine resources.
+You could make a personality of 500 levels deep, but that probably won't run
 very well.
 
 #+CAPTION: Believes YAML file
@@ -5228,26 +5230,26 @@ actors:
 personality: [Ne, Fi, Te, Si]
 #+END_SRC
 
-\toReview
+\newlyCleared
 Loading the believes inside a YAML file is a design conflict:
 "Should believes be loaded from YAML or inside the Drools?"
 There is a constant pull between these two possibilities.
 Drools is much more flexible,
 because it is Turing complete cite:weppenaar2011solving,
-however YAML is usually less verbose.
+however YAML can be less verbose as just a data format.
 The issue is that we now indicate that this structure is a standard part of the
 bot, but its only part of the personality component.
 On the other hand one needs to have a method of deciding which connections ought
 to be used anyway,
-if you always want to use the same connections you may as well have chosen to
-use the ALICE bot.
+if you always want to use the same connections for a pattern you may as well
+have chosen to use the ALICE bot.
 Doing it this way was also a method of providing a scenario descriptor file,
 drools however may have been better suited for that.
 This decision probably needs to be reconsidered once a multilogue architecture
 will be implemented (see section [[Multilogue architecture]]).
 
 *** Steering the bot
-\toReview
+\newlyCleared
 As discussed before the primary sources of steering the bot are perlocutionary
 values and goals.
 However these are not our only tools, if we want to make distinctions between
@@ -5257,21 +5259,21 @@ For example Te has as default behavior, meaning no goals present,
 to prefer connections that transition to another scene,
 whereas Ti prefers connections that lead to more options (see section [[Thinking]]).
 
-\toReview
+\newlyCleared
 In listing [[code:yaml:model:connext]] we can see the extended version of
 listing [[code:yaml:model:initial-connections]],
-we can already see how the functions maybe influenced by this,
-we expect for example personalities with a dominant feeling functions to go for
+with a quick glance, we can see how the functions maybe influenced by this.
+For example we expect personalities with a dominant feeling functions to go for
 the status option, because it gives so much utility.
 Leading out from the status option there are only options that can be uttered
-by the doctor, simply because it would be strange to continue talking after
-asking "How are you?".
+by the doctor, this is done simply because it would be strange to continue
+talking after asking "How are you?".
 
-\toReview
-So if the status symbol is liked more by feeling function Fi,
+\newlyCleared
+If the status symbol is liked more by feeling function Fi,
 why did in section [[Testing]] Susie (with dominant Fi) utter a greeting
 first?
-The answer is in low level replies (see section [[Operation]]),
+The answer is in low level replies (explained in detail in section [[Operation]]),
 of which we can see an example in listing [[code:drool:lowlevelreply]].
 What this does is execute code upon insertion of a symbol, in this case it just
 replies with a greeting.
@@ -5333,12 +5335,12 @@ then
 end
 #+END_SRC
 
-\toReview
+\newlyCleared
 If we also take listing [[code:yaml:model:gathering]] and the believes into
 consideration,
 we can see why thinking functions may like the =ask_reason_here= option,
 first of all its a scene transition, which is Te enjoys, but more importantly, 
-telling about the backpain is a goal in the believes.
+telling about the back pain is a goal in the believes.
 So any personality that can think ahead with its irrational functions would
 probably like this option.
 
@@ -5359,11 +5361,11 @@ to_defaults:
 #+END_SRC
 
 
-\toReview
+\newlyCleared
 There are several other tools for steering available too which were
 discussed in [[Replacing AIML]] such as before fields and templates.
 However these can't be used to steer personality in particular,
-although they have influence on the amount of options.
+besides having an influence on the amount of options, and therefore Ti.
 They can also of course be combined with the methods discussed before.
 
 \FloatBarrier
@@ -5376,10 +5378,17 @@ We test these individually by creating specific believes and a dialogue tree for
 input, then we check the output against an expected believe base and dialogue
 tree.
 
-\toReview
+\newlyCleared
 On the highest level we have the so called validation tests.
 With these we check if the bot behaves as expected by setting up a scenario,
 and then executing the bot, after which we run trough the scenario manually.
+
+\toReview
+Traditionally there is also an in-between option called integration tests,
+which test combined parts of the system, but does so in an automated manner.
+However we haven't used those because setting them up initially takes much more
+effort than simple unit tests.
+Validation tests are quick to setup because the process isn't automated.
 
 *** Unit tests
 \newlyCleared
@@ -5466,49 +5475,50 @@ however most issues we found were with the functions and their interactions.
 \clearpage
 * In conclusion
 \toReview
-In this work we have shown a possible interpertation of carl Jung's theory of
+In this work we have shown a possible interpretation of Carl Jung's theory of
 types in a chat bot.
 We built on top of the work of an existing chat bot,
-but decided to replace the core moddeling langauge with an alternative
+but decided to replace the core modeling language with an alternative
 because there was no space to do deliberation in.
-This effort resulted in drools becoming the center of the new chatbot,
-where each step of processing a user message was decided by buisness rules.
-\todo{This alone opens up a legion of possiblities, however we want the conclusion to be short so discuss it in future work I guess}
+This effort resulted a much more free,
+less verbose and more precise method of modelling dialogue.
+It also made drools the center of the new chat bot,
+where each step of processing a user message was decided by business rules.
 
-\toReview
+\newlyCleared
 Once this was done we could implement our interpretation of Jung and
 set up a test scenario to test the ideas presented in section [[Mapping to process]].
 From the test results in appendix [[final test]],
 we can see that the theory works in the implemented chat bot and scenario
 for the INTJ, ENFP and ISTP personalities.
 
-\toReview
+\newlyCleared
 This is by no means a prove that this will work in all instances.
-A first step towards that would be to model the thoeries in section
-[[BDI and Jung]] in a formal langauge discussed in section [[Logic of BDI]].
+A first step towards that would be to model the theories in section
+[[BDI and Jung]] in a formal language discussed in section [[Logic of BDI]].
 We haven't had a need to do such an effort yet, and were more concerned with
 getting a working implementation.
 
 \todo[inline]{Comparison? (Maybe we can compare with ALICE, or other personality based schemes?)}
 ** Discussion
-\toReview
-There are some odds and ends that haven't been adressed.
+\newlyCleared
+There are some odds and ends that haven't been addressed.
 A really major one is the way we expected the function attitude order type to
 be and how it was.
 Section [[Mapping function attitudes to a process]] was expecting an alternating
 order of rational and irrational functions, so $ABAB$. 
-However upon closer inspection of the theory it, turned out to be a rotating order,
-along the lines of $ABBA$.
-Although this has little effect upon the dominant and auxilary functions,
+However upon closer inspection of MBTI specific theory it,
+turned out to be a rotating order, along the lines of $ABBA$.
+Although this has little effect upon the dominant and auxiliary functions,
 this may be problematic for the deeper functions.
 We suspect that there may be really only 8 personalities, rather than at least 16.
-Additional experimentation is required to identify this problem,
+Additional experimentation is required to verify this problem,
 and potentially start looking for a solution.
 
-\toReview
+\newlyCleared
 Another issue is that although the bot is functional,
 the way we implemented the rational functions is rather simplistic.
-No actual minimax algorthim is used (or something similiar that would work with
+No actual mini-max algorithm is used (or something similar that would work with
 non zero sum games).
 We instead just use static evaluation at each level.
 So no dialogue tree information is used in the deliberation,
