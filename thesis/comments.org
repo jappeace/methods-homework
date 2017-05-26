@@ -2,27 +2,22 @@
 
 * Dignum
 
-1. Wat moet ik precies doen om het makkelijk te maken voor een andere student?
-   1. Er is al een build guide, dus in princiep zou het vrij makkelijk moeten
-      zijn voor een andere student om het over te nemen.
-      Deze bouw gids gaat uit van linux (ubuntu of gentoo)
-      omdat package managment instalatie stukken makkelijker maakt.
-      Je moet bijvoorbeel mariadb (mysql) instaleren en maven instaleren
-      Wat niet triviaal is.
-      Daarnaast word de commandline gebruikt om deze software te gebruiken.
-      Ik weet niet hoe derglijke dingen op windows gaan.
-   2. De bot is in princiepe niet afhankelijk van mariadb, mysql of maven.
-      Ik zou een variant kunnen maken die deze afhankelijkheden niet langer heeft.
-      Ik had het destijds zo gedaan omdat er een client server achtectuur is.
-      Wat ik dan doe is de bot opzetten als een library.
-   3. Mischien is het beste dan nog wel dit te overleggen met manuel?
-      Zodat die het aan een andere student kan uitleggen?
-      Ik dacht dat manuel het ook zo deployde...
-      Maar volgens mij had hij ook een applicatie ofzo gemaakt om te testen.
-      Het probleem was dat deze niet bij mij werkte omdat javaFX werd gebruikt.
-2. Kan ik de code opensourcen?
-   1. Bijvoorbeeld met LGPL, zelfde licentie als de ALICE bot.
-   2. Moet ik ook overleggen met Manuel..
+> Wat ik ergens in de laatste hoofdstukken wil zien is een doorlopen van de
+  scenario's en dan aangeven wat er nu intern gebeurt zodat duidelijk is waar
+  de persoonlijkheid invloed heeft en waar dat zichtbaar is.
+  In de appendix zeg je wel dat er iets uitkomt maar niet hoe. 
+
+Dit is gedaan in het implemenatie hoodstuk, in sectie "making the scenario"
+Specifiek de subsecties "Believes" en "steering the bot".
+Ik had er aan gedacht om dit nog specifieker te maken,
+maar dan word het broncode bij langs lopen.
+Wat opzich wel te doen is aangezien het persoonlijkheid specifieke gedeelte
+mischien 200 regels java code in totaal is exclusief commentaar
+(wat het aantal verdubbeld).
+Maar omdat u zij dat broncode geen centrale rol speelt heb ik hier tegen besloten.
+
+Ik vroeg me af welke figuren naar de appendix verplaatst horen te worden,
+alle, of alle grote? en of dit  inclusief tabellen, listings en formules is.
 
 * Manuel
 
