@@ -2,6 +2,12 @@
 
 * Dignum
 
+Uw email kwam precies op tijd omdat ik uit dingen begon te raken die ik nog kon
+doen.
+(naast de hele applicatie naar gradle verplaatsen en alle grote dependencies
+scrhappen, wat bouwen zeer makkelijk zal maken, maar een significantie
+investering van tijd vraagt (een dag tot een week denk ik..))
+
 > Wat ik ergens in de laatste hoofdstukken wil zien is een doorlopen van de
   scenario's en dan aangeven wat er nu intern gebeurt zodat duidelijk is waar
   de persoonlijkheid invloed heeft en waar dat zichtbaar is.
