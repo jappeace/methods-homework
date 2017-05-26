@@ -111,7 +111,7 @@ Another party is required to communicate with,
 and a tutor or teacher has to be there to give feedback.
 Serious games can be used to train people with these kind of skills
 cite:swartout2013virtual.
-Therefore a general "communicate!" game was developed.
+Therefore a general "communicate!" game was developed. \dignum{Communicate was made for medicine students}
 Wherein teachers can create scenarios to let their students practice with
 communication cite:jeuring2015demo.
 
@@ -125,7 +125,7 @@ and replying correctly relies on a simple /ABC/ choice.
 To combat this an alternative serious game was made based on the
 chatbot Alice cite:weiderveld2016chatbot.
 To measure performance a rule engine was used, and to limit the domain
-to that of a doctor's appointment social practices were used.
+to that of a doctor's appointment social practices were used. \dignum{SP for doctor consult was used in this scenario. But not as a restriction. For other scnearios other SP's can be used}
 In this thesis we are interested in extending this work with personalities,
 where we consider personalities to be a preference for a process rather than
 content cite:campos_mabs2009.
@@ -149,7 +149,11 @@ we're planning to extend.
 After this we'll discuss the implementation.
 Finally we'll compare the different implementations.
 
+\todo[inline]{Describe the structure of this document}
 ** Related work
+\dignum{Needs to be moved to behind the background work}
+\ask{Wait so in the background chapter? Or behind?}
+\todo{I guess we just move it into the background chapter at the end}
 <<Related work>>
 \cleared
   To simulate personality in communication games there have been already several
@@ -160,7 +164,7 @@ Although argumentation is not the same as communication we can consider the
 method used to make the personality.
 In this paper a personality model is introduced based on OCEAN.
 To move from personality values in OCEAN towards action selection fuzzy logic
-is used.
+is used. \dignum{Give examples, and tell what you would do differently}
 However this has a major disadvantage in that a lot of rules need to be
 added to do action selection.
 This can make action selection opaque.
@@ -171,7 +175,7 @@ unwanted behavior many rules need to be inspected before the change can be made.
 
 \cleared
 In agents with with personalities Cocu tried making a complete game based
-on MBTI cite:cocu2015agents.
+on MBTI cite:cocu2015agents. \dignum{???} \ask{... what means =???= ?}
 However communication was never implemented and personality got reduced to
 doing a single action.
 
@@ -189,7 +193,7 @@ This kind of methodology is called content orientated cite:campos_mabs2009,
 the personality, would and should change depending on context.
 
 \cleared
-Campos used the MBTI to create BDI based agents cite:campos_mabs2009.
+Campos used the MBTI to create BDI based agents cite:campos_mabs2009. \dignum{Tell more about this, what means fine grained, how does the architecture of campos look?}
 We will use a more fine grained version of MBTI but his architecture is used,
 in which personality will be processed orientated rather than content
 orientated.
@@ -267,9 +271,9 @@ and finally we will look at the serious game in its existing form.
 
  \cleared
  The data Tupes used is from Cattell cite:cattell1947confirmation and several
- others. Cattell used a rating scheme,
+ others. Cattell used a\todo{this was marked??} rating scheme,
  where a trait was introduced and all test subjects then had to rate all other
- test subjects else as average, below or above average for that specific trait.
+ test subjects as average, below or above average for that specific trait.
  Persons could also use one extreme rating per trait for one person.
  These traits in the test were based on the /personality sphere/ concept which
  tried to cover the entire surface of personality by providing many small trait
@@ -312,7 +316,7 @@ and finally we will look at the serious game in its existing form.
  - Agreeableness or altruism, a low score would indicate that you don't want to
    share and generally don't trust people.
  - Neuroticism or nervousness, a high score indicates that you like to brag and
-   get upset when someone is angry at them.
+   get upset when someone is angry at you.
 
  \cleared
  The big five has been extensively tested and the result has been replicated
@@ -337,7 +341,7 @@ and finally we will look at the serious game in its existing form.
 
  \cleared
  There are some existing solutions in which OCEAN is implemented, for
- example Allbeck used it as a mapping to the EMOTE system cite:allbeck2002toward,
+ example Allbeck cite:allbeck2002toward used it as a mapping to the EMOTE system,
  whereas cite:durupinar2008creating used the OCEAN values as a low level mapping
  in steering behaviors
  and finally cite:etheredge2016personality used the values for action selection
@@ -467,7 +471,7 @@ and finally we will look at the serious game in its existing form.
    almost every situation,
    this also makes them very inspiring leaders because
    they are very excited about their ideas cite:neproffesionadvice.
- + $N_i$ stands for introverted intuition. Looks new possibilities in ideas.
+ + $N_i$ stands for introverted intuition. Looks for new possibilities in ideas.
    A typical occupation of this type is artist or visionary
    cite:hall1973primer104nitype,
    this is because connecting ideas with each other comes natural to this type.
@@ -546,10 +550,10 @@ and finally we will look at the serious game in its existing form.
  \cleared
  The MBTI is extremely popular in a sub field called Organizational Development
  (OD) cite:sample2004myers. 
- But it has gotten some heavy criticism in from the field of psychology.
+ But it has gotten some heavy criticism from the field of psychology.
 
  \cleared
- MBTI has always used a continues scoring system in the results.
+ MBTI has always used a continuous scoring system in the results.
  However the creators insist that type is enough for making assessment judgments.
  Since MBTI reduces the test scores to type,
  it is expected that most of the population would fall into either proposed
@@ -561,7 +565,7 @@ and finally we will look at the serious game in its existing form.
  cite:salter2005two.
  In an extended investigation cite:arnau2003jungian into weather Jungian
  constructs are truly categorical suggested however that this was maybe not
- the case and a continues scale for assessment judgements are required.
+ the case and a continuous scale for assessment judgements are required.
 
  \cleared
  In cite:sipps1985item the MBTI is put trough a method called factor analyses.
@@ -638,19 +642,19 @@ and finally we will look at the serious game in its existing form.
  The internal consistency was also measured which proved to be better than
  MBTI but there was still a dependency between S/N and P/J which remains
  unexplained cite:kier1997new.
- The PPSDQ is internally most consistent of the discussed alternatives
+ The PPSDQ is internally the most consistent of the discussed alternatives
  (excluding OCEAN) cite:arnau1999alternative.
 
 **** SL-TDI
  \cleared
- SL-TDI measures functions by presenting 20 situations and then giving subject
+ SL-TDI measures functions by presenting 20 situations and then giving subjects
  possible actions which correlate with the functions.
  The subjects then have to indicate how likely it is that they would choose that
  particular action cite:arnau2000reliability.
 
  \cleared
  It becomes rather straight forward to make a function preference of the 
- measurement of SL-TDI since the question directly measure the Jungian
+ measurement of SL-TDI since the question directly measures the Jungian
  functions.
  A possible personality type therefore would be:
  \[ S_i \geq T_i \geq S_e \geq F_e \geq N_i \geq T_e \geq N_e \geq F_i \]
@@ -705,7 +709,7 @@ and finally we will look at the serious game in its existing form.
  attitudes no longer have to alternate.
  This either means that functions are independent (thereby rejecting some of Jung's work),
  or that they have to work in some kind of combination.
- If they work in some kind of combination and we have to following preference:
+ If they work in some kind of combination and we have the following preference:
  \[ T_e > T_i > S_i > N_i > F_e > N_e > S_e > F_i\]
  We select the first function to work with, but it requires some information now,
  what to do?
@@ -739,6 +743,7 @@ and finally we will look at the serious game in its existing form.
  discussed in [[Related work]] which include executable implementations.
 
 *** Agents background
+ \dignum{Don't use BDI but IVA as basis. For example the Fatima architecture. This is more aimed at interaction with characters}
  \cleared
  In the literature there is little consensus on what exactly an agent is,
  however there is a general consensus that an agent is /autonomous/
@@ -861,6 +866,7 @@ An example of a drool rule can be seen in listing [[code:drool:lowlevelreply]].
 
 *** Social practices
  <<social practice>>
+ \dignum{Introduction: Why social practices? Relevant for giving context to dialouge, and therefore expectations, norms, social effects etc.}
  \todo[inline]{(extra) possible sources: Weber, Durkleim, Hobermas, latour/reckwitz}
  \todo[inline]{ difference between norms and sp is that sp has no moral value, but you *violate* norms }
  \cleared
@@ -907,7 +913,7 @@ in Nordic waling this can be for example talking with your partner,
 or stopping to get a stone out of your shoe.
 They don't need to all be performed but are there just as options.
 This is the first construct that wasn't covered by the other model.
-/Plan patterns/ are blue prints for the eventual plan.
+/Plan patterns/ are blue prints for the eventual plan. \dignum{No, plan patterns set the boundaries in which plans can be made}
 An example of a doctor appointment plan pattern can be seen in
 figure [[fig:sp-activity]].
 If you go to the doctor the first thing you do is some kind of greeting.
@@ -979,12 +985,13 @@ stop
 #+RESULTS[35679ceefcd43b1884cc8c502d27ae59aaa34043]: fig:sp-activity
 [[file:img/uml/sp-activity.png]]
 
+  \dignum{A plan pattern isn't an abstract workflow! It only gives time order to parts of a dialogue}
   \cleared
   We can imagine personality should have /a/ influence on social practice
   selection and of course plan influence. As far as the authors are aware however,
   there hasn't been any prior work on this subject. But we can speculate for
   example that when considering physical context someone that is domination by a
-  Sensing function would check all artifacts more rigorously than someone
+  Sensing function would check all facts more rigorously than someone
   dominated by an Intuition.
 
   \cleared
@@ -1087,7 +1094,7 @@ This is of course an information state approach too.
  In our model we conceptualize the Jungian functions also as a process.
  We comment more on this in section [[Jungian BDI]].
  
-** The serious game
+** Salve
  <<The serious game>>
  \cleared
  This chapter describes the game we inherited from our predecessors.
@@ -1526,6 +1533,7 @@ Template -> [*]
 [[file:img/uml/figstateaiml.png]]
 
 ** Personality influence case study
+\dignum{This is no background and doesn't belong here. It is part of the experiment}
 <<Personality influence case study>>
 
 \cleared
@@ -5685,7 +5693,6 @@ A final possible extension would be to create a graphical scenario editor.
 Doing this always costs more time than expected and probably should be avoided
 until above mentioned systems are in place.
 
-# start appendix, dump al floats and leave some room
 
 \clearpage
 * Acknowledgements
@@ -5698,8 +5705,8 @@ Also thanks to Dr. M. Gentile for helping with implementation matters.
 Finally I want to tank my parents for providing me with housing and a (mostly)
 calm working environment.
 
+# start appendix, dump all floats and leave some room
 \clearpage
-
 \appendix
 
 * References
@@ -6541,10 +6548,11 @@ Conversation went according to script.
 \todo[inline]{Extracting information from meanings isn't very DRY right now, for example saying how is your foot? Could perhaps be splitup into statusInquiry + foot. However I don't know how to do this better right now, perhaps it could be a natural result of dubble matching but we lose the order inforamtion.}
 ** Rough planning.
 *** Report
-+ Spell check
 + Integrate dignum's comments
 + Make (highlighted) formulas floats and add a caption to them
 + Fix those comments
+
+
 *** Make usable for other student
 - Document about python scripts and shell scripts (how to use),
   make sure succerrer can take it on easily.
