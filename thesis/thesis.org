@@ -101,8 +101,7 @@ Jung, chatbot, drools, YAML, AIML, MBTI
 \newpage
 
 * Introduction
-\todo[inline]{since this was written so long ago, I think we should reread it (some are as old as 2016-12-05)}
-\cleared
+\toReview
 Communication is the foundation of our modern society.
 Having good communication skills can help individuals in both professional as
 well as in their personal lives.
@@ -111,11 +110,12 @@ Another party is required to communicate with,
 and a tutor or teacher has to be there to give feedback.
 Serious games can be used to train people with these kind of skills
 cite:swartout2013virtual.
-Therefore a general "communicate!" game was developed. \dignum{Communicate was made for medicine students}
+Therefore the "communicate!" game was developed which was specifically aimed at
+medical students.
 Wherein teachers can create scenarios to let their students practice with
 communication cite:jeuring2015demo.
 
-\cleared
+\toReview
 This game was script based, the teacher made a scenario and the student would
 follow the choices predefined by the teacher.
 A script based game has of course the weakness that a student can't use
@@ -124,8 +124,9 @@ all possible responses are scripted into the scenario
 and replying correctly relies on a simple /ABC/ choice.
 To combat this an alternative serious game was made based on the
 chatbot Alice cite:weiderveld2016chatbot.
-To measure performance a rule engine was used, and to limit the domain
-to that of a doctor's appointment social practices were used. \dignum{SP for doctor consult was used in this scenario. But not as a restriction. For other scnearios other SP's can be used}
+To measure performance a production rule engine was used called drools,
+the social practice of a doctor consult was used in this particular instance,
+for other scenarios other social practices could be used.
 In this thesis we are interested in extending this work with personalities,
 where we consider personalities to be a preference for a process rather than
 content cite:campos_mabs2009.
@@ -137,66 +138,16 @@ personalities will help addressing this issue.
 
 \cleared
 Since the personality topic has become quite popular in recent years
-some thoughts will be devoted to related work.
+some thoughts will be devoted to related work. \dignum{Specify in which chapters this is located}
 After that,
 to validate our work according to personality research
 we'll look at existing personality theories and their advantages and disadvantages,
-keeping practical considerations in mind.
 Then we'll have a look at idiomatic AI programming and how in theory personality
 could be combined with AI.
 We continue by taking a close look at the state of the existing software that
 we're planning to extend.
 After this we'll discuss the implementation.
 Finally we'll compare the different implementations.
-
-\todo[inline]{Describe the structure of this document}
-** Related work
-\dignum{Needs to be moved to behind the background work}
-\ask{Wait so in the background chapter? Or behind?}
-\todo{I guess we just move it into the background chapter at the end}
-<<Related work>>
-\cleared
-  To simulate personality in communication games there have been already several
-works proposed.
-Etheredge used the OCEAN personality theory to create argumentative
-agents cite:etheredge2016personality.
-Although argumentation is not the same as communication we can consider the
-method used to make the personality.
-In this paper a personality model is introduced based on OCEAN.
-To move from personality values in OCEAN towards action selection fuzzy logic
-is used. \dignum{Give examples, and tell what you would do differently}
-However this has a major disadvantage in that a lot of rules need to be
-added to do action selection.
-This can make action selection opaque.
-It is for example not immediately clear how a higher anxiety will influence
-action selection.
-Having a lot of rule also make maintenance hard, if for example there is an
-unwanted behavior many rules need to be inspected before the change can be made.
-
-\cleared
-In agents with with personalities Cocu tried making a complete game based
-on MBTI cite:cocu2015agents. \dignum{???} \ask{... what means =???= ?}
-However communication was never implemented and personality got reduced to
-doing a single action.
-
-\cleared
-Van den Bosch also chose to use OCEAN to model characters in a serious
-communication game cite:van2012characters.
-He used a nested probabilistic if else structure to decide on how agents should
-interact.
-His methodologies had some shortcomings however,
-for example a not agreeable person was defined as someone who'd had a high
-probability of telling facts about himself.
-Which in certain situations could be considered strange,
-for example a spy who was captured.
-This kind of methodology is called content orientated cite:campos_mabs2009,
-the personality, would and should change depending on context.
-
-\cleared
-Campos used the MBTI to create BDI based agents cite:campos_mabs2009. \dignum{Tell more about this, what means fine grained, how does the architecture of campos look?}
-We will use a more fine grained version of MBTI but his architecture is used,
-in which personality will be processed orientated rather than content
-orientated.
 
 
 \clearpage
@@ -1532,179 +1483,51 @@ Template -> [*]
 #+RESULTS[e004be8f35a1f147fb2883719a5fb53bf630e02b]: fig:state:aiml
 [[file:img/uml/figstateaiml.png]]
 
-** Personality influence case study
-\dignum{This is no background and doesn't belong here. It is part of the experiment}
-<<Personality influence case study>>
+
+** Related work
+<<Related work>>
+\cleared
+To simulate personality in communication games there have been already several
+works proposed.
+Etheredge used the OCEAN personality theory to create argumentative
+agents cite:etheredge2016personality.
+Although argumentation is not the same as communication we can consider the
+method used to make the personality.
+In this paper a personality model is introduced based on OCEAN.
+To move from personality values in OCEAN towards action selection fuzzy logic
+is used. \dignum{Give examples, and tell what you would do differently}
+However this has a major disadvantage in that a lot of rules need to be
+added to do action selection.
+This can make action selection opaque.
+It is for example not immediately clear how a higher anxiety will influence
+action selection.
+Having a lot of rule also make maintenance hard, if for example there is an
+unwanted behavior many rules need to be inspected before the change can be made.
 
 \cleared
-To make the influence of personality more concrete,
-and to get a possible expectation of what the chatbot should be able to do.
-We want to make a scenario of a doctor appointment where each
-patient has different personalities.
-First we have Sander the INTJ, secondly Susie the ENFP and Chris the ISTP.
-This type selection will give a rough usage of most Jungian functions.
-In all cases the patients have the same problem, a back pain.
-The cause of this problem in all cases is a worn out back.
+In agents with with personalities Cocu tried making a complete game based
+on MBTI cite:cocu2015agents. \dignum{???} \ask{... what means =???= ?}
+However communication was never implemented and personality got reduced to
+doing a single action.
 
 \cleared
-After the dialogue we will also discuss the motivations for saying things the
-way they do.
-This is important since because we are doing AI and not just computer science
-we need to have an understanding what is going on in the mind of our test
-subjects.
-
-
-*** Sander the INTJ
-\cleared
-First we should note the dominant and auxiliary functions of the someone with an
-INTJ MBTI type.
-An INTJ has as dominant function introverted intuition $N_i$ and as auxiliary
-thinking extroverted $T_e$.
-We would expect these function to be most obvious in the dialogue
-(as discussed in section [[sec:types]]).
-$N_i$ mainly focuses on connecting ideas and extroverted analyses objects
-in the external world.
-Combined with each other we get a personality that focuses on getting to goals
-by analyzing situation far ahead of time.
-This results in the expected dialogue which can be seen in table
-[[tab:sander-conv-doct]].
-
-#+CAPTION: Sander in conversation with the doctor
-#+NAME:   tab:sander-conv-doct
-| Who      | Utterance                                         |
-|----------+---------------------------------------------------|
-| Doctor   | Hi                                                |
-| /Sander/ | /Hello/                                           |
-| Doctor   | How can I help you?                               | 
-| /Sander/ | /I have a back pain./                             |
-| Doctor   | When did this first occur?                        |
-| /Sander/ | /When I lifted a heavy object./                   |
-| Doctor   | Oh, yes then you need some pain killers for this. |
-| /Sander/ | /Thank you doctor/                                |
+Van den Bosch also chose to use OCEAN to model characters in a serious
+communication game cite:van2012characters.
+He used a nested probabilistic if else structure to decide on how agents should
+interact.
+His methodologies had some shortcomings however,
+for example a not agreeable person was defined as someone who'd had a high
+probability of telling facts about himself.
+Which in certain situations could be considered strange,
+for example a spy who was captured.
+This kind of methodology is called content orientated cite:campos_mabs2009,
+the personality, would and should change depending on context.
 
 \cleared
-Sander gives the doctor the information he needs to come to the conclusion he
-himself probably already had drawn.
-We could even expect him to ask for the medicine immediately,
-however since this could make the doctor question his motives
-(he could be addicted for example) he decides not to do this.
-Doctor however doesn't go into the source of the problem.
-He just assumed the patient overstretched himself because he lifted something
-heavy.
-
-*** Susie the ENFP
-\cleared
-As an ENFP, Susie has the dominant function of extroverted intuition $N_e$ and
-as auxiliary function of introverted feeling $F_i$.
-Therefore these functions should be most dominant in the dialogue.
-$N_e$ focuses on finding possibilities in situations and $F_i$ is a internal
-value based judgement function.
-Combined with each other they make a personality who has strong ideals and is
-enthusiastic about them.
-The expected dialogue can be seen in [[tab:suzie-conv-doct]].
-
-#+CAPTION: Susie in conversation with the doctor
-#+NAME:   tab:suzie-conv-doct
-| Who     | Utterance                                                          |
-|---------+--------------------------------------------------------------------|
-| Doctor  | Hi                                                                 |
-| /Susie/ | /Hello/                                                            |
-| /Susie/ | /How are you today doctor?/                                        |
-| Doctor  | I'm good, how can I help you?                                      |
-| /Susie/ | /I'm afraid I need some medicine/                                  |
-| Doctor  | Medicine? Why do you need that?                                    |
-| /Susie/ | /Well, I was watering the plants and all the sudden,/              |
-| /Susie/ | /I got this pain in my back./                                      |
-| /Susie/ | /Do you think I'm allergic to plants?/                             |
-| Doctor  | Ha ha, no, I think we need to make a scan of your back.             |
-| Doctor  | Because a watering can is a little to light to get back-pain from. |
-| /Susie/ | /Of course doctor./                                                |
-| Doctor  | Can you go to the hospital next Friday at 13:00?                   |
-| /Susie/ | /Yes, I will go then./                                             |
-
-\cleared
-We can now see a stark difference with the INTJ personality.
-First of all being dominated by extroversion it was Susie who took the initiative.
-Secondly she directly asked for medicine, without thinking about the
-consequences but knowing she probably needs it.
-Then when explaining the situation she jumped to an idea of why she could have
-this sudden pain,
-without thinking about if it even makes sense that you are all the sudden
-allergic to plants that have been in your home for a while.
-The doctor does however come to the conclusion that something is odd about
-getting a back pain from lifting a watering can.
-So because Susie is more talkative the doctor decides to do more tests rather
-than just giving some pain killers.
-*** Chris the ISTP
-\cleared
-With his ISTP type, Chris has the dominant function of $T_i$ and then the
-auxiliary function of $S_e$.
-We therefore would expect these functions to do most of the work in the dialogue.
-$T_i$ uses an internal reasoning structure to make judgments about the world
-and $S_e$ uses the senses to gather information.
-The conversation can be seen in table [[tab:chris-conv-doct]].
-
-#+CAPTION: Chris in conversation with the doctor
-#+NAME:   tab:chris-conv-doct
-| Who     | Utterance                                                         |
-|---------+-------------------------------------------------------------------|
-| Doctor  | Hi                                                                |
-| /Chris/ | /Hello/                                                           |
-| Doctor  | How can I help?                                                   |
-| /Chris/ | /I have back pain doctor./                                        |
-| Doctor  | When did this first occur?                                        |
-| /Chris/ | /Well I was watering the plants,/                                 |
-| /Chris/ | /Perhaps I put to much water in the watering can/                 |
-| Doctor  | Yes, that could be the case.                                      |
-| Doctor  | However I would like to make a scan of your back just to be sure. |
-| /Chris/ | /Can't you just give some pain killers to help me?/               |
-| Doctor  | Yes but that will only work temporary.                            |
-| Doctor  | So let's plan a scan at the hospital next Friday at 13:00?        |
-| Doctor  | I can give you some pain killers meanwhile.                       |
-| /Chris/ | /Okay, thanks doctor/                                             |
-
-\cleared
-So this dialogue looks a lot more like that Sander (INTJ) than that of Susie (ENFP).
-However the motivation for the responses are quite different than that of Sander.
-Chris hadn't figured out yet that he needed pain killers when he arrived,
-since his auxiliary function is $S_e$, he hadn't thought that deep about the
-problem.
-He just knew he was in much pain, and knew the doctor could help with that.
-
-\cleared
-The difference with the dialogue of Susie is again quite obvious.
-He didn't took the initiative because his dominant function isn't extroverted,
-and unlike Susie he correctly asserted when the doctor asked about it
-that the object he lifted may have been to heavy.
-
-\cleared
-The conclusion is again different.
-Because one of the main functions of Chris is $S_e$ he wants to deal with the
-pain /now/.
-Therefore he asks the doctor explicitly for pain killers,
-without considering that only the tests could actually solve the problem
-permanently. 
-However the doctor comes to a middle ground and besides ordering the test also
-prescribes painkillers.
-
-*** Influence of personality
-\cleared
-So we had 3 different doctor appointments all with the same problem but with
-different personalities being at play.
-The end result was three different outcomes for each patient.
-Sander probably will be back next week with the same complaints at the doctor.
-However this time his situation may have worsened.
-Susie will get her problem eventually diagnosed like Chris,
-however Susie won't have access to painkillers meanwhile.
-Which may be uncomfortable to her.
-
-\cleared
-From this case study we can conclude that training doctors to deal with
-different personalities is in fact very desirable because it can allow
-patients to be treated sooner and more effective.
-Sander could have had his problem diagnosed a week earlier and Susie could have
-had access to pain killers for example.
-
+Campos used the MBTI to create BDI based agents cite:campos_mabs2009. \dignum{Tell more about this, what means fine grained, how does the architecture of campos look?}
+We will use a more fine grained version of MBTI but his architecture is used,
+in which personality will be processed orientated rather than content
+orientated.
 
 \clearpage
 * BDI and Jung 
@@ -5124,6 +4947,179 @@ When one starts working on an existing software project the first
 obstacle faced is building/executing the project.
 This is however not discussed in this chapter,
 but done in detail in the appendix [[building]].
+
+
+** Personality influence case study
+<<Personality influence case study>>
+
+\cleared
+To make the influence of personality more concrete,
+and to get a possible expectation of what the chatbot should be able to do.
+We want to make a scenario of a doctor appointment where each
+patient has different personalities.
+First we have Sander the INTJ, secondly Susie the ENFP and Chris the ISTP.
+This type selection will give a rough usage of most Jungian functions.
+In all cases the patients have the same problem, a back pain.
+The cause of this problem in all cases is a worn out back.
+
+\cleared
+After the dialogue we will also discuss the motivations for saying things the
+way they do.
+This is important since because we are doing AI and not just computer science
+we need to have an understanding what is going on in the mind of our test
+subjects.
+
+
+*** Sander the INTJ
+\cleared
+First we should note the dominant and auxiliary functions of the someone with an
+INTJ MBTI type.
+An INTJ has as dominant function introverted intuition $N_i$ and as auxiliary
+thinking extroverted $T_e$.
+We would expect these function to be most obvious in the dialogue
+(as discussed in section [[sec:types]]).
+$N_i$ mainly focuses on connecting ideas and extroverted analyses objects
+in the external world.
+Combined with each other we get a personality that focuses on getting to goals
+by analyzing situation far ahead of time.
+This results in the expected dialogue which can be seen in table
+[[tab:sander-conv-doct]].
+
+#+CAPTION: Sander in conversation with the doctor
+#+NAME:   tab:sander-conv-doct
+| Who      | Utterance                                         |
+|----------+---------------------------------------------------|
+| Doctor   | Hi                                                |
+| /Sander/ | /Hello/                                           |
+| Doctor   | How can I help you?                               | 
+| /Sander/ | /I have a back pain./                             |
+| Doctor   | When did this first occur?                        |
+| /Sander/ | /When I lifted a heavy object./                   |
+| Doctor   | Oh, yes then you need some pain killers for this. |
+| /Sander/ | /Thank you doctor/                                |
+
+\cleared
+Sander gives the doctor the information he needs to come to the conclusion he
+himself probably already had drawn.
+We could even expect him to ask for the medicine immediately,
+however since this could make the doctor question his motives
+(he could be addicted for example) he decides not to do this.
+Doctor however doesn't go into the source of the problem.
+He just assumed the patient overstretched himself because he lifted something
+heavy.
+
+*** Susie the ENFP
+\cleared
+As an ENFP, Susie has the dominant function of extroverted intuition $N_e$ and
+as auxiliary function of introverted feeling $F_i$.
+Therefore these functions should be most dominant in the dialogue.
+$N_e$ focuses on finding possibilities in situations and $F_i$ is a internal
+value based judgement function.
+Combined with each other they make a personality who has strong ideals and is
+enthusiastic about them.
+The expected dialogue can be seen in [[tab:suzie-conv-doct]].
+
+#+CAPTION: Susie in conversation with the doctor
+#+NAME:   tab:suzie-conv-doct
+| Who     | Utterance                                                          |
+|---------+--------------------------------------------------------------------|
+| Doctor  | Hi                                                                 |
+| /Susie/ | /Hello/                                                            |
+| /Susie/ | /How are you today doctor?/                                        |
+| Doctor  | I'm good, how can I help you?                                      |
+| /Susie/ | /I'm afraid I need some medicine/                                  |
+| Doctor  | Medicine? Why do you need that?                                    |
+| /Susie/ | /Well, I was watering the plants and all the sudden,/              |
+| /Susie/ | /I got this pain in my back./                                      |
+| /Susie/ | /Do you think I'm allergic to plants?/                             |
+| Doctor  | Ha ha, no, I think we need to make a scan of your back.             |
+| Doctor  | Because a watering can is a little to light to get back-pain from. |
+| /Susie/ | /Of course doctor./                                                |
+| Doctor  | Can you go to the hospital next Friday at 13:00?                   |
+| /Susie/ | /Yes, I will go then./                                             |
+
+\cleared
+We can now see a stark difference with the INTJ personality.
+First of all being dominated by extroversion it was Susie who took the initiative.
+Secondly she directly asked for medicine, without thinking about the
+consequences but knowing she probably needs it.
+Then when explaining the situation she jumped to an idea of why she could have
+this sudden pain,
+without thinking about if it even makes sense that you are all the sudden
+allergic to plants that have been in your home for a while.
+The doctor does however come to the conclusion that something is odd about
+getting a back pain from lifting a watering can.
+So because Susie is more talkative the doctor decides to do more tests rather
+than just giving some pain killers.
+*** Chris the ISTP
+\cleared
+With his ISTP type, Chris has the dominant function of $T_i$ and then the
+auxiliary function of $S_e$.
+We therefore would expect these functions to do most of the work in the dialogue.
+$T_i$ uses an internal reasoning structure to make judgments about the world
+and $S_e$ uses the senses to gather information.
+The conversation can be seen in table [[tab:chris-conv-doct]].
+
+#+CAPTION: Chris in conversation with the doctor
+#+NAME:   tab:chris-conv-doct
+| Who     | Utterance                                                         |
+|---------+-------------------------------------------------------------------|
+| Doctor  | Hi                                                                |
+| /Chris/ | /Hello/                                                           |
+| Doctor  | How can I help?                                                   |
+| /Chris/ | /I have back pain doctor./                                        |
+| Doctor  | When did this first occur?                                        |
+| /Chris/ | /Well I was watering the plants,/                                 |
+| /Chris/ | /Perhaps I put to much water in the watering can/                 |
+| Doctor  | Yes, that could be the case.                                      |
+| Doctor  | However I would like to make a scan of your back just to be sure. |
+| /Chris/ | /Can't you just give some pain killers to help me?/               |
+| Doctor  | Yes but that will only work temporary.                            |
+| Doctor  | So let's plan a scan at the hospital next Friday at 13:00?        |
+| Doctor  | I can give you some pain killers meanwhile.                       |
+| /Chris/ | /Okay, thanks doctor/                                             |
+
+\cleared
+So this dialogue looks a lot more like that Sander (INTJ) than that of Susie (ENFP).
+However the motivation for the responses are quite different than that of Sander.
+Chris hadn't figured out yet that he needed pain killers when he arrived,
+since his auxiliary function is $S_e$, he hadn't thought that deep about the
+problem.
+He just knew he was in much pain, and knew the doctor could help with that.
+
+\cleared
+The difference with the dialogue of Susie is again quite obvious.
+He didn't took the initiative because his dominant function isn't extroverted,
+and unlike Susie he correctly asserted when the doctor asked about it
+that the object he lifted may have been to heavy.
+
+\cleared
+The conclusion is again different.
+Because one of the main functions of Chris is $S_e$ he wants to deal with the
+pain /now/.
+Therefore he asks the doctor explicitly for pain killers,
+without considering that only the tests could actually solve the problem
+permanently. 
+However the doctor comes to a middle ground and besides ordering the test also
+prescribes painkillers.
+
+*** Influence of personality
+\cleared
+So we had 3 different doctor appointments all with the same problem but with
+different personalities being at play.
+The end result was three different outcomes for each patient.
+Sander probably will be back next week with the same complaints at the doctor.
+However this time his situation may have worsened.
+Susie will get her problem eventually diagnosed like Chris,
+however Susie won't have access to painkillers meanwhile.
+Which may be uncomfortable to her.
+
+\cleared
+From this case study we can conclude that training doctors to deal with
+different personalities is in fact very desirable because it can allow
+patients to be treated sooner and more effective.
+Sander could have had his problem diagnosed a week earlier and Susie could have
+had access to pain killers for example.
 
 ** Making a scenario
 \newlyCleared
