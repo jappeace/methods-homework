@@ -5506,7 +5506,7 @@ however most issues we found were with the functions and their interactions.
 
 \clearpage
 * In conclusion
-\toReview
+\newlyCleared
 In this work we have shown a possible interpretation of Carl Jung's theory of
 types in a chatbot.
 We built on top of the work of an existing chatbot,
@@ -5557,32 +5557,35 @@ So no dialogue tree information is used in the deliberation,
 addressing this issue could lead to more varied personalities.
 
 ** Future work
-\toReview
+\newlyCleared
 Considering the move to drools to the center of chatbot deliberation,
 and a novel alternate take on modeling chatbot dialogue,
 there are a legion of possibilities to extend this work.
 We will present in this section a brief overview of the more obvious extensions,
-but we expect there will be many niches we haven't even considered.
+but we expect there will be many niches we haven't considered.
 
 *** Social practice support
-\toReview
+\newlyCleared
 We already hinted in section [[social practice]] that social practices were a
 consideration.
 However during the implementation we haven't looked deep into this,
 except for the fact that drools maybe a good bases to do this.
-Especially in terms of norms.
+Although it was already in place when we arrived,
+we just made it the center of deliberation.
+This will make modelling norms for example more easy.
 
-\toReview
+\newlyCleared
 For example we can consider it to be not normal when someone utters the same
 symbol over and over.
 Since utterances are already recorded into believes for some of the Jungian functions,
 we can define a norm with a drools query.
 Then we can react by moving to a particularly designed scene for repeating one self.
 This way we can work around several of the usual tricks cite:detectachatbot
-people use to detect if they're talking to a chatbot.
+people use to detect if they're talking to a chatbot,
+and make it more easy to passing the Turing test more likely.
 
 *** Multilogue implementation
-\toReview
+\newlyCleared
 We discussed the architectural changes required for this in section
 [[Multilogue architecture]].
 However as discussed in section [[Practicalities]],
@@ -5596,8 +5599,21 @@ Since AIML was used in that paper we can safely say they weren't planning on
 making a multilogue architecture, because AIML can't do that as discussed in
 section [[Actors]].
 
-*** Better use of linguistic theory
 \toReview
+In another paper cite:penning2007boosting, multilogue is already possible.
+However this design is /drastically/ different from the one we presented.
+They tried to improve input understanding,
+because it was difficult to hand write in their system,
+therefore the process was automated.
+Although in the end there were still several open problems left,
+such as not being able to deal with what we call templates or what AIML calls
+star tags.
+They also seemed to have problem with context, which we partly solved with
+scenes.
+On the other hand it is more advanced in that it can construct sentences.
+
+*** Better use of linguistic theory
+\newlyCleared
 Currently linguistic theory is only used on a very basic level,
 in case of perlocutionary values for example.
 If symbols and templates were marked with slot grammar cite:mccord1990slot,
@@ -5605,17 +5621,19 @@ a more precise use of templates could happen.
 So connections that go to a symbol that require a noun,
 would no longer be able to use symbols that matched a verb.
 
-\toReview
+\newlyCleared
 With help of the work of convolution kernels for semantic parsing
 cite:moschitti2004study, a simple knowledge base could be constructed as an
 inspiration for bot about what to fill into the template system.
-So that bot to bot conversations could also use the templated symbols.
+So that bot to bot conversations could also use the symbols with templates.
 Care must be taken in this case that the connections are still aligned
 properly, and the insertion of a template does not alter the meaning of a symbol
-completely. Although currently this is also a potential problem.
+completely.
+Although currently this is also a potential problem.
+A clean way of dealing with this is throwing an error that explains the problem.
 
 *** More advanced learning
-\toReview
+\newlyCleared
 The idea of dynamically extending the symbol graph, and creating new symbols
 themselves is an interesting one.
 For example a new symbol is created every time the bot doesn't know something,
@@ -5661,6 +5679,16 @@ until above mentioned systems are in place.
 
 # start appendix, dump al floats and leave some room
 \clearpage
+
+* Acknowledgements
+\drafting
+There is it, my drop of contribution into the ocean of science.
+I did of course not do this on my own.
+Many thanks to my teacher Dr. F. Dignum, for helping me ask the right questions
+and keep me focused, and Dr. M. Gentile for helping with implementation matters.
+
+
+
 \appendix
 
 * References
