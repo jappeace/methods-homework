@@ -136,9 +136,9 @@ but rather being sensitive to the people who appreciate it. cite:clack2004person
 Therefore extending the game to allow doctors to train for different
 personalities will help addressing this issue.
 
-\drafting
+\toReview
 In the background section [[Background]] we will start by looking into 
-persinality theories.
+personality theories.
 to validate our work according to personality research
 we'll look at existing personality theories and their advantages and
 disadvantages in section [[personality theories]].
@@ -148,11 +148,7 @@ we're planning to extend in section [[Salve]].
 Since the personality topic has become quite popular in recent years
 some thoughts will be devoted to related work in section [[Related work]].
 With all this in mind, we continue to develop theory of how to
-make such a system in section [[BDI and Jung]],
-wherein section
-[[A type signature approach]] is about making a theoretical data structure to do
-this, and section [[Mapping to process]] is about discusing what the jungian
-functions are supposed to do.
+make such a system in section [[BDI and Jung]].
 To make the work in the previous section more concrete,
 we discuss what architecture was used to implement this in section [[Architecture]].
 In section [[Replacing AIML]] we go into detail why we replaced AIML and with what.
@@ -234,7 +230,7 @@ and finally we will look at the serious game in its existing form.
 
  \cleared
  The data Tupes used is from Cattell cite:cattell1947confirmation and several
- others. Cattell used a\todo{this was marked??} rating scheme,
+ others. Cattell used a rating scheme,
  where a trait was introduced and all test subjects then had to rate all other
  test subjects as average, below or above average for that specific trait.
  Persons could also use one extreme rating per trait for one person.
@@ -706,7 +702,6 @@ and finally we will look at the serious game in its existing form.
  discussed in [[Related work]] which include executable implementations.
 
 *** Agents background
- \dignum{Don't use BDI but IVA as basis. For example the Fatima architecture. This is more aimed at interaction with characters}
  \cleared
  In the literature there is little consensus on what exactly an agent is,
  however there is a general consensus that an agent is /autonomous/
@@ -785,6 +780,14 @@ and finally we will look at the serious game in its existing form.
  abstracting in an agent orientated way is more "natural",
  and complex systems dependencies and interactions can be easily modeled.
  # A case study is presented as proof of these claims.
+
+**** IVA
+\dignum{Don't use BDI but IVA as basis. For example the Fatima architecture. This is more aimed at interaction with characters}
+\drafting
+Fatima architecture cite:dias2005feeling 
+
+\drafting
+Fatima-PSI archticerute cite:lim2008improving
 
 **** Logic of BDI
  <<bdi logics>>
@@ -1545,6 +1548,7 @@ orientated.
 * BDI and Jung 
 <<Jungian BDI>>
 \todo{I think we should remove BDI from bdi and jung}
+\todo[inline]{This should be restructured and reread, trying to figure out what goes on from a birds eye view is to difficult}
 # In this chapter we talk about the abstract ideas, any information necessary
 # to execute the thesis without considering implementation details.
 # so I guess height and node count aren't necessary.
@@ -5725,7 +5729,6 @@ bibliography:refs.bib
 
 
 \newpage
-
 
 * List of figures
 \listoffigures
