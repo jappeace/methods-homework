@@ -71,22 +71,27 @@
 
 #+BEGIN_CENTER
 
-\toReview
-In this thesis we explore how to add jungian personality to a chatbot.
-An existing serious game was taken over, and closely inspected.
-A strategy was devised for adding personality while leaving as much of the
-orignal architecture in tact.
-In this process we replaced the existing AIML based scheme with a novel approach.
-This made the drools rule engine the center of the chatbot,
+\newlyCleared
+We explore how to add jungian personality to a chatbot as a process.
+An existing serious chatbot game was used as starting point,
+and closely inspected.
+We imagned personality as a process rather than value driven.
+In other words, a personality prefers a way of doing things rather than
+particular objects.
+With this in mind a strategy was devised for adding personality,
+while leaving as much of the orignal architecture in tact.
+In this process we replaced the existing AIML based scheme with a novel
+approach. 
+The drools rule engine the center of the chatbot,
 and opened up space to have varied responses to a similar utterance
-depending on the personality,
-while making the modelling langauge less verbose and more precise.
-We conclude by demonstarting that in fact this scheme works as expected.
+depending on the personality's decissions.
+The new modelling method was also less verbose and more precise.
+We conclude by demonstarting that this scheme works as expected.
 
 #+END_CENTER
 
-\toReview
-chatbot, Jung, drools, YAML, AIML
+\newlyCleared
+Jung, chatbot, drools, YAML, AIML, MBTI
 \todo[inline]{Figures should to be able to be placed in the appendix}
 
 \newpage
@@ -5658,12 +5663,13 @@ bibliography:refs.bib
 
 \newpage
 
+
 * List of figures
 \listoffigures
-\newpage
+\clearpage
 * List of tables
 \listoftables
-\newpage
+\clearpage
 * Symbol overview
 <<Symbol overview>>
 #+NAME: tab:symbols
