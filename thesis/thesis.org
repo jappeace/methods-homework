@@ -136,19 +136,31 @@ but rather being sensitive to the people who appreciate it. cite:clack2004person
 Therefore extending the game to allow doctors to train for different
 personalities will help addressing this issue.
 
-\cleared
-Since the personality topic has become quite popular in recent years
-some thoughts will be devoted to related work. \dignum{Specify in which chapters this is located}
-After that,
+\drafting
+In the background section [[Background]] we will start by looking into 
+persinality theories.
 to validate our work according to personality research
-we'll look at existing personality theories and their advantages and disadvantages,
-Then we'll have a look at idiomatic AI programming and how in theory personality
-could be combined with AI.
+we'll look at existing personality theories and their advantages and
+disadvantages in section [[personality theories]].
+Then we'll discuss AI literature in section [[Artificial intelligence literature]].
 We continue by taking a close look at the state of the existing software that
-we're planning to extend.
-After this we'll discuss the implementation.
-Finally we'll compare the different implementations.
-
+we're planning to extend in section [[Salve]].
+Since the personality topic has become quite popular in recent years
+some thoughts will be devoted to related work in section [[Related work]].
+With all this in mind, we continue to develop theory of how to
+make such a system in section [[BDI and Jung]],
+wherein section
+[[A type signature approach]] is about making a theoretical data structure to do
+this, and section [[Mapping to process]] is about discusing what the jungian
+functions are supposed to do.
+To make the work in the previous section more concrete,
+we discuss what architecture was used to implement this in section [[Architecture]].
+In section [[Replacing AIML]] we go into detail why we replaced AIML and with what.
+Followed by section [[Implementation]] in which we discuss a scenario
+[[Personality influence case study]] and how to use the bot [[Making a scenario]],
+after which we present the test results [[Testing]].
+Finally we conclude in section [[In conclusion]], in which we also discuss some
+possible issues [[Discussion]] and we present a list of future work [[Future work]].
 
 \clearpage
 * Background
@@ -5719,7 +5731,7 @@ bibliography:refs.bib
 \listoffigures
 \clearpage
 * List of tables
-\listoftables
+#+TOC: tables 
 \clearpage
 * Symbol overview
 <<Symbol overview>>
