@@ -838,11 +838,12 @@ and finally we will look at the serious game in its existing form.
 **** Drools
 <<Drools background>>
 \toReview
-If jade cite:braubach2003jadex, and 2apl cite:dastani20082apl are agent
-orientated programming langauges,
-drools can be seen as a more low level variant,
-where things such as goals and ontology are not predefined.
-This is called a production rule system, which is based around the RETE
+If JADE cite:braubach2003jadex, and 2APL cite:dastani20082apl are agent
+orientated programming languages,
+then drools can be seen as a more low level variant.
+Things such as goals and ontology are not predefined but there exists a concept
+of rule matching similar to 2APL, although not JADE.
+Drools is called a production rule system, which is based around the RETE
 algorithm cite:droolsdocs.
 
 \newlyCleared
@@ -859,7 +860,6 @@ An example of a drool rule can be seen in listing [[code:drool:lowlevelreply]].
 
 *** Social practices
  <<social practice>>
-
  \todo[inline]{(extra) possible sources: Weber, Durkleim, Hobermas, latour/reckwitz}
  \todo[inline]{ difference between norms and sp is that sp has no moral value, but you *violate* norms }
  \cleared
@@ -897,7 +897,7 @@ developed.
 This model is extended specifically to allow software agents to use it.
 In this model /physical context/ describes the physical environment,
 it contains resources, places and actors.
-Note that resources is equivelant to material from the model used by
+Note that resources is equivalent to material from the model used by
 cite:shove2005consumers,holtz2014generating.
 /Social context/ contains a social interpretation, roles and norms.
 In the previous model this was all part of /Meanings/.
@@ -918,7 +918,7 @@ Finishing may for example contain the prescription of medicine,
 or an appointment to go to the hospital. 
 However plan patterns do not describe such an implementation.
 The plan pattern construct wasn't represented in the previous model either.
-/Meaning/ in this model is soley related to the social effects of activities,
+/Meaning/ in this model is solely related to the social effects of activities,
 and finally /Competences/ is the same as in the previous model.
 
  \cleared
@@ -1087,7 +1087,6 @@ This is of course an information state approach too.
  We comment more on this in section [[Jungian BDI]].
  
 ** The serious game
-
  <<The serious game>>
  \cleared
  This chapter describes the game we inherited from our predecessors.
@@ -4543,13 +4542,15 @@ which basically means any actor can say this,
 or a specific actor.
 This could be extended with some kind of role system cite:sandhu1996role.
 
-\toReview
+\newlyCleared
 Note that because AIML does not specify actors,
-it can never be used on its own to model a multilogue system in.
-Although we make actors explicit not because of wanting to implement a
+it can never be used on its own, to model a multilogue system in.
+Although we make actors explicit not because of the desire to implement a
 multilogue system,
 but to make it possible to predict what the other actor will say from the
 agent's perspective.
+Being able to eventually build a multilogue system on top of this is a nice
+benefit.
 
 *** Scenes
 \cleared
@@ -5414,7 +5415,7 @@ On the highest level we have the so called validation tests.
 With these we check if the bot behaves as expected by setting up a scenario,
 and then executing the bot, after which we run trough the scenario manually.
 
-\toReview
+\newlyCleared
 Traditionally there is also an in-between option called integration tests,
 which test combined parts of the system, but does so in an automated manner.
 However we haven't used those because setting them up initially takes much more
@@ -6596,5 +6597,5 @@ Conversation went according to script.
 
   
 
-#  LocalWords:  DialogueTree PatternDatabase Immutablity Traum SRAI
+#  LocalWords:  DialogueTree PatternDatabase Immutablity Traum SRAI RETE
 
