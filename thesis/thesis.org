@@ -5681,12 +5681,14 @@ until above mentioned systems are in place.
 \clearpage
 
 * Acknowledgements
-\drafting
+\toReview
 There is it, my drop of contribution into the ocean of science.
-I did of course not do this on my own.
-Many thanks to my teacher Dr. F. Dignum, for helping me ask the right questions
-and keep me focused, and Dr. M. Gentile for helping with implementation matters.
-
+I did this of course not on my own.
+Many thanks to my teacher Dr. F. Dignum, for helping me ask the right questions,
+and with the content of the thesis.
+Also thanks to Dr. M. Gentile for helping with implementation matters.
+Finally I want to tank my parents for providing me with housing and a calm
+working environment.
 
 
 \appendix
