@@ -5647,7 +5647,7 @@ This could be done by more advanced language parsing techniques in combination
 with an existing knowledge base such as OWL cite:world2012owl.
 
 *** Matching
-\toReview
+\newlyCleared
 It should be noted that regular expressions is just one of the possible ways
 of determining what symbol the user uttered.
 The bot can be easily modified to use alternate matching mechanisms such
@@ -5660,7 +5660,7 @@ Alternatively the existing regular expression approach could be enhanced,
 for example by executing it in parallel, or even upon the GPU cite:zu2012gpu. 
 Also note that at matching personality could play a role.
 
-\toReview
+\newlyCleared
 The question of what to do when multiple symbols are matched is a difficult one.
 In the initial approach we simply selected the first symbol,
 however currently they are all selected, and we hope the scenario is designed
@@ -5673,7 +5673,7 @@ However this precision also should be encoded or derived somehow
 (for example, more words means more information).
 
 *** Graphical scenario editor
-\toReview
+\newlyCleared
 A final possible extension would be to create a graphical scenario editor.
 Doing this always costs more time than expected and probably should be avoided
 until above mentioned systems are in place.
