@@ -11,7 +11,7 @@
 # we have our own title
 #+Options: title:nil
 
-# we don't want numbering to appear in front of headings untill
+# we don't want numbering to appear in front of headings until
 #+OPTIONS: H:5
 
 # table alternating colors
@@ -44,7 +44,7 @@
 # 3. The introduction and main body of the thesis. If all else fails a
 # researcher can use this as fallback
 
-# smaller code font size (cause mostly boring xml)
+# smaller code font size (cause mostly boring XML)
 #+LATEX_HEADER: \RequirePackage{fancyvrb}
 #+LATEX_HEADER: \DefineVerbatimEnvironment{verbatim}{Verbatim}{fontsize=\scriptsize}
 # Make listing captions smaller, to fit with smaller code size
@@ -80,14 +80,14 @@ We imagined personality as a process rather than value driven.
 In other words, a personality prefers a way of doing things rather than
 particular objects.
 With this in mind a strategy was devised for adding personality,
-while leaving as much of the orignal architecture in tact.
+while leaving as much of the original architecture in tact.
 In this process we replaced the existing AIML based scheme with a novel
 approach. 
 The drools rule engine the center of the chatbot,
 and opened up space to have varied responses to a similar utterance
-depending on the personality's decissions.
+depending on the personality's decisions.
 The new modelling method was also less verbose and more precise.
-We conclude by demonstarting that this scheme works as expected.
+We conclude by demonstrating that this scheme works as expected.
 
 #+END_CENTER
 
@@ -121,7 +121,7 @@ follow the choices predefined by the teacher.
 A script based game has of course the weakness that a student can't use
 creative responses,
 all possible responses are scripted into the scenario
-and replying correctly relies on a simple /abc/ choice.
+and replying correctly relies on a simple /ABC/ choice.
 To combat this an alternative serious game was made based on the
 chatbot Alice cite:weiderveld2016chatbot.
 To measure performance a rule engine was used, and to limit the domain
@@ -176,7 +176,7 @@ However communication was never implemented and personality got reduced to
 doing a single action.
 
 \cleared
-Van den bosch also chose to use OCEAN to model characters in a serious
+Van den Bosch also chose to use OCEAN to model characters in a serious
 communication game cite:van2012characters.
 He used a nested probabilistic if else structure to decide on how agents should
 interact.
@@ -233,7 +233,7 @@ and finally we will look at the serious game in its existing form.
    Several frameworks have been developed to figure out people's
    personality and what this in turn would mean for their lives.
    We are interested in two ways in existing personality theories:
-   1. Accuracy, if a personality thoery does not fit the reality at all it won't
+   1. Accuracy, if a personality theory does not fit the reality at all it won't
        help anyone in the serious game.
    2. Ease of implementation. If the personality theory is too hard (or impossible)
        to implement in the serious game than we can't use it.
@@ -259,15 +259,15 @@ and finally we will look at the serious game in its existing form.
  they conveyed the same idea as the big five model used now.
  The methodology used is something which is called factor analyses[fn::
  In the paper the term 'varimax rotational program' is used,
- but if we look this term in wikipedia, we can see the result is called factor
+ but if we look this term in Wikipedia, we can see the result is called factor
  analyses cite:varymaxrotanonalprogram].
  Factor analyses is a statistical methodology that tries to find underlying
  hidden variables.
  This methodology has become widely used in psychology cite:fabrigar1999evaluating.
 
  \cleared
- The data Tupes used is from Catell cite:cattell1947confirmation and several
- others. Catell used a rating scheme,
+ The data Tupes used is from Cattell cite:cattell1947confirmation and several
+ others. Cattell used a rating scheme,
  where a trait was introduced and all test subjects then had to rate all other
  test subjects else as average, below or above average for that specific trait.
  Persons could also use one extreme rating per trait for one person.
@@ -280,7 +280,7 @@ and finally we will look at the serious game in its existing form.
  \cleared
  In the beginning of the 1990's there were many ways to measure personality that
  didn't agree with each other.
- For example at Berkley alone block used a 2 dimensional ego-resilience and
+ For example at Berkeley, block used a 2 dimensional ego-resilience and
  ego-control method cite:block1980role,
  whereas Gough measured folk concepts such as self-control, well-being and
  tolerance cite:gough1987california.
@@ -337,14 +337,14 @@ and finally we will look at the serious game in its existing form.
 
  \cleared
  There are some existing solutions in which OCEAN is implemented, for
- example allbeck used it as a mapping to the EMOTE system cite:allbeck2002toward,
+ example Allbeck used it as a mapping to the EMOTE system cite:allbeck2002toward,
  whereas cite:durupinar2008creating used the OCEAN values as a low level mapping
  in steering behaviors
  and finally cite:etheredge2016personality used the values for action selection
  in a dialogue, but extended the descriptions of OCEAN with IPIP
  with an entire chapter devoted to explaining this.
  Although these implementation are based on the same OCEAN model,
- the influence of it has starkley different effects on their
+ the influence of it has starkly different effects on their
  respective implementations.
  Since each of them decided to change the OCEAN model in some kind of way
  we can conclude that although OCEAN is good for discussing the psyche,
@@ -368,9 +368,9 @@ and finally we will look at the serious game in its existing form.
  \cleared
  Jung describes several concepts, firstly each person has two attitudes:
  /Introversion/ and /extroversion/.
- Extroversion means dealing with the outside world and therfore is called
+ Extroversion means dealing with the outside world and therefore is called
  objective (or observable).
- Intoversion is the world inside a person, and therefore is subjective,
+ Introversion is the world inside a person, and therefore is subjective,
  or private.
  This privacy however may be so great that the consciousness can't even access it.
  These attitudes are mutually exclusive,
@@ -379,7 +379,7 @@ and finally we will look at the serious game in its existing form.
  surroundings.
  A person who spends most of his time in the introversion attitude is called
  an /introvert/.
- But he is not totally the one or the other, ie an introvert can still have
+ But he is not totally the one or the other, an introvert can still have
  extrovert moments and vice versa.
  It should also be noted that the unconsciousness according to Jung is
  flipped in attitude. cite:hall1973primer97-98attitude
@@ -391,7 +391,7 @@ and finally we will look at the serious game in its existing form.
  /Thinking/ is a function that connects ideas with each other to arrive at
  generalizations or conclusions. 
  /Feeling/ evaluates ideas by determining if its good or bad, pleasant
- or unpleasant, beautifull or ugly.
+ or unpleasant, beautiful or ugly.
  Note that this is /not/ the same as being emotional,
  although you can be emotional and use this function.
  The /irrational functions/ are called this because they require no reason.
@@ -418,7 +418,7 @@ and finally we will look at the serious game in its existing form.
  consistency of the internal reasoning process is important.
 
  \cleared
- Let $\mathcal{J}$ denote the set of all possible jungian function attitudes
+ Let $\mathcal{J}$ denote the set of all possible Jungian function attitudes
  such that:
  \[ \mathcal{J} = \{ T_e, T_i, F_e, F_i, S_e, S_i, N_e, N_i\}\]
  Where
@@ -435,7 +435,7 @@ and finally we will look at the serious game in its existing form.
    A typical example of $T_i$ based reasoning is a mathematician creating or
    combining new mathematical structures with help of axiomatic logic.
  + $F_e$ stands for extroverted feeling, where objective or external criteria
-   is used to judge, for example something is beautifull or ugly.
+   is used to judge, for example something is beautiful or ugly.
    Established standards may be used to decide this and therefore its a
    conservative function.
    Decisions are based on interpersonal and cultural values.
@@ -486,18 +486,18 @@ and finally we will look at the serious game in its existing form.
 
 **** MBTI
  \cleared
- The meyer brigs type indicator is based upon Carl Jung's theory of personality
+ The Meyer brigs type indicator is based upon Carl Jung's theory of personality
  types.
  However it brings two important changes, first of all the way
  of measuring personality type is changed. 
- It uses a structured approach rather than Carl Jungs projective approach.
+ It uses a structured approach rather than Carl Jung's projective approach.
  The responses to items are finite and therefore can be deduced based on theory.
  In contrast to Jung's technique where he used open ended answering with word
  associations cite:hall1973primer23method.
  Then there is the introduction of an extra index used to order function
  attitudes cite:carlson1985recent.
- Which is either a $J$ for judging (rational in jung terms)
- or a $P$ for perceiving (irrational in jung terms).
+ Which is either a $J$ for judging (rational in Jung terms)
+ or a $P$ for perceiving (irrational in Jung terms).
  This dimension indicates together with the $I/E$ dimension which function
  attitude is dominant and which is auxiliary.
 
@@ -531,12 +531,12 @@ and finally we will look at the serious game in its existing form.
 
  \cleared
  Before continuing we would like to say a word about a popular
- interpretation of MBTI which is based on Kersey's book "Please understand me",
+ interpretation of MBTI which is based on Keirsey's book "Please understand me",
  and later "Please understand me II".
  In this interpretation the sixteen types are also placed in general groups
  of four but here the $ST$ and $SF$ distinction is replaced by $SJ$ and $SP$
  cite:keirsey1998please.
- It turns out however that Kersey invented this distinction because
+ It turns out however that Keirsey invented this distinction because
  "He thought it made sense to group them this way" cite:whyaretypesdistinct.
  In doing this he rejected the work of Jung and also that of cognitive functions.
  Which is problematic because the theory he presented then does not make any
@@ -581,10 +581,10 @@ and finally we will look at the serious game in its existing form.
 
  \cleared
  Reliability indicates how often the same result will come out of the test,
- for example if you take the mbti a 100 times you may be classified the same
+ for example if you take the MBTI a 100 times you may be classified the same
  type for 70 times,
  which would be an indication it has a reliability of around 70%.
- But in psycology another aspect is important,
+ But in psychology another aspect is important,
  namely the interval in between which the tests are taken,
  if for example two tests produce starkly different results but a long time
  has passed between them its not considered a big issue.
@@ -625,7 +625,7 @@ and finally we will look at the serious game in its existing form.
 
  \cleared
  The result of the PPSDQ would look something like: I-30 N-20 T-80 J-60, with
- a scale of 0 to 100. To calculate the jungian functions as a probability measure
+ a scale of 0 to 100. To calculate the Jungian functions as a probability measure
  some math is required. Our subject is $70\%$ of the time introverted and $30\%$ of the 
  time extroverted. $60\%$ of the time judging and $40\%$ of the time perceiving.
  therefore N_i would be calculated as: 0.7 \times 0.4 \times 0.8 = 0.224 or $22.4\%$.
@@ -644,13 +644,13 @@ and finally we will look at the serious game in its existing form.
 **** SL-TDI
  \cleared
  SL-TDI measures functions by presenting 20 situations and then giving subject
- possible actions which corrolate with the functions.
+ possible actions which correlate with the functions.
  The subjects then have to indicate how likely it is that they would choose that
  particular action cite:arnau2000reliability.
 
  \cleared
  It becomes rather straight forward to make a function preference of the 
- measurement of SL-TDI since the question directly measure the jungian
+ measurement of SL-TDI since the question directly measure the Jungian
  functions.
  A possible personality type therefore would be:
  \[ S_i \geq T_i \geq S_e \geq F_e \geq N_i \geq T_e \geq N_e \geq F_i \]
@@ -692,7 +692,7 @@ and finally we will look at the serious game in its existing form.
  big five in some way.
 
  \cleared
- The PPSDQ is based on the same thoery as MBTI, but with scaled type letters.
+ The PPSDQ is based on the same theory as MBTI, but with scaled type letters.
  To convert the type to function attitudes some extra work has to be done,
  namely calculate their respective probabilities.
  To decide which function attitude to use some kind of mixed strategy
@@ -711,7 +711,7 @@ and finally we will look at the serious game in its existing form.
  what to do?
  Select $S_i$, thereby skipping $T_i$, or select $T_i$ and let it decide to
  select $S_i$, but this would basically give $T_i$ censorship rights.
- This is difficult to answer therfore it is a lot more difficult to implement
+ This is difficult to answer therefore it is a lot more difficult to implement
  than PPSDQ.
  Since SL-TDI drops an assumption, which is shown with experimental evidence
  to be false cite:loomis1980testing, we can say SL-TDI's theory is most realistic.
@@ -727,7 +727,7 @@ and finally we will look at the serious game in its existing form.
  OCEAN builds on nothing, we'll leave that for future work.
 
 ** Artificial intelligence literature
- # How do I measure that the persnoality created is in fact in complience with
+ # How do I measure that the personality created is in fact in compliance with
  # the personality I aimed for?
  # Can I let the personality take the test somehow?
  \cleared
@@ -785,12 +785,12 @@ and finally we will look at the serious game in its existing form.
  system described in section [[The serious game]].
  Finally there are the /agent languages/, which ask the question how to write
  agent programs.
- Again this is mostly preditermined for us, but we will give a small overview.
+ Again this is mostly predetermined for us, but we will give a small overview.
 
 **** Belief desires and intentions
  \cleared
  The belief desire intention model of human practical reasoning was first
- introduced by bratman cite:bratman1987intention.
+ introduced by Bratman cite:bratman1987intention.
  It is based upon a "common sense" framework of human reasoning.
 
  \cleared
@@ -903,7 +903,7 @@ cite:shove2005consumers,holtz2014generating.
 /Social context/ contains a social interpretation, roles and norms.
 In the previous model this was all part of /Meanings/.
 /Activities/ are the normal activities in the social practice,
-in nordic waling this can be for example talking with your partner,
+in Nordic waling this can be for example talking with your partner,
 or stopping to get a stone out of your shoe.
 They don't need to all be performed but are there just as options.
 This is the first construct that wasn't covered by the other model.
@@ -1201,8 +1201,8 @@ ignoring all of AIML.
 <<existing architecture>>
 \cleared
 The game uses a client server architecture (see figure [[fig:components]]).
-The client is written in unity and the server is a Java servlet running on
-wildfly.
+The client is written in unity and the server is a Java servlet running on \todo{except it isn't a servlet?}
+Wildfly.
 Communication between the two applications happens trough a web socket.
 A web socket is used because it allows the chatbot to pro-active,
 which is not possible with a technology such as REST.
@@ -1222,11 +1222,11 @@ which is not possible with a technology such as REST.
     \cleared
     There are two major source trees tracked in separate version control systems.
     The first manages
-    the client[fn::received on commit 40b55c0da1f556ba2b66ea8322d72008c9df1e72]
+    the client[fn::received on commit =40b55c0da1f556ba2b66ea8322d72008c9df1e72=]
     and the second the
-    server[fn:: received on commit 92f12fc26a7da83554903bfe7c6ed1cc64dd5a53].
+    server[fn:: received on commit =92f12fc26a7da83554903bfe7c6ed1cc64dd5a53=].
     The protocol is tracked separately in the respective client and server
-    folders with the folder name "dto".
+    folders with the folder name =dto=.
 
 **** Protocol
     \cleared
@@ -1267,7 +1267,7 @@ which is not possible with a technology such as REST.
 We will discuss the server architecture in more detail since it contains the
 "brains" of the application.
 The most important classes are shown in figure [[fig:class]].
-WebSocket is the entry point for the program where the messages from the client
+=WebSocket= is the entry point for the program where the messages from the client
 enter.
 
 #+NAME: fig:class
@@ -1305,23 +1305,24 @@ enter.
     }
   }
 #+END_SRC
-#+CAPTION: Class diagram of the server, where kie is the engine that handles the drools
+#+CAPTION: Class diagram of the server, where KIE is the engine that handles the drools
 #+LABEL: fig:class
 #+RESULTS[0b594e175f82f51e7db78f2340ecb9fa14f3e0e6]: fig:class
 [[file:img/uml/class.png]]
 
 \cleared
-The Websocket uses a ChatbotEngine to determine how to reply to userUtterances,
-Where ChatbotEngineImpl is the concrete implementation.
-ChatbotEngineImpl uses a KieSession for the drools and a Chat which is the alicebot.
-Once the startGame message is received the kie service is started,
+The =Websocket= uses a =ChatbotEngine= to determine how to reply to user utterances,
+Where =ChatbotEngineImpl= is the concrete implementation.
+=ChatbotEngineImpl= uses a =KieSession= for the drools and a Chat which is the
+ALICE bot.
+Once the =startGame= message is received the KIE service is started,
 which runs on a dedicated thread to do drool deliberation.
-At this point facts can be inserted for the drools to react upon, in case
-of the anmnesi scenario the GameStart fact was inserted, which was a marker
-object to indicate that the game has started.
-This allow drools to take the initiative, for example when the user
-hasn't replied after 20 seconds the agent will ask the user why he hasn't
-replied yet.
+At this point facts can be inserted for the drools to react upon,
+in case of the anamnesi scenario the =GameStart= fact was inserted,
+which was a marker object to indicate that the game has started.
+This allow drools to take the initiative,
+for example when the user hasn't replied after 20 seconds the agent will ask
+the user why he hasn't replied yet.
 A detailed overview of construction can be seen in figure [[fig:construction]].
 
 \cleared
@@ -1329,14 +1330,14 @@ In the class diagram (figure [[fig:class]]), we can see an attribute to the Chat
 class called predicates.
 This is a bag of variables the drools can use to keep track of the scenario
 progression.
-The setGlobal method of KieSession is used to expose global objects to drools.
-In this case the ChatbotEngineImpl is exposed.
+The =setGlobal= method of =KieSession= is used to expose global objects to drools.
+In this case the =ChatbotEngineImpl= is exposed.
 Insert can be used to insert facts.
 The difference between facts and globals is that facts are evaluated by
 the  rule base, where as globals are used by the rule base.
 A fact can be considered as "just a value".
 Currently globals are used as communication with external libraries
-(for example the websocket and chat session).
+(for example the =WebSocket= and =ChatSession=).
 
 #+NAME: fig:construction
 #+BEGIN_SRC plantuml :cache yes :file img/uml/construction.png :exports results
@@ -1407,8 +1408,8 @@ stop
 **** Deliberation
 <<Deliberation>>
 \cleared
-     AIML has been extended to allow updating of the drools knowledge base,
-     as can be seen in listing [[code:s-aiml-inserts]].
+AIML has been extended to allow updating of the drools knowledge base,
+as can be seen in listing [[code:s-aiml-inserts]].
 
 #+CAPTION: Extended AIML that communicate knowledge
 #+NAME: code:s-aiml-inserts
@@ -1424,14 +1425,14 @@ stop
 #+END_SRC
 
 \cleared
-     In this case if a user utters the sentence: "why are you here", the bot
-     will check the drool database what his problem is and also update the
-     scenario.
-     Once the scenario is updated the possible responses of the chatbot are
-     changed, as can be seen by the precondition tag.
-     The template tag has some extra tags. The insert tag inserts a fact into
-     the drools knowledge base, the getDroolsTemplate tag queries the drools
-     knowledge base for a string.
+In this case if a user utters the sentence: "why are you here", the bot
+will check the drool database what his problem is and also update the
+scenario.
+Once the scenario is updated the possible responses of the chatbot are
+changed, as can be seen by the precondition tag.
+The template tag has some extra tags. The insert tag inserts a fact into
+the drools knowledge base, the =getDroolsTemplate= tag queries the drools
+knowledge base for a string.
 
 **** User utterance processing 
 <<user utterance processing>>
@@ -1548,7 +1549,7 @@ subjects.
 *** Sander the INTJ
 \cleared
 First we should note the dominant and auxiliary functions of the someone with an
-INTJ mbti type.
+INTJ MBTI type.
 An INTJ has as dominant function introverted intuition $N_i$ and as auxiliary
 thinking extroverted $T_e$.
 We would expect these function to be most obvious in the dialogue
@@ -1607,7 +1608,7 @@ The expected dialogue can be seen in [[tab:suzie-conv-doct]].
 | /Susie/ | /Well, I was watering the plants and all the sudden,/              |
 | /Susie/ | /I got this pain in my back./                                      |
 | /Susie/ | /Do you think I'm allergic to plants?/                             |
-| Doctor  | Haha, no, I think we need to make a scan of your back.             |
+| Doctor  | Ha ha, no, I think we need to make a scan of your back.             |
 | Doctor  | Because a watering can is a little to light to get back-pain from. |
 | /Susie/ | /Of course doctor./                                                |
 | Doctor  | Can you go to the hospital next Friday at 13:00?                   |
@@ -1701,18 +1702,18 @@ had access to pain killers for example.
 * BDI and Jung 
 <<Jungian BDI>>
 \todo{I think we should remove BDI from bdi and jung}
-# In this chapter we talk about the abstract ideas, any information neccasarry
+# In this chapter we talk about the abstract ideas, any information necessary
 # to execute the thesis without considering implementation details.
-# so I guess height and node count aren't neccasarry.
+# so I guess height and node count aren't necessary.
 \cleared
 This chapter tries to answer the question,
 "what is personality from a computationally perspective".
 In where we imagine personality being a preference towards a process rather
 than a preference towards content.
 We will however not consider yet how to place this in the existing system,
-but will consider how to combine Jungian psycology with BDI.
+but will consider how to combine Jungian psychology with BDI.
 
-** Differences from campos
+** Differences from Campos
 \cleared
 Campos cite:campos_mabs2009 first considered how to combine MBTI with BDI.
 His reasoning domain was however in action space (rather than just dialogue),
@@ -1776,7 +1777,7 @@ want to describe it informally.
 Firstly we see the Jungian functions as a unit of processing.
 This is a clear design choice, there are alternatives.
 One could for example choose to make a unit of processing for every possible
-combination of jungian functions attitudes which would result in $8!$ different
+combination of Jungian functions attitudes which would result in $8!$ different
 functions, or specifically just for MBTI which would result in $16$ functions.
 
 \cleared
@@ -1944,9 +1945,9 @@ The current agent has to be able to do a game tree like deliberation process
 to reason about what the other agent will say so it can pick the meaning that
 brings it closest towards its goal.
 In our case a goal is a particular meaning the agent wants the doctor to utter,
-for example if our agent is sick we want the doctor to utter a /GiveMedicine/
-meaning,
-or if he is in extreme pain he would like to see the /GivePainKiller/ meaning
+for example if our agent is sick we want the doctor to utter a =GiveMedicine=
+symbol,
+or if he is in extreme pain he would like to see the =GivePainKiller= symbol 
 uttered.
 We also need to mark which agent uttered the dialogue tree node,
 therefore we introduce $\Lambda$ as the set of all active actors, where $a \in \Lambda$.
@@ -2131,7 +2132,7 @@ need to complete the /next/ argument.
 Because its the least preferred function we just use the unit.
 Now the partially applied type of $T_e$ satisfies that of $N_i$ and we can use
 it as /next/.
-This methodology can be used for an entire personality type (ie all 8 functions
+This methodology can be used for an entire personality type (all 8 functions
 in some order).
 Also as an analogy we could say that we're dealing with an intrusive linked
 list.
@@ -2146,7 +2147,7 @@ Then they can inspect the result, and even the changed believe base to decide
 if its a good idea to use the result.
 
 \cleared
-This architecture can be extended with the scale based jungian models
+This architecture can be extended with the scale based Jungian models
 such as SL-TDI and PDQ by introducing a random choice for using the current or
 next function.
 However this becomes rather messy because we're modeling pure functions,
@@ -2829,7 +2830,7 @@ and the implementation for this class diagram can be seen in table
 | $\sigma$    | =String=                                                                                                                                          |
 | $s$    | =Symbol=                                                                                                                                          |
 | $g$    | =PatternSymbol=                                                                                                                                   |
-| $g'$   | =Symbol=[fn:: The literal strings are used for back conversion, in combination with the MatchedQueryDB described in section [[Before and templates]]] |
+| $g'$   | =Symbol=[fn:: The literal strings are used for back conversion, in combination with the =MatchedQueryDB= described in section [[Before and templates]]] |
 | $P$    | =PerlocutionaryValueSet=                                                                                                                          |
 | $p$    | =PerlocutionaryValue=                                                                                                                             |
 | $a$    | =Actor=                                                                                                                                           |
@@ -3391,7 +3392,7 @@ cooking phase, and after that make the object immutable cite:zibin2010ownership.
 This is in essence what we do with the =Database= structure.
 We construct its data first with a standard java =HashMap=,
 and once this is complete we wrap this into the =Database= class.
-Which makes a shallow copy and has no api for mutation (see figure [[fig:dbclass]]).
+Which makes a shallow copy and has no API for mutation (see figure [[fig:dbclass]]).
 
 \cleared
 This initialization problem is the reason why we chose the order of
@@ -3948,7 +3949,7 @@ and which other parts we wanted to remove or change.
 The next sections will discuss the thought process to a new representation.
 
 ** Analyzing AIML
-# Note taht such descriptions are good, show how it was in the old system and
+# Note that such descriptions are good, show how it was in the old system and
 # the thought process towards the new system, so do more of it like this
 \cleared
 What we want to do is create a mapping function $\sigma \overset{g}{\to} s$
@@ -4232,7 +4233,7 @@ Note that we still use the idea of having one symbol per file,
 and the symbol name is the filename.
 Therefore no =symbol= item is shown in the example.
 Quotation marks ="=, are to indicate strings, for certain characters this is 
-neccasarry, in other cases YAML does this for you.
+necessary, in other cases YAML does this for you.
 
 \cleared
 Note for example that there are multiple literals to choose from in listing
@@ -4767,13 +4768,13 @@ different names as can be seen in table [[tab:alice-normal-words]].
 
 #+CAPTION: Attempts at what would pass for 'normal' words according to ALICE.
 #+NAME: tab:alice-normal-words
-| Inserted              | What the bot accepted |
-|-----------------------+-----------------------|
-| jap34! gee!@          | jap34                 |
-| jap gee23             | jap gee23             |
-| jap_23_flap ddd dfadf | jap_23_flap ddd dfadf |
-| blah *. blah          | blah *                |
-| blah * ahah           | blah * ahah           |
+| Inserted                | What the bot accepted   |
+|-------------------------+-------------------------|
+| =jap34! gee!@=          | =jap34=                 |
+| =jap gee23=             | =jap gee23=             |
+| =jap_23_flap ddd dfadf= | =jap_23_flap ddd dfadf= |
+| =blah *. blah=          | =blah *=                |
+| =blah * ahah=           | =blah * ahah=           |
 
 \cleared
 So quite arbitrarily some characters are accepted while others aren't,
@@ -5303,8 +5304,8 @@ by the doctor, this is done simply because it would be strange to continue
 talking after asking "How are you?".
 
 \newlyCleared
-If the status symbol is liked more by feeling function Fi,
-why did in section [[Testing]] Susie (with dominant Fi) utter a greeting
+If the status symbol is liked more by feeling function $F_i$,
+why did in section [[Testing]] Susie (with dominant $F_i$) utter a greeting
 first?
 The answer is in low level replies (explained in detail in section [[Operation]]),
 of which we can see an example in listing [[code:drool:lowlevelreply]].
@@ -5490,7 +5491,7 @@ project.
 \newlyCleared
 $T_e$ only has one test that is specifically aimed at it,
 but several shared tests also target it.
-For example we know that rationale functions should preffer alteration if all
+For example we know that rationale functions should prefer alteration if all
 things are equal.
 So we wrote a test for this and just applied the same test on all rationale
 functions.
@@ -6540,6 +6541,10 @@ Conversation went according to script.
 \todo[inline]{Extracting information from meanings isn't very DRY right now, for example saying how is your foot? Could perhaps be splitup into statusInquiry + foot. However I don't know how to do this better right now, perhaps it could be a natural result of dubble matching but we lose the order inforamtion.}
 ** Rough planning.
 *** Report
++ Spell check
++ Integrate dignum's comments
++ Make (highlighted) formulas floats and add a caption to them
++ Fix those comments
 *** Make usable for other student
 - Document about python scripts and shell scripts (how to use),
   make sure succerrer can take it on easily.
@@ -6551,7 +6556,7 @@ Conversation went according to script.
   instructions I wrote.
 - This probably also includes fixing recursive before, almost certain that doesn't work.
   (maybe include unit tests for that because its recursion which never works as expected)
-
+ 
 *** Additional experimentation?
      For this I wanna setup an experiment like thing, where we research what
      the system does etc.
@@ -6635,5 +6640,7 @@ Conversation went according to script.
 
   
 
-#  LocalWords:  DialogueTree PatternDatabase Immutablity Traum SRAI RETE
+#  LocalWords:  DialogueTree PatternDatabase Immutablity Traum SRAI RETE INTJ
 
+#  LocalWords:  varimax ENTJ INTP Kersey's Keirsey's PPSDQ SL TDI's Wooldridges
+#  LocalWords:  Rao Bratman's Grice's anamnesi ENFP ISTP toc se
