@@ -838,14 +838,22 @@ and finally we will look at the serious game in its existing form.
 **** Drools
 <<Drools background>>
 \toReview
+If jade cite:braubach2003jadex, and 2apl cite:dastani20082apl are agent
+orientated programming langauges,
+drools can be seen as a more low level variant,
+where things such as goals and ontology are not predefined.
+This is called a production rule system, which is based around the RETE
+algorithm cite:droolsdocs.
+
+\newlyCleared
 Drools consists of three major concepts.
-First of all there is the data model, which are in principle just java classes.
+First of all there is the data model, which are just java classes.
 This data model is called the fact base.
 Then we have the rule queries, or left hand side.
-These indicate when a rule should be executed.
-Finally there is the right hand side, which is just a piece of java code
-that can modify the facts, or interlope with outside java code trough so called
-global variables.
+These indicate when a rule should be executed by analyzing the fact base.
+Finally there is the right hand side,
+which is just a piece of java code that can modify the facts,
+or interlope with outside java code trough global variables.
 Also note that drools is Turing complete cite:weppenaar2011solving.
 An example of a drool rule can be seen in listing [[code:drool:lowlevelreply]].
 
