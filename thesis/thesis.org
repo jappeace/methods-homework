@@ -778,7 +778,8 @@ and finally we will look at the serious game in its existing form.
  and complex systems dependencies and interactions can be easily modeled.
  # A case study is presented as proof of these claims.
 
-**** IVA
+**** IVE
+<<Fatima Architecture>>
 \dignum{Don't use BDI but IVA as basis. For example the Fatima architecture. This is more aimed at interaction with characters}
 \drafting
 Fatima architecture cite:dias2005feeling 
@@ -1499,8 +1500,58 @@ Template -> [*]
 [[file:img/uml/figstateaiml.png]]
 
 
-** Related work
+\clearpage
+* Related work
 <<Related work>>
+\toReview
+In this chapter we will give a brief overview of various interesting papers
+we found during researching the topic.
+We will start with chatbots in general, each of which has wildly different
+approach to perform the same task.
+In which there is some variance, but they generally follow the same pattern.
+Then finally we will discuss the reasoning behind the direction we chose.
+
+** Chatbots
+\toReview
+One of the first chatbots was ELIZA, made as early as 1966 cite:shawar2007chatbots.
+The ALICE chatbot is a more recent incarnation of the idea,
+but uses AIML as an basis cite:wallace2001don.
+Because ALICE is licensed under an open source license,
+and the AIML has been standardized,
+a legion of other implementations have been made that all can parse AIML.
+In fact the Salve game discussed in section [[The serious game]],
+used AIML to deal with natural language.
+In section [[AIML issues]] we discuss our reasons to move away from this almost
+traditional chatbot paradigm, but in short:
+We can't use AIML for adding personality unless we'd modify it in such a way
+where it no longer is AIML.
+
+\toReview
+In cite:vinyals2015neural a sub symbolic chatbot is presented that uses
+machine learning.
+It appears that it can handle the general cases of conversation,
+even questions it didn't train upon.
+The authors state that its answers are sometimes on the short side,
+and that upon slight variance in semantics can result into inconsistent answers.
+
+
+*** Multilogue
+<<Related multilogue>>
+\newlyCleared
+In another interesting paper cite:penning2007boosting,
+multilogue is already possible.
+However this design is /drastically/ different from the one we presented.
+In this paper they tried to improve input understanding,
+because it was difficult to hand write in their system,
+therefore the process was automated.
+Although in the end there were still several open problems left,
+such as not being able to deal with what we call templates or what AIML calls
+star tags.
+They also seemed to have problem with context,
+which we partly solved with scenes.
+On the other hand it is more advanced in that it can construct sentences.
+
+** Personality in chatbots
 \cleared
 To simulate personality in communication games there have been already several
 works proposed.
@@ -1523,7 +1574,7 @@ unwanted behavior many rules need to be inspected before the change can be made.
 In agents with with personalities Cocu tried making a complete game based
 on MBTI cite:cocu2015agents. \dignum{???} \ask{... what means =???= ?}
 However communication was never implemented and personality got reduced to
-doing a single action.
+doing a single action. \todo{ I think he means we should delete this}
 
 \cleared
 Van den Bosch also chose to use OCEAN to model characters in a serious
@@ -1538,11 +1589,13 @@ for example a spy who was captured.
 This kind of methodology is called content orientated cite:campos_mabs2009,
 the personality, would and should change depending on context.
 
+** Campos
 \cleared
 Campos used the MBTI to create BDI based agents cite:campos_mabs2009. \dignum{Tell more about this, what means fine grained, how does the architecture of campos look?}
 We will use a more fine grained version of MBTI but his architecture is used,
 in which personality will be processed orientated rather than content
 orientated.
+
 
 \clearpage
 * BDI and Jung 
@@ -5622,19 +5675,12 @@ Since AIML was used in that paper we can safely say they weren't planning on
 making a multilogue architecture, because AIML can't do that as discussed in
 section [[Actors]].
 
-\newlyCleared
-In another interesting paper cite:penning2007boosting, \todo{Move to related work? (I think its interesting enough although not neccisarly with personality)}
-multilogue is already possible.
-However this design is /drastically/ different from the one we presented.
-In this paper they tried to improve input understanding,
-because it was difficult to hand write in their system,
-therefore the process was automated.
-Although in the end there were still several open problems left,
-such as not being able to deal with what we call templates or what AIML calls
-star tags.
-They also seemed to have problem with context,
-which we partly solved with scenes.
-On the other hand it is more advanced in that it can construct sentences.
+\toReview
+As discussed in section [[Related multilogue]],
+there already exists a system that can do this,
+but its drastically different from this architecture.
+It may be worth more study if one were to take an endeavor to a multilogue
+based system.
 
 *** Better use of linguistic theory
 \newlyCleared
@@ -5709,6 +5755,19 @@ until above mentioned systems are in place.
 
 
 \clearpage
+
+*** Emotions
+\drafting
+Perlocutionary values could be used as a basis for emotions.
+However the current version doesn't really track emotions anymore.
+A possible extension would be to make perlocutionary values a more complex
+structure, and the ability to add restrictions on certain connections once the
+bot reached certain emotional levels.
+
+\drafting
+refer to section [[Fatima Architecture]].
+
+
 * Acknowledgements
 \newlyCleared
 There it is, my drop of contribution into the ocean of science.
@@ -6671,4 +6730,4 @@ Conversation went according to script.
 #  LocalWords:  DialogueTree PatternDatabase Immutablity Traum SRAI RETE INTJ
 
 #  LocalWords:  varimax ENTJ INTP Kersey's Keirsey's PPSDQ SL TDI's Wooldridges
-#  LocalWords:  Rao Bratman's Grice's anamnesi ENFP ISTP toc se
+#  LocalWords:  Rao Bratman's Grice's anamnesi ENFP ISTP toc se IVE
