@@ -145,7 +145,7 @@ we're planning to extend in section [[Salve]].
 Since the personality topic has become quite popular in recent years
 some thoughts will be devoted to related work in section [[Related work]].
 With all this in mind, we continue to develop theory of how to
-make such a system in section [[BDI and Jung]]. \todo{Maybe discuss this more deeply here once it has been restructured}
+make such a system in section [[BDI and Jung]].
 To make the work in the previous section more concrete,
 we discuss what architecture was used to implement this in section [[Architecture]].
 In section [[Replacing AIML]] we go into detail why we replaced AIML and with what.
@@ -815,7 +815,7 @@ Things such as goals and ontology are not predefined but there exists a concept
 of rule matching similar to 2APL, although not JADE.
 Drools is called a production rule system, which is based around the RETE
 algorithm cite:droolsdocs.
-A good example in which drools is used is the expert system called optaplanner
+A good example in which drools is used is the expert system called OptaPlanner
 cite:vcimbora2015usability, which is a constraint satisfaction solver trough
 heuristics by using drools.
 
