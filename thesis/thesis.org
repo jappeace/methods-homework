@@ -94,6 +94,7 @@ We conclude by demonstrating that this scheme works as expected.
 \newlyCleared
 Jung, chatbot, drools, YAML, AIML, MBTI
 \todo[inline]{Figures should to be able to be placed in the appendix}
+\todo[inline]{Don't forget to delete the ideas chapter (after that remove this)}
 
 \newpage
 #+TOC: headlines 2
@@ -5754,7 +5755,6 @@ Doing this always costs more time than expected and probably should be avoided
 until above mentioned systems are in place.
 
 
-\clearpage
 
 *** Emotions
 \drafting
@@ -5768,6 +5768,7 @@ bot reached certain emotional levels.
 refer to section [[Fatima Architecture]].
 
 
+\clearpage
 * Acknowledgements
 \newlyCleared
 There it is, my drop of contribution into the ocean of science.
