@@ -994,20 +994,20 @@ Finishing --> [*]
 #+RESULTS[7a43fec1ceafd4b5f5a5ceaf9e08cbc3996b06c6]: fig:sp-activity
 [[file:img/uml/sp-activity.png]]
 
-  \cleared
-  We can imagine personality should have /a/ influence on social practice
-  selection and of course plan influence. As far as the authors are aware however,
-  there hasn't been any prior work on this subject. But we can speculate for
-  example that when considering physical context someone that is domination by a
-  Sensing function would check all facts more rigorously than someone
-  dominated by an Intuition.
+\cleared
+We can imagine personality should have /a/ influence on social practice
+selection and of course plan influence. As far as the authors are aware however,
+there hasn't been any prior work on this subject. But we can speculate for
+example that when considering physical context someone that is domination by a
+Sensing function would check all facts more rigorously than someone
+dominated by an Intuition.
 
-  \cleared
-  If the social practices are defined more formally they could be 
-  used in a bigger system such as in cite:augello2015social and
-  cite:augello2016model.
+\cleared
+If the social practices are defined more formally they could be 
+used in a bigger system such as in cite:augello2015social and
+cite:augello2016model.
 
-  \FloatBarrier
+\FloatBarrier
 ** Speech act theory
 <<Speech act thoery>>
 \cleared
