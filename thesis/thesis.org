@@ -841,8 +841,6 @@ An example of a drool rule can be seen in listing [[code:drool:lowlevelreply]].
 
 *** BDI + Personality
 <<BDI + Personality>>
-\cleared
-
 \toReview
 There have been several works that attempted to combine BDI with personality
 theory.
@@ -6700,9 +6698,8 @@ Conversation went according to script.
 \todo[inline]{Extracting information from meanings isn't very DRY right now, for example saying how is your foot? Could perhaps be splitup into statusInquiry + foot. However I don't know how to do this better right now, perhaps it could be a natural result of dubble matching but we lose the order inforamtion.}
 ** Rough planning.
 *** Report
-+ Integrate dignum's comments
++ Emotion future work should be finished
 + Make (highlighted) formulas floats and add a caption to them
-+ Fix those comments
 
 
 *** Make usable for other student
