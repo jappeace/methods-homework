@@ -93,6 +93,10 @@ We conclude by demonstrating that this scheme works as expected.
 
 #+END_CENTER
 
+*** Keywords
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
 \newlyCleared
 Jung, chatbot, drools, YAML, AIML, MBTI
 
@@ -852,39 +856,52 @@ An example of a drool rule can be seen in listing [[code:drool:lowlevelreply]].
   In our model we conceptualize the Jungian functions also as a process.
   We comment more on this in section [[Jungian BDI]].
  
-** Social practices
- <<social practice>>
- \dignum{Introduction: Why social practices? Relevant for giving context to dialouge, and therefore expectations, norms, social effects etc.}
- \todo[inline]{(extra) possible sources: Weber, Durkleim, Hobermas, latour/reckwitz}
- \todo[inline]{ difference between norms and sp is that sp has no moral value, but you *violate* norms }
- \cleared
- In cite:smolka2001social it is stated that the research in activity theory
- led to the development of social practices.
- It was Karl Marx who made thought of the "roots" of activity
- theory cite:engestrom1999perspectivesp3_marx,
- Activity theory tries to bridge the gap between a single actor and the system
- it resides in cite:engestrom1999perspectivesp10_broad_definition
- trough the activity in progress.
- Another way of describing activity in this sense is "a way of doing things".
- A problem with this model however was, how do cultures move activities from the
- collective towards the individual cite:smolka2001social.
- Social practices were therefore introduced to make the notion of activity more
- concrete.
+** Social practice
+<<social practice>>
+\todo[inline]{(extra) possible sources: Weber, Durkleim, Hobermas, latour/reckwitz}
+\todo[inline]{ difference between norms and sp is that sp has no moral value, but you *violate* norms }
+\toReview
+In cite:reckwitz2002toward, practice theory is described as an example of
+culture thoery, from this we can deduce a reason why the study of such theory
+would be relevant: It can help us explain context in for example dialogue,
+trough expectations norms and social effects.
+In contrast to more clasical models such as the `homo economicus'
+where self interest and goals are most important, and `homo sociologus'
+in which group values are most important, in other words, one ought to do
+something.
+Both these classical models ignore the unconsciousness layer of knowledge humans
+of same cultures share.
+Using the social practice model that doesn't ignore this layer,
+could lead to a more `natural' conversation with a chatbot.
 
- \cleared
- An early adoption of social practice can be found in cite:shove2005consumers,
- where it was used to analyze the spread of Nordic Walking.
- In his analyses he uses the following overarching concepts to analyze the practice:
- 1. /Material/, which is just stuff in the real world. Such as cars, lamps etc.
- 2. /Meanings/, which covers issues that are relevant to the material and/or the
-    practice. Think of health, price or even emotions. Consider the an example
-    practice of cycling.
-    In cite:shove2005consumers meanings and images is used interchangeably,
-    however in cite:holtz2014generating its labeled as just meanings.
-    For clarity we will be using the word /Meanings/ since its more descriptive.
- 3. /Competence/, it is rather obvious to say you need to be able to cycle to
-    participate in the social practice of cycling. This is why this is
-    introduced.
+\cleared
+In cite:smolka2001social it is stated that the research in activity theory
+led to the development of social practices.
+It was Karl Marx who made thought of the "roots" of activity
+theory cite:engestrom1999perspectivesp3_marx,
+Activity theory tries to bridge the gap between a single actor and the system
+it resides in cite:engestrom1999perspectivesp10_broad_definition
+trough the activity in progress.
+Another way of describing activity in this sense is "a way of doing things".
+A problem with this model however was, how do cultures move activities from the
+collective towards the individual cite:smolka2001social.
+Social practices were therefore introduced to make the notion of activity more
+concrete.
+
+\cleared
+An early adoption of social practice can be found in cite:shove2005consumers,
+where it was used to analyze the spread of Nordic Walking.
+In his analyses he uses the following overarching concepts to analyze the practice:
+1. /Material/, which is just stuff in the real world. Such as cars, lamps etc.
+2. /Meanings/, which covers issues that are relevant to the material and/or the
+  practice. Think of health, price or even emotions. Consider the an example
+  practice of cycling.
+  In cite:shove2005consumers meanings and images is used interchangeably,
+  however in cite:holtz2014generating its labeled as just meanings.
+  For clarity we will be using the word /Meanings/ since its more descriptive.
+3. /Competence/, it is rather obvious to say you need to be able to cycle to
+  participate in the social practice of cycling. This is why this is
+  introduced.
 
 \cleared
 In cite:dignum2014contextualized a model of social practices for agents was
@@ -916,42 +933,42 @@ The plan pattern construct wasn't represented in the previous model either.
 /Meaning/ in this model is solely related to the social effects of activities,
 and finally /Competences/ is the same as in the previous model.
 
- \cleared
- The interest for this model comes from  the potential heuristic use of social
- practices.
- Once in a particular situation that fits for a social practice the amount of
- reasoning can be sped up by having actions and their preconditions be grouped
- under that social practice,
- if no preconditions match an agent could consider trying other social practices
- he knows, or ask its peers for more information.
+\cleared
+The interest for this model comes from  the potential heuristic use of social
+practices.
+Once in a particular situation that fits for a social practice the amount of
+reasoning can be sped up by having actions and their preconditions be grouped
+under that social practice,
+if no preconditions match an agent could consider trying other social practices
+he knows, or ask its peers for more information.
 
- \cleared
- The social practice theory in this thesis should be considered as a
- /foundation/ rather than a separate element.
- We will be using it as a domain limiting device,
- however it should be noted that it could act as much more than that,
- potentially it could give the notion of culture to agents.
- In this thesis we are interested in implementing personality for a serious game
- in a single social practice.
- So right now the social practice just gives an ordered overview in what domain our program
- should work.
- We can formulate the social practice that is relevant for this thesis 
- in the following manner:
+\cleared
+The social practice theory in this thesis should be considered as a
+/foundation/ rather than a separate element.
+We will be using it as a domain limiting device,
+however it should be noted that it could act as much more than that,
+potentially it could give the notion of culture to agents.
+In this thesis we are interested in implementing personality for a serious game
+in a single social practice.
+So right now the social practice just gives an ordered overview in what domain our program
+should work.
+We can formulate the social practice that is relevant for this thesis 
+in the following manner:
 
- + Practice name: Doctor appointment
- + /Physical context/,
-   - Resources: Computer, chair, diagnostic tools..
-   - Places: waiting room, doctor's office...
-   - Actors: doctor, patient, assistant, ...
- + /Social context/,
-   - Roles: Doctor, Patient...
-   - Norms: doctor is polite, patient is polite, doctor is inquisitive
-   - Social interpretation: Can sit on chair, cannot sit on table.
- + /Activities/, share information, do diagnostics, minor treatments,
-   prescribing drugs...
- + /Plan patterns/, see figure [[fig:sp-activity]].
- + /Social meaning/, awkwardness, gratitude, ...
- + /Competences/, Give injection, empathetic talk
++ Practice name: Doctor appointment
++ /Physical context/,
+  - Resources: Computer, chair, diagnostic tools..
+  - Places: waiting room, doctor's office...
+  - Actors: doctor, patient, assistant, ...
++ /Social context/,
+  - Roles: Doctor, Patient...
+  - Norms: doctor is polite, patient is polite, doctor is inquisitive
+  - Social interpretation: Can sit on chair, cannot sit on table.
++ /Activities/, share information, do diagnostics, minor treatments,
+  prescribing drugs...
++ /Plan patterns/, see figure [[fig:sp-activity]].
++ /Social meaning/, awkwardness, gratitude, ...
++ /Competences/, Give injection, empathetic talk
 
 #+NAME: fig:sp-activity
 #+BEGIN_SRC plantuml :cache yes :file img/uml/sp-activity.png :exports results
@@ -986,6 +1003,8 @@ stop
   If the social practices are defined more formally they could be 
   used in a bigger system such as in cite:augello2015social and
   cite:augello2016model.
+
+  \FloatBarrier
 ** Speech act theory
 <<Speech act thoery>>
 \cleared
@@ -1505,7 +1524,6 @@ Template -> [*]
 
 \clearpage
 * Related work
-\ask{Can't I just merge this chapter into background?}
 <<Related work>>
 \newlyCleared
 In this chapter we will give a brief overview of various interesting papers
