@@ -146,7 +146,7 @@ In the background section [[Background]] we will start by looking into
 personality theories [[personality theories]] for their advantages and disadvantages.
 Then we'll discuss agents literature in [[Artificial intelligence literature]].
 followed by the idea of social practices [[social practice]], 
-and some limted speech act thoery [[Speech act thoery]].
+and some limited speech act theory [[Speech act thoery]].
 After which we continue with Dialogue systems [[Dialogue systems]],
 some of which can be considered related work.
 We continue by taking a close look at the state of the existing software that
@@ -791,8 +791,9 @@ reaction rules and action tendencies,
 personalities were emulated.
 These therefore aren't he same as the personalities discussed in section
 [[personality theories]],
-but rather they indicate how the agent deals with emotion.
-This Fatima architecture is an extension upon BDI cite:lim2008improving.
+it is unclear on what theoretical foundation the claim was made this
+described personality.
+Note that the Fatima architecture is an extension upon BDI cite:lim2008improving.
 
 *** Logic of BDI
 <<bdi logics>>
@@ -841,16 +842,40 @@ An example of a drool rule can be seen in listing [[code:drool:lowlevelreply]].
 *** BDI + Personality
 <<BDI + Personality>>
 \cleared
-\todo[inline]{other proposed systems and argue for campos}
-Campos discussed an architecture in which personality emerged not from things
-you like, \todo{wut?}
-but rather than trying to determine which content a personality preferred,
-the personality was encoded in the process they preferred.
+
+\toReview
+There have been several works that attempted to combine BDI with personality
+theory.
+In cite:gmytrasiewicz2002emotions emotion and personality is taken together
+and modelled formally. Similarly to the Fatima architecture there is no
+personality research cited in this work.
+However this formal model could be useful regardless of theory,
+especially the observation that there are only three possible transformation
+as the result of emotions (at least in their model): Transformation of actions
+space, transformation of the utility function and transformation of probabilities
+of state.
+We mention this because we do transformation of action space
+(irrational functions) and utility
+functions ($F_e$ modifies itself) in section [[Mapping to process]].
+In cite:canuto2005personality the personality model of Millon was used,
+they chose to interpret it as a value based personality scheme.
+Where the values would indicate probability of action selection and quality of
+behavior. So if an agent would get several task the one he selects depends on
+his personality values and the quality of execution would also depend on that.
+
+\toReview
+In cite:campos_mabs2009 Campos presents a methodology for adding personality
+to BDI agents.
+What is novel about his work is that rather than presenting personality as
+value driven, it emerge from the process an agent prefers.
+So personality defines the reasoning approach an agent will use according to
+Campos.
 This was called /process orientated/ rather than contend orientated.
 cite:campos_mabs2009
 For example in their interpretation of MBTI a Sensing agent would make a plan
-in complete details whereas an intuitive agent would just continue planning as
-needed.
+before hand in complete detail (strict evaluation cite:sheard2003pure),
+whereas an intuitive agent would continue planning as the situation demanded
+from the agent (lazy evaluation cite:launchbury1993natural).
 Thinking agents would base their decision process upon their own believes
 whereas feeling agents would consider what other agents want.
 In our model we conceptualize the Jungian functions also as a process.
@@ -860,11 +885,11 @@ We comment more on this in section [[Jungian BDI]].
 <<social practice>>
 \toReview
 In cite:reckwitz2002toward, practice theory is described as an example of
-culture thoery, from this we can deduce a reason why the study of such theory
+culture theory, from this we can deduce a reason why the study of such theory
 would be relevant: It can help us explain context in for example dialogue,
 trough expectations norms and social effects.
-In contrast to more clasical models such as the `homo economicus'
-where self interest and goals are most important, and `homo sociologus'
+In contrast to more classical models such as the `homo economicus'
+where self interest and goals are most important, and `homo sociologicus'
 in which group values are most important, in other words, one ought to do
 something.
 Both these classical models ignore the unconsciousness layer of knowledge humans
@@ -1596,13 +1621,13 @@ method used to make the personality.
 In this paper a personality model is introduced based on OCEAN.
 They move from personality values in OCEAN towards action selection
 with fuzzy logic.
-Fuzzy logic `obfusicates' `crisp' values with more `natural' terms,
+Fuzzy logic `obfuscates' `crisp' values with more `natural' terms,
 rather than ${1,2,3}$, we can use `low, medium, and high'.
-With these terms, buisness rules can be specified.
+With these terms, business rules can be specified.
 A big advantage of this is that we can modify the definition of 
 the natural terms without modifying the rules they specified.
 An example of these rules is:
-``if actions is high or selfconsciousness is high then acceptance is favored''.
+``if actions is high or self consciousness is high then acceptance is favored''.
 However this has a major disadvantage in that a lot of rules need to be
 added to do action selection (there are 54 described in the paper),
 some of which become quite big (some have 7 conditions).
@@ -1612,12 +1637,12 @@ action selection.
 Having a lot of rule also make maintenance hard, if for example there is an
 unwanted behavior many rules need to be inspected before the change can be made.
 There are two strategies that could help dealing with this:
-Modulirazation which is partly already done in the paper by splitting up action
+Modularization which is partly already done in the paper by splitting up action
 selection and action revision for example.
 Or by simplifying the model,
 which could be done by OCEAN traits rather than the facets,
 reducing the amount of variables from 16 to 5.
-In fact this will make the argumantive bot a lot more consistent
+In fact this will make the argumentative bot a lot more consistent
 with the OCEAN model. Since some facets were used for action revision and others
 for action selection,
 we can have an agent that will revise as if it is very neurotic but select as
@@ -5885,7 +5910,7 @@ To build this project two hurdles need to be overcome, because the
 server uses a starkly different tool chain than the client.
 In this appendix we will record how the application can be build.
 It may seem trivial but the Java EE world is incredibly complex.
-We assume a unix-like operating system with a package manager.
+We assume a UNIX-like operating system with a package manager.
 
 ** Client
 \cleared
@@ -5899,7 +5924,7 @@ its just not officially supported (yet) but the latest version can be found [[ht
 Scroll all the way down for the latest release.
 
 \newlyCleared
-Note that the unity client currenlty doesn't support multiple replies from an
+Note that the unity client currently doesn't support multiple replies from an
 agent, because the reply is just inserted in a label, rather than showing a chat
 history.
 ** Server
@@ -5914,7 +5939,7 @@ following command:
 
 *** Maven
 \cleared
-Then maven needs to be installed since gradle didn't work ([[Gradle attempt]]):
+Then maven needs to be installed since Gradle didn't work ([[Gradle attempt]]):
 
 #+BEGIN_SRC sh
    # emerge dev-java/maven-bin
@@ -5922,13 +5947,13 @@ Then maven needs to be installed since gradle didn't work ([[Gradle attempt]]):
 
 \cleared
 Maven is the package manager for java software, it downloads and installs
-dependencies (and dependency dependencies) automatically based on xml
+dependencies (and dependency dependencies) automatically based on XML
 configuration.
 Do note that to use maven you need to setup a \url{\string~/.m2/settings.xml}
 file. I based mine on [[https://maven.apache.org/settings.html][this]] with help of [[https://maven.apache.org/ref/3.3.9/maven-settings/settings.html][this.]]
 The active profile should have the name local so that the local profile is used
 in the maven project (in this case /local/).
-Otherwise the wildfly plugin won't deploy the application.
+Otherwise the Wildfly plugin won't deploy the application.
 To test if maven works go to the \url{communicate2/communicate/communicate_server}
 folder and execute:
 
@@ -5941,20 +5966,20 @@ If no errors occur it means the settings are configure right.
 However we are not done yet since the resulting binary is not executable.
 It is something called a servlet which is an API for server like applications.
 To use this binary, we need an application server.
-Our maven repository and code base has been configured towards /wildfly/,
+Our maven repository and code base has been configured towards /Wildfly/,
 so we will use that.
 
 **** Gradle attempt
 <<Gradle attempt>>
 \cleared
-it was attempted to replace maven with gradle, since its a lot less verbose
-than maven and easier to setup however doesn't have the picketlink extension
-which wildfly requires.
-Therefore gradle was abandoned and the maven tool was used instead.
+it was attempted to replace maven with Gradle, since its a lot less verbose
+than maven and easier to setup however doesn't have the =picketlink= extension
+which Wildfly requires.
+Therefore Gradle was abandoned and the maven tool was used instead.
 
-*** Get wildfly
+*** Get Wildfly
 \cleared
-Download wildfly from [[http://wildfly.org/downloads/][here]], choose the full web distribution
+Download Wildfly from [[http://wildfly.org/downloads/][here]], choose the full web distribution
 (if you choose the servlet one you'll run into trouble since it doesn't have the
 datasource subsystem, it took about two days to figure that out).
 Extract this download somewhere which we will call hence forth $WILDFLY.
@@ -5964,15 +5989,15 @@ Extract this download somewhere which we will call hence forth $WILDFLY.
 Now its time to configure the persistent datasource.
 The code base can handle sessions,
 but to deal with user registration and logins and such we need a database.
-There are two methods, mariadb and the in ram storage.
-Mariadb is what the online application uses and its probably better to
-stick to that for active devlopment, but if you just want to have
+There are two methods, MariaDB and the in ram storage.
+MariaDB is what the online application uses and its probably better to
+stick to that for active development, but if you just want to have
 a quick look at the server you should use look at section [[inmemorydb]].
 
-*** Mariab setup
+*** MariaDB setup
 <<Mariadb setup>>
 \cleared
-So first install mariadb (or mysql, they are the same, except mariadb has better
+So first install MariaDB (or MySQL, they are the same, except MariaDB has better
 defaults):
 #+BEGIN_SRC sh
   # emerge dev-db/mariadb
@@ -5986,7 +6011,7 @@ Then we need to setup the user and database:
     IDENTIFIED BY 'salve';
 #+END_SRC
 
-*** Mariadb driver
+*** MariaDB driver
 \cleared
 Now we need to make the application server aware of the database.
 To do this we first need to install a driver from here [[http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.33/mysql-connector-java-5.1.33.jar][here]],
@@ -6024,10 +6049,10 @@ Then execute the following commands:
 
 \cleared
 That last command should open the browser. Click then
-Configuration \to subsystems \to datasrouces \to non xa \to add  \to mysql \to next.
-The name should be GameDS and the JNDI name should be java:/GameDS,
-now click: next \to detect driver \to mysql.
-The url should be \url{jdbc:mysql://localhost:3306/salve}, the username and pass
+Configuration \to subsystems \to datasource \to non =xa= \to add  \to MySQL \to next.
+The name should be =GameDS= and the =JNDI= name should be =java:/GameDS=,
+now click: next \to detect driver \to MySQL.
+The URL should be \url{jdbc:mysql://localhost:3306/salve}, the username and pass
 should both be salve, now click next \to finish.
 
 *** Deploying
@@ -6051,7 +6076,7 @@ internet it can help to go to the root folder and execute:
 \cleared
 <<inmemorydb>>
 Now there is a choice to be made, you can either choose to use maria db
-or try and point the appliation to the in ram storage of wildfly.
+or try and point the application to the in ram storage of Wildfly.
 To do this go to:
 \url{communicate2/communicate/communicate_server/src/main/resources/META-INF}
 and then replace everything with:
@@ -6079,9 +6104,9 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
 #+END_SRC
 
 ** Ubuntu issues
-At some point my laptop crashed and I had to fall back to an ubuntu based
+At some point my laptop crashed and I had to fall back to an Ubuntu based
 distribution.
-Installing mysql came with the gotcha, the default root on mysql is only
+Installing MySQL came with the gotcha, the default root on MySQL is only
 accessible from:
 #+BEGIN_SRC sh
 sudo mysql -u root
@@ -6117,23 +6142,23 @@ default-character-set = latin1
 #+END_SRC
 
 \cleared
-After which we do a restart of the mysqld:
+After which we do a restart of the =mysqld=:
 
 #+BEGIN_SRC sh
 sudo systemctl restart mysql
 #+END_SRC
 \cleared
-Note: make sure to stop your running wildfly instance, otherwise wildfly will keep it alive
+Note: make sure to stop your running Wildfly instance, otherwise Wildfly will keep it alive
 
 \cleared
 Now drop the entire salve database as root, the tables were created with the
-wrong charset so we need to just remove them all.
+wrong char-set so we need to just remove them all.
 #+BEGIN_SRC sh
 mysql -u root -ppassword -e "DROP DATABASE salve;:
 #+END_SRC
 
 \cleared
-Now recreate the database as was done in section [[Mariadb setup]] (alternativly
+Now recreate the database as was done in section [[Mariadb setup]] (alternatively
 logging in as root and pressing arrow up a couple of times should get you the
 right commands).
 
@@ -6146,7 +6171,7 @@ rm -R ~/.m2/repository/cnruithof; (cd ../ && mvn clean && mvn install) && mvn wi
 #+END_SRC
 There is also a shell script "rebuild.sh".
 This will re-install the entire project thereby also rebuilding all dependencies.
-mvn clean in there for good measure.
+=mvn clean= in there for good measure.
 
 \cleared
 There is a python client script for quick debugging, therefore its unnecessary
@@ -6212,7 +6237,7 @@ hold up.
 | /Susie/ | /Well, I was watering the plants and all the sudden,/              | 3      |
 | /Susie/ | /I got this pain in my back./                                      |        |
 | /Susie/ | /Do you think I'm allergic to plants?/                             |        |
-| Doctor  | Haha, no, I think we need to make a scan of your back.             | 4      |
+| Doctor  | Ha ha, no, I think we need to make a scan of your back.             | 4      |
 | Doctor  | Because a watering can is a little to light to get back-pain from. |        |
 | /Susie/ | /Of course doctor./                                                |        |
 | Doctor  | Can you go to the hospital next Friday at 13:00?                   |        |
@@ -6293,7 +6318,7 @@ Conversation went according to script.
 | /Susie/ | /Well, I was watering the plants and all the sudden,/              |        |
 | /Susie/ | /I got this pain in my back./                                      |      3 |
 | /Susie/ | /Do you think I'm allergic to plants?/                             |        |
-| Doctor  | Haha, no, I think we need to make a scan of your back.             |        |
+| Doctor  | Ha ha, no, I think we need to make a scan of your back.             |        |
 | Doctor  | Because a watering can is a little to light to get back-pain from. |        |
 | /Susie/ | /Of course doctor./                                                |        |
 | Doctor  | Can you go to the hospital next Friday at 13:00?                   |        |
@@ -6407,7 +6432,7 @@ Conversation went according to script.
 | /Susie/ | /Well, I was watering the plants and all the sudden,/              |        |
 | /Susie/ | /I got this pain in my back./                                      |        |
 | /Susie/ | /Do you think I'm allergic to plants?/                             |        |
-| Doctor  | Haha, no, I think we need to make a scan of your back.             |        |
+| Doctor  | Ha ha, no, I think we need to make a scan of your back.             |        |
 | Doctor  | Because a watering can is a little to light to get back-pain from. |        |
 | /Susie/ | /Of course doctor./                                                |        |
 | Doctor  | Can you go to the hospital next Friday at 13:00?                   |        |
@@ -6487,7 +6512,7 @@ Conversation went according to script.
 | /Susie/ | /Well, I was watering the plants and all the sudden,/              |        |
 | /Susie/ | /I got this pain in my back./                                      |        |
 | /Susie/ | /Do you think I'm allergic to plants?/                             |        |
-| Doctor  | Haha, no, I think we need to make a scan of your back.             |        |
+| Doctor  | Ha ha, no, I think we need to make a scan of your back.             |        |
 | Doctor  | Because a watering can is a little to light to get back-pain from. |        |
 | /Susie/ | /Of course doctor./                                                |        |
 | Doctor  | Can you go to the hospital next Friday at 13:00?                   |        |
@@ -6558,7 +6583,7 @@ Conversation went according to script
 | /Susie/ | /Well, I was watering the plants and all the sudden,/              |        |
 | /Susie/ | /I got this pain in my back./                                      |        |
 | /Susie/ | /Do you think I'm allergic to plants?/                             |        |
-| Doctor  | Haha, no, I think we need to make a scan of your back.             |        |
+| Doctor  | Ha ha, no, I think we need to make a scan of your back.             |        |
 | Doctor  | Because a watering can is a little to light to get back-pain from. |        |
 | /Susie/ | /Of course doctor./                                                |        |
 | Doctor  | Can you go to the hospital next Friday at 13:00?                   |        |
@@ -6627,7 +6652,7 @@ Conversation went according to script.
 | /Susie/ | /Well, I was watering the plants and all the sudden,/              |        |
 | /Susie/ | /I got this pain in my back./                                      |        |
 | /Susie/ | /Do you think I'm allergic to plants?/                             |        |
-| Doctor  | Haha, no, I think we need to make a scan of your back.             |        |
+| Doctor  | Ha ha, no, I think we need to make a scan of your back.             |        |
 | Doctor  | Because a watering can is a little to light to get back-pain from. |        |
 | /Susie/ | /Of course doctor./                                                |        |
 | Doctor  | Can you go to the hospital next Friday at 13:00?                   |        |
@@ -6778,4 +6803,4 @@ Conversation went according to script.
 #  LocalWords:  DialogueTree PatternDatabase Immutablity Traum SRAI RETE INTJ
 
 #  LocalWords:  varimax ENTJ INTP Kersey's Keirsey's PPSDQ SL TDI's Wooldridges
-#  LocalWords:  Rao Bratman's Grice's anamnesi ENFP ISTP toc se IVE
+#  LocalWords:  Rao Bratman's Grice's anamnesi ENFP ISTP toc se IVE proto EE
