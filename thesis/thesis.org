@@ -154,7 +154,7 @@ we're planning to extend in section [[Salve]].
 Since the personality topic has become quite popular in recent years
 some thoughts will be devoted to related work in section [[Related work]].
 With all this in mind, we continue to develop theory of how to
-make such a system in section [[BDI and Jung]].
+make such a system in section [[Jungian BDI]].
 To make the work in the previous section more concrete,
 we discuss what architecture was used to implement this in section [[Architecture]].
 In section [[Replacing AIML]] we go into detail why we replaced AIML and with what.
@@ -1644,14 +1644,13 @@ We will use a more fine grained version of MBTI, but his architecture is used,
 in which personality will be processed orientated rather than content
 orientated.
 It is more fine grained in that we use Jungian functions instead of MBTI type
-labels. The details can be found in section [[BDI and Jung]].
+labels. The details can be found in section [[Jungian BDI]].
 \dignum{Tell more about this, what means fine grained, how does the architecture of campos look?}
 
 
 \clearpage
-* BDI and Jung 
+* Dialogue as a personality process
 <<Jungian BDI>>
-\todo{I think we should remove BDI from bdi and jung}
 \todo[inline]{This should be restructured and reread, trying to figure out what goes on from a birds eye view is to difficult}
 # In this chapter we talk about the abstract ideas, any information necessary
 # to execute the thesis without considering implementation details.
@@ -2554,7 +2553,7 @@ Secondly we will discuss the $N$-agent architecture which is capable of dealing
 with more than one agent (and the user), this is called the multilogue
 architecture.
 The reason for discussing both is that the ideas discussed in section
-[[BDI and Jung]] could be applied to an $N$-agent architecture.
+[[Jungian BDI]] could be applied to an $N$-agent architecture.
 However there are some pragmatic problems with this discussed in section
 [[Practicalities]].
 Therefore we held of on implementing this and just describe how it could be done
@@ -2654,7 +2653,7 @@ Good programmers worry about data structures and their relationships.
 
 \cleared
 In this subsection we will discuss the main data structures used to implement
-the ideas from section [[BDI and Jung]].
+the ideas from section [[Jungian BDI]].
 We use class diagrams to accomplish this which are based upon UML cite:fowler2004uml.
 Before this is done we would like to point out several things to keep in mind.
 
@@ -2768,14 +2767,14 @@ structure in the application.
 Simply by counting the amount of structures that consist of it,
 and of course it is a very important structure because it is the building
 block that gives understanding to the implementation.
-As described in section [[BDI and Jung]] we map strings into user symbols,
+As described in section [[Jungian BDI]] we map strings into user symbols,
 and we can map symbols back to strings again.
 An overview of the relationship between the theoretic representation
 and the implementation for this class diagram can be seen in table
 [[tab:jung-class-relation-drool]].
 
 #+NAME: tab:jung-class-relation-drool
-#+CAPTION: Overview of section [[BDI and Jung]] symbols and their class representations
+#+CAPTION: Overview of section [[Jungian BDI]] symbols and their class representations
 | Symbol | Corresponding Class                                                                                                                               |
 |--------+---------------------------------------------------------------------------------------------------------------------------------------------------|
 | $\sigma$    | =String=                                                                                                                                          |
@@ -2888,13 +2887,13 @@ in this figure to save space.
 From [[fig:jungclass]] we can see the main clients of the low level drool package
 is indeed the =Believes= class and after that the =DialogueTree=.
 =Believes= provide the Jungian functions with bounded information about the mind
-of the chatbot as discussed in section [[BDI and Jung]].
+of the chatbot as discussed in section [[Jungian BDI]].
 In table [[tab:jung-class-relation-dialogue]] we can see the relationship
 between theoretic representation and that of this class diagram, excluding
 the ones discussed in previous section.
 
 #+NAME: tab:jung-class-relation-dialogue
-#+CAPTION: Overview of section [[BDI and Jung]] symbols and their class representations
+#+CAPTION: Overview of section [[Jungian BDI]] symbols and their class representations
 | Symbol | Corresponding Class |
 | $B$    | Believes            |
 | $D$    | DialogueTree        |
@@ -2971,7 +2970,7 @@ phase.
 From this the other two databases can be more easily constructed since they 
 can lookup symbols in the =SymbolDatabase=, rather than worrying about construction
 of new ones.
-This class is the realization of $\mathcal{S}$ from section [[BDI and Jung]].
+This class is the realization of $\mathcal{S}$ from section [[Jungian BDI]].
 
 \cleared
 =PatternDatabase= can store patterns based upon a =Scene=.
@@ -2988,7 +2987,7 @@ However to construct this second database the connection database is required.
 \cleared
 =ConnectionDatabase= is a database that stores a connection set from a
 symbol. 
-This class is analogous to the symbol graph $G$ from section [[BDI and Jung]],
+This class is analogous to the symbol graph $G$ from section [[Jungian BDI]],
 it is used to determine what the bot could say, and what it thinks its speech
 partner can say.
 This database has a special method named =createDual= which is used to create
@@ -2998,7 +2997,7 @@ it made looking up the required patterns much easier.
 
 *** Jung in Java
 \cleared
-To implement the theory presented in section [[BDI and Jung]],
+To implement the theory presented in section [[Jungian BDI]],
 several issues had to be overcome.
 First of all Java has no native support for doing partial application.
 We worked around this Issue by introducing a structure that contained the
@@ -4516,7 +4515,7 @@ so we can use more generalized patterns in our particular scene.
 
 \cleared
 Although scenes aren't necessary to implement the theory presented in
-section [[BDI and Jung]],
+section [[Jungian BDI]],
 it is necessary for eventual social practice support.
 It also makes this representation much more modular.
 The part were scenes are actively used is in section [[db package]],
@@ -4577,7 +4576,7 @@ They appear in listing [[code:aiml-that-tag]] as an example.
 
 \cleared
 Although supporting this feature isn't necessary to implement the theory
-presented in section [[BDI and Jung]],
+presented in section [[Jungian BDI]],
 they do allow much more fine grained control over the scenario.
 We therefore decided to also implement this AIML feature.
 They are described more extensively in section [[Before and templates]].
@@ -5652,7 +5651,7 @@ for the INTJ, ENFP and ISTP personalities.
 \newlyCleared
 This is by no means a prove that this will work in all instances.
 A first step towards that would be to model the theories in section
-[[BDI and Jung]] in a formal language discussed in section [[Logic of BDI]].
+[[Jungian BDI]] in a formal language discussed in section [[Logic of BDI]].
 We haven't had a need to do such an effort yet, and were more concerned with
 getting a working implementation.
 
