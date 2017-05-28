@@ -1590,7 +1590,7 @@ which we partly solved with scenes.
 On the other hand it is more advanced in that it can construct sentences.
 
 ** Personality in chatbots
-\cleared
+\toReview
 To simulate personality in communication games there have been already several
 works proposed.
 Etheredge used the OCEAN personality theory to create argumentative
@@ -1598,21 +1598,30 @@ agents cite:etheredge2016personality.
 Although argumentation is not the same as communication we can consider the
 method used to make the personality.
 In this paper a personality model is introduced based on OCEAN.
-To move from personality values in OCEAN towards action selection fuzzy logic
-is used. \dignum{Give examples, and tell what you would do differently}
+In this they move from personality values in OCEAN towards action selection
+fuzzy logic is used.
+Fuzzy logic `obfusicates' `crisp' values with more natural terms,
+rather than ${1,2,3}$, we can use low, medium, and high.
+With these terms, buisness rules can be specified.
+A big advantage of this is that we can modify the definition of 
+the natural terms without modifying the rules they specified.
+An example of these rules is:
+``if actions is high or selfconsciousness is high then acceptance is favored''.
 However this has a major disadvantage in that a lot of rules need to be
-added to do action selection.
+added to do action selection (there are 54 described in the paper),
+some of which become quite big (some have 7 conditions).
 This can make action selection opaque.
 It is for example not immediately clear how a higher anxiety will influence
 action selection.
 Having a lot of rule also make maintenance hard, if for example there is an
 unwanted behavior many rules need to be inspected before the change can be made.
-
-\cleared
-In agents with with personalities Cocu tried making a complete game based
-on MBTI cite:cocu2015agents. \dignum{???} \ask{... what means =???= ?}
-However communication was never implemented and personality got reduced to
-doing a single action. \todo{ I think he means we should delete this}
+There are two strategies that could help dealing with this:
+Modulirazation which is partly already done in the paper by splitting up action
+selection and action revision for example
+(although we disagree with splitting up the facets along these lines).
+Or by simplifying the model,
+which could be done by OCEAN traits rather than the facets,
+reducing the amount of variables from 16 to 5.
 
 \cleared
 Van den Bosch also chose to use OCEAN to model characters in a serious
@@ -1629,7 +1638,8 @@ the personality, would and should change depending on context.
 
 ** Campos
 \cleared
-Campos used the MBTI to create BDI based agents cite:campos_mabs2009. \dignum{Tell more about this, what means fine grained, how does the architecture of campos look?}
+Campos used the MBTI to create BDI based agents cite:campos_mabs2009.
+\dignum{Tell more about this, what means fine grained, how does the architecture of campos look?}
 We will use a more fine grained version of MBTI but his architecture is used,
 in which personality will be processed orientated rather than content
 orientated.
