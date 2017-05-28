@@ -918,7 +918,7 @@ in Nordic waling this can be for example talking with your partner,
 or stopping to get a stone out of your shoe.
 They don't need to all be performed but are there just as options.
 This is the first construct that wasn't covered by the other model.
-/Plan patterns/ are blue prints for the eventual plan. \dignum{No, plan patterns set the boundaries in which plans can be made}
+/Plan patterns/ set the boundaries for the eventual plan.
 An example of a doctor appointment plan pattern can be seen in
 figure [[fig:sp-activity]].
 If you go to the doctor the first thing you do is some kind of greeting.
@@ -972,25 +972,28 @@ in the following manner:
 
 #+NAME: fig:sp-activity
 #+BEGIN_SRC plantuml :cache yes :file img/uml/sp-activity.png :exports results
-start
-:greeting;
-while (has diagnoses?)
-fork
-:data gathering;
-fork again;
-:diagnoses;
-end fork
-endwhile
-:finishing;
-stop
+[*] --> Greeting
+
+state "Data gathering" as data
+
+Greeting --> data
+Greeting --> Diagnoses
+
+data -> Diagnoses
+Diagnoses -> data
+
+data --> Finishing
+Diagnoses --> Finishing
+
+Finishing --> [*]
+
 #+END_SRC
-#+CAPTION: Plan pattern example
+#+CAPTION: Plan pattern example 
 #+LABEL: fig:sp-activity
 #+ATTR_LATEX: :width 0.5\textwidth
-#+RESULTS[35679ceefcd43b1884cc8c502d27ae59aaa34043]: fig:sp-activity
+#+RESULTS[7a43fec1ceafd4b5f5a5ceaf9e08cbc3996b06c6]: fig:sp-activity
 [[file:img/uml/sp-activity.png]]
 
-  \dignum{A plan pattern isn't an abstract workflow! It only gives time order to parts of a dialogue}
   \cleared
   We can imagine personality should have /a/ influence on social practice
   selection and of course plan influence. As far as the authors are aware however,
