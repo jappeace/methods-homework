@@ -839,22 +839,22 @@ Also note that drools is Turing complete cite:weppenaar2011solving.
 An example of a drool rule can be seen in listing [[code:drool:lowlevelreply]].
 
 *** BDI + Personality
- <<BDI + Personality>>
-  \cleared
-  \todo[inline]{other proposed systems and argue for campos}
-  Campos discussed an architecture in which personality emerged not from things
-  you like, \todo{wut?}
-  but rather than trying to determine which content a personality preferred,
-  the personality was encoded in the process they preferred.
-  This was called /process orientated/ rather than contend orientated.
-  cite:campos_mabs2009
-  For example in their interpretation of MBTI a Sensing agent would make a plan
-  in complete details whereas an intuitive agent would just continue planning as
-  needed.
-  Thinking agents would base their decision process upon their own believes
-  whereas feeling agents would consider what other agents want.
-  In our model we conceptualize the Jungian functions also as a process.
-  We comment more on this in section [[Jungian BDI]].
+<<BDI + Personality>>
+\cleared
+\todo[inline]{other proposed systems and argue for campos}
+Campos discussed an architecture in which personality emerged not from things
+you like, \todo{wut?}
+but rather than trying to determine which content a personality preferred,
+the personality was encoded in the process they preferred.
+This was called /process orientated/ rather than contend orientated.
+cite:campos_mabs2009
+For example in their interpretation of MBTI a Sensing agent would make a plan
+in complete details whereas an intuitive agent would just continue planning as
+needed.
+Thinking agents would base their decision process upon their own believes
+whereas feeling agents would consider what other agents want.
+In our model we conceptualize the Jungian functions also as a process.
+We comment more on this in section [[Jungian BDI]].
  
 ** Social practice
 <<social practice>>
@@ -2567,7 +2567,7 @@ Note that we want to keep as much of the existing architecture as possible.
 There are also several items we won't discuss in this chapter because they
 haven't changed, these include the protocol,
 and the Wildfly server and the unity client.
-** Deployment diagram
+** Overview
 <<Implemented architecture>>
 \cleared
 A deployment diagram of the architecture can bee seen in figure
