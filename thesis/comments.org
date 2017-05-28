@@ -1,50 +1,7 @@
 #+TITLE: questions
 
 * Dignum
-Beste dr. Dignum,
 
-Hierbij mijn werk van deze week,
-In het begin van de week heb ik de implementatie en conclusie hoofdstukken gemaakt.
-Daarna heb ik al uw aanmerking heb verbeterd:
-+ Spelfouten nagelopen (en een spellchecker over het hele document gedaan).
-+ Introductie fouten verbeterd.
-+ Social practice
-  + Plan patterns verbetert waar nodig
-  + Introductie toegevoegd
-  + Figuur 1 veranderd naar state diagram (heeft geen beslissings punten,
-    dus geeft alleen mogelijke transities aan, wat volgens mij neerkomt op
-    tijdvolgorde)
-+ Related work hoofdstuk naar achter achtergrond hoofdstuk verplaatst
-+ Personality case studies is verplaatst naar implementation hoofdstuk
-
-Bij hoofdstuk 2.2 stond een notatie dat ik beter IVA kon gebruiken
-(als basis),
-ik neem aan dat dit stond voor interactive virtual environments.
-Ik heb hier een subkopje voor toegevoegd maar weet niet echt verder wat met dat
-commentaar werd bedoeld (of er nog meer aan gebeurd moest worden).
-
-> Wat ik ergens in de laatste hoofdstukken wil zien is een doorlopen van de
-  scenario's en dan aangeven wat er nu intern gebeurt zodat duidelijk is waar
-  de persoonlijkheid invloed heeft en waar dat zichtbaar is.
-  In de appendix zeg je wel dat er iets uitkomt maar niet hoe.
-
-Dit is gedaan in het implemenatie hoodstuk, in sectie "making the scenario"
-Specifiek de subsecties "Believes" en "steering the bot".
-Ik had er aan gedacht om dit nog specifieker te maken,
-maar dan word het broncode bij langs lopen.
-Wat opzich wel te doen is aangezien het persoonlijkheid specifieke gedeelte
-misschien 200 regels Java code in totaal is exclusief commentaar
-(wat het aantal verdubbeld).
-Maar omdat u zij dat broncode geen centrale rol speelt heb ik hier tegen besloten.
-
-Ik vroeg me af welke figuren naar de appendix verplaatst horen te worden,
-alle, of alle grote? en of dit inclusief tabellen, listings en formules is.
-
-Bijgevoegd thesis in huidige staat,
-
-Mvg,
-
-Jappie Klooster
 
 * Manuel
 
