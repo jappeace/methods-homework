@@ -65,6 +65,8 @@
 # for \FloatBarrier, prevents figures from floating over sections etc
 #+LATEX_HEADER: \usepackage{placeins}
 
+\todo[inline]{Figures should to be able to be placed in the appendix}
+\todo[inline]{Don't forget to delete the ideas chapter (after that remove this)}
 ** Abstract                                                          
 :PROPERTIES:
 :UNNUMBERED: t
@@ -93,8 +95,6 @@ We conclude by demonstrating that this scheme works as expected.
 
 \newlyCleared
 Jung, chatbot, drools, YAML, AIML, MBTI
-\todo[inline]{Figures should to be able to be placed in the appendix}
-\todo[inline]{Don't forget to delete the ideas chapter (after that remove this)}
 
 \newpage
 #+TOC: headlines 2
@@ -782,11 +782,24 @@ and finally we will look at the serious game in its existing form.
 **** IVE
 <<Fatima Architecture>>
 \dignum{Don't use BDI but IVA as basis. For example the Fatima architecture. This is more aimed at interaction with characters}
-\drafting
-Fatima architecture cite:dias2005feeling 
+\ask{I was asked to use IVE instead of BDI as basis, but within the fatima paper they use BDI right? So I can keep that around?}
 
 \drafting
-Fatima-PSI archticerute cite:lim2008improving
+Interactive virtual environments are populated by synthetic characters used
+to guide an application cite:dias2005feeling.
+In this Fatima architecture OCC was used to define and track emotions in their
+respective agents.
+They also defined `personalities'
+trough value based limits on emotions,
+decay rate variances,
+goals,
+reaction rules and action tendencies,
+personalities were emulated.
+
+\drafting
+This Fatima architecture is an extension upon BDI, and has since been extended
+to include a motivational system cite:lim2008improving, and has been renamed
+to Fatima-PSI.
 
 **** Logic of BDI
  <<bdi logics>>
@@ -1504,19 +1517,26 @@ Template -> [*]
 \clearpage
 * Related work
 <<Related work>>
-\toReview
+\newlyCleared
 In this chapter we will give a brief overview of various interesting papers
 we found during researching the topic.
 We will start with chatbots in general, each of which has wildly different
 approach to perform the same task.
+Then we will discuss chatbots that also have personality.
 In which there is some variance, but they generally follow the same pattern.
 Then finally we will discuss the reasoning behind the direction we chose.
 
 ** Chatbots
-\toReview
+\newlyCleared
 One of the first chatbots was ELIZA, made as early as 1966 cite:shawar2007chatbots.
+It recognized keywords and based on the linguistic context chose the appropriate
+transformation.
+The keyword file and its associated transformation rules were called the
+`script'.
+
+\newlyCleared
 The ALICE chatbot is a more recent incarnation of the idea,
-but uses AIML as an basis cite:wallace2001don.
+but uses AIML as a basis for the `script' cite:wallace2001don.
 Because ALICE is licensed under an open source license,
 and the AIML has been standardized,
 a legion of other implementations have been made that all can parse AIML.
@@ -1527,14 +1547,20 @@ traditional chatbot paradigm, but in short:
 We can't use AIML for adding personality unless we'd modify it in such a way
 where it no longer is AIML.
 
-\toReview
+\newlyCleared
 In cite:vinyals2015neural a sub symbolic chatbot is presented that uses
 machine learning.
 It appears that it can handle the general cases of conversation,
 even questions it didn't train upon.
 The authors state that its answers are sometimes on the short side,
 and that upon slight variance in semantics can result into inconsistent answers.
-
+Another issue we have with such a methodology is that its an completely
+opaque process.
+Although you could probably emulate personality by training on specific sets of
+data, the problem than becomes how would you decide upon this?
+An interesting idea is however to try and use the technique discussed in this
+paper as a drop in replacement for pattern matching, this is discussed in
+section [[Replace regex]].
 
 *** Multilogue
 <<Related multilogue>>
@@ -5018,7 +5044,6 @@ obstacle faced is building/executing the project.
 This is however not discussed in this chapter,
 but done in detail in the appendix [[building]].
 
-
 ** Personality influence case study
 <<Personality influence case study>>
 
@@ -5676,7 +5701,7 @@ Since AIML was used in that paper we can safely say they weren't planning on
 making a multilogue architecture, because AIML can't do that as discussed in
 section [[Actors]].
 
-\toReview
+\newlyCleared
 As discussed in section [[Related multilogue]],
 there already exists a system that can do this,
 but its drastically different from this architecture.
@@ -5717,6 +5742,7 @@ This could be done by more advanced language parsing techniques in combination
 with an existing knowledge base such as OWL cite:world2012owl.
 
 *** Matching
+<<Replace regex>>
 \newlyCleared
 It should be noted that regular expressions is just one of the possible ways
 of determining what symbol the user uttered.
@@ -5753,8 +5779,6 @@ whereas intuition types would prefer possibilities and ideas.
 A final possible extension would be to create a graphical scenario editor.
 Doing this always costs more time than expected and probably should be avoided
 until above mentioned systems are in place.
-
-
 
 *** Emotions
 \drafting
