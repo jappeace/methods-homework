@@ -137,10 +137,14 @@ but rather being sensitive to the people who appreciate it cite:clack2004persona
 Therefore extending the game that allows doctors to train for different
 personalities will help addressing this issue.
 
-\newlyCleared
+\toReview
 In the background section [[Background]] we will start by looking into 
 personality theories [[personality theories]] for their advantages and disadvantages.
-Then we'll discuss AI literature in [[Artificial intelligence literature]].
+Then we'll discuss agents literature in [[Artificial intelligence literature]].
+followed by the idea of social practices [[social practice]], 
+and some limted speech act thoery [[Speech act thoery]].
+After which we continue with Dialogue systems [[Dialogue systems]],
+some of which can be considered related work.
 We continue by taking a close look at the state of the existing software that
 we're planning to extend in section [[Salve]].
 Since the personality topic has become quite popular in recent years
@@ -687,99 +691,88 @@ and finally we will look at the serious game in its existing form.
  that of MBTI, and that of SL-TDI can build on that of PPSDQ.
  OCEAN builds on nothing, we'll leave that for future work.
 
-** Artificial intelligence literature
- # How do I measure that the personality created is in fact in compliance with
- # the personality I aimed for?
- # Can I let the personality take the test somehow?
- \cleared
- In this section we will look at some of the AI based literature.
- For example we will have a look at the intelligent agent approach and the BDI
- architecture.
- We will also look at some theoretical attempts at implementing personality.
- Theoretical attempts are often a logic in contrast to the topics
- discussed in [[Related work]] which include executable implementations.
+** Agents
+<<Artificial intelligence literature>>
+\cleared
+In the literature there is little consensus on what exactly an agent is,
+however there is a general consensus that an agent is /autonomous/
+cite:wooldridge2009introduction.
+To make this more clear we'll use Wooldridges' definition:
 
-*** Agents background
- \cleared
- In the literature there is little consensus on what exactly an agent is,
- however there is a general consensus that an agent is /autonomous/
- cite:wooldridge2009introduction.
- To make this more clear we'll use Wooldridges' definition:
+#+BEGIN_QUOTE
+An /agent/ is a computer system that is /situated/ in some /environment/ and
+that is capable of /autonomous action/ in this environment in order to meet its
+delegated objectives. -- Wooldridge
+#+END_QUOTE
 
- #+BEGIN_QUOTE
- An /agent/ is a computer system that is /situated/ in some /environment/ and
- that is capable of /autonomous action/ in this environment in order to meet its
- delegated objectives. -- Wooldridge
- #+END_QUOTE
+\cleared
+In another older definition cite:wooldridge1995intelligent Wooldridge highlights
+/autonomy/, /social ability/, /reactivity/, and /pro activity/.
+Where autonomy means that no human intervention is required,
+social ability means it can talk to other agents,
+reactivity is that it can reply on input and pro activity means that it can
+show behavior while not reacting to something.
+However he later continues on with a stronger claim about an agent is a
+piece of software that uses concepts which are attributed to humans.
+Such as believes desires and intentions.
 
- \cleared
- In another older definition cite:wooldridge1995intelligent Wooldridge highlights
- /autonomy/, /social ability/, /reactivity/, and /pro activity/.
- Where autonomy means that no human intervention is required,
- social ability means it can talk to other agents,
- reactivity is that it can reply on input and pro activity means that it can
- show behavior while not reacting to something.
- However he later continues on with a stronger claim about an agent is a
- piece of software that uses concepts which are attributed to humans.
- Such as believes desires and intentions.
+\cleared
+This is the reason why we can't call any program an agent.
+For example an operating system kernel is
+autonomous (a user would never interact with it),
+social (can do networking),
+reactive (it will comply to hardware interprets for example)
+and proactive (a process hogging to much memory will be killed without the
+process asking for it).
+However we won't call a kernel an agent because it doesn't even come close to
+having believes, desires or intentions.
 
- \cleared
- This is the reason why we can't call any program an agent.
- For example an operating system kernel is
- autonomous (a user would never interact with it),
- social (can do networking),
- reactive (it will comply to hardware interprets for example)
- and proactive (a process hogging to much memory will be killed without the
- process asking for it).
- However we won't call a kernel an agent because it doesn't even come close to
- having believes, desires or intentions.
+\cleared
+Something to keep in mind is that there are three "branches" of agent research
+cite:wooldridge1995intelligent.
+The first one is /agent theory/ in which /specifications/ and methods of 
+specifications are developed. They ask what are agents and what are they
+ought to do and how do we tell them that.
+Then there are the /agent architectures/, these address questions of how
+to implement the specifications written by the theorists.
+In this paper we won't discuss architectures since we work in an existing
+system described in section [[The serious game]].
+Finally there are the /agent languages/, which ask the question how to write
+agent programs.
+Again this is mostly predetermined for us, but we will give a small overview.
 
- \cleared
- Something to keep in mind is that there are three "branches" of agent research
- cite:wooldridge1995intelligent.
- The first one is /agent theory/ in which /specifications/ and methods of 
- specifications are developed. They ask what are agents and what are they
- ought to do and how do we tell them that.
- Then there are the /agent architectures/, these address questions of how
- to implement the specifications written by the theorists.
- In this paper we won't discuss architectures since we work in an existing
- system described in section [[The serious game]].
- Finally there are the /agent languages/, which ask the question how to write
- agent programs.
- Again this is mostly predetermined for us, but we will give a small overview.
+*** Belief desires and intentions
+\cleared
+The belief desire intention model of human practical reasoning was first
+introduced by Bratman cite:bratman1987intention.
+It is based upon a "common sense" framework of human reasoning.
 
-**** Belief desires and intentions
- \cleared
- The belief desire intention model of human practical reasoning was first
- introduced by Bratman cite:bratman1987intention.
- It is based upon a "common sense" framework of human reasoning.
+\cleared
+The idea of BDI is that an agent has believes, these can be anything, such as
+I believe the grass is green, or I believe the keys are on the table.
+Note that we never speak about facts, an agent can believe something to be a
+fact, but that doesn't make it a fact.
+Desires are special kind of believes that give agents a reason to be, they
+may also be called goals.
+Intentions are (partial) plans to make a desire come to fruition.
+How to formalize this properly turns out to be a hard question, which is
+analyzed in the following section [[bdi logics]].
 
- \cleared
- The idea of BDI is that an agent has believes, these can be anything, such as
- I believe the grass is green, or I believe the keys are on the table.
- Note that we never speak about facts, an agent can believe something to be a
- fact, but that doesn't make it a fact.
- Desires are special kind of believes that give agents a reason to be, they
- may also be called goals.
- Intentions are (partial) plans to make a desire come to fruition.
- How to formalize this properly turns out to be a hard question, which is
- analyzed in the following section [[bdi logics]].
+\cleared
+A number of reasons have been stated to use this methodology.
+The foremost is to make agent orientated systems less expensive in maintenance,
+verification and construction according to Rao and Georgeff cite:rao1995bdi. 
+However they don't cite a source for this.
 
- \cleared
- A number of reasons have been stated to use this methodology.
- The foremost is to make agent orientated systems less expensive in maintenance,
- verification and construction according to Rao and Georgeff cite:rao1995bdi. 
- However they don't cite a source for this.
+\cleared
+Another paper argues in favour of agent orientated design cite:jennings2001agent.
+It has the following major arguments:
+It is effective to divide a complex problem domain into several smaller problems,
+abstracting in an agent orientated way is more "natural",
+and complex systems dependencies and interactions can be easily modeled.
+# A case study is presented as proof of these claims.
 
- \cleared
- Another paper argues in favour of agent orientated design cite:jennings2001agent.
- It has the following major arguments:
- It is effective to divide a complex problem domain into several smaller problems,
- abstracting in an agent orientated way is more "natural",
- and complex systems dependencies and interactions can be easily modeled.
- # A case study is presented as proof of these claims.
-
-**** Interactive virtual environments
+*** Interactive virtual environments
 <<Fatima Architecture>>
 \toReview
 Interactive virtual environments are populated by synthetic characters used
@@ -797,25 +790,25 @@ These therefore aren't he same as the personalities discussed in section
 but rather they indicate how the agent deals with emotion.
 This Fatima architecture is an extension upon BDI cite:lim2008improving.
 
-**** Logic of BDI
- <<bdi logics>>
- \cleared
- Logic of BDI is an attempt to formalize how agents behave.
- One of the first formalization of Bratman's theory was that of Cohen and
- Levesque cite:cohen1990intention. It was based on linear time logic and
- used operators for actions and modalities for goals and beliefs cite:meyer2014logics.
- It was also used a tiered formalism, with at the bottom belief goals and
- actions which provided the basis for the higher achievement and persistent goals
- and intentions to do and be.
- Rao and Georgeff introduced a different formalism that used branching time logic. 
- They use modal operators for belief desires and intentions and then put 
- constraints on them to make interactions meaning full cite:meyer2014logics.
- Therefore this formalism is much closer to that of Bratman cite:rao1991modeling.
- Finally there is the KARO formalism which is based on dynamic logic.
- This is the logic of actions and computation. They extend this logic with
- epistemics to add believes to it cite:meyer2014logics.
+*** Logic of BDI
+<<bdi logics>>
+\cleared
+Logic of BDI is an attempt to formalize how agents behave.
+One of the first formalization of Bratman's theory was that of Cohen and
+Levesque cite:cohen1990intention. It was based on linear time logic and
+used operators for actions and modalities for goals and beliefs cite:meyer2014logics.
+It was also used a tiered formalism, with at the bottom belief goals and
+actions which provided the basis for the higher achievement and persistent goals
+and intentions to do and be.
+Rao and Georgeff introduced a different formalism that used branching time logic. 
+They use modal operators for belief desires and intentions and then put 
+constraints on them to make interactions meaning full cite:meyer2014logics.
+Therefore this formalism is much closer to that of Bratman cite:rao1991modeling.
+Finally there is the KARO formalism which is based on dynamic logic.
+This is the logic of actions and computation. They extend this logic with
+epistemics to add believes to it cite:meyer2014logics.
 
-**** Drools
+*** Drools
 <<Drools background>>
 \newlyCleared
 If JADE cite:braubach2003jadex, and 2APL cite:dastani20082apl are agent
@@ -841,7 +834,25 @@ or interlope with outside java code trough global variables.
 Also note that drools is Turing complete cite:weppenaar2011solving.
 An example of a drool rule can be seen in listing [[code:drool:lowlevelreply]].
 
-*** Social practices
+*** BDI + Personality
+ <<BDI + Personality>>
+  \cleared
+  \todo[inline]{other proposed systems and argue for campos}
+  Campos discussed an architecture in which personality emerged not from things
+  you like,
+  but rather than trying to determine which content a personality preferred,
+  the personality was encoded in the process they preferred.
+  This was called /process orientated/ rather than contend orientated.
+  cite:campos_mabs2009
+  For example in their interpretation of MBTI a Sensing agent would make a plan
+  in complete details whereas an intuitive agent would just continue planning as
+  needed.
+  Thinking agents would base their decision process upon their own believes
+  whereas feeling agents would consider what other agents want.
+  In our model we conceptualize the Jungian functions also as a process.
+  We comment more on this in section [[Jungian BDI]].
+ 
+** Social practices
  <<social practice>>
  \dignum{Introduction: Why social practices? Relevant for giving context to dialouge, and therefore expectations, norms, social effects etc.}
  \todo[inline]{(extra) possible sources: Weber, Durkleim, Hobermas, latour/reckwitz}
@@ -975,7 +986,7 @@ stop
   If the social practices are defined more formally they could be 
   used in a bigger system such as in cite:augello2015social and
   cite:augello2016model.
-*** Speech act theory
+** Speech act theory
 <<Speech act thoery>>
 \cleared
 Since a large part of this thesis is about communication we will give here a
@@ -1007,7 +1018,7 @@ being discussed.
 /Manner/ is about being as brief and clear as possible while avoiding ambiguity
 and being orderly.
 
-*** Dialogue systems
+** Dialogue systems
 <<Dialogue systems>>
 \cleared
 Dialogue systems are the systems that try to analyze how dialogue works.
@@ -1053,24 +1064,6 @@ rules were made to select according to a single strategy,
 whereas we saw it as an opportunity to make composable strategies.
 This is of course an information state approach too.
 
-*** BDI + Personality
-<<BDI + Personality>>
- \cleared
- \todo[inline]{other proposed systems and argue for campos}
- Campos discussed an architecture in which personality emerged not from things
- you like,
- but rather than trying to determine which content a personality preferred,
- the personality was encoded in the process they preferred.
- This was called /process orientated/ rather than contend orientated.
- cite:campos_mabs2009
- For example in their interpretation of MBTI a Sensing agent would make a plan
- in complete details whereas an intuitive agent would just continue planning as
- needed.
- Thinking agents would base their decision process upon their own believes
- whereas feeling agents would consider what other agents want.
- In our model we conceptualize the Jungian functions also as a process.
- We comment more on this in section [[Jungian BDI]].
- 
 ** Salve
  <<The serious game>>
  \cleared
