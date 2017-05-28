@@ -1668,13 +1668,12 @@ in which personality will be processed orientated rather than content
 orientated.
 It is more fine grained in that we use Jungian functions instead of MBTI type
 labels. The details can be found in section [[Jungian BDI]].
-\dignum{Tell more about this, what means fine grained, how does the architecture of campos look?}
 
 
 \clearpage
 * Dialogue as a personality process
 <<Jungian BDI>>
-\todo[inline]{This should be restructured and reread, trying to figure out what goes on from a birds eye view is to difficult}
+\todo[inline]{This should be restructured and reread, trying to figure out what goes on from a birds eye view is to difficult (from the content page)}
 # In this chapter we talk about the abstract ideas, any information necessary
 # to execute the thesis without considering implementation details.
 # so I guess height and node count aren't necessary.
