@@ -779,12 +779,9 @@ and finally we will look at the serious game in its existing form.
  and complex systems dependencies and interactions can be easily modeled.
  # A case study is presented as proof of these claims.
 
-**** IVE
+**** Interactive virtual environments
 <<Fatima Architecture>>
-\dignum{Don't use BDI but IVA as basis. For example the Fatima architecture. This is more aimed at interaction with characters}
-\ask{I was asked to use IVE instead of BDI as basis, but within the fatima paper they use BDI right? So I can keep that around?}
-
-\drafting
+\toReview
 Interactive virtual environments are populated by synthetic characters used
 to guide an application cite:dias2005feeling.
 In this Fatima architecture OCC was used to define and track emotions in their
@@ -795,11 +792,10 @@ decay rate variances,
 goals,
 reaction rules and action tendencies,
 personalities were emulated.
-
-\drafting
-This Fatima architecture is an extension upon BDI, and has since been extended
-to include a motivational system cite:lim2008improving, and has been renamed
-to Fatima-PSI.
+These therefore aren't he same as the personalities discussed in section
+[[personality theories]],
+but rather they indicate how the agent deals with emotion.
+This Fatima architecture is an extension upon BDI cite:lim2008improving.
 
 **** Logic of BDI
  <<bdi logics>>
@@ -1020,7 +1016,7 @@ science.
 
 \cleared
 First of all are of course the chatbot systems, which are based upon case based
-reasoning. A good example of this is the A.L.I.C.E. bot cite:wallace2001dont.
+reasoning. A good example of this is the A.L.I.C.E. bot cite:wallace2001don.
 These are mostly reactive systems that use pattern matching rules paired with
 "good" responses,
 sometimes with conditions to allow for more variety.
@@ -1516,6 +1512,7 @@ Template -> [*]
 
 \clearpage
 * Related work
+\ask{Can't I just merge this chapter into background?}
 <<Related work>>
 \newlyCleared
 In this chapter we will give a brief overview of various interesting papers

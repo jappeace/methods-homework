@@ -25,6 +25,7 @@ Maar omdat u zij dat broncode geen centrale rol speelt heb ik hier tegen beslote
 Ik vroeg me af welke figuren naar de appendix verplaatst horen te worden,
 alle, of alle grote? en of dit  inclusief tabellen, listings en formules is.
 
+
 * Manuel
 
   Probablistic generation of next dialogue moves could be combined with moddeling one
