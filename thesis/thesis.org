@@ -843,7 +843,7 @@ An example of a drool rule can be seen in listing [[code:drool:lowlevelreply]].
   \cleared
   \todo[inline]{other proposed systems and argue for campos}
   Campos discussed an architecture in which personality emerged not from things
-  you like,
+  you like, \todo{wut?}
   but rather than trying to determine which content a personality preferred,
   the personality was encoded in the process they preferred.
   This was called /process orientated/ rather than contend orientated.
@@ -858,8 +858,6 @@ An example of a drool rule can be seen in listing [[code:drool:lowlevelreply]].
  
 ** Social practice
 <<social practice>>
-\todo[inline]{(extra) possible sources: Weber, Durkleim, Hobermas, latour/reckwitz}
-\todo[inline]{ difference between norms and sp is that sp has no moral value, but you *violate* norms }
 \toReview
 In cite:reckwitz2002toward, practice theory is described as an example of
 culture thoery, from this we can deduce a reason why the study of such theory
@@ -1259,7 +1257,6 @@ which is not possible with a technology such as REST.
 #+RESULTS[db5e6bada22b64bf70a330d1219fedc990f11453]: fig:sequence
 [[file:img/uml/sequence.png]]
 
-\FloatBarrier
 *** Server architecture
 <<Server architecture>>
   \cleared
@@ -1362,7 +1359,6 @@ stop
 #+RESULTS[3acde42e45cb6f546f0d34b2c135845e8f592a48]: fig:construction
 [[file:img/uml/construction.png]]
 
-\FloatBarrier
 **** Text processing
 <<Text Processing>>
     \cleared
@@ -1598,10 +1594,10 @@ agents cite:etheredge2016personality.
 Although argumentation is not the same as communication we can consider the
 method used to make the personality.
 In this paper a personality model is introduced based on OCEAN.
-In this they move from personality values in OCEAN towards action selection
-fuzzy logic is used.
-Fuzzy logic `obfusicates' `crisp' values with more natural terms,
-rather than ${1,2,3}$, we can use low, medium, and high.
+They move from personality values in OCEAN towards action selection
+with fuzzy logic.
+Fuzzy logic `obfusicates' `crisp' values with more `natural' terms,
+rather than ${1,2,3}$, we can use `low, medium, and high'.
 With these terms, buisness rules can be specified.
 A big advantage of this is that we can modify the definition of 
 the natural terms without modifying the rules they specified.
@@ -1617,11 +1613,15 @@ Having a lot of rule also make maintenance hard, if for example there is an
 unwanted behavior many rules need to be inspected before the change can be made.
 There are two strategies that could help dealing with this:
 Modulirazation which is partly already done in the paper by splitting up action
-selection and action revision for example
-(although we disagree with splitting up the facets along these lines).
+selection and action revision for example.
 Or by simplifying the model,
 which could be done by OCEAN traits rather than the facets,
 reducing the amount of variables from 16 to 5.
+In fact this will make the argumantive bot a lot more consistent
+with the OCEAN model. Since some facets were used for action revision and others
+for action selection,
+we can have an agent that will revise as if it is very neurotic but select as
+if it were very low neurotic.
 
 \cleared
 Van den Bosch also chose to use OCEAN to model characters in a serious
@@ -1637,12 +1637,15 @@ This kind of methodology is called content orientated cite:campos_mabs2009,
 the personality, would and should change depending on context.
 
 ** Campos
-\cleared
+\toReview
 Campos used the MBTI to create BDI based agents cite:campos_mabs2009.
-\dignum{Tell more about this, what means fine grained, how does the architecture of campos look?}
-We will use a more fine grained version of MBTI but his architecture is used,
+In section [[BDI + Personality]] we already discussed Campos his architecture.
+We will use a more fine grained version of MBTI, but his architecture is used,
 in which personality will be processed orientated rather than content
 orientated.
+It is more fine grained in that we use Jungian functions instead of MBTI type
+labels. The details can be found in section [[BDI and Jung]].
+\dignum{Tell more about this, what means fine grained, how does the architecture of campos look?}
 
 
 \clearpage
