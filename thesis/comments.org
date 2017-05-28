@@ -1,12 +1,26 @@
 #+TITLE: questions
 
 * Dignum
+Beste dr. Dignum,
 
-Uw email kwam precies op tijd omdat ik uit dingen begon te raken die ik nog kon
-doen.
-(naast de hele applicatie naar gradle verplaatsen en alle grote dependencies
-scrhappen, wat bouwen zeer makkelijk zal maken, maar een significantie
-investering van tijd vraagt (een dag tot een week denk ik..))
+Hierbij mijn werk van deze week,
+Ik denk dat ik al uw aanmerking heb verbeterd:
++ Spelfouten nagelopen (en een spellchecker over het hele document gedaan).
++ Introductie fouten verbeterd.
++ Social practice
+  + Plan patterns verbetered waar nodig
+  + Introductie toegevoegd
+  + Figuur 1 veranderd naar state diagram (heeft geen beslissings punten,
+    dus geeft alleen mogelijke transities aan, wat volgens mij neerkomt op
+    tijdvolgorde)
++ Related work hoofdstuk naar achter achtergrond hoofdstuk verplaatst
++ Personality case studies is verplaatst naar implementation hoofdstuk
+
+Bij hoofdstuk 2.2 stond een notatie dat ik beter IVA kon gebruiken
+(als basis),
+ik neem aan dat dit stond voor interactive virtual environments.
+Ik heb hier een subkopje voor toegevoegd maar weet niet echt verder wat met dat
+comentaar werd bedoeld
 
 > Wat ik ergens in de laatste hoofdstukken wil zien is een doorlopen van de
   scenario's en dan aangeven wat er nu intern gebeurt zodat duidelijk is waar
@@ -23,7 +37,13 @@ mischien 200 regels java code in totaal is exclusief commentaar
 Maar omdat u zij dat broncode geen centrale rol speelt heb ik hier tegen besloten.
 
 Ik vroeg me af welke figuren naar de appendix verplaatst horen te worden,
-alle, of alle grote? en of dit  inclusief tabellen, listings en formules is.
+alle, of alle grote? en of dit inclusief tabellen, listings en formules is.
+
+Bijgevoegd thesis in huidige staat,
+
+Mvg,
+
+Jappie Klooster
 
 
 * Manuel
