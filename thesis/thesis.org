@@ -5870,19 +5870,21 @@ They used to be a part of the system, however they were based upon type
 insertions in the AIML files, and couldn't influence dialogue beyond changing
 scenes.
 Now the dialogue is much more dynamic because its completely loaded into memory.
-However to re-add this a theory has to be devised of combing OCC with Jung's
+However to re-add this, a theory has to be devised of combing OCC with Jung's
 functions.
 
 \toReview
 If we use perlocutionary values as prime source for emotion tracking,
 then the model can be extended with information on what expected effect the a
 perlocutionary value has on the bot.
-These are then applied and decay rates are used to slowly return to the norm.
+Once an utterance is made, the emotional effects are then applied and
+decay rates are used to slowly return to the norm.
 With this new model, the bot could predict which connections could change his
 emotion to a more desirable state.
+Personality could play a role in the way it would make these predictions.
 In that way we only would need to encode the expected emotional change per
 perlocutionary value, and which emotions are desirable to be in.
-Personality could play a role in the desire to be in a particular state,
+Personality could also play a role in the desire to be in a particular state,
 for example a thinking dominated personality would rather be calm,
 whereas an intuitive personality would rather be excited.
 
