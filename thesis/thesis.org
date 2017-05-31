@@ -127,7 +127,7 @@ creative responses,
 all possible responses are scripted into the scenario
 and replying correctly relies on a simple /ABC/ choice.
 To combat this an alternative serious game was made based on the
-chatbot Alice cite:weiderveld2016chatbot.
+chatbot Alice cite:augello2016social.
 To measure how a student performed, a production rule engine was used called drools.
 The social practice of a doctor consult was used in this particular instance,
 in other scenarios other social practices could be used.
@@ -1252,7 +1252,7 @@ ignoring all of AIML.
 <<existing architecture>>
 \cleared
 The game uses a client server architecture (see figure [[fig:components]]).
-The client is written in unity and the server is a Java servlet running on \todo{except it isn't a servlet?}
+The client is written in unity and the server is a Java application running on 
 Wildfly.
 Communication between the two applications happens trough a web socket.
 A web socket is used because it allows the chatbot to pro-active,
@@ -4919,8 +4919,6 @@ and inserting them into the template.
 However one can workaround this limitation by writing drools for this,
 similarly to low level replies.
 A =MatchedQueryDB= can be constructed manually to fill with drool facts.
-
-\todo[inline]{Another missing feature is inserting raw strings from connections or using other symbols to fill in templates}
 
 ** Automatic AIML to YAML
 \cleared
