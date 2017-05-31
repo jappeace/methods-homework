@@ -141,12 +141,13 @@ Therefore extending the game that allows doctors to train for different
 personalities will help addressing this issue.
 
 \toReview
-In the background section [[Background]] we will start by looking into 
-personality theories [[personality theories]] for their advantages and disadvantages.
+In background section [[Background]] we will start by looking into 
+personality theories [[personality theories]], and compare them on advantages and
+disadvantages.
 Then we'll discuss agents literature in [[Artificial intelligence literature]].
 followed by the idea of social practices [[social practice]], 
 and some limited speech act theory [[Speech act thoery]].
-After which we continue with Dialogue systems [[Dialogue systems]],
+After which we continue with dialogue systems [[Dialogue systems]],
 some of which can be considered related work.
 We continue by taking a close look at the state of the existing software that
 we're planning to extend in section [[Salve]].
