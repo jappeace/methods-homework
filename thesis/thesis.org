@@ -5863,30 +5863,28 @@ until above mentioned systems are in place.
 
 *** Emotions
 \toReview
-Perlocutionary values could be used as a basis for emotions.
-However the current version doesn't track emotions.
-A possible extension would be to make perlocutionary values a more complex
-structure, and the ability to add restrictions on certain connections once the
-bot reached certain emotional levels.
-
-\toReview
 In section  [[Fatima Architecture]] the Fatima architecture is discussed that 
 uses decay rates for emotions.
-So what would happen is connections with perlocutionary values could still be
-used the same,
-but then the model should be extended on what expected effect the value 
-has on the bot.
-These are then applied and decay rates are used to return to the norm.
-With this the only extension connections would need is to guard for being in
-certain emotional states, although perlocutionary values could also be used for
-this.
-For example if the bot were to know certain utterances could change his emotion
-to a more desirable state, it would be enough.
+Analyzing this could be a good start for re-adding emotions.
+They used to be a part of the system, however they were based upon type
+insertions in the AIML files, and couldn't influence dialogue beyond changing
+scenes.
+Now the dialogue is much more dynamic because its completely loaded into memory.
+However to re-add this a theory has to be devised of combing OCC with Jung's
+functions.
+
+\toReview
+If we use perlocutionary values as prime source for emotion tracking,
+then the model can be extended with information on what expected effect the a
+perlocutionary value has on the bot.
+These are then applied and decay rates are used to slowly return to the norm.
+With this new model, the bot could predict which connections could change his
+emotion to a more desirable state.
 In that way we only would need to encode the expected emotional change per
-perlocutionary value, and which emotions are desirable to be in, although
-personality could play a role in that.
-For example a thinking dominated personality would rather be calm, whereas an
-intuitive personality would rather be excited.
+perlocutionary value, and which emotions are desirable to be in.
+Personality could play a role in the desire to be in a particular state,
+for example a thinking dominated personality would rather be calm,
+whereas an intuitive personality would rather be excited.
 
 \clearpage
 * Acknowledgements
