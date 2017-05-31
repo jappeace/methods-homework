@@ -6760,20 +6760,6 @@ Conversation went according to script.
 - This probably also includes fixing recursive before, almost certain that doesn't work.
   (maybe include unit tests for that because its recursion which never works as expected)
  
-*** Additional experimentation?
-     For this I wanna setup an experiment like thing, where we research what
-     the system does etc.
-     + Perhaps we should look in what cases the deeper functions have effect (if any)
-     + Are slight differences in order relevant? [Ne, Ti] vs [Ti, Ne]
-
-    I'm pretty sure current design doesn't work that great with 'deeper' levels,
-    because we assumed irir or riri,
-    but now the theory says riir or irri.
-    We should analyze this difference I think
-
-**** charcounting
-    If we have time we can compare infrmation per character between the new and old method,
-    going from 251 to 131 is quite an improvement
 ** Random thoughts
 + Goals should perhaps be able to be finished?
   + Ti and Te shouldn't preffer this double
