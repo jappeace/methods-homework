@@ -6744,7 +6744,9 @@ Conversation went according to script.
 :END:
 ** Rough planning.
 *** Report
-+ Make (highlighted) formulas floats and add a caption to them
++ Clear the uncleared sections
++ Re-read the entire thing
++ Hand it in again
 
 *** Make usable for other student
 - Document about python scripts and shell scripts (how to use),
