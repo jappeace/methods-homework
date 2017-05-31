@@ -1851,8 +1851,6 @@ and return a function $b \to c$, this process is called partial application
 cite:haskellpartialapplication.
 Capital letters indicate sets.
 
-*** Narrowing the model
-<<Narrowing the model>>
 \cleared
 We will go from an as broad as possible system (while using BDI) to a
 precise as possible definition, while still being able to satisfy the domain.
@@ -1893,6 +1891,10 @@ In this the intentions are encoded in the function used, and the desires are
 part of the believe base.
 We marked the $f_a$ arrow, which indicates the deliberation process of the agent,
 so $f_a$ can be any of the function attitudes.
+
+** Narrowing the model
+<<Narrowing the model>>
+\todo[inline]{We should make the observation that all chatbots are $\sigma \to \sigma$, and perhaps glue this better to each other}
 
 \cleared
 This definition is however too general for our domain.
@@ -1941,7 +1943,7 @@ received a symbol (empty set).
 This produces the following type signature:
 \[ B_t \to t \to S_t \overset{f_a}{\to} (B_{t+1}, \Delta_{t+1}) \]
 
-*** The dialogue tree
+** Dialogue tree
 <<Dialogue tree>>
 \cleared
 We have some believes, time and meaning going in, some deliberation
@@ -2066,7 +2068,53 @@ However once movement becomes a requirement we can just create a new function
 type signature that is less restrictive, but still has the option to use these
 functions for meaning full replies.
 
-*** Composing type dynamics
+** Symbol graph
+<<symbol graph>>
+\cleared
+To make sure the agent stays on topic we will make use of a symbol graph.
+This graphs gives connections to the symbols described in section [[A type signature approach]].
+The meaning graph $G$ is a set of connections $c \in G$ where
+$c = (P, A, s_1, s_2)$, $s_1, s_2 \in \mathcal{S} \wedge s_1 \neq s_2$,
+$A \subseteq \Lambda$ is the set of agents that can use the connection,
+to prevent cases where the patient asks the doctor about his health problems.
+$P$ is the perlocutionary value set of the speech act, as introduced in section
+[[Dialogue tree]].
+This is encoded in the edges because its not the meaning that causes these
+but the way you get to those meanings.
+In other words, being polite and then telling bad news causes different
+perlocutionary values than just telling bad news.
+
+\cleared
+From this we can define a function that gets the allowed connections from
+a symbol and an agent:
+\[ a \to s \to [c] \]
+We can retrieve $a$ and $s$ from the current node we are processing in $D$.
+The result is a list of connections we can go to from that symbol.
+Since connection $c$ contains multiple agents $A$,
+and a dialogue tree as an option can only contain a single agent in the utterance,
+we need to flatten the resulting connection list $[c]$.
+
+\cleared
+The introduction of the symbol graph is probably the most radical change this
+thesis proposes.
+It moves chatbots away from the idea that responses are many to one relations
+always and opens up many to many relations.
+Please note that this is probably not only approach available.
+It would have been more robust to use owl cite:world2012owl for example.
+But this would open up a new problem on how to construct sentences,
+of which the theoretical foundation is incomplete.
+Another issue is how to interpret meanings, where you could for example use
+cite:moschitti2004study.
+But again its just a piece of the puzzle.
+We think that making those steps are to big and probably simply will result into
+failure.
+However the symbol graph provides a good middle ground,
+in which its relatively easy to implement but offers enough freedom to encode
+personality in as a process.
+Note that this approach fits nicely into the information state transitions
+idea discussed in section [[Dialogue systems]].
+
+** Composing type dynamics
 <<Composing types>>
 \cleared
 The first thing a commendable programmer may think of when trying to combine
@@ -2160,7 +2208,7 @@ next function.
 However this becomes rather messy because we're modeling pure functions,
 therefore we leave this as an exercise to the reader.
 
-***  Rational and irrational
+** Role of rational and irrational in a process
 <<Rational and irrational>>
 \cleared
 Up until now we modeled the type signature to have a dialogue tree as input and
@@ -2216,7 +2264,260 @@ This could happen if a rational function was the first function for example
 and didn't have any choices available to decide upon.
 This structure still works with SL-TDI's non alternation.
 
-** Mapping function attitudes to a process 
+*** Irrational as a process
+ The irrational functions rely heavily on the symbol graph to create new
+ children in the dialogue tree.
+ This is under the assumption that connections in the symbol graph are always
+ on topic.
+ Please note that all irrational functions need to have an extra argument
+ to limit their activities.
+ Since considering the entire graph is unrealistic, and unnecessary.
+
+ \cleared
+ In the initial design of what the $S$ and $N$ functions should do
+ as algorithm we considered them in the following way.
+ $S$ would be analyzing all available options rigorously in a forward chaining
+ process, whereas $N$ would do backward chaining, starting at the goal and going
+ trough some way points directly to the starting point.
+
+ \cleared
+ This would translate into $S$ going several plies deep into the
+ meaning graph before calling the $next$ function and returning the result.
+ And if we assume that the $next$ function brings us closer to the goal we can
+ use it as a heuristic to let it determine the direction for $N$.
+ This of course doesn't allow us to do backward chaining since there is hardly a
+ guarantee that the $next$ function will bring us to the goal, in fact we may get
+ stuck in a loop.
+
+ \cleared
+ Alternatives to the implementation proposed include the use of
+ probabilities to determine appropriate responses. 
+ However this introduces a new problem of how to obtain the probability
+ distributions.
+ Machine learning could be used for this, but this raises the question:
+ "learn on what"?
+ Since the answer to that question is non-trivial, we consider such a solution
+ out of scope.
+
+**** Intuition
+ # http://personalitycafe.com/cognitive-functions/83205-whats-difference-between-ni-ne.html
+ \cleared
+ We can consider $N_i$ to be a depth first approach. Going several plies deep and
+ at each ply consulting the $next$ function which step to take.
+ $N_e$ on the other hand just takes the top $x$ of the current dialogue options
+ and expands those, but then next step it will again consider the entire existing
+ tree to find the best $x$ of each ply.
+ This will of course be a much more shallow consideration than $N_i$, but 
+ much more broad. Which is of course the behavior we are looking for in both
+ $N_i$ and $N_e$ (see section [[Jungian types]]).
+
+**** Sensing
+ \cleared
+ The $S_e$ function just receives all possible connections from the current
+ meaning for several plies and then applies the /next/ function on it.
+ The $S_i$ however is more conservative and will only pop $x$ random meanings by
+ default (the first $x$ connections),
+ however it will construct its own connections of whatever the user said in
+ response to the bot from previous conversations when at the same meaning (if it
+ didn't exists already).
+ Whenever these connections are available they will substitute the random $x$.
+ So $S_i$ starts of kind off similar to $S_e$ but builds up over time.
+
+*** Rational as a process
+ \cleared
+ In the current design the rational functions apply order to the children of a
+ current dialogue node.
+ Then once finished they will call the $next$ function on the most preferred
+ child. This is to ensure all function attitudes can do some processing.
+
+ \cleared
+ Please do note that although we have a game tree,
+ we're not dealing with a zero sum game.
+ Dialogue is cooperative rather than competitive (see section [[Speech act theory]]).
+ So doing an algorithm such as mini-max is out of the question.
+ However we will borrow parts of it.
+ Namely whenever a rational function finishing ordering the input set it will
+ call the /next/ function to do deliberation on the most preferred item.
+
+ \cleared
+ We also model the rational functions as local optimizing functions.
+ Only the current ply and maybe the next ply is considered,
+ but not the entire tree.
+ The primary reason for this is time constraints.
+ However there is no reason why the entire available tree couldn't be used.
+
+**** Feeling
+ \cleared
+ Initially we wanted to create two lookup tables for both feeling functions one.
+ However this would be confusing to configure,
+ the scenario creator would need to decide which values are "external" and which are
+ "internal".
+ Campos however modeled feeling as a prediction of what the other agents will
+ do.
+ This describes $F_e$ rather well, $F_i$ not so much however.
+ So we adapted and adopted that idea for $F_e$ and for $F_i$ we used the lookup
+ table.
+
+ \cleared
+ Both feeling functions $F$ use the perlocutionary acts to order the children.
+ $F_i$ uses a predefined value set $h$: 
+ \[ p \overset{h}{\to} i \].
+ Where $p \in \mathcal{P}$ is a perlocutionary value.
+ This valuation is done by a lookup table on all available perlocutionary speech
+ acts.
+ $F_e$ tries to figure out what the conversation partners values by
+ picking the perlocutionary act the other chose most.
+ This is done by simply keeping track on how many of such speech acts the
+ partner uttered and picking the that has been uttered most,
+ if that one is not available we move to the next one.
+ This is similar to fictitious play.
+
+**** Thinking
+ \cleared
+ Normally the $T$ function is about reasoning.
+ There is little reasoning to do in our scenario except to get to the goal as
+ soon as possible.
+ The thinking functions $T$ do this without paying any attention to
+ perlocutionary speech acts.
+
+ \cleared
+ We could say that while feeling is concerned with perlocutionary speech act goals
+ thinking on the other is concerned with symbolic goals.
+ To model the goals of the thinking functions we will introduce the set of goals
+ in an agents believe base $\Phi$. Where a single goals $\phi \in \Phi$ consists of
+ $\phi = (a, s)$ a symbol uttered by a particular agent.
+ Then there also exists the function that can compare goals with each other:
+ \[\phi_1 \to \phi_2 \to b \]
+ where $b \in \{ \top, \bot \}$ is a boolean, true or false that determines if
+ the first goal is more important then the second.
+ This function is asymmetric.
+ Finally there is a function that determines if a goal is completed or not:
+ \[\phi \to b\]
+
+ \cleared
+ Now to begin with $T_e$.
+ It sees the problem to solve as the conversation itself.
+ Therefore it will consistently choose speech acts that could help the partner to
+ progress the scenario.
+ So it wants to put the partner in a position where he has
+ almost no other options except to progress the scenario.
+ If it encounters a child node with a goal $\phi$ in it it will give priority to that.
+ If there are multiple goals in the options the comparison function can be used
+ to determine the most important one.
+ Scenario progression is measured with help of scenes.
+ If an option changes scene we assume it progresses scenario.
+ This comes secondary to finding goals.
+
+ \cleared
+ To model $T_i$ however the most obvious solution would be to implement an
+ axiomatic logic system.
+ This is however rather heavy on maintenance.
+ Every agent would need to have their own axiomatic system to determine what to
+ do for each node in the symbol graph.
+ The only real solution would be to create this dynamically somehow,
+ but this is out of scope of this thesis.
+ Therefore we looked for an alternative.
+
+ \cleared
+ $T_i$ wants to help the conversation partner to analyze the problem according
+ to the partner's own internal logic framework,
+ and to do this it wants to give as much options as possible to the partner.
+ Therefore it will choose the speech acts that produce the most symbols for the
+ partner.
+ To do this it will sort the child nodes according to as much unique symbols as
+ possible.
+
+*** Turn taking
+ <<Turn taking>>
+ \cleared
+ In the naive approach we modeled turn taking with a simple round robin strategy. 
+ Basically the irrational functions would only consider options that change
+ actor between plies. 
+ This makes it however difficult to model agents that hold long monologues,
+ which happens to for example Susie in the case study (see section [[Susie the ENFP]]).
+ You could do it by making just more symbols that hold all these utterances in
+ one. However this is very inflexible.
+ So to solve this problem we use alternation of actors whenever there is a tie
+ between two options.
+ So irrational would leave out the option that doesn't alternate,
+ and rational would prefer alternation when possible.
+
+*** Function ply depth
+ <<Function ply depth>>
+ \cleared
+ A big issue that turned up was at which level function ought to operate.
+ We have a two pass architecture, where functions can inspect the dialogue tree
+ before passing it to the /next/ function, but they can also inspect the result
+ of the /next/ function.
+ The reason for the two pass architecture is explained in section [[Rational and irrational]].
+ However it didn't treat another issue in dept, which is:
+ How does a function know at which level it should operate?
+
+ \cleared
+ In a naive approach we tried an implementation where irrational functions
+ will by default go down the left (most preferred) path to a leaf node and then
+ generate more meanings,
+ and the rational functions will sort the one layer above the leaf layer.
+ This has a problem in that it would make a rational function in the first
+ position the least relevant function,
+ since in the first pass it does nothing and when everything
+ goes back it works at one level above the leaves,
+ but it should be the *most* relevant.
+
+ \cleared
+ Another approach is to use outside information to determine height.
+ Basically we would put into the believes the order of functions.
+ With this information and the dialogue tree we can calculate the
+ right level to operate upon.
+ A question then remains is if the rational should sort everything even below
+ its level or just its level. 
+ This can be answered however,
+ rational should sort its level and everything below it,
+ because we can expect multiple responses if the same actor comes up first,
+ so in this case we want the dominant rational function to sort those replies too.
+ Then we want the lower level also to be of the most important rational function.
+ The 'deeper' less important rational functions only have a guiding role for 
+ irrational functions after them.
+
+ \cleared
+ We could also let the rational functions sort the entire tree,
+ and let irrational always extend the most preferred option.
+ At first glance this idea would make order for rational functions irrelevant.
+ Perhaps this isn't the case however,
+ since a lower level rational function would still guide which part of the tree
+ get extended.
+
+ \cleared
+ So there are two methods of dealing with this issue.
+ Firstly we can let rational functions just let everything be sorted,
+ but then the deeper rational functions will become less relevant.
+ Secondly we can let functions operate at a particular level based upon their
+ position in the personality.
+ We chose to do the latter,
+ because we thought this would make earlier rational functions more influential.
+ With this particular choice we can also make a decision about whether a function
+ should operate at a particular height,
+ or go downward trough the entire tree,
+ we chose to let it go downward because then the personality will be more
+ consistent in its choices if it wants to utter lower level replies.
+ Note however that deeper rationale functions can still have effect by virtue of
+ deciding which actions are generated indirectly.
+
+ \cleared
+ To calculate an operation height, we need to know the function order,
+ then the function itself and finally the height of the dialogue tree.
+ Which results in the following:
+ \[ [F_a] \to F_a \to i_{D_{\text{height}}} \to i_{\text{operate level}} \]
+ Where $F_a$ is the Jungian function,
+ $i_{D_{\text{height}}}$ is an integer which indicates the height of the dialogue tree
+ and $i_{\text{operate level}}$ is the suggested operation height.
+ To do this we group the functions in function attitude pairs,
+ the result is the pair index of the input function function pair,
+ plus one if the second value of the pair is rationale,
+ /and/ the input function is rationale,
+ otherwise its the pair index.
+
+** Believes
 <<Mapping to process>>
 \cleared
 Now you may argue at this point we haven't refined our types a lot, since
@@ -2236,216 +2537,6 @@ To do this we will start analyzing the Jungian functions and see what
 "extra" information require to function to perform their duties.
 Then we will define the believe tuple more formally.
 
-*** Symbol graph
-<<symbol graph>>
-\cleared
-To make sure the agent stays on topic we will make use of a symbol graph.
-This graphs gives connections to the symbols described in section [[A type signature approach]].
-The meaning graph $G$ is a set of connections $c \in G$ where
-$c = (P, A, s_1, s_2)$, $s_1, s_2 \in \mathcal{S} \wedge s_1 \neq s_2$,
-$A \subseteq \Lambda$ is the set of agents that can use the connection,
-to prevent cases where the patient asks the doctor about his health problems.
-$P$ is the perlocutionary value set of the speech act, as introduced in section
-[[Dialogue tree]].
-This is encoded in the edges because its not the meaning that causes these
-but the way you get to those meanings.
-In other words, being polite and then telling bad news causes different
-perlocutionary values than just telling bad news.
-
-\cleared
-From this we can define a function that gets the allowed connections from
-a symbol and an agent:
-\[ a \to s \to [c] \]
-We can retrieve $a$ and $s$ from the current node we are processing in $D$.
-The result is a list of connections we can go to from that symbol.
-Since connection $c$ contains multiple agents $A$,
-and a dialogue tree as an option can only contain a single agent in the utterance,
-we need to flatten the resulting connection list $[c]$.
-
-\cleared
-The introduction of the symbol graph is probably the most radical change this
-thesis proposes.
-It moves chatbots away from the idea that responses are many to one relations
-always and opens up many to many relations.
-Please note that this is probably not only approach available.
-It would have been more robust to use owl cite:world2012owl for example.
-But this would open up a new problem on how to construct sentences,
-of which the theoretical foundation is incomplete.
-Another issue is how to interpret meanings, where you could for example use
-cite:moschitti2004study.
-But again its just a piece of the puzzle.
-We think that making those steps are to big and probably simply will result into
-failure.
-However the symbol graph provides a good middle ground,
-in which its relatively easy to implement but offers enough freedom to encode
-personality in as a process.
-Note that this approach fits nicely into the information state transitions
-idea discussed in section [[Dialogue systems]].
-
-*** Irrational
-The irrational functions rely heavily on the symbol graph to create new
-children in the dialogue tree.
-This is under the assumption that connections in the symbol graph are always
-on topic.
-Please note that all irrational functions need to have an extra argument
-to limit their activities.
-Since considering the entire graph is unrealistic, and unnecessary.
-
-\cleared
-In the initial design of what the $S$ and $N$ functions should do
-as algorithm we considered them in the following way.
-$S$ would be analyzing all available options rigorously in a forward chaining
-process, whereas $N$ would do backward chaining, starting at the goal and going
-trough some way points directly to the starting point.
-
-\cleared
-This would translate into $S$ going several plies deep into the
-meaning graph before calling the $next$ function and returning the result.
-And if we assume that the $next$ function brings us closer to the goal we can
-use it as a heuristic to let it determine the direction for $N$.
-This of course doesn't allow us to do backward chaining since there is hardly a
-guarantee that the $next$ function will bring us to the goal, in fact we may get
-stuck in a loop.
-
-\cleared
-Alternatives to the implementation proposed include the use of
-probabilities to determine appropriate responses. 
-However this introduces a new problem of how to obtain the probability
-distributions.
-Machine learning could be used for this, but this raises the question:
-"learn on what"?
-Since the answer to that question is non-trivial, we consider such a solution
-out of scope.
-
-**** Intuition
-# http://personalitycafe.com/cognitive-functions/83205-whats-difference-between-ni-ne.html
-\cleared
-We can consider $N_i$ to be a depth first approach. Going several plies deep and
-at each ply consulting the $next$ function which step to take.
-$N_e$ on the other hand just takes the top $x$ of the current dialogue options
-and expands those, but then next step it will again consider the entire existing
-tree to find the best $x$ of each ply.
-This will of course be a much more shallow consideration than $N_i$, but 
-much more broad. Which is of course the behavior we are looking for in both
-$N_i$ and $N_e$ (see section [[Jungian types]]).
-
-**** Sensing
-\cleared
-The $S_e$ function just receives all possible connections from the current
-meaning for several plies and then applies the /next/ function on it.
-The $S_i$ however is more conservative and will only pop $x$ random meanings by
-default (the first $x$ connections),
-however it will construct its own connections of whatever the user said in
-response to the bot from previous conversations when at the same meaning (if it
-didn't exists already).
-Whenever these connections are available they will substitute the random $x$.
-So $S_i$ starts of kind off similar to $S_e$ but builds up over time.
-
-*** Rational
-\cleared
-In the current design the rational functions apply order to the children of a
-current dialogue node.
-Then once finished they will call the $next$ function on the most preferred
-child. This is to ensure all function attitudes can do some processing.
-
-\cleared
-Please do note that although we have a game tree,
-we're not dealing with a zero sum game.
-Dialogue is cooperative rather than competitive (see section [[Speech act theory]]).
-So doing an algorithm such as mini-max is out of the question.
-However we will borrow parts of it.
-Namely whenever a rational function finishing ordering the input set it will
-call the /next/ function to do deliberation on the most preferred item.
-
-\cleared
-We also model the rational functions as local optimizing functions.
-Only the current ply and maybe the next ply is considered,
-but not the entire tree.
-The primary reason for this is time constraints.
-However there is no reason why the entire available tree couldn't be used.
-
-**** Feeling
-\cleared
-Initially we wanted to create two lookup tables for both feeling functions one.
-However this would be confusing to configure,
-the scenario creator would need to decide which values are "external" and which are
-"internal".
-Campos however modeled feeling as a prediction of what the other agents will
-do.
-This describes $F_e$ rather well, $F_i$ not so much however.
-So we adapted and adopted that idea for $F_e$ and for $F_i$ we used the lookup
-table.
-
-\cleared
-Both feeling functions $F$ use the perlocutionary acts to order the children.
-$F_i$ uses a predefined value set $h$: 
-\[ p \overset{h}{\to} i \].
-Where $p \in \mathcal{P}$ is a perlocutionary value.
-This valuation is done by a lookup table on all available perlocutionary speech
-acts.
-$F_e$ tries to figure out what the conversation partners values by
-picking the perlocutionary act the other chose most.
-This is done by simply keeping track on how many of such speech acts the
-partner uttered and picking the that has been uttered most,
-if that one is not available we move to the next one.
-This is similar to fictitious play.
-
-**** Thinking
-\cleared
-Normally the $T$ function is about reasoning.
-There is little reasoning to do in our scenario except to get to the goal as
-soon as possible.
-The thinking functions $T$ do this without paying any attention to
-perlocutionary speech acts.
-
-\cleared
-We could say that while feeling is concerned with perlocutionary speech act goals
-thinking on the other is concerned with symbolic goals.
-To model the goals of the thinking functions we will introduce the set of goals
-in an agents believe base $\Phi$. Where a single goals $\phi \in \Phi$ consists of
-$\phi = (a, s)$ a symbol uttered by a particular agent.
-Then there also exists the function that can compare goals with each other:
-\[\phi_1 \to \phi_2 \to b \]
-where $b \in \{ \top, \bot \}$ is a boolean, true or false that determines if
-the first goal is more important then the second.
-This function is asymmetric.
-Finally there is a function that determines if a goal is completed or not:
-\[\phi \to b\]
-
-\cleared
-Now to begin with $T_e$.
-It sees the problem to solve as the conversation itself.
-Therefore it will consistently choose speech acts that could help the partner to
-progress the scenario.
-So it wants to put the partner in a position where he has
-almost no other options except to progress the scenario.
-If it encounters a child node with a goal $\phi$ in it it will give priority to that.
-If there are multiple goals in the options the comparison function can be used
-to determine the most important one.
-Scenario progression is measured with help of scenes.
-If an option changes scene we assume it progresses scenario.
-This comes secondary to finding goals.
-
-\cleared
-To model $T_i$ however the most obvious solution would be to implement an
-axiomatic logic system.
-This is however rather heavy on maintenance.
-Every agent would need to have their own axiomatic system to determine what to
-do for each node in the symbol graph.
-The only real solution would be to create this dynamically somehow,
-but this is out of scope of this thesis.
-Therefore we looked for an alternative.
-
-\cleared
-$T_i$ wants to help the conversation partner to analyze the problem according
-to the partner's own internal logic framework,
-and to do this it wants to give as much options as possible to the partner.
-Therefore it will choose the speech acts that produce the most symbols for the
-partner.
-To do this it will sort the child nodes according to as much unique symbols as
-possible.
-
-*** Believes overview
 <<Believes overview>>
 \cleared
 We listed the function attitudes $f_a$ and their required information into
@@ -2465,95 +2556,6 @@ in table [[tab:symbols]] in appendix [[Symbol overview]].
 | $S_i$    | Utterance history $[u]$ and $G$, and learned graph $G'$              |
 | $N_e$    | $G$                                                                  |
 | $N_i$    | $G$                                                                  |
-
-*** Turn taking
-<<Turn taking>>
-\cleared
-In the naive approach we modeled turn taking with a simple round robin strategy. 
-Basically the irrational functions would only consider options that change
-actor between plies. 
-This makes it however difficult to model agents that hold long monologues,
-which happens to for example Susie in the case study (see section [[Susie the ENFP]]).
-You could do it by making just more symbols that hold all these utterances in
-one. However this is very inflexible.
-So to solve this problem we make alternation whenever there is a tie between
-two options. So irrational would leave out the option that doesn't alternate,
-and rational would prefer alternation when possible.
-
-*** Function ply depth
-<<Function ply depth>>
-\cleared
-A big issue that turned up was at which level function ought to operate.
-We have a two pass architecture, where functions can inspect the dialogue tree
-before passing it to the /next/ function, but they can also inspect the result
-of the /next/ function.
-The reason for the two pass architecture is explained in section [[Rational and irrational]].
-However it didn't treat another issue in dept, which is:
-How does a function know at which level it should operate?
-
-\cleared
-In a naive approach we tried an implementation where irrational functions
-will by default go down the left (most preferred) path to a leaf node and then
-generate more meanings,
-and the rational functions will sort the one layer above the leaf layer.
-This has a problem in that it would make a rational function in the first
-position the least relevant function,
-since in the first pass it does nothing and when everything
-goes back it works at one level above the leaves,
-but it should be the *most* relevant.
-
-\cleared
-Another approach is to use outside information to determine height.
-Basically we would put into the believes the order of functions.
-With this information and the dialogue tree we can calculate the
-right level to operate upon.
-A question then remains is if the rational should sort everything even below
-its level or just its level. 
-This can be answered however,
-rational should sort its level and everything below it,
-because we can expect multiple responses if the same actor comes up first,
-so in this case we want the dominant rational function to sort those replies too.
-Then we want the lower level also to be of the most important rational function.
-The 'deeper' less important rational functions only have a guiding role for 
-irrational functions after them.
-
-\cleared
-We could also let the rational functions sort the entire tree,
-and let irrational always extend the most preferred option.
-At first glance this idea would make order for rational functions irrelevant.
-Perhaps this isn't the case however,
-since a lower level rational function would still guide which part of the tree
-get extended.
-
-\cleared
-So there are two methods of dealing with this issue.
-Firstly we can let rational functions just let everything be sorted,
-but then the deeper rational functions will become less relevant.
-Secondly we can let functions operate at a particular level based upon their
-position in the personality.
-We chose to do the latter,
-because we thought this would make earlier rational functions more influential.
-With this particular choice we can also make a decision about whether a function
-should operate at a particular height,
-or go downward trough the entire tree,
-we chose to let it go downward because then the personality will be more
-consistent in its choices if it wants to utter lower level replies.
-Note however that deeper rationale functions can still have effect by virtue of
-deciding which actions are generated indirectly.
-
-\cleared
-To calculate an operation height, we need to know the function order,
-then the function itself and finally the height of the dialogue tree.
-Which results in the following:
-\[ [F_a] \to F_a \to i_{D_{\text{height}}} \to i_{\text{operate level}} \]
-Where $F_a$ is the Jungian function,
-$i_{D_{\text{height}}}$ is an integer which indicates the height of the dialogue tree
-and $i_{\text{operate level}}$ is the suggested operation height.
-To do this we group the functions in function attitude pairs,
-the result is the pair index of the input function function pair,
-plus one if the second value of the pair is rationale,
-/and/ the input function is rationale,
-otherwise its the pair index.
 
 ** Consistency with theory
 \cleared
@@ -5718,7 +5720,7 @@ getting a working implementation.
 There are some odds and ends that haven't been addressed.
 A really major one is the way we expected the function attitude order type to
 be and how it was.
-Section [[Mapping function attitudes to a process]] was expecting an alternating
+Section [[Rational and irrational]] was expecting an alternating
 order of rational and irrational functions, so $ABAB$. 
 However upon closer inspection of MBTI specific theory it,
 turned out to be a rotating order, along the lines of $ABBA$.
