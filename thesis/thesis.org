@@ -6742,7 +6742,6 @@ Conversation went according to script.
 :PROPERTIES:
 :UNNUMBERED: t
 :END:
-\todo[inline]{To circumvent typing errors of users we can put input trough a spell checker taking the first correction}
 ** Rough planning.
 *** Report
 + Emotion future work should be finished
