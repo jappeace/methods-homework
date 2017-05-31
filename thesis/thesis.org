@@ -910,10 +910,12 @@ We comment more on this in section [[Jungian BDI]].
  
 ** Social practice
 <<social practice>>
-\toReview
+\newlyCleared
 In cite:reckwitz2002toward, practice theory is described as an example of
-culture theory, from this we can deduce a reason why the study of such theory
-would be relevant: It can help us explain context in for example dialogue,
+culture theory,
+from this we can deduce a reason why the study of such theory
+would be relevant:
+It can help us explain context in for example dialogue,
 trough expectations norms and social effects.
 In contrast to more classical models such as the `homo economicus'
 where self interest and goals are most important, and `homo sociologicus'
@@ -1638,7 +1640,7 @@ which we partly solved with scenes.
 On the other hand it is more advanced in that it can construct sentences.
 
 ** Personality in chatbots
-\toReview
+\newlyCleared
 To simulate personality in communication games there have been already several
 works proposed.
 Etheredge used the OCEAN personality theory to create argumentative
@@ -1653,27 +1655,31 @@ rather than ${1,2,3}$, we can use `low, medium, and high'.
 With these terms, business rules can be specified.
 A big advantage of this is that we can modify the definition of 
 the natural terms without modifying the rules they specified.
-An example of these rules is:
+An example of one of these rules is:
 ``if actions is high or self consciousness is high then acceptance is favored''.
-However this has a major disadvantage in that a lot of rules need to be
+
+\newlyCleared
+This has a major disadvantage in that a lot of rules need to be
 added to do action selection (there are 54 described in the paper),
-some of which become quite big (some have 7 conditions).
+some of which become quite big (for example, some have 7 conditions).
 This can make action selection opaque.
 It is for example not immediately clear how a higher anxiety will influence
 action selection.
 Having a lot of rule also make maintenance hard, if for example there is an
 unwanted behavior many rules need to be inspected before the change can be made.
+
+\newlyCleared
 There are two strategies that could help dealing with this:
 Modularization which is partly already done in the paper by splitting up action
 selection and action revision for example.
-Or by simplifying the model,
+Another approach is to simplify the model,
 which could be done by OCEAN traits rather than the facets,
 reducing the amount of variables from 16 to 5.
 In fact this will make the argumentative bot a lot more consistent
 with the OCEAN model. Since some facets were used for action revision and others
 for action selection,
-we can have an agent that will revise as if it is very neurotic but select as
-if it were very low neurotic.
+we can have an agent that will revise as if it is very high neurotic but select
+as if it were very low neurotic.
 
 \cleared
 Van den Bosch also chose to use OCEAN to model characters in a serious
@@ -1689,7 +1695,7 @@ This kind of methodology is called content orientated cite:campos_mabs2009,
 the personality, would and should change depending on context.
 
 ** Campos
-\toReview
+\newlyCleared
 Campos used the MBTI to create BDI based agents cite:campos_mabs2009.
 In section [[BDI + Personality]] we already discussed Campos his architecture.
 We will use a more fine grained version of MBTI, but his architecture is used,
@@ -5856,16 +5862,31 @@ Doing this always costs more time than expected and probably should be avoided
 until above mentioned systems are in place.
 
 *** Emotions
-\drafting
+\toReview
 Perlocutionary values could be used as a basis for emotions.
-However the current version doesn't really track emotions anymore.
+However the current version doesn't track emotions.
 A possible extension would be to make perlocutionary values a more complex
 structure, and the ability to add restrictions on certain connections once the
 bot reached certain emotional levels.
 
-\drafting
-refer to section [[Fatima Architecture]].
-
+\toReview
+In section  [[Fatima Architecture]] the Fatima architecture is discussed that 
+uses decay rates for emotions.
+So what would happen is connections with perlocutionary values could still be
+used the same,
+but then the model should be extended on what expected effect the value 
+has on the bot.
+These are then applied and decay rates are used to return to the norm.
+With this the only extension connections would need is to guard for being in
+certain emotional states, although perlocutionary values could also be used for
+this.
+For example if the bot were to know certain utterances could change his emotion
+to a more desirable state, it would be enough.
+In that way we only would need to encode the expected emotional change per
+perlocutionary value, and which emotions are desirable to be in, although
+personality could play a role in that.
+For example a thinking dominated personality would rather be calm, whereas an
+intuitive personality would rather be excited.
 
 \clearpage
 * Acknowledgements
@@ -6722,14 +6743,10 @@ Conversation went according to script.
 :UNNUMBERED: t
 :END:
 \todo[inline]{To circumvent typing errors of users we can put input trough a spell checker taking the first correction}
-\todo[inline]{How to deal with long inputs? I think sentence splitting was mentioned?}
-\todo[inline]{Perhaps we can use argumentation research on top of the graph to figure out more semantics (this statment is attacking that or inquirying this)}
-\todo[inline]{Extracting information from meanings isn't very DRY right now, for example saying how is your foot? Could perhaps be splitup into statusInquiry + foot. However I don't know how to do this better right now, perhaps it could be a natural result of dubble matching but we lose the order inforamtion.}
 ** Rough planning.
 *** Report
 + Emotion future work should be finished
 + Make (highlighted) formulas floats and add a caption to them
-
 
 *** Make usable for other student
 - Document about python scripts and shell scripts (how to use),
