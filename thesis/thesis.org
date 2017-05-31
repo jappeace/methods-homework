@@ -775,24 +775,35 @@ abstracting in an agent orientated way is more "natural",
 and complex systems dependencies and interactions can be easily modeled.
 # A case study is presented as proof of these claims.
 
-*** Interactive virtual environments
+*** Intelligent virtual agents
 <<Fatima Architecture>>
 \toReview
-Interactive virtual environments are populated by synthetic characters used
-to guide an application cite:dias2005feeling.
-In this Fatima architecture OCC was used to define and track emotions in their
-respective agents.
+Intelligent virtual agents are systems that emulate characters,
+that not just move but have human like abilities cite:aylett2013intelligent.
+Because of complex cognition and planning mechanisms they are able to deal
+with dynamic social envirnoments autonimously.
+
+\toReview
+We can consider the Fatima architecture  cite:dias2005feeling
+as an intelligent virtual agent archticture.
+In this OCC was used to define and track emotions in their respective agents.
 They also defined `personalities'
 trough value based limits on emotions,
 decay rate variances,
 goals,
 reaction rules and action tendencies,
 personalities were emulated.
-These therefore aren't he same as the personalities discussed in section
-[[personality theories]],
-it is unclear on what theoretical foundation the claim was made this
-described personality.
+These don't follow the thoery discussed in section [[personality theories]].
 Note that the Fatima architecture is an extension upon BDI cite:lim2008improving.
+
+\toReview
+We can consider the architecture of section [[Abstract architecture]] already 
+a virtual agent architecture.
+So it is only natural to say the same of the architecture discussed in
+section [[Architecture]]
+More extended use of social practice, and the recombination of OCC could
+lead in future work lead to an agent that can chat much more realistically than
+just another ALICE bot.
 
 *** Logic of BDI
 <<bdi logics>>
