@@ -73,7 +73,7 @@
 
 #+BEGIN_CENTER
 
-\newlyCleared
+\cleared
 We explore how to add Jungian personality to a chatbot as a process.
 An existing serious chatbot game was used as starting point,
 and closely inspected.
@@ -96,7 +96,7 @@ We conclude by demonstrating that this scheme works as expected.
 :PROPERTIES:
 :UNNUMBERED: t
 :END:
-\newlyCleared
+\cleared
 Jung, chatbot, drools, YAML, AIML, MBTI
 
 \newpage
@@ -105,7 +105,7 @@ Jung, chatbot, drools, YAML, AIML, MBTI
 \newpage
 
 * Introduction
-\newlyCleared
+\cleared
 Communication is the foundation of our modern society.
 Having good communication skills can help individuals in both professional as
 well as in their personal lives.
@@ -119,7 +119,7 @@ medical students.
 Wherein teachers can create scenarios to let their students practice with
 communication cite:jeuring2015demo.
 
-\newlyCleared
+\cleared
 This game was script based, the teacher made a scenario and the student would
 follow the choices predefined by the teacher.
 A script based game has of course the weakness that a student can't use
@@ -140,13 +140,13 @@ but rather being sensitive to the people who appreciate it cite:clack2004persona
 Therefore extending the game that allows doctors to train for different
 personalities will help addressing this issue.
 
-\toReview
+\newlyCleared
 In background section [[Background]] we will start by looking into 
 personality theories [[personality theories]], and compare them on advantages and
 disadvantages.
 Then we'll discuss agents literature in [[Artificial intelligence literature]].
 followed by the idea of social practices [[social practice]], 
-and some limited speech act theory [[Speech act thoery]].
+and some limited speech act theory [[Speech act theory]].
 After which we continue with dialogue systems [[Dialogue systems]],
 some of which can be considered related work.
 We continue by taking a close look at the state of the existing software that
@@ -778,32 +778,33 @@ and complex systems dependencies and interactions can be easily modeled.
 
 *** Intelligent virtual agents
 <<Fatima Architecture>>
-\toReview
+\newlyCleared
 Intelligent virtual agents are systems that emulate characters,
 that not just move but have human like abilities cite:aylett2013intelligent.
 Because of complex cognition and planning mechanisms they are able to deal
-with dynamic social envirnoments autonimously.
+with dynamic social environments autonomously.
 
-\toReview
+\newlyCleared
 We can consider the Fatima architecture  cite:dias2005feeling
-as an intelligent virtual agent archticture.
-In this OCC was used to define and track emotions in their respective agents.
-They also defined `personalities'
-trough value based limits on emotions,
-decay rate variances,
-goals,
-reaction rules and action tendencies,
+as an intelligent virtual agent architecture.
+In this the OCC model cite:steunebrink2009occ was used to define and track
+emotions in their respective agents.
+They also defined `personalities' trough value based limits on emotions,
+decay rate variances, goals, reaction rules and action tendencies,
 personalities were emulated.
-These don't follow the thoery discussed in section [[personality theories]].
+These don't follow the theory discussed in section [[personality theories]].
 Note that the Fatima architecture is an extension upon BDI cite:lim2008improving.
 
-\toReview
+\newlyCleared
 We can consider the architecture of section [[Abstract architecture]] already 
 a virtual agent architecture.
+It for example also has an emotions module which also is grounded in
+OCC cite:augello2016social.
 So it is only natural to say the same of the architecture discussed in
-section [[Architecture]]
+section [[Architecture]],
+although this thesis did not try to unify OCC based emotions with personality.
 More extended use of social practice, and the recombination of OCC could
-lead in future work lead to an agent that can chat much more realistically than
+in future work lead to an agent that can chat much more realistically than
 just another ALICE bot.
 
 *** Logic of BDI
@@ -826,7 +827,7 @@ epistemics to add believes to it cite:meyer2014logics.
 
 *** Drools
 <<Drools background>>
-\newlyCleared
+\cleared
 If JADE cite:braubach2003jadex, and 2APL cite:dastani20082apl are agent
 orientated programming languages,
 then drools can be seen as a more low level variant.
@@ -838,7 +839,7 @@ A good example in which drools is used is the expert system called OptaPlanner
 cite:vcimbora2015usability, which is a constraint satisfaction solver trough
 heuristics by using drools.
 
-\newlyCleared
+\cleared
 Drools consists of three major concepts.
 First of all there is the data model, which are just java classes.
 This data model is called the fact base.
@@ -856,23 +857,40 @@ An example of a drool rule can be seen in listing [[code:drool:lowlevelreply]].
 There have been several works that attempted to combine BDI with personality
 theory.
 In cite:gmytrasiewicz2002emotions emotion and personality is taken together
-and modelled formally. Similarly to the Fatima architecture there is no
-personality research cited in this work.
-However this formal model could be useful regardless of theory,
+and modelled formally.
+Similarly to the Fatima architecture there is no personality research cited in
+this work, just research on emotions.
+However this formal model could be useful regardless of lack of personality theory,
 especially the observation that there are only three possible transformation
-as the result of emotions (at least in their model): Transformation of actions
-space, transformation of the utility function and transformation of probabilities
+as the result of emotions:
+Transformation of actions space,
+transformation of the utility function and transformation of probabilities
 of state.
 We mention this because we do transformation of action space
 (irrational functions) and utility
 functions ($F_e$ modifies itself) in section [[Mapping to process]].
+However the transformation of state idea is foreign to us:
+personality never changes in our architecture.
+Since personality doesn't use this it would be an idea to base emotions upon
+state transformations.
+
+\toReview
 In cite:canuto2005personality the personality model of Millon was used,
 they chose to interpret it as a value based personality scheme.
 Where the values would indicate probability of action selection and quality of
-behavior. So if an agent would get several task the one he selects depends on
-his personality values and the quality of execution would also depend on that.
+behavior.
+If an agent would get several tasks the one he selects depends on
+his personality values and the quality of execution also depends on personality.
+Tasks could align or not align with personality depending on the task.
+A drawback to such an approach is the necessity of mapping values of the
+personality to the required actions.
+We do this to some extend in the symbol graph with perlocutionary values
+for example,
+but this is only necessary when certain personalities need to follow different
+routes (see section [[steering bot]]),
+besides the irrational functions do something completely different.
 
-\toReview
+\newlyCleared
 In cite:campos_mabs2009 Campos presents a methodology for adding personality
 to BDI agents.
 What is novel about his work is that rather than presenting personality as
@@ -1041,7 +1059,7 @@ cite:augello2016model.
 
 \FloatBarrier
 ** Speech act theory
-<<Speech act thoery>>
+<<Speech act theory>>
 \cleared
 Since a large part of this thesis is about communication we will give here a
 brief overview of speech act theory.
@@ -1558,7 +1576,7 @@ Template -> [*]
 \clearpage
 * Related work
 <<Related work>>
-\newlyCleared
+\cleared
 In this chapter we will give a brief overview of various interesting papers
 we found during researching the topic.
 We will start with chatbots in general, each of which has wildly different
@@ -1568,14 +1586,14 @@ In which there is some variance, but they generally follow the same pattern.
 Then finally we will discuss the reasoning behind the direction we chose.
 
 ** Chatbots
-\newlyCleared
+\cleared
 One of the first chatbots was ELIZA, made as early as 1966 cite:shawar2007chatbots.
 It recognized keywords and based on the linguistic context chose the appropriate
 transformation.
 The keyword file and its associated transformation rules were called the
 `script'.
 
-\newlyCleared
+\cleared
 The ALICE chatbot is a more recent incarnation of the idea,
 but uses AIML as a basis for the `script' cite:wallace2001don.
 Because ALICE is licensed under an open source license,
@@ -1588,7 +1606,7 @@ traditional chatbot paradigm, but in short:
 We can't use AIML for adding personality unless we'd modify it in such a way
 where it no longer is AIML.
 
-\newlyCleared
+\cleared
 In cite:vinyals2015neural a sub symbolic chatbot is presented that uses
 machine learning.
 It appears that it can handle the general cases of conversation,
@@ -1605,7 +1623,7 @@ section [[Replace regex]].
 
 *** Multilogue
 <<Related multilogue>>
-\newlyCleared
+\cleared
 In another interesting paper cite:penning2007boosting,
 multilogue is already possible.
 However this design is /drastically/ different from the one we presented.
@@ -1939,7 +1957,7 @@ therefore we introduce $\Lambda$ as the set of all active actors, where $a \in \
 With an actor $a$ and a symbol $s$ we can start thinking about modeling an
 utterance.
 However to do this, its important to remember that an utterance always comes with
-a perlocutionary value set as discussed in section [[Speech act thoery]].
+a perlocutionary value set as discussed in section [[Speech act theory]].
 Therefore we introduce the set of all encoded perlocutionary speech acts as
 $\mathcal{P}$ of which a set of speech acts is $P \subseteq \mathcal{P}$.
 With this we can define utterance $u$ as a tuple:
@@ -2327,7 +2345,7 @@ child. This is to ensure all function attitudes can do some processing.
 \cleared
 Please do note that although we have a game tree,
 we're not dealing with a zero sum game.
-Dialogue is cooperative rather than competitive (see section [[Speech act thoery]]).
+Dialogue is cooperative rather than competitive (see section [[Speech act theory]]).
 So doing an algorithm such as mini-max is out of the question.
 However we will borrow parts of it.
 Namely whenever a rational function finishing ordering the input set it will
@@ -2726,7 +2744,7 @@ is constructed from.
 #+BEGIN_SRC plantuml :cache yes :file img/uml/droolclass.png :exports results
   enum PerlocutionaryValue
   class PerlocutionaryValueSet{
-    +perlocuationaryValues:{PerlocationaryValue}
+    +perlocutionaryValues:{PerlocationaryValue}
   }
   PerlocutionaryValueSet --* "*" PerlocutionaryValue
 
@@ -2791,7 +2809,7 @@ is constructed from.
 #+END_SRC
 #+CAPTION: Class diagram of the low level model
 #+LABEL: fig:droolclass
-#+RESULTS[1c677a21ef92d9dff7fc9ff5dfca6512d4f6c4d0]: fig:droolclass
+#+RESULTS[21ed2d8e1f9aab1fa283d778126b8d46087e0bb4]: fig:droolclass
 [[file:img/uml/droolclass.png]]
 
 \cleared
@@ -4270,7 +4288,7 @@ Therefore both methods will be supported.
 
 *** Loading YAML
 <<Loading yaml>>
-\newlyCleared
+\cleared
 As explained earlier YAML key value pairs are either directly loaded into a
 =HashMap=, or into a class.
 We chose to use classes wherever possible because it provides more type safety.
@@ -4278,7 +4296,7 @@ This is only possible if all keys are known before hand.
 Which its not in case of the template system for example,
 but in most other cases it is.
 
-\newlyCleared
+\cleared
 In listing [[code:java:rawsym]] the class where the symbols are loaded into is shown.
 The fields defined there can be used as keys in symbol files.
 Note that over some fields the user has no control, such as =name= and =scene=.
@@ -4302,7 +4320,7 @@ public class RawSymbol {
 }
 #+END_SRC
 
-\newlyCleared
+\cleared
 In listing [[code:java:yamlread]] we show how one can load a YAML structure into a
 raw class.
 We also add some additional restrictions, we do not want to load 
@@ -4508,14 +4526,14 @@ cloud "symbols"{
 [[file:img/uml/dep:filedconns.png]]
 
 **** Actors
-\newlyCleared
+\cleared
 A foreign idea to AIML is the notion of actor restrictions.
 Since AIML will always model from the perspective of the bot, there is no need for this.
 However because we model both bot and user, we do require this.
 this is especially important to prevent the bot from infinitely talking to itself,
 which is discussed more in section [[Turn taking]].
 
-\newlyCleared
+\cleared
 To make sure certain strange situations don't occur, such as the patient asking
 the doctor if the doctor is sick,
 we added actor based restrictions on connections.
@@ -4527,7 +4545,7 @@ which basically means any actor can say this,
 or a specific actor.
 This could be extended with some kind of role system cite:sandhu1996role.
 
-\newlyCleared
+\cleared
 Note that because AIML does not specify actors,
 it can never be used on its own, to model a multilogue system in.
 Although we make actors explicit not because of the desire to implement a
@@ -4727,7 +4745,7 @@ and therefore its more difficult to implement.
 </category>
 #+END_SRC
 
-\newlyCleared
+\cleared
 Although this feature isn't necessary for personality per se, its a really
 important chatbot feature.
 It allows symbols to become more flexible, and connections more dynamic.
@@ -5080,7 +5098,7 @@ The help message will display which.
 
 \clearpage
 * Implementation
-\newlyCleared
+\cleared
 In this chapter we will discuss the specific personality implementation details.
 We will discuss how to setup a scenario, and how we tested our system.
 In section [[From strings to meanings]] a lot of implementation specifics were
@@ -5273,7 +5291,7 @@ Sander could have had his problem diagnosed a week earlier and Susie could have
 had access to pain killers for example.
 
 ** Making a scenario
-\newlyCleared
+\cleared
 Making a realistic dialogue can be difficult.
 Predicting most utterances one actor can make in a particular niche
 and adding answers to those is even more difficult.
@@ -5284,7 +5302,7 @@ We will discuss in this section how we modeled the dialogue and
 what methods we used to steer particular personalities over particular paths.
 
 *** Dialogue to YAML
-\newlyCleared
+\cleared
 The first task is just getting the utterances and the connections (without
 steering) into our knowledge base (the YAML files).
 In this section we will discuss how we modeled a part of the scenario discussed
@@ -5292,7 +5310,7 @@ in section [[Personality influence case study]].
 In that section several dialogues are presented with different personalities
 dealing with the same social practice, visiting the doctor.
 
-\newlyCleared
+\cleared
 Our strategy for modeling these is selecting a particular dialogue and then
 deciding per utterance whether they: require a unique symbol,
 can be merged in an existing one,
@@ -5307,7 +5325,7 @@ For example we merge the greetings according to listing [[code:yaml:model:greeti
     - Hi
 #+END_SRC
 
-\newlyCleared
+\cleared
 While putting utterances into symbols, we can start thinking about how to group
 them in scenes.
 Scenes are available to allow pattern matching to be more general by disabling
@@ -5317,7 +5335,7 @@ One may even not use this at all and leave everything in the introduction.
 What we chose to use was the social practice activities in section
 [[social practice]] as guide for determining what to group in which scenes.
 
-\newlyCleared
+\cleared
 The final step is modeling the connections.
 We just look at the dialogue and link up the utterances as can be seen in
 listing [[code:yaml:model:initial-connections]].
@@ -5337,7 +5355,7 @@ to:
    scene: information_gathering
 #+END_SRC
 
-\newlyCleared
+\cleared
 Although these connections are valid for conversation,
 the bot has no way to know which personality should choose what path.
 We have two major ways of steering certain personality kinds over certain paths.
@@ -5346,14 +5364,14 @@ However to use these we first need to setup the initial believes of the bot.
 Which will be discussed next.
 
 *** Believes
-\newlyCleared
+\cleared
 An example =believes.yml= can be seen in listing [[code:yaml:sc-believes]].
 This file describes several constants in the chatbot,
 that cannot, or should not be derived.
 This file in cooperation with the symbols and connection will be used
 to create an initial believe base.
 
-\newlyCleared
+\cleared
 We need to setup the goals and values, which are the primary steering
 information sources.
 The higher a goal is in the goals list the more important it is,
@@ -5365,7 +5383,7 @@ most,
 then after that he wants to tell the doctor he has a back pain.
 Goals are the most powerful method of steering the thinking functions.
 
-\newlyCleared
+\cleared
 We can also see the utility definition of values,
 higher is more attractive.
 Values, unlike goals can have an equal utility.
@@ -5381,7 +5399,7 @@ to use.
 Finally whereas goals were about steering thinking functions,
 values are about steering the feeling functions.
 
-\newlyCleared
+\cleared
 Then we need to determine the available actors and which actor is the bot himself.
 This is required to determine which connections can be used,
 a connection that does not defines restrictions gets expended into the actor list.
@@ -5389,7 +5407,7 @@ There was an idea of trying to derive the available actors from connection
 definitions, however this wouldn't work in case no actors were ever defined
 (relying on the expansion mechanism for every connection).
 
-\newlyCleared
+\cleared
 Finally we need to determine the personality this chatbot will use.
 This is just a sequence of the Jungian function names.
 There are no restrictions on this, except for your machine resources.
@@ -5419,7 +5437,7 @@ actors:
 personality: [Ne, Fi, Te, Si]
 #+END_SRC
 
-\newlyCleared
+\cleared
 Loading the believes inside a YAML file is a design conflict:
 "Should believes be loaded from YAML or inside the Drools?"
 There is a constant pull between these two possibilities.
@@ -5438,7 +5456,8 @@ This decision probably needs to be reconsidered once a multilogue architecture
 will be implemented (see section [[Multilogue architecture]]).
 
 *** Steering the bot
-\newlyCleared
+<<steering bot>>
+\cleared
 As discussed before the primary sources of steering the bot are perlocutionary
 values and goals.
 However these are not our only tools, if we want to make distinctions between
@@ -5448,7 +5467,7 @@ For example Te has as default behavior, meaning no goals present,
 to prefer connections that transition to another scene,
 whereas Ti prefers connections that lead to more options (see section [[Thinking]]).
 
-\newlyCleared
+\cleared
 In listing [[code:yaml:model:connext]] we can see the extended version of
 listing [[code:yaml:model:initial-connections]],
 with a quick glance, we can see how the functions maybe influenced by this.
@@ -5458,7 +5477,7 @@ Leading out from the status option there are only options that can be uttered
 by the doctor, this is done simply because it would be strange to continue
 talking after asking "How are you?".
 
-\newlyCleared
+\cleared
 If the status symbol is liked more by feeling function $F_i$,
 why did in section [[Testing]] Susie (with dominant $F_i$) utter a greeting
 first?
@@ -5524,7 +5543,7 @@ then
 end
 #+END_SRC
 
-\newlyCleared
+\cleared
 If we also take listing [[code:yaml:model:gathering]] and the believes into
 consideration,
 we can see why thinking functions may like the =ask_reason_here= option,
@@ -5550,7 +5569,7 @@ to_defaults:
 #+END_SRC
 
 
-\newlyCleared
+\cleared
 There are several other tools for steering available too which were
 discussed in [[Replacing AIML]] such as before fields and templates.
 However these can't be used to steer personality in particular,
@@ -5559,7 +5578,7 @@ They can also of course be combined with the methods discussed before.
 
 \FloatBarrier
 ** Testing
-\newlyCleared
+\cleared
 To verify our implementation's correctness we use several testing methodologies.
 First at the lowest level we use the so called unit tests to verify individual
 Jungian functions work as described in this thesis.
@@ -5567,12 +5586,12 @@ We test these individually by creating specific believes and a dialogue tree for
 input, then we check the output against an expected believe base and dialogue
 tree.
 
-\newlyCleared
+\cleared
 On the highest level we have the so called validation tests.
 With these we check if the bot behaves as expected by setting up a scenario,
 and then executing the bot, after which we run trough the scenario manually.
 
-\newlyCleared
+\cleared
 Traditionally there is also an in-between option called integration tests,
 which test combined parts of the system, but does so in an automated manner.
 However we haven't used those because setting them up initially takes much more
@@ -5580,23 +5599,23 @@ effort than simple unit tests.
 Validation tests are quick to setup because the process isn't automated.
 
 *** Unit tests
-\newlyCleared
+\cleared
 Unit tests are executed each build.
 They provide extra guarantees upon behavior where type can't do this.
 In essence unit tests are an extension of the type checker.
 
-\newlyCleared
+\cleared
 Static typing provides better correctness guarantees than unit tests cite:unitvsstatic.
 It follows that if you have a stronger type system you need fewer unit tests,
 Java however has a rather basic type system cite:javavsscala,javavshaskell.
 Therefore we implemented over 70 unit tests in the code.
 
-\newlyCleared
+\cleared
 A framework called JUnit cite:junit is used to integrate with maven and execute
 the tests on compile time.
 It also has a handy assertion API.
 
-\newlyCleared
+\cleared
 The unit tests don't cover every aspect of the application but are
 mainly focused upon the Jungian Functions and their data structures.
 For example the Te tests can be seen in listing [[code:java-unit-te]].
@@ -5636,14 +5655,14 @@ the method =no_goals_look_for_ones_that_change_scene= defines a test.
 #+END_SRC
 
 
-\newlyCleared
+\cleared
 Tests generally follow a similar pattern, first an expectation is build,
 then the input is created, the function to test is called, trough the =apply=
 method in this case, and finally the expectation is asserted.
 If the expectation isn't upheld an error will be shown when building the
 project.
 
-\newlyCleared
+\cleared
 $T_e$ only has one test that is specifically aimed at it,
 but several shared tests also target it.
 For example we know that rationale functions should prefer alteration if all
@@ -5652,7 +5671,7 @@ So we wrote a test for this and just applied the same test on all rationale
 functions.
 
 *** Validation test
-\newlyCleared
+\cleared
 To do validation tests we will try to model the scenario presented as an example
 in section [[Personality influence case study]].
 How this is done is discussed in section [[Making a scenario]].
@@ -5663,7 +5682,7 @@ however most issues we found were with the functions and their interactions.
 
 \clearpage
 * In conclusion
-\newlyCleared
+\cleared
 In this work we have shown a possible interpretation of Carl Jung's theory of
 types in a chatbot.
 We built on top of the work of an existing chatbot,
@@ -5674,14 +5693,14 @@ less verbose and more precise method of modelling dialogue.
 It also made drools the center of the new chatbot,
 where each step of processing a user message was decided by business rules.
 
-\newlyCleared
+\cleared
 Once this was done we could implement our interpretation of Jung and
 set up a test scenario to test the ideas presented in section [[Mapping to process]].
 From the test results in appendix [[final test]],
 we can see that the theory works in the implemented chatbot and scenario
 for the INTJ, ENFP and ISTP personalities.
 
-\newlyCleared
+\cleared
 This is by no means a prove that this will work in all instances.
 A first step towards that would be to model the theories in section
 [[Jungian BDI]] in a formal language discussed in section [[Logic of BDI]].
@@ -5691,7 +5710,7 @@ getting a working implementation.
 \todo[inline]{We should mention something about the intro: "Therefore extending the game that allows doctors to train for different personalities will help addressing this issue."}
 \todo[inline]{Comparison? (Maybe we can compare with ALICE, or other personality based schemes?)}
 ** Discussion
-\newlyCleared
+\cleared
 There are some odds and ends that haven't been addressed.
 A really major one is the way we expected the function attitude order type to
 be and how it was.
@@ -5705,7 +5724,7 @@ We suspect that there may be really only 8 personalities, rather than at least 1
 Additional experimentation is required to verify this problem,
 and potentially start looking for a solution.
 
-\newlyCleared
+\cleared
 Another issue is that although the bot is functional,
 the way we implemented the rational functions is rather simplistic.
 No actual mini-max algorithm is used (or something similar that would work with
@@ -5715,7 +5734,7 @@ So no dialogue tree information is used in the deliberation,
 addressing this issue could lead to more varied personalities.
 
 ** Future work
-\newlyCleared
+\cleared
 Considering the move to drools to the center of chatbot deliberation,
 and a novel alternate take on modeling chatbot dialogue,
 there are a legion of possibilities to extend this work.
@@ -5723,7 +5742,7 @@ We will present in this section a brief overview of the more obvious extensions,
 but we expect there will be many niches we haven't considered.
 
 *** Social practice support
-\newlyCleared
+\cleared
 We already hinted in section [[social practice]] that social practices were a
 consideration.
 However during the implementation we haven't looked deep into this,
@@ -5732,7 +5751,7 @@ Although it was already in place when we arrived,
 we just made it the center of deliberation.
 This will make modelling norms for example more easy.
 
-\newlyCleared
+\cleared
 For example we can consider it to be not normal when someone utters the same
 symbol over and over.
 Since utterances are already recorded into believes for some of the Jungian functions,
@@ -5743,7 +5762,7 @@ people use to detect if they're talking to a chatbot,
 and make it more easy to passing the Turing test more likely.
 
 *** Multilogue implementation
-\newlyCleared
+\cleared
 We discussed the architectural changes required for this in section
 [[Multilogue architecture]].
 However as discussed in section [[Practicalities]],
@@ -5757,7 +5776,7 @@ Since AIML was used in that paper we can safely say they weren't planning on
 making a multilogue architecture, because AIML can't do that as discussed in
 section [[Actors]].
 
-\newlyCleared
+\cleared
 As discussed in section [[Related multilogue]],
 there already exists a system that can do this,
 but its drastically different from this architecture.
@@ -5765,7 +5784,7 @@ It may be worth more study if one were to take an endeavor to a multilogue
 based system.
 
 *** Better use of linguistic theory
-\newlyCleared
+\cleared
 Currently linguistic theory is only used on a very basic level,
 in case of perlocutionary values for example.
 If symbols and templates were marked with slot grammar cite:mccord1990slot,
@@ -5773,7 +5792,7 @@ a more precise use of templates could happen.
 So connections that go to a symbol that require a noun,
 would no longer be able to use symbols that matched a verb.
 
-\newlyCleared
+\cleared
 With help of the work of convolution kernels for semantic parsing
 cite:moschitti2004study, a simple knowledge base could be constructed as an
 inspiration for bot about what to fill into the template system.
@@ -5785,7 +5804,7 @@ Although currently this is also a potential problem.
 A clean way of dealing with this is throwing an error that explains the problem.
 
 *** More advanced learning
-\newlyCleared
+\cleared
 The idea of dynamically extending the symbol graph, and creating new symbols
 themselves is an interesting one.
 For example a new symbol is created every time the bot doesn't know something,
@@ -5799,7 +5818,7 @@ with an existing knowledge base such as OWL cite:world2012owl.
 
 *** Matching
 <<Replace regex>>
-\newlyCleared
+\cleared
 It should be noted that regular expressions is just one of the possible ways
 of determining what symbol the user uttered.
 The bot can be easily modified to use alternate matching mechanisms such
@@ -5811,7 +5830,7 @@ symbols.
 Alternatively the existing regular expression approach could be enhanced,
 for example by executing it in parallel, or even upon the GPU cite:zu2012gpu. 
 
-\newlyCleared
+\cleared
 The question of what to do when multiple symbols are matched is a difficult one.
 In the initial approach we simply selected the first symbol,
 however currently they are all selected, and we hope the scenario is designed
@@ -5823,7 +5842,7 @@ theory to select the most precise symbol.
 However this precision also should be encoded or derived somehow
 (for example, more words means more information).
 
-\newlyCleared
+\cleared
 Note that at the matching phase personality could play a role,
 for example preferring to match on different symbols,
 or if multiple are matched, having a preference for certain kinds of symbols.
@@ -5831,7 +5850,7 @@ Sensing types may for example prefer raw data based symbols,
 whereas intuition types would prefer possibilities and ideas.
 
 *** Graphical scenario editor
-\newlyCleared
+\cleared
 A final possible extension would be to create a graphical scenario editor.
 Doing this always costs more time than expected and probably should be avoided
 until above mentioned systems are in place.
@@ -5850,7 +5869,7 @@ refer to section [[Fatima Architecture]].
 
 \clearpage
 * Acknowledgements
-\newlyCleared
+\cleared
 There it is, my drop of contribution into the ocean of science.
 I did this work of course not on my own.
 Many thanks to my teacher Dr. F. Dignum, for helping me ask the right questions,
@@ -5931,7 +5950,7 @@ Also note that there exists a Linux editor,
 its just not officially supported (yet) but the latest version can be found [[https://forum.unity3d.com/threads/unity-on-linux-release-notes-and-known-issues.350256/][here.]]
 Scroll all the way down for the latest release.
 
-\newlyCleared
+\cleared
 Note that the unity client currently doesn't support multiple replies from an
 agent, because the reply is just inserted in a label, rather than showing a chat
 history.
@@ -6188,7 +6207,7 @@ to keep unity running (or use at all).
 \newpage
 * Test Results
 <<Test Results>>
-\newlyCleared
+\cleared
 All these test follow the scenario which is presented as case study in section
 section [[Personality influence case study]].
 Each time all tests are executed to prevent regressions, even if they did manage
@@ -6200,7 +6219,7 @@ reproducibility reasons.
 | Commit | =65e704a0f9ec6f5d7052e0de285a79baf420db7d= |
 | Date   | 2017-03-28 |
 
-\newlyCleared
+\cleared
 We believe most of the higher level reasoning is done at this point.
 Therefore we attempted this acceptance test to see how well the system would
 hold up.
@@ -6217,7 +6236,7 @@ hold up.
 | Doctor   | Oh, yes then you need some pain killers for this. |        |
 | /Sander/ | /Thank you doctor/                                |        |
 
-\newlyCleared
+\cleared
 1. Actually said "How are you?", This is unexpected,
    however since replying with hello is useless to INTJ (it'll just loop back),
    such a reply may actually be better for progress high level process.
@@ -6251,7 +6270,7 @@ hold up.
 | Doctor  | Can you go to the hospital next Friday at 13:00?                   |        |
 | /Susie/ | /Yes, I will go then./                                             |        |
 
-\newlyCleared
+\cleared
 1. Skipped saying hello (again we miss the short circuit rule, same as INTJ)
 2. Didn't match with I'm good, probably same issue as INTJ.
 3. Only says the first sentence. This is because we don't keep on popping
@@ -6279,7 +6298,7 @@ hold up.
 | Doctor  | I can give you some pain killers meanwhile.                       |        |
 | /Chris/ | /Okay, thanks doctor/                                             |        |
 
-\newlyCleared
+\cleared
 1. Again no hello
 2. Replied with, I'm afraid I need some medicine, I think this is because Ti
    is the first function, and I think the two pass effect isn't implemented
@@ -6296,7 +6315,7 @@ hold up.
 | Commit | =1de05450c187c51df780a975cc4f0cec7c69dba1= |
 | Date   |                               2017-04-05 |
 
-\newlyCleared
+\cleared
 After solving the issues from the initial test, we redid them.
 
 *** INTJ
@@ -6333,7 +6352,7 @@ Conversation went according to script.
 | /Susie/ | /Yes, I will go then./                                             |        |
 
 
-\newlyCleared
+\cleared
 1. Wasn't uttered, probably because we handle hello as a low level reply.
    Perhaps we should let replies also be passed to themselves so higher level
    functions have a chance to interact?
@@ -6369,7 +6388,7 @@ Conversation went according to script.
 | /Chris/ | /Okay, thanks doctor/                                             |        |
 
 
-\newlyCleared
+\cleared
 1. Says 'when lifting a heavy object'.
    This derails the entire script so the test was stopped.
    The reason for this became apparent after a full tree dump after each function.
@@ -6380,7 +6399,7 @@ Conversation went according to script.
    Then once we come back to $T_i$, the most obvious choice is of course the first
    option provided by $S_e$, since it was expended by $N_i$, twice.
 
-\newlyCleared
+\cleared
 This is obviously not what we want, since $S_e$ is deciding which action is
 taken here.
 $S_e$ could try and get a sane ordering function.
@@ -6392,7 +6411,7 @@ list all available options.
 We ended up doing this but note that this breaks the design idea of the
 architecture. 
 
-\newlyCleared
+\cleared
 To fix this properly we need to reconsider the design at a deeper level,
 for example give ti the opportunity somehow in with direction $N_e$ will go down.
 A potential better way of solving this would to allow irrational to either
@@ -6406,7 +6425,7 @@ But since we're starting to run into time constraints we just leave it at this
 | Commit | =893f54f6942a65e3c22126949091d096c3691445= |
 | Date   |                               2017-04-10 |
 
-\newlyCleared
+\cleared
 After solving the issues from the second test we did another run of all tests.
 Even though this time we tested quite closely against the issues from the
 previous test, going trough the entire battery is necessary to prevent
@@ -6468,7 +6487,7 @@ Conversation went according to script.
 | Doctor  | I can give you some pain killers meanwhile.                       |        |
 | /Chris/ | /Okay, thanks doctor/                                             |        |
 
-\newlyCleared
+\cleared
 1. Said hello twice?!
    This was caused by the reinserting part of the shortcut, it used any actor
    rather than self. Fixing this caused a regression in ENFP which wouldn't
@@ -6487,7 +6506,7 @@ Conversation went according to script.
 | Commit | =8ea894d0da28addd8067c341e842ca2d91296586= |
 | Date   |                               2017-04-10 |
 
-\newlyCleared
+\cleared
 Its the same day and we try another round to try and pass this.
 Although we modified ISTP slightly, because it had to parse a large amount and
 produce a single reply for no obvious reason. Unlike ENFP which for example is
@@ -6548,7 +6567,7 @@ Conversation went according to script.
 | Doctor  | I can give you some pain killers meanwhile.                       |        |
 | /Chris/ | /Okay, thanks doctor/                                             |        |
 
-\newlyCleared
+\cleared
 Conversation went according to script. Note however that we split up the
 utterances of the doctor compared to the scenario.
 This is because there were to many different symbols in the input
@@ -6559,7 +6578,7 @@ This is because there were to many different symbols in the input
 | Commit | =ae74151591d0c5a20566d8d74283d4c73e9450d2= |
 | Date   |                               2017-04-30 |
 
-\newlyCleared
+\cleared
 This test was done after completing the major features that were still missing
 in comparison with AIML.
 We wanted to make sure no regressions had occurred meanwhile.
@@ -6619,7 +6638,7 @@ Conversation went according to script
 | Doctor  | I can give you some pain killers meanwhile.                       |        |
 | /Chris/ | /Okay, thanks doctor/                                             |        |
 
-\newlyCleared
+\cleared
 1. It didn't match these sentences, apparently because of the new scene system.
    There was no connection for this transition.
 
@@ -6630,7 +6649,7 @@ Conversation went according to script
 | Commit | =e15409ffc37b837a47a9ceb3c183d67f18c3eb17= |
 | Date   |                               2017-04-30 |
 
-\newlyCleared
+\cleared
 Because of the ISTP issues in last test we wanted to try and pass this one.
 
 *** INTJ
@@ -6708,7 +6727,6 @@ Conversation went according to script.
 \todo[inline]{Extracting information from meanings isn't very DRY right now, for example saying how is your foot? Could perhaps be splitup into statusInquiry + foot. However I don't know how to do this better right now, perhaps it could be a natural result of dubble matching but we lose the order inforamtion.}
 ** Rough planning.
 *** Report
-+ Beantwoorden van emails
 + Emotion future work should be finished
 + Make (highlighted) formulas floats and add a caption to them
 
