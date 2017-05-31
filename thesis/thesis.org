@@ -334,124 +334,124 @@ and finally we will look at the serious game in its existing form.
 
 **** Jung's theory of psychological types
 <<Jungian types>>
- \cleared
- Jung describes several concepts, firstly each person has two attitudes:
- /Introversion/ and /extroversion/.
- Extroversion means dealing with the outside world and therefore is called
- objective (or observable).
- Introversion is the world inside a person, and therefore is subjective,
- or private.
- This privacy however may be so great that the consciousness can't even access it.
- These attitudes are mutually exclusive,
- you can't do introversion and extroversion at the same time.
- For example if you're day dreaming you're not paying attention to your
- surroundings.
- A person who spends most of his time in the introversion attitude is called
- an /introvert/.
- But he is not totally the one or the other, an introvert can still have
- extrovert moments and vice versa.
- It should also be noted that the unconsciousness according to Jung is
- flipped in attitude. cite:hall1973primer97-98attitude
+\cleared
+Jung describes several concepts, firstly each person has two attitudes:
+/Introversion/ and /extroversion/.
+Extroversion means dealing with the outside world and therefore is called
+objective (or observable).
+Introversion is the world inside a person, and therefore is subjective,
+or private.
+This privacy however may be so great that the consciousness can't even access it.
+These attitudes are mutually exclusive,
+you can't do introversion and extroversion at the same time.
+For example if you're day dreaming you're not paying attention to your
+surroundings.
+A person who spends most of his time in the introversion attitude is called
+an /introvert/.
+But he is not totally the one or the other, an introvert can still have
+extrovert moments and vice versa.
+It should also be noted that the unconsciousness according to Jung is
+flipped in attitude. cite:hall1973primer97-98attitude
 
- \cleared
- Then there are four functions.
- The first two functions are called the /rational functions/
- because they act as a method of making judgements.
- /Thinking/ is a function that connects ideas with each other to arrive at
- generalizations or conclusions. 
- /Feeling/ evaluates ideas by determining if its good or bad, pleasant
- or unpleasant, beautiful or ugly.
- Note that this is /not/ the same as being emotional,
- although you can be emotional and use this function.
- The /irrational functions/ are called this because they require no reason.
- /Sensation/ is sense perception created by the stimulation of the senses,
- it can always be rooted to a sense,
- such as "I see a balloon" or "I feel hungry".
- /Intuition/ is like a sensation but its not produced by a sense.
- Therefore it has no origin in the same way as sensation has,
- by which its explained as "just a hunch" or "I feel it in my bones".
- cite:beauchamp2005communication,hall1973primer98-100functions
+\cleared
+Then there are four functions.
+The first two functions are called the /rational functions/
+because they act as a method of making judgements.
+/Thinking/ is a function that connects ideas with each other to arrive at
+generalizations or conclusions. 
+/Feeling/ evaluates ideas by determining if its good or bad, pleasant
+or unpleasant, beautiful or ugly.
+Note that this is /not/ the same as being emotional,
+although you can be emotional and use this function.
+The /irrational functions/ are called this because they require no reason.
+/Sensation/ is sense perception created by the stimulation of the senses,
+it can always be rooted to a sense,
+such as "I see a balloon" or "I feel hungry".
+/Intuition/ is like a sensation but its not produced by a sense.
+Therefore it has no origin in the same way as sensation has,
+by which its explained as "just a hunch" or "I feel it in my bones".
+cite:beauchamp2005communication,hall1973primer98-100functions
 
- \cleared
- To use these functions they have to be combined with attitudes, producing
- /function attitudes/.
- Therefore a person will never be of a thinking type,
- but rather either a thinking introvert or thinking extrovert.
- cite:hall1973primer100-101combo
- We can now imagine what this means,
- an extroverted thinker will for example make judgement about the real world,
- and therefore be more like a natural scientist or biology researcher,
- where they would study natural objects and behaviors.
- An introverted thinker will make judgement about ideas in his mind,
- and therefore will be an excellent philosopher, or mathematician, where
- consistency of the internal reasoning process is important.
+\cleared
+To use these functions they have to be combined with attitudes, producing
+/function attitudes/.
+Therefore a person will never be of a thinking type,
+but rather either a thinking introvert or thinking extrovert.
+cite:hall1973primer100-101combo
+We can now imagine what this means,
+an extroverted thinker will for example make judgement about the real world,
+and therefore be more like a natural scientist or biology researcher,
+where they would study natural objects and behaviors.
+An introverted thinker will make judgement about ideas in his mind,
+and therefore will be an excellent philosopher, or mathematician, where
+consistency of the internal reasoning process is important.
 
- \cleared
- Let $\mathcal{J}$ denote the set of all possible Jungian function attitudes
- such that:
- \[ \mathcal{J} = \{ T_e, T_i, F_e, F_i, S_e, S_i, N_e, N_i\}\]
- Where
- + $T_e$ stands for extroverted thinking, which is thinking about objects in the
-   real world. This is thinking with a goal, a problem to solve,
-   to check weather certain laws are upheld, or a system to check.
-   As said before a typical example of $T_e$ based reasoning would be a
-   biologist studying natural behavior.
- + $T_i$ stands for introverted thinking,
-   this kind of thinking could be called deductive,
-   it tries to construct a framework to explain the world.
-   This is consistent reasoning based on internal believes,
-   which does not necessarily solve a problem.
-   A typical example of $T_i$ based reasoning is a mathematician creating or
-   combining new mathematical structures with help of axiomatic logic.
- + $F_e$ stands for extroverted feeling, where objective or external criteria
-   is used to judge, for example something is beautiful or ugly.
-   Established standards may be used to decide this and therefore its a
-   conservative function.
-   Decisions are based on interpersonal and cultural values.
-   A typical example of $F_e$ based reasoning is about fashion and fads.
-   Deciding what is fashionable at the moment is an $F_e$ based process.
-   A typical profession would be working at a clothes shop,
-   where the knowledge of the latest trends is crucial.
- + $F_i$ stands for introverted feeling, decisions based on personal values and
-   believes.
-   People who have this as dominant function attitude could be characterized by
-   "still waters run deep".
-   A typical profession for this type is in counseling or health care, because
-   empathy comes rather natural to them cite:fiproffesionadvice.
- + $S_e$ stands for extroverted sensing, Act on concrete data from the here and
-   now. Then lets it go.
-   People of this type are often realistic and practical.
-   A typical profession driver of heavy machinery or athlete cite:seproffesionadvice, 
-   because living in the moment is most important for those professions,
-   this comes natural to $S_e$ based personalities.
- + $S_i$ stands for introverted sensing, acts on concrete data from memories and
-   passed experience.
-   A possible profession for the people with $S_i$ as dominant function is in
-   quality assurance,
-   where the perfect model in their mind can be easily
-   compared to the product in question cite:siproffesionadvice.
- + $N_e$ stands for extroverted intuition, try to find possibilities in every
-   situation.
-   Extroverted intuition can be very good entrepreneurs, seeing ideas in
-   almost every situation,
-   this also makes them very inspiring leaders because
-   they are very excited about their ideas cite:neproffesionadvice.
- + $N_i$ stands for introverted intuition. Looks for new possibilities in ideas.
-   A typical occupation of this type is artist or visionary
-   cite:hall1973primer104nitype,
-   this is because connecting ideas with each other comes natural to this type.
-   However just like the typical artist it may not always be understood why by
-   his peers or even himself.
+\cleared
+Let $\mathcal{J}$ denote the set of all possible Jungian function attitudes
+such that:
+\[ \mathcal{J} = \{ T_e, T_i, F_e, F_i, S_e, S_i, N_e, N_i\}\]
+Where
++ $T_e$ stands for extroverted thinking, which is thinking about objects in the
+  real world. This is thinking with a goal, a problem to solve,
+  to check weather certain laws are upheld, or a system to check.
+  As said before a typical example of $T_e$ based reasoning would be a
+  biologist studying natural behavior.
++ $T_i$ stands for introverted thinking,
+  this kind of thinking could be called deductive,
+  it tries to construct a framework to explain the world.
+  This is consistent reasoning based on internal believes,
+  which does not necessarily solve a problem.
+  A typical example of $T_i$ based reasoning is a mathematician creating or
+  combining new mathematical structures with help of axiomatic logic.
++ $F_e$ stands for extroverted feeling, where objective or external criteria
+  is used to judge, for example something is beautiful or ugly.
+  Established standards may be used to decide this and therefore its a
+  conservative function.
+  Decisions are based on interpersonal and cultural values.
+  A typical example of $F_e$ based reasoning is about fashion and fads.
+  Deciding what is fashionable at the moment is an $F_e$ based process.
+  A typical profession would be working at a clothes shop,
+  where the knowledge of the latest trends is crucial.
++ $F_i$ stands for introverted feeling, decisions based on personal values and
+  believes.
+  People who have this as dominant function attitude could be characterized by
+  "still waters run deep".
+  A typical profession for this type is in counseling or health care, because
+  empathy comes rather natural to them cite:fiproffesionadvice.
++ $S_e$ stands for extroverted sensing, Act on concrete data from the here and
+  now. Then lets it go.
+  People of this type are often realistic and practical.
+  A typical profession driver of heavy machinery or athlete cite:seproffesionadvice, 
+  because living in the moment is most important for those professions,
+  this comes natural to $S_e$ based personalities.
++ $S_i$ stands for introverted sensing, acts on concrete data from memories and
+  passed experience.
+  A possible profession for the people with $S_i$ as dominant function is in
+  quality assurance,
+  where the perfect model in their mind can be easily
+  compared to the product in question cite:siproffesionadvice.
++ $N_e$ stands for extroverted intuition, try to find possibilities in every
+  situation.
+  Extroverted intuition can be very good entrepreneurs, seeing ideas in
+  almost every situation,
+  this also makes them very inspiring leaders because
+  they are very excited about their ideas cite:neproffesionadvice.
++ $N_i$ stands for introverted intuition. Looks for new possibilities in ideas.
+  A typical occupation of this type is artist or visionary
+  cite:hall1973primer104nitype,
+  this is because connecting ideas with each other comes natural to this type.
+  However just like the typical artist it may not always be understood why by
+  his peers or even himself.
 
- \cleared
- <<Jungian alternating functions>>
- Another important concept is the idea of the /principal/ and /auxiliary/
- function cite:hall1973primer105principal.
- The principal function is the one that is most preferred.
- The auxiliary renders its services to the principal function,
- however this function cannot be the opposite of the principal.
- So if /Feeling/ is the principal function than thinking cannot be the auxiliary.
- This is also true for the irrational functions.
+\cleared
+<<Jungian alternating functions>>
+Another important concept is the idea of the /principal/ and /auxiliary/
+function cite:hall1973primer105principal.
+The principal function is the one that is most preferred.
+The auxiliary renders its services to the principal function,
+however this function cannot be the opposite of the principal.
+So if /Feeling/ is the principal function than thinking cannot be the auxiliary.
+This is also true for the irrational functions.
 
 **** MBTI
  \cleared
@@ -6744,7 +6744,6 @@ Conversation went according to script.
 :END:
 ** Rough planning.
 *** Report
-+ Emotion future work should be finished
 + Make (highlighted) formulas floats and add a caption to them
 
 *** Make usable for other student
