@@ -6759,38 +6759,6 @@ Conversation went according to script.
   instructions I wrote.
 - This probably also includes fixing recursive before, almost certain that doesn't work.
   (maybe include unit tests for that because its recursion which never works as expected)
- 
-** Random thoughts
-+ Goals should perhaps be able to be finished?
-  + Ti and Te shouldn't preffer this double
-+ Manuel made the argument this isn't BDI because we don't use a rule based
-  engine. We should find a theoretical source that mentions this and then attack
-  it by saying that we use pure functions or something? Alternatively the result
-  of each function gets inserted at each step in the rule engine,
-  therefore we could argue that aside from the actual processing step it *is*
-  BDI.
-  The laborious approach would be to refactor all the code to be in drools.
-+ Manuel also said that social practices may not fit with this.
-  For example when you expect an event in a particular scene,
-  but I don't think this isn't true either since at every step of deliberation
-  the information gets reinserted.
-+ We should note the utterance is used by goals a little weird in that
-  percolutionary values aren't used.
-  Actually goals need less information, so an idea would be to splitup
-  Utterances, but the issue is what to name the splitup (protoutterance?)
-+ Perhaps it shouldn't be possible to skip to a certain part of a dialogue
-  without punishment?
-  Although this is handy for debugging right now.
-+ We should add support for start and terminal nodes in the connections.
-  So that these siutation can be modelled gracefully.
-+ So is our symbol graph something along the lines of connectionism?
-  + Nodes are uniform in type, but not in value
-  + https://en.wikipedia.org/wiki/Connectionism
-+ Our connections are by default not allowed.
-  + However once allowed they allow everything possible in that connection,
-    unless specified differntly
-  + I think talking about what is allowed and not allowed is the core of doing
-    a description in logic.
 
 ** Tooling stuff
 + Protocol buffers could be used for protocol. Its strongly typed and has both
