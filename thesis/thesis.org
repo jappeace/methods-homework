@@ -65,7 +65,6 @@
 # for \FloatBarrier, prevents figures from floating over sections etc
 #+LATEX_HEADER: \usepackage{placeins}
 
-\todo[inline]{Figures should to be able to be placed in the appendix}
 \todo[inline]{Don't forget to delete the ideas chapter (after that remove this)}
 ** Abstract                                                          
 :PROPERTIES:
