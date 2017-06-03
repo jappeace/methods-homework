@@ -92,6 +92,7 @@ utterance depending on the personality.
 The drools rule engine is now the center of deliberation in the chatbot.
 The new modelling method was also less verbose and more precise.
 We conclude by demonstrating that this scheme works as expected.
+\todo{we need to say we extend the salve game}
 
 #+END_CENTER
 
@@ -100,7 +101,7 @@ We conclude by demonstrating that this scheme works as expected.
 :UNNUMBERED: t
 :END:
 \cleared
-Jung, chatbot, drools, YAML, AIML, MBTI
+Jung, chatbot, drools, YAML, AIML, MBTI, salve, communicate!
 
 \newpage
 #+TOC: headlines 2
@@ -108,6 +109,7 @@ Jung, chatbot, drools, YAML, AIML, MBTI
 \newpage
 
 * Introduction
+\todo[inline]{Name salve somewhere}
 \toReview
 Communication is the foundation of our modern society.
 Having good communication skills can help individuals in both their professional
@@ -800,27 +802,28 @@ that not just move but have human like abilities cite:aylett2013intelligent.
 Because of complex cognition and planning mechanisms they are able to deal
 with dynamic social environments autonomously.
 
-\newlyCleared
+\toReview
 We can consider the Fatima architecture  cite:dias2005feeling
 as an intelligent virtual agent architecture.
 In this the OCC model cite:steunebrink2009occ was used to define and track
 emotions in their respective agents.
 They also defined `personalities' trough value based limits on emotions,
-decay rate variances, goals, reaction rules and action tendencies,
-personalities were emulated.
+decay rate variances, goals, reaction rules and action tendencies.
 These don't follow the theory discussed in section [[personality theories]].
 Note that the Fatima architecture is an extension upon BDI cite:lim2008improving.
 
-\newlyCleared
-We can consider the architecture of section [[Abstract architecture]] already 
-a virtual agent architecture.
+\toReview
+We can consider the architecture of the `salve' game discussed in section
+[[Abstract architecture]] already a virtual agent architecture.
 It for example also has an emotions module which also is grounded in
 OCC cite:augello2016social.
-So it is only natural to say the same of the architecture discussed in
-section [[Architecture]],
-although this thesis did not try to unify OCC based emotions with personality.
+So it is only natural to say the architecture discussed in
+section [[Architecture]], is also an intelligent virtual agent architecture.
+This thesis did not try to unify OCC based emotions with personality,
+moving drools to the core of deliberation could make this easier however
+(see section [[Drools background]]).
 More extended use of social practice, and the recombination of OCC could
-in future work lead to an agent that can chat much more realistically than
+in future work lead to an agent that can chat much more naturally than
 just another ALICE bot.
 
 *** Logic of BDI
@@ -843,12 +846,12 @@ epistemics to add believes to it cite:meyer2014logics.
 
 *** Drools
 <<Drools background>>
-\cleared
+\toReview
 If JADE cite:braubach2003jadex, and 2APL cite:dastani20082apl are agent
 orientated programming languages,
 then drools can be seen as a more low level variant.
-Things such as goals and ontology are not predefined but there exists a concept
-of rule matching similar to 2APL, although not JADE.
+Things such as goals and ontology are not predefined in drools but there exists a concept
+of rule matching similar to 2APL.
 Drools is called a production rule system, which is based around the RETE
 algorithm cite:droolsdocs.
 A good example in which drools is used is the expert system called OptaPlanner
@@ -866,6 +869,7 @@ which is just a piece of java code that can modify the facts,
 or interlope with outside java code trough global variables.
 Also note that drools is Turing complete cite:weppenaar2011solving.
 An example of a drool rule can be seen in listing [[code:drool:lowlevelreply]].
+\todo{This is very far away, mention page or put an example just here, or add a list of listings somehow (which we already spend like 2 to 3 hours upon)}
 
 *** BDI + Personality
 <<BDI + Personality>>
@@ -885,10 +889,11 @@ of state.
 We mention this because we do transformation of action space
 (irrational functions) and utility
 functions ($F_e$ modifies itself) in section [[Mapping to process]].
-However the transformation of state idea is foreign to us:
-personality never changes in our architecture.
-Since personality doesn't use this it would be an idea to base emotions upon
-state transformations.
+The transformation of state idea may seem foreign to us:
+`personality never changes in our architecture',
+however we do have the believes $B$,
+which could be seen as the state of mind of an agent.
+Therefore we do this operation whenever we change the believe base.
 
 \toReview
 In cite:canuto2005personality the personality model of Millon was used,
