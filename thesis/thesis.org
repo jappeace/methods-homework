@@ -931,7 +931,7 @@ We comment more on this in section [[Jungian BDI]].
  
 ** Social practice
 <<social practice>>
-\newlyCleared
+\toReview
 In cite:reckwitz2002toward, practice theory is described as an example of
 culture theory,
 from this we can deduce a reason why the study of such theory
@@ -940,43 +940,41 @@ It can help us explain context in for example dialogue,
 trough expectations norms and social effects.
 In contrast to more classical models such as the `homo economicus'
 where self interest and goals are most important, and `homo sociologicus'
-in which group values are most important, in other words, one ought to do
-something.
+in which group values are most important.
 Both these classical models ignore the unconsciousness layer of knowledge humans
 of same cultures share.
 Using the social practice model that doesn't ignore this layer,
 could lead to a more `natural' conversation with a chatbot.
 
-\cleared
+\toReview
 In cite:smolka2001social it is stated that the research in activity theory
 led to the development of social practices.
-It was Karl Marx who made thought of the "roots" of activity
-theory cite:engestrom1999perspectivesp3_marx,
+It was Karl Marx who thought of the "roots" of activity theory
+cite:engestrom1999perspectivesp3_marx,
 Activity theory tries to bridge the gap between a single actor and the system
-it resides in cite:engestrom1999perspectivesp10_broad_definition
-trough the activity in progress.
+it resides in trough the activity in progress
+cite:engestrom1999perspectivesp10_broad_definition.
 Another way of describing activity in this sense is "a way of doing things".
 A problem with this model however was, how do cultures move activities from the
 collective towards the individual cite:smolka2001social.
 Social practices were therefore introduced to make the notion of activity more
 concrete.
 
-\cleared
+\toReview
 An early adoption of social practice can be found in cite:shove2005consumers,
 where it was used to analyze the spread of Nordic Walking.
 In his analyses he uses the following overarching concepts to analyze the practice:
 1. /Material/, which is just stuff in the real world. Such as cars, lamps etc.
 2. /Meanings/, which covers issues that are relevant to the material and/or the
-  practice. Think of health, price or even emotions. Consider the an example
-  practice of cycling.
+  practice. Think of health, price or even emotions.
   In cite:shove2005consumers meanings and images is used interchangeably,
-  however in cite:holtz2014generating its labeled as just meanings.
-  For clarity we will be using the word /Meanings/ since its more descriptive.
-3. /Competence/, it is rather obvious to say you need to be able to cycle to
-  participate in the social practice of cycling. This is why this is
-  introduced.
+  however in cite:holtz2014generating it's labeled as just meanings.
+  For clarity we will be using the word /Meanings/ since it's more descriptive.
+3. /Competence/, To participate in the practice of cycling,
+  one needs to be able to ride a bike.
+  These abilities is what competence encompasses.
 
-\cleared
+\toReview
 In cite:dignum2014contextualized a model of social practices for agents was
 developed.
 This model is extended specifically to allow software agents to use it.
@@ -987,13 +985,16 @@ cite:shove2005consumers,holtz2014generating.
 /Social context/ contains a social interpretation, roles and norms.
 In the previous model this was all part of /Meanings/.
 /Activities/ are the normal activities in the social practice,
-in Nordic waling this can be for example talking with your partner,
+in Nordic walking this can be for example talking with your partner,
 or stopping to get a stone out of your shoe.
 They don't need to all be performed but are there just as options.
 This is the first construct that wasn't covered by the other model.
-/Plan patterns/ set the boundaries for the eventual plan.
+/Plan patterns/ is a default that is assumed for all ways the social practice
+is used.
+They are concerned with order of activities,
+certain activities have to happen before other activities.
 An example of a doctor appointment plan pattern can be seen in
-figure [[fig:sp-activity]].
+figure [[fig:sp-activity]]. \ask{Is this correct or should I just delete the figure?}
 If you go to the doctor the first thing you do is some kind of greeting.
 Then the doctor goes onto data gathering and diagnoses mode until he figured
 out what's wrong.
@@ -1001,7 +1002,8 @@ After which he will tell in the finishing phase what to do about it.
 Now what these phases entail is not clear at all.
 Finishing may for example contain the prescription of medicine,
 or an appointment to go to the hospital. 
-However plan patterns do not describe such an implementation.
+However plan patterns do not describe such an implementation,
+and only offer loose constraints on eventual concrete plans.
 The plan pattern construct wasn't represented in the previous model either.
 /Meaning/ in this model is solely related to the social effects of activities,
 and finally /Competences/ is the same as in the previous model.
@@ -1015,16 +1017,14 @@ under that social practice,
 if no preconditions match an agent could consider trying other social practices
 he knows, or ask its peers for more information.
 
-\cleared
+\toReview
 The social practice theory in this thesis should be considered as a
 /foundation/ rather than a separate element.
-We will be using it as a domain limiting device,
-however it should be noted that it could act as much more than that,
-potentially it could give the notion of culture to agents.
+Potentially it could give the notion of culture or even common sense to agents.
 In this thesis we are interested in implementing personality for a serious game
 in a single social practice.
-So right now the social practice just gives an ordered overview in what domain our program
-should work.
+So right now the social practice just gives an ordered overview in what domain
+our program should work.
 We can formulate the social practice that is relevant for this thesis 
 in the following manner:
 
@@ -1067,13 +1067,14 @@ Finishing --> [*]
 #+RESULTS[7a43fec1ceafd4b5f5a5ceaf9e08cbc3996b06c6]: fig:sp-activity
 [[file:img/uml/sp-activity.png]]
 
-\cleared
+\toReview
 We can imagine personality should have /a/ influence on social practice
 selection and of course plan influence. As far as the authors are aware however,
-there hasn't been any prior work on this subject. But we can speculate for
+there hasn't been any prior work on this subject, but we can speculate for
 example that when considering physical context someone that is domination by a
-Sensing function would check all facts more rigorously than someone
-dominated by an Intuition.
+sensing extroverted $S_e$ function attitude would check all facts more
+rigorously than someone dominated by an introverted intuition $N_i$ function
+attitude.
 
 \cleared
 If the social practices are defined more formally they could be 
