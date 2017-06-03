@@ -1753,13 +1753,34 @@ labels. The details can be found in section [[Jungian BDI]].
 # In this chapter we talk about the abstract ideas, any information necessary
 # to execute the thesis without considering implementation details.
 # so I guess height and node count aren't necessary.
-\cleared
+\toReview
 This chapter tries to answer the question,
-"what is personality from a computationally perspective".
+`what is personality from a computationally perspective?'.
 In where we imagine personality being a preference towards a process rather
 than a preference towards content.
 We will however not consider yet how to place this in the existing system,
-but will consider how to combine Jungian psychology with BDI.
+but will consider how to model Jungian psychology with BDI into a dialogue process.
+We want to make personality as a process work, while trying to introduce
+as few assumptions as possible, and we want these assumptions to be as small
+as possible.
+So we want to make the system work, while keeping it simple,
+because simplicity matters cite:hickey2012simplcity.
+
+\todo[inline]{We should look again into making this section division better}
+\toReview
+We do this first by analyzing what we want to do in section [[Differences from Campos]], 
+then we propose a rough solution in section [[Informal description of Jung + BDI]].
+However since that solution is very rough we use type signatures in
+section [[A type signature approach]] to be more precise.
+This leads us to discuss the dialogue tree [[Dialogue tree]] and symbol graph
+[[symbol graph]], which are two core components. \todo{we should group these in  a section called core components?}
+Then we make a model that can combine individual functions in section
+[[Composing types]].
+After which we will look into the specific function attitudes and how to
+implement these as behavior in section [[Rational and irrational]].
+Followed by a brief overview of believes in section [[Believes]].
+Finally we will consider how this presented method relates to Jungian
+theory in section [[Consistency with theory]].
 
 ** Differences from Campos
 \todo{Name bad not descriptive, although if we mention it in the abstract not that bad}
@@ -1773,7 +1794,7 @@ However rather than using MBTI dimensions we want to use Jungian functions.
 This is because Jungian function attitudes are the underlying construct of
 MBTI and several other instruments (such as the PPSDQ and SL-TDI).
 
-\cleared
+\toReview
 There are some differences from the theory discussed in [[sec:types]] and Campos'
 process.
 The difference is that in the discussed theory we would translate MBTI to the
@@ -1789,7 +1810,7 @@ Campos avoids this by ignoring the I/E and J/P dimensions, resulting in a
 simplified theory.
 However we would like to note that it is not an easily extendable simplification.
 Therefore we chose to translate types to orders in Jungian function attitudes,
-something which is already done by MBTI (see section [[sec:mbti:order_comparison]]).
+something which is already done by MBTI.
 
 \cleared
 Another consideration to make is what are these function attitudes?
@@ -1800,13 +1821,9 @@ informal definition.
 However we can make a mapping to certain BDI processes
 based upon their description,
 but before that is done we need to make several structural observations.
-
-\cleared
 Firstly functions attitudes are not independent, by which I mean that
 if we have a function attitude $a$, followed by $b$ then the resulting
 behavior is different than $b$ followed by $a$ (see section [[sec:mbti:order_comparison]]).
-
-\cleared
 Secondly all functions should be used and their order matters.
 The first function used should be most prevalent.
 This means that we can't just execute all functions and use a do preference
@@ -1987,6 +2004,7 @@ so $f_a$ can be any of the function attitudes.
 
 ** Dialogue tree
 <<Dialogue tree>>
+\todo{Merge in type signature approach}
 \cleared
 We have some believes, time and meaning going in, some deliberation
 going on and a new set of believes and actions going out.
@@ -2112,6 +2130,7 @@ functions for meaning full replies.
 
 ** Symbol graph
 <<symbol graph>>
+\todo{Merge in type signature approach}
 \cleared
 To make sure the agent stays on topic we will make use of a symbol graph.
 This graphs gives connections to the symbols described in section [[A type signature approach]].
@@ -2158,6 +2177,7 @@ idea discussed in section [[Dialogue systems]].
 
 ** Composing type dynamics
 <<Composing types>>
+\todo{Merge in type signature approach, function attitudes working together}
 \cleared
 The first thing a commendable programmer may think of when trying to combine
 behavior is of course functional composition.
@@ -2252,6 +2272,7 @@ therefore we leave this as an exercise to the reader.
 
 ** Role of rational and irrational in a process
 <<Rational and irrational>>
+\todo{Rename to applied theory to Jung}
 \cleared
 Up until now we modeled the type signature to have a dialogue tree as input and
 output.
@@ -2471,6 +2492,7 @@ This structure still works with SL-TDI's non alternation.
 
 *** Turn taking
  <<Turn taking>>
+\todo{Move to type signature appraoch}
  \cleared
  In the naive approach we modeled turn taking with a simple round robin strategy. 
  Basically the irrational functions would only consider options that change
@@ -2486,6 +2508,7 @@ This structure still works with SL-TDI's non alternation.
 
 *** Function ply depth
  <<Function ply depth>>
+\todo{Move to type signature appraoch}
  \cleared
  A big issue that turned up was at which level function ought to operate.
  We have a two pass architecture, where functions can inspect the dialogue tree
@@ -2561,6 +2584,7 @@ This structure still works with SL-TDI's non alternation.
 
 ** Believes
 <<Mapping to process>>
+\todo{Merge into currently named: "role of rational and irrational in a process"}
 \cleared
 Now you may argue at this point we haven't refined our types a lot, since
 the believe structure was defined as "Every possible believe",
