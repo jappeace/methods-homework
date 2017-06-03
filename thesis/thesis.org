@@ -87,7 +87,7 @@ chatbot,
 while leaving as much of the original architecture in tact.
 This caused us to replace the existing AIML based scheme with a novel
 approach. 
-In this appraoch, we opened up space to have varied responses to a similar
+In this approach, we opened up space to have varied responses to a similar
 utterance depending on the personality.
 The drools rule engine is now the center of deliberation in the chatbot.
 The new modelling method was also less verbose and more precise.
@@ -108,27 +108,29 @@ Jung, chatbot, drools, YAML, AIML, MBTI
 \newpage
 
 * Introduction
-\cleared
+\toReview
 Communication is the foundation of our modern society.
-Having good communication skills can help individuals in both professional as
-well as in their personal lives.
+Having good communication skills can help individuals in both their professional
+and personal lives.
 However training people in communication skills can be difficult.
 Another party is required to communicate with,
 and a tutor or teacher has to be there to give feedback.
+
+\toReview
 Serious games can be used to train people with these kind of skills
 cite:swartout2013virtual.
-Therefore the "communicate!" game was developed which was specifically aimed at
-medical students.
+An example of this is the `communicate!' game which was developed specifically
+for medical students.
 Wherein teachers can create scenarios to let their students practice with
 communication cite:jeuring2015demo.
-
-\cleared
-This game was script based, the teacher made a scenario and the student would
+The `communicate!' game was script based, the teacher made a scenario and the student would
 follow the choices predefined by the teacher.
 A script based game has of course the weakness that a student can't use
 creative responses,
 all possible responses are scripted into the scenario
 and replying correctly relies on a simple /ABC/ choice.
+
+\toReview
 To combat this an alternative serious game was made based on the
 chatbot Alice cite:augello2016social.
 To measure how a student performed, a production rule engine was used called drools.
@@ -140,13 +142,13 @@ content cite:campos_mabs2009.
 This is useful because it turns out that the issues most doctors struggle
 with isn't so much being sensitive,
 but rather being sensitive to the people who appreciate it cite:clack2004personality.
-Therefore extending the game that allows doctors to train for different
-personalities will help addressing this issue.
+Therefore extending the game so that doctors can train for dealing with different
+personalities, will help addressing this issue.
 
-\newlyCleared
+\toReview
 In background section [[Background]] we will start by looking into 
-personality theories [[personality theories]], and compare them on advantages and
-disadvantages.
+personality theories [[personality theories]], and consider the advantages and
+disadvantages they have for our use case.
 Then we'll discuss agents literature in [[Artificial intelligence literature]].
 followed by the idea of social practices [[social practice]], 
 and some limited speech act theory [[Speech act theory]].
@@ -156,8 +158,8 @@ We continue by taking a close look at the state of the existing software that
 we're planning to extend in section [[Salve]].
 Since the personality topic has become quite popular in recent years
 some thoughts will be devoted to related work in section [[Related work]].
-With all this in mind, we continue to develop theory of how to
-make such a system in section [[Jungian BDI]].
+With all this in mind, we combine Campos' architecture with dialogue and Jungian
+personality as a theory in section [[Jungian BDI]].
 To make the work in the previous section more concrete,
 we discuss what architecture was used to implement this in section [[Architecture]].
 In section [[Replacing AIML]] we go into detail why we replaced AIML and with what.
