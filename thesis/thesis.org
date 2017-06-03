@@ -1708,7 +1708,6 @@ labels. The details can be found in section [[Jungian BDI]].
 \clearpage
 * Dialogue as a personality process
 <<Jungian BDI>>
-\todo[inline]{This should be restructured and reread, trying to figure out what goes on from a birds eye view is to difficult (from the content page)}
 # In this chapter we talk about the abstract ideas, any information necessary
 # to execute the thesis without considering implementation details.
 # so I guess height and node count aren't necessary.
@@ -2557,6 +2556,7 @@ in table [[tab:symbols]] in appendix [[Symbol overview]].
 | $N_e$    | $G$                                                                  |
 | $N_i$    | $G$                                                                  |
 
+\FloatBarrier
 ** Consistency with theory
 \cleared
 In this section we will explore if especially INTJ and ENTJ (MBTI) types would
