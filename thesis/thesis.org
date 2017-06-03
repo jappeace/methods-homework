@@ -871,6 +871,8 @@ Also note that drools is Turing complete cite:weppenaar2011solving.
 An example of a drool rule can be seen in listing [[code:drool:lowlevelreply]].
 \todo{This is very far away, mention page or put an example just here, or add a list of listings somehow (which we already spend like 2 to 3 hours upon)}
 
+\todo[inline]{Difference between facts and globals}
+
 *** BDI + Personality
 <<BDI + Personality>>
 \toReview
@@ -1188,11 +1190,12 @@ This is of course an information state approach too.
  Practicing in this case would mean memorising what button to click rather
  than to figure out what to say.
 
- \cleared
+ \toReview
  To address this issue the a new implementation was made. 
- This version was based around the idea of a chatbot, in the form of the ALICE
- bot.
- The AIML language was extended to allow emotional reactions of the agent.
+ This version was based around the idea of a chatbot,
+ which allowed users to give open answers rather than selecting buttons.
+ The ALICE chatbot was used as a foundation and
+ the AIML language was extended to allow emotional reactions of the agent.
  This new language was called S-AIML cite:augello2016model. 
 
  \cleared
@@ -1202,7 +1205,7 @@ This is of course an information state approach too.
  cite:augello2016social,
  such as following certain protocols (politeness, medical standards), and empathy.  
 
- \cleared
+ \toReview
  There is a difference between the architecture in the published papers and
  the source code received.
  This is because the source code is actively being worked on, whereas the
@@ -1213,8 +1216,10 @@ This is of course an information state approach too.
  language, however in the source code AIML has taken a step back.
  It is only used for text processing and not deliberation
  (which is now being taken over by drools as discussed in [[existing architecture]]).
- We will be using the source code as a guideline in discussing the existing
- work because it is more relevant and constructive.
+ Section [[Functionality]] and [[Abstract architecture]], are based upon the published
+ papers, however for sections [[existing architecture]] and [[Server architecture]],
+ we will be using the source code as a reference when discussing the existing
+ work because it is more relevant.
 
 *** Functionality
     \cleared
@@ -1237,12 +1242,12 @@ This is of course an information state approach too.
 From here the student can start practicing, the game will track his progress
 on the server.
 **** Teacher usage
-    \cleared
-For the teacher there is right now no client.
+\toReview
+For the teacher there is no client right now.
 The way a teacher can setup a scenario is trough modifying AIML and drool files.
-The teacher probably needs an expert to do this since these are right now
-combined with the war.
-It would be difficult to modify these files on a running instance.
+The teacher probably needs an expert to do this because to load these one needs
+to do a build. Which can be quite difficult for the first time,
+as seen in appendix [[building]].
 
 *** Abstract architecture
 \cleared
@@ -1254,40 +1259,41 @@ which was directly taken from cite:augello2016social.
   #+NAME:   fig:abstract-architecture
   [[./img/abstract-architecture.png]]
   
-\cleared
-The interaction module handles user interaction, where the GUI can show the
+\toReview
+The =Interaction= module handles user interaction, where the =GUI= can show the
 dialogue and the mood of the agent.
-The Dialogue module inside it however handles low level string interpretation
-with help of AIML (see section [[Text Processing]]), this basically works trough string
-matching.
+The =Dialogue= module inside it however handles low level string interpretation
+with help of AIML (see section [[Text Processing]]), this basically works trough
+string matching.
 Note that although represented in the abstract architecture as the same module,
-the GUI resides in  the implementation on the client side whereas the dialogue
-module resides on the server. 
+the =GUI= resides in  the implementation on the client side whereas the
+=Dialogue= module resides on the server. 
 
-\cleared
-The dialogue module calls directly the Representation and interpretation module
+\toReview
+The =Dialogue= module calls directly the =Representation and interpretation=
+module,
 with help of specialized tags (see section [[Deliberation]]) information can be inserted in
-the representation and interpretation module.
+the =Representation and interpretation= module.
 
-\cleared
-Both the 'representation and interpretation' module and the score module use
+\toReview
+Both the =Representation and interpretation= module and the =Score= module use
 drools to do their respective tasks.
 The only real separation in implementation is trough directory and file
-structure, but at runtime there is little distinction.
-The only other thing of note is the direct connection between the emotion module
-and the GUI,
-this is because the emotion module sends directly messages to the GUI whilst
-ignoring all of AIML.
+structure, at runtime there is little distinction.
+The only other thing of note is the direct connection between the =Emotion= module
+and the =GUI=,
+this is done because the =Emotion= module sends directly messages to the
+=GUI= whilst ignoring all of AIML.
 
 *** Application Architecture
 <<existing architecture>>
-\cleared
+\toReview
 The game uses a client server architecture (see figure [[fig:components]]).
 The client is written in unity and the server is a Java application running on 
 Wildfly.
 Communication between the two applications happens trough a web socket.
-A web socket is used because it allows the chatbot to pro-active,
-which is not possible with a technology such as REST.
+A web socket is used because it allows the chatbot to be pro-active,
+which is more difficult with a technology such as REST.
 
 #+NAME: fig:components
 #+BEGIN_SRC plantuml :cache yes :file img/uml/components.png :exports results
@@ -1311,12 +1317,12 @@ which is not possible with a technology such as REST.
     folders with the folder name =dto=.
 
 **** Protocol
-    \cleared
+    \toReview
     The protocol is setup to be intended for a much larger system.
     There are hints of a registration system but further inspection
-    revealed that only logging in only worked and but was required.
+    revealed that only logging in worked and was required.
     This is tied into the server's ability to run multiple games. 
-    there is also a limited monitoring functionality, the active games can
+    There is also limited monitoring functionality, the active games can
     be listed with a specialized message.
     A typical happy path scenario of protocol messages is listed in
     figure [[fig:sequence]].
@@ -1344,12 +1350,12 @@ which is not possible with a technology such as REST.
 
 *** Server architecture
 <<Server architecture>>
-  \cleared
+\toReview
 We will discuss the server architecture in more detail since it contains the
-"brains" of the application.
+`brains' of the application.
 The most important classes are shown in figure [[fig:class]].
-=WebSocket= is the entry point for the program where the messages from the client
-enter.
+=WebSocketService= is the entry point for the program where the messages from
+the client enter.
 
 #+NAME: fig:class
 #+BEGIN_SRC plantuml :cache yes :file img/uml/class.png :exports results
@@ -1371,14 +1377,14 @@ enter.
   WebsocketService --> ChatBotEngine
 
   package org.kie.api.runtime{
-  KieSession <-- ChatBotEngineImpl
+  ChatBotEngineImpl --> KieSession 
   class KieSession{
       +Facthandle insert(Object obj)
       +void setGlobal(String identifier, Object value)
   }
   }
   package org.alicebot.ab{
-  Chat <-- ChatBotEngineImpl
+  ChatBotEngineImpl --> Chat
     class Chat{
       +HashMap<String, Object> predicates
       +String multisentenceRespond(String str)
@@ -1388,36 +1394,35 @@ enter.
 #+END_SRC
 #+CAPTION: Class diagram of the server, where KIE is the engine that handles the drools
 #+LABEL: fig:class
-#+RESULTS[0b594e175f82f51e7db78f2340ecb9fa14f3e0e6]: fig:class
+#+RESULTS[da1283423804d9bccc8868552768b582306da369]: fig:class
 [[file:img/uml/class.png]]
 
-\cleared
-The =Websocket= uses a =ChatbotEngine= to determine how to reply to user utterances,
+\toReview
+The =WebsocketService= uses a =ChatbotEngine= to determine how to reply to user utterances,
 Where =ChatbotEngineImpl= is the concrete implementation.
-=ChatbotEngineImpl= uses a =KieSession= for the drools and a Chat which is the
-ALICE bot.
-Once the =startGame= message is received the KIE service is started,
+=ChatbotEngineImpl= uses a =KieSession= for the drools and a =Chat= which is the
+ALICE bot interface.
+Once a =startGame= message is received the KIE service is started,
 which runs on a dedicated thread to do drool deliberation.
 At this point facts can be inserted for the drools to react upon,
-in case of the anamnesi scenario the =GameStart= fact was inserted,
-which was a marker object to indicate that the game has started.
+in case of the anamnesi scenario the =GameStart= fact is inserted,
+which is a marker object to indicate that the game has started.
 This allow drools to take the initiative,
 for example when the user hasn't replied after 20 seconds the agent will ask
 the user why he hasn't replied yet.
 A detailed overview of construction can be seen in figure [[fig:construction]].
 
-\cleared
-In the class diagram (figure [[fig:class]]), we can see an attribute to the Chat
+\toReview
+In the class diagram (figure [[fig:class]]), we can see an attribute to the =Chat=
 class called predicates.
 This is a bag of variables the drools can use to keep track of the scenario
 progression.
 The =setGlobal= method of =KieSession= is used to expose global objects to drools.
 In this case the =ChatbotEngineImpl= is exposed.
 Insert can be used to insert facts.
-The difference between facts and globals is that facts are evaluated by
-the  rule base, where as globals are used by the rule base.
-A fact can be considered as "just a value".
-Currently globals are used as communication with external libraries
+The difference between facts and globals is explained in section
+[[Drools background]], the summery is that facts are `just a value' and globals
+are used as communication with external libraries
 (for example the =WebSocket= and =ChatSession=).
 
 #+NAME: fig:construction
@@ -1476,10 +1481,10 @@ stop
 		</template>
 	</category>
 #+END_SRC
-    \cleared
+    \toReview
      In this example the first category indicates that if a user types
-     "What is the problem" (pattern tags), then the answer can be found in a
-     category with pattern "why are you here".
+     ``What is the problem'' (pattern tags), then the answer can be found in a
+     category with pattern ``why are you here''.
      The second category does the same but the star indicates that any amount of
      characters
      [fn::It is not really 'any' character, we investigate this further in section [[Star tags]]]
@@ -1504,12 +1509,13 @@ as can be seen in listing [[code:s-aiml-inserts]].
 </category>
 #+END_SRC
 
-\cleared
-In this case if a user utters the sentence: "why are you here", the bot
+\toReview
+In this case if a user utters the sentence: ``why are you here'', the bot
 will check the drool database what his problem is and also update the
 scenario.
 Once the scenario is updated the possible responses of the chatbot are
 changed, as can be seen by the precondition tag.
+\todo{Pre conditions appear to be a thing, we should modify the figures upon that, (we could also test if they even work?)}
 The template tag has some extra tags. The insert tag inserts a fact into
 the drools knowledge base, the =getDroolsTemplate= tag queries the drools
 knowledge base for a string.
@@ -1568,7 +1574,7 @@ Figure [[fig:utterance-proccesing]] gives a detailed overview of utterance proce
 #+RESULTS[2be41360a975175f4a0734807235d7983de36beb]: fig:utterance-proccesing
 [[file:img/uml/utterance-proccesing.png]]
 
-\cleared
+\toReview
 As can be seen in the diagram the message processing happens inside the Alice
 bot.
 Tags were added to AIML to allow the drool engine to be updated.
@@ -1586,8 +1592,7 @@ Note that there is a loop for the =getDroolTemplates= tag
 in figure [[fig:utterance-proccesing]].
 This is because a blocking queue is used,
 which will block the thread until there is an item in the list.
-This is represented in the state diagram as the =ReadDroolTag= state,
-which is a read only operation on drools.
+This is represented in the state diagram as the =ReadDroolTag= state.
 
 #+NAME: fig:state:aiml
 #+BEGIN_SRC plantuml :cache yes :file img/uml/figstateaiml.png :exports results
@@ -1609,14 +1614,13 @@ Template -> [*]
 \clearpage
 * Related work
 <<Related work>>
-\cleared
+\toReview
 In this chapter we will give a brief overview of various interesting papers
-we found during researching the topic.
-We will start with chatbots in general, each of which has wildly different
+we found during researching this topic.
+We will start with chatbots in general, each of which has a wildly different
 approach to perform the same task.
 Then we will discuss chatbots that also have personality.
-In which there is some variance, but they generally follow the same pattern.
-Then finally we will discuss the reasoning behind the direction we chose.
+Finally we will discuss the reasoning behind the direction we chose.
 
 ** Chatbots
 \cleared
@@ -1626,7 +1630,7 @@ transformation.
 The keyword file and its associated transformation rules were called the
 `script'.
 
-\cleared
+\toReview
 The ALICE chatbot is a more recent incarnation of the idea,
 but uses AIML as a basis for the `script' cite:wallace2001don.
 Because ALICE is licensed under an open source license,
@@ -1637,9 +1641,9 @@ used AIML to deal with natural language.
 In section [[AIML issues]] we discuss our reasons to move away from this almost
 traditional chatbot paradigm, but in short:
 We can't use AIML for adding personality unless we'd modify it in such a way
-where it no longer is AIML.
+that it no longer is AIML.
 
-\cleared
+\toReview
 In cite:vinyals2015neural a sub symbolic chatbot is presented that uses
 machine learning.
 It appears that it can handle the general cases of conversation,
@@ -1649,14 +1653,15 @@ and that upon slight variance in semantics can result into inconsistent answers.
 Another issue we have with such a methodology is that its an completely
 opaque process.
 Although you could probably emulate personality by training on specific sets of
-data, the problem than becomes how would you decide upon this?
+data, the problem than becomes how would you decide what data is part of which
+personality?
 An interesting idea is however to try and use the technique discussed in this
 paper as a drop in replacement for pattern matching, this is discussed in
 section [[Replace regex]].
 
 *** Multilogue
 <<Related multilogue>>
-\cleared
+\toReview
 In another interesting paper cite:penning2007boosting,
 multilogue is already possible.
 However this design is /drastically/ different from the one we presented.
@@ -1668,21 +1673,25 @@ such as not being able to deal with what we call templates or what AIML calls
 star tags.
 They also seemed to have problem with context,
 which we partly solved with scenes.
-On the other hand it is more advanced in that it can construct sentences.
+On the other hand it is more advanced in that it can construct sentences,
+whereas we predefined them.
 
 ** Personality in chatbots
-\newlyCleared
+\drafting
+Describe cite:galvao2004persona, which did personality in AIML. \todo{describe}
+
+\toReview
 To simulate personality in communication games there have been already several
 works proposed.
 Etheredge used the OCEAN personality theory to create argumentative
 agents cite:etheredge2016personality.
-Although argumentation is not the same as communication we can consider the
-method used to make the personality.
+Although argumentation is not the same as communication, \todo{In particular because we are interested in content rather than strucutre, idk maybe look in that paper again}
+we can consider the method used to make the personality.
 In this paper a personality model is introduced based on OCEAN.
 They move from personality values in OCEAN towards action selection
 with fuzzy logic.
-Fuzzy logic `obfuscates' `crisp' values with more `natural' terms,
-rather than ${1,2,3}$, we can use `low, medium, and high'.
+Fuzzy logic `obfuscates' `crisp' values with more `natural' terms:
+Rather than writing ${1,2,3}$, we can use `low, medium, and high'.
 With these terms, business rules can be specified.
 A big advantage of this is that we can modify the definition of 
 the natural terms without modifying the rules they specified.
@@ -1699,12 +1708,12 @@ action selection.
 Having a lot of rule also make maintenance hard, if for example there is an
 unwanted behavior many rules need to be inspected before the change can be made.
 
-\newlyCleared
+\toReview
 There are two strategies that could help dealing with this:
 Modularization which is partly already done in the paper by splitting up action
 selection and action revision for example.
 Another approach is to simplify the model,
-which could be done by OCEAN traits rather than the facets,
+which could be done by using OCEAN traits rather than the facets,
 reducing the amount of variables from 16 to 5.
 In fact this will make the argumentative bot a lot more consistent
 with the OCEAN model. Since some facets were used for action revision and others
@@ -1712,18 +1721,19 @@ for action selection,
 we can have an agent that will revise as if it is very high neurotic but select
 as if it were very low neurotic.
 
-\cleared
+\toReview
 Van den Bosch also chose to use OCEAN to model characters in a serious
 communication game cite:van2012characters.
 He used a nested probabilistic if else structure to decide on how agents should
 interact.
 His methodologies had some shortcomings however,
-for example a not agreeable person was defined as someone who'd had a high
-probability of telling facts about himself.
-Which in certain situations could be considered strange,
+for example: A not agreeable person was defined as someone who'd had a high
+probability of telling facts about himself,
+which in certain situations could be considered strange,
 for example a spy who was captured.
-This kind of methodology is called content orientated cite:campos_mabs2009,
-the personality, would and should change depending on context.
+This kind of methodology is called content orientated cite:campos_mabs2009.
+Depending on context the personality should change, with which social practices
+can help.
 
 ** Campos
 \todo{Different name? Not descriptive, although if we mention it in the abstract not that bad}
