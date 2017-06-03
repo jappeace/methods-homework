@@ -79,6 +79,7 @@ We explore how to add Jungian personality to a chatbot as a process.
 An existing serious chatbot game was used as starting point,
 and closely inspected.
 We imagined \todo{different word?} personality as a process rather than value driven.
+\todo{We build upon campos' ideas where personality is a preference for algoirhtms rather than value driven??}
 In other words, a personality prefers a way of doing things rather than
 particular objects \todo{word}.
 With this in mind a strategy was devised for adding personality to the existing
@@ -1697,6 +1698,7 @@ This kind of methodology is called content orientated cite:campos_mabs2009,
 the personality, would and should change depending on context.
 
 ** Campos
+\todo{Different name? Not descriptive, although if we mention it in the abstract not that bad}
 \newlyCleared
 Campos used the MBTI to create BDI based agents cite:campos_mabs2009.
 In section [[BDI + Personality]] we already discussed Campos his architecture.
@@ -1722,6 +1724,7 @@ We will however not consider yet how to place this in the existing system,
 but will consider how to combine Jungian psychology with BDI.
 
 ** Differences from Campos
+\todo{Name bad not descriptive, although if we mention it in the abstract not that bad}
 \cleared
 Campos cite:campos_mabs2009 first considered how to combine MBTI with BDI.
 His reasoning domain was however in action space (rather than just dialogue),
