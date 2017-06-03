@@ -56,7 +56,7 @@
 # Inline code has a light grey background
 #+LATEX_HEADER: \usepackage{xcolor}
 #+LATEX_HEADER: \usepackage{soul}
-#+LATEX_HEADER: \definecolor{Light}{gray}{.95}
+#+LATEX_HEADER: \definecolor{Light}{gray}{.85}
 #+LATEX_HEADER: \sethlcolor{Light}
 
 #+LATEX_HEADER: \let\OldTexttt\texttt
@@ -65,6 +65,7 @@
 # for \FloatBarrier, prevents figures from floating over sections etc
 #+LATEX_HEADER: \usepackage{placeins}
 
+\todo[inline]{Inline code can be darker: dark enough now?}
 \todo[inline]{Don't forget to delete the ideas chapter (after that remove this)}
 ** Abstract                                                          
 :PROPERTIES:
@@ -73,20 +74,21 @@
 
 #+BEGIN_CENTER
 
-\cleared
+\toReview
 We explore how to add Jungian personality to a chatbot as a process.
 An existing serious chatbot game was used as starting point,
 and closely inspected.
-We imagined personality as a process rather than value driven.
+We imagined \todo{different word?} personality as a process rather than value driven.
 In other words, a personality prefers a way of doing things rather than
-particular objects.
-With this in mind a strategy was devised for adding personality,
+particular objects \todo{word}.
+With this in mind a strategy was devised for adding personality to the existing
+chatbot,
 while leaving as much of the original architecture in tact.
-In this process we replaced the existing AIML based scheme with a novel
+This caused us to replace the existing AIML based scheme with a novel
 approach. 
-The drools rule engine the center of the chatbot,
-and opened up space to have varied responses to a similar utterance
-depending on the personality's decisions.
+In this appraoch, we opened up space to have varied responses to a similar
+utterance depending on the personality.
+The drools rule engine is now the center of deliberation in the chatbot.
 The new modelling method was also less verbose and more precise.
 We conclude by demonstrating that this scheme works as expected.
 
@@ -1891,56 +1893,56 @@ part of the believe base.
 We marked the $f_a$ arrow, which indicates the deliberation process of the agent,
 so $f_a$ can be any of the function attitudes.
 
-** Narrowing the model
-<<Narrowing the model>>
-\todo[inline]{We should make the observation that all chatbots are $\sigma \to \sigma$, and perhaps glue this better to each other}
+*** Narrowing the model
+ <<Narrowing the model>>
+ \todo[inline]{We should make the observation that all chatbots are $\sigma \to \sigma$, and perhaps glue this better to each other}
 
-\cleared
-This definition is however too general for our domain.
-First of all the set of sensory information can be reduced to a String,
-since this is the information we get from a user.
-However a String is still to broad since going from a textual representation
-to a deliberation process is difficult.
-Therefore we will introduce another mapping function $g$:
-\[ \sigma \overset{g}{\to} s \]
-Where $\sigma$ is a string and $s$ a symbol where $s \in \mathcal{S}$ in which
-$\mathcal{S}$ stands for the set of all encoded symbols[fn::Originally this was
-called meaning with an $m$, but we want to avoid confusion with meaning in the
-social practice, and therefore renamed it to symbol, as in symbolic
-representation]
+ \cleared
+ This definition is however too general for our domain.
+ First of all the set of sensory information can be reduced to a String,
+ since this is the information we get from a user.
+ However a String is still to broad since going from a textual representation
+ to a deliberation process is difficult.
+ Therefore we will introduce another mapping function $g$:
+ \[ \sigma \overset{g}{\to} s \]
+ Where $\sigma$ is a string and $s$ a symbol where $s \in \mathcal{S}$ in which
+ $\mathcal{S}$ stands for the set of all encoded symbols[fn::Originally this was
+ called meaning with an $m$, but we want to avoid confusion with meaning in the
+ social practice, and therefore renamed it to symbol, as in symbolic
+ representation]
 
-\cleared
-A symbol $s$, where $s = (\{\sigma\}, \sigma)$ has the first value as a set of potential
-returning strings to utter,
-and the second is the name of the scene the symbol occurs in.
-The scene name is used as a name space and a crude way to measure scenario
-progression.
+ \cleared
+ A symbol $s$, where $s = (\{\sigma\}, \sigma)$ has the first value as a set of potential
+ returning strings to utter,
+ and the second is the name of the scene the symbol occurs in.
+ The scene name is used as a name space and a crude way to measure scenario
+ progression.
 
-\cleared
-With this we can define another function $g'$:
-\[ s \overset{g'}{\to} \sigma \]
-This allows symbol $s$ to be decoded into string $\sigma$.
-Note that in this relation there can be multiple $\sigma$ that map to the same
-symbol,
-but one symbol produces only a defined set of strings $\{\sigma\}$,
-that in turn map to itself,
-on this a random selection can be made.
-In the previous version this mapping was entirely done by AIML.
-How this is done in this version will be discussed in the implementation
-section [[From strings to meanings]].
+ \cleared
+ With this we can define another function $g'$:
+ \[ s \overset{g'}{\to} \sigma \]
+ This allows symbol $s$ to be decoded into string $\sigma$.
+ Note that in this relation there can be multiple $\sigma$ that map to the same
+ symbol,
+ but one symbol produces only a defined set of strings $\{\sigma\}$,
+ that in turn map to itself,
+ on this a random selection can be made.
+ In the previous version this mapping was entirely done by AIML.
+ How this is done in this version will be discussed in the implementation
+ section [[From strings to meanings]].
 
-\cleared
-So the simplification is now as follows,
-firstly we note that $\mathcal{S} \subset \Pi$,
-since understanding meaning is a form of sensation.
-Then we can define $S_t \subseteq \mathcal{S}$ which stands for the
-symbols the agent understood at time $t$.
-To ensure a reactive and proactive we also have to pass the current time
-as argument.
-This keeps open the possibility of the agent to do deliberation without having
-received a symbol (empty set).
-This produces the following type signature:
-\[ B_t \to t \to S_t \overset{f_a}{\to} (B_{t+1}, \Delta_{t+1}) \]
+ \cleared
+ So the simplification is now as follows,
+ firstly we note that $\mathcal{S} \subset \Pi$,
+ since understanding meaning is a form of sensation.
+ Then we can define $S_t \subseteq \mathcal{S}$ which stands for the
+ symbols the agent understood at time $t$.
+ To ensure a reactive and proactive we also have to pass the current time
+ as argument.
+ This keeps open the possibility of the agent to do deliberation without having
+ received a symbol (empty set).
+ This produces the following type signature:
+ \[ B_t \to t \to S_t \overset{f_a}{\to} (B_{t+1}, \Delta_{t+1}) \]
 
 ** Dialogue tree
 <<Dialogue tree>>
