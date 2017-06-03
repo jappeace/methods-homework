@@ -180,14 +180,14 @@ and finally we will look at the serious game in its existing form.
 
 ** Personality theories
  <<personality theories>>
-   \cleared
+   \toReview
    A personality is a set of identifiers that can be used with
    reasonable consistency to predict behavior
    cite:mischel2008introductionp3_definition.
    What we want from this model is a guideline of implementation for the program,
    that is to say,
    the more the theory says about internal workings of a person the better it is.
-   We want it to model to be realistic of course,
+   We want the model to be realistic of course,
    but we also want it to be implementable.
    This is where we have a conflict of interest with the field of
    psychology since they do not necessarily care about implementation details.
@@ -239,12 +239,13 @@ and finally we will look at the serious game in its existing form.
  hidden variables.
  This methodology has become widely used in psychology cite:fabrigar1999evaluating.
 
- \cleared
+ \toReview
  The data Tupes used is from Cattell cite:cattell1947confirmation and several
  others. Cattell used a rating scheme,
  where a trait was introduced and all test subjects then had to rate all other
  test subjects as average, below or above average for that specific trait.
- Persons could also use one extreme rating per trait for one person.
+ Subjects were also required to select two extreme trait ratings (max and min)
+ in the subject group.
  These traits in the test were based on the /personality sphere/ concept which
  tried to cover the entire surface of personality by providing many small trait
  areas.
