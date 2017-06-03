@@ -327,49 +327,49 @@ and finally we will look at the serious game in its existing form.
  
 *** Personality types
  <<sec:types>>
- \cleared
+ \toReview
  To address the big five's issue of having no theoretical foundation we'll
- have a look into personality types.
+ inspect the idea of personality types.
  We begin with the theoretical foundation proposed by the grandfather of
  personality research, Carl Jung.
  After which we'll look at a theoretical evolution proposed by Myers and
  Myers-Brigs, which also introduced a structured method of measuring types.
  Then we'll discuss some critique on this method.
- With this criticism in mind we'll look at alternatives to the MBTI that have been
- proposed afterwards.
+ With this criticism in mind we consider some alternatives to the MBTI that have
+ been proposed afterwards.
 
 **** Jung's theory of psychological types
 <<Jungian types>>
-\cleared
+\toReview
 Jung describes several concepts, firstly each person has two attitudes:
 /Introversion/ and /extroversion/.
 Extroversion means dealing with the outside world and therefore is called
 objective (or observable).
 Introversion is the world inside a person, and therefore is subjective,
 or private.
-This privacy however may be so great that the consciousness can't even access it.
 These attitudes are mutually exclusive,
 you can't do introversion and extroversion at the same time.
 For example if you're day dreaming you're not paying attention to your
 surroundings.
 A person who spends most of his time in the introversion attitude is called
-an /introvert/.
-But he is not totally the one or the other, an introvert can still have
-extrovert moments and vice versa.
+an /introvert/, conversely someone who spends most of his time with the
+observable would can be called an /extrovert/.
+One is however never totally an introvert or extrovert,
+an introvert can still have extrovert moments and vice versa.
 It should also be noted that the unconsciousness according to Jung is
 flipped in attitude. cite:hall1973primer97-98attitude
 
-\cleared
+\toReview
 Then there are four functions.
 The first two functions are called the /rational functions/
 because they act as a method of making judgements.
 /Thinking/ is a function that connects ideas with each other to arrive at
 generalizations or conclusions. 
-/Feeling/ evaluates ideas by determining if its good or bad, pleasant
+/Feeling/ evaluates ideas by determining if they are good or bad, pleasant
 or unpleasant, beautiful or ugly.
 Note that this is /not/ the same as being emotional,
 although you can be emotional and use this function.
-The /irrational functions/ are called this because they require no reason.
+The /irrational functions/ are called this because they require no reasoning.
 /Sensation/ is sense perception created by the stimulation of the senses,
 it can always be rooted to a sense,
 such as "I see a balloon" or "I feel hungry".
@@ -538,15 +538,15 @@ This is also true for the irrational functions.
  constructs are truly categorical suggested however that this was maybe not
  the case and a continuous scale for assessment judgements are required.
 
- \cleared
+ \toReview
  In cite:sipps1985item the MBTI is put trough a method called factor analyses.
  This is the same technique where OCEAN is based upon (see section [[OCEAN]]).
  With this technique the desired outcome is that there are 4 question clusters
  (or factors), one for each dimension.
- These factors should also be independent,
- a question that influences I/E score should not influence S/N.
- Finally we expect the factors to indicate differences between individuals.
- Random questions won't do that.
+ They should be independent,
+ a question that influences I/E score should not influence S/N, and 
+ finally we expect the factors to indicate differences between individuals,
+ random questions won't do that.
  However the study indicated that the MBTI had more than 4 factors (6),
  cite:sipps1985item explains the first extra factor as questions that assessed
  people being "unconditional positive",
@@ -554,7 +554,7 @@ This is also true for the irrational functions.
  Something else of note worth cite:sipps1985item indicated was that there
  were questions doing no discrimination at all (not being scored). 
 
- \cleared
+ \toReview
  Reliability indicates how often the same result will come out of the test,
  for example if you take the MBTI a 100 times you may be classified the same
  type for 70 times,
@@ -562,14 +562,15 @@ This is also true for the irrational functions.
  But in psychology another aspect is important,
  namely the interval in between which the tests are taken,
  if for example two tests produce starkly different results but a long time
- has passed between them its not considered a big issue.
+ has passed between them it's not considered a big issue.
  In cite:pittenger1993measuring it is suggested that after a period of 5 weeks 50%
  of the participants changed in score.
  However one should take into consideration that after taking the test a first time 
- people could consciously decide to change their opinion because they think its
+ people could consciously decide to change their opinion because they think it's
  more desirable to have a different type.
- Jung said that type is decided very early on in life cite:hall1973primer106inborn
- so having reliable scoring is important.
+ Jung said that type is decided very early on in life
+ cite:hall1973primer106inborn,
+ so reliable scoring is important.
 
 **** PPSDQ
  \cleared
@@ -591,21 +592,24 @@ This is also true for the irrational functions.
  state the importance of an available midpoint.
  The 5 point choice format in the PPSDQ is not motivated.
  
-#+CAPTION: An example of a word pair checklist, where the test taker should choose the  word that he identifies most with
+#+CAPTION: An example of a word pair checklist, where the test taker should choose the  word that he identifies most with.
 #+NAME: tab:word-pair-example
  | Word          |   |   |   |   |   | Word      |
  |---------------+---+---+---+---+---+-----------|
  | Empathy       | 1 | 2 | 3 | 4 | 5 | Logic     |
  | Dispassionate | 1 | 2 | 3 | 4 | 5 | Emotional |
 
- \cleared
+ \toReview
  The result of the PPSDQ would look something like: I-30 N-20 T-80 J-60, with
  a scale of 0 to 100. To calculate the Jungian functions as a probability measure
- some math is required. Our subject is $70\%$ of the time introverted and $30\%$ of the 
- time extroverted. $60\%$ of the time judging and $40\%$ of the time perceiving.
- therefore N_i would be calculated as: 0.7 \times 0.4 \times 0.8 = 0.224 or $22.4\%$.
- N_e would be $0.3 \times 0.4 \times 0.8 = 0.096$ etc.
- From this you can make a preference sequence or create a mixed strategy.
+ some math is required. Our subject in our example is $70\%$ of the time
+ introverted and $30\%$ of the time extroverted.
+ $60\%$ of the time judging and $40\%$ of the time perceiving.
+ therefore $N_i$ would be calculated as: 0.7 \times 0.4 \times 0.8 = 0.224 or $22.4\%$.
+ $N_e$ would be $0.3 \times 0.4 \times 0.8 = 0.096$ etc.
+ From this you can make a preference sequence, where higher valued functions come
+ first, or create a mixed strategy, where we select functions based upon
+ probability.
 
  \cleared
  The PPSDQ is measuring the same thing as MBTI but lacks the criticisms of MBTI.
@@ -645,7 +649,7 @@ This is also true for the irrational functions.
  MBTI and the subsequent PPSDQ cite:loomis1980testing.
 
  
-*** Comparison of theories
+*** TODO Comparison of theories
  \cleared
  To re-iterate, we are interested in a framework that is realistic, and easy to
  implement.
@@ -675,7 +679,7 @@ This is also true for the irrational functions.
  The PPSDQ is more realistic, but at the cost of being more difficult to
  implement.
 
- \cleared
+ \toReview
  The SL-TDI is even harder to implement than the PPSDQ because the function
  attitudes no longer have to alternate.
  This either means that functions are independent (thereby rejecting some of Jung's work),
@@ -683,23 +687,27 @@ This is also true for the irrational functions.
  If they work in some kind of combination and we have the following preference:
  \[ T_e > T_i > S_i > N_i > F_e > N_e > S_e > F_i\]
  We select the first function to work with, but it requires some information now,
- what to do?
+ which we can only get from irrational, what do we now?
  Select $S_i$, thereby skipping $T_i$, or select $T_i$ and let it decide to
  select $S_i$, but this would basically give $T_i$ censorship rights.
  This is difficult to answer therefore it is a lot more difficult to implement
  than PPSDQ.
  Since SL-TDI drops an assumption, which is shown with experimental evidence
- to be false cite:loomis1980testing, we can say SL-TDI's theory is most realistic.
- This comes however at the cost of being even more difficult to implement.
+ to be false cite:loomis1980testing, we can say SL-TDI's theory is most realistic,
+ but this comes at the cost of being even more difficult to implement.
 
  \cleared
  Therefore our preference for implementation is the following:
  \[ \text{MBTI} > \text{PPSDQ} > \text{SL-TDI} > \text{OCEAN} \]
 
- \cleared
+ \toReview
  There is another hidden reasoning behind this, the work of PPSDQ can built on
  that of MBTI, and that of SL-TDI can build on that of PPSDQ.
- OCEAN builds on nothing, we'll leave that for future work.
+ OCEAN lacks theory and builds on statistics,
+ however since SL-TDI and especially PPSDQ have a statistical relationship with
+ OCEAN cite:arnau1999alternative,
+ Jungian theory can be used quite realistically with an eventual statistical
+ mapping mapping back to OCEAN.
 
 ** Agents
 <<Artificial intelligence literature>>
@@ -6767,3 +6775,5 @@ Conversation went according to script.
   instructions I wrote.
 - This probably also includes fixing recursive before, almost certain that doesn't work.
   (maybe include unit tests for that because its recursion which never works as expected)
+
+#  LocalWords:  PPSDQ
