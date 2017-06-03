@@ -1127,7 +1127,7 @@ reasoning. A good example of this is the A.L.I.C.E. bot cite:wallace2001don.
 These are mostly reactive systems that use pattern matching rules paired with
 "good" responses,
 sometimes with conditions to allow for more variety.
-A more extended example of such a system is Eliza bot which is described in
+Another example of such a system is Eliza bot which is described in
 cite:galvao2004persona,
 where they also added personality to the bot with the OCEAN model.
 
@@ -1144,16 +1144,25 @@ The approach Traum proposes is modeling:
 The dialogue is the information state itself cite:walterapproaches.
 This is an extremely general way of describing a dialogue system.
 
+\toReview
+Both Alice and Eliza fit in this system.
+Alice for example provides dialogue moves trough AIML and the update strategy
+is simple pattern matching.
+You could consider topic tags to be an update rule.
+The formal representation is then also AIML itself.
+A similar mapping can be made for Eliza.
+
 \cleared
 In cite:wobcke2005bdi a BDI based methodology is proposed to handle dialogue
 between a user and an agent.
-However we want to point out that this solution fits into the rough model Traum
-sketched. So we could say its a information state approach too.
+However we want to point out that this solution fits into the rough model
+Traum sketched.
+So we could say its a information state approach too.
 
 \cleared
 An interesting paper on dialogue modeling can be found in cite:bilange1991task.
 What is interesting is that they treat having multiple options available in
-their implementation (see 3.3 in the paper).
+their implementation (see 3.3 in the referenced paper).
 This is similar to what we present in section [[Dialogue tree]].
 Although their solution is quite different,
 rules were made to select according to a single strategy,
