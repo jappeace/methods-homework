@@ -720,19 +720,19 @@ To make this more clear we'll use Wooldridges' definition:
 #+BEGIN_QUOTE
 An /agent/ is a computer system that is /situated/ in some /environment/ and
 that is capable of /autonomous action/ in this environment in order to meet its
-delegated objectives. -- Wooldridge
+delegated objectives.
 #+END_QUOTE
 
-\cleared
+\toReview
 In another older definition cite:wooldridge1995intelligent Wooldridge highlights
 /autonomy/, /social ability/, /reactivity/, and /pro activity/.
 Where autonomy means that no human intervention is required,
 social ability means it can talk to other agents,
 reactivity is that it can reply on input and pro activity means that it can
 show behavior while not reacting to something.
-However he later continues on with a stronger claim about an agent is a
-piece of software that uses concepts which are attributed to humans.
-Such as believes desires and intentions.
+However he later continues on with a stronger claim: An agent is a
+piece of software that uses concepts which are attributed to humans,
+such as believes desires and intentions.
 
 \cleared
 This is the reason why we can't call any program an agent.
@@ -745,19 +745,21 @@ process asking for it).
 However we won't call a kernel an agent because it doesn't even come close to
 having believes, desires or intentions.
 
-\cleared
+\toReview
 Something to keep in mind is that there are three "branches" of agent research
 cite:wooldridge1995intelligent.
 The first one is /agent theory/ in which /specifications/ and methods of 
 specifications are developed. They ask what are agents and what are they
-ought to do and how do we tell them that.
+ought to do and how do we tell them that, we describe some in section
+[[bdi logics]].
 Then there are the /agent architectures/, these address questions of how
 to implement the specifications written by the theorists.
-In this paper we won't discuss architectures since we work in an existing
-system described in section [[The serious game]].
+Although we already got an architecture described in section [[The serious game]],
+we will explore some more in section [[Fatima Architecture]].
 Finally there are the /agent languages/, which ask the question how to write
 agent programs.
-Again this is mostly predetermined for us, but we will give a small overview.
+This again is mostly predetermined for us, but we briefly mention some in section
+[[Drools background]].
 
 *** Belief desires and intentions
 \cleared
