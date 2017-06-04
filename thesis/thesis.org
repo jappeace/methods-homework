@@ -651,7 +651,7 @@ This is also true for the irrational functions.
  MBTI and the subsequent PPSDQ cite:loomis1980testing.
 
  
-*** TODO Comparison of theories
+*** Comparison of theories
  \cleared
  To re-iterate, we are interested in a framework that is realistic, and easy to
  implement.
@@ -1837,24 +1837,26 @@ After this we will look what extra information the function attitudes need
 in an attempt to reduce the amount of possible believes.
 
 ** Informal description of Jung + BDI
-\cleared
+\toReview
 Before diving into the type signature approach, or the formal description we
 want to describe it informally.
 Firstly we see the Jungian functions as a unit of processing.
 This is a clear design choice, there are alternatives.
 One could for example choose to make a unit of processing for every possible
-combination of Jungian functions attitudes which would result in $8!$ different
-functions, or specifically just for MBTI which would result in $16$ functions.
+combination of Jungian functions attitudes which would result in
+eight factorial different units of processing,
+or specifically just for MBTI which would result in $16$.
 
-\cleared
+\toReview
 We also chose to model function attitudes, rather than functions and attitudes.
 The reason for taking them as a combination is that there are more precise
 descriptions available for function attitudes, rather than functions and
-attitudes separated.
+attitudes separated separated.
 
 \cleared
-So a function attitude as a unit of processing is something where information
-goes in, the function does its processing and then information comes out.
+A Jungian function attitude as a unit of processing is something where
+information goes in,
+the function does its processing and then information comes out.
 This is analogous to a mathematical pure function.
 Another way of describing such a process is a transformation upon information.
 
@@ -1862,12 +1864,6 @@ Another way of describing such a process is a transformation upon information.
 From this we used the idea which MBTI uses too, that these small processing
 units are in an order,
 this order determines the eventual personality.
-Then what we set out to do in the rest of the chapter is how to model this
-into /type signatures/ and /types/.
-/type signatures/ show what information (/types/) goes into a pure function.
-In our case this usually contains a believe base for example.
-Thus what we explored was what information does the believe base need to contain
-for the Jungian functions to do their operations.
 
 \cleared
 There are several phases of processing going on.
@@ -1882,26 +1878,26 @@ This action is finally handled by the surrounding system.
 The opportunity for personality exists in practically all phases.
 In the first phase for example we can do filtering based on the type of
 messages received.
-For example Thinking based personality may filter the message "how are you" as
-an inquiry based on "how is your disease?", or "why are you here?".
+For example Thinking based personality may filter the message ``how are you'' as
+an inquiry based on ``how is your disease?'', or ``why are you here?''.
 Whereas a feeling based personality may retrieve a different meaning,
-as in "how are you doing in live generally"?
+as in ``how are you doing in live generally''?
 We chose to not do such kind of personality based filtering because it
 requires actual understanding of the message received.
 Now there exist techniques such as convolution kernels cite:moschitti2004study
 to decide what was said which can be combined with owl cite:world2012owl
 to simulate a sense of understanding.
 However implementing such techniques is considerably out of scope of this
-thesis, and even with the existence of such techniques separately, its still
+thesis, and even with the existence of such techniques separately, it's still
 questionable if you can combine them successfully.
 
 ** A type signature approach
 <<A type signature approach>>
-\cleared
+\toReview
 To give a better understanding of the scope of this project we will
 try to come up with a type signature of a pure function that models all the
 function attitudes.
-This is done with a Haskell like syntax,
+This is done with a Haskell like syntax cite:jones2003haskell,
 in which the arrows indicate a function,
 left of the arrow is called a domain and the right side a codomain.
 The domain is also called the argument of a function.
@@ -1909,31 +1905,36 @@ If we see a pattern like $a \to b \to c$ means $a \to (b \to c)$ or give an $a$
 and return a function $b \to c$, this process is called partial application
 cite:haskellpartialapplication.
 Capital letters indicate sets.
+Note that we have an overview of the symbols used in appendix [[Symbol overview]].
 
-\cleared
+\toReview
 We will go from an as broad as possible system (while using BDI) to a
 precise as possible definition, while still being able to satisfy the domain.
-This is desirable because it will restrict the amount of things that can happen
-inside the function.
-Therefore making it less complex and easier to understand.
+This is desirable because it will restrict the amount of computation branches
+that can happen inside the function.
+For example a pure function with type $b \to i$ where $b$
+is a boolean and $i$ an integer, can only produce two possible integer values,
+because there is no more input information to make decisions upon.
+Therefore making the domain as small as possible will result in a 
+less complex system.
 
-\cleared
-To make this process more easy to understand we'll postpone modeling interplay
+\toReview
+To start we'll postpone modeling interplay
 between the $f_a$ function attitudes and define a type signature for them working
 individually.
 To do this we will define some terms, with which we will go from the broadest
-definition possible towards one that just fits the project scope.
+definition possible towards one that fits the project scope precisely.
 
-\cleared
+\toReview
 Let $\mathcal{B}$ denote the set of all
 possible believes and let $B_t$ with $B_t \subseteq \mathcal{B}$ denote the
 believes at time $t$. 
 $\Pi$ is the set of all possible sense information,
 in which $\pi_t$ with $\pi_t \subseteq \Pi$ denotes the perception information at
 time $t$.
-$\mathcal{D}$ denotes the set of all possible actions with $\Delta_t$
-$\Delta_t \subseteq \mathcal{D}$ denoting the set of actions executed at time
-$t$.
+$\mathcal{D}$ denotes the set of all possible actions, and $\Delta_t$
+indicates the set of actions executed at time
+$t$ where $\Delta_t \subseteq \mathcal{D}$.
 With this definition we can define every possible agent configuration[fn::Note
 that this is just the deliberation part, there is no memory in a pure function,
 but the agent's memories can be stored in the believes.
@@ -1949,7 +1950,7 @@ information after which we get a new believe base and a set of actions.
 In this the intentions are encoded in the function used, and the desires are
 part of the believe base.
 We marked the $f_a$ arrow, which indicates the deliberation process of the agent,
-so $f_a$ can be any of the function attitudes.
+so $f_a$ can be any of the function attitudes discussed in section [[sec:types]].
 
 *** Narrowing the model
  <<Narrowing the model>>
@@ -1957,9 +1958,9 @@ so $f_a$ can be any of the function attitudes.
 
  \cleared
  This definition is however too general for our domain.
- First of all the set of sensory information can be reduced to a String,
+ First of all the set of sensory information can be reduced to a string,
  since this is the information we get from a user.
- However a String is still to broad since going from a textual representation
+ However a string is still to broad since going from a textual representation
  to a deliberation process is difficult.
  Therefore we will introduce another mapping function $g$:
  \[ \sigma \overset{g}{\to} s \]
@@ -1985,45 +1986,40 @@ so $f_a$ can be any of the function attitudes.
  but one symbol produces only a defined set of strings $\{\sigma\}$,
  that in turn map to itself,
  on this a random selection can be made.
- In the previous version this mapping was entirely done by AIML.
- How this is done in this version will be discussed in the implementation
- section [[From strings to meanings]].
 
- \cleared
- So the simplification is now as follows,
+ \toReview
+ The simplification is now as follows,
  firstly we note that $\mathcal{S} \subset \Pi$,
- since understanding meaning is a form of sensation.
+ since understanding symbols is a form of sensation.
  Then we can define $S_t \subseteq \mathcal{S}$ which stands for the
  symbols the agent understood at time $t$.
  To ensure a reactive and proactive we also have to pass the current time
  as argument.
- This keeps open the possibility of the agent to do deliberation without having
- received a symbol (empty set).
- This produces the following type signature:
+ This allows the agent to do deliberation without having
+ received any symbol (empty set).
+ Which leaves us with the following type signature:
  \[ B_t \to t \to S_t \overset{f_a}{\to} (B_{t+1}, \Delta_{t+1}) \]
 
 ** Dialogue tree
 <<Dialogue tree>>
 \todo{Merge in type signature approach}
-\cleared
-We have some believes, time and meaning going in, some deliberation
+\toReview
+We have some believes, time and symbols going in, some deliberation
 going on and a new set of believes and actions going out.
-The new believes can be used for the next iteration.
 However this type signature isn't enough.
-The current agent has to be able to do a game tree like deliberation process
-to reason about what the other agent will say so it can pick the meaning that
-brings it closest towards its goal.
-In our case a goal is a particular meaning the agent wants the doctor to utter,
-for example if our agent is sick we want the doctor to utter a =GiveMedicine=
-symbol,
-or if he is in extreme pain he would like to see the =GivePainKiller= symbol 
-uttered.
-We also need to mark which agent uttered the dialogue tree node,
-therefore we introduce $\Lambda$ as the set of all active actors, where $a \in \Lambda$.
 
-\cleared
+\toReview
+To allow the agent to select action in a rational manner,
+we use a dialogue tree to model the options.
+The root of the tree is the utterance we deliberate upon. 
+The ply under that is the utterances we consider in response to that.
+With plies under that in turn being responses to those, etc.
+
+\toReview
+We need to mark which agent uttered what in the dialogue tree nodes,
+therefore we introduce $\Lambda$ as the set of all active actors, where $a \in \Lambda$.
 With an actor $a$ and a symbol $s$ we can start thinking about modeling an
-utterance.
+utterance around which we can model dialogue tree nodes.
 However to do this, its important to remember that an utterance always comes with
 a perlocutionary value set as discussed in section [[Speech act theory]].
 Therefore we introduce the set of all encoded perlocutionary speech acts as
@@ -2100,7 +2096,7 @@ response .. D1
 #+RESULTS[1f1f673a8fc69adbde74aa1a7aeb115abfb4b09a]: fig:dialoguetree
 [[file:img/uml/dialoguetree.png]]
 
-\cleared
+\toReview
 With this in place we can replace both the $S_t$ and $\Delta_{t+1}$ with the $D_t$ and
 $D_{t+1}$ respectively, we can also remove $t$, since its now contained in the
 utterance.
@@ -2111,22 +2107,20 @@ We are left with the following type signature:
 So we receive a dialogue tree from the user, which can just be a root node,
 and then after processing we put out a dialogue tree plus the replies which
 are the children, whereof the first child is the most preferred.
-Also note that this $f_a$ function is an endomorphism, meaning that the input
-arguments are of the same type as the output arguments. Note that we annotated
+Note that this $f_a$ function is an endomorphism, meaning that the input
+arguments are of the same type as the output arguments. We annotated
 the output arguments with $t+1$ to indicate they could've been changed,
 not to indicate a different type.
 
-\cleared
+\toReview
 Now we should note that this type signature heavily constrains our agent.
 It for example can't handle being punched in the face by the doctor unless
-there is a meaning encoded for that. 
+there is a symbol encoded for that. 
 It also runs into trouble when the agent is asked to sit on the counter.
-Movement should be possible, but movement like one does during sky
-diving is not interesting because we have the informal constraint of the
-[[social practice]].
+Movement should be possible.
 However once movement becomes a requirement we can just create a new function
-type signature that is less restrictive, but still has the option to use these
-functions for meaning full replies.
+and type signature that is less restrictive.
+This new function can still use these functions we are modelling now for dialogue.
 
 ** Symbol graph
 <<symbol graph>>
@@ -2145,47 +2139,40 @@ but the way you get to those meanings.
 In other words, being polite and then telling bad news causes different
 perlocutionary values than just telling bad news.
 
-\cleared
-From this we can define a function that gets the allowed connections from
-a symbol and an agent:
-\[ a \to s \to [c] \]
+\toReview
+From this we can define a function that gets the allowed connections 
+using a symbol and an agent from the graph:
+\[ G \to a \to s \to [c] \]
 We can retrieve $a$ and $s$ from the current node we are processing in $D$.
 The result is a list of connections we can go to from that symbol.
 Since connection $c$ contains multiple agents $A$,
 and a dialogue tree as an option can only contain a single agent in the utterance,
 we need to flatten the resulting connection list $[c]$.
 
-\cleared
+\toReview
 The introduction of the symbol graph is probably the most radical change this
 thesis proposes.
 It moves chatbots away from the idea that responses are many to one relations
 always and opens up many to many relations.
-Please note that this is probably not only approach available.
-It would have been more robust to use owl cite:world2012owl for example.
-But this would open up a new problem on how to construct sentences,
-of which the theoretical foundation is incomplete.
-Another issue is how to interpret meanings, where you could for example use
-cite:moschitti2004study.
-But again its just a piece of the puzzle.
-We think that making those steps are to big and probably simply will result into
-failure.
-However the symbol graph provides a good middle ground,
+There are more advanced techniques such as owl available, we discuss
+these in section [[More advanced learning]].
+We didn't use that because we thought the step from ontology to language
+would be to difficult to finish in time.
+The symbol graph provides a good middle ground,
 in which its relatively easy to implement but offers enough freedom to encode
 personality in as a process.
-Note that this approach fits nicely into the information state transitions
-idea discussed in section [[Dialogue systems]].
+Note that this approach fits into the information state transitions
+discussed in section [[Dialogue systems]].
 
 ** Composing type dynamics
 <<Composing types>>
 \todo{Merge in type signature approach, function attitudes working together}
-\cleared
+\toReview
 The first thing a commendable programmer may think of when trying to combine
 behavior is of course functional composition.
-However there is an important requirement for this to work.
-The input type and output type need to be the same of the two functions we
+The most important requirement for this to work is that
+the input type and output type need to be the same of the two functions we
 want to combine.
-Our current type signature has this feature almost except for the time
-argument, it is not difficult to work around this.
 What is problematic however is that using functional composition in this
 way would make it impossible for function attitudes to inspect results
 of their auxiliary functions.
@@ -2195,50 +2182,29 @@ the user meaning it can't do its job yet, more on his in this section
 [[Rational and irrational]].
 Therefore we consider another approach.
 
-\cleared
-Another architecture that was considered would be to store the functions in a
-list and then let an external control unit decide which function processes next.
+\toReview
+we considered storing the functions in a list
+and then let an external control unit decide which function processes next.
 However this would leave the control of the function being called outside of the
 control of the function attitudes,
 therefore personality wouldn't play a role in deciding the function being called.
 It will also create another problem of deciding when a function is called.
-So to solve these problems we looked at another possibility.
+So to solve these problems we looked at another possibility. \todo{Yes but we actually do this within drools, and we also do the next thing, in fact we just sort off combined both methods, so I think we should describe this somewhere (although technically you don't have to do this to make it work so maybe not in this chapter)}
 
-\cleared
+\toReview
 In this approach we will give $f_a$ another argument which is the next $f_a$.
 This looks like the following:
 \[ \left (\overset{next}{B_t \to D_t \to (B_{t+1}, D_{t+1})}\right ) \to B_t \to D_t \overset{f_a}{\to} (B_{t+1}, D_{t+1}) \]
 Note that the function in the next bracket has the same prototype as the codomain.
+A more compact way of representing this type signature is the following:
+\[ \overset{next}{f_a} \to f_a \]
 In this case the /next/ function can play an advisory role to the codomain.
 A unit function can be defined that produces empty sets as results for both
 believes and action.
 By unit function we mean the initial /next/ function
 that does nothing and just returns the believes and dialogue tree.
-Since the notation has become quite complex at this point we provided 
-an activity diagram of this works in the broader system,
-which can be seen in figure [[fig:faprocessing]].
 
-#+NAME: fig:faprocessing
-#+BEGIN_SRC plantuml :cache yes :file img/uml/faprocessing.png :exports results
-  start
-  :Interpret string into symbol (s);
-  :Call first fa in personality sequence;
-  repeat
-  :Current fa logic;
-  repeat while (Called next?)
-  repeat
-  :Fa modify results of next;
-  repeat while (Another fa on stack?)
-  :Extract string from results (D);
-  end
-#+END_SRC
-#+CAPTION: Activity diagram of function attitude (fa) processing.
-#+LABEL: fig:faprocessing
-#+ATTR_LATEX: :width 0.5\textwidth
-#+RESULTS[f6dff7c3b2e64b005de74f12e19c7b2917da613c]: fig:faprocessing
-[[file:img/uml/faprocessing.png]]
-
-\cleared
+\toReview
 To illustrate the use of this type signature design more clearly we'll sketch
 an example with the first two function attitudes of the INTJ type:
 \[N_i > T_e \]
@@ -2253,9 +2219,9 @@ This methodology can be used for an entire personality type (all 8 functions
 in some order).
 Also as an analogy we could say that we're dealing with an intrusive linked
 list.
-The next argument is just the next item in the list.
-And unit is just the tail item of that list, which merely exists to provide a
-start point to create the data structure upon and an endpoint for iterations.
+The next argument is the next item in the list.
+Unit is the tail item of that list, which exists to provide a
+start point to create the data structure upon.
 
 \cleared
 With this methodology function attitudes can decide themselves to consult the
@@ -2273,18 +2239,18 @@ therefore we leave this as an exercise to the reader.
 ** Role of rational and irrational in a process
 <<Rational and irrational>>
 \todo{Rename to applied theory to Jung}
-\cleared
+\toReview
 Up until now we modeled the type signature to have a dialogue tree as input and
 output.
-However we have not considered yet how children are generated and how the order
+However we have not considered how children are generated and how the order
 is determined.
 If we look at the definition (section [[Jungian types]]) of rational and irrational,
 we can make a design decision about what these functions should do to the
 children.
 Rational functions are about making decisions therefore they
 should apply order to the children.
-irrational are about producing information therefore they should produce
-children based.
+irrational are about producing information therefore they should produce new
+children.
 
 \cleared
 There are however some edge cases to consider when modeling this idea.
@@ -2294,63 +2260,57 @@ Currently it cannot apply any order since the children list is empty.
 Luckily it can still use its next function, which is irrational
 (see section [[Jungian alternating functions]]).
 
-\cleared
+\toReview
 Another situation to consider is what to do when there are already children.
 Should an irrational function extend this list of children or go to some leaf
 node?
 Same question for a rational functions should it sort everything or just the
-children list one layer above the leaf nodes.
+children list on its respective level.
 At which level a function should operate is rather fundamental.
 We will discuss this level of operation in more detail at section
 [[Function ply depth]], since this discussion is quite complicated and not important
 for the main idea of what rational and irrational ought to do.
 
-\cleared
+\toReview
 With this in mind we can still say these things about the conceptualized
 architecture:
-/rational/ functions change the order of possible replies,
-one layer above the leaf layer,
-/irrational/ increase the number of children at the left most leaf layer.
-So if we start with an irrational function it produces several related meanings
-to the inputted meaning in a tree like structure.
-The original meaning uttered by the user is the root node and the produced
-response meanings are the children.
+/rational/ functions change the order of possible replies.
+/irrational/ increase the number of children.
+So if we start with an irrational function it produces several related symbols
+to the inputted dialogue tree.
+The original symbol uttered by the user is the root node and the produced
+response symbols are the children.
 These then get inserted into the next rational function which modifies the order
 of the children.
-After doing this it passes this structure to the next
-rational functions (because they alternate [[Jungian alternating functions]]),
-until all functions in the personality had their chance.
+This continues until all functions in the personality had their chance.
 Finally the unit function just returns the Dialogue and believes without
-modifying them.
-This returns trough all functions from before that can still modify it.
+modifying them,
+which returns trough all functions from before that can still modify the result.
 This could happen if a rational function was the first function for example
 and didn't have any choices available to decide upon.
-This structure still works with SL-TDI's non alternation.
 
 *** Irrational as a process
+ \toReview
  The irrational functions rely heavily on the symbol graph to create new
  children in the dialogue tree.
  This is under the assumption that connections in the symbol graph are always
  on topic.
- Please note that all irrational functions need to have an extra argument
- to limit their activities.
- Since considering the entire graph is unrealistic, and unnecessary.
 
- \cleared
- In the initial design of what the $S$ and $N$ functions should do
- as algorithm we considered them in the following way.
+ \toReview
+ In the initial design of the $S$ and $N$ functions,
+ we considered them in the following way:
  $S$ would be analyzing all available options rigorously in a forward chaining
  process, whereas $N$ would do backward chaining, starting at the goal and going
  trough some way points directly to the starting point.
 
  \cleared
  This would translate into $S$ going several plies deep into the
- meaning graph before calling the $next$ function and returning the result.
- And if we assume that the $next$ function brings us closer to the goal we can
+ symbol graph before calling the $next$ function and returning the result,
+ and if we assume that the $next$ function brings us closer to the goal we can
  use it as a heuristic to let it determine the direction for $N$.
  This of course doesn't allow us to do backward chaining since there is hardly a
- guarantee that the $next$ function will bring us to the goal, in fact we may get
- stuck in a loop.
+ guarantee that the $next$ function will bring us back to the origin,
+ in fact we may get stuck in a loop.
 
  \cleared
  Alternatives to the implementation proposed include the use of
@@ -2362,20 +2322,26 @@ This structure still works with SL-TDI's non alternation.
  Since the answer to that question is non-trivial, we consider such a solution
  out of scope.
 
+ \toReview
+ We decided instead to use a more simple approach instead,
+ $S$ would be options in breath, analyzing many details around it,
+ and $N$ would be options in depth, just taking what first comes to mind and
+ plan ahead on that.
+
 **** Intuition
  # http://personalitycafe.com/cognitive-functions/83205-whats-difference-between-ni-ne.html
- \cleared
+ \toReview
  We can consider $N_i$ to be a depth first approach. Going several plies deep and
  at each ply consulting the $next$ function which step to take.
  $N_e$ on the other hand just takes the top $x$ of the current dialogue options
  and expands those, but then next step it will again consider the entire existing
  tree to find the best $x$ of each ply.
  This will of course be a much more shallow consideration than $N_i$, but 
- much more broad. Which is of course the behavior we are looking for in both
+ also more broad. Which is of course the behavior we are looking for in both
  $N_i$ and $N_e$ (see section [[Jungian types]]).
 
 **** Sensing
- \cleared
+ \toReview
  The $S_e$ function just receives all possible connections from the current
  meaning for several plies and then applies the /next/ function on it.
  The $S_i$ however is more conservative and will only pop $x$ random meanings by
@@ -2385,6 +2351,8 @@ This structure still works with SL-TDI's non alternation.
  didn't exists already).
  Whenever these connections are available they will substitute the random $x$.
  So $S_i$ starts of kind off similar to $S_e$ but builds up over time.
+ So $S_i$ acts as a learning function and $S_e$ as a possibility function which
+ is what was described in the theory of section [[Jungian types]].
 
 *** Rational as a process
  \cleared
@@ -2413,8 +2381,8 @@ This structure still works with SL-TDI's non alternation.
  \cleared
  Initially we wanted to create two lookup tables for both feeling functions one.
  However this would be confusing to configure,
- the scenario creator would need to decide which values are "external" and which are
- "internal".
+ the scenario creator would need to decide which values are external and which are
+ internal.
  Campos however modeled feeling as a prediction of what the other agents will
  do.
  This describes $F_e$ rather well, $F_i$ not so much however.
@@ -2433,7 +2401,7 @@ This structure still works with SL-TDI's non alternation.
  This is done by simply keeping track on how many of such speech acts the
  partner uttered and picking the that has been uttered most,
  if that one is not available we move to the next one.
- This is similar to fictitious play.
+ This is similar to fictitious play. \todo{cite?}
 
 **** Thinking
  \cleared
@@ -2457,9 +2425,9 @@ This structure still works with SL-TDI's non alternation.
  Finally there is a function that determines if a goal is completed or not:
  \[\phi \to b\]
 
- \cleared
+ \toReview
  Now to begin with $T_e$.
- It sees the problem to solve as the conversation itself.
+ It sees the conversation as the problem to solve.
  Therefore it will consistently choose speech acts that could help the partner to
  progress the scenario.
  So it wants to put the partner in a position where he has
@@ -2471,17 +2439,17 @@ This structure still works with SL-TDI's non alternation.
  If an option changes scene we assume it progresses scenario.
  This comes secondary to finding goals.
 
- \cleared
+ \toReview
  To model $T_i$ however the most obvious solution would be to implement an
  axiomatic logic system.
- This is however rather heavy on maintenance.
+ This is rather heavy on maintenance.
  Every agent would need to have their own axiomatic system to determine what to
  do for each node in the symbol graph.
  The only real solution would be to create this dynamically somehow,
  but this is out of scope of this thesis.
  Therefore we looked for an alternative.
 
- \cleared
+ \toReview
  $T_i$ wants to help the conversation partner to analyze the problem according
  to the partner's own internal logic framework,
  and to do this it wants to give as much options as possible to the partner.
@@ -2489,15 +2457,16 @@ This structure still works with SL-TDI's non alternation.
  partner.
  To do this it will sort the child nodes according to as much unique symbols as
  possible.
+ Options that are goals still get precedence however.
 
 *** Turn taking
  <<Turn taking>>
-\todo{Move to type signature appraoch}
- \cleared
+\todo{Perhaps make a chapter rule engine influence?}
+ \toReview
  In the naive approach we modeled turn taking with a simple round robin strategy. 
  Basically the irrational functions would only consider options that change
  actor between plies. 
- This makes it however difficult to model agents that hold long monologues,
+ This makes it difficult however to model agents that hold long monologues,
  which happens to for example Susie in the case study (see section [[Susie the ENFP]]).
  You could do it by making just more symbols that hold all these utterances in
  one. However this is very inflexible.
@@ -2508,41 +2477,43 @@ This structure still works with SL-TDI's non alternation.
 
 *** Function ply depth
  <<Function ply depth>>
-\todo{Move to type signature appraoch}
- \cleared
- A big issue that turned up was at which level function ought to operate.
+\todo{Perhaps make a chapter rule engine influence?}
+\todo[inline]{This is also because at some point we fell back to the list based next approach because we watned drools to have influence on personality reasoning}
+ \toReview
+ A big issue that turned up trough testing is at which level a function ought to
+ operate.
  We have a two pass architecture, where functions can inspect the dialogue tree
  before passing it to the /next/ function, but they can also inspect the result
  of the /next/ function.
  The reason for the two pass architecture is explained in section [[Rational and irrational]].
  However it didn't treat another issue in dept, which is:
- How does a function know at which level it should operate?
+ How does a function know at which level n the dialogue tree it should operate?
 
- \cleared
+ \toReview
  In a naive approach we tried an implementation where irrational functions
  will by default go down the left (most preferred) path to a leaf node and then
- generate more meanings,
+ generate more options,
  and the rational functions will sort the one layer above the leaf layer.
  This has a problem in that it would make a rational function in the first
- position the least relevant function,
- since in the first pass it does nothing and when everything
- goes back it works at one level above the leaves,
- but it should be the *most* relevant.
+ position of a personality the least relevant function,
+ since in the first pass it does nothing and when going
+ back it works at one level above the leaves.
+ This is a problem because it should be the most relevant function instead of
+ least relevant.
 
- \cleared
+ \toReview
  Another approach is to use outside information to determine height.
  Basically we would put into the believes the order of functions.
  With this information and the dialogue tree we can calculate the
  right level to operate upon.
- A question then remains is if the rational should sort everything even below
- its level or just its level. 
- This can be answered however,
- rational should sort its level and everything below it,
- because we can expect multiple responses if the same actor comes up first,
- so in this case we want the dominant rational function to sort those replies too.
- Then we want the lower level also to be of the most important rational function.
- The 'deeper' less important rational functions only have a guiding role for 
- irrational functions after them.
+ A question that remains is: Should the rational function sort everything even
+ options below its level or just options in its level?
+ We decided that rational should sort its level and everything below it,
+ because it allows the dominant rational function to have a more pronounced
+ effects, whereas deeper level rational functions don't have a direct effect
+ upon the resulting dialogue tree.
+ The `deeper' less important rational functions only have a guiding role for 
+ irrational functions.
 
  \cleared
  We could also let the rational functions sort the entire tree,
@@ -2552,9 +2523,9 @@ This structure still works with SL-TDI's non alternation.
  since a lower level rational function would still guide which part of the tree
  get extended.
 
- \cleared
- So there are two methods of dealing with this issue.
- Firstly we can let rational functions just let everything be sorted,
+ \toReview
+ To sum up, there are two methods of dealing with this issue.
+ Firstly we can let rational functions sort everything,
  but then the deeper rational functions will become less relevant.
  Secondly we can let functions operate at a particular level based upon their
  position in the personality.
@@ -2568,40 +2539,41 @@ This structure still works with SL-TDI's non alternation.
  Note however that deeper rationale functions can still have effect by virtue of
  deciding which actions are generated indirectly.
 
- \cleared
+ \toReview
  To calculate an operation height, we need to know the function order,
  then the function itself and finally the height of the dialogue tree.
  Which results in the following:
  \[ [F_a] \to F_a \to i_{D_{\text{height}}} \to i_{\text{operate level}} \]
- Where $F_a$ is the Jungian function,
+ Where $F_a$ is the Jungian function, and $[F_a]$ is the personality,
+ which consists of  an ordered list of Jungian functions,
  $i_{D_{\text{height}}}$ is an integer which indicates the height of the dialogue tree
  and $i_{\text{operate level}}$ is the suggested operation height.
  To do this we group the functions in function attitude pairs,
- the result is the pair index of the input function function pair,
+ a rational and irrational function combined into an tuple.
+ Of this we take the pair index of the input functions' function pair,
  plus one if the second value of the pair is rationale,
  /and/ the input function is rationale,
- otherwise its the pair index.
+ plus zero
 
 ** Believes
 <<Mapping to process>>
 \todo{Merge into currently named: "role of rational and irrational in a process"}
-\cleared
+\toReview
 Now you may argue at this point we haven't refined our types a lot, since
-the believe structure was defined as "Every possible believe",
-which is basically analogous to "Anything you can think of" or in a Object
-Orientated terminology: Object.
+the believe structure was defined as `Every possible believe',
+which is basically analogous to `Anything you can think of' or in a object
+orientated terminology: =Object=.
 Since the believes serve as input of our function and output of the function
 we may as well have said $Object \to Object$.
-Of course the believes are not intended to be true output but rather just
-part of the mind.
+Of course the believes are not intended to be direct program output but rather
+just part of the mind.
 In other words, the believes are intended to be kept in a container
-whereas the input $M_t$ and the output $R_{t+1}$ would only be visible for the
-"outside world".
-But still we want to refine our all possible believe to something which is 
+whereas the input $D_t$ and the output $D_{t+1}$ would only be visible for the
+`outside world'.
+Still we want to refine our all possible believe to something which is 
 less broad in scope.
-To do this we will start analyzing the Jungian functions and see what
-"extra" information require to function to perform their duties.
-Then we will define the believe tuple more formally.
+To do this analyzed the Jungian functions and see what
+`extra' information require to function to perform their operations.
 
 <<Believes overview>>
 \cleared
@@ -2634,60 +2606,54 @@ The first two functions of INTJ are:
 And of ENTJ they are:
 \[ T_e > N_i \]
 
-\cleared
+\toReview
 What we would expect is that the $T_e$ and $N_i$ produce different results
 because of the order they are in the sequence.
-So in case of ENTJ if $T_e$ receives an meaning $M_t$ from the user
-it will pass it directly to the next function since it can't make decisions
-based on a single meaning. Then once the $N_i$ function returns a reply
-(which has the entire meaning tree in it) it can judgments based on these 
-meanings producing a final reply.
-In case of INTJ the $N_i$ function would generate the meanings based on its
-data structure and pass this tree with the children to $T_e$ to assign values
-to it.
-Then it can either return this result or pass it to the /next/ function and
-judge these results again.
-
-\cleared
-In any case the main difference is that an INTJ $T_e$ function gets to
-value before the other functions get a chance to do anything. In case of an
-ENTJ it is always just a final judgement.
-
-\cleared
+If we assume personalities only have these two functions, their respective
+differences are:
++ INTJ: At each ply $N_i$ will use $T_e$ to select the options generated.
++ ENTJ: $N_i$ will generate random options at each ply, which $T_e$ sorts
+  recursively.
 INTJ and INTP are different in attitudes, but have the same order.
 Since attitudes produce a different process by definition
 (see section [[Mapping to process]]),
 we can conclude that they will also behave differently.
 
+\toReview
+Because we have differences trough order we can consider this system consistent
+with the theory MBTI presents.
+It is also consistent with Campos' work because the functions are just units
+of processing that can be combined.
+Therefore this system consistent with the major sources of theory we used.
 
 \clearpage
 * Architecture
 <<Architecture>>
-\cleared
+\toReview
 To combine the ideas discussed in section [[Jungian BDI]] with the existing program,
 some big architectural changes were introduced.
 For example the Alice bot was completely removed in favor of a new less tightly
 coupled scheme.
-The drools have become the center of deliberation (which previously was the AIML).
+The drools engine has become the center of deliberation (which previously was the AIML).
 We will discuss these changes in this chapter.
 
-\cleared
+\toReview
 In this chapter we will discuss two architectures,
 the first is the architecture which is actually implemented, this deals with a
 single agent and the user.
-Secondly we will discuss the $N$-agent architecture which is capable of dealing
-with more than one agent (and the user), this is called the multilogue
-architecture.
-The reason for discussing both is that the ideas discussed in section
-[[Jungian BDI]] could be applied to an $N$-agent architecture.
-However there are some pragmatic problems with this discussed in section
-[[Practicalities]].
-Therefore we held of on implementing this and just describe how it could be done
-instead.
-In section [[Implemented architecture]] we will describe the main architectural
+In section [[Implemented architecture]],
+we will describe the main architectural
 changes between the current implementation and the original architecture
 discussed in section [[The serious game]].
-Note that we want to keep as much of the existing architecture as possible.
+After that we discuss the data structures in section [[Data structures]].
+In section [[Initialization]] we discuss how the initialization of the program
+with help of the discussed data structures,
+we continue discussing the (normal) operation of the program in section
+[[Operation]].
+In section [[Social practice support]] we discuss how social practice support
+can be added in the future and in section [[Multilogue architecture]] we do
+the same for a multilogue architecture, in which multiple agents can 
+participate in the dialogue.
 
 \cleared
 There are also several items we won't discuss in this chapter because they
@@ -2739,20 +2705,22 @@ the solid arrow means uses and the other lines mean interacts.
 #+RESULTS[f680066f7943af2a2abf4c0b6a487ffa49d6b619]: fig:architecture-concept
 [[file:img/uml/architecture-concept.png]]
 
-\cleared
+\todo[inline]{Discuss figure [[fig:architecture-concept]] more here}
+
+\toReview
 The biggest difference from the original architecture is the removal of
 distinction between drools and the chatbot.
 In the new architecture we make all information in the files available to
-the drools in a big database.
+the drools in a database.
 This is starkly different than the architecture used in section [[
 Server architecture]].
-As can be see in section [[user utterance processing]], 
-int the old architecture, the reply for a message is already determined before
-drools had a chance to do deliberation.
+In the old architecture,
+the reply for a message is already determined before drools had a chance to do
+deliberation.
 What's even worse is that if the drools want to utter a spontaneous utterance,
 then it has to be encoded in a string inside the drools themselves.
 This means the strings facing the user are spread over both the AIML files
-*and* the drools.
+and the drools.
 This is confusing for new scenario creators since completely different folders
 have to be accessed to change the strings.
 # This violates the changeability design principle quite heavily and unnecessarily. \todo{cite}
@@ -5986,7 +5954,7 @@ bibliography:refs.bib
 #+TOC: tables 
 \clearpage
 * Symbol overview
-<<Symbol overview>>
+  <<Symbol overview>>
 #+NAME: tab:symbols
 #+CAPTION: Symbol table
 | Symbol        | Constraints                                                                                | Description                                   |                                          |
@@ -6813,7 +6781,13 @@ Conversation went according to script.
 *** Report
 + Clear the uncleared sections
 + Re-read the entire thing
-+ Hand it in again
+  + Correct errors found
++ Use judgment form to check if everything is in there.
++ Spell
+  + Go trough each its and it's.
+  + Go trough to and too.
++ Perhaps another re-read?
++ Hand in final version
 
 *** Make usable for other student
 - Document about python scripts and shell scripts (how to use),
