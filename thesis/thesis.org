@@ -2749,31 +2749,27 @@ Good programmers worry about data structures and their relationships.
 In this subsection we will discuss the main data structures used to implement
 the ideas from section [[Jungian BDI]].
 We use class diagrams to accomplish this which are based upon UML cite:fowler2004uml.
-Before this is done we would like to point out several things to keep in mind.
 
-\cleared
+\toReview
+Before this is done we would like to point out several things to keep in mind.
 Firstly, we do not show everything precisely such as implemented in the code,
 because that would clutter the diagrams.
 What we do model is all relevant information in structures and the relationship
 between those, following the words of Torvalds.
-
-\cleared
-Secondly, its better to think of the classes shown here as data structures,
-the fields are set to public in cases where immutability was possible.
-
-\cleared
-Thirdly we split up the class diagram into several because of space,
+Secondly, its better to think of the classes shown here as value types,
+in other words: The model part in the `model view controller paradigm'
+cite:krasner1988description.
+Note that we use public fields in cases where immutability was possible.
+Thirdly we split up the class diagram into several to save space,
 the model has become rather big.
-There exists a real separation like this in the code base, the lower level
-components are in the =salve_drools= projects, whereas the higher level
-components are in the =salve_personality= package.
+However there exists a similar separation like this in the source code,
+the lower level components are in the =salve_drools= projects,
+whereas the higher level components are in the =salve_personality= package.
 The reason for this separation is that currently, the bot will simply
 not function without the low level components,
-but you can make it function without the high level components.
+but it can function without the high level components.
 Which in practice is done with the low level replies.
-
-\cleared
-Finally note that we use $[\dots]$ for list and $\{\dots\}$ for set in the
+Finally note that we use $[\dots]$ for lists and $\{\dots\}$ for sets in the
 class diagrams, to save space.
 
 *** Low level diagram
@@ -2855,12 +2851,12 @@ is constructed from.
 #+RESULTS[21ed2d8e1f9aab1fa283d778126b8d46087e0bb4]: fig:droolclass
 [[file:img/uml/droolclass.png]]
 
-\cleared
-From figure  [[fig:droolclass]] we can clearly see the importance of the =Symbol=
+\toReview
+From figure [[fig:droolclass]] we can clearly see the importance of the =Symbol=
 structure in the application.
 Simply by counting the amount of structures that consist of it,
 and of course it is a very important structure because it is the building
-block that gives understanding to the implementation.
+block that we use for information state transitions.
 As described in section [[Jungian BDI]] we map strings into user symbols,
 and we can map symbols back to strings again.
 An overview of the relationship between the theoretic representation
