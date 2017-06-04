@@ -2884,18 +2884,18 @@ Something that was thought about is how similar a =Connection= is to an
 =Utterance=. Except for the =instant= field, they are the same
 (note that the =informative= field of utterance is the same as the =to= and
 =restricted_to= fields of connection).
-However their semantics are clearly different.
+However their semantics are clearly different:
 A connection entails a possibility of an utterance, but it does /not/ mean it
-will be uttered. Whereas an utterance is a used connection, that possibility
+will be uttered, whereas an utterance is a used connection, that 
 became a realization.
-Therefore, we were right to distinct them at type level.
+Therefore, we consider this type level distinction as correct.
 
 \cleared
 These considerations become especially important when structures are
 essentially the same, as we can see with the =Scene= and =Actor= classes.
-The only thing they contain are a String.
+The only thing they contain is a string.
 Even the field names are the same!
-Are we correct to treat these as distinct classes?
+Are we correct to treat these as distinct types?
 We argue yes because they entail completely different semantics,
 the =Scene= class is used to group symbols and patterns,
 whereas the =Actor= class is used to identify actors.
@@ -2912,13 +2912,14 @@ resulting in functions that could accept an =ANamed= argument for example.
 As soon as client code starts using that, the single inheritance 'slot' Java
 provides is occupied forever,
 or at least until a major refactor occurs.
+Therefore we didn't do this
 
-*** Believes and DialogueTree
+*** Believes and dialogue tree
 <<Believes and DialogueTree>>
 \cleared
 In figure [[fig:jungclass]] we can see the higher level structures of =Believes= and
-=DialogueTree=. Note that we significantly simplified all lower level components
-in this figure to save space.
+=DialogueTree=. Note that we significantly simplified all classes from section
+[[Low level diagram]] in this figure to save space.
 
 #+NAME: fig:jungclass
 #+BEGIN_SRC plantuml :cache yes :file img/uml/jungclass.png :exports results
@@ -2974,7 +2975,7 @@ in this figure to save space.
 [[file:img/uml/jungclass.png]]
 
 \cleared
-From [[fig:jungclass]] we can see the main clients of the low level drool package
+From figure [[fig:jungclass]] we can see the main clients of the low level drool package
 is indeed the =Believes= class and after that the =DialogueTree=.
 =Believes= provide the Jungian functions with bounded information about the mind
 of the chatbot as discussed in section [[Jungian BDI]].
@@ -2988,38 +2989,37 @@ the ones discussed in previous section.
 | $B$    | Believes            |
 | $D$    | DialogueTree        |
 
-\cleared
+\toReview
 The =Believes= structure is very peculiar, because it doesn't represent a single
 idea or use case. Instead its just a combination of various elements that are
 required for the Jungian functions to operate.
 But none of the functions use /all/ fields,
-so they get in essence just too much information.
-In fact, it is extremely similar to how the drools fact base operates.
-But the drools have a built in mechanism to make sure individual rules
-don't get all information (the when clause) \todo{cite or refer to background}.
+so they get more `assumptions' than they need, which is an architectural problem.
+The drool fact base and rule `when' clauses have a mechanism for dealing with this
+as described in section [[Drools background]].
 So an argument can be made to remove the =Believes= structure and replace it with
-the drool fact base.
+the drool fact base and `when' clauses.
 This hasn't been done, because it would be a very invasive operation,
 currently the Jungian functions have the Believe structure in their signature.
 This can then be replaced by what they individually need,
 rather then what they as a whole need.
 With that change the personality functions could be flattened to drool rules,
-which would make the architecture even more simple. \todo{Why is this good? or refer to section that discusses this}
+which would make the architecture even more simple.
 
 \cleared
 The =DialogueTree= structure is however a whole other beast.
 It provides a well defined structure, and some utility methods that make tree
 navigation much easier.
 These methods aren't shown in the figure because their type signatures are
-rather big. \todo{But we discuss them in the implementation? Refer to that}
+rather big.
 
-*** db package
-\cleared
+*** Db package
+\toReview
 In figure [[fig:dbclass]] the databases are shown.
 This is a sub package of the model.
-The database is best seen as an immutable hash map. It also provides some extra
-java8 features,
-such as returning an optional rather than null-able type for the get method.
+The database is an immutable hash map. It also provides some extra
+Java 8 features,
+such as returning an =Optional= rather than a null reference as get method.
 The concrete implementations of database can add extra behavior once the type
 value of the generic parameters is known which is done by connection database
 for example.
@@ -3062,19 +3062,19 @@ can lookup symbols in the =SymbolDatabase=, rather than worrying about construct
 of new ones.
 This class is the realization of $\mathcal{S}$ from section [[Jungian BDI]].
 
-\cleared
+\toReview
 =PatternDatabase= can store patterns based upon a =Scene=.
 There are actually two constructed of these,
 the first one constructs the patterns that are in a scene,
 and the second one constructs patterns that are of scenes where the current
 scene is connected to.
 For example if there exists a connection form a symbol in scene A to a symbol
-in scene B, the patterns from the symbol in scene b are stored in the key of
+in scene B, the patterns from the symbol in scene B are stored in the key of
 scene A.
 This second database allows scene transitions to occur.
-However to construct this second database the connection database is required.
+To construct this second database a connection database is required however.
 
-\cleared
+\toReview
 =ConnectionDatabase= is a database that stores a connection set from a
 symbol. 
 This class is analogous to the symbol graph $G$ from section [[Jungian BDI]],
@@ -3082,7 +3082,7 @@ it is used to determine what the bot could say, and what it thinks its speech
 partner can say.
 This database has a special method named =createDual= which is used to create
 a connection database where all the connections are flipped.
-This is used to create the second pattern database,
+This is used to create the second pattern database in dual form,
 it made looking up the required patterns much easier.
 
 *** Jung in Java
