@@ -78,12 +78,12 @@
 We explore how to add Jungian personality to a chatbot as a process.
 An existing serious chatbot game was used as starting point,
 and closely inspected.
-We imagined \todo{different word?} personality as a process rather than value driven.
-\todo{We build upon campos' ideas where personality is a preference for algoirhtms rather than value driven??}
+We designed personality as a preference for an algorithm rather than value
+driven decision making, akin to the ideas of Campos cite:campos_mabs2009.
 In other words, a personality prefers a way of doing things rather than
-particular objects \todo{word}.
+particular actions or things.
 With this in mind a strategy was devised for adding personality to the existing
-chatbot,
+chatbot in the `Salve' serious game,
 while leaving as much of the original architecture in tact.
 This caused us to replace the existing AIML based scheme with a novel
 approach. 
@@ -92,7 +92,6 @@ utterance depending on the personality.
 The drools rule engine is now the center of deliberation in the chatbot.
 The new modelling method was also less verbose and more precise.
 We conclude by demonstrating that this scheme works as expected.
-\todo{we need to say we extend the salve game}
 
 #+END_CENTER
 
@@ -109,7 +108,6 @@ Jung, chatbot, drools, YAML, AIML, MBTI, salve, communicate!
 \newpage
 
 * Introduction
-\todo[inline]{Name salve somewhere}
 \toReview
 Communication is the foundation of our modern society.
 Having good communication skills can help individuals in both their professional
@@ -133,7 +131,7 @@ all possible responses are scripted into the scenario
 and replying correctly relies on a simple /ABC/ choice.
 
 \toReview
-To combat this an alternative serious game was made based on the
+To combat this an alternative serious game called `Salve' was made based on the
 chatbot Alice cite:augello2016social.
 To measure how a student performed, a production rule engine was used called drools.
 The social practice of a doctor consult was used in this particular instance,
@@ -156,8 +154,8 @@ followed by the idea of social practices [[social practice]],
 and some limited speech act theory [[Speech act theory]].
 After which we continue with dialogue systems [[Dialogue systems]],
 some of which can be considered related work.
-We continue by taking a close look at the state of the existing software that
-we're planning to extend in section [[Salve]].
+We continue by taking a close look at the state of the existing `Salve'
+software that we're planning to extend in section [[Salve]].
 Since the personality topic has become quite popular in recent years
 some thoughts will be devoted to related work in section [[Related work]].
 With all this in mind, we combine Campos' architecture with dialogue and Jungian
@@ -858,7 +856,7 @@ A good example in which drools is used is the expert system called OptaPlanner
 cite:vcimbora2015usability, which is a constraint satisfaction solver trough
 heuristics by using drools.
 
-\cleared
+\toReview
 Drools consists of three major concepts.
 First of all there is the data model, which are just java classes.
 This data model is called the fact base.
@@ -868,10 +866,30 @@ Finally there is the right hand side,
 which is just a piece of java code that can modify the facts,
 or interlope with outside java code trough global variables.
 Also note that drools is Turing complete cite:weppenaar2011solving.
-An example of a drool rule can be seen in listing [[code:drool:lowlevelreply]].
-\todo{This is very far away, mention page or put an example just here, or add a list of listings somehow (which we already spend like 2 to 3 hours upon)}
+An example of a drool rule can be seen in listing [[code:drool:example]].
 
-\todo[inline]{Difference between facts and globals}
+#+CAPTION: Example of drool rule
+#+NAME: code:drool:example
+#+BEGIN_SRC java
+rule "Create default reply"
+when
+	$symbol_database:SymbolDatabase()
+then
+	log.info(drools.getRule().getName());
+	delete($symbol_database);
+	insert(new DefaultReply($symbol_database.get("nonsense").orElseThrow(
+		()->new RuntimeException("I can't find nonsense anywhere :s")
+	)));
+end
+#+END_SRC
+
+\toReview
+With listing [[code:drool:example]] we can also see the difference between facts
+and globals.
+The facts are used as values to execute drools upon.
+In the example this is the =SymbolDatabase=.
+Globals are interactions with objects that live outside of the rule engine.
+Such as the logging object =log= in the example.
 
 *** BDI + Personality
 <<BDI + Personality>>
@@ -1677,9 +1695,6 @@ On the other hand it is more advanced in that it can construct sentences,
 whereas we predefined them.
 
 ** Personality in chatbots
-\drafting
-Describe cite:galvao2004persona, which did personality in AIML. \todo{describe}
-
 \toReview
 To simulate personality in communication games there have been already several
 works proposed.
@@ -1734,6 +1749,23 @@ for example a spy who was captured.
 This kind of methodology is called content orientated cite:campos_mabs2009.
 Depending on context the personality should change, with which social practices
 can help.
+
+\toReview
+In  cite:galvao2004persona an architecture is presented to add personality
+trough AIML.
+This paper is interesting because it uses AIML where we explicitly wanted to
+avoid it (see section [[From strings to meanings]]).
+The paper does not base itself on a particular personality theory but
+offers a `modular architecture' so that the developer can customize them to any
+particular personality model.
+This is explained with some examples in cite:galvao2004adding,
+it can specify its state and personality in AIML,
+and then check upon that with `if, then' rules in the templates.
+Aside from the fact that this is practically unmaintainable verbose and
+stretching AIML and XML to its limits (see section [[xml vs everything]]),
+it's also not very modular since now everything is in AIML.
+Constructs for dealing with modularity such as type safety and even
+object orientation are just not available if you put everything in AIML.
 
 ** Campos
 \todo{Different name? Not descriptive, although if we mention it in the abstract not that bad}
@@ -4207,6 +4239,7 @@ more terse data format in which such a definition is legal.
 In the next section we will analyze some possible candidates. 
 
 *** XML vs JSON vs YAML, vs TOML
+<<xml vs everything>>
 \cleared
 All these languages are standards cite:jsonspec,yamlspec,xmlspec,tomlspec.
 However there is a major difference between XML and JSON or YAML, and that is
@@ -5989,14 +6022,15 @@ It may seem trivial but the Java EE world is incredibly complex.
 We assume a UNIX-like operating system with a package manager.
 
 ** Client
-\cleared
+\toReview
 The client is relatively easy too setup since its build with a
 monolithic environment.
-Therefore you need to have the unity editor.
+You need to have the unity editor.
 The only issues with the client were an incomplete merge and a dangling
 import that produced build errors.
 Also note that there exists a Linux editor,
-its just not officially supported (yet) but the latest version can be found [[https://forum.unity3d.com/threads/unity-on-linux-release-notes-and-known-issues.350256/][here.]]
+its just not officially supported (yet) but the latest version can be found
+here: [[https://forum.unity3d.com/threads/unity-on-linux-release-notes-and-known-issues.350256/]]
 Scroll all the way down for the latest release.
 
 \cleared
@@ -6010,23 +6044,25 @@ In our case java 8 was used. If your system uses portage you can use the
 following command:
 
 #+BEGIN_SRC sh
-   # emerge dev-java/oracle-jdk-bin
+   # emerge dev-java/icedtea:8
 #+END_SRC
 
 *** Maven
 \cleared
-Then maven needs to be installed since Gradle didn't work ([[Gradle attempt]]):
+Then maven needs to be installed since Gradle didn't work:
 
 #+BEGIN_SRC sh
    # emerge dev-java/maven-bin
 #+END_SRC
 
-\cleared
+\toReview
 Maven is the package manager for java software, it downloads and installs
 dependencies (and dependency dependencies) automatically based on XML
 configuration.
 Do note that to use maven you need to setup a \url{\string~/.m2/settings.xml}
-file. I based mine on [[https://maven.apache.org/settings.html][this]] with help of [[https://maven.apache.org/ref/3.3.9/maven-settings/settings.html][this.]]
+file. I based mine on
+this: [[https://maven.apache.org/settings.html]],
+with help of: [[https://maven.apache.org/ref/3.3.9/maven-settings/settings.html]]
 The active profile should have the name local so that the local profile is used
 in the maven project (in this case /local/).
 Otherwise the Wildfly plugin won't deploy the application.
@@ -6090,10 +6126,11 @@ Then we need to setup the user and database:
 *** MariaDB driver
 \cleared
 Now we need to make the application server aware of the database.
-To do this we first need to install a driver from here [[http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.33/mysql-connector-java-5.1.33.jar][here]],
+To do this we first need to install a driver from here:
+[[http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.33/mysql-connector-java-5.1.33.jar]]
 then copy this jar into
 \url{$WILDFLY/modules/system/layers/base/com/mysql/driver/main}
-you probably need to make everything after base.
+you probably need to make every folder after base.
 Also create another file called \url{module.xml} with the following content:
 #+BEGIN_SRC xml
 <module xmlns="urn:jboss:module:1.3" name="com.mysql.driver">
@@ -6142,16 +6179,17 @@ Then to deploy the application the following command is used:
 
 \cleared
 If your build gets stuck because it tries to find communicate jars from the 
-internet it can help to go to the root folder and execute:
+internet it can help to go to the project root folder and execute:
 
 #+BEGIN_SRC sh
  $ mvn compile
 #+END_SRC
 
 *** Alternative: in memory db
-\cleared
+\toReview
 <<inmemorydb>>
-Now there is a choice to be made, you can either choose to use maria db
+Note that I didn't test this but it should work.
+You can either choose to use maria db
 or try and point the application to the in ram storage of Wildfly.
 To do this go to:
 \url{communicate2/communicate/communicate_server/src/main/resources/META-INF}
@@ -6180,6 +6218,7 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
 #+END_SRC
 
 ** Ubuntu issues
+\toReview
 At some point my laptop crashed and I had to fall back to an Ubuntu based
 distribution.
 Installing MySQL came with the gotcha, the default root on MySQL is only
@@ -6536,16 +6575,16 @@ Conversation went according to script.
 | Doctor  | I can give you some pain killers meanwhile.                       |        |
 | /Chris/ | /Okay, thanks doctor/                                             |        |
 
-\cleared
+\toReview
 1. Said hello twice?!
    This was caused by the reinserting part of the shortcut, it used any actor
    rather than self. Fixing this caused a regression in ENFP which wouldn't
    ask about the doctor's day anymore.
    This was solved by adding an extra value to that connection
    (making it more appealing for $F_i$).
-2. Said "of course" rather than give me some pain killers
+2. Said ``of course'' rather than give me some pain killers
    After inspection of the scenario it appears that there is no reason to say
-   "can't you give me painkillers" because there weren't any connection
+   ``can't you give me painkillers'' because there weren't any connection
    leading out of it.
    I also made give painkillers a low priority goal, to force ISTP in that
    direction.
@@ -6772,14 +6811,12 @@ Conversation went according to script.
 :END:
 ** Rough planning.
 *** Report
-+ Clear the uncleared sections
-+ Re-read the entire thing
-  + Correct errors found
-+ Use judgment form to check if everything is in there.
++ Fix todo markers
++ Clear the uncleared sections: `Everything newly cleared'
++ Re-read the entire thing again
 + Spell
   + Go trough each its and it's.
   + Go trough to and too.
-+ Perhaps another re-read?
 + Hand in final version
 
 *** Make usable for other student
@@ -6794,4 +6831,4 @@ Conversation went according to script.
 - This probably also includes fixing recursive before, almost certain that doesn't work.
   (maybe include unit tests for that because its recursion which never works as expected)
 
-#  LocalWords:  PPSDQ
+#  LocalWords:  PPSDQ modularity
