@@ -2222,7 +2222,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  control of the function attitudes,
  therefore personality wouldn't play a role in deciding the function being called.
  It will also create another problem of deciding when a function is called.
- So to solve these problems we looked at another possibility. \todo{Yes but we actually do this within drools, and we also do the next thing, in fact we just sort off combined both methods, so I think we should describe this somewhere (although technically you don't have to do this to make it work so maybe not in this chapter)}
+ So to solve these problems we looked at another possibility.
 
  \toReview
  In this approach we will give $f_a$ another argument which is the next $f_a$.
@@ -2323,7 +2323,6 @@ and didn't have any choices available to decide upon.
 
 *** Irrational as a process
  <<Mapping to process>>
- \todo{Where is this anchor supposed to point too?}
  \toReview
  The irrational functions rely heavily on the symbol graph to create new
  children in the dialogue tree.
@@ -2435,7 +2434,7 @@ and didn't have any choices available to decide upon.
  This is done by simply keeping track on how many of such speech acts the
  partner uttered and picking the that has been uttered most,
  if that one is not available we move to the next one.
- This is similar to fictitious play. \todo{cite?}
+ This is similar to fictitious play cite:brown1951iterative.
 
 **** Thinking
  \cleared
@@ -2708,8 +2707,7 @@ the solid arrow means uses and the other lines mean interacts.
 
 #+NAME: fig:architecture-concept
 #+BEGIN_SRC plantuml :cache yes :file img/uml/architecture-concept.png :exports results
-
-  folder bot{
+  package bot{
     cloud drools {
       component score
       component scenario
@@ -2736,15 +2734,27 @@ the solid arrow means uses and the other lines mean interacts.
   node client
 
   server "1"-- "1..*" bot
-  server  -- scene
   server  -(0)- client
 #+END_SRC
 #+CAPTION: Deployment diagram of implemented architecture
 #+LABEL: fig:architecture-concept
-#+RESULTS[f680066f7943af2a2abf4c0b6a487ffa49d6b619]: fig:architecture-concept
+#+RESULTS[4adcedc67be0402235438092c31809760c721def]: fig:architecture-concept
 [[file:img/uml/architecture-concept.png]]
 
-\todo[inline]{Discuss figure [[fig:architecture-concept]] more here}
+\toReview
+In figure [[fig:architecture-concept]] we can see the new deployment diagram.
+The server and client have mostly stayed the same, except for the bot.
+This has been completely replaced by a new system.
+The Alice bot used to be a file reader, pattern database and deliberation engine
+in one package.
+These concepts have now been split,
+the file reader handles the loading part of the bot,
+after that it just insert the pattern,
+symbol and connection database into the drools rule engine.
+The drools rule engine then handles all deliberation,
+which can happen with the various components, such as personality emotions etc.
+Since the file reader is no longer a part of the bot,
+it should be really easy to support other data formats.
 
 \toReview
 The biggest difference from the original architecture is the removal of
@@ -3721,7 +3731,15 @@ If we do send a reply we reinsert the selected =Utterance= as a
 These types can be found in figure [[fig:supportclassdrools]]. 
 
 ** Social practice support
-\todo[inline]{Why didn't we add more support?}
+\toReview
+Currently our support for social practice is rather limited.
+It was not a core goal of this thesis to support this,
+however it was important that in future work it should be possible to add this.
+This was a reason to keep using a rule engine as core deliberation
+mechanism.
+We tried to make the deliberation process as transparent as possible to the
+rule engine.
+
 \cleared
 Because this entire process is implemented in Drools, and we use types to track
 progress. Its relatively easy to add other rules that can modify the process,
@@ -3804,6 +3822,7 @@ A deployment diagram of this architecture can bee seen in figure
 #+LABEL: fig:n-agent-arch
 #+RESULTS[2175bf151e4fe4f5ae54fdba0ca134983678c0d2]: fig:n-agent-arch
 [[file:img/uml/n-agent-arch.png]]
+
 
 \todo[inline]{How is this different from section [[Implemented architecture]] talk about the figure}
 *** System vs agent believes
