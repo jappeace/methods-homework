@@ -1533,7 +1533,6 @@ will check the drool database what his problem is and also update the
 scenario.
 Once the scenario is updated the possible responses of the chatbot are
 changed, as can be seen by the precondition tag.
-\todo{Pre conditions appear to be a thing, we should modify the figures upon that, (we could also test if they even work?)}
 The template tag has some extra tags. The insert tag inserts a fact into
 the drools knowledge base, the =getDroolsTemplate= tag queries the drools
 knowledge base for a string.
