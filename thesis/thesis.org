@@ -3014,6 +3014,7 @@ These methods aren't shown in the figure because their type signatures are
 rather big.
 
 *** Db package
+<<db package>>
 \toReview
 In figure [[fig:dbclass]] the databases are shown.
 This is a sub package of the model.
@@ -3434,7 +3435,7 @@ We construct its data first with a standard java =HashMap=,
 and once this is complete we wrap this into the =Database= class.
 Which makes a shallow copy and has no API for mutation (see figure [[fig:dbclass]]).
 
-\cleared
+\toReview
 This initialization problem is the reason why we chose the order of
 initialization shown in figure [[fig:initjung]].
 The cyclic structure we want to create is the symbol graph $G$.
@@ -3442,36 +3443,42 @@ So we start with the nodes in the graph,
 which are the symbols by constructing the symbol database.
 All symbols are constructed and put into the symbol database with as key a
 string containing the scene name and symbol name.
-In essence we are using now as an address the scene name and symbol name.
+We are using the scene name and symbol name as a key value.
 
-\cleared
+\toReview
 Once we have the symbol database we can use it to create connections from it.
-As seen in figure [[fig:droolclass]],
-connections consist of a symbol object its going too,
-and the key value of a connection database is a symbol too (see figure [[fig:dbclass]]).
-So to satisfy these values we just do a lookup in the symbol database.
-So we changed the address, rather than it being the scene and symbol name,
-its the symbol object in itself.
-Since the connections are not stored in the symbols this is possible
-without making the symbols mutable.
+We can see in figure [[fig:dbclass]] that a connection database consists
+of symbol key values leading up to a set of connections.
+In figure [[fig:droolclass]] we see that connections consist of a symbol object
+its going too with some additional values.
+To get the symbol values we just do a lookup in the symbol database which we
+know from the file system and the =_connections= YAML file.
+In an initial iteration the symbol object wasn't used directly as key, 
+instead the symbol scene name and symbol name string were used.
+However using the symbol directly is more type safe and more ergonomic.
+The other values of the connection class can be determined by the YAML
+as discussed in section [[yaml connections]].
+An alternative approach would have been to store connections inside the symbols
+themselves, however this would make it impossible for the symbols to be
+immutable.
 
-\cleared
+\toReview
 Finally the pattern databases are constructed.
 Patterns were after reading the symbols already put into a =HasHmap=,
 with as key the symbol and as value the set of patterns.
 So the only things that needs to happen for the in scene patterns database is to
 group them by scene.
-For neighbouring scene patterns however connections are required.
+For neighbouring scene patterns however connections are required as discussed
+in section [[db package]].
 The reason for postponing these to the end of construction is because the
-neighbouring scene pattern database requires the knowledge of connections to be
-constructed.
+neighbouring scene pattern database requires the =ConnectionDB=.
 
 #+NAME: fig:initjung
 #+BEGIN_SRC plantuml :cache yes :file img/uml/initjung.png :exports results
   |WebSocket|
   start
   :Receve StartGame message;
-  |#CCDDDD|Engine|
+  |#FFDEEE|Engine|
   :Start kie thread;
   |#AntiqueWhite|File reader|
   :Read symbol files;
@@ -3480,7 +3487,7 @@ constructed.
   :Construct connection db ;
   :Read believe file;
   :Construct patttern dbs;
-  |#CCDDDD|Engine|
+  |#FFDEEE|Engine|
   :Insert file reader results into drools;
   |WebSocket|
   :put game id in websocket user prefs;
@@ -3488,7 +3495,7 @@ constructed.
 #+END_SRC
 #+CAPTION: Activity diagram of a server game construction
 #+LABEL: fig:initjung
-#+RESULTS[c422b040ae5246a7ecdb58bed350e5cb68d716bd]: fig:initjung
+#+RESULTS[774d2c7ab1efe8808e1e4318c5656666f7c00d9c]: fig:initjung
 [[file:img/uml/initjung.png]]
 
 ** Operation
@@ -3543,7 +3550,7 @@ we can quite precisely explain what is going on.
  #+RESULTS[ba2ef7b0333cc8277765f73cc81a4e7ac3846b44]: fig:insert_meaning
  [[file:img/uml/insert_meaning.png]]
 
-\cleared
+\toReview
 This operation is starkly different from the one presented in section
 [[user utterance processing]],
 particularly if you compare the activity diagrams in
@@ -3551,12 +3558,12 @@ figure [[fig:utterance-proccesing]] with figure [[fig:insert_meaning]].
 What we can see directly by comparing these is the change in swimming lanes
 cite:planumlswimminglanes.
 The ALICE swimming lane has been removed completely,
-and in its place we've got drools, which has become the figurative center of
+and in its place we've got drools, which has become the center of
 the application.
 Then the Personality swimming lane was introduced,
 this is of course in light of this thesis.
 
-\cleared
+\toReview
 Since these activity diagrams are quite detailed in their description of what
 is going on,
 we made an overview of the key changes in the state diagrams 
@@ -3569,8 +3576,7 @@ and it also opens up more space to do high level deliberations.
 Finally since =PatternMatching= is just the execution of another rule,
 we're not just limited to just pattern matching schemes in figuring out what
 the user said.
-Statistical methods could also be used for example cite:jin2009opinionminer,
-but this is out of the scope of this thesis.
+Alternatives approaches are discussed in section [[Replace regex]].
 
 #+NAME: fig:state:yaml
 #+BEGIN_SRC plantuml :cache yes :file img/uml/figstateyaml.png :exports results
@@ -3612,7 +3618,7 @@ this results in the =ParsedUtterance= type which can be seen
 in figure [[fig:supportclassjava]].
 This type then gets inserted into the fact base to continue the process.
 
-\cleared
+\toReview
 The =ParsedUtterance= then gets transformed into a =PreProcessed= type.
 During this process the duplicates matches are removed.
 Each element in the =ParsedUtterance= list gets individually inserted as a
@@ -3624,8 +3630,8 @@ In contrast to the initial approach where only the first match was used,
 this approach is more flexible.
 It allows the bot to form opinions about
 utterance where it doesn't necessarily wants to reply upon.
-For example if it asks the doctor "How are you doing?" the answer of
-"I'm good, how can I help you?" or "how can I help you?" should be treated
+For example if it asks the doctor ``How are you doing?'' the answer of
+``I'm good, how can I help you?'' or ``how can I help you?'' should be treated
 differently.
 It now can also give multiple answers to longer user utterances.
 However the disadvantage is that sometimes the bot will give more replies than
@@ -3640,21 +3646,22 @@ which is true in practice, but no concrete if else structure is used.
 Drools has support for setting priority of execution in rules,
 which was used for this.
 
-\cleared
+\toReview
 It should be noted that at the point of quick reply personality could also be at
 play.
 For example people could have alternative ways of pronouncing the response.
 Thinking people may for example respond with a confident yes, whereas feeling
 people would say it by default in a more doubting tone.
+We have not taken such variations into consideration.
 
-\cleared
+\toReview
 The high level processing executes if there is still a  =PreProcessed= type
 available, in other words no low level replies were executed.
 We create the initial =DialogueTree=, and remove the =Believes=
 from the fact base and put these believes into a =PersonalityProcess= which can
 be seen in figure [[fig:supportclassperson]].
-The reason for removing the believes base is to prevent concurrent modifications.
-By removing the Believes structure, rules that use it are no longer executed.
+The reason for removing the believes base is to prevent concurrent modifications,
+by removing the Believes structure, rules that use it are no longer executed.
 To create a =PersonalityProcess=, a =Believes= structure has to be available.
 In this Personality process we also add the =JungianFunction= list,
 these are the functions that are extensively described in section
@@ -3663,9 +3670,9 @@ these are the functions that are extensively described in section
 With this list it is determined which function should be executed next upon
 the =DialogueTree= and =Believes=.
 
-\cleared
+\toReview
 After there are no more functions in the list, we know we are done.
-We move to the next step where we get the reply from the DialogueTree.
+We move to the next step where we get the reply from the =DialogueTree-.
 This is an =Utterance= structure, if this =Utterance= is the same as the
 self field in the =Believes= structure, we send the reply by wrapping the
 utterance in a =Reply= type.
@@ -3675,6 +3682,7 @@ If we do send a reply we reinsert the selected =Utterance= as a
 These types can be found in figure [[fig:supportclassdrools]]. 
 
 ** Social practice support
+\todo[inline]{Why didn't we add more support?}
 \cleared
 Because this entire process is implemented in Drools, and we use types to track
 progress. Its relatively easy to add other rules that can modify the process,
@@ -3758,20 +3766,22 @@ A deployment diagram of this architecture can bee seen in figure
 #+RESULTS[2175bf151e4fe4f5ae54fdba0ca134983678c0d2]: fig:n-agent-arch
 [[file:img/uml/n-agent-arch.png]]
 
-*** System vs thoughts
-\cleared
+\todo[inline]{How is this different from section [[Implemented architecture]] talk about the figure}
+*** System vs agent believes
+\toReview
 What is required of the drools is that we make a separation between the 
-multilogue /system/ and agent /thoughts/.
+multilogue /system/ and agent /believes/.
 A good step in this direction is the =Believes= structure,
 which groups most agent thoughts, at least those used by the high-level system.
 Although it should be noted that the =Believes= structure itself also has
 problems, this is discussed in section [[Believes and DialogueTree]],
 but the gist of its better to replace this structure with a drools fact base
 itself.
-However what is good about this structure is that it has a self field,
-therefore it could be used to identify the agent.
+Since it has a self field however, it could be used to identify an agents'
+believes.
 In other parts of the current architecture this is not the case at all.
 For example the =PatternDatabase=  are just plainly inserted into the fact base.
+Which means we can't identify who's patterns these are.
 
 \cleared
 The naive solution is to just mark every fact with a self field.
@@ -3785,7 +3795,7 @@ at least for the agents.
 
 \cleared
 So what we present in figure [[fig:n-agent-arch]] is a different approach.
-Basically what we do is separate the system from the thoughts.
+What we do is separate the system from the agent believes.
 The system will be in the =sys.drools= engine, whereas the bot will be in the
 =bot.drools=.
 These are separate KIE runtimes, but the system has access to the bot.drools
@@ -3794,11 +3804,11 @@ The server can then have multiple bot instances.
 In these instances not every fact has to be marked since they have their own
 fact base anyway.
 The only thing that needs happen is a self fact needs to be inserted,
-or the =Believes= structure could be used for that, if that is kept around.
+or the =Believes= structure could be used for that, if it is kept around.
 
 *** Identifying speaker
-\cleared
-Another big issue is figuring out which agent(s) is being talked to.
+\toReview
+Another big issue is figuring out which agent(s) is being talked to by the user.
 There has been some research on this subject,
 for example using hand coded selection mechanisms cite:klotz2011engagement,
 and statistical mechanisms cite:keizer2013training.
@@ -3827,7 +3837,7 @@ and therefore it would be wise to define some kind of role mechanism,
 for which solutions exist cite:sandhu1996role.
 
 *** Practicalities
-\cleared
+\toReview
 Then there are some practicalities to consider, that are more at implementation
 level.
 For example replies should be timed, so that the user won't see suddenly 200
@@ -3839,14 +3849,14 @@ but it could also be considered a part of the social practice.
 Do note that these timed replies should be interruptible by the user.
 A different way of dealing with this is just preventing the scenario from
 continuing at certain key points until a user reaction occurs.
-Deciding which approach is the best is basically a matter of experimentation.
+Deciding which approach is the best is a matter of experimentation.
 
-\cleared
+\toReview
 Then it should also be noted that the scenarios of the bots should be
 specified differently. At least for parts of it, while other parts should be
 shareable.
 So the YAML files should be specified distinctly per bot, the drools files
-distinctly per bot *and* there should be a mechanism to share these.
+distinctly per bot and there could be a mechanism to share these.
 
 
 # empty buffer of figures
@@ -4380,6 +4390,7 @@ if(syms.size() > 1){
 
 \FloatBarrier
 ** Connections
+<<yaml connections>>
 \cleared
 Now we've figured out how to represent our basic axioms, the symbols thoroughly,
 we can move on to make our model functional again.
@@ -5864,8 +5875,15 @@ cite:vinyals2015neural.
 What needs to be done is just replace the existing pattern matching drool
 rule with an alternative and modify the recurrent neural network to select
 symbols.
-Alternatively the existing regular expression approach could be enhanced,
-for example by executing it in parallel, or even upon the GPU cite:zu2012gpu. 
+With probability theory matching could also be made such as done in
+cite:jin2009opinionminer, this would require slight modification of the ideas
+proposed in that paper.
+But the core problem is the same: Figuring out what was said,
+based upon a set of possibilities.
+We have symbols in a scene whereas they had a tag set.
+Finally there could be chosen to improve the existing regular expression approach,
+for example by executing it in parallel,
+or even upon the GPU cite:zu2012gpu. 
 
 \cleared
 The question of what to do when multiple symbols are matched is a difficult one.
