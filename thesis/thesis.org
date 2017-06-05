@@ -3112,14 +3112,14 @@ Therefore the =JungFuncAccessor= interface was introduced.
 This allows unit test to check if the next function was called for example,
 but the architecture also becomes more extendable because of this.
 
-\cleared
+\toReview
 Figure [[fig:jungjavaclass]] shows the elements required for java to apply an $f_a$.
 To do this we first create a =JungFuncArgs= structure with its =create= method.
 Then we insert the Jungian functions we want to apply.
 This is a list of elements of the =JungianFunction= enum,
 these elements aren't shown in the figure because they're just the abbreviated
 names of the Jungian functions,
-for example Se for extroverted sensing.
+for example $S_e$ for extroverted sensing.
 The =insertNextFuncs= returns a new =JungFuncArgs= object with the inserted
 next functions,
 these next functions are not evaluated.
@@ -3898,8 +3898,8 @@ Patterns are used to identify user utterances and attach responses to them.
 We created a deployment diagram of the situation seen in figure [[fig:dep:aimlcats]],
 which removes the syntax, so that the situation is more obvious.
 
-\cleared
-What we can see is that if the user says "Hello" then the bot will reply "Hi".
+\toReview
+What we can see is that if the user says ``Hello'' then the bot will reply ``Hi''.
 So what we have here is a mapping function from $\sigma \to \sigma$, where $\sigma$ is a
 string (see section [[Narrowing the model]]).
 The issue is that once Hello is matched, the answer *must* be Hi.
@@ -4001,12 +4001,12 @@ The next sections will discuss the thought process to a new representation.
 ** Analyzing AIML
 # Note that such descriptions are good, show how it was in the old system and
 # the thought process towards the new system, so do more of it like this
-\cleared
+\toReview
 What we want to do is create a mapping function $\sigma \overset{g}{\to} s$
 (see section [[Narrowing the model]]).
 In our first attempt we will modify AIML to do this.
 AIML is primarily a case based reasoner.
-It will match on predefined strings or patterns and then "say" the string
+It will match on predefined strings or patterns and then `say' the string
 that was attached to the pattern.
 So we can use AIML to match user input,
 but the language has to be modified so that instead of producing a reaction,
@@ -4089,7 +4089,7 @@ In other words, dealing with the $g'$ function, this is what the next section
 deals with.
 
 *** Symbol to string
-\cleared
+\toReview
 The next step is to consider how we go from symbols back to strings.
 What we assume is that the agent already found a symbol to utter,
 for example the status inquiry.
@@ -4098,7 +4098,8 @@ they were called template tags.
 We just need to separate the literal strings from the catch all patterns
 as can be seen in listing [[code:ailm-grouped-literal]].
 In this listing we renamed the template tag to literal,
-because the name template is very generic.
+because the name `template' is very generic and we have already used it for
+another system discussed in section [[Before and templates]] and [[Star tags]].
 They function the same:
 Provide the string to utter for that particular category,
 in other words the $s \overset{g'}{\to} \sigma$ function
@@ -4197,8 +4198,8 @@ and therefore another file.
 </patterns>
 #+END_SRC
 
-\cleared
-However the observant reader will know this isn't valid XML
+\toReview
+However the observant reader will see this isn't valid XML
 and by extension AIML, since XML requires a single document root tag.
 It does specify what we want, and it does so very tersely.
 Since we are changing the semantics of AIML drastically we may as well use a
@@ -4252,15 +4253,15 @@ therefore correct it.
 The syntax of JSON can be also more terse, which is shown by both YAML and TOML.
 Because of these reason we looked at the other two contenders.
 
-\cleared
+\toReview
 The reason for choosing YAML over TOML is that YAML is stable,
 whereas TOML hasn't reached stabilization yet cite:tomlreadme.
 Although the argument TOML has over YAML is that YAML is much more complex,
 and can in certain cases be not as human readable cite:yamldisatvantages.
-If TOML were to stabilize, its probably better to move to that format instead.
+If TOML were to stabilize, it's probably better to move to that format instead.
 Its instability means that the author thinks the representation may change.
 Therefore currently the best choice is YAML.
-Its relatively easy to move between these standards, if they're stable,
+It's relatively easy to move between these standards, if they're stable,
 as is shown in section [[Conversion script]].
 Therefore a possible future move from YAML to TOML should also be easy.
 
@@ -4283,10 +4284,10 @@ Note that we still use the idea of having one symbol per file,
 and the symbol name is the filename.
 Therefore no =symbol= item is shown in the example.
 Quotation marks ="=, are to indicate strings, for certain characters this is 
-necessary, in other cases YAML does this for you.
+necessary, in other cases YAML does this for the author.
 
-\cleared
-Note for example that there are multiple literals to choose from in listing
+\toReview
+Note that there are multiple literals to choose from in listing
 [[code:yaml-symbol]].
 In the current implementation this is similar to using =random= tags in AIML.
 However as can be seen in section [[Low level diagram]],
@@ -4305,13 +4306,13 @@ patterns:
   - How are you *
 #+END_SRC
 
-\cleared
+\toReview
 We keep the pattern fields for legacy support.
-However its much more easy to just support regular expressions
+However it's much more easy to just support regular expressions
 cite:thompson1968programming.
 The reason for this is that they're part of the Java standard library
 cite:regexpattern.
-What we can do is transform AIML patterns into regular expressions,
+What we do is transform AIML patterns into regular expressions,
 and then use the Java standard library to match the patterns.
 This will make the patterns more precise,
 and give less code to maintain,
@@ -4326,11 +4327,13 @@ regexes:
   - "How ([a-z])\\w+ you(.*)"
 #+END_SRC
 
-\cleared
+\toReview
 The example in listing [[code:yaml-regexes]] only matches a single word and allows
 for trailing characters.
 Note that the example in listing [[code:yaml-symbol]] would've also matched
-"How did this became you?", since any character would've matched the star.
+``How did this became you?'',
+since any character would've matched the star
+(not any but most characters, see section [[AIML stars]]).
 Regular expressions can be much more precise in specifying what a wildcard star is,
 although they are also a lot more difficult to learn and read.
 Therefore both methods will be supported.
@@ -4576,28 +4579,26 @@ cloud "symbols"{
 [[file:img/uml/dep:filedconns.png]]
 
 **** Actors
-\cleared
+\toReview
 A foreign idea to AIML is the notion of actor restrictions.
 Since AIML will always model from the perspective of the bot, there is no need for this.
 However because we model both bot and user, we do require this.
-this is especially important to prevent the bot from infinitely talking to itself,
-which is discussed more in section [[Turn taking]].
 
-\cleared
+\toReview
 To make sure certain strange situations don't occur, such as the patient asking
 the doctor if the doctor is sick,
 we added actor based restrictions on connections.
 This is done trough the =restricted_to= key,
 which can be seen in listing [[code:yaml:complex]].
 Currently however this implementation is rather limited,
-it only allows for an "any" actor,
+it only allows for an `any' actor,
 which basically means any actor can say this,
 or a specific actor.
 This could be extended with some kind of role system cite:sandhu1996role.
 
-\cleared
+\toReview
 Note that because AIML does not specify actors,
-it can never be used on its own, to model a multilogue system in.
+it can never be used on its own to model a multilogue system in.
 Although we make actors explicit not because of the desire to implement a
 multilogue system,
 but to make it possible to predict what the other actor will say from the
@@ -4640,13 +4641,8 @@ to:
  - symbol: ask_reason_here
    scene: information_gathering
    restricted_to: doctor
-   values:
-     - Impatient
  - symbol: good
    restricted_to: doctor
-   values:
-     - Polite
-     - Happy
 #+END_SRC
 
 \cleared
@@ -4675,12 +4671,11 @@ pattern can be used.
 Therefore in our YAML semantics, they are an additional restriction on connections.
 They appear in listing [[code:aiml-that-tag]] as an example.
 
-\cleared
+\toReview
 Although supporting this feature isn't necessary to implement the theory
 presented in section [[Jungian BDI]],
 they do allow much more fine grained control over the scenario.
 We therefore decided to also implement this AIML feature.
-They are described more extensively in section [[Before and templates]].
 
 #+CAPTION: That tags example.
 #+NAME: code:aiml-that-tag
@@ -4721,11 +4716,11 @@ An example can be seen in listing [[code:yaml-before-field]].
      restricted_to: patient   
 #+END_SRC
 
-\cleared
+\toReview
 Adding the who field was necessary since we no longer model just the
 utterances of the bot,
 we needed to expend it by adding the actor who uttered the utterance.
-We also needed to think about *when* it was uttered, because alternation
+We also needed to think about when it was uttered, because alternation
 isn't a guarantee in conversation (discussed in section [[Turn taking]]).
 What is done now, is to filter out the utterances from the person who is not
 the who in the before tag, and then take the latest utterance from them.
@@ -4753,12 +4748,12 @@ This is best illustrated with an example which can be seen in listing
      restricted_to: patient   
 #+END_SRC
 
-\cleared
+\toReview
 The default value of the before field will be None. Which just means no
 additional restrictions.
 In this example making such an explicit definition won't be very constructive.
 However since we need an identity (no-op) before value anyway for the default
-restriction. Making a recursive definition isn't that big of an extension.
+restriction, making a recursive definition isn't a big extension.
 
 \cleared
 The AIML tag specification never defined when a that tag match would be
@@ -4800,8 +4795,8 @@ Although this feature isn't necessary for personality per se, its a really
 important chatbot feature.
 It allows symbols to become more flexible, and connections more dynamic.
 
-\cleared
-To implement these in our new scheme we first need to analyze what star tags are.
+\toReview
+To implement these in our new system we first need to analyze what star tags are.
 Then we need to figure out how we can implement this in our matching system,
 and finally we need to add a template method to our YAML representation.
 The data structures involved are discussed in section [[Before and templates]].
@@ -4814,8 +4809,8 @@ Wildcards are defined as any string in $L(N)$ where $L(N)$ is all normal words.
 This would imply that it would not include spaces or other special symbols.
 Since this definition is rather vague we did some experimentation on the example
 from listing [[code:aiml-star-tag]].
-We tried to introduce ourselves to the bot over and over again with
-different names as can be seen in table [[tab:alice-normal-words]].
+We tried to introduce ourselves to the bot with
+various names as can be seen in table [[tab:alice-normal-words]].
 
 #+CAPTION: Attempts at what would pass for 'normal' words according to ALICE.
 #+NAME: tab:alice-normal-words
@@ -4827,15 +4822,15 @@ different names as can be seen in table [[tab:alice-normal-words]].
 | =blah *. blah=          | =blah *=                |
 | =blah * ahah=           | =blah * ahah=           |
 
-\cleared
-So quite arbitrarily some characters are accepted while others aren't,
+\toReview
+Quite arbitrarily some characters are accepted while others aren't,
 ALICE happily accepts an underscore but an exclamation mark is to much.
 There are several ways to improve this system.
 Such as trying to add context to what the star should be.
 In our example case we wanted to match on names,
-so we know that numbers ought not to be allowed,
+so we know that numbers shouldn't be allowed,
 or at least that it would be highly unusual.
-Social practice and norms could help with this.
+Social practice and norms could help with these distinctions.
 
 \cleared
 We already improved on the star matching system by using regular expressions
@@ -4844,7 +4839,7 @@ which would allow scenario writers to be much more precise in what they want
 to match.
 However we want to also be able to store what is matched and access it later.
 The java regex API already provides a method of extracting information from
-wildcard trough something called groups cite:regexgroups.
+wildcards trough something called groups cite:regexgroups.
 An example of an regular expression that extracts data can be seen in listing
 [[code:regex:extract]].
 So the problem is no longer one of extraction,
@@ -4861,15 +4856,16 @@ regexes:
 #+END_SRC
 
 *** Templates in symbols
-\cleared
+\toReview
 To insert data into a symbol we need a templating mechanism.
 So the first thing we did was finding template libraries in Java.
 Three options came up:
 Velocity cite:velocity, FreeMarker cite:freemarker
 and StringTemplate cite:stringtemplate.
 Because StringTemplate enforces strict model view separation,
-and is therefore much more maintainable and easier to understand than FreeMarker
-template engines cite:parr2004enforcing, we chose to use StringTemplate.
+and therefore is much more maintainable and easier to understand
+cite:parr2004enforcing,
+we chose to use StringTemplate, over the other two options.
 
 \cleared
 Using that engine we can define a naive way of writing a symbol as can be
@@ -4881,11 +4877,12 @@ seen in listing [[code:naive-template-symbol]].
 literal: "Hello, my name is <actor.name>"
 #+END_SRC
 
-\cleared
+\toReview
 In listing there [[code:naive-template-symbol]] is a problem however,
 is it always the case that the current actor should be used if we use a query
-like "<actor.name>"?
-No because we can say something like: "Hey <actor.name>, can I borrow your pen?".
+like ``<actor.name>''?
+No because we can say something like:
+``Hey <actor.name>, can I borrow your pen?''.
 Therefore we should reconsider selecting such things at the symbol level.
 A lot of context information is not available in symbol files.
 The best we can do is give them a name and leave it at that,
@@ -4901,27 +4898,12 @@ literal: "Hello, my name is <name>"
 literal: "Can I borrow a <tool>"
 #+END_SRC
 
-*** Tying matches to templates
-\cleared
-Now we know how to extract data from a regular expression,
-and we know how to insert data into a symbol.
-There is a key difference between AIML and the YAML implementation.
-Pattern and template tags are expended into their own symbols, as discussed
-in section [[Mapping AIML]]. 
-Therefore we need to device a system that can match in one symbol and
-insert the matched data in another.
-
-\cleared
-As said before the implicit relationship between patterns and template tags in
-AIML is made explicit in this implementation trough connections.
-Its only natural to solve this problem with help of connections.
-
-\cleared
-So then the question becomes how do we fill in these templates?
+\toReview
+How do we fill these templates?
 The issue we had with trying to fill these in the symbols was the lack of
 context.
 Context is mainly provided by connections, if we know who is saying
-"Hello, my name is <name>", we know what to fill in for the template "name".
+``Hello, my name is <name>'', we know what to fill in for the template `name'.
 In this system context is provided by connections.
 An example of how to do this is given in listing [[code:template-connection-fill]],
 where the name is filled by using a previous utterance.
@@ -4936,11 +4918,11 @@ to:
 - symbol: hello_x
   restricted_to: patient
   utterances:
-    name: # the template name
+    name: # the template name to fill
       actor: doctor
       symbol: my_name_is_x
       scene: introduction
-      match: name # we can match on named groups
+      match: name # group name to extract
 #+END_SRC
 
 \cleared
@@ -4965,17 +4947,13 @@ similarly to low level replies.
 A =MatchedQueryDB= can be constructed manually to fill with drool facts.
 
 ** Automatic AIML to YAML
-\cleared
+\toReview
 AIML is a standard cite:aimlspec.
 Note that the spec says: "AIML shall be compatible with XML.",
 and XML is also a standard cite:xmlspec.
 YAML happens to also be a standard format cite:yamlspec.
-although its not a markup language, unlike XML and AIML,
-but rather a data format cite:yamlvsxml.
-The advantage of being "just a data format" is
-that the syntax can become a lot more terse, while maintaining readability.
 With all these standards, its relatively easy to convert between them,
-because libraries exist for parsing them.
+because libraries exist for parsing the standard, and in turn for generating it.
 
 *** Legacy AIML
 \cleared
@@ -4986,15 +4964,13 @@ There are several ways of circumventing this.
 First of all, one could add support of the legacy format to the code base.
 The second method is creating a script that will help along the way with
 conversion.
-
-\cleared
 We chose the second method because the first method will be much harder,
 as it will re-introduce the problems we had with AIML in the first place.
 The second method provides the user an opportunity to make their AIML script
 comply to the new method,
 whilst also reducing the effort it takes.
 
-\cleared
+\toReview
 To make the conversion we need to point out some structural observations about
 differences between AIML and YAML.
 Firstly AIML works strictly from the perspective of the bot.
@@ -5002,8 +4978,8 @@ There is no deliberation about what the user is thinking.
 Therefore we can't model what we expect the doctor to say after a patient
 uttered something in the test scenario because this information isn't encoded.
 You may argue that the mechanism which could be used for this are the /that/ tags.
-But they are just an additional restriction on the pattern matching:
-If user uttered pattern $A$ *and* he said that pattern $B$ before,
+But they are just an additional restriction on the pattern matching,
+see section [[That tags]].
 we can say template $C$.
 Alternatively you count the injection of types (in S-AIML),
 but this isn't a formal encoding in AIML itself,
@@ -5155,6 +5131,13 @@ We separated that from this chapter because it became to big,
 and it had a lot more to do with just getting an environment ready
 that was flexible enough to deal with personality as a process.
 
+\toReview
+In this chapter we will first setup a small case study of personality
+influence in section [[Personality influence case study]].
+Then we will show how to model a part of this scenario in section
+[[Making a scenario]] to show how the bot works and how to steer it.
+Finally we will discuss how we tested the bot in section [[Testing]].
+
 *** Source code
 We made the source code that was written to test this thesis available on
 =SOURCE_LINK_HERE=. \todo{Add link to source}
@@ -5226,7 +5209,7 @@ He just assumed the patient overstretched himself because he lifted something
 heavy.
 
 *** Susie the ENFP
-\cleared
+\toReview
 As an ENFP, Susie has the dominant function of extroverted intuition $N_e$ and
 as auxiliary function of introverted feeling $F_i$.
 Therefore these functions should be most dominant in the dialogue.
@@ -5234,7 +5217,7 @@ $N_e$ focuses on finding possibilities in situations and $F_i$ is a internal
 value based judgement function.
 Combined with each other they make a personality who has strong ideals and is
 enthusiastic about them.
-The expected dialogue can be seen in [[tab:suzie-conv-doct]].
+The expected dialogue can be seen in table [[tab:suzie-conv-doct]].
 
 #+CAPTION: Susie in conversation with the doctor
 #+NAME:   tab:suzie-conv-doct
@@ -5255,9 +5238,9 @@ The expected dialogue can be seen in [[tab:suzie-conv-doct]].
 | Doctor  | Can you go to the hospital next Friday at 13:00?                   |
 | /Susie/ | /Yes, I will go then./                                             |
 
-\cleared
+\toReview
 We can now see a stark difference with the INTJ personality.
-First of all being dominated by extroversion it was Susie who took the initiative.
+First of all being dominated by extroversion, it was Susie who took the initiative.
 Secondly she directly asked for medicine, without thinking about the
 consequences but knowing she probably needs it.
 Then when explaining the situation she jumped to an idea of why she could have
@@ -5358,9 +5341,9 @@ in section [[Personality influence case study]].
 In that section several dialogues are presented with different personalities
 dealing with the same social practice, visiting the doctor.
 
-\cleared
+\toReview
 Our strategy for modeling these is selecting a particular dialogue and then
-deciding per utterance whether they: require a unique symbol,
+deciding per utterance whether they: Require a unique symbol,
 can be merged in an existing one,
 or already have one and therefore can be ignored.
 For example we merge the greetings according to listing [[code:yaml:model:greeting]].
@@ -5485,9 +5468,9 @@ actors:
 personality: [Ne, Fi, Te, Si]
 #+END_SRC
 
-\cleared
-Loading the believes inside a YAML file is a design conflict:
-"Should believes be loaded from YAML or inside the Drools?"
+\toReview
+Loading the believes inside a YAML file presents a design conflict:
+Should believes be loaded from YAML or inside the Drools?
 There is a constant pull between these two possibilities.
 Drools is much more flexible,
 because it is Turing complete cite:weppenaar2011solving,
@@ -5505,27 +5488,27 @@ will be implemented (see section [[Multilogue architecture]]).
 
 *** Steering the bot
 <<steering bot>>
-\cleared
+\toReview
 As discussed before the primary sources of steering the bot are perlocutionary
 values and goals.
 However these are not our only tools, if we want to make distinctions between
 introversion and extroversion we need to look closely at the behavior of the
 functions in question.
-For example Te has as default behavior, meaning no goals present,
+For example $T_e$ has as default behavior, meaning no goals present,
 to prefer connections that transition to another scene,
-whereas Ti prefers connections that lead to more options (see section [[Thinking]]).
+whereas $T_i$ prefers connections that lead to more options (see section [[Thinking]]).
 
-\cleared
+\toReview
 In listing [[code:yaml:model:connext]] we can see the extended version of
 listing [[code:yaml:model:initial-connections]],
-with a quick glance, we can see how the functions maybe influenced by this.
+with a glance, we can see how the functions maybe influenced by this.
 For example we expect personalities with a dominant feeling functions to go for
-the status option, because it gives so much utility.
-Leading out from the status option there are only options that can be uttered
+the `status' option, because it gives so much utility.
+From the status option there are only options that can be uttered
 by the doctor, this is done simply because it would be strange to continue
-talking after asking "How are you?".
+talking after asking ``How are you?''.
 
-\cleared
+\toReview
 If the status symbol is liked more by feeling function $F_i$,
 why did in section [[Testing]] Susie (with dominant $F_i$) utter a greeting
 first?
@@ -5536,7 +5519,7 @@ replies with a greeting.
 So that drool rule will force all personalities to reply a greeting with a
 greeting.
 We modelled the connection to add a perlocutionary value to this reply,
-which means the learning function Fe will prefer uttering polite replies in
+which means the learning function $F_e$ will prefer uttering polite replies in
 future choices.
 
 #+CAPTION: Connections in =introduction= extended with values
@@ -5591,11 +5574,11 @@ then
 end
 #+END_SRC
 
-\cleared
+\toReview
 If we also take listing [[code:yaml:model:gathering]] and the believes into
 consideration,
 we can see why thinking functions may like the =ask_reason_here= option,
-first of all its a scene transition, which is Te enjoys, but more importantly, 
+first of all its a scene transition, which is $T_e$ enjoys, but more importantly, 
 telling about the back pain is a goal in the believes.
 So any personality that can think ahead with its irrational functions would
 probably like this option.
@@ -5617,11 +5600,11 @@ to_defaults:
 #+END_SRC
 
 
-\cleared
+\toReview
 There are several other tools for steering available too which were
-discussed in [[Replacing AIML]] such as before fields and templates.
+discussed in section [[Replacing AIML]] such as before fields and templates.
 However these can't be used to steer personality in particular,
-besides having an influence on the amount of options, and therefore Ti.
+besides having an influence on the amount of options, and therefore $T_i$.
 They can also of course be combined with the methods discussed before.
 
 \FloatBarrier
@@ -5666,13 +5649,13 @@ It also has a handy assertion API.
 \cleared
 The unit tests don't cover every aspect of the application but are
 mainly focused upon the Jungian Functions and their data structures.
-For example the Te tests can be seen in listing [[code:java-unit-te]].
+For example the $T_e$ tests can be seen in listing [[code:java-unit-te]].
 In =getTestTarget= we define which Jungian function is under test,
 which is handled by the parent class.
 Then as can be seen by its annotation,
 the method =no_goals_look_for_ones_that_change_scene= defines a test.
 
-#+CAPTION: Te test example
+#+CAPTION: $T_e$ test example
 #+NAME: code:java-unit-te
 #+BEGIN_SRC java
   public class TeTest extends AJungFuncTest {
@@ -5724,7 +5707,7 @@ To do validation tests we will try to model the scenario presented as an example
 in section [[Personality influence case study]].
 How this is done is discussed in section [[Making a scenario]].
 After this we test the bot by playing doctor in the scenario.
-The results are recorded and can be seen in appendix [[Test Results]].
+The results were recorded and can be seen in appendix [[Test Results]].
 There were some issues with the scenario itself,
 however most issues we found were with the functions and their interactions.
 
@@ -5772,13 +5755,13 @@ We suspect that there may be really only 8 personalities, rather than at least 1
 Additional experimentation is required to verify this problem,
 and potentially start looking for a solution.
 
-\cleared
+\toReview
 Another issue is that although the bot is functional,
 the way we implemented the rational functions is rather simplistic.
 No actual mini-max algorithm is used (or something similar that would work with
 non zero sum games).
 We instead just use static evaluation at each level.
-So no dialogue tree information is used in the deliberation,
+So not all dialogue tree information is used in the deliberation,
 addressing this issue could lead to more varied personalities.
 
 ** Future work
@@ -5797,21 +5780,19 @@ However during the implementation we haven't looked deep into this,
 except for the fact that drools maybe a good bases to do this.
 Although it was already in place when we arrived,
 we just made it the center of deliberation.
-This will make modelling norms for example more easy.
-
-\cleared
-For example we can consider it to be not normal when someone utters the same
+This will make modelling norms for example more easy,
+for example we can consider it to be not normal when someone utters the same
 symbol over and over.
 Since utterances are already recorded into believes for some of the Jungian functions,
 we can define a norm with a drools query.
 Then we can react by moving to a particularly designed scene for repeating one self.
 This way we can work around several of the usual tricks cite:detectachatbot
 people use to detect if they're talking to a chatbot,
-and make it more easy to passing the Turing test more likely.
+and make it more probable to pass the Turing test.
 
 *** Multilogue implementation
 \cleared
-We discussed the architectural changes required for this in section
+We discussed the architectural changes required for multilogue in section
 [[Multilogue architecture]].
 However as discussed in section [[Practicalities]],
 there are some deeper difficulties with doing this,
@@ -5840,7 +5821,7 @@ a more precise use of templates could happen.
 So connections that go to a symbol that require a noun,
 would no longer be able to use symbols that matched a verb.
 
-\cleared
+\toReview
 With help of the work of convolution kernels for semantic parsing
 cite:moschitti2004study, a simple knowledge base could be constructed as an
 inspiration for bot about what to fill into the template system.
@@ -5849,16 +5830,15 @@ Care must be taken in this case that the connections are still aligned
 properly, and the insertion of a template does not alter the meaning of a symbol
 completely.
 Although currently this is also a potential problem.
-A clean way of dealing with this is throwing an error that explains the problem.
 
 *** More advanced learning
-\cleared
+\toReview
 The idea of dynamically extending the symbol graph, and creating new symbols
 themselves is an interesting one.
 For example a new symbol is created every time the bot doesn't know something,
 then the bot asks about it and if the user replies with something which is known,
 connect them.
-Currently there is limited support for "learning" in the Si function.
+Currently there is limited support for learning in the $S_i$ function.
 but this is based on knowing existing symbols,
 the extension would add symbols dynamically.
 This could be done by more advanced language parsing techniques in combination
@@ -5866,11 +5846,11 @@ with an existing knowledge base such as OWL cite:world2012owl.
 
 *** Matching
 <<Replace regex>>
-\cleared
+\toReview
 It should be noted that regular expressions is just one of the possible ways
 of determining what symbol the user uttered.
 The bot can be easily modified to use alternate matching mechanisms such
-as fuzzy matching trough a recurrent neural network for example
+as trough a recurrent neural network for example
 cite:vinyals2015neural.
 What needs to be done is just replace the existing pattern matching drool
 rule with an alternative and modify the recurrent neural network to select
@@ -5885,16 +5865,16 @@ Finally there could be chosen to improve the existing regular expression approac
 for example by executing it in parallel,
 or even upon the GPU cite:zu2012gpu. 
 
-\cleared
+\toReview
 The question of what to do when multiple symbols are matched is a difficult one.
 In the initial approach we simply selected the first symbol,
 however currently they are all selected, and we hope the scenario is designed
-properly.
+in a way to deal with that.
 What should be looked into is if there are ways to combine symbols,
 or perhaps even select one or several based upon personality.
 Another approach would be to try and use information
 theory to select the most precise symbol.
-However this precision also should be encoded or derived somehow
+However this precision could also be encoded or derived somehow
 (for example, more words means more information).
 
 \cleared
@@ -5903,12 +5883,6 @@ for example preferring to match on different symbols,
 or if multiple are matched, having a preference for certain kinds of symbols.
 Sensing types may for example prefer raw data based symbols,
 whereas intuition types would prefer possibilities and ideas.
-
-*** Graphical scenario editor
-\cleared
-A final possible extension would be to create a graphical scenario editor.
-Doing this always costs more time than expected and probably should be avoided
-until above mentioned systems are in place.
 
 *** Emotions
 \toReview
@@ -5936,6 +5910,12 @@ perlocutionary value, and which emotions are desirable to be in.
 Personality could also play a role in the desire to be in a particular state,
 for example a thinking dominated personality would rather be calm,
 whereas an intuitive personality would rather be excited.
+
+*** Graphical scenario editor
+\cleared
+A final possible extension would be to create a graphical scenario editor.
+Doing this always costs more time than expected and probably should be avoided
+until above mentioned systems are in place.
 
 \clearpage
 * Acknowledgements
@@ -6370,7 +6350,7 @@ hold up.
 
 \cleared
 1. Again no hello
-2. Replied with, I'm afraid I need some medicine, I think this is because Ti
+2. Replied with, I'm afraid I need some medicine, I think this is because $T_i$
    is the first function, and I think the two pass effect isn't implemented
    correctly yet.
    It just goes deeper now rather than finding the right level
@@ -6436,7 +6416,7 @@ Conversation went according to script.
    We should analyze what has been learned at this point.
    It appears also that in either case no values are attached.
    After this point the bot follows the ISTP script.
-   This is wrong, Fe is the learning function, $F_i$ uses perlocutionary values.
+   This is wrong, $F_e$ is the learning function, $F_i$ uses perlocutionary values.
    So this was easily fixed by modifying the perlocutionary value utility.
 
 *** ISTP
@@ -6463,8 +6443,8 @@ Conversation went according to script.
    This derails the entire script so the test was stopped.
    The reason for this became apparent after a full tree dump after each function.
    First time the $T_i$ function has nothing to sort, so it does nothing.
-   Se generates all available options in the order they came,
-   $N_i$ just goes down whatever Se preferred.
+   $S_e$ generates all available options in the order they came,
+   $N_i$ just goes down whatever $S_e$ preferred.
    $F_e$ sorts everything twice, but most have no perlocutionary value.
    Then once we come back to $T_i$, the most obvious choice is of course the first
    option provided by $S_e$, since it was expended by $N_i$, twice.
