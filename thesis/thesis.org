@@ -1699,7 +1699,7 @@ To simulate personality in communication games there have been already several
 works proposed.
 Etheredge used the OCEAN personality theory to create argumentative
 agents cite:etheredge2016personality.
-Although argumentation is not the same as communication, \todo{In particular because we are interested in content rather than strucutre, idk maybe look in that paper again}
+Although argumentation is not the same as communication,
 we can consider the method used to make the personality.
 In this paper a personality model is introduced based on OCEAN.
 They move from personality values in OCEAN towards action selection
@@ -1767,7 +1767,6 @@ Constructs for dealing with modularity such as type safety and even
 object orientation are just not available if you put everything in AIML.
 
 ** Campos
-\todo{Different name? Not descriptive, although if we mention it in the abstract not that bad}
 \newlyCleared
 Campos used the MBTI to create BDI based agents cite:campos_mabs2009.
 In section [[BDI + Personality]] we already discussed Campos his architecture.
@@ -1814,7 +1813,6 @@ Finally we will consider how this presented method relates to Jungian
 theory in section [[Consistency with theory]].
 
 ** Differences from Campos
-\todo{Name bad not descriptive, although if we mention it in the abstract not that bad}
 \cleared
 Campos cite:campos_mabs2009 first considered how to combine MBTI with BDI.
 His reasoning domain was however in action space (rather than just dialogue),
@@ -1867,7 +1865,7 @@ This is then reduced to the scope of a chatbot in the social practice.
 After this we will look what extra information the function attitudes need
 in an attempt to reduce the amount of possible believes.
 
-** Informal description of Jung + BDI
+** Core idea
 \toReview
 Before diving into the type signature approach, or the formal description we
 want to describe it informally.
@@ -2031,243 +2029,238 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  Which leaves us with the following type signature:
  \[ B_t \to t \to S_t \overset{f_a}{\to} (B_{t+1}, \Delta_{t+1}) \]
 
-** Dialogue tree
-<<Dialogue tree>>
-\todo{Merge in type signature approach}
-\toReview
-We have some believes, time and symbols going in, some deliberation
-going on and a new set of believes and actions going out.
-However this type signature isn't enough.
+*** Dialogue tree
+ <<Dialogue tree>>
+ \toReview
+ We have some believes, time and symbols going in, some deliberation
+ going on and a new set of believes and actions going out.
+ However this type signature isn't enough.
+ To allow the agent to select action in a rational manner,
+ we use a dialogue tree to model the options.
+ The root of the tree is the utterance we deliberate upon. 
+ The ply under that is the utterances we consider in response to that.
+ With plies under that in turn being responses to those, etc.
 
-\toReview
-To allow the agent to select action in a rational manner,
-we use a dialogue tree to model the options.
-The root of the tree is the utterance we deliberate upon. 
-The ply under that is the utterances we consider in response to that.
-With plies under that in turn being responses to those, etc.
+ \toReview
+ We need to mark which agent uttered what in the dialogue tree nodes,
+ therefore we introduce $\Lambda$ as the set of all active actors, where $a \in \Lambda$.
+ With an actor $a$ and a symbol $s$ we can start thinking about modeling an
+ utterance around which we can model dialogue tree nodes.
+ However to do this, its important to remember that an utterance always comes with
+ a perlocutionary value set as discussed in section [[Speech act theory]].
+ Therefore we introduce the set of all encoded perlocutionary speech acts as
+ $\mathcal{P}$ of which a set of speech acts is $P \subseteq \mathcal{P}$.
+ With this we can define utterance $u$ as a tuple:
+ \[ u = (P,a,s,t) \]
+ Where $P$ is the set of perlocutionary values uttered, $a$ is the actor that
+ uttered, $s$ the symbol that was uttered and $t$ the time at which the utterance
+ was made.
 
-\toReview
-We need to mark which agent uttered what in the dialogue tree nodes,
-therefore we introduce $\Lambda$ as the set of all active actors, where $a \in \Lambda$.
-With an actor $a$ and a symbol $s$ we can start thinking about modeling an
-utterance around which we can model dialogue tree nodes.
-However to do this, its important to remember that an utterance always comes with
-a perlocutionary value set as discussed in section [[Speech act theory]].
-Therefore we introduce the set of all encoded perlocutionary speech acts as
-$\mathcal{P}$ of which a set of speech acts is $P \subseteq \mathcal{P}$.
-With this we can define utterance $u$ as a tuple:
-\[ u = (P,a,s,t) \]
-Where $P$ is the set of perlocutionary values uttered, $a$ is the actor that
-uttered, $s$ the symbol that was uttered and $t$ the time at which the utterance
-was made.
+ \cleared
+ Now we introduce $D$ a dialogue tree tuple:
+ \[ D = (u, [D])\]
+ Where $u$ is the utterance,
+ and $[D]$ is the ordered list of dialogue children.
+ The initial dialogue is just a symbol with an empty list of children.
+ To consider a reply, we would use the same dialogue tree,
+ except with a list of children that is bigger than zero.
+ The most preferred reply is the first element in the list of children.
+ How the actor is decided will be discussed in section [[symbol graph]].
+ An example of an expended dialogue tree can be seen in figure [[fig:dialoguetree]].
 
-\cleared
-Now we introduce $D$ a dialogue tree tuple:
-\[ D = (u, [D])\]
-Where $u$ is the utterance,
-and $[D]$ is the ordered list of dialogue children.
-The initial dialogue is just a symbol with an empty list of children.
-To consider a reply, we would use the same dialogue tree,
-except with a list of children that is bigger than zero.
-The most preferred reply is the first element in the list of children.
-How the actor is decided will be discussed in section [[symbol graph]].
-An example of an expended dialogue tree can be seen in figure [[fig:dialoguetree]].
+ #+NAME: fig:dialoguetree
+ #+BEGIN_SRC plantuml :cache yes :file img/uml/dialoguetree.png :exports results
+ object D0{
+ a = "doctor"
+ s = "Greeting"
+ [D] = [D1, D2, D3]
+ }
+ object D1 {
+ a = "patient"
+ s = "Complaint"
+ [D] = [D5, D4]
+ }
+ object D2 {
+ a = "patient"
+ s = "QuestionIdentity"
+ [D] = [D6]
+ }
+ object D3{
+ a = "patient"
+ s = "Greeting"
+ [D] = [D1, D2]
+ }
+ object D5{
+ a = "doctor"
+ s = "StatusInquiry"
+ [D] = []
+ }
+ object D4{
+ a = "doctor"
+ s = "DoDiagnostics"
+ [D] = []
+ }
+ object D6{
+ a = "doctor"
+ s = "ShareIdentity"
+ [D] = []
+ }
+ D0 --* D1
+ D0 --* D2
+ D0 --* D3
+ D1 --* D4
+ D1 --* D5
+ D2 --* D6
+ D3 --* D1
+ D3 --* D2
+ note "This node is currenlty \n implicitly selected \n as response \n(because it came first \n in D0 as child)" as response
+ response .. D1
+ #+END_SRC
+ #+CAPTION: Object diagram of a dialogue tree, at the leaves deliberation stopped.
+ #+LABEL: fig:dialoguetree
+ #+ATTR_LATEX: :width 0.5\textwidth
+ #+RESULTS[1f1f673a8fc69adbde74aa1a7aeb115abfb4b09a]: fig:dialoguetree
+ [[file:img/uml/dialoguetree.png]]
 
-#+NAME: fig:dialoguetree
-#+BEGIN_SRC plantuml :cache yes :file img/uml/dialoguetree.png :exports results
-object D0{
-a = "doctor"
-s = "Greeting"
-[D] = [D1, D2, D3]
-}
-object D1 {
-a = "patient"
-s = "Complaint"
-[D] = [D5, D4]
-}
-object D2 {
-a = "patient"
-s = "QuestionIdentity"
-[D] = [D6]
-}
-object D3{
-a = "patient"
-s = "Greeting"
-[D] = [D1, D2]
-}
-object D5{
-a = "doctor"
-s = "StatusInquiry"
-[D] = []
-}
-object D4{
-a = "doctor"
-s = "DoDiagnostics"
-[D] = []
-}
-object D6{
-a = "doctor"
-s = "ShareIdentity"
-[D] = []
-}
-D0 --* D1
-D0 --* D2
-D0 --* D3
-D1 --* D4
-D1 --* D5
-D2 --* D6
-D3 --* D1
-D3 --* D2
-note "This node is currenlty \n implicitly selected \n as response \n(because it came first \n in D0 as child)" as response
-response .. D1
-#+END_SRC
-#+CAPTION: Object diagram of a dialogue tree, at the leaves deliberation stopped.
-#+LABEL: fig:dialoguetree
-#+ATTR_LATEX: :width 0.5\textwidth
-#+RESULTS[1f1f673a8fc69adbde74aa1a7aeb115abfb4b09a]: fig:dialoguetree
-[[file:img/uml/dialoguetree.png]]
+ \toReview
+ With this in place we can replace both the $S_t$ and $\Delta_{t+1}$ with the $D_t$ and
+ $D_{t+1}$ respectively, we can also remove $t$, since its now contained in the
+ utterance.
+ This is convenient because now we can model function attitudes as processing
+ units that take a dialogue tree and modify it.
+ We are left with the following type signature:
+ \[ B_t \to D_t \overset{f_a}{\to} (B_{t+1}, D_{t+1}) \]
+ So we receive a dialogue tree from the user, which can just be a root node,
+ and then after processing we put out a dialogue tree plus the replies which
+ are the children, whereof the first child is the most preferred.
+ Note that this $f_a$ function is an endomorphism, meaning that the input
+ arguments are of the same type as the output arguments. We annotated
+ the output arguments with $t+1$ to indicate they could've been changed,
+ not to indicate a different type.
 
-\toReview
-With this in place we can replace both the $S_t$ and $\Delta_{t+1}$ with the $D_t$ and
-$D_{t+1}$ respectively, we can also remove $t$, since its now contained in the
-utterance.
-This is convenient because now we can model function attitudes as processing
-units that take a dialogue tree and modify it.
-We are left with the following type signature:
-\[ B_t \to D_t \overset{f_a}{\to} (B_{t+1}, D_{t+1}) \]
-So we receive a dialogue tree from the user, which can just be a root node,
-and then after processing we put out a dialogue tree plus the replies which
-are the children, whereof the first child is the most preferred.
-Note that this $f_a$ function is an endomorphism, meaning that the input
-arguments are of the same type as the output arguments. We annotated
-the output arguments with $t+1$ to indicate they could've been changed,
-not to indicate a different type.
+ \toReview
+ Now we should note that this type signature heavily constrains our agent.
+ It for example can't handle being punched in the face by the doctor unless
+ there is a symbol encoded for that. 
+ It also runs into trouble when the agent is asked to sit on the counter.
+ Movement should be possible.
+ However once movement becomes a requirement we can just create a new function
+ and type signature that is less restrictive.
+ This new function can still use these functions we are modelling now for dialogue.
 
-\toReview
-Now we should note that this type signature heavily constrains our agent.
-It for example can't handle being punched in the face by the doctor unless
-there is a symbol encoded for that. 
-It also runs into trouble when the agent is asked to sit on the counter.
-Movement should be possible.
-However once movement becomes a requirement we can just create a new function
-and type signature that is less restrictive.
-This new function can still use these functions we are modelling now for dialogue.
+*** Symbol graph
+ <<symbol graph>>
+ \cleared
+ To make sure the agent stays on topic we will make use of a symbol graph.
+ This graphs gives connections to the symbols described in section [[A type signature approach]].
+ The meaning graph $G$ is a set of connections $c \in G$ where
+ $c = (P, A, s_1, s_2)$, $s_1, s_2 \in \mathcal{S} \wedge s_1 \neq s_2$,
+ $A \subseteq \Lambda$ is the set of agents that can use the connection,
+ to prevent cases where the patient asks the doctor about his health problems.
+ $P$ is the perlocutionary value set of the speech act, as introduced in section
+ [[Dialogue tree]].
+ This is encoded in the edges because its not the meaning that causes these
+ but the way you get to those meanings.
+ In other words, being polite and then telling bad news causes different
+ perlocutionary values than just telling bad news.
 
-** Symbol graph
-<<symbol graph>>
-\todo{Merge in type signature approach}
-\cleared
-To make sure the agent stays on topic we will make use of a symbol graph.
-This graphs gives connections to the symbols described in section [[A type signature approach]].
-The meaning graph $G$ is a set of connections $c \in G$ where
-$c = (P, A, s_1, s_2)$, $s_1, s_2 \in \mathcal{S} \wedge s_1 \neq s_2$,
-$A \subseteq \Lambda$ is the set of agents that can use the connection,
-to prevent cases where the patient asks the doctor about his health problems.
-$P$ is the perlocutionary value set of the speech act, as introduced in section
-[[Dialogue tree]].
-This is encoded in the edges because its not the meaning that causes these
-but the way you get to those meanings.
-In other words, being polite and then telling bad news causes different
-perlocutionary values than just telling bad news.
+ \toReview
+ From this we can define a function that gets the allowed connections 
+ using a symbol and an agent from the graph:
+ \[ G \to a \to s \to [c] \]
+ We can retrieve $a$ and $s$ from the current node we are processing in $D$.
+ The result is a list of connections we can go to from that symbol.
+ Since connection $c$ contains multiple agents $A$,
+ and a dialogue tree as an option can only contain a single agent in the utterance,
+ we need to flatten the resulting connection list $[c]$.
 
-\toReview
-From this we can define a function that gets the allowed connections 
-using a symbol and an agent from the graph:
-\[ G \to a \to s \to [c] \]
-We can retrieve $a$ and $s$ from the current node we are processing in $D$.
-The result is a list of connections we can go to from that symbol.
-Since connection $c$ contains multiple agents $A$,
-and a dialogue tree as an option can only contain a single agent in the utterance,
-we need to flatten the resulting connection list $[c]$.
+ \toReview
+ The introduction of the symbol graph is probably the most radical change this
+ thesis proposes.
+ It moves chatbots away from the idea that responses are many to one relations
+ always and opens up many to many relations.
+ There are more advanced techniques such as owl available, we discuss
+ these in section [[More advanced learning]].
+ We didn't use that because we thought the step from ontology to language
+ would be to difficult to finish in time.
+ The symbol graph provides a good middle ground,
+ in which its relatively easy to implement but offers enough freedom to encode
+ personality in as a process.
+ Note that this approach fits into the information state transitions
+ discussed in section [[Dialogue systems]].
 
-\toReview
-The introduction of the symbol graph is probably the most radical change this
-thesis proposes.
-It moves chatbots away from the idea that responses are many to one relations
-always and opens up many to many relations.
-There are more advanced techniques such as owl available, we discuss
-these in section [[More advanced learning]].
-We didn't use that because we thought the step from ontology to language
-would be to difficult to finish in time.
-The symbol graph provides a good middle ground,
-in which its relatively easy to implement but offers enough freedom to encode
-personality in as a process.
-Note that this approach fits into the information state transitions
-discussed in section [[Dialogue systems]].
+*** Function attitudes combined
+ <<Composing types>>
+ \toReview
+ The first thing a commendable programmer may think of when trying to combine
+ behavior is of course functional composition.
+ The most important requirement for this to work is that
+ the input type and output type need to be the same of the two functions we
+ want to combine.
+ What is problematic however is that using functional composition in this
+ way would make it impossible for function attitudes to inspect results
+ of their auxiliary functions.
+ This is an important feature we want to keep because if for example a
+ judgement function is first in the order of functions and receives
+ the user meaning it can't do its job yet, more on his in this section
+ [[Rational and irrational]].
+ Therefore we consider another approach.
 
-** Composing type dynamics
-<<Composing types>>
-\todo{Merge in type signature approach, function attitudes working together}
-\toReview
-The first thing a commendable programmer may think of when trying to combine
-behavior is of course functional composition.
-The most important requirement for this to work is that
-the input type and output type need to be the same of the two functions we
-want to combine.
-What is problematic however is that using functional composition in this
-way would make it impossible for function attitudes to inspect results
-of their auxiliary functions.
-This is an important feature we want to keep because if for example a
-judgement function is first in the order of functions and receives
-the user meaning it can't do its job yet, more on his in this section
-[[Rational and irrational]].
-Therefore we consider another approach.
+ \toReview
+ we considered storing the functions in a list
+ and then let an external control unit decide which function processes next.
+ However this would leave the control of the function being called outside of the
+ control of the function attitudes,
+ therefore personality wouldn't play a role in deciding the function being called.
+ It will also create another problem of deciding when a function is called.
+ So to solve these problems we looked at another possibility. \todo{Yes but we actually do this within drools, and we also do the next thing, in fact we just sort off combined both methods, so I think we should describe this somewhere (although technically you don't have to do this to make it work so maybe not in this chapter)}
 
-\toReview
-we considered storing the functions in a list
-and then let an external control unit decide which function processes next.
-However this would leave the control of the function being called outside of the
-control of the function attitudes,
-therefore personality wouldn't play a role in deciding the function being called.
-It will also create another problem of deciding when a function is called.
-So to solve these problems we looked at another possibility. \todo{Yes but we actually do this within drools, and we also do the next thing, in fact we just sort off combined both methods, so I think we should describe this somewhere (although technically you don't have to do this to make it work so maybe not in this chapter)}
+ \toReview
+ In this approach we will give $f_a$ another argument which is the next $f_a$.
+ This looks like the following:
+ \[ \left (\overset{next}{B_t \to D_t \to (B_{t+1}, D_{t+1})}\right ) \to B_t \to D_t \overset{f_a}{\to} (B_{t+1}, D_{t+1}) \]
+ Note that the function in the next bracket has the same prototype as the codomain.
+ A more compact way of representing this type signature is the following:
+ \[ \overset{next}{f_a} \to f_a \]
+ In this case the /next/ function can play an advisory role to the codomain.
+ A unit function can be defined that produces empty sets as results for both
+ believes and action.
+ By unit function we mean the initial /next/ function
+ that does nothing and just returns the believes and dialogue tree.
 
-\toReview
-In this approach we will give $f_a$ another argument which is the next $f_a$.
-This looks like the following:
-\[ \left (\overset{next}{B_t \to D_t \to (B_{t+1}, D_{t+1})}\right ) \to B_t \to D_t \overset{f_a}{\to} (B_{t+1}, D_{t+1}) \]
-Note that the function in the next bracket has the same prototype as the codomain.
-A more compact way of representing this type signature is the following:
-\[ \overset{next}{f_a} \to f_a \]
-In this case the /next/ function can play an advisory role to the codomain.
-A unit function can be defined that produces empty sets as results for both
-believes and action.
-By unit function we mean the initial /next/ function
-that does nothing and just returns the believes and dialogue tree.
+ \toReview
+ To illustrate the use of this type signature design more clearly we'll sketch
+ an example with the first two function attitudes of the INTJ type:
+ \[N_i > T_e \]
+ So to encode this as a function we start with the least preferred function
+ attitude namely the $T_e$,
+ however to let it play an advisory role in the $N_i$ function we first
+ need to complete the /next/ argument.
+ Because its the least preferred function we just use the unit.
+ Now the partially applied type of $T_e$ satisfies that of $N_i$ and we can use
+ it as /next/.
+ This methodology can be used for an entire personality type (all 8 functions
+ in some order).
+ Also as an analogy we could say that we're dealing with an intrusive linked
+ list.
+ The next argument is the next item in the list.
+ Unit is the tail item of that list, which exists to provide a
+ start point to create the data structure upon.
 
-\toReview
-To illustrate the use of this type signature design more clearly we'll sketch
-an example with the first two function attitudes of the INTJ type:
-\[N_i > T_e \]
-So to encode this as a function we start with the least preferred function
-attitude namely the $T_e$,
-however to let it play an advisory role in the $N_i$ function we first
-need to complete the /next/ argument.
-Because its the least preferred function we just use the unit.
-Now the partially applied type of $T_e$ satisfies that of $N_i$ and we can use
-it as /next/.
-This methodology can be used for an entire personality type (all 8 functions
-in some order).
-Also as an analogy we could say that we're dealing with an intrusive linked
-list.
-The next argument is the next item in the list.
-Unit is the tail item of that list, which exists to provide a
-start point to create the data structure upon.
+ \cleared
+ With this methodology function attitudes can decide themselves to consult the
+ next type.
+ Then they can inspect the result, and even the changed believe base to decide
+ if its a good idea to use the result.
 
-\cleared
-With this methodology function attitudes can decide themselves to consult the
-next type.
-Then they can inspect the result, and even the changed believe base to decide
-if its a good idea to use the result.
+ \cleared
+ This architecture can be extended with the scale based Jungian models
+ such as SL-TDI and PDQ by introducing a random choice for using the current or
+ next function.
+ However this becomes rather messy because we're modeling pure functions,
+ therefore we leave this as an exercise to the reader.
 
-\cleared
-This architecture can be extended with the scale based Jungian models
-such as SL-TDI and PDQ by introducing a random choice for using the current or
-next function.
-However this becomes rather messy because we're modeling pure functions,
-therefore we leave this as an exercise to the reader.
-
-** Role of rational and irrational in a process
+** Applied to Jung
 <<Rational and irrational>>
 \todo{Rename to applied theory to Jung}
 \toReview
@@ -2321,6 +2314,8 @@ This could happen if a rational function was the first function for example
 and didn't have any choices available to decide upon.
 
 *** Irrational as a process
+ <<Mapping to process>>
+ \todo{Where is this anchor supposed to point too?}
  \toReview
  The irrational functions rely heavily on the symbol graph to create new
  children in the dialogue tree.
@@ -2490,9 +2485,59 @@ and didn't have any choices available to decide upon.
  possible.
  Options that are goals still get precedence however.
 
+*** Believes
+ \toReview
+ Now you may argue at this point we haven't refined our types a lot, since
+ the believe structure was defined as `Every possible believe',
+ which is basically analogous to `Anything you can think of' or in a object
+ orientated terminology: =Object=.
+ Since the believes serve as input of our function and output of the function
+ we may as well have said $Object \to Object$.
+ Of course the believes are not intended to be direct program output but rather
+ just part of the mind.
+ In other words, the believes are intended to be kept in a container
+ whereas the input $D_t$ and the output $D_{t+1}$ would only be visible for the
+ `outside world'.
+ Still we want to refine our all possible believe to something which is 
+ less broad in scope.
+ To do this analyzed the Jungian functions and see what
+ `extra' information require to function to perform their operations.
+
+ <<Believes overview>>
+ \cleared
+ We listed the function attitudes $f_a$ and their required information into
+ table [[tab:fa-and-data]]. 
+ Therefore $B = (h, [u], \Phi, G, a, G', h')$.
+ For reference a symbol table of all introduced symbols is shown
+ in table [[tab:symbols]] in appendix [[Symbol overview]].
+
+ #+CAPTION: Function attitudes and their required data.
+ #+NAME:   tab:fa-and-data
+ | Function | required data                                                        |
+ | $T_e$    | The set of goals $\Phi$, scene information and $G$                      |
+ | $T_i$    | The set of goals $\Phi$, and $G$                                        |
+ | $F_e$    | Utterance history [u] and $G$, self believe $a$, learned values $h'$ |
+ | $F_i$    | Personal values  $h$                                                 |
+ | $S_e$    | $G$                                                                  |
+ | $S_i$    | Utterance history $[u]$ and $G$, and learned graph $G'$              |
+ | $N_e$    | $G$                                                                  |
+ | $N_i$    | $G$                                                                  |
+
+ \FloatBarrier
+
+** Rule engine influence
+  \drafting
+  The use of the rule engine has had some interesting influences on our design.
+  Firstly it became rather easy to drop the assumption that chatbots ought to
+  operate in a round robin process as discussed in section [[Turn taking]], 
+  secondly the way we combined functions in section [[combining functions]] 
+  is very opaque from the rule engine's perspective.
+  functions has , the issues that arose from that are
+  discussed in section [[Function ply depth]].
+
+
 *** Turn taking
  <<Turn taking>>
-\todo{Perhaps make a chapter rule engine influence?}
  \toReview
  In the naive approach we modeled turn taking with a simple round robin strategy. 
  Basically the irrational functions would only consider options that change
@@ -2508,7 +2553,6 @@ and didn't have any choices available to decide upon.
 
 *** Function ply depth
  <<Function ply depth>>
-\todo{Perhaps make a chapter rule engine influence?}
 \todo[inline]{This is also because at some point we fell back to the list based next approach because we watned drools to have influence on personality reasoning}
  \toReview
  A big issue that turned up trough testing is at which level a function ought to
@@ -2586,47 +2630,6 @@ and didn't have any choices available to decide upon.
  /and/ the input function is rationale,
  plus zero
 
-** Believes
-<<Mapping to process>>
-\todo{Merge into currently named: "role of rational and irrational in a process"}
-\toReview
-Now you may argue at this point we haven't refined our types a lot, since
-the believe structure was defined as `Every possible believe',
-which is basically analogous to `Anything you can think of' or in a object
-orientated terminology: =Object=.
-Since the believes serve as input of our function and output of the function
-we may as well have said $Object \to Object$.
-Of course the believes are not intended to be direct program output but rather
-just part of the mind.
-In other words, the believes are intended to be kept in a container
-whereas the input $D_t$ and the output $D_{t+1}$ would only be visible for the
-`outside world'.
-Still we want to refine our all possible believe to something which is 
-less broad in scope.
-To do this analyzed the Jungian functions and see what
-`extra' information require to function to perform their operations.
-
-<<Believes overview>>
-\cleared
-We listed the function attitudes $f_a$ and their required information into
-table [[tab:fa-and-data]]. 
-Therefore $B = (h, [u], \Phi, G, a, G', h')$.
-For reference a symbol table of all introduced symbols is shown
-in table [[tab:symbols]] in appendix [[Symbol overview]].
-
-#+CAPTION: Function attitudes and their required data.
-#+NAME:   tab:fa-and-data
-| Function | required data                                                        |
-| $T_e$    | The set of goals $\Phi$, scene information and $G$                      |
-| $T_i$    | The set of goals $\Phi$, and $G$                                        |
-| $F_e$    | Utterance history [u] and $G$, self believe $a$, learned values $h'$ |
-| $F_i$    | Personal values  $h$                                                 |
-| $S_e$    | $G$                                                                  |
-| $S_i$    | Utterance history $[u]$ and $G$, and learned graph $G'$              |
-| $N_e$    | $G$                                                                  |
-| $N_i$    | $G$                                                                  |
-
-\FloatBarrier
 ** Consistency with theory
 \cleared
 In this section we will explore if especially INTJ and ENTJ (MBTI) types would
