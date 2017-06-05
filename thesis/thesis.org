@@ -5739,7 +5739,6 @@ We haven't had a need to do such an effort yet, and were more concerned with
 getting a working implementation.
 
 \todo[inline]{We should mention something about the intro: "Therefore extending the game that allows doctors to train for different personalities will help addressing this issue."}
-\todo[inline]{Comparison? (Maybe we can compare with ALICE, or other personality based schemes?)}
 ** Discussion
 \cleared
 There are some odds and ends that haven't been addressed.
