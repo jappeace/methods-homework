@@ -1866,6 +1866,7 @@ After this we will look what extra information the function attitudes need
 in an attempt to reduce the amount of possible believes.
 
 ** Core idea
+<<Informal description of Jung + BDI>>
 \toReview
 Before diving into the type signature approach, or the formal description we
 want to describe it informally.
@@ -1983,12 +1984,20 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
 
 *** Narrowing the model
  <<Narrowing the model>>
- \todo[inline]{We should make the observation that all chatbots are $\sigma \to \sigma$, and perhaps glue this better to each other}
-
- \cleared
+ \toReview
  This definition is however too general for our domain.
  First of all the set of sensory information can be reduced to a string,
  since this is the information we get from a user.
+ We can go even further by saying all chatbots do the same thing
+ namely a mapping $\sigma \to \sigma$ where $\sigma$ is a string, where the domain is a user
+ string and the codomain the bots' reply.
+ Therefore we could express all chatbots in the following manner:
+ \[ B_t \to \sigma \to (B_{t+1}, \sigma) \]
+ Where $B_t$ are the set of believes of the chatbot, or its state.
+ We can model all chatbots in this manner because if they don't have state
+ $B_t = \{ \}$.
+
+ \cleared
  However a string is still to broad since going from a textual representation
  to a deliberation process is difficult.
  Therefore we will introduce another mapping function $g$:
@@ -2262,7 +2271,6 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
 
 ** Applied to Jung
 <<Rational and irrational>>
-\todo{Rename to applied theory to Jung}
 \toReview
 Up until now we modeled the type signature to have a dialogue tree as input and
 output.
@@ -2525,16 +2533,13 @@ and didn't have any choices available to decide upon.
 
  \FloatBarrier
 
-** Rule engine influence
-  \drafting
-  The use of the rule engine has had some interesting influences on our design.
-  Firstly it became rather easy to drop the assumption that chatbots ought to
-  operate in a round robin process as discussed in section [[Turn taking]], 
-  secondly the way we combined functions in section [[combining functions]] 
-  is very opaque from the rule engine's perspective.
-  functions has , the issues that arose from that are
-  discussed in section [[Function ply depth]].
-
+** Changes from tests
+  \toReview
+  In this section we discuss what influence testing had on the application.
+  A big change was the way how turn taking operated discussed in
+  section [[Turn taking]], 
+  secondly the way we combined functions in section [[Composing types]]
+  has some issues with depth discussed in section [[Function ply depth]].
 
 *** Turn taking
  <<Turn taking>>
