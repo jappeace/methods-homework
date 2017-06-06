@@ -30,6 +30,7 @@
 #+LATEX_HEADER: \newcommand{\newlyCleared}{\todo[noline, backgroundcolor=white, bordercolor=red]{Newly cleared}}
 # (something cleared that was under discussion last time)
 #+LATEX_HEADER: \newcommand{\cleared}{\todo[noline, color=white]{Cleared}}
+#+LATEX_HEADER: \newcommand{\cleared2}{\todo[noline, backgroundcolor=white, bordercolor=grey]{Cleared II}}
 
 # alternating table rows
 #+LATEX: \rowcolors{1}{white}{gray!15}
@@ -1796,7 +1797,6 @@ as possible.
 So we want to make the system work, while keeping it simple,
 because simplicity matters cite:hickey2012simplcity.
 
-\todo[inline]{We should look again into making this section division better}
 \toReview
 We do this first by analyzing what we want to do in section [[Differences from Campos]], 
 then we propose a rough solution in section [[Informal description of Jung + BDI]].
@@ -1927,7 +1927,7 @@ questionable if you can combine them successfully.
 To give a better understanding of the scope of this project we will
 try to come up with a type signature of a pure function that models all the
 function attitudes.
-This is done with a Haskell like syntax cite:jones2003haskell,
+We do this with a Haskell like syntax cite:jones2003haskell,
 in which the arrows indicate a function,
 left of the arrow is called a domain and the right side a codomain.
 The domain is also called the argument of a function.
@@ -2532,7 +2532,7 @@ and didn't have any choices available to decide upon.
 
  \FloatBarrier
 
-** Changes from tests
+** Practical changes
   \toReview
   In this section we discuss what influence testing had on the application.
   A big change was the way how turn taking operated discussed in
@@ -2557,7 +2557,6 @@ and didn't have any choices available to decide upon.
 
 *** Function ply depth
  <<Function ply depth>>
-\todo[inline]{This is also because at some point we fell back to the list based next approach because we watned drools to have influence on personality reasoning}
  \toReview
  A big issue that turned up trough testing is at which level a function ought to
  operate.
@@ -2565,8 +2564,16 @@ and didn't have any choices available to decide upon.
  before passing it to the /next/ function, but they can also inspect the result
  of the /next/ function.
  The reason for the two pass architecture is explained in section [[Rational and irrational]].
- However it didn't treat another issue in dept, which is:
- How does a function know at which level n the dialogue tree it should operate?
+ Note that at some point in the reference implementation we stepped away from
+ doing a pure /next/ based appraoch and we re-introduced the list mechanism 
+ that was described in section [[Composing types]].
+ This was to allow drool rules to do inspection of the personality
+ process in between function attitudes, for example to allow emotions to have
+ their influence, or norms from the social practice.
+ Partly because we have a hybred approach of deciding the /next/ function,
+ and because we simply hadn't worked it out for the pure /next/ based approach
+ we need to anwser the follwoing question:
+ ``How does a function know at which level in the dialogue tree it should operate?''
 
  \toReview
  In a naive approach we tried an implementation where irrational functions
@@ -2733,12 +2740,12 @@ the solid arrow means uses and the other lines mean interacts.
   node server
   node client
 
-  server "1"-- "1..*" bot
+  server --  bot
   server  -(0)- client
 #+END_SRC
 #+CAPTION: Deployment diagram of implemented architecture
 #+LABEL: fig:architecture-concept
-#+RESULTS[4adcedc67be0402235438092c31809760c721def]: fig:architecture-concept
+#+RESULTS[ac69c79b9282e3ea8157bf1543b2bb5b52f51f04]: fig:architecture-concept
 [[file:img/uml/architecture-concept.png]]
 
 \toReview
@@ -2761,8 +2768,7 @@ The biggest difference from the original architecture is the removal of
 distinction between drools and the chatbot.
 In the new architecture we make all information in the files available to
 the drools in a database.
-This is starkly different than the architecture used in section [[
-Server architecture]].
+This is starkly different than the architecture used in section [[Server architecture]].
 In the old architecture,
 the reply for a message is already determined before drools had a chance to do
 deliberation.
@@ -2772,7 +2778,6 @@ This means the strings facing the user are spread over both the AIML files
 and the drools.
 This is confusing for new scenario creators since completely different folders
 have to be accessed to change the strings.
-# This violates the changeability design principle quite heavily and unnecessarily. \todo{cite}
 
 \cleared
 The changes proposed here, result in a much more simple architecture.
@@ -3823,8 +3828,19 @@ A deployment diagram of this architecture can bee seen in figure
 #+RESULTS[2175bf151e4fe4f5ae54fdba0ca134983678c0d2]: fig:n-agent-arch
 [[file:img/uml/n-agent-arch.png]]
 
+\toReview
+If we compare figure [[fig:n-agent-arch]] with figure [[fig:architecture-concept]] from
+section [[Implemented architecture]], we can see several large changes.
+First of all the scene and scenario are now split of from the bot drools.
+The reason for this is discussed in section [[System vs agent believes]], 
+but it is basically to serperate the system from the agent believes.
+Also note that there is just one system, but there can be multiple bots.
+Each of these bots has its own file reader, pattern database, and symbol graph.
+Also note that we introduced the social practice component as a way for the bots
+to predict how the scenario will go.
+The score component has direct acces to the bot facts to evaluate how the user
+is doing, for example by analyzing the bots' emotions.
 
-\todo[inline]{How is this different from section [[Implemented architecture]] talk about the figure}
 *** System vs agent believes
 \toReview
 What is required of the drools is that we make a separation between the 
@@ -5783,21 +5799,20 @@ less verbose and more precise method of modelling dialogue.
 It also made drools the center of the new chatbot,
 where each step of processing a user message was decided by business rules.
 
-\cleared
+\toReview
 Once this was done we could implement our interpretation of Jung and
 set up a test scenario to test the ideas presented in section [[Mapping to process]].
 From the test results in appendix [[final test]],
 we can see that the theory works in the implemented chatbot and scenario
 for the INTJ, ENFP and ISTP personalities.
-
-\cleared
-This is by no means a prove that this will work in all instances.
+This could in future work help doctors train in dealing with various
+personalities as discussed in the introduction.
+We did not prove however that this will work in all instances.
 A first step towards that would be to model the theories in section
 [[Jungian BDI]] in a formal language discussed in section [[Logic of BDI]].
 We haven't had a need to do such an effort yet, and were more concerned with
 getting a working implementation.
 
-\todo[inline]{We should mention something about the intro: "Therefore extending the game that allows doctors to train for different personalities will help addressing this issue."}
 ** Discussion
 \cleared
 There are some odds and ends that haven't been addressed.
@@ -6837,7 +6852,6 @@ Conversation went according to script.
 :END:
 ** Rough planning.
 *** Report
-+ Fix todo markers
 + Clear the uncleared sections: `Everything newly cleared'
 + Re-read the entire thing again
 + Spell
