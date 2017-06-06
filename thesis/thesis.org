@@ -75,9 +75,9 @@
 
 #+BEGIN_CENTER
 
-\toReview
+\newlyCleared
 We explore how to add Jungian personality to a chatbot as a process.
-An existing serious chatbot game was used as starting point,
+`Salve' an existing serious chatbot game, was used as a starting point,
 and closely inspected.
 We designed personality as a preference for an algorithm rather than value
 driven decision making, akin to the ideas of Campos cite:campos_mabs2009.
@@ -109,7 +109,7 @@ Jung, chatbot, drools, YAML, AIML, MBTI, salve, communicate!
 \newpage
 
 * Introduction
-\toReview
+\newlyCleared
 Communication is the foundation of our modern society.
 Having good communication skills can help individuals in both their professional
 and personal lives.
@@ -117,21 +117,22 @@ However training people in communication skills can be difficult.
 Another party is required to communicate with,
 and a tutor or teacher has to be there to give feedback.
 
-\toReview
+\newlyCleared
 Serious games can be used to train people with these kind of skills
 cite:swartout2013virtual.
 An example of this is the `communicate!' game which was developed specifically
 for medical students.
 Wherein teachers can create scenarios to let their students practice with
 communication cite:jeuring2015demo.
-The `communicate!' game was script based, the teacher made a scenario and the student would
+The `communicate!' game was script based,
+the teacher made a scenario and the student would
 follow the choices predefined by the teacher.
 A script based game has of course the weakness that a student can't use
 creative responses,
 all possible responses are scripted into the scenario
 and replying correctly relies on a simple /ABC/ choice.
 
-\toReview
+\newlyCleared
 To combat this an alternative serious game called `Salve' was made based on the
 chatbot Alice cite:augello2016social.
 To measure how a student performed, a production rule engine was used called drools.
@@ -146,7 +147,7 @@ but rather being sensitive to the people who appreciate it cite:clack2004persona
 Therefore extending the game so that doctors can train for dealing with different
 personalities, will help addressing this issue.
 
-\toReview
+\newlyCleared
 In background section [[Background]] we will start by looking into 
 personality theories [[personality theories]], and consider the advantages and
 disadvantages they have for our use case.
@@ -181,7 +182,7 @@ and finally we will look at the serious game in its existing form.
 
 ** Personality theories
  <<personality theories>>
-   \toReview
+   \newlyCleared
    A personality is a set of identifiers that can be used with
    reasonable consistency to predict behavior
    cite:mischel2008introductionp3_definition.
@@ -240,7 +241,7 @@ and finally we will look at the serious game in its existing form.
  hidden variables.
  This methodology has become widely used in psychology cite:fabrigar1999evaluating.
 
- \toReview
+ \newlyCleared
  The data Tupes used is from Cattell cite:cattell1947confirmation and several
  others. Cattell used a rating scheme,
  where a trait was introduced and all test subjects then had to rate all other
@@ -250,8 +251,8 @@ and finally we will look at the serious game in its existing form.
  These traits in the test were based on the /personality sphere/ concept which
  tried to cover the entire surface of personality by providing many small trait
  areas.
- Examples of the traits are: "Attention getting vs Self sufficient", or
- "Assertive vs Submissive".
+ Examples of the traits are: `Attention getting vs Self sufficient', or
+ `Assertive vs Submissive'.
 
  \doubleCleared
  In the beginning of the 1990's there were many ways to measure personality that
@@ -328,7 +329,7 @@ and finally we will look at the serious game in its existing form.
  
 *** Personality types
  <<sec:types>>
- \toReview
+ \newlyCleared
  To address the big five's issue of having no theoretical foundation we'll
  inspect the idea of personality types.
  We begin with the theoretical foundation proposed by the grandfather of
@@ -341,7 +342,7 @@ and finally we will look at the serious game in its existing form.
 
 **** Jung's theory of psychological types
 <<Jungian types>>
-\toReview
+\newlyCleared
 Jung describes several concepts, firstly each person has two attitudes:
 /Introversion/ and /extroversion/.
 Extroversion means dealing with the outside world and therefore is called
@@ -350,17 +351,17 @@ Introversion is the world inside a person, and therefore is subjective,
 or private.
 These attitudes are mutually exclusive,
 you can't do introversion and extroversion at the same time.
-For example if you're day dreaming you're not paying attention to your
+For example if you're day dreaming, you're not paying attention to your
 surroundings.
 A person who spends most of his time in the introversion attitude is called
-an /introvert/, conversely someone who spends most of his time with the
-observable would can be called an /extrovert/.
+an /introvert/, conversely someone who spends most of his time in
+the extroversion attitude is called an /extrovert/.
 One is however never totally an introvert or extrovert,
 an introvert can still have extrovert moments and vice versa.
 It should also be noted that the unconsciousness according to Jung is
 flipped in attitude. cite:hall1973primer97-98attitude
 
-\toReview
+\newlyCleared
 Then there are four functions.
 The first two functions are called the /rational functions/
 because they act as a method of making judgements.
@@ -373,10 +374,10 @@ although you can be emotional and use this function.
 The /irrational functions/ are called this because they require no reasoning.
 /Sensation/ is sense perception created by the stimulation of the senses,
 it can always be rooted to a sense,
-such as "I see a balloon" or "I feel hungry".
+such as ``I see a balloon'' or ``I feel hungry''.
 /Intuition/ is like a sensation but its not produced by a sense.
 Therefore it has no origin in the same way as sensation has,
-by which its explained as "just a hunch" or "I feel it in my bones".
+by which its explained as ``just a hunch'' or ``I feel it in my bones''.
 cite:beauchamp2005communication,hall1973primer98-100functions
 
 \doubleCleared
@@ -539,23 +540,23 @@ This is also true for the irrational functions.
  constructs are truly categorical suggested however that this was maybe not
  the case and a continuous scale for assessment judgements are required.
 
- \toReview
+ \newlyCleared
  In cite:sipps1985item the MBTI is put trough a method called factor analyses.
  This is the same technique where OCEAN is based upon (see section [[OCEAN]]).
- With this technique the desired outcome is that there are 4 question clusters
+ With this technique the desired outcome is that there are four question clusters
  (or factors), one for each dimension.
  They should be independent,
- a question that influences I/E score should not influence S/N, and 
- finally we expect the factors to indicate differences between individuals,
+ a question that influences I/E score should not influence S/N,
+ and finally we expect the factors to indicate differences between individuals,
  random questions won't do that.
  However the study indicated that the MBTI had more than 4 factors (6),
  cite:sipps1985item explains the first extra factor as questions that assessed
- people being "unconditional positive",
+ people being `unconditional positive',
  but could not explain the other extra factor.
  Something else of note worth cite:sipps1985item indicated was that there
  were questions doing no discrimination at all (not being scored). 
 
- \toReview
+ \newlyCleared
  Reliability indicates how often the same result will come out of the test,
  for example if you take the MBTI a 100 times you may be classified the same
  type for 70 times,
@@ -600,7 +601,7 @@ This is also true for the irrational functions.
  | Empathy       | 1 | 2 | 3 | 4 | 5 | Logic     |
  | Dispassionate | 1 | 2 | 3 | 4 | 5 | Emotional |
 
- \toReview
+ \newlyCleared
  The result of the PPSDQ would look something like: I-30 N-20 T-80 J-60, with
  a scale of 0 to 100. To calculate the Jungian functions as a probability measure
  some math is required. Our subject in our example is $70\%$ of the time
@@ -680,15 +681,15 @@ This is also true for the irrational functions.
  The PPSDQ is more realistic, but at the cost of being more difficult to
  implement.
 
- \toReview
+ \newlyCleared
  The SL-TDI is even harder to implement than the PPSDQ because the function
  attitudes no longer have to alternate.
  This either means that functions are independent (thereby rejecting some of Jung's work),
  or that they have to work in some kind of combination.
  If they work in some kind of combination and we have the following preference:
  \[ T_e > T_i > S_i > N_i > F_e > N_e > S_e > F_i\]
- We select the first function to work with, but it requires some information now,
- which we can only get from irrational, what do we now?
+ We select the first function to work with, but it requires some information,
+ which we can only get from an irrational function. So what do we do now?
  Select $S_i$, thereby skipping $T_i$, or select $T_i$ and let it decide to
  select $S_i$, but this would basically give $T_i$ censorship rights.
  This is difficult to answer therefore it is a lot more difficult to implement
@@ -701,7 +702,7 @@ This is also true for the irrational functions.
  Therefore our preference for implementation is the following:
  \[ \text{MBTI} > \text{PPSDQ} > \text{SL-TDI} > \text{OCEAN} \]
 
- \toReview
+ \newlyCleared
  There is another hidden reasoning behind this, the work of PPSDQ can built on
  that of MBTI, and that of SL-TDI can build on that of PPSDQ.
  OCEAN lacks theory and builds on statistics,
@@ -724,7 +725,7 @@ that is capable of /autonomous action/ in this environment in order to meet its
 delegated objectives.
 #+END_QUOTE
 
-\toReview
+\newlyCleared
 In another older definition cite:wooldridge1995intelligent Wooldridge highlights
 /autonomy/, /social ability/, /reactivity/, and /pro activity/.
 Where autonomy means that no human intervention is required,
@@ -746,7 +747,7 @@ process asking for it).
 However we won't call a kernel an agent because it doesn't even come close to
 having believes, desires or intentions.
 
-\toReview
+\newlyCleared
 Something to keep in mind is that there are three "branches" of agent research
 cite:wooldridge1995intelligent.
 The first one is /agent theory/ in which /specifications/ and methods of 
@@ -801,7 +802,7 @@ that not just move but have human like abilities cite:aylett2013intelligent.
 Because of complex cognition and planning mechanisms they are able to deal
 with dynamic social environments autonomously.
 
-\toReview
+\newlyCleared
 We can consider the Fatima architecture  cite:dias2005feeling
 as an intelligent virtual agent architecture.
 In this the OCC model cite:steunebrink2009occ was used to define and track
@@ -811,7 +812,7 @@ decay rate variances, goals, reaction rules and action tendencies.
 These don't follow the theory discussed in section [[personality theories]].
 Note that the Fatima architecture is an extension upon BDI cite:lim2008improving.
 
-\toReview
+\newlyCleared
 We can consider the architecture of the `salve' game discussed in section
 [[Abstract architecture]] already a virtual agent architecture.
 It for example also has an emotions module which also is grounded in
@@ -845,7 +846,7 @@ epistemics to add believes to it cite:meyer2014logics.
 
 *** Drools
 <<Drools background>>
-\toReview
+\newlyCleared
 If JADE cite:braubach2003jadex, and 2APL cite:dastani20082apl are agent
 orientated programming languages,
 then drools can be seen as a more low level variant.
@@ -857,14 +858,15 @@ A good example in which drools is used is the expert system called OptaPlanner
 cite:vcimbora2015usability, which is a constraint satisfaction solver trough
 heuristics by using drools.
 
-\toReview
+\newlyCleared
 Drools consists of three major concepts.
 First of all there is the data model, which are just java classes.
 This data model is called the fact base.
 Then we have the rule queries, or left hand side.
 These indicate when a rule should be executed by analyzing the fact base.
 Finally there is the right hand side,
-which is just a piece of java code that can modify the facts,
+which is java code that gets executed if the left hand side becomes true.
+This code can modify the facts,
 or interlope with outside java code trough global variables.
 Also note that drools is Turing complete cite:weppenaar2011solving.
 An example of a drool rule can be seen in listing [[code:drool:example]].
@@ -884,7 +886,7 @@ then
 end
 #+END_SRC
 
-\toReview
+\newlyCleared
 With listing [[code:drool:example]] we can also see the difference between facts
 and globals.
 The facts are used as values to execute drools upon.
@@ -894,14 +896,14 @@ Such as the logging object =log= in the example.
 
 *** BDI + Personality
 <<BDI + Personality>>
-\toReview
+\newlyCleared
 There have been several works that attempted to combine BDI with personality
 theory.
 In cite:gmytrasiewicz2002emotions emotion and personality is taken together
 and modelled formally.
 Similarly to the Fatima architecture there is no personality research cited in
 this work, just research on emotions.
-However this formal model could be useful regardless of lack of personality theory,
+However this formal model could be useful regardless the lack of personality theory,
 especially the observation that there are only three possible transformation
 as the result of emotions:
 Transformation of actions space,
@@ -909,14 +911,14 @@ transformation of the utility function and transformation of probabilities
 of state.
 We mention this because we do transformation of action space
 (irrational functions) and utility
-functions ($F_e$ modifies itself) in section [[Mapping to process]].
+functions ($F_e$ modifies itself) in section [[rational process]].
 The transformation of state idea may seem foreign to us:
-`personality never changes in our architecture',
+Personality never changes in our architecture,
 however we do have the believes $B$,
 which could be seen as the state of mind of an agent.
-Therefore we do this operation whenever we change the believe base.
+Therefore we do this transformation whenever we change the believe base.
 
-\toReview
+\newlyCleared
 In cite:canuto2005personality the personality model of Millon was used,
 they chose to interpret it as a value based personality scheme.
 Where the values would indicate probability of action selection and quality of
@@ -952,7 +954,7 @@ We comment more on this in section [[Jungian BDI]].
  
 ** Social practice
 <<social practice>>
-\toReview
+\newlyCleared
 In cite:reckwitz2002toward, practice theory is described as an example of
 culture theory,
 from this we can deduce a reason why the study of such theory
@@ -967,21 +969,21 @@ of same cultures share.
 Using the social practice model that doesn't ignore this layer,
 could lead to a more `natural' conversation with a chatbot.
 
-\toReview
+\newlyCleared
 In cite:smolka2001social it is stated that the research in activity theory
 led to the development of social practices.
-It was Karl Marx who thought of the "roots" of activity theory
+It was Karl Marx who thought of the `roots' of activity theory
 cite:engestrom1999perspectivesp3_marx,
 Activity theory tries to bridge the gap between a single actor and the system
 it resides in trough the activity in progress
 cite:engestrom1999perspectivesp10_broad_definition.
-Another way of describing activity in this sense is "a way of doing things".
+Another way of describing activity in this sense is `a way of doing things'.
 A problem with this model however was, how do cultures move activities from the
 collective towards the individual cite:smolka2001social.
 Social practices were therefore introduced to make the notion of activity more
 concrete.
 
-\toReview
+\newlyCleared
 An early adoption of social practice can be found in cite:shove2005consumers,
 where it was used to analyze the spread of Nordic Walking.
 In his analyses he uses the following overarching concepts to analyze the practice:
@@ -991,11 +993,11 @@ In his analyses he uses the following overarching concepts to analyze the practi
   In cite:shove2005consumers meanings and images is used interchangeably,
   however in cite:holtz2014generating it's labeled as just meanings.
   For clarity we will be using the word /Meanings/ since it's more descriptive.
-3. /Competence/, To participate in the practice of cycling,
+3. /Competence/, to participate in the practice of cycling,
   one needs to be able to ride a bike.
   These abilities is what competence encompasses.
 
-\toReview
+\newlyCleared
 In cite:dignum2014contextualized a model of social practices for agents was
 developed.
 This model is extended specifically to allow software agents to use it.
@@ -1008,7 +1010,7 @@ In the previous model this was all part of /Meanings/.
 /Activities/ are the normal activities in the social practice,
 in Nordic walking this can be for example talking with your partner,
 or stopping to get a stone out of your shoe.
-They don't need to all be performed but are there just as options.
+They don't all need to be performed, but are there just as options.
 This is the first construct that wasn't covered by the other model.
 /Plan patterns/ is a default that is assumed for all ways the social practice
 is used.
@@ -1038,7 +1040,7 @@ under that social practice,
 if no preconditions match an agent could consider trying other social practices
 he knows, or ask its peers for more information.
 
-\toReview
+\newlyCleared
 The social practice theory in this thesis should be considered as a
 /foundation/ rather than a separate element.
 Potentially it could give the notion of culture or even common sense to agents.
@@ -1088,14 +1090,15 @@ Finishing --> [*]
 #+RESULTS[7a43fec1ceafd4b5f5a5ceaf9e08cbc3996b06c6]: fig:sp-activity
 [[file:img/uml/sp-activity.png]]
 
-\toReview
+\newlyCleared
 We can imagine personality should have /a/ influence on social practice
-selection and of course plan influence. As far as the authors are aware however,
-there hasn't been any prior work on this subject, but we can speculate for
-example that when considering physical context someone that is domination by a
-sensing extroverted $S_e$ function attitude would check all facts more
-rigorously than someone dominated by an introverted intuition $N_i$ function
-attitude.
+selection and of course plan influence.
+As far as the authors are aware however,
+there hasn't been any prior work on this subject,
+but we can speculate for example that when considering physical context someone
+that is domination by a sensing extroverted $S_e$ function attitude would check
+all facts more rigorously than
+someone dominated by an introverted intuition $N_i$ function attitude.
 
 \doubleCleared
 If the social practices are defined more formally they could be 
@@ -1165,7 +1168,7 @@ The approach Traum proposes is modeling:
 The dialogue is the information state itself cite:walterapproaches.
 This is an extremely general way of describing a dialogue system.
 
-\toReview
+\newlyCleared
 Both Alice and Eliza fit in this system.
 Alice for example provides dialogue moves trough AIML and the update strategy
 is simple pattern matching.
@@ -1209,7 +1212,7 @@ This is of course an information state approach too.
  Practicing in this case would mean memorising what button to click rather
  than to figure out what to say.
 
- \toReview
+ \newlyCleared
  To address this issue the a new implementation was made. 
  This version was based around the idea of a chatbot,
  which allowed users to give open answers rather than selecting buttons.
@@ -1224,7 +1227,7 @@ This is of course an information state approach too.
  cite:augello2016social,
  such as following certain protocols (politeness, medical standards), and empathy.  
 
- \toReview
+ \newlyCleared
  There is a difference between the architecture in the published papers and
  the source code received.
  This is because the source code is actively being worked on, whereas the
@@ -1235,8 +1238,9 @@ This is of course an information state approach too.
  language, however in the source code AIML has taken a step back.
  It is only used for text processing and not deliberation
  (which is now being taken over by drools as discussed in [[existing architecture]]).
- Section [[Functionality]] and [[Abstract architecture]], are based upon the published
- papers, however for sections [[existing architecture]] and [[Server architecture]],
+ Section [[Functionality]] and [[Abstract architecture]],
+ are based upon the published papers,
+ however for sections [[existing architecture]] and [[Server architecture]],
  we will be using the source code as a reference when discussing the existing
  work because it is more relevant.
 
@@ -1261,7 +1265,7 @@ This is of course an information state approach too.
 From here the student can start practicing, the game will track his progress
 on the server.
 **** Teacher usage
-\toReview
+\newlyCleared
 For the teacher there is no client right now.
 The way a teacher can setup a scenario is trough modifying AIML and drool files.
 The teacher probably needs an expert to do this because to load these one needs
@@ -1278,17 +1282,17 @@ which was directly taken from cite:augello2016social.
   #+NAME:   fig:abstract-architecture
   [[./img/abstract-architecture.png]]
   
-\toReview
-The =Interaction= module handles user interaction, where the =GUI= can show the
-dialogue and the mood of the agent.
+\newlyCleared
+The =Interaction= module handles user interaction,
+where the =GUI= can show the dialogue and the mood of the agent.
 The =Dialogue= module inside it however handles low level string interpretation
-with help of AIML (see section [[Text Processing]]), this basically works trough
-string matching.
+with help of AIML (see section [[Text Processing]]),
+this basically works trough string matching.
 Note that although represented in the abstract architecture as the same module,
-the =GUI= resides in  the implementation on the client side whereas the
+the =GUI= resides in the implementation on the client side whereas the
 =Dialogue= module resides on the server. 
 
-\toReview
+\newlyCleared
 The =Dialogue= module calls directly the =Representation and interpretation=
 module,
 with help of specialized tags (see section [[Deliberation]]) information can be inserted in
@@ -2271,6 +2275,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
 
 ** Applied to Jung
 <<Rational and irrational>>
+<<Mapping to process>>
 \toReview
 Up until now we modeled the type signature to have a dialogue tree as input and
 output.
@@ -2322,7 +2327,7 @@ This could happen if a rational function was the first function for example
 and didn't have any choices available to decide upon.
 
 *** Irrational as a process
- <<Mapping to process>>
+ <<irrational process>>
  \toReview
  The irrational functions rely heavily on the symbol graph to create new
  children in the dialogue tree.
@@ -2388,6 +2393,7 @@ and didn't have any choices available to decide upon.
  is what was described in the theory of section [[Jungian types]].
 
 *** Rational as a process
+<<rational process>>
  \doubleCleared
  In the current design the rational functions apply order to the children of a
  current dialogue node.
