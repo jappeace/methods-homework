@@ -25,12 +25,12 @@
 #+LATEX_HEADER: \usepackage[obeyFinal, colorinlistoftodos]{todonotes}
 #+LATEX_HEADER: \newcommand{\ask}[1]{\todo[color=cyan]{#1}}
 #+LATEX_HEADER: \newcommand{\dignum}[1]{\todo[color=brown]{#1}}
-#+LATEX_HEADER: \newcommand{\drafting}{\todo[noline, color=gray]{Working draft}}
-#+LATEX_HEADER: \newcommand{\toReview}{\todo[noline, color=yellow]{To review}}
-#+LATEX_HEADER: \newcommand{\newlyCleared}{\todo[noline, backgroundcolor=white, bordercolor=red]{Newly doubleCleared}}
+#+LATEX_HEADER: \newcommand{\drafting}{\todo[noline, color=gray]{working draft}}
+#+LATEX_HEADER: \newcommand{\toReview}{\todo[noline, color=yellow]{to review}}
+#+LATEX_HEADER: \newcommand{\newlyCleared}{\todo[noline, backgroundcolor=white, bordercolor=red]{newly cleared}}
 # (something cleared that was under discussion last time)
 #+LATEX_HEADER: \newcommand{\cleared}{\todo[noline, color=white]{cleared}}
-#+LATEX_HEADER: \newcommand{\doubleCleared}{\todo[noline, backgroundcolor=white, bordercolor=gray]{Cleared II}}
+#+LATEX_HEADER: \newcommand{\doubleCleared}{\todo[noline, backgroundcolor=white, bordercolor=gray]{cleared II}}
 
 # alternating table rows
 #+LATEX: \rowcolors{1}{white}{gray!15}
@@ -1298,7 +1298,7 @@ module,
 with help of specialized tags (see section [[Deliberation]]) information can be inserted in
 the =Representation and interpretation= module.
 
-\toReview
+\newlyCleared
 Both the =Representation and interpretation= module and the =Score= module use
 drools to do their respective tasks.
 The only real separation in implementation is trough directory and file
@@ -1310,7 +1310,7 @@ this is done because the =Emotion= module sends directly messages to the
 
 *** Application Architecture
 <<existing architecture>>
-\toReview
+\newlyCleared
 The game uses a client server architecture (see figure [[fig:components]]).
 The client is written in unity and the server is a Java application running on 
 Wildfly.
@@ -1340,7 +1340,7 @@ which is more difficult with a technology such as REST.
     folders with the folder name =dto=.
 
 **** Protocol
-    \toReview
+    \newlyCleared
     The protocol is setup to be intended for a much larger system.
     There are hints of a registration system but further inspection
     revealed that only logging in worked and was required.
@@ -1373,7 +1373,7 @@ which is more difficult with a technology such as REST.
 
 *** Server architecture
 <<Server architecture>>
-\toReview
+\newlyCleared
 We will discuss the server architecture in more detail since it contains the
 `brains' of the application.
 The most important classes are shown in figure [[fig:class]].
@@ -1420,7 +1420,7 @@ the client enter.
 #+RESULTS[da1283423804d9bccc8868552768b582306da369]: fig:class
 [[file:img/uml/class.png]]
 
-\toReview
+\newlyCleared
 The =WebsocketService= uses a =ChatbotEngine= to determine how to reply to user utterances,
 Where =ChatbotEngineImpl= is the concrete implementation.
 =ChatbotEngineImpl= uses a =KieSession= for the drools and a =Chat= which is the
@@ -1435,7 +1435,7 @@ for example when the user hasn't replied after 20 seconds the agent will ask
 the user why he hasn't replied yet.
 A detailed overview of construction can be seen in figure [[fig:construction]].
 
-\toReview
+\newlyCleared
 In the class diagram (figure [[fig:class]]), we can see an attribute to the =Chat=
 class called predicates.
 This is a bag of variables the drools can use to keep track of the scenario
@@ -1504,13 +1504,13 @@ stop
 		</template>
 	</category>
 #+END_SRC
-    \toReview
+    \newlyCleared
      In this example the first category indicates that if a user types
      ``What is the problem'' (pattern tags), then the answer can be found in a
      category with pattern ``why are you here''.
      The second category does the same but the star indicates that any amount of
      characters
-     [fn::It is not really 'any' character, we investigate this further in section [[Star tags]]]
+     [fn::It is not really `any' character, we investigate this further in section [[Star tags]]]
      before the pattern can be ignored to match with the category.
 
 **** Deliberation
@@ -1532,7 +1532,7 @@ as can be seen in listing [[code:s-aiml-inserts]].
 </category>
 #+END_SRC
 
-\toReview
+\newlyCleared
 In this case if a user utters the sentence: ``why are you here'', the bot
 will check the drool database what his problem is and also update the
 scenario.
@@ -1596,7 +1596,7 @@ Figure [[fig:utterance-proccesing]] gives a detailed overview of utterance proce
 #+RESULTS[2be41360a975175f4a0734807235d7983de36beb]: fig:utterance-proccesing
 [[file:img/uml/utterance-proccesing.png]]
 
-\toReview
+\newlyCleared
 As can be seen in the diagram the message processing happens inside the Alice
 bot.
 Tags were added to AIML to allow the drool engine to be updated.
@@ -1636,7 +1636,7 @@ Template -> [*]
 \clearpage
 * Related work
 <<Related work>>
-\toReview
+\newlyCleared
 In this chapter we will give a brief overview of various interesting papers
 we found during researching this topic.
 We will start with chatbots in general, each of which has a wildly different
@@ -1652,7 +1652,7 @@ transformation.
 The keyword file and its associated transformation rules were called the
 `script'.
 
-\toReview
+\newlyCleared
 The ALICE chatbot is a more recent incarnation of the idea,
 but uses AIML as a basis for the `script' cite:wallace2001don.
 Because ALICE is licensed under an open source license,
@@ -1665,7 +1665,7 @@ traditional chatbot paradigm, but in short:
 We can't use AIML for adding personality unless we'd modify it in such a way
 that it no longer is AIML.
 
-\toReview
+\newlyCleared
 In cite:vinyals2015neural a sub symbolic chatbot is presented that uses
 machine learning.
 It appears that it can handle the general cases of conversation,
@@ -1683,7 +1683,7 @@ section [[Replace regex]].
 
 *** Multilogue
 <<Related multilogue>>
-\toReview
+\newlyCleared
 In another interesting paper cite:penning2007boosting,
 multilogue is already possible.
 However this design is /drastically/ different from the one we presented.
@@ -1699,7 +1699,7 @@ On the other hand it is more advanced in that it can construct sentences,
 whereas we predefined them.
 
 ** Personality in chatbots
-\toReview
+\newlyCleared
 To simulate personality in communication games there have been already several
 works proposed.
 Etheredge used the OCEAN personality theory to create argumentative
@@ -1727,7 +1727,7 @@ action selection.
 Having a lot of rule also make maintenance hard, if for example there is an
 unwanted behavior many rules need to be inspected before the change can be made.
 
-\toReview
+\newlyCleared
 There are two strategies that could help dealing with this:
 Modularization which is partly already done in the paper by splitting up action
 selection and action revision for example.
@@ -1740,7 +1740,7 @@ for action selection,
 we can have an agent that will revise as if it is very high neurotic but select
 as if it were very low neurotic.
 
-\toReview
+\newlyCleared
 Van den Bosch also chose to use OCEAN to model characters in a serious
 communication game cite:van2012characters.
 He used a nested probabilistic if else structure to decide on how agents should
@@ -1754,7 +1754,7 @@ This kind of methodology is called content orientated cite:campos_mabs2009.
 Depending on context the personality should change, with which social practices
 can help.
 
-\toReview
+\newlyCleared
 In  cite:galvao2004persona an architecture is presented to add personality
 trough AIML.
 This paper is interesting because it uses AIML where we explicitly wanted to
@@ -1788,31 +1788,30 @@ labels. The details can be found in section [[Jungian BDI]].
 # In this chapter we talk about the abstract ideas, any information necessary
 # to execute the thesis without considering implementation details.
 # so I guess height and node count aren't necessary.
-\toReview
+\newlyCleared
 This chapter tries to answer the question,
 `what is personality from a computationally perspective?'.
 In where we imagine personality being a preference towards a process rather
 than a preference towards content.
 We will however not consider yet how to place this in the existing system,
 but will consider how to model Jungian psychology with BDI into a dialogue process.
-We want to make personality as a process work, while trying to introduce
-as few assumptions as possible, and we want these assumptions to be as small
-as possible.
+We want to make personality as a process work,
+while trying to introduce as few assumptions as possible,
+and we want these assumptions to be as small as possible.
 So we want to make the system work, while keeping it simple,
 because simplicity matters cite:hickey2012simplcity.
 
-\toReview
+\newlyCleared
 We do this first by analyzing what we want to do in section [[Differences from Campos]], 
 then we propose a rough solution in section [[Informal description of Jung + BDI]].
 However since that solution is very rough we use type signatures in
 section [[A type signature approach]] to be more precise.
 This leads us to discuss the dialogue tree [[Dialogue tree]] and symbol graph
-[[symbol graph]], which are two core components. \todo{we should group these in  a section called core components?}
+[[symbol graph]], which are two core components.
 Then we make a model that can combine individual functions in section
 [[Composing types]].
 After which we will look into the specific function attitudes and how to
 implement these as behavior in section [[Rational and irrational]].
-Followed by a brief overview of believes in section [[Believes]].
 Finally we will consider how this presented method relates to Jungian
 theory in section [[Consistency with theory]].
 
@@ -1827,7 +1826,7 @@ However rather than using MBTI dimensions we want to use Jungian functions.
 This is because Jungian function attitudes are the underlying construct of
 MBTI and several other instruments (such as the PPSDQ and SL-TDI).
 
-\toReview
+\newlyCleared
 There are some differences from the theory discussed in [[sec:types]] and Campos'
 process.
 The difference is that in the discussed theory we would translate MBTI to the
@@ -1871,7 +1870,7 @@ in an attempt to reduce the amount of possible believes.
 
 ** Core idea
 <<Informal description of Jung + BDI>>
-\toReview
+\newlyCleared
 Before diving into the type signature approach, or the formal description we
 want to describe it informally.
 Firstly we see the Jungian functions as a unit of processing.
@@ -1881,7 +1880,7 @@ combination of Jungian functions attitudes which would result in
 eight factorial different units of processing,
 or specifically just for MBTI which would result in $16$.
 
-\toReview
+\newlyCleared
 We also chose to model function attitudes, rather than functions and attitudes.
 The reason for taking them as a combination is that there are more precise
 descriptions available for function attitudes, rather than functions and
@@ -1927,7 +1926,7 @@ questionable if you can combine them successfully.
 
 ** A type signature approach
 <<A type signature approach>>
-\toReview
+\newlyCleared
 To give a better understanding of the scope of this project we will
 try to come up with a type signature of a pure function that models all the
 function attitudes.
@@ -1941,7 +1940,7 @@ cite:haskellpartialapplication.
 Capital letters indicate sets.
 Note that we have an overview of the symbols used in appendix [[Symbol overview]].
 
-\toReview
+\newlyCleared
 We will go from an as broad as possible system (while using BDI) to a
 precise as possible definition, while still being able to satisfy the domain.
 This is desirable because it will restrict the amount of computation branches
@@ -1952,14 +1951,14 @@ because there is no more input information to make decisions upon.
 Therefore making the domain as small as possible will result in a 
 less complex system.
 
-\toReview
+\newlyCleared
 To start we'll postpone modeling interplay
 between the $f_a$ function attitudes and define a type signature for them working
 individually.
 To do this we will define some terms, with which we will go from the broadest
 definition possible towards one that fits the project scope precisely.
 
-\toReview
+\newlyCleared
 Let $\mathcal{B}$ denote the set of all
 possible believes and let $B_t$ with $B_t \subseteq \mathcal{B}$ denote the
 believes at time $t$. 
@@ -1988,7 +1987,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
 
 *** Narrowing the model
  <<Narrowing the model>>
- \toReview
+ \newlyCleared
  This definition is however too general for our domain.
  First of all the set of sensory information can be reduced to a string,
  since this is the information we get from a user.
@@ -2029,7 +2028,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  that in turn map to itself,
  on this a random selection can be made.
 
- \toReview
+ \newlyCleared
  The simplification is now as follows,
  firstly we note that $\mathcal{S} \subset \Pi$,
  since understanding symbols is a form of sensation.
@@ -2044,7 +2043,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
 
 *** Dialogue tree
  <<Dialogue tree>>
- \toReview
+ \newlyCleared
  We have some believes, time and symbols going in, some deliberation
  going on and a new set of believes and actions going out.
  However this type signature isn't enough.
@@ -2054,7 +2053,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  The ply under that is the utterances we consider in response to that.
  With plies under that in turn being responses to those, etc.
 
- \toReview
+ \newlyCleared
  We need to mark which agent uttered what in the dialogue tree nodes,
  therefore we introduce $\Lambda$ as the set of all active actors, where $a \in \Lambda$.
  With an actor $a$ and a symbol $s$ we can start thinking about modeling an
@@ -2135,7 +2134,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  #+RESULTS[1f1f673a8fc69adbde74aa1a7aeb115abfb4b09a]: fig:dialoguetree
  [[file:img/uml/dialoguetree.png]]
 
- \toReview
+ \newlyCleared
  With this in place we can replace both the $S_t$ and $\Delta_{t+1}$ with the $D_t$ and
  $D_{t+1}$ respectively, we can also remove $t$, since its now contained in the
  utterance.
@@ -2151,7 +2150,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  the output arguments with $t+1$ to indicate they could've been changed,
  not to indicate a different type.
 
- \toReview
+ \newlyCleared
  Now we should note that this type signature heavily constrains our agent.
  It for example can't handle being punched in the face by the doctor unless
  there is a symbol encoded for that. 
@@ -2177,7 +2176,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  In other words, being polite and then telling bad news causes different
  perlocutionary values than just telling bad news.
 
- \toReview
+ \newlyCleared
  From this we can define a function that gets the allowed connections 
  using a symbol and an agent from the graph:
  \[ G \to a \to s \to [c] \]
@@ -2187,7 +2186,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  and a dialogue tree as an option can only contain a single agent in the utterance,
  we need to flatten the resulting connection list $[c]$.
 
- \toReview
+ \newlyCleared
  The introduction of the symbol graph is probably the most radical change this
  thesis proposes.
  It moves chatbots away from the idea that responses are many to one relations
@@ -2204,9 +2203,9 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
 
 *** Function attitudes combined
  <<Composing types>>
- \toReview
- The first thing a commendable programmer may think of when trying to combine
- behavior is of course functional composition.
+ \newlyCleared
+ The first thing a programmer may think of when trying to combine
+ behavior is functional composition.
  The most important requirement for this to work is that
  the input type and output type need to be the same of the two functions we
  want to combine.
@@ -2219,8 +2218,8 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  [[Rational and irrational]].
  Therefore we consider another approach.
 
- \toReview
- we considered storing the functions in a list
+ \newlyCleared
+ We considered storing the functions in a list
  and then let an external control unit decide which function processes next.
  However this would leave the control of the function being called outside of the
  control of the function attitudes,
@@ -2228,7 +2227,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  It will also create another problem of deciding when a function is called.
  So to solve these problems we looked at another possibility.
 
- \toReview
+ \newlyCleared
  In this approach we will give $f_a$ another argument which is the next $f_a$.
  This looks like the following:
  \[ \left (\overset{next}{B_t \to D_t \to (B_{t+1}, D_{t+1})}\right ) \to B_t \to D_t \overset{f_a}{\to} (B_{t+1}, D_{t+1}) \]
@@ -2241,7 +2240,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  By unit function we mean the initial /next/ function
  that does nothing and just returns the believes and dialogue tree.
 
- \toReview
+ \newlyCleared
  To illustrate the use of this type signature design more clearly we'll sketch
  an example with the first two function attitudes of the INTJ type:
  \[N_i > T_e \]
@@ -2252,7 +2251,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  Because its the least preferred function we just use the unit.
  Now the partially applied type of $T_e$ satisfies that of $N_i$ and we can use
  it as /next/.
- This methodology can be used for an entire personality type (all 8 functions
+ This methodology can be used for an entire personality type (all eight functions
  in some order).
  Also as an analogy we could say that we're dealing with an intrusive linked
  list.
@@ -2276,7 +2275,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
 ** Applied to Jung
 <<Rational and irrational>>
 <<Mapping to process>>
-\toReview
+\newlyCleared
 Up until now we modeled the type signature to have a dialogue tree as input and
 output.
 However we have not considered how children are generated and how the order
@@ -2297,7 +2296,7 @@ Currently it cannot apply any order since the children list is empty.
 Luckily it can still use its next function, which is irrational
 (see section [[Jungian alternating functions]]).
 
-\toReview
+\newlyCleared
 Another situation to consider is what to do when there are already children.
 Should an irrational function extend this list of children or go to some leaf
 node?
@@ -2308,7 +2307,7 @@ We will discuss this level of operation in more detail at section
 [[Function ply depth]], since this discussion is quite complicated and not important
 for the main idea of what rational and irrational ought to do.
 
-\toReview
+\newlyCleared
 With this in mind we can still say these things about the conceptualized
 architecture:
 /rational/ functions change the order of possible replies.
@@ -2328,13 +2327,13 @@ and didn't have any choices available to decide upon.
 
 *** Irrational as a process
  <<irrational process>>
- \toReview
+ \newlyCleared
  The irrational functions rely heavily on the symbol graph to create new
  children in the dialogue tree.
  This is under the assumption that connections in the symbol graph are always
  on topic.
 
- \toReview
+ \newlyCleared
  In the initial design of the $S$ and $N$ functions,
  we considered them in the following way:
  $S$ would be analyzing all available options rigorously in a forward chaining
@@ -2360,7 +2359,7 @@ and didn't have any choices available to decide upon.
  Since the answer to that question is non-trivial, we consider such a solution
  out of scope.
 
- \toReview
+ \newlyCleared
  We decided instead to use a more simple approach instead,
  $S$ would be options in breath, analyzing many details around it,
  and $N$ would be options in depth, just taking what first comes to mind and
@@ -2368,7 +2367,7 @@ and didn't have any choices available to decide upon.
 
 **** Intuition
  # http://personalitycafe.com/cognitive-functions/83205-whats-difference-between-ni-ne.html
- \toReview
+ \newlyCleared
  We can consider $N_i$ to be a depth first approach. Going several plies deep and
  at each ply consulting the $next$ function which step to take.
  $N_e$ on the other hand just takes the top $x$ of the current dialogue options
@@ -2379,7 +2378,7 @@ and didn't have any choices available to decide upon.
  $N_i$ and $N_e$ (see section [[Jungian types]]).
 
 **** Sensing
- \toReview
+ \newlyCleared
  The $S_e$ function just receives all possible connections from the current
  meaning for several plies and then applies the /next/ function on it.
  The $S_i$ however is more conservative and will only pop $x$ random meanings by
@@ -2464,12 +2463,12 @@ and didn't have any choices available to decide upon.
  Finally there is a function that determines if a goal is completed or not:
  \[\phi \to b\]
 
- \toReview
+ \newlyCleared
  Now to begin with $T_e$.
  It sees the conversation as the problem to solve.
  Therefore it will consistently choose speech acts that could help the partner to
  progress the scenario.
- So it wants to put the partner in a position where he has
+ It wants to put the partner in a position where he has
  almost no other options except to progress the scenario.
  If it encounters a child node with a goal $\phi$ in it it will give priority to that.
  If there are multiple goals in the options the comparison function can be used
@@ -2478,7 +2477,7 @@ and didn't have any choices available to decide upon.
  If an option changes scene we assume it progresses scenario.
  This comes secondary to finding goals.
 
- \toReview
+ \newlyCleared
  To model $T_i$ however the most obvious solution would be to implement an
  axiomatic logic system.
  This is rather heavy on maintenance.
@@ -2488,7 +2487,7 @@ and didn't have any choices available to decide upon.
  but this is out of scope of this thesis.
  Therefore we looked for an alternative.
 
- \toReview
+ \newlyCleared
  $T_i$ wants to help the conversation partner to analyze the problem according
  to the partner's own internal logic framework,
  and to do this it wants to give as much options as possible to the partner.
@@ -2499,7 +2498,7 @@ and didn't have any choices available to decide upon.
  Options that are goals still get precedence however.
 
 *** Believes
- \toReview
+ \newlyCleared
  Now you may argue at this point we haven't refined our types a lot, since
  the believe structure was defined as `Every possible believe',
  which is basically analogous to `Anything you can think of' or in a object
@@ -2539,7 +2538,7 @@ and didn't have any choices available to decide upon.
  \FloatBarrier
 
 ** Practical changes
-  \toReview
+  \newlyCleared
   In this section we discuss what influence testing had on the application.
   A big change was the way how turn taking operated discussed in
   section [[Turn taking]], 
@@ -2548,7 +2547,7 @@ and didn't have any choices available to decide upon.
 
 *** Turn taking
  <<Turn taking>>
- \toReview
+ \newlyCleared
  In the naive approach we modeled turn taking with a simple round robin strategy. 
  Basically the irrational functions would only consider options that change
  actor between plies. 
@@ -2563,7 +2562,7 @@ and didn't have any choices available to decide upon.
 
 *** Function ply depth
  <<Function ply depth>>
- \toReview
+ \newlyCleared
  A big issue that turned up trough testing is at which level a function ought to
  operate.
  We have a two pass architecture, where functions can inspect the dialogue tree
@@ -2571,17 +2570,17 @@ and didn't have any choices available to decide upon.
  of the /next/ function.
  The reason for the two pass architecture is explained in section [[Rational and irrational]].
  Note that at some point in the reference implementation we stepped away from
- doing a pure /next/ based appraoch and we re-introduced the list mechanism 
+ doing a pure /next/ based approach and we re-introduced the list mechanism 
  that was described in section [[Composing types]].
  This was to allow drool rules to do inspection of the personality
  process in between function attitudes, for example to allow emotions to have
  their influence, or norms from the social practice.
- Partly because we have a hybred approach of deciding the /next/ function,
+ Partly because we have a hybrid approach of deciding the /next/ function,
  and because we simply hadn't worked it out for the pure /next/ based approach
- we need to anwser the follwoing question:
+ we need to answer the following question:
  ``How does a function know at which level in the dialogue tree it should operate?''
 
- \toReview
+ \newlyCleared
  In a naive approach we tried an implementation where irrational functions
  will by default go down the left (most preferred) path to a leaf node and then
  generate more options,
@@ -2593,7 +2592,7 @@ and didn't have any choices available to decide upon.
  This is a problem because it should be the most relevant function instead of
  least relevant.
 
- \toReview
+ \newlyCleared
  Another approach is to use outside information to determine height.
  Basically we would put into the believes the order of functions.
  With this information and the dialogue tree we can calculate the
@@ -2615,7 +2614,7 @@ and didn't have any choices available to decide upon.
  since a lower level rational function would still guide which part of the tree
  get extended.
 
- \toReview
+ \newlyCleared
  To sum up, there are two methods of dealing with this issue.
  Firstly we can let rational functions sort everything,
  but then the deeper rational functions will become less relevant.
@@ -2631,7 +2630,7 @@ and didn't have any choices available to decide upon.
  Note however that deeper rationale functions can still have effect by virtue of
  deciding which actions are generated indirectly.
 
- \toReview
+ \newlyCleared
  To calculate an operation height, we need to know the function order,
  then the function itself and finally the height of the dialogue tree.
  Which results in the following:
@@ -2657,7 +2656,7 @@ The first two functions of INTJ are:
 And of ENTJ they are:
 \[ T_e > N_i \]
 
-\toReview
+\newlyCleared
 What we would expect is that the $T_e$ and $N_i$ produce different results
 because of the order they are in the sequence.
 If we assume personalities only have these two functions, their respective
@@ -2670,7 +2669,7 @@ Since attitudes produce a different process by definition
 (see section [[Mapping to process]]),
 we can conclude that they will also behave differently.
 
-\toReview
+\newlyCleared
 Because we have differences trough order we can consider this system consistent
 with the theory MBTI presents.
 It is also consistent with Campos' work because the functions are just units
@@ -2680,7 +2679,7 @@ Therefore this system consistent with the major sources of theory we used.
 \clearpage
 * Architecture
 <<Architecture>>
-\toReview
+\newlyCleared
 To combine the ideas discussed in section [[Jungian BDI]] with the existing program,
 some big architectural changes were introduced.
 For example the Alice bot was completely removed in favor of a new less tightly
@@ -2688,7 +2687,7 @@ coupled scheme.
 The drools engine has become the center of deliberation (which previously was the AIML).
 We will discuss these changes in this chapter.
 
-\toReview
+\newlyCleared
 In this chapter we will discuss two architectures,
 the first is the architecture which is actually implemented, this deals with a
 single agent and the user.
@@ -2699,7 +2698,7 @@ discussed in section [[The serious game]].
 After that we discuss the data structures in section [[Data structures]].
 In section [[Initialization]] we discuss how the initialization of the program
 with help of the discussed data structures,
-we continue discussing the (normal) operation of the program in section
+we continue discussing the normal operation of the program in section
 [[Operation]].
 In section [[Social practice support]] we discuss how social practice support
 can be added in the future and in section [[Multilogue architecture]] we do
@@ -2754,22 +2753,24 @@ the solid arrow means uses and the other lines mean interacts.
 #+RESULTS[ac69c79b9282e3ea8157bf1543b2bb5b52f51f04]: fig:architecture-concept
 [[file:img/uml/architecture-concept.png]]
 
-\toReview
+\newlyCleared
 In figure [[fig:architecture-concept]] we can see the new deployment diagram.
 The server and client have mostly stayed the same, except for the bot.
 This has been completely replaced by a new system.
 The Alice bot used to be a file reader, pattern database and deliberation engine
 in one package.
-These concepts have now been split,
+These concepts have now been split up,
 the file reader handles the loading part of the bot,
-after that it just insert the pattern,
-symbol and connection database into the drools rule engine.
+after that it just inserts the
+symbol, pattern and connection databases into the drools rule engine.
 The drools rule engine then handles all deliberation,
 which can happen with the various components, such as personality emotions etc.
+Even the pattern matching is done by a drool rule with help of the
+pattern database.
 Since the file reader is no longer a part of the bot,
-it should be really easy to support other data formats.
+it should be easy to add support for other data formats.
 
-\toReview
+\newlyCleared
 The biggest difference from the original architecture is the removal of
 distinction between drools and the chatbot.
 In the new architecture we make all information in the files available to
@@ -2810,7 +2811,7 @@ In this subsection we will discuss the main data structures used to implement
 the ideas from section [[Jungian BDI]].
 We use class diagrams to accomplish this which are based upon UML cite:fowler2004uml.
 
-\toReview
+\newlyCleared
 Before this is done we would like to point out several things to keep in mind.
 Firstly, we do not show everything precisely such as implemented in the code,
 because that would clutter the diagrams.
@@ -2911,14 +2912,15 @@ is constructed from.
 #+RESULTS[21ed2d8e1f9aab1fa283d778126b8d46087e0bb4]: fig:droolclass
 [[file:img/uml/droolclass.png]]
 
-\toReview
+\newlyCleared
 From figure [[fig:droolclass]] we can clearly see the importance of the =Symbol=
 structure in the application.
 Simply by counting the amount of structures that consist of it,
 and of course it is a very important structure because it is the building
 block that we use for information state transitions.
 As described in section [[Jungian BDI]] we map strings into user symbols,
-and we can map symbols back to strings again.
+and once the symbol graph is used to find a connected symbol,
+we can map symbols back to strings again.
 An overview of the relationship between the theoretic representation
 and the implementation for this class diagram can be seen in table
 [[tab:jung-class-relation-drool]].
@@ -3049,7 +3051,7 @@ the ones discussed in previous section.
 | $B$    | Believes            |
 | $D$    | DialogueTree        |
 
-\toReview
+\newlyCleared
 The =Believes= structure is very peculiar, because it doesn't represent a single
 idea or use case. Instead its just a combination of various elements that are
 required for the Jungian functions to operate.
@@ -3075,7 +3077,7 @@ rather big.
 
 *** Db package
 <<db package>>
-\toReview
+\newlyCleared
 In figure [[fig:dbclass]] the databases are shown.
 This is a sub package of the model.
 The database is an immutable hash map. It also provides some extra
@@ -3123,7 +3125,7 @@ can lookup symbols in the =SymbolDatabase=, rather than worrying about construct
 of new ones.
 This class is the realization of $\mathcal{S}$ from section [[Jungian BDI]].
 
-\toReview
+\newlyCleared
 =PatternDatabase= can store patterns based upon a =Scene=.
 There are actually two constructed of these,
 the first one constructs the patterns that are in a scene,
@@ -3135,7 +3137,7 @@ scene A.
 This second database allows scene transitions to occur.
 To construct this second database a connection database is required however.
 
-\toReview
+\newlyCleared
 =ConnectionDatabase= is a database that stores a connection set from a
 symbol. 
 This class is analogous to the symbol graph $G$ from section [[Jungian BDI]],
@@ -3172,7 +3174,7 @@ Therefore the =JungFuncAccessor= interface was introduced.
 This allows unit test to check if the next function was called for example,
 but the architecture also becomes more extendable because of this.
 
-\toReview
+\newlyCleared
 Figure [[fig:jungjavaclass]] shows the elements required for java to apply an $f_a$.
 To do this we first create a =JungFuncArgs= structure with its =create= method.
 Then we insert the Jungian functions we want to apply.
@@ -3495,7 +3497,7 @@ We construct its data first with a standard java =HashMap=,
 and once this is complete we wrap this into the =Database= class.
 Which makes a shallow copy and has no API for mutation (see figure [[fig:dbclass]]).
 
-\toReview
+\newlyCleared
 This initialization problem is the reason why we chose the order of
 initialization shown in figure [[fig:initjung]].
 The cyclic structure we want to create is the symbol graph $G$.
@@ -3505,24 +3507,24 @@ All symbols are constructed and put into the symbol database with as key a
 string containing the scene name and symbol name.
 We are using the scene name and symbol name as a key value.
 
-\toReview
+\newlyCleared
 Once we have the symbol database we can use it to create connections from it.
 We can see in figure [[fig:dbclass]] that a connection database consists
 of symbol key values leading up to a set of connections.
 In figure [[fig:droolclass]] we see that connections consist of a symbol object
 its going too with some additional values.
-To get the symbol values we just do a lookup in the symbol database which we
-know from the file system and the =_connections= YAML file.
+To get the symbol values we just do a lookup in the symbol database, we
+know the key value from the file system and the =_connections= YAML file.
 In an initial iteration the symbol object wasn't used directly as key, 
 instead the symbol scene name and symbol name string were used.
-However using the symbol directly is more type safe and more ergonomic.
+However using the symbol directly is more type safe and ergonomic.
 The other values of the connection class can be determined by the YAML
 as discussed in section [[yaml connections]].
 An alternative approach would have been to store connections inside the symbols
 themselves, however this would make it impossible for the symbols to be
 immutable.
 
-\toReview
+\newlyCleared
 Finally the pattern databases are constructed.
 Patterns were after reading the symbols already put into a =HasHmap=,
 with as key the symbol and as value the set of patterns.
@@ -3610,7 +3612,7 @@ we can quite precisely explain what is going on.
  #+RESULTS[ba2ef7b0333cc8277765f73cc81a4e7ac3846b44]: fig:insert_meaning
  [[file:img/uml/insert_meaning.png]]
 
-\toReview
+\newlyCleared
 This operation is starkly different from the one presented in section
 [[user utterance processing]],
 particularly if you compare the activity diagrams in
@@ -3623,7 +3625,7 @@ the application.
 Then the Personality swimming lane was introduced,
 this is of course in light of this thesis.
 
-\toReview
+\newlyCleared
 Since these activity diagrams are quite detailed in their description of what
 is going on,
 we made an overview of the key changes in the state diagrams 
@@ -3678,7 +3680,7 @@ this results in the =ParsedUtterance= type which can be seen
 in figure [[fig:supportclassjava]].
 This type then gets inserted into the fact base to continue the process.
 
-\toReview
+\newlyCleared
 The =ParsedUtterance= then gets transformed into a =PreProcessed= type.
 During this process the duplicates matches are removed.
 Each element in the =ParsedUtterance= list gets individually inserted as a
@@ -3706,7 +3708,7 @@ which is true in practice, but no concrete if else structure is used.
 Drools has support for setting priority of execution in rules,
 which was used for this.
 
-\toReview
+\newlyCleared
 It should be noted that at the point of quick reply personality could also be at
 play.
 For example people could have alternative ways of pronouncing the response.
@@ -3714,7 +3716,7 @@ Thinking people may for example respond with a confident yes, whereas feeling
 people would say it by default in a more doubting tone.
 We have not taken such variations into consideration.
 
-\toReview
+\newlyCleared
 The high level processing executes if there is still a  =PreProcessed= type
 available, in other words no low level replies were executed.
 We create the initial =DialogueTree=, and remove the =Believes=
@@ -3730,9 +3732,9 @@ these are the functions that are extensively described in section
 With this list it is determined which function should be executed next upon
 the =DialogueTree= and =Believes=.
 
-\toReview
+\newlyCleared
 After there are no more functions in the list, we know we are done.
-We move to the next step where we get the reply from the =DialogueTree-.
+We move to the next step where we get the reply from the =DialogueTree=.
 This is an =Utterance= structure, if this =Utterance= is the same as the
 self field in the =Believes= structure, we send the reply by wrapping the
 utterance in a =Reply= type.
@@ -3742,7 +3744,7 @@ If we do send a reply we reinsert the selected =Utterance= as a
 These types can be found in figure [[fig:supportclassdrools]]. 
 
 ** Social practice support
-\toReview
+\newlyCleared
 Currently our support for social practice is rather limited.
 It was not a core goal of this thesis to support this,
 however it was important that in future work it should be possible to add this.
@@ -3834,21 +3836,21 @@ A deployment diagram of this architecture can bee seen in figure
 #+RESULTS[2175bf151e4fe4f5ae54fdba0ca134983678c0d2]: fig:n-agent-arch
 [[file:img/uml/n-agent-arch.png]]
 
-\toReview
+\newlyCleared
 If we compare figure [[fig:n-agent-arch]] with figure [[fig:architecture-concept]] from
 section [[Implemented architecture]], we can see several large changes.
 First of all the scene and scenario are now split of from the bot drools.
 The reason for this is discussed in section [[System vs agent believes]], 
-but it is basically to serperate the system from the agent believes.
+but it is basically to separate the system from the agent believes.
 Also note that there is just one system, but there can be multiple bots.
 Each of these bots has its own file reader, pattern database, and symbol graph.
-Also note that we introduced the social practice component as a way for the bots
+We introduced the social practice component as a way for the bots
 to predict how the scenario will go.
-The score component has direct acces to the bot facts to evaluate how the user
+The score component has direct access to the bot facts to evaluate how the user
 is doing, for example by analyzing the bots' emotions.
 
 *** System vs agent believes
-\toReview
+\newlyCleared
 What is required of the drools is that we make a separation between the 
 multilogue /system/ and agent /believes/.
 A good step in this direction is the =Believes= structure,
@@ -3887,7 +3889,7 @@ The only thing that needs happen is a self fact needs to be inserted,
 or the =Believes= structure could be used for that, if it is kept around.
 
 *** Identifying speaker
-\toReview
+\newlyCleared
 Another big issue is figuring out which agent(s) is being talked to by the user.
 There has been some research on this subject,
 for example using hand coded selection mechanisms cite:klotz2011engagement,
@@ -3917,12 +3919,12 @@ and therefore it would be wise to define some kind of role mechanism,
 for which solutions exist cite:sandhu1996role.
 
 *** Practicalities
-\toReview
+\newlyCleared
 Then there are some practicalities to consider, that are more at implementation
 level.
 For example replies should be timed, so that the user won't see suddenly 200
 lines of chat messages between two of his conversation partners.
-This is relatively complex to do because with multiple bots *and* doing
+This is relatively complex to do because with multiple bots and doing
 timed reactions some kind of communication needs to occur between the bots.
 This is probably a task for the system,
 but it could also be considered a part of the social practice.
@@ -3931,13 +3933,12 @@ A different way of dealing with this is just preventing the scenario from
 continuing at certain key points until a user reaction occurs.
 Deciding which approach is the best is a matter of experimentation.
 
-\toReview
+\newlyCleared
 Then it should also be noted that the scenarios of the bots should be
 specified differently. At least for parts of it, while other parts should be
 shareable.
 So the YAML files should be specified distinctly per bot, the drools files
 distinctly per bot and there could be a mechanism to share these.
-
 
 # empty buffer of figures
 \clearpage
@@ -3978,7 +3979,7 @@ Patterns are used to identify user utterances and attach responses to them.
 We created a deployment diagram of the situation seen in figure [[fig:dep:aimlcats]],
 which removes the syntax, so that the situation is more obvious.
 
-\toReview
+\newlyCleared
 What we can see is that if the user says ``Hello'' then the bot will reply ``Hi''.
 So what we have here is a mapping function from $\sigma \to \sigma$, where $\sigma$ is a
 string (see section [[Narrowing the model]]).
@@ -4081,7 +4082,7 @@ The next sections will discuss the thought process to a new representation.
 ** Analyzing AIML
 # Note that such descriptions are good, show how it was in the old system and
 # the thought process towards the new system, so do more of it like this
-\toReview
+\newlyCleared
 What we want to do is create a mapping function $\sigma \overset{g}{\to} s$
 (see section [[Narrowing the model]]).
 In our first attempt we will modify AIML to do this.
@@ -4169,7 +4170,7 @@ In other words, dealing with the $g'$ function, this is what the next section
 deals with.
 
 *** Symbol to string
-\toReview
+\newlyCleared
 The next step is to consider how we go from symbols back to strings.
 What we assume is that the agent already found a symbol to utter,
 for example the status inquiry.
@@ -4278,7 +4279,7 @@ and therefore another file.
 </patterns>
 #+END_SRC
 
-\toReview
+\newlyCleared
 However the observant reader will see this isn't valid XML
 and by extension AIML, since XML requires a single document root tag.
 It does specify what we want, and it does so very tersely.
@@ -4334,7 +4335,7 @@ therefore correct it.
 The syntax of JSON can be also more terse, which is shown by both YAML and TOML.
 Because of these reason we looked at the other two contenders.
 
-\toReview
+\newlyCleared
 The reason for choosing YAML over TOML is that YAML is stable,
 whereas TOML hasn't reached stabilization yet cite:tomlreadme.
 Although the argument TOML has over YAML is that YAML is much more complex,
@@ -4367,7 +4368,7 @@ Therefore no =symbol= item is shown in the example.
 Quotation marks ="=, are to indicate strings, for certain characters this is 
 necessary, in other cases YAML does this for the author.
 
-\toReview
+\newlyCleared
 Note that there are multiple literals to choose from in listing
 [[code:yaml-symbol]].
 In the current implementation this is similar to using =random= tags in AIML.
@@ -4387,7 +4388,7 @@ patterns:
   - How are you *
 #+END_SRC
 
-\toReview
+\newlyCleared
 We keep the pattern fields for legacy support.
 However it's much more easy to just support regular expressions
 cite:thompson1968programming.
@@ -4408,7 +4409,7 @@ regexes:
   - "How ([a-z])\\w+ you(.*)"
 #+END_SRC
 
-\toReview
+\newlyCleared
 The example in listing [[code:yaml-regexes]] only matches a single word and allows
 for trailing characters.
 Note that the example in listing [[code:yaml-symbol]] would've also matched
@@ -4660,12 +4661,12 @@ cloud "symbols"{
 [[file:img/uml/dep:filedconns.png]]
 
 **** Actors
-\toReview
+\newlyCleared
 A foreign idea to AIML is the notion of actor restrictions.
 Since AIML will always model from the perspective of the bot, there is no need for this.
 However because we model both bot and user, we do require this.
 
-\toReview
+\newlyCleared
 To make sure certain strange situations don't occur, such as the patient asking
 the doctor if the doctor is sick,
 we added actor based restrictions on connections.
@@ -4677,7 +4678,7 @@ which basically means any actor can say this,
 or a specific actor.
 This could be extended with some kind of role system cite:sandhu1996role.
 
-\toReview
+\newlyCleared
 Note that because AIML does not specify actors,
 it can never be used on its own to model a multilogue system in.
 Although we make actors explicit not because of the desire to implement a
@@ -4752,7 +4753,7 @@ pattern can be used.
 Therefore in our YAML semantics, they are an additional restriction on connections.
 They appear in listing [[code:aiml-that-tag]] as an example.
 
-\toReview
+\newlyCleared
 Although supporting this feature isn't necessary to implement the theory
 presented in section [[Jungian BDI]],
 they do allow much more fine grained control over the scenario.
@@ -4797,7 +4798,7 @@ An example can be seen in listing [[code:yaml-before-field]].
      restricted_to: patient   
 #+END_SRC
 
-\toReview
+\newlyCleared
 Adding the who field was necessary since we no longer model just the
 utterances of the bot,
 we needed to expend it by adding the actor who uttered the utterance.
@@ -4829,8 +4830,8 @@ This is best illustrated with an example which can be seen in listing
      restricted_to: patient   
 #+END_SRC
 
-\toReview
-The default value of the before field will be None. Which just means no
+\newlyCleared
+The default value of the before field will be =None=. Which just means no
 additional restrictions.
 In this example making such an explicit definition won't be very constructive.
 However since we need an identity (no-op) before value anyway for the default
@@ -4876,7 +4877,7 @@ Although this feature isn't necessary for personality per se, its a really
 important chatbot feature.
 It allows symbols to become more flexible, and connections more dynamic.
 
-\toReview
+\newlyCleared
 To implement these in our new system we first need to analyze what star tags are.
 Then we need to figure out how we can implement this in our matching system,
 and finally we need to add a template method to our YAML representation.
@@ -4903,7 +4904,7 @@ various names as can be seen in table [[tab:alice-normal-words]].
 | =blah *. blah=          | =blah *=                |
 | =blah * ahah=           | =blah * ahah=           |
 
-\toReview
+\newlyCleared
 Quite arbitrarily some characters are accepted while others aren't,
 ALICE happily accepts an underscore but an exclamation mark is to much.
 There are several ways to improve this system.
@@ -4937,7 +4938,7 @@ regexes:
 #+END_SRC
 
 *** Templates in symbols
-\toReview
+\newlyCleared
 To insert data into a symbol we need a templating mechanism.
 So the first thing we did was finding template libraries in Java.
 Three options came up:
@@ -4958,7 +4959,7 @@ seen in listing [[code:naive-template-symbol]].
 literal: "Hello, my name is <actor.name>"
 #+END_SRC
 
-\toReview
+\newlyCleared
 In listing there [[code:naive-template-symbol]] is a problem however,
 is it always the case that the current actor should be used if we use a query
 like ``<actor.name>''?
@@ -4979,7 +4980,7 @@ literal: "Hello, my name is <name>"
 literal: "Can I borrow a <tool>"
 #+END_SRC
 
-\toReview
+\newlyCleared
 How do we fill these templates?
 The issue we had with trying to fill these in the symbols was the lack of
 context.
@@ -5028,9 +5029,9 @@ similarly to low level replies.
 A =MatchedQueryDB= can be constructed manually to fill with drool facts.
 
 ** Automatic AIML to YAML
-\toReview
+\newlyCleared
 AIML is a standard cite:aimlspec.
-Note that the spec says: "AIML shall be compatible with XML.",
+Note that the spec says: ``AIML shall be compatible with XML.'',
 and XML is also a standard cite:xmlspec.
 YAML happens to also be a standard format cite:yamlspec.
 With all these standards, its relatively easy to convert between them,
@@ -5051,7 +5052,7 @@ The second method provides the user an opportunity to make their AIML script
 comply to the new method,
 whilst also reducing the effort it takes.
 
-\toReview
+\newlyCleared
 To make the conversion we need to point out some structural observations about
 differences between AIML and YAML.
 Firstly AIML works strictly from the perspective of the bot.
@@ -5212,11 +5213,11 @@ We separated that from this chapter because it became to big,
 and it had a lot more to do with just getting an environment ready
 that was flexible enough to deal with personality as a process.
 
-\toReview
+\newlyCleared
 In this chapter we will first setup a small case study of personality
 influence in section [[Personality influence case study]].
 Then we will show how to model a part of this scenario in section
-[[Making a scenario]] to show how the bot works and how to steer it.
+[[Making a scenario]], to show how the bot works and how to steer it.
 Finally we will discuss how we tested the bot in section [[Testing]].
 
 *** Source code
@@ -5290,7 +5291,7 @@ He just assumed the patient overstretched himself because he lifted something
 heavy.
 
 *** Susie the ENFP
-\toReview
+\newlyCleared
 As an ENFP, Susie has the dominant function of extroverted intuition $N_e$ and
 as auxiliary function of introverted feeling $F_i$.
 Therefore these functions should be most dominant in the dialogue.
@@ -5319,7 +5320,7 @@ The expected dialogue can be seen in table [[tab:suzie-conv-doct]].
 | Doctor  | Can you go to the hospital next Friday at 13:00?                   |
 | /Susie/ | /Yes, I will go then./                                             |
 
-\toReview
+\newlyCleared
 We can now see a stark difference with the INTJ personality.
 First of all being dominated by extroversion, it was Susie who took the initiative.
 Secondly she directly asked for medicine, without thinking about the
@@ -5422,7 +5423,7 @@ in section [[Personality influence case study]].
 In that section several dialogues are presented with different personalities
 dealing with the same social practice, visiting the doctor.
 
-\toReview
+\newlyCleared
 Our strategy for modeling these is selecting a particular dialogue and then
 deciding per utterance whether they: Require a unique symbol,
 can be merged in an existing one,
@@ -5549,7 +5550,7 @@ actors:
 personality: [Ne, Fi, Te, Si]
 #+END_SRC
 
-\toReview
+\newlyCleared
 Loading the believes inside a YAML file presents a design conflict:
 Should believes be loaded from YAML or inside the Drools?
 There is a constant pull between these two possibilities.
@@ -5569,7 +5570,7 @@ will be implemented (see section [[Multilogue architecture]]).
 
 *** Steering the bot
 <<steering bot>>
-\toReview
+\newlyCleared
 As discussed before the primary sources of steering the bot are perlocutionary
 values and goals.
 However these are not our only tools, if we want to make distinctions between
@@ -5579,7 +5580,7 @@ For example $T_e$ has as default behavior, meaning no goals present,
 to prefer connections that transition to another scene,
 whereas $T_i$ prefers connections that lead to more options (see section [[Thinking]]).
 
-\toReview
+\newlyCleared
 In listing [[code:yaml:model:connext]] we can see the extended version of
 listing [[code:yaml:model:initial-connections]],
 with a glance, we can see how the functions maybe influenced by this.
@@ -5589,7 +5590,7 @@ From the status option there are only options that can be uttered
 by the doctor, this is done simply because it would be strange to continue
 talking after asking ``How are you?''.
 
-\toReview
+\newlyCleared
 If the status symbol is liked more by feeling function $F_i$,
 why did in section [[Testing]] Susie (with dominant $F_i$) utter a greeting
 first?
@@ -5655,14 +5656,15 @@ then
 end
 #+END_SRC
 
-\toReview
-If we also take listing [[code:yaml:model:gathering]] and the believes into
+\newlyCleared
+If we take listing [[code:yaml:model:gathering]] and the believes into
 consideration,
-we can see why thinking functions may like the =ask_reason_here= option,
-first of all its a scene transition, which is $T_e$ enjoys, but more importantly, 
+we can see why thinking functions may like the =ask_reason_here= option:
+First of all its a scene transition, which is $T_e$ enjoys,
+but more importantly, 
 telling about the back pain is a goal in the believes.
-So any personality that can think ahead with its irrational functions would
-probably like this option.
+So any personality that can think ahead with its irrational functions and order
+with a thinking function would probably like this option.
 
 #+CAPTION: Connections in =information_gathering=
 #+NAME: code:yaml:model:gathering
@@ -5681,7 +5683,7 @@ to_defaults:
 #+END_SRC
 
 
-\toReview
+\newlyCleared
 There are several other tools for steering available too which were
 discussed in section [[Replacing AIML]] such as before fields and templates.
 However these can't be used to steer personality in particular,
@@ -5805,7 +5807,7 @@ less verbose and more precise method of modelling dialogue.
 It also made drools the center of the new chatbot,
 where each step of processing a user message was decided by business rules.
 
-\toReview
+\newlyCleared
 Once this was done we could implement our interpretation of Jung and
 set up a test scenario to test the ideas presented in section [[Mapping to process]].
 From the test results in appendix [[final test]],
@@ -5834,7 +5836,7 @@ We suspect that there may be really only 8 personalities, rather than at least 1
 Additional experimentation is required to verify this problem,
 and potentially start looking for a solution.
 
-\toReview
+\newlyCleared
 Another issue is that although the bot is functional,
 the way we implemented the rational functions is rather simplistic.
 No actual mini-max algorithm is used (or something similar that would work with
@@ -5900,7 +5902,7 @@ a more precise use of templates could happen.
 So connections that go to a symbol that require a noun,
 would no longer be able to use symbols that matched a verb.
 
-\toReview
+\newlyCleared
 With help of the work of convolution kernels for semantic parsing
 cite:moschitti2004study, a simple knowledge base could be constructed as an
 inspiration for bot about what to fill into the template system.
@@ -5911,7 +5913,7 @@ completely.
 Although currently this is also a potential problem.
 
 *** More advanced learning
-\toReview
+\newlyCleared
 The idea of dynamically extending the symbol graph, and creating new symbols
 themselves is an interesting one.
 For example a new symbol is created every time the bot doesn't know something,
@@ -5925,7 +5927,7 @@ with an existing knowledge base such as OWL cite:world2012owl.
 
 *** Matching
 <<Replace regex>>
-\toReview
+\newlyCleared
 It should be noted that regular expressions is just one of the possible ways
 of determining what symbol the user uttered.
 The bot can be easily modified to use alternate matching mechanisms such
@@ -5944,7 +5946,7 @@ Finally there could be chosen to improve the existing regular expression approac
 for example by executing it in parallel,
 or even upon the GPU cite:zu2012gpu. 
 
-\toReview
+\newlyCleared
 The question of what to do when multiple symbols are matched is a difficult one.
 In the initial approach we simply selected the first symbol,
 however currently they are all selected, and we hope the scenario is designed
@@ -5964,7 +5966,7 @@ Sensing types may for example prefer raw data based symbols,
 whereas intuition types would prefer possibilities and ideas.
 
 *** Emotions
-\toReview
+\newlyCleared
 In section  [[Fatima Architecture]] the Fatima architecture is discussed that 
 uses decay rates for emotions.
 Analyzing this could be a good start for re-adding emotions.
@@ -5975,7 +5977,7 @@ Now the dialogue is much more dynamic because its completely loaded into memory.
 However to re-add this, a theory has to be devised of combing OCC with Jung's
 functions.
 
-\toReview
+\newlyCleared
 If we use perlocutionary values as prime source for emotion tracking,
 then the model can be extended with information on what expected effect the a
 perlocutionary value has on the bot.
@@ -6069,7 +6071,7 @@ It may seem trivial but the Java EE world is incredibly complex.
 We assume a UNIX-like operating system with a package manager.
 
 ** Client
-\toReview
+\newlyCleared
 The client is relatively easy too setup since its build with a
 monolithic environment.
 You need to have the unity editor.
@@ -6102,7 +6104,7 @@ Then maven needs to be installed since Gradle didn't work:
    # emerge dev-java/maven-bin
 #+END_SRC
 
-\toReview
+\newlyCleared
 Maven is the package manager for java software, it downloads and installs
 dependencies (and dependency dependencies) automatically based on XML
 configuration.
@@ -6233,7 +6235,7 @@ internet it can help to go to the project root folder and execute:
 #+END_SRC
 
 *** Alternative: in memory db
-\toReview
+\newlyCleared
 <<inmemorydb>>
 Note that I didn't test this but it should work.
 You can either choose to use maria db
@@ -6265,7 +6267,7 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
 #+END_SRC
 
 ** Ubuntu issues
-\toReview
+\newlyCleared
 At some point my laptop crashed and I had to fall back to an Ubuntu based
 distribution.
 Installing MySQL came with the gotcha, the default root on MySQL is only
@@ -6622,7 +6624,7 @@ Conversation went according to script.
 | Doctor  | I can give you some pain killers meanwhile.                       |        |
 | /Chris/ | /Okay, thanks doctor/                                             |        |
 
-\toReview
+\newlyCleared
 1. Said hello twice?!
    This was caused by the reinserting part of the shortcut, it used any actor
    rather than self. Fixing this caused a regression in ENFP which wouldn't
