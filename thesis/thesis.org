@@ -375,7 +375,7 @@ The /irrational functions/ are called this because they require no reasoning.
 /Sensation/ is sense perception created by the stimulation of the senses,
 it can always be rooted to a sense,
 such as ``I see a balloon'' or ``I feel hungry''.
-/Intuition/ is like a sensation but its not produced by a sense.
+/Intuition/ is like a sensation but it's not produced by a sense.
 Therefore it has no origin in the same way as sensation has,
 by which its explained as ``just a hunch'' or ``I feel it in my bones''.
 cite:beauchamp2005communication,hall1973primer98-100functions
@@ -413,7 +413,7 @@ Where
   combining new mathematical structures with help of axiomatic logic.
 + $F_e$ stands for extroverted feeling, where objective or external criteria
   is used to judge, for example something is beautiful or ugly.
-  Established standards may be used to decide this and therefore its a
+  Established standards may be used to decide this and therefore it's a
   conservative function.
   Decisions are based on interpersonal and cultural values.
   A typical example of $F_e$ based reasoning is about fashion and fads.
@@ -664,7 +664,7 @@ This is also true for the irrational functions.
  The MBTI has been criticized a lot from the field of psychology,
  but it does have a solid theoretical foundation.
  There is some relation between the big five and MBTI cite:furnham1996big.
- Therefore its somewhat realistic, but quite easy to implement.
+ Therefore it's somewhat realistic, but quite easy to implement.
 
  \doubleCleared
  Both of the alternatives of MBTI use a continues scale and have a high
@@ -1672,7 +1672,7 @@ It appears that it can handle the general cases of conversation,
 even questions it didn't train upon.
 The authors state that its answers are sometimes on the short side,
 and that upon slight variance in semantics can result into inconsistent answers.
-Another issue we have with such a methodology is that its an completely
+Another issue we have with such a methodology is that it's an completely
 opaque process.
 Although you could probably emulate personality by training on specific sets of
 data, the problem than becomes how would you decide what data is part of which
@@ -1848,7 +1848,7 @@ something which is already done by MBTI.
 Another consideration to make is what are these function attitudes?
 By which I mean what do they represent in computer science terms: programs,
 objects or functions? What should they be?
-Since Jung wasn't much of a mathematician cite:jungonfunctions its just an
+Since Jung wasn't much of a mathematician cite:jungonfunctions it's just an
 informal definition.
 However we can make a mapping to certain BDI processes
 based upon their description,
@@ -1972,7 +1972,7 @@ With this definition we can define every possible agent configuration[fn::Note
 that this is just the deliberation part, there is no memory in a pure function,
 but the agent's memories can be stored in the believes.
 The believes can be reused in the next call,
-its up to the caller to decide how this happens.
+it's up to the caller to decide how this happens.
 This can be done on the thread of control the agent owns for example.
 Where it will block until a time $t$ has passed or a new perception $P$ comes in from
 the environment.]
@@ -2058,7 +2058,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  therefore we introduce $\Lambda$ as the set of all active actors, where $a \in \Lambda$.
  With an actor $a$ and a symbol $s$ we can start thinking about modeling an
  utterance around which we can model dialogue tree nodes.
- However to do this, its important to remember that an utterance always comes with
+ However to do this, it's important to remember that an utterance always comes with
  a perlocutionary value set as discussed in section [[Speech act theory]].
  Therefore we introduce the set of all encoded perlocutionary speech acts as
  $\mathcal{P}$ of which a set of speech acts is $P \subseteq \mathcal{P}$.
@@ -2136,7 +2136,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
 
  \newlyCleared
  With this in place we can replace both the $S_t$ and $\Delta_{t+1}$ with the $D_t$ and
- $D_{t+1}$ respectively, we can also remove $t$, since its now contained in the
+ $D_{t+1}$ respectively, we can also remove $t$, since it's now contained in the
  utterance.
  This is convenient because now we can model function attitudes as processing
  units that take a dialogue tree and modify it.
@@ -2171,7 +2171,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  to prevent cases where the patient asks the doctor about his health problems.
  $P$ is the perlocutionary value set of the speech act, as introduced in section
  [[Dialogue tree]].
- This is encoded in the edges because its not the meaning that causes these
+ This is encoded in the edges because it's not the meaning that causes these
  but the way you get to those meanings.
  In other words, being polite and then telling bad news causes different
  perlocutionary values than just telling bad news.
@@ -2196,7 +2196,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  We didn't use that because we thought the step from ontology to language
  would be to difficult to finish in time.
  The symbol graph provides a good middle ground,
- in which its relatively easy to implement but offers enough freedom to encode
+ in which it's relatively easy to implement but offers enough freedom to encode
  personality in as a process.
  Note that this approach fits into the information state transitions
  discussed in section [[Dialogue systems]].
@@ -2248,7 +2248,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  attitude namely the $T_e$,
  however to let it play an advisory role in the $N_i$ function we first
  need to complete the /next/ argument.
- Because its the least preferred function we just use the unit.
+ Because it's the least preferred function we just use the unit.
  Now the partially applied type of $T_e$ satisfies that of $N_i$ and we can use
  it as /next/.
  This methodology can be used for an entire personality type (all eight functions
@@ -2263,7 +2263,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  With this methodology function attitudes can decide themselves to consult the
  next type.
  Then they can inspect the result, and even the changed believe base to decide
- if its a good idea to use the result.
+ if it's a good idea to use the result.
 
  \doubleCleared
  This architecture can be extended with the scale based Jungian models
@@ -2817,7 +2817,7 @@ Firstly, we do not show everything precisely such as implemented in the code,
 because that would clutter the diagrams.
 What we do model is all relevant information in structures and the relationship
 between those, following the words of Torvalds.
-Secondly, its better to think of the classes shown here as value types,
+Secondly, it's better to think of the classes shown here as value types,
 in other words: The model part in the `model view controller paradigm'
 cite:krasner1988description.
 Note that we use public fields in cases where immutability was possible.
@@ -3053,7 +3053,7 @@ the ones discussed in previous section.
 
 \newlyCleared
 The =Believes= structure is very peculiar, because it doesn't represent a single
-idea or use case. Instead its just a combination of various elements that are
+idea or use case. Instead it's just a combination of various elements that are
 required for the Jungian functions to operate.
 But none of the functions use /all/ fields,
 so they get more `assumptions' than they need, which is an architectural problem.
@@ -3479,7 +3479,7 @@ package personality{
 In figure [[fig:supportclassperson]] we can see the drool defined =PersonalityProcess=.
 This structure tracks traversing the Jungian Functions.
 We manage this inside drools to give other rules the opportunity to inspect
-the deliberation process while its going.
+the deliberation process while it's going.
 
 \FloatBarrier
 ** Initialization
@@ -3512,7 +3512,7 @@ Once we have the symbol database we can use it to create connections from it.
 We can see in figure [[fig:dbclass]] that a connection database consists
 of symbol key values leading up to a set of connections.
 In figure [[fig:droolclass]] we see that connections consist of a symbol object
-its going too with some additional values.
+it's going too with some additional values.
 To get the symbol values we just do a lookup in the symbol database, we
 know the key value from the file system and the =_connections= YAML file.
 In an initial iteration the symbol object wasn't used directly as key, 
@@ -3662,7 +3662,7 @@ Alternatives approaches are discussed in section [[Replace regex]].
 To ensure rules are executed in a particular order we often wrap and unwrap
 required data into types, as explained in section [[Support types]].
 For example the initial user utterance gets wrapped into an =UnparsedUttarence=
-type, before its even inserted into the drools.
+type, before it's even inserted into the drools.
 This type can be seen in figure [[fig:supportclassjava]].
 We could have just inserted a string and not created the type,
 but the reason for doing this with the initial string is to make it explicit:
@@ -3755,7 +3755,7 @@ rule engine.
 
 \doubleCleared
 Because this entire process is implemented in Drools, and we use types to track
-progress. Its relatively easy to add other rules that can modify the process,
+progress. It's relatively easy to add other rules that can modify the process,
 without changing the existing ones.
 Priority can be used to intercept a rule, as was done with the low level replies.
 Adding a more refined implementation of social practice therefore would be
@@ -3857,8 +3857,8 @@ A good step in this direction is the =Believes= structure,
 which groups most agent thoughts, at least those used by the high-level system.
 Although it should be noted that the =Believes= structure itself also has
 problems, this is discussed in section [[Believes and DialogueTree]],
-but the gist of its better to replace this structure with a drools fact base
-itself.
+but the gist of it is that it's better to replace this structure with a drools
+fact base.
 Since it has a self field however, it could be used to identify an agents'
 believes.
 In other parts of the current architecture this is not the case at all.
@@ -4318,8 +4318,8 @@ cite:coombs1987markup.
 
 \doubleCleared
 In AIML however, no document is constructed.
-Its not a story with a lead, middle ground and conclusion,
-its more like a key-value pair database or big configuration file.
+It's not a story with a lead, middle ground and conclusion,
+it's more like a key-value pair database or big configuration file.
 So since XML was intended to be used for inline document markup,
 We will argue that there are better alternatives that focus on key-value based
 configuration in particular, such as YAML, JSON or TOML.
@@ -4330,7 +4330,7 @@ However JSON has a few significant disadvantages,
 for one it doesn't allow comments and it is quite strict.
 For example a common acceptable mistake is to have an array with a trailing
 comma like: =[1,23,4,]=. This is an error in JSON cite:jsonconfig,
-while its relatively easy for a program to notice this is erroneous and
+while it's relatively easy for a program to notice this is erroneous and
 therefore correct it.
 The syntax of JSON can be also more terse, which is shown by both YAML and TOML.
 Because of these reason we looked at the other two contenders.
@@ -4427,7 +4427,7 @@ As explained earlier YAML key value pairs are either directly loaded into a
 =HashMap=, or into a class.
 We chose to use classes wherever possible because it provides more type safety.
 This is only possible if all keys are known before hand.
-Which its not in case of the template system for example,
+Which it's not in case of the template system for example,
 but in most other cases it is.
 
 \doubleCleared
@@ -4738,7 +4738,7 @@ We break away from the idea of S-AIML that scenes are linear.
 We believe that scenes are a weakly connected cyclic graphs.
 Note that by cyclic, we mean there can be cycles, but there don't have to be.
 So we can go back to previous visited scenes for example.
-Its weakly connected because it wouldn't make much sense to model scenes
+It's weakly connected because it wouldn't make much sense to model scenes
 that can't get to other scenes trough connections.
 Although there is nothing preventing one from doing so,
 the common sense reasoning is:
@@ -4857,7 +4857,7 @@ An example can be seen in listing [[code:aiml-star-tag]].
 This is a simple trick to make the bot more flexible,
 and since in AIML patterns and templates occur hand in hand, doing this is easy.
 In this system we have not such a close relationship (on purpose),
-and therefore its more difficult to implement.
+and therefore it's more difficult to implement.
 
 #+CAPTION: Star tag usage example.
 #+NAME: code:aiml-star-tag
@@ -4873,7 +4873,7 @@ and therefore its more difficult to implement.
 #+END_SRC
 
 \doubleCleared
-Although this feature isn't necessary for personality per se, its a really
+Although this feature isn't necessary for personality per se, it's a really
 important chatbot feature.
 It allows symbols to become more flexible, and connections more dynamic.
 
@@ -4970,7 +4970,7 @@ A lot of context information is not available in symbol files.
 The best we can do is give them a name and leave it at that,
 as can be seen in listing [[code:template-symbol-context]].
 This won't add any restrictions on the inserted value.
-Its just a hole that can be filled up by an arbitrary string.
+It's just a hole that can be filled up by an arbitrary string.
 
 #+CAPTION: Context unaware approach
 #+NAME: code:template-symbol-context
@@ -5009,7 +5009,7 @@ to:
 
 \doubleCleared
 There are several important things to note about this implementation.
-First of all its a lot more flexible than AIML stars,
+First of all it's a lot more flexible than AIML stars,
 since information can be retrieved from any previously uttered utterance,
 if a connection has a query that isn't satisfied, it is not available.
 Another advantage over AIML is that regular expressions allow much more precise
@@ -5034,7 +5034,7 @@ AIML is a standard cite:aimlspec.
 Note that the spec says: ``AIML shall be compatible with XML.'',
 and XML is also a standard cite:xmlspec.
 YAML happens to also be a standard format cite:yamlspec.
-With all these standards, its relatively easy to convert between them,
+With all these standards, it's relatively easy to convert between them,
 because libraries exist for parsing the standard, and in turn for generating it.
 
 *** Legacy AIML
@@ -5146,7 +5146,7 @@ called of AIML called S-AIML.
 \doubleCleared
 In S-AIML types are injected to track progress of the scenario.
 In contrast to the current scheme where the entire user utterance gets
-inserted and its up to drools to make a symbolic understanding from it.
+inserted and it's up to drools to make a symbolic understanding from it.
 To work around the issue of inserting types we actually have to generate
 drools in case of a particular symbol inserted.
 For this we can just use the low level reply mechanism, but rather than
@@ -5443,7 +5443,7 @@ While putting utterances into symbols, we can start thinking about how to group
 them in scenes.
 Scenes are available to allow pattern matching to be more general by disabling
 most patterns at a particular point in the conversation (see section [[Scenes]]).
-Its up to the author to decide what is most handy for using this feature.
+It's up to the author to decide what is most handy for using this feature.
 One may even not use this at all and leave everything in the introduction.
 What we chose to use was the social practice activities in section
 [[social practice]] as guide for determining what to group in which scenes.
@@ -5507,7 +5507,7 @@ Whereas goals are encoded at believes level,
 values can be encoded in connections themselves
 (see section [[Low level diagram]] and section [[Feeling]]).
 Also note that this is a dictionary definition,
-meaning its up to the scenario implementer to decide which value names he wants
+meaning it's up to the scenario implementer to decide which value names he wants
 to use.
 Finally whereas goals were about steering thinking functions,
 values are about steering the feeling functions.
@@ -5558,7 +5558,7 @@ Drools is much more flexible,
 because it is Turing complete cite:weppenaar2011solving,
 however YAML can be less verbose as just a data format.
 The issue is that we now indicate that this structure is a standard part of the
-bot, but its only part of the personality component.
+bot, but it's only part of the personality component.
 On the other hand one needs to have a method of deciding which connections ought
 to be used anyway,
 if you always want to use the same connections for a pattern you may as well
@@ -5660,7 +5660,7 @@ end
 If we take listing [[code:yaml:model:gathering]] and the believes into
 consideration,
 we can see why thinking functions may like the =ask_reason_here= option:
-First of all its a scene transition, which is $T_e$ enjoys,
+First of all it's a scene transition, which is $T_e$ enjoys,
 but more importantly, 
 telling about the back pain is a goal in the believes.
 So any personality that can think ahead with its irrational functions and order
@@ -5889,7 +5889,7 @@ section [[Actors]].
 \doubleCleared
 As discussed in section [[Related multilogue]],
 there already exists a system that can do this,
-but its drastically different from this architecture.
+but it's drastically different from this architecture.
 It may be worth more study if one were to take an endeavor to a multilogue
 based system.
 
@@ -5973,7 +5973,7 @@ Analyzing this could be a good start for re-adding emotions.
 They used to be a part of the system, however they were based upon type
 insertions in the AIML files, and couldn't influence dialogue beyond changing
 scenes.
-Now the dialogue is much more dynamic because its completely loaded into memory.
+Now the dialogue is much more dynamic because it's completely loaded into memory.
 However to re-add this, a theory has to be devised of combing OCC with Jung's
 functions.
 
@@ -6072,13 +6072,13 @@ We assume a UNIX-like operating system with a package manager.
 
 ** Client
 \newlyCleared
-The client is relatively easy too setup since its build with a
+The client is relatively easy too setup since it's build with a
 monolithic environment.
 You need to have the unity editor.
 The only issues with the client were an incomplete merge and a dangling
 import that produced build errors.
 Also note that there exists a Linux editor,
-its just not officially supported (yet) but the latest version can be found
+it's just not officially supported (yet) but the latest version can be found
 here: [[https://forum.unity3d.com/threads/unity-on-linux-release-notes-and-known-issues.350256/]]
 Scroll all the way down for the latest release.
 
@@ -6133,7 +6133,7 @@ so we will use that.
 **** Gradle attempt
 <<Gradle attempt>>
 \doubleCleared
-it was attempted to replace maven with Gradle, since its a lot less verbose
+it was attempted to replace maven with Gradle, since it's a lot less verbose
 than maven and easier to setup however doesn't have the =picketlink= extension
 which Wildfly requires.
 Therefore Gradle was abandoned and the maven tool was used instead.
@@ -6147,11 +6147,11 @@ Extract this download somewhere which we will call hence forth $WILDFLY.
 
 *** Setup datasource
 \doubleCleared
-Now its time to configure the persistent datasource.
+Now it's time to configure the persistent datasource.
 The code base can handle sessions,
 but to deal with user registration and logins and such we need a database.
 There are two methods, MariaDB and the in ram storage.
-MariaDB is what the online application uses and its probably better to
+MariaDB is what the online application uses and it's probably better to
 stick to that for active development, but if you just want to have
 a quick look at the server you should use look at section [[inmemorydb]].
 
@@ -6338,7 +6338,7 @@ This will re-install the entire project thereby also rebuilding all dependencies
 =mvn clean= in there for good measure.
 
 \doubleCleared
-There is a python client script for quick debugging, therefore its unnecessary
+There is a python client script for quick debugging, therefore it's unnecessary
 to keep unity running (or use at all).
 
 \newpage
@@ -6380,13 +6380,13 @@ hold up.
    However, this doesn't mean this is right, the intention was to make the hello
    reply be done on a lower level (first item said and understanding matches
    hello short-circuits into replying hello)
-2. We use the other scripted response (perhaps it thinks its ENFP),
+2. We use the other scripted response (perhaps it thinks it's ENFP),
    this didn't match however,
    turns out this symbol didn't have any regular expressions,
    after adding the regular expressions it still didn't match,
    further investigation is required
    into the regular expressions why they don't match,
-   I'm suspecting its either a construction problem (not all are added),
+   I'm suspecting it's either a construction problem (not all are added),
    Or some standard java regex problem.
 
 *** ENFP
@@ -6442,7 +6442,7 @@ hold up.
    correctly yet.
    It just goes deeper now rather than finding the right level
    to modify. Since telling about back pain is a goal and we have a unit test that
-   ti prefers goals its almost surely this broken two pass behavior.
+   ti prefers goals it's almost surely this broken two pass behavior.
 3. It says when lifting a heavy object, but I'm pretty sure it just always picks
    the first option because two pass logic is broken.
    So I'll end this test prematurely.
@@ -6644,10 +6644,10 @@ Conversation went according to script.
 | Date   |                               2017-04-10 |
 
 \doubleCleared
-Its the same day and we try another round to try and pass this.
+It's the same day and we try another round to try and pass this.
 Although we modified ISTP slightly, because it had to parse a large amount and
 produce a single reply for no obvious reason. Unlike ENFP which for example is
-expected to produce multiple replies because its talkative.
+expected to produce multiple replies because it's talkative.
 
 *** INTJ
 | Who      | Scripted Utterance                                | Issues |
@@ -6860,11 +6860,7 @@ Conversation went according to script.
 :END:
 ** Rough planning.
 *** Report
-+ Clear the undoubleCleared sections: `Everything newly doubleCleared'
 + Re-read the entire thing again
-+ Spell
-  + Go trough each its and it's.
-  + Go trough to and too.
 + Hand in final version
 
 *** Make usable for other student
