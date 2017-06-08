@@ -1,6 +1,4 @@
 #+TITLE: Jungian personality in a chatbot
-#+SUBTITLE: Better method of modeling chatbot dialogue
-# A serious communication game with personalities
 #+LANGUAGE: en
 #+LaTeX_CLASS: article
 #+LaTeX_CLASS_OPTIONS: [a4paper,drafting]
@@ -33,7 +31,7 @@
 #+LATEX_HEADER: \newcommand{\doubleCleared}{\todo[noline, backgroundcolor=white, bordercolor=gray]{cleared II}}
 
 # alternating table rows
-#+LATEX: \rowcolors{1}{white}{gray!15}
+#+LATEX: \rowcolors{1}{white}{gray!25}
 
 # Title page
 #+LATEX: \input{title}
@@ -66,7 +64,7 @@
 # for \FloatBarrier, prevents figures from floating over sections etc
 #+LATEX_HEADER: \usepackage{placeins}
 
-\todo[inline]{Inline code can be darker: dark enough now?}
+\todo[inline]{Table alteration darker: dark enough now?}
 \todo[inline]{Don't forget to delete the ideas chapter (after that remove this)}
 ** Abstract                                                          
 :PROPERTIES:
@@ -6860,7 +6858,11 @@ Conversation went according to script.
 :END:
 ** Rough planning.
 *** Report
-+ Re-read the entire thing again
++ Hickey URL
++ Write ALICE consitently
++ search for " and replace
++ email comments
++ Correct mistakes
 + Hand in final version
 
 *** Make usable for other student
