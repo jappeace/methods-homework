@@ -66,7 +66,6 @@
 #+LATEX_HEADER: \usepackage{placeins}
 
 \todo[inline]{Table alteration darker: dark enough now?}
-\todo[inline]{Don't forget to delete the ideas chapter (after that remove this)}
 ** Abstract                                                          
 :PROPERTIES:
 :UNNUMBERED: t
@@ -6882,26 +6881,3 @@ Conversation went according to script.
 # \listlessness
 
 \newpage
-* Ideas
-:PROPERTIES:
-:UNNUMBERED: t
-:END:
-** Rough planning.
-*** Report
-+ Correct mistakes
-+ Fix todo tags
-+ Hand in final version
-
-*** Make usable for other student
-- Document about python scripts and shell scripts (how to use),
-  make sure succerrer can take it on easily.
-- Another student should be able to work with this,
-  +so perhaps we should make a docker image for wildfly mysql etc?+
-  What about dumping wildfly and mysql, don't use it anyway..
-  Just create a stripped down version that starts the websocket and stops.
-- You know, we should just test the idea by letting an other student execute the
-  instructions I wrote.
-- This probably also includes fixing recursive before, almost certain that doesn't work.
-  (maybe include unit tests for that because its recursion which never works as expected)
-
-#  LocalWords:  PPSDQ modularity
