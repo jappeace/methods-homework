@@ -1,7 +1,15 @@
 #+TITLE: questions
 
 * Dignum
-
+De tekst over de plan patterns kan nog iets scherper.
+In jouw voorbeeld geeft het plan pattern alleen maar wat hoog nivo constraints
+op de volgorde van de verschillende scenes,
+die zelf heel abstract zijn.
+Echter, zo'n plan pattern kan ook heel specifieke dingen bevatten.
+Bv. bij de dokter kan de dialoog alleen eindigen nadat de dokter heeft gevraagd
+of de patient alles heeft begrepen en of hij/zij nog iets te vragen heeft.
+Dus in principe kan zo'n plan pattern ook specifiek worden.
+Alle plannen die aan het patroon voldoen zijn vervolgens ok voor de social practice.
 
 * Manuel
 
