@@ -421,7 +421,7 @@ Where
 + $F_i$ stands for introverted feeling, decisions based on personal values and
   believes.
   People who have this as dominant function attitude could be characterized by
-  "still waters run deep".
+  `still waters run deep'.
   A typical profession for this type is in counseling or health care, because
   empathy comes rather natural to them cite:fiproffesionadvice.
 + $S_e$ stands for extroverted sensing, Act on concrete data from the here and
@@ -479,7 +479,7 @@ This is also true for the irrational functions.
  \doubleCleared
  <<sec:mbti:order_comparison>>
  Once completed with the MBTI you'll get character string as outcome,
- for example "INTJ".
+ for example `INTJ'.
  This label tells you indirectly which of Carl Jung's functions is dominant,
  auxiliary, tertiary and inferior cite:mccaulley2000myers.
  In other words it provides a sequence of preferences
@@ -506,13 +506,13 @@ This is also true for the irrational functions.
 
  \doubleCleared
  Before continuing we would like to say a word about a popular
- interpretation of MBTI which is based on Keirsey's book "Please understand me",
- and later "Please understand me II".
+ interpretation of MBTI which is based on Keirsey's book `Please understand me',
+ and later `Please understand me II'.
  In this interpretation the sixteen types are also placed in general groups
  of four but here the $ST$ and $SF$ distinction is replaced by $SJ$ and $SP$
  cite:keirsey1998please.
  It turns out however that Keirsey invented this distinction because
- "He thought it made sense to group them this way" cite:whyaretypesdistinct.
+ `He thought it made sense to group them this way' cite:whyaretypesdistinct.
  In doing this he rejected the work of Jung and also that of cognitive functions.
  Which is problematic because the theory he presented then does not make any
  theoretical sense.
@@ -746,7 +746,7 @@ However we won't call a kernel an agent because it doesn't even come close to
 having believes, desires or intentions.
 
 \newlyCleared
-Something to keep in mind is that there are three "branches" of agent research
+Something to keep in mind is that there are three `branches' of agent research
 cite:wooldridge1995intelligent.
 The first one is /agent theory/ in which /specifications/ and methods of 
 specifications are developed. They ask what are agents and what are they
@@ -765,7 +765,7 @@ This again is mostly predetermined for us, but we briefly mention some in sectio
 \doubleCleared
 The belief desire intention model of human practical reasoning was first
 introduced by Bratman cite:bratman1987intention.
-It is based upon a "common sense" framework of human reasoning.
+It is based upon a `common sense' framework of human reasoning.
 
 \doubleCleared
 The idea of BDI is that an agent has believes, these can be anything, such as
@@ -788,7 +788,7 @@ However they don't cite a source for this.
 Another paper argues in favour of agent orientated design cite:jennings2001agent.
 It has the following major arguments:
 It is effective to divide a complex problem domain into several smaller problems,
-abstracting in an agent orientated way is more "natural",
+abstracting in an agent orientated way is more `natural',
 and complex systems dependencies and interactions can be easily modeled.
 # A case study is presented as proof of these claims.
 
@@ -822,7 +822,7 @@ moving drools to the core of deliberation could make this easier however
 (see section [[Drools background]]).
 More extended use of social practice, and the recombination of OCC could
 in future work lead to an agent that can chat much more naturally than
-just another ALICE bot.
+just another Alice bot.
 
 *** Logic of BDI
 <<bdi logics>>
@@ -1016,6 +1016,7 @@ They are concerned with order of activities,
 certain activities have to happen before other activities.
 An example of a doctor appointment plan pattern can be seen in
 figure [[fig:sp-activity]]. \ask{Is this correct or should I just delete the figure?}
+\todo[inline]{De tekst over de plan patterns kan nog iets scherper. In jouw voorbeeld geeft het plan pattern alleen maar wat hoog nivo constraints op de volgorde van de verschillende scenes, die zelf heel abstract zijn. Echter, zo'n plan pattern kan ook heel specifieke dingen bevatten. Bv. bij de dokter kan de dialoog alleen eindigen nadat de dokter heeft gevraagd of de patient alles heeft begrepen en of hij/zij nog iets te vragen heeft. Dus in principe kan zo'n plan pattern ook specifiek worden. Alle plannen die aan het patroon voldoen zijn vervolgens ok voor de social practice.}
 If you go to the doctor the first thing you do is some kind of greeting.
 Then the doctor goes onto data gathering and diagnoses mode until he figured
 out what's wrong.
@@ -1145,9 +1146,9 @@ science.
 
 \doubleCleared
 First of all are of course the chatbot systems, which are based upon case based
-reasoning. A good example of this is the A.L.I.C.E. bot cite:wallace2001don.
+reasoning. A good example of this is the Alice bot cite:wallace2001don.
 These are mostly reactive systems that use pattern matching rules paired with
-"good" responses,
+`good' responses,
 sometimes with conditions to allow for more variety.
 Another example of such a system is Eliza bot which is described in
 cite:galvao2004persona,
@@ -1200,7 +1201,7 @@ This is of course an information state approach too.
  2. To distinct our changes from theirs'
 
   \doubleCleared
- There have been several distinct versions of the "communicate!" game. 
+ There have been several distinct versions of the `communicate!' game. 
  The first version was a web based game, with a scenario editor.
  cite:jeuring2015demo
  However it had some drawbacks,
@@ -1214,7 +1215,7 @@ This is of course an information state approach too.
  To address this issue the a new implementation was made. 
  This version was based around the idea of a chatbot,
  which allowed users to give open answers rather than selecting buttons.
- The ALICE chatbot was used as a foundation and
+ The Alice chatbot was used as a foundation and
  the AIML language was extended to allow emotional reactions of the agent.
  This new language was called S-AIML cite:augello2016model. 
 
@@ -1422,7 +1423,7 @@ the client enter.
 The =WebsocketService= uses a =ChatbotEngine= to determine how to reply to user utterances,
 Where =ChatbotEngineImpl= is the concrete implementation.
 =ChatbotEngineImpl= uses a =KieSession= for the drools and a =Chat= which is the
-ALICE bot interface.
+Alice bot interface.
 Once a =startGame= message is received the KIE service is started,
 which runs on a dedicated thread to do drool deliberation.
 At this point facts can be inserted for the drools to react upon,
@@ -1473,7 +1474,7 @@ stop
 **** Text processing
 <<Text Processing>>
     \doubleCleared
-     Text processing is done with help of the ALICE chatbot.
+     Text processing is done with help of the Alice chatbot.
      This bot does the parsing and validation of AIML,
      with help of the knowledge encoded in AIML it can specify a response.
      AIML links a pattern to a template, where the pattern is a user input and
@@ -1651,9 +1652,9 @@ The keyword file and its associated transformation rules were called the
 `script'.
 
 \newlyCleared
-The ALICE chatbot is a more recent incarnation of the idea,
+The Alice chatbot is a more recent incarnation of the idea,
 but uses AIML as a basis for the `script' cite:wallace2001don.
-Because ALICE is licensed under an open source license,
+Because Alice is licensed under an open source license,
 and the AIML has been standardized,
 a legion of other implementations have been made that all can parse AIML.
 In fact the Salve game discussed in section [[The serious game]],
@@ -2353,7 +2354,7 @@ and didn't have any choices available to decide upon.
  However this introduces a new problem of how to obtain the probability
  distributions.
  Machine learning could be used for this, but this raises the question:
- "learn on what"?
+ `Learn on what?'
  Since the answer to that question is non-trivial, we consider such a solution
  out of scope.
 
@@ -3230,7 +3231,7 @@ JungianFunction ..> JungFuncArgs
 <<Before and templates>>
 \doubleCleared
 After the personality was implemented, we wanted to bring the bot up too
-feature parity with the ALICE bot. 
+feature parity with the Alice bot. 
 To do this several new data structures had to be introduced which can be seen
 in figure [[fig:templateclass]].
 
@@ -3617,7 +3618,7 @@ particularly if you compare the activity diagrams in
 figure [[fig:utterance-proccesing]] with figure [[fig:insert_meaning]].
 What we can see directly by comparing these is the change in swimming lanes
 cite:planumlswimminglanes.
-The ALICE swimming lane has been removed completely,
+The Alice swimming lane has been removed completely,
 and in its place we've got drools, which has become the center of
 the application.
 Then the Personality swimming lane was introduced,
@@ -3991,7 +3992,7 @@ in which case AIML is no longer used as knowledge representation anyway.
 \doubleCleared
 We're also not modelling the entire conversation.
 There is no way for the bot of knowing that his Hi utterance,
-could be followed up reasonably with the question "How are you?" for example.
+could be followed up reasonably with the question ``How are you?'' for example.
 Therefore there is no way for the bot to plan ahead in the conversation,
 or have any kind of variations in these plans.
 This is of course a problem, because we imagine personality as variations in a
@@ -4068,7 +4069,7 @@ to prevent this every template tag would need an insert tag,
 which is boilerplate code cite:lammel2003scrap.
 
 \doubleCleared
-What needs to happen is either to either modify the ALICE bot and AIML to 
+What needs to happen is either to either modify the Alice bot and AIML to 
 work fundamentally different,
 or outright replace it with something else.
 We chose for the latter,
@@ -4304,7 +4305,7 @@ which first needs to be parsed by a program before a human can understand it
 (or with great amount of effort).
 Alternatively unlike a human document, such as a book,
 a computer program needs to do lots of effort to extract information from that,
-whereas a human can just understand it "naturally".
+whereas a human can just understand it `naturally'.
 
 \doubleCleared
 Markup languages provide a nice middle ground between human readable and
@@ -4892,7 +4893,7 @@ from listing [[code:aiml-star-tag]].
 We tried to introduce ourselves to the bot with
 various names as can be seen in table [[tab:alice-normal-words]].
 
-#+CAPTION: Attempts at what would pass for 'normal' words according to ALICE.
+#+CAPTION: Attempts at what would pass for 'normal' words according to Alice.
 #+NAME: tab:alice-normal-words
 | Inserted                | What the bot accepted   |
 |-------------------------+-------------------------|
@@ -4904,7 +4905,7 @@ various names as can be seen in table [[tab:alice-normal-words]].
 
 \newlyCleared
 Quite arbitrarily some characters are accepted while others aren't,
-ALICE happily accepts an underscore but an exclamation mark is to much.
+Alice happily accepts an underscore but an exclamation mark is to much.
 There are several ways to improve this system.
 Such as trying to add context to what the star should be.
 In our example case we wanted to match on names,
@@ -5560,7 +5561,7 @@ bot, but it's only part of the personality component.
 On the other hand one needs to have a method of deciding which connections ought
 to be used anyway,
 if you always want to use the same connections for a pattern you may as well
-have chosen to use the ALICE bot.
+have chosen to use the Alice bot.
 Doing it this way was also a method of providing a scenario descriptor file,
 drools however may have been better suited for that.
 This decision probably needs to be reconsidered once a multilogue architecture
@@ -6331,7 +6332,7 @@ command is:
 #+BEGIN_SRC sh
 rm -R ~/.m2/repository/cnruithof; (cd ../ && mvn clean && mvn install) && mvn wildfly:deploy
 #+END_SRC
-There is also a shell script "rebuild.sh".
+There is also a shell script =rebuild.sh=.
 This will re-install the entire project thereby also rebuilding all dependencies.
 =mvn clean= in there for good measure.
 
@@ -6372,7 +6373,7 @@ hold up.
 | /Sander/ | /Thank you doctor/                                |        |
 
 \doubleCleared
-1. Actually said "How are you?", This is unexpected,
+1. Actually said ``How are you?'', This is unexpected,
    however since replying with hello is useless to INTJ (it'll just loop back),
    such a reply may actually be better for progress high level process.
    However, this doesn't mean this is right, the intention was to make the hello
@@ -6494,7 +6495,7 @@ Conversation went according to script.
    (note that alteration is the default, so unless a goal is directly below it
     nothing will be said)
 2. We just said 'how can I help you' instead.
-3. Goes into "Perhaps I put to much water in the watering can".
+3. Goes into ``Perhaps I put to much water in the watering can''.
    Probably because ENFP is an $F_i$ rather than $F_e$, $F_i$ is a learning function
    [fn:: note I got this wrong here in my initial analyses,
    $F_e$ is the learning function].
@@ -6858,9 +6859,6 @@ Conversation went according to script.
 :END:
 ** Rough planning.
 *** Report
-+ Hickey URL
-+ Write ALICE consitently
-+ search for " and replace
 + email comments
 + Correct mistakes
 + Hand in final version
