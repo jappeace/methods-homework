@@ -545,7 +545,7 @@ This is also true for the irrational functions.
  With this technique the desired outcome is that there are four question clusters
  (or factors), one for each dimension.
  They should be independent,
- a question that influences I/E score should not influence S/N,
+ a question that influences $I/E$ score should not influence S/N,
  and finally we expect the factors to indicate differences between individuals,
  random questions won't do that.
  However the study indicated that the MBTI had more than 4 factors (6),
@@ -574,12 +574,12 @@ This is also true for the irrational functions.
  so reliable scoring is important.
 
 **** PPSDQ
- \tripleCleared
+ \toReview
  The PPSDQ keeps basically the same theory as MBTI cite:kier1997new,king1999score,
  but uses a different measuring method.
  Instead of forced questions it uses a word-pair checklist for
- $I/E, S/N$ and $T/F$, and for the $J/P$ self describing sentences are used
- cite:melancon1996measurement.
+ $I/E, S/N$ and $T/F$ scales, and for the $J/P$ scale self describing sentences
+ are used cite:melancon1996measurement.
  An example of a word pair checklist can be found in table [[tab:word-pair-example]].
  The word pairs themselves were obtained by prescribing an exploratory test(s) to a
  sample in which the proto PPSDQ was submitted and also the MBTI itself, factor
@@ -612,11 +612,11 @@ This is also true for the irrational functions.
  first, or create a mixed strategy, where we select functions based upon
  probability.
 
- \tripleCleared
+ \toReview
  The PPSDQ is measuring the same thing as MBTI but lacks the criticisms of MBTI.
  The reliability is for example between 90% to 95% with a delay of two weeks.
  The internal consistency was also measured which proved to be better than
- MBTI but there was still a dependency between S/N and P/J which remains
+ MBTI but there was still a dependency between $S/N$ and $P/J$ which remains
  unexplained cite:kier1997new.
  The PPSDQ is internally the most consistent of the discussed alternatives
  (excluding OCEAN) cite:arnau1999alternative.
@@ -746,7 +746,7 @@ process asking for it).
 However we won't call a kernel an agent because it doesn't even come close to
 having believes, desires or intentions.
 
-\cleared
+\toReview
 Something to keep in mind is that there are three `branches' of agent research
 cite:wooldridge1995intelligent.
 The first one is /agent theory/ in which /specifications/ and methods of 
@@ -757,12 +757,14 @@ Then there are the /agent architectures/, these address questions of how
 to implement the specifications written by the theorists.
 Although we already got an architecture described in section [[The serious game]],
 we will explore some more in section [[Fatima Architecture]].
+To show some comparable architectures to our own.
 Finally there are the /agent languages/, which ask the question how to write
 agent programs.
 This again is mostly predetermined for us, but we briefly mention some in section
-[[Drools background]].
+[[Drools background]], to juxtapose with our approach.
 
 *** Belief desires and intentions
+<<BDI  explained>>
 \tripleCleared
 The belief desire intention model of human practical reasoning was first
 introduced by Bratman cite:bratman1987intention.
@@ -812,7 +814,7 @@ These don't follow the theory discussed in section [[personality theories]].
 Note that the Fatima architecture is an extension upon BDI cite:lim2008improving.
 
 \cleared
-We can consider the architecture of the `salve' game discussed in section
+We can consider the architecture of the `Salve' game discussed in section
 [[Abstract architecture]] already a virtual agent architecture.
 It for example also has an emotions module which also is grounded in
 OCC cite:augello2016social.
@@ -827,12 +829,12 @@ just another Alice bot.
 
 *** Logic of BDI
 <<bdi logics>>
-\tripleCleared
+\toReview
 Logic of BDI is an attempt to formalize how agents behave.
 One of the first formalization of Bratman's theory was that of Cohen and
 Levesque cite:cohen1990intention. It was based on linear time logic and
 used operators for actions and modalities for goals and beliefs cite:meyer2014logics.
-It was also used a tiered formalism, with at the bottom belief goals and
+It also used a tiered formalism, with at the bottom belief goals and
 actions which provided the basis for the higher achievement and persistent goals
 and intentions to do and be.
 Rao and Georgeff introduced a different formalism that used branching time logic. 
@@ -893,9 +895,17 @@ In the example this is the =SymbolDatabase=.
 Globals are interactions with objects that live outside of the rule engine.
 Such as the logging object =log= in the example.
 
+\toReview
+An interesting difference between traditional BDI model and drools is that drools
+speak about facts.
+In section [[BDI  explained]] that we never speak about facts,
+however drool does call the main data model the fact base.
+Drools is of course not a BDI agent programming langauge and does not need to keep
+to the established BDI taxonomy.
+
 *** BDI + Personality
 <<BDI + Personality>>
-\cleared
+\toReview
 There have been several works that attempted to combine BDI with personality
 theory.
 In cite:gmytrasiewicz2002emotions emotion and personality is taken together
@@ -912,8 +922,8 @@ We mention this because we do transformation of action space
 (irrational functions) and utility
 functions ($F_e$ modifies itself) in section [[rational process]].
 The transformation of state idea may seem foreign to us:
-Personality never changes in our architecture,
-however we do have the believes $B$,
+Personality never changes in our architecture.
+However we do have the believes $B$,
 which could be seen as the state of mind of an agent.
 Therefore we do this transformation whenever we change the believe base.
 
@@ -933,7 +943,7 @@ but this is only necessary when certain personalities need to follow different
 routes (see section [[steering bot]]),
 besides the irrational functions do something completely different.
 
-\doubleCleared
+\toReview
 In cite:campos_mabs2009 Campos presents a methodology for adding personality
 to BDI agents.
 What is novel about his work is that rather than presenting personality as
@@ -942,7 +952,7 @@ So personality defines the reasoning approach an agent will use according to
 Campos.
 This was called /process orientated/ rather than contend orientated.
 cite:campos_mabs2009
-For example in their interpretation of MBTI a Sensing agent would make a plan
+For example in their interpretation of MBTI a sensing agent would make a plan
 before hand in complete detail (strict evaluation cite:sheard2003pure),
 whereas an intuitive agent would continue planning as the situation demanded
 from the agent (lazy evaluation cite:launchbury1993natural).
@@ -968,7 +978,7 @@ of same cultures share.
 Using the social practice model that doesn't ignore this layer,
 could lead to a more `natural' conversation with a chatbot.
 
-\cleared
+\toReview
 In cite:smolka2001social it is stated that the research in activity theory
 led to the development of social practices.
 It was Karl Marx who thought of the `roots' of activity theory
@@ -977,8 +987,8 @@ Activity theory tries to bridge the gap between a single actor and the system
 it resides in trough the activity in progress
 cite:engestrom1999perspectivesp10_broad_definition.
 Another way of describing activity in this sense is `a way of doing things'.
-A problem with this model however was, how do cultures move activities from the
-collective towards the individual cite:smolka2001social.
+A problem with this model however was. How do cultures move activities from the
+collective towards the individual cite:smolka2001social?
 Social practices were therefore introduced to make the notion of activity more
 concrete.
 
@@ -1201,7 +1211,7 @@ This is of course an information state approach too.
  1. To help understand the design constraints we work under
  2. To distinct our changes from theirs'
 
-  \tripleCleared
+  \toReview
  There have been several distinct versions of the `communicate!' game. 
  The first version was a web based game, with a scenario editor.
  cite:jeuring2015demo
@@ -1209,11 +1219,11 @@ This is of course an information state approach too.
  for example each dialog was scripted by the teacher and the answers the student
  could give were specified by the teacher.
  This made practicing on it somewhat unrealistic.
- Practicing in this case would mean memorising what button to click rather
+ In this case practicing would mean memorising what button to click rather
  than to figure out what to say.
 
- \cleared
- To address this issue the a new implementation was made. 
+ \toReview
+ To address this issue a new implementation was made. 
  This version was based around the idea of a chatbot,
  which allowed users to give open answers rather than selecting buttons.
  The Alice chatbot was used as a foundation and
@@ -1532,6 +1542,8 @@ as can be seen in listing [[code:s-aiml-inserts]].
 </category>
 #+END_SRC
 
+\todo[inline]{Investigate if drools rule have to update precondition hashmaps individually? (Or if this is done automated? Well you could automate it so I think it doesn't matter). I think we should talk more about this?}
+\todo{Now I'm like, noo it just doesn't matter}
 \cleared
 In this case if a user utters the sentence: ``why are you here'', the bot
 will check the drool database what his problem is and also update the
@@ -1596,19 +1608,19 @@ Figure [[fig:utterance-proccesing]] gives a detailed overview of utterance proce
 #+RESULTS[2be41360a975175f4a0734807235d7983de36beb]: fig:utterance-proccesing
 [[file:img/uml/utterance-proccesing.png]]
 
-\cleared
+\toReview
 As can be seen in the diagram the message processing happens inside the Alice
 bot.
 Tags were added to AIML to allow the drool engine to be updated.
 The drool system can be relatively easily be bypassed.
-If there are no tags in the AIML the drool system will be oblivious of chat
+If there are no tags in AIML the drool system will be oblivious of chat
 messages.
 We represented this situation in figure [[fig:state:aiml]],
 there is a clear choice between going from a pattern either to drools or to the
 template.
-If there is an insert tag then the Drools state is visited,
-if not we go directly to the Template state.
-Then the Template state can use =getDroolTemplates= tags to read information
+If there is an insert tag then the `Drools' state is visited,
+if not we go directly to the `Template' state.
+Then the `Template' state can use =getDroolTemplates= tags to read information
 from drools.
 Note that there is a loop for the =getDroolTemplates= tag
 in figure [[fig:utterance-proccesing]].
@@ -1652,38 +1664,38 @@ transformation.
 The keyword file and its associated transformation rules were called the
 `script'.
 
-\cleared
+\toReview
 The Alice chatbot is a more recent incarnation of the idea,
 but uses AIML as a basis for the `script' cite:wallace2001don.
 Because Alice is licensed under an open source license,
 and the AIML has been standardized,
 a legion of other implementations have been made that all can parse AIML.
-In fact the Salve game discussed in section [[The serious game]],
+In fact the `Salve' game discussed in section [[The serious game]],
 used AIML to deal with natural language.
 In section [[AIML issues]] we discuss our reasons to move away from this almost
 traditional chatbot paradigm, but in short:
 We can't use AIML for adding personality unless we'd modify it in such a way
 that it no longer is AIML.
 
-\cleared
+\toReview
 In cite:vinyals2015neural a sub symbolic chatbot is presented that uses
 machine learning.
 It appears that it can handle the general cases of conversation,
 even questions it didn't train upon.
 The authors state that its answers are sometimes on the short side,
 and that upon slight variance in semantics can result into inconsistent answers.
-Another issue we have with such a methodology is that it's an completely
+Another issue we have with such a methodology is that it's a completely
 opaque process.
 Although you could probably emulate personality by training on specific sets of
 data, the problem than becomes how would you decide what data is part of which
 personality?
 An interesting idea is however to try and use the technique discussed in this
-paper as a drop in replacement for pattern matching, this is discussed in
+paper as a drop in replacement for pattern matching, this is discussed more in
 section [[Replace regex]].
 
 *** Multilogue
 <<Related multilogue>>
-\cleared
+\toReview
 In another interesting paper cite:penning2007boosting,
 multilogue is already possible.
 However this design is /drastically/ different from the one we presented.
@@ -1691,7 +1703,7 @@ In this paper they tried to improve input understanding,
 because it was difficult to hand write in their system,
 therefore the process was automated.
 Although in the end there were still several open problems left,
-such as not being able to deal with what we call templates or what AIML calls
+such as not being able to deal with what we call templates, or what AIML calls
 star tags.
 They also seemed to have problem with context,
 which we partly solved with scenes.
@@ -1727,7 +1739,7 @@ action selection.
 Having a lot of rule also make maintenance hard, if for example there is an
 unwanted behavior many rules need to be inspected before the change can be made.
 
-\cleared
+\toReview
 There are two strategies that could help dealing with this:
 Modularization which is partly already done in the paper by splitting up action
 selection and action revision for example.
@@ -1739,6 +1751,7 @@ with the OCEAN model. Since some facets were used for action revision and others
 for action selection,
 we can have an agent that will revise as if it is very high neurotic but select
 as if it were very low neurotic.
+A reason for the complex model maybe the inherent lack of theory OCEAN provides.
 
 \cleared
 Van den Bosch also chose to use OCEAN to model characters in a serious
@@ -1754,7 +1767,7 @@ This kind of methodology is called content orientated cite:campos_mabs2009.
 Depending on context the personality should change, with which social practices
 can help.
 
-\cleared
+\toReview
 In  cite:galvao2004persona an architecture is presented to add personality
 trough AIML.
 This paper is interesting because it uses AIML where we explicitly wanted to
@@ -1769,7 +1782,7 @@ Aside from the fact that this is practically unmaintainable verbose and
 stretching AIML and XML to its limits (see section [[xml vs everything]]),
 it's also not very modular since now everything is in AIML.
 Constructs for dealing with modularity such as type safety and even
-object orientation are just not available if you put everything in AIML.
+object orientation are just not available if everything is put in AIML.
 
 ** Campos
 \doubleCleared
@@ -1788,7 +1801,7 @@ labels. The details can be found in section [[Jungian BDI]].
 # In this chapter we talk about the abstract ideas, any information necessary
 # to execute the thesis without considering implementation details.
 # so I guess height and node count aren't necessary.
-\cleared
+\toReview
 This chapter tries to answer the question,
 `what is personality from a computationally perspective?'.
 In where we imagine personality being a preference towards a process rather
@@ -1798,7 +1811,7 @@ but will consider how to model Jungian psychology with BDI into a dialogue proce
 We want to make personality as a process work,
 while trying to introduce as few assumptions as possible,
 and we want these assumptions to be as small as possible.
-So we want to make the system work, while keeping it simple,
+We want to make the system work, while keeping it simple,
 because simplicity matters cite:hickey2012simplcity.
 
 \cleared
@@ -1826,7 +1839,7 @@ However rather than using MBTI dimensions we want to use Jungian functions.
 This is because Jungian function attitudes are the underlying construct of
 MBTI and several other instruments (such as the PPSDQ and SL-TDI).
 
-\cleared
+\toReview
 There are some differences from the theory discussed in [[sec:types]] and Campos'
 process.
 The difference is that in the discussed theory we would translate MBTI to the
@@ -1836,15 +1849,15 @@ by doing so we are for example not bound to just the MBTI.
 We also get more accurate descriptions of what Jungian functions are,
 Jung described in his work people with that particular function as dominant.
 This is harder to do with the dimensions, because if you take an INTJ type and an
-INTP type the semantics of both the N and T change because of the P/J dimension, 
+INTP type the semantics of both the N and T change because of the $P/J$ dimension, 
 as can be seen in their respective order (see section [[sec:mbti:order_comparison]]).
-Campos avoids this by ignoring the I/E and J/P dimensions, resulting in a
+Campos avoids this by ignoring the $I/E$ and $J/P$ dimensions, resulting in a
 simplified theory.
 However we would like to note that it is not an easily extendable simplification.
 Therefore we chose to translate types to orders in Jungian function attitudes,
 something which is already done by MBTI.
 
-\tripleCleared
+\toReview
 Another consideration to make is what are these function attitudes?
 By which I mean what do they represent in computer science terms: programs,
 objects or functions? What should they be?
@@ -1853,12 +1866,13 @@ informal definition.
 However we can make a mapping to certain BDI processes
 based upon their description,
 but before that is done we need to make several structural observations.
-Firstly functions attitudes are not independent, by which I mean that
-if we have a function attitude $a$, followed by $b$ then the resulting
-behavior is different than $b$ followed by $a$ (see section [[sec:mbti:order_comparison]]).
+Firstly functions attitudes are not independent, by which we mean that
+the function attitude resulting behavior of $a$, followed by $b$ is different 
+than $b$ followed by $a$ (see section [[sec:mbti:order_comparison]]).
+Jungian functions do not have the commutative property.
 Secondly all functions should be used and their order matters.
 The first function used should be most prevalent.
-This means that we can't just execute all functions and use a do preference
+This means that we can't just execute all functions and do a preference
 selection on the result.
 
 \tripleCleared
@@ -1871,8 +1885,8 @@ in an attempt to reduce the amount of possible believes.
 ** Core idea
 <<Informal description of Jung + BDI>>
 \cleared
-Before diving into the type signature approach, or the formal description we
-want to describe it informally.
+Before diving into the type signature approach, we
+want to give an overview of the core idea. \todo{Does this explain the core idea? Without the syntax?}
 Firstly we see the Jungian functions as a unit of processing.
 This is a clear design choice, there are alternatives.
 One could for example choose to make a unit of processing for every possible
@@ -1892,8 +1906,6 @@ information goes in,
 the function does its processing and then information comes out.
 This is analogous to a mathematical pure function.
 Another way of describing such a process is a transformation upon information.
-
-\tripleCleared
 From this we used the idea which MBTI uses too, that these small processing
 units are in an order,
 this order determines the eventual personality.
@@ -1959,7 +1971,7 @@ To do this we will define some terms, with which we will go from the broadest
 definition possible towards one that fits the project scope precisely.
 
 \cleared
-Let $\mathcal{B}$ denote the set of all
+Let $\mathcal{B}$ denote the set of all \todo{Are we going to do at time T? I think it is confusing to do that on types}
 possible believes and let $B_t$ with $B_t \subseteq \mathcal{B}$ denote the
 believes at time $t$. 
 $\Pi$ is the set of all possible sense information,
@@ -1974,7 +1986,7 @@ but the agent's memories can be stored in the believes.
 The believes can be reused in the next call,
 it's up to the caller to decide how this happens.
 This can be done on the thread of control the agent owns for example.
-Where it will block until a time $t$ has passed or a new perception $P$ comes in from
+Where it will block until a time $t$ has passed or a new perception $\pi$ comes in from
 the environment.]
 as the following pure function type signature:
 \[ B_t \to \pi_t \overset{f_a}{\to} (B_{t+1}, \Delta_{t+1}) \]
