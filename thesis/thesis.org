@@ -1889,7 +1889,7 @@ in an attempt to reduce the amount of possible believes.
 <<Informal description of Jung + BDI>>
 \cleared
 Before diving into the type signature approach, we
-want to give an overview of the core idea. \todo{Does this explain the core idea? Without the syntax?}
+want to give an overview of the core idea.
 Firstly we see the Jungian functions as a unit of processing.
 This is a clear design choice, there are alternatives.
 One could for example choose to make a unit of processing for every possible
