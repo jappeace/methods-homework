@@ -1,5 +1,12 @@
 #+TITLE: questions
 
+* Inleveren
++ Kijk alle toReview na
++ Validatie tests nogmaals uitvoeren en resultaten in thesis
+  (vergeet laatste test anchor niet te verplaatsen)
++ Zet class options op final ipv drafting en commit
++ Compile laatste versie
++ Emailen
 * Dignum
 De tekst over de plan patterns kan nog iets scherper.
 In jouw voorbeeld geeft het plan pattern alleen maar wat hoog nivo constraints
