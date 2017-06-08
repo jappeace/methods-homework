@@ -1904,7 +1904,7 @@ The reason for taking them as a combination is that there are more precise
 descriptions available for function attitudes, rather than functions and
 attitudes separated separated.
 
-\tripleCleared
+\toReview
 A Jungian function attitude as a unit of processing is something where
 information goes in,
 the function does its processing and then information comes out.
@@ -1913,26 +1913,30 @@ Another way of describing such a process is a transformation upon information.
 From this we used the idea which MBTI uses too, that these small processing
 units are in an order,
 this order determines the eventual personality.
+What we do is to combine the units of processing into a non commutative chain.
+This chain will then receive the information, which each unit can modify.
+The result is then a piece of information too: One part being the reply,
+and the other being the agents' believes.
 
-\tripleCleared
-There are several phases of processing going on.
+\toReview
+There are several phases of processing going on in the entire chatbot.
 Firstly we have user message parsing, where we try to figure out what the user
 said.
 Then, secondly there is action generation, where we use the parsed message to
 determine sensible replies.
 After that there is action selection, of which the best action is chosen.
 This action is finally handled by the surrounding system.
-
-\tripleCleared
 The opportunity for personality exists in practically all phases.
 In the first phase for example we can do filtering based on the type of
-messages received.
-For example Thinking based personality may filter the message ``how are you'' as
-an inquiry based on ``how is your disease?'', or ``why are you here?''.
-Whereas a feeling based personality may retrieve a different meaning,
+messages received:
+A Thinking based personality may filter the message ``how are you'' as
+an inquiry based on ``how is your disease?'', or ``why are you here?'',
+whereas a feeling based personality may retrieve a different meaning,
 as in ``how are you doing in live generally''?
 We chose to not do such kind of personality based filtering because it
 requires actual understanding of the message received.
+
+\toReview
 Now there exist techniques such as convolution kernels cite:moschitti2004study
 to decide what was said which can be combined with owl cite:world2012owl
 to simulate a sense of understanding.
@@ -5202,7 +5206,7 @@ always have setters.
 So there could be java code generated for that.
 Although we haven't done this in the actual implementation since this feature
 didn't seemed to be used a lot and
-we expect from the user to do manual modfication of the generated results.
+we expect from the user to do manual modification of the generated results.
 
 *** Proof of concept
 <<Conversion script>>
@@ -5246,7 +5250,7 @@ Finally we will discuss how we tested the bot in section [[Testing]].
 
 *** Source code
 We made the source code that was written to test this thesis available on
-=SOURCE_LINK_HERE=. \todo{Add link to source}
+[[https://github.com/jappeace/gaia]].
 
 *** Building
 \tripleCleared
