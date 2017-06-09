@@ -1,10 +1,6 @@
 #+TITLE: questions
 
 * Inleveren
-+ Kijk alle toReview na
-+ Validatie tests nogmaals uitvoeren en resultaten in thesis
-  (vergeet laatste test anchor niet te verplaatsen)
-+ Zet class options op final ipv drafting en commit
 + Compile laatste versie
 + Emailen
 * Dignum

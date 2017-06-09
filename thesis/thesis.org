@@ -1,7 +1,7 @@
 #+TITLE: Jungian personality in a chatbot
 #+LANGUAGE: en
 #+LaTeX_CLASS: article
-#+LaTeX_CLASS_OPTIONS: [a4paper,drafting]
+#+LaTeX_CLASS_OPTIONS: [a4paper,final]
 
 # disable tic so it doesn't appear at the top but where we want it instead
 #+Options: toc:nil ^:nil 
@@ -6813,7 +6813,6 @@ Conversation went according to script
    There was no connection for this transition.
 
 ** Sixth test
-<<final test>>
 # move this to the last test
 
 | Commit | =e15409ffc37b837a47a9ceb3c183d67f18c3eb17= |
@@ -6880,6 +6879,82 @@ Conversation went according to script.
 \doubleCleared
 Conversation went according to script. 
 
+
+# If we can ever figure out how to remove the name from this:
+# https://stackoverflow.com/questions/2709898/change-list-of-listings-text
+# * List of listings
+# \listlessness
+
+\newpage
+
+** Seventh test
+<<final test>>
+# move this to the last test
+
+| Commit | =bda8dcfb77e7f144ae04eb930611ea74f311a8e7= |
+| Date   |                               2017-06-09 |
+
+\toReview
+Before handing in the project I wanted to do a final acceptance test.
+
+*** INTJ
+| Who      | Scripted Utterance                                | Issues |
+|----------+---------------------------------------------------+--------|
+| Doctor   | Hi                                                |        |
+| /Sander/ | /Hello/                                           |        |
+| Doctor   | How can I help you?                               |        |
+| /Sander/ | /I have a back pain./                             |        |
+| Doctor   | When did this first occur?                        |        |
+| /Sander/ | /When I lifted a heavy object./                   |        |
+| Doctor   | Oh, yes then you need some pain killers for this. |        |
+| /Sander/ | /Thank you doctor/                                |        |
+
+\toReview
+Conversation went according to script.
+
+*** ENFP
+| Who     | Utterance                                                          | Issues |
+|---------+--------------------------------------------------------------------+--------|
+| Doctor  | Hi                                                                 |        |
+| /Susie/ | /Hello/                                                            |        |
+| /Susie/ | /How are you today doctor?/                                        |        |
+| Doctor  | I'm good, how can I help you?                                      |        |
+| /Susie/ | /I'm afraid I need some medicine/                                  |        |
+| Doctor  | Medicine? Why do you need that?                                    |        |
+| /Susie/ | /Well, I was watering the plants and all the sudden,/              |        |
+| /Susie/ | /I got this pain in my back./                                      |        |
+| /Susie/ | /Do you think I'm allergic to plants?/                             |        |
+| Doctor  | Ha ha, no, I think we need to make a scan of your back.             |        |
+| Doctor  | Because a watering can is a little to light to get back-pain from. |        |
+| /Susie/ | /Of course doctor./                                                |        |
+| Doctor  | Can you go to the hospital next Friday at 13:00?                   |        |
+| /Susie/ | /Yes, I will go then./                                             |        |
+
+\toReview
+Conversation went according to script.
+
+*** ISTP
+| Who     | Utterance                                                         | Issues |
+|---------+-------------------------------------------------------------------+--------|
+| Doctor  | Hi                                                                |        |
+| /Chris/ | /Hello/                                                           |        |
+| Doctor  | How can I help?                                                   |        |
+| /Chris/ | /I have back pain doctor./                                        |        |
+| Doctor  | When did this first occur?                                        |        |
+| /Chris/ | /Well I was watering the plants,/                                 |        |
+| /Chris/ | /Perhaps I put to much water in the watering can/                 |        |
+| Doctor  | Yes, that could be the case.                                      |        |
+| Doctor  | However I would like to make a scan of your back just to be sure. |        |
+| /Chris/ | /Can't you just give some pain killers to help me?/               |        |
+| Doctor  | Yes but that will only work temporary.                            |        |
+| Doctor  | So let's plan a scan at the hospital next Friday at 13:00?        |        |
+| /Chris/ | /Yes, I will go then./                                            |        |
+| Doctor  | I can give you some pain killers meanwhile.                       |        |
+| /Chris/ | /Okay, thanks doctor/                                             |        |
+
+\toReview
+Conversation went according to script.
+ 
 
 # If we can ever figure out how to remove the name from this:
 # https://stackoverflow.com/questions/2709898/change-list-of-listings-text
