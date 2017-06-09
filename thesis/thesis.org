@@ -6173,7 +6173,7 @@ Therefore Gradle was abandoned and the maven tool was used instead.
 
 *** Get Wildfly
 \doubleCleared
-Download Wildfly from [[http://wildfly.org/downloads/][here]], choose the full web distribution
+Download Wildfly from here: [[http://wildfly.org/downloads/]], choose the full web distribution
 (if you choose the servlet one you'll run into trouble since it doesn't have the
 datasource subsystem, it took about two days to figure that out).
 Extract this download somewhere which we will call hence forth $WILDFLY.
