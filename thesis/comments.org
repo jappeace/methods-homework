@@ -1,6 +1,8 @@
 #+TITLE: questions
 
 * Inleveren
++ Verander url naar mijn domijn die rederict naar github url
+  (zodat ik controle heb waarheen het wijst)
 + Kijk alle toReview na
 + Validatie tests nogmaals uitvoeren en resultaten in thesis
   (vergeet laatste test anchor niet te verplaatsen)

@@ -5248,8 +5248,9 @@ Then we will show how to model a part of this scenario in section
 Finally we will discuss how we tested the bot in section [[Testing]].
 
 *** Source code
+\toReview
 We made the source code that was written to test this thesis available on
-[[https://github.com/jappeace/gaia]].
+[[https://jappieklooster.nl/chatbot]].
 
 *** Building
 \tripleCleared
