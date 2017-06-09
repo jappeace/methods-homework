@@ -6322,7 +6322,8 @@ I got an error: \\
 com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException:
   Specified key was too long; max key length is 767 bytes
 #+END_SRC
-This is because it uses an utf8 encoding (see [[http://stackoverflow.com/questions/10748155/specified-key-was-too-long-max-key-length-is-767-bytes][this website]]).
+This is because it uses an utf8 encoding (see this website:
+[[http://stackoverflow.com/questions/10748155/specified-key-was-too-long-max-key-length-is-767-bytes]]).
 To solve this change the tables to use a smaller utf8 instead.
 In `/etc/mysql/mariadb.conf.d/50-server.cnf` change the variables to
 
