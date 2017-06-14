@@ -1534,7 +1534,7 @@ stop
 AIML has been extended to allow updating of the drools knowledge base,
 as can be seen in listing [[code:s-aiml-inserts]].
 
-#+CAPTION: Extended AIML that communicate knowledge
+#+CAPTION: Extended AIML that uses knowledge
 #+NAME: code:s-aiml-inserts
 #+BEGIN_SRC xml
 <category>

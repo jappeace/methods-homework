@@ -1,0 +1,105 @@
+#+TITLE: Jungian personality in a chatbot
+#+LANGUAGE: en
+#+REVEAL_ROOT: ./reveal.js-3.5.0
+#+REVEAL_THEME: blood
+#+REVEAL_TRANS: linear
+
+# disable tic so it doesn't appear at the top but where we want it instead
+#+Options: toc:nil ^:nil 
+#+Options: num:nil
+
+# we don't want numbering to appear in front of headings until
+#+Options: H:5
+* Communication training
++ Important
++ Expensive
+
+* Communicate!
+#+CAPTION: Client view communicate!
+#+NAME:   fig:communicate-client
+[[./img/client-communicate.png]]
+
+** Editor
+#+CAPTION: Editor view communicate!
+#+NAME:   fig:communicate-editor
+[[./img/editor.png]]
+
+* Salve
++ Based on ALICE
++ AIML
++ Drools
++ Unity
+
+** Architecture
+[[./img/abstract-architecture.png]]
+
+** AIML
+
+#+CAPTION: AIML example: why are you here?
+#+NAME: code:aiml-example-why-here
+#+BEGIN_SRC nxml
+  <category>
+	  <pattern>
+		  What is the problem
+	  </pattern>
+	  <template>
+		  <srai>why are you here</srai>
+	  </template>
+  </category>
+
+  <category>
+	  <pattern>
+		  ,* why are you here
+		  </pattern>
+	  <template>
+		  <srai>why are you here</srai>
+	  </template>
+  </category>
+#+END_SRC
+
+** S-AIML
+
+#+CAPTION: Extended AIML that uses knowledge
+#+NAME: code:s-aiml-inserts
+#+BEGIN_SRC nxml
+  <category>
+      <pattern>why are you here</pattern>
+      <preconditions>not healthProblemAsked</preconditions>
+      <template>
+          <insert packageName="sp.anamnesi.health_problem" typeName="HealthProblemAsked" />
+          I'm experiencing a <getDroolsTemplate />. It's quite strong.
+      </template>
+  </category>
+#+END_SRC
+
+** Drools rule
+#+CAPTION: Drools rule example
+#+NAME: code:drools
+#+BEGIN_SRC java
+rule "Greetings goals achieved"
+when
+	GreetingReceived()
+then
+	FinishedSceneEvent f = new FinishedSceneEvent();	
+	f.setSceneName("Greetings");
+	insert(f);
+end
+rule "Greeting not received in time"
+when
+	$startScene:EnterScene(scene.name=="Greetings")	
+	not(GreetingReceived(this after[0ms,10000ms] $startScene))
+then
+	Score scoreReasoningTemp = (Score)drools.getWorkingMemory().getGlobal("scoreReasoning");(-1, "Introduction - You let the doctor wait too long for your greeting");
+	OCCNotHappenedEvent e=new OCCNotHappenedEvent();
+	don(e,DesirableEvent.class);
+	don(e,ProspectedRelevantEvent.class);
+	insert(e);
+	controller.respond("Did you want something from me..?");
+end
+#+END_SRC
+
+** Client view
+#+CAPTION: Client view salve
+#+NAME:   fig:client-salve
+[[./img/client.png]]
+
