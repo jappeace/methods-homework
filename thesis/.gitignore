@@ -16,3 +16,5 @@ _minted-*
 *.lol
 
 *.html
+
+reveal.js-*
