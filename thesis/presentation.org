@@ -89,7 +89,6 @@ when
 	$startScene:EnterScene(scene.name=="Greetings")	
 	not(GreetingReceived(this after[0ms,10000ms] $startScene))
 then
-	Score scoreReasoningTemp = (Score)drools.getWorkingMemory().getGlobal("scoreReasoning");(-1, "Introduction - You let the doctor wait too long for your greeting");
 	OCCNotHappenedEvent e=new OCCNotHappenedEvent();
 	don(e,DesirableEvent.class);
 	don(e,ProspectedRelevantEvent.class);
