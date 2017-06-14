@@ -1,5 +1,7 @@
 #! /bin/bash
 
+# there is a bug where code blocks have this line ending: &#57344;&#57345;&#57345;
+# we delete that with sed
 # we can't write directly into the same file we're reading from.
 # therefore we work around it like this:
 # do the operation
