@@ -39,23 +39,24 @@ Presented in cite:jeuring2015demo
 #+CAPTION: AIML example: why are you here?
 #+NAME: code:aiml-example-why-here
 #+BEGIN_SRC nxml
-<category>
+<aiml>
+<categroy>
     <pattern>
-        What is the problem
+        Hello
     </pattern>
     <template>
-        <srai>why are you here</srai>
+        Hi
     </template>
-</category>
-
+</categroy>
 <category>
     <pattern>
-        ,* why are you here
-        </pattern>
+        How are you
+    </pattern>
     <template>
-        <srai>why are you here</srai>
+        Not doing too well today.
     </template>
 </category>
+</aiml>
 #+END_SRC
 
 ** S-AIML
@@ -63,6 +64,7 @@ Presented in cite:jeuring2015demo
 #+CAPTION: Extended AIML that uses knowledge
 #+NAME: code:s-aiml-inserts
 #+BEGIN_SRC nxml
+<aiml>
 <category>
     <pattern>why are you here</pattern>
     <preconditions>not healthProblemAsked</preconditions>
@@ -74,6 +76,7 @@ Presented in cite:jeuring2015demo
         I'm experiencing a <getDroolsTemplate />. It's quite strong.
     </template>
 </category>
+</aiml>
 #+END_SRC
 
 ** Drools rule
@@ -109,7 +112,7 @@ end
 * Goals
 + Compare personality theories
 + As a process
-+ Use `Salve' game
++ Use Salve game
 
 * Personality theories
 
@@ -169,7 +172,7 @@ Because:
 * Goals
 + +Compare personality theories+
 + As a process
-+ Use `Salve' game
++ Use Salve game
 * Dialogue as process
 + Model the idea
 + /type signatures/
@@ -307,3 +310,166 @@ Modified connections:
 | $c$ | connection               |
 | $s$ | Symbol                   |
 | $P$ | Perlocutionary value set |
+* Goals
++ +Compare personality theories+
++ +As a process+
++ Use Salve game
+* Use Salve game
+Remember every chat bot ever:
+\[ \sigma \to \sigma \]
+
+| /   | <>       |
+| $\sigma$ | String   |
+
+**  Even Alice with AIML
+\[ \sigma \to \sigma \]
+#+BEGIN_SRC nxml
+<aiml>
+<category>
+    <pattern>
+        How are you
+    </pattern>
+    <template>
+        Not doing too well today.
+    </template>
+</category>
+</aiml>
+#+END_SRC
+
+#+NAME: fig:pres:depaimlcats
+#+BEGIN_SRC plantuml :cache yes :file img/uml/pres:depaimlcats.png :exports results
+skinParam backgroundColor transparent
+usecase "How are you" as how
+
+storage "Not doing well today." as notwell
+
+how -> notwell
+#+END_SRC
+
+#+LABEL: fig:pres:depaimlcats
+#+ATTR_HTML: :style width:50%
+#+RESULTS[4eecfb19d7735dd69705fc1ab1e8ef174d0b6bde]: fig:pres:depaimlcats
+[[file:img/uml/pres:depaimlcats.png]]
+
+** The in between step
+\[ \sigma \to s \]
+\[ s \to \sigma\]
+
+| /   | <>     |
+| $\sigma$ | String |
+| $s$ | Symbol |
+
+*** $\sigma \to s$
+
+#+BEGIN_SRC nxml
+<aiml>
+<category>
+    <pattern>
+        How are you
+    </pattern>
+    <symbol>
+      StatusInquiry
+    </symbol>
+</category>
+</aiml>
+#+END_SRC
+
+#+NAME: fig:pres:aimlsyms
+#+BEGIN_SRC plantuml :cache yes :file img/uml/pres:aimlsyms.png :exports results
+skinParam backgroundColor transparent
+usecase "How are you" as how
+
+node StatusInquiry
+
+how -> StatusInquiry
+#+END_SRC
+
+#+LABEL: fig:pres:aimlsyms
+#+ATTR_HTML: :style width:50%
+#+RESULTS[abf8c7cfccd18abae2fbb1e63b5eee57d78e9122]: fig:pres:aimlsyms
+[[file:img/uml/pres:aimlsyms.png]]
+
+*** $s \to \sigma$
+
+#+BEGIN_SRC nxml
+<aiml>
+<category>
+    <literal>
+        How are you?
+    </literal>
+    <patterns>
+        <pattern>How * you</pattern>
+        <pattern>How are you *</pattern>
+    </patterns>
+    <symbol>
+      StatusInquiry
+    </symbol>
+</category>
+</aiml>
+#+END_SRC
+
+#+NAME: fig:pres:aimlliters
+#+BEGIN_SRC plantuml :cache yes :file img/uml/pres:aimlliters.png :exports results
+skinParam backgroundColor transparent
+  usecase "How are you?" as howq
+  usecase "How are you *" as how
+  usecase "How * you" as howstar
+
+node StatusInquiry[
+  StatusInquiry
+  ----
+  How are you?
+]
+
+how --> StatusInquiry
+howq --> StatusInquiry
+howstar --> StatusInquiry
+#+END_SRC
+
+#+LABEL: fig:pres:aimlliters
+#+ATTR_HTML: :style width:50%
+#+RESULTS[9a3cf96aaf94827cf42c7415f6a275a2e4efb4c1]: fig:pres:aimlliters
+[[file:img/uml/pres:aimlliters.png]]
+
+*** Terser
+#+BEGIN_SRC xml
+<literal>
+    How are you?
+</literal>
+<patterns>
+    <pattern>How * you</pattern>
+    <pattern>How are you *</pattern>
+</patterns>
+#+END_SRC
+
+With:
++ Symbol name in filename
+  + Free uniqueness gauranteed by FS
++ Drop aiml tags
++ Drop category tags
+
+*** But Illegal XML
+*** So we use YAML
+#+BEGIN_SRC yaml
+literals:
+  - How are you
+patterns:
+  - How * you
+  - How are you *
+#+END_SRC
+Still with symbol name as filename.
+
+** Symbol graph
+Remember, remember:
+
+\[ c = (s_1, s_2) \]
+\[ s_1, s_2 \in \mathcal{S} \wedge c \in G \]
+
+| /             | <>                  |
+| $c$           | connection          |
+| $s$           | Symbol              |
+| $\mathcal{S}$ | All encoded symbols |
+| $G$           | Symbol graph        |
+
+
+
