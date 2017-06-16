@@ -106,10 +106,10 @@ end
 #+NAME:   fig:client-salve
 [[./img/client.png]]
 
-* Personality + Chatbot 
-+ Process
-+ MBTI based
-+ Help doctors.
+* Goals
++ Compare personality theories
++ As a process
++ Use `Salve' game
 
 * Personality theories
 
@@ -166,3 +166,144 @@ Because:
 - Can assume MBTI
 - Later PPSDQ or SL-TDI
 - Mapping to OCEAN
+* Goals
++ +Compare personality theories+
++ As a process
++ Use `Salve' game
+* Dialogue as process
++ Model the idea
++ /type signatures/
++ Categories
++ Arrows
+
+\[a \to b \to c \]
+\[a \to (b \to c) \]
+partial apply with $a$
+
+\[b \to c \]
+
+** Every agent ever
+\[ B \to \pi \to (B, \Delta) \]
+
+| /   | <>                |
+| $\pi$ | Sense information |
+| $B$ | Believes          |
+| $\Delta$ | Actions           |
+
+** Every chatbot ever
+Stateless:
+\[ \sigma \to \sigma \]
+
+Statefull:
+\[ B \to \sigma \to  (\sigma, B) \]
+
+| /   | <>       |
+| $\sigma$ | String   |
+| $B$ | Believes |
+
+** Core idea
+Add in between step:
+\[ \sigma \to s \]
+\[ s \to \sigma\]
+
+| /   | <>     |
+| $\sigma$ | String |
+| $s$ | Symbol |
+
+*** Connect symbols in graph
+\[ c = (s_1, s_2) \]
+\[ s_1, s_2 \in \mathcal{S} \wedge c \in G \]
+
+| /             | <>                  |
+| $c$           | connection          |
+| $s$           | Symbol              |
+| $\mathcal{S}$ | All encoded symbols |
+| $G$           | Symbol graph        |
+
+*** Add game tree
+ \[ u = (a,s) \]
+ \[ D = (u, [D])\]
+
+| /   | <>            |
+| $u$ | Utterance     |
+| $a$ | Actor         |
+| $s$ | Symbol        |
+| $D$ | Dialogue tree |
+
+*** Reasoning model
+ \[ B \to D \overset{f_a}{\to} (B, D) \]
+
+| /     | <>               |
+| $B$   | Believes         |
+| $D$   | Dialogue tree    |
+| $f_a$ | Jungian function |
+
+** Imposing order
++ MBTI, PPSDQ and SL-TDI
++ Even Jung (principal, auxiliary)
+So:
+
+\[ \overset{next}{f_a} \to f_a \]
+
+| /                   | <>                    |
+| $f_a$               | Jungian function      |
+| $\overset{next}{f_a}$ | Next jungian function |
+
+*** Expanded
+
+ \[ \left (\overset{next}{B \to D \to (B, D)}\right ) \to B \to D \overset{f_a}{\to} (B, D) \]
+
+| /      | <>                    |
+| $B$    | Believes              |
+| $D$    | Dialogue tree         |
+| $f_a$  | Jungian function      |
+| $next$ | Next jungian function |
+
+*** Alternatively
+
+\[ \text{Personality}= [f_a] \]
+
++ Did both
++ System vs function controll
+
+** Define process per function
+
+*** Rational vs Irrational
++ Action generation
++ Sort by preference
++ Modify the Dialogue tree
+
+*** Irrational
+Action generation
++ $N_i$ Depth first
++ $N_e$ Depth + $x$ breath
++ $S_e$ Breath (all available)
++ $S_i$ Learned connection else random
+
+*** Rational
+Sort by preference
++ $T_e$ Priority on goals, else scene transitions
++ $T_i$ Priority on goals, else favour more options
++ $F_i$ Interal perlocutionary values
++ $F_e$ Learned perlocutionary values
+
+**** Goals
+\[ \phi = (a, s) \]
+
+| /   | <>     |
+| $a$ | Actor  |
+| $s$ | Symbol |
+| $\phi$ | Goal   |
+
+- Can compare priority
+- Can see if finished
+
+**** Perlocutionary values
+Modified connections:
+
+\[ c = (s_1, s_2, P) \]
+
+| /   | <>                       |
+| $c$ | connection               |
+| $s$ | Symbol                   |
+| $P$ | Perlocutionary value set |

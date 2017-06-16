@@ -2191,7 +2191,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  To make sure the agent stays on topic we will make use of a symbol graph.
  This graphs gives connections to the symbols described in section [[A type signature approach]].
  The meaning graph $G$ is a set of connections $c \in G$ where
- $c = (P, A, s_1, s_2)$, $s_1, s_2 \in \mathcal{S} \wedge s_1 \neq s_2$,
+ $c = (P, A, s_1, s_2)$, $s_1, s_2 \in \mathcal{S}$,
  $A \subseteq \Lambda$ is the set of agents that can use the connection,
  to prevent cases where the patient asks the doctor about his health problems.
  $P$ is the perlocutionary value set of the speech act, as introduced in section
