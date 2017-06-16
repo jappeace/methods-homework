@@ -11,9 +11,6 @@
 # we don't want numbering to appear in front of headings until
 #+Options: H:5
 
-Proberen footnotes refs werkend te krijgen:
-https://github.com/jkitchin/org-ref/issues/319
-
 * Communication training
 + Important
 + Expensive
@@ -110,15 +107,62 @@ end
 [[./img/client.png]]
 
 * Personality + Chatbot 
-+ As a process cite:campos_mabs2009
++ Process
 + MBTI based
++ Help doctors.
 
-** Why?
-Help doctors
-Varied personalities are an issue
+* Personality theories
 
-* 
-<<bibliography link>>
+** OCEAN
+- taxonomy mining
+- factor analyses
+- no theory
+- accepted
+- measure: NEO-PI, NEO-FFI
 
-bibliographystyle:unsrt
-bibliography:refs.bib
+** Jung
+- Personality types
+- Free form questions
+- Introversion vs Extroversion
+- Rational vs Irattional
+
+\[ \mathcal{J} = \{ T_e, T_i, F_e, F_i, S_e, S_i, N_e, N_i\}\]
+
+** MBTI
+- Carl Jung
+- In order
+- Quesstionaire measurement
+- Critizised
+- PPSDQ, SL-TDI
+
+\[ INTJ = N_i > T_e  > F_i > S_e \]
+
+** Which one is the best?
+We need:
+- Realism
+- Implementable
+
+** OCEAN
+Has:
+- *Realism*
+- Implementable
+
+Because:
+- Accepted,
+- very broad
+
+** MBTI
+Has:
+- Realism
+- *Implementable*
+
+Because:
+- Solid thoery
+- Finite types (16)
+
+** Which one is the best?
+
+** Jung
+- Can assume MBTI
+- Later PPSDQ or SL-TDI
+- Mapping to OCEAN
