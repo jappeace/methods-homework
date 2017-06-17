@@ -18,3 +18,5 @@ _minted-*
 *.html
 
 reveal.js-*
+ltximg
+presentation.tex
