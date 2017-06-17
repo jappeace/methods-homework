@@ -2750,6 +2750,7 @@ the solid arrow means uses and the other lines mean interacts.
 
 #+NAME: fig:architecture-concept
 #+BEGIN_SRC plantuml :cache yes :file img/uml/architecture-concept.png :exports results
+  skinParam backgroundColor transparent
   package bot{
     cloud drools {
       component score
@@ -2781,7 +2782,7 @@ the solid arrow means uses and the other lines mean interacts.
 #+END_SRC
 #+CAPTION: Deployment diagram of implemented architecture
 #+LABEL: fig:architecture-concept
-#+RESULTS[ac69c79b9282e3ea8157bf1543b2bb5b52f51f04]: fig:architecture-concept
+#+RESULTS[e65c17b0bd6822613fd73bff412f3b10b9b0e13d]: fig:architecture-concept
 [[file:img/uml/architecture-concept.png]]
 
 \cleared
@@ -2873,6 +2874,7 @@ is constructed from.
 
 #+NAME: fig:droolclass
 #+BEGIN_SRC plantuml :cache yes :file img/uml/droolclass.png :exports results
+  skinParam backgroundColor transparent
   enum PerlocutionaryValue
   class PerlocutionaryValueSet{
     +perlocutionaryValues:{PerlocationaryValue}
@@ -2940,7 +2942,7 @@ is constructed from.
 #+END_SRC
 #+CAPTION: Class diagram of the low level model
 #+LABEL: fig:droolclass
-#+RESULTS[21ed2d8e1f9aab1fa283d778126b8d46087e0bb4]: fig:droolclass
+#+RESULTS[63c13339c5b78776640fe21523eade9c064e7e97]: fig:droolclass
 [[file:img/uml/droolclass.png]]
 
 \newlyCleared
@@ -3016,6 +3018,7 @@ In figure [[fig:jungclass]] we can see the higher level structures of =Believes=
 
 #+NAME: fig:jungclass
 #+BEGIN_SRC plantuml :cache yes :file img/uml/jungclass.png :exports results
+  skinParam backgroundColor transparent
   class Believes{
     +programmedConnections:ConnectionDatabase
     +learnedConnections:ConnectionDatabase
@@ -3064,7 +3067,7 @@ In figure [[fig:jungclass]] we can see the higher level structures of =Believes=
 #+END_SRC
 #+CAPTION: Class diagram of the high level model
 #+LABEL: fig:jungclass
-#+RESULTS[212259f430fea1f6c765e388f698bb1c14824598]: fig:jungclass
+#+RESULTS[7bbc0695a7950d00a11407c749254898824149ca]: fig:jungclass
 [[file:img/uml/jungclass.png]]
 
 \tripleCleared
@@ -3223,7 +3226,7 @@ which returns a new =JungFuncArgs= object with the resulting values.
 
 #+NAME: fig:jungjavaclass
 #+BEGIN_SRC plantuml :cache yes :file img/uml/jungjavaclass.png :exports results
-
+skinParam backgroundColor transparent
 interface JungFuncAccessor{
   + getFunction() : Function<JungFuncArgs, JungFuncArgs>
 }
@@ -3256,7 +3259,7 @@ JungianFunction ..> JungFuncArgs
 #+END_SRC
 #+CAPTION: Jung in Java
 #+LABEL: fig:jungjavaclass
-#+RESULTS[019dc12edde2e80f03b0ae309525edacf716f1a2]: fig:jungjavaclass
+#+RESULTS[726a09e81b64e8427cef8d44efb090848628fcc6]: fig:jungjavaclass
 [[file:img/uml/jungjavaclass.png]]
 
 *** Before and templates
@@ -4634,6 +4637,13 @@ terse.
  #+NAME: code:yaml:complex
  #+BEGIN_SRC yaml
 from:
+ - greeting
+to:
+ - symbol: greeting
+ - symbol: ask_reason_here
+   restricted_to: doctor
+---
+from:
  - ask_reason_here
 to:
  - restricted_to: patient
@@ -4650,13 +4660,6 @@ to:
  - restricted_to: doctor
    symbol: why_need
  - symbol: status_inquery
----
-from:
- - greeting
-to:
- - symbol: greeting
- - symbol: ask_reason_here
-   restricted_to: doctor
  #+END_SRC
 
 #+NAME: fig:dep:filedconns

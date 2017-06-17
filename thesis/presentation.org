@@ -11,13 +11,15 @@
 # we don't want numbering to appear in front of headings until
 #+Options: H:5
 
+* Please interupt
+I like discussion..
+
 * Communication training
 + Important
 + Expensive
 
 * Communicate!
-Presented in cite:jeuring2015demo
-#+CAPTION: Client view communicate!
+#+CAPTION: Client view
 #+NAME:   fig:communicate-client
 [[./img/client-communicate.png]]
 
@@ -321,7 +323,7 @@ Remember every chat bot ever:
 | /   | <>       |
 | $\sigma$ | String   |
 
-**  Even Alice with AIML
+** Even Alice with AIML
 \[ \sigma \to \sigma \]
 #+BEGIN_SRC nxml
 <aiml>
@@ -460,16 +462,209 @@ patterns:
 Still with symbol name as filename.
 
 ** Symbol graph
-Remember, remember:
 
-\[ c = (s_1, s_2) \]
+\[ c = (P, A, s_1, s_2) \]
 \[ s_1, s_2 \in \mathcal{S} \wedge c \in G \]
 
-| /             | <>                  |
-| $c$           | connection          |
-| $s$           | Symbol              |
-| $\mathcal{S}$ | All encoded symbols |
-| $G$           | Symbol graph        |
+| /             | <>                    |
+| $c$           | connection            |
+| $s$           | Symbol                |
+| $P$           | Perlocutionary values |
+| $A$           | Restricted to         |
+| $\mathcal{S}$ | All encoded symbols   |
+| $G$           | Symbol graph          |
 
+*** In YAML
+#+BEGIN_SRC yaml
+from:
+ - greeting
+to:
+ - symbol: status_inquery
+ - symbol: greeting
+#+END_SRC
 
+#+NAME: fig:pres:connections
+#+BEGIN_SRC plantuml :cache yes :file img/uml/pres:connections.png :exports results
+skinParam backgroundColor transparent
 
+node StatusInquiry[
+  StatusInquiry
+  ----
+  How are you?
+]
+node Greeting [
+  Greeting
+  ----
+  Hello
+]
+
+Greeting => Greeting
+StatusInquiry <= Greeting 
+
+#+END_SRC
+
+#+LABEL: fig:pres:connections
+#+RESULTS[e79804d7cdce8255ed50bedfcf7c7c8cfb9484f2]: fig:pres:connections
+[[file:img/uml/pres:connections.png]]
+
+*** Extended example
+#+NAME: code-yaml-complex
+#+BEGIN_SRC yaml
+from:
+ - greeting
+to:
+ - symbol: greeting
+ - symbol: ask_reason_here
+   restricted_to: doctor
+---
+from:
+ - ask_reason_here
+to:
+ - restricted_to: patient
+   symbol: need_medicine
+ - restricted_to: patient
+   symbol: broken_arms
+ - restricted_to: patient
+   symbol: feel_sick
+---
+from:
+ - need_medicine
+ - greeting
+to:
+ - restricted_to: doctor
+   symbol: why_need
+ - symbol: status_inquery
+ #+END_SRC
+
+** Steering
+
+*** Starting from a dialogue
+
+| Who      | Utterance                                         |
+|----------+---------------------------------------------------|
+| Doctor   | Hi                                                |
+| /Sander/ | /Hello/                                           |
+| Doctor   | How can I help you?                               | 
+| /Sander/ | /I have a back pain./                             |
+| Doctor   | When did this first occur?                        |
+| /Sander/ | /When I lifted a heavy object./                   |
+| Doctor   | Oh, yes then you need some pain killers for this. |
+| /Sander/ | /Thank you doctor/                                |
+
+*** Create utterences
+#+CAPTION: greeting.yml
+#+BEGIN_SRC yaml
+  literals:
+    - Hello
+    - Hi
+#+END_SRC
+
+#+CAPTION: ask_reason_here.yml
+#+BEGIN_SRC yaml
+  literals:
+    - How can I help you?
+  regexes:
+    - "[Hh]ow can (.*)"
+#+END_SRC
+
+*** Connect the known utterences
+#+BEGIN_SRC yaml
+from:
+ - greeting
+to:
+ - symbol: greeting
+ - symbol: status
+ - symbol: ask_reason_here
+   scene: information_gathering
+#+END_SRC
+
+*** Make believes
+#+CAPTION: Believes YAML file
+#+NAME: code:yaml:sc-believes
+#+BEGIN_SRC yaml
+goals:
+  - actor: doctor
+    scene: diagnoses
+    symbol: have_painkillers
+  - actor: patient
+    scene: information_gathering
+    symbol: back_pain
+values:
+  enthusiasm: 8
+  polite: 5
+
+self: patient
+actors:
+  - patient
+  - doctor
+
+# ENFP
+personality: [Ne, Fi, Te, Si]
+#+END_SRC
+
+*** Modify connections for values scenes etc
+#+BEGIN_SRC yaml
+from:
+ - greeting
+to:
+ - symbol: greeting 
+   values:
+   - Polite
+ - symbol: status
+   restricted_to: patient
+   values:
+   - Polite
+   - Enthusiasm
+ - symbol: ask_reason_here
+   scene: information_gathering
+   restricted_to: doctor
+#+END_SRC
+
+*** Can also add drool rules
+#+CAPTION: Low level greeting reply
+#+NAME: code:drool:lowlevelreply
+#+BEGIN_SRC java
+rule "Low level hello replies with hello first time"
+when
+	$pre:PreProcessed(
+      $symbol:utterance.what, 
+      $symbol.name == "introduction/greeting", 
+      $actor:utterance.byWhom
+    )
+	$believes:Believes($actor != self)
+then
+	log.info("low level entry");
+	delete($pre);
+
+	final Informative infor = new Informative($believes.self, $symbol);
+	final Utterance resulting = $believes.findToFromLastUttTo(infor)
+		.map(Utterance::createFromConnection)
+		.orElse(Utterance.create(infor.who, infor.what, PerlocutionaryValueSet.empty));
+	insert(new Reply(resulting.setByWhom(infor.who), QueryDatabase.empty));
+end
+#+END_SRC
+
+** Architecture
+#+ATTR_HTML: :style width:100%
+[[./img/uml/architecture-concept.png]]
+
+*** Low level
+
+#+ATTR_HTML: :style width:100%
+[[./img/uml/droolclass.png]]
+
+*** Believes and DialogueTree
+#+ATTR_HTML: :style width:75%
+[[./img/uml/jungclass.png]]
+
+*** Jung func
+#+ATTR_HTML: :style width:50%
+[[./img/uml/jungjavaclass.png]]
+
+* Goals
++ +Compare personality theories+
++ +As a process+
++ +Use Salve game+
+
+* Demo time!
+* Questions?
