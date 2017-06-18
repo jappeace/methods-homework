@@ -220,22 +220,22 @@ and finally we will look at the serious game in its existing form.
 
 *** The big five
   <<OCEAN>>
- \tripleCleared
+ \toReview
  The first framework we'll discuss is called the big five.
- The term big five first coined in 1981 by Goldberg cite:goldberg1981language.
+ The term big five was first coined in 1981 by Goldberg cite:goldberg1981language.
  The big five were not big because of their intrinsic greatness,
  but rather to emphasize how broad these factors were.
 
- \tripleCleared
+ \toReview
  This framework was not really invented, but rather discovered trough
- lexical analyses by for example Tupes cite:tupes1961recurrent.
+ lexical analysis by for example Tupes cite:tupes1961recurrent.
  Although the labels used were different,
  they conveyed the same idea as the big five model used now.
- The methodology used is something which is called factor analyses[fn::
+ The methodology used is something which is called factor analysis[fn::
  In the paper the term 'varimax rotational program' is used,
  but if we look this term in Wikipedia, we can see the result is called factor
- analyses cite:varymaxrotanonalprogram].
- Factor analyses is a statistical methodology that tries to find underlying
+ analysis cite:varymaxrotanonalprogram].
+ Factor analysis is a statistical methodology that tries to find underlying
  hidden variables.
  This methodology has become widely used in psychology cite:fabrigar1999evaluating.
 
@@ -289,10 +289,10 @@ and finally we will look at the serious game in its existing form.
  - Neuroticism or nervousness, a high score indicates that you like to brag and
    get upset when someone is angry at you.
 
- \tripleCleared
+ \toReview
  The big five has been extensively tested and the result has been replicated
  in multiple studies cite:pervin2008handbookp119.
- One can measure his big five score trough a test called the NEO-PI, or the
+ One can measure big five score trough a test called the NEO-PI, or the
  NEO-FFI. The FFI variant is shorter but less precise cite:costa1992revised.
 
  \tripleCleared
@@ -310,7 +310,7 @@ and finally we will look at the serious game in its existing form.
  other factors.
  Solving this is a non-trivial endeavor.
 
- \tripleCleared
+ \toReview
  There are some existing solutions in which OCEAN is implemented, for
  example Allbeck cite:allbeck2002toward used it as a mapping to the EMOTE system,
  whereas cite:durupinar2008creating used the OCEAN values as a low level mapping
@@ -318,7 +318,7 @@ and finally we will look at the serious game in its existing form.
  and finally cite:etheredge2016personality used the values for action selection
  in a dialogue, but extended the descriptions of OCEAN with IPIP
  with an entire chapter devoted to explaining this.
- Although these implementation are based on the same OCEAN model,
+ Although these implementations are based on the same OCEAN model,
  the influence of it has starkly different effects on their
  respective implementations.
  Since each of them decided to change the OCEAN model in some kind of way
@@ -359,7 +359,7 @@ an introvert can still have extrovert moments and vice versa.
 It should also be noted that the unconsciousness according to Jung is
 flipped in attitude. cite:hall1973primer97-98attitude
 
-\cleared
+\toReview
 Then there are four functions.
 The first two functions are called the /rational functions/
 because they act as a method of making judgements.
@@ -375,17 +375,17 @@ it can always be rooted to a sense,
 such as ``I see a balloon'' or ``I feel hungry''.
 /Intuition/ is like a sensation but it's not produced by a sense.
 Therefore it has no origin in the same way as sensation has,
-by which its explained as ``just a hunch'' or ``I feel it in my bones''.
+and often is explained as ``just a hunch'' or ``I feel it in my bones''.
 cite:beauchamp2005communication,hall1973primer98-100functions
 
-\tripleCleared
+\toReview
 To use these functions they have to be combined with attitudes, producing
 /function attitudes/.
 Therefore a person will never be of a thinking type,
 but rather either a thinking introvert or thinking extrovert.
 cite:hall1973primer100-101combo
 We can now imagine what this means,
-an extroverted thinker will for example make judgement about the real world,
+an extroverted thinker will for example make judgements about the real world,
 and therefore be more like a natural scientist or biology researcher,
 where they would study natural objects and behaviors.
 An introverted thinker will make judgement about ideas in his mind,
@@ -476,7 +476,7 @@ This is also true for the irrational functions.
  This dimension indicates together with the $I/E$ dimension which function
  attitude is dominant and which is auxiliary.
 
- \tripleCleared
+ \toReview
  <<sec:mbti:order_comparison>>
  Once completed with the MBTI you'll get character string as outcome,
  for example `INTJ'.
@@ -488,7 +488,7 @@ This is also true for the irrational functions.
  \[N_i > T_e  > F_i > S_e\]
  So the most preferred function to be used by someone of type INTJ would be $N_i$,
  then $T_e$ and so forth.
- These are the same function as Jung used, the MBTI
+ These are the same functions as Jung used, the MBTI
  just imposed an order on them cite:mccaulley2000myers,website.mbtisequence.
  How much preference there is for a function is not encoded in MBTI, just an
  order of preference.
@@ -523,7 +523,7 @@ This is also true for the irrational functions.
  (OD) cite:sample2004myers. 
  But it has gotten some heavy criticism from the field of psychology.
 
- \tripleCleared
+ \toReview
  MBTI has always used a continuous scoring system in the results.
  However the creators insist that type is enough for making assessment judgments.
  Since MBTI reduces the test scores to type,
@@ -534,12 +534,12 @@ This is also true for the irrational functions.
  However cite:bess2002bimodal suggests this is not the case,
  but this could be the result of the scores being bidirectional
  cite:salter2005two.
- In an extended investigation cite:arnau2003jungian into weather Jungian
+ In an extended investigation cite:arnau2003jungian into wether Jungian
  constructs are truly categorical suggested however that this was maybe not
  the case and a continuous scale for assessment judgements are required.
 
- \newlyCleared
- In cite:sipps1985item the MBTI is put trough a method called factor analyses.
+ \toReview
+ In cite:sipps1985item the MBTI is put trough a method called factor analysis.
  This is the same technique where OCEAN is based upon (see section [[OCEAN]]).
  With this technique the desired outcome is that there are four question clusters
  (or factors), one for each dimension.
@@ -602,7 +602,7 @@ This is also true for the irrational functions.
  \cleared
  The result of the PPSDQ would look something like: I-30 N-20 T-80 J-60, with
  a scale of 0 to 100. To calculate the Jungian functions as a probability measure
- some math is required. Our subject in our example is $70\%$ of the time
+ some math is required. Our subject in our example is $70\%$ of the time \todo{this is not correct. If the score for introvertion is 70, it means the strength of this influence or tendency is 70 on a scale of 100. It has not much to do with frequencies or probabilities. I.e. choices can be very consistent  but behaviour in general less extreme introvert.}
  introverted and $30\%$ of the time extroverted.
  $60\%$ of the time judging and $40\%$ of the time perceiving.
  therefore $N_i$ would be calculated as: 0.7 \times 0.4 \times 0.8 = 0.224 or $22.4\%$.
@@ -664,8 +664,8 @@ This is also true for the irrational functions.
  There is some relation between the big five and MBTI cite:furnham1996big.
  Therefore it's somewhat realistic, but quite easy to implement.
 
- \tripleCleared
- Both of the alternatives of MBTI use a continues scale and have a high
+ \toReview
+ Both of the alternatives of MBTI use a continuous scale and have a high
  correlation with the big five cite:arnau1997measurement.
  This means is that they are measuring something which is also measured by the
  big five in some way.
@@ -906,27 +906,27 @@ to the established BDI taxonomy.
 
 *** BDI + Personality
 <<BDI + Personality>>
-\newlyCleared
+\toReview
 There have been several works that attempted to combine BDI with personality
 theory.
 In cite:gmytrasiewicz2002emotions emotion and personality is taken together
 and modelled formally.
 Similarly to the Fatima architecture there is no personality research cited in
 this work, just research on emotions.
-However this formal model could be useful regardless the lack of personality theory,
-especially the observation that there are only three possible transformation
+However this formal model could be useful regardless of the lack of personality theory,
+especially the observation that there are only three possible transformations
 as the result of emotions:
-Transformation of actions space,
-transformation of the utility function and transformation of probabilities
+Transformations of actions space,
+transformation of the utility function and transformations of probabilities
 of state.
-We mention this because we do transformation of action space
+We mention this because we do transformations of action space
 (irrational functions) and utility
 functions ($F_e$ modifies itself) in section [[rational process]].
-The transformation of state idea may seem foreign to us:
+The transformations of state idea may seem foreign to us:
 Personality never changes in our architecture.
 However we do have the believes $B$,
 which could be seen as the state of mind of an agent.
-Therefore we do this transformation whenever we change the believe base.
+Therefore we do this transformations whenever we change the believe base.
 
 \cleared
 In cite:canuto2005personality the personality model of Millon was used,
@@ -1136,13 +1136,13 @@ warning.
 /Perlocutionary/ acts are the acts that bring an effect to the hearer, such as
 scaring or saddening.
 
-\tripleCleared
+\toReview
 There are some basic assumptions of conversation, commonly described as the
 /rules of conversation/ developed by Grice cite:shoham2008multiagent_speechact_p241..245.
-Humans communication happens on the assumption that both parties want to be
+Human communication happens on the assumption that both parties want to be
 clear to each other, even when other motivations apply.
 This is called the /cooperation principle/.
-To accomplish this share goal the Grice's maxims cite:gricemaxims are
+To accomplish this shared goal the Grice's maxims cite:gricemaxims are
 used:
 /Quantity/ has to do with the amount of information transferred in a single
 utterance, a human wants to transfer just enough to get the right meaning across.
@@ -1680,15 +1680,15 @@ used AIML to deal with natural language.
 In section [[AIML issues]] we discuss our reasons to move away from this almost
 traditional chatbot paradigm, but in short:
 We can't use AIML for adding personality unless we'd modify it in such a way
-that it no longer is AIML.
+that it no longer is AIML. \todo{explain here already the basic reasons.}
 
-\newlyCleared
+\toReview
 In cite:vinyals2015neural a sub symbolic chatbot is presented that uses
 machine learning.
 It appears that it can handle the general cases of conversation,
 even questions it didn't train upon.
 The authors state that its answers are sometimes on the short side,
-and that upon slight variance in semantics can result into inconsistent answers.
+and that slight variance in semantics can result in inconsistent answers.
 Another issue we have with such a methodology is that it's a completely
 opaque process.
 Although you could probably emulate personality by training on specific sets of
@@ -1734,14 +1734,14 @@ the natural terms without modifying the rules they specified.
 An example of one of these rules is:
 ``if actions is high or self consciousness is high then acceptance is favored''.
 
-\doubleCleared
+\toReview
 This has a major disadvantage in that a lot of rules need to be
 added to do action selection (there are 54 described in the paper),
 some of which become quite big (for example, some have 7 conditions).
 This can make action selection opaque.
 It is for example not immediately clear how a higher anxiety will influence
 action selection.
-Having a lot of rule also make maintenance hard, if for example there is an
+Having a lot of rules also makes maintenance hard, if for example there is an
 unwanted behavior many rules need to be inspected before the change can be made.
 
 \newlyCleared
@@ -1806,10 +1806,10 @@ labels. The details can be found in section [[Jungian BDI]].
 # In this chapter we talk about the abstract ideas, any information necessary
 # to execute the thesis without considering implementation details.
 # so I guess height and node count aren't necessary.
-\newlyCleared
+\toReview
 This chapter tries to answer the question:
 What is personality from a computationally perspective?
-In where we imagine personality being a preference towards a process rather
+We imagine personality being a preference towards a process rather
 than a preference towards content.
 We will however not consider yet how to place this in the existing system,
 but will consider how to model Jungian psychology with BDI into a dialogue process.
@@ -1829,9 +1829,9 @@ This leads us to discuss the dialogue tree [[Dialogue tree]] and symbol graph
 Then we make a model that can combine individual functions in section
 [[Composing types]].
 After which we will look into the specific function attitudes and how to
-implement these as behavior in section [[Rational and irrational]].
+implement these as behavior in section [[Rational and irrational]]. \todo{How about 4.5?}
 Finally we will consider how this presented method relates to Jungian
-theory in section [[Consistency with theory]].
+theory in section [[Consistency with theory]]. 
 
 ** Differences from Campos
 \tripleCleared
@@ -1899,11 +1899,11 @@ combination of Jungian functions attitudes which would result in
 eight factorial different units of processing,
 or specifically just for MBTI which would result in $16$.
 
-\cleared
+\toReview
 We also chose to model function attitudes, rather than functions and attitudes.
 The reason for taking them as a combination is that there are more precise
 descriptions available for function attitudes, rather than functions and
-attitudes separated separated.
+attitudes separated
 
 \newlyCleared
 A Jungian function attitude as a unit of processing is something where
@@ -2090,7 +2090,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  uttered, $s$ the symbol that was uttered and $t$ the time at which the utterance
  was made.
 
- \tripleCleared
+ \toReview
  Now we introduce $D$ a dialogue tree tuple:
  \[ D = (u, [D])\]
  Where $u$ is the utterance,
@@ -2099,7 +2099,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  To consider a reply, we would use the same dialogue tree,
  except with a list of children that is bigger than zero.
  The most preferred reply is the first element in the list of children.
- How the actor is decided will be discussed in section [[symbol graph]].
+ How the actor decides will be discussed in section [[symbol graph]].
  An example of an expended dialogue tree can be seen in figure [[fig:dialoguetree]].
 
  #+NAME: fig:dialoguetree
@@ -2526,7 +2526,7 @@ and didn't have any choices available to decide upon.
  Options that are goals still get precedence however.
 
 *** Believes
- \cleared
+ \toReview
  Now you may argue at this point we haven't refined our types a lot, since
  the believe structure was defined as `Every possible believe',
  which is basically analogous to `Anything you can think of' or in a object
@@ -2538,10 +2538,9 @@ and didn't have any choices available to decide upon.
  In other words, the believes are intended to be kept in a container
  whereas the input $D_t$ and the output $D_{t+1}$ would only be visible for the
  `outside world'.
- Still we want to refine our all possible believe to something which is 
- less broad in scope.
- To do this analyzed the Jungian functions and see what
- `extra' information require to function to perform their operations.
+ Still we want to refine believe to something which is less broad in scope.
+ To do this we analyzed the Jungian functions and see what
+ `extra' information is required to function to perform their operations.
 
  <<Believes overview>>
  \tripleCleared
@@ -2843,9 +2842,9 @@ In this subsection we will discuss the main data structures used to implement
 the ideas from section [[Jungian BDI]].
 We use class diagrams to accomplish this which are based upon UML cite:fowler2004uml.
 
-\cleared
+\toReview
 Before this is done we would like to point out several things to keep in mind.
-Firstly, we do not show everything precisely such as implemented in the code,
+Firstly, we do not show everything precisely as implemented in the code,
 because that would clutter the diagrams.
 What we do model is all relevant information in structures and the relationship
 between those, following the words of Torvalds.
@@ -2995,14 +2994,14 @@ We argue yes because they entail completely different semantics,
 the =Scene= class is used to group symbols and patterns,
 whereas the =Actor= class is used to identify actors.
 
-\newlyCleared
+\toReview
 The next question would be: Should we use an inheritance relation to make our
 code more DRY (don't repeat yourself) cite:thomas2010orthogonality?
 For by example introducing an abstract class =ANamed= and letting
 =Actor= and =Scene= be extended from those.
-We argue no, because introduces more complexity than that we would save on code
+We argue no, because it introduces more complexity than that we would save on code
 reduction.
-It would also open up to possibility to use the implicit covariant relationship,
+It would also open up the possibility to use the implicit covariant relationship,
 resulting in functions that could accept an =ANamed= argument for example.
 As soon as client code starts using that, the single inheritance `slot' Java
 provides is occupied forever,
@@ -4321,13 +4320,13 @@ In the next section we will analyze some possible candidates.
 
 *** XML vs JSON vs YAML, vs TOML
 <<xml vs everything>>
-\tripleCleared
+\toReview
 All these languages are standards cite:jsonspec,yamlspec,xmlspec,tomlspec.
 However there is a major difference between XML and JSON or YAML, and that is
 their intention.
 XML is a markup language, whereas both JSON and YAML are data formats
 cite:yamlvsxml.
-What they all share in common is that they are supposed to be both
+What they all share is that they are supposed to be both
 human readable and parsable by a computer program.
 
 \tripleCleared
@@ -5244,9 +5243,6 @@ In this chapter we will discuss the specific personality implementation details.
 We will discuss how to setup a scenario, and how we tested our system.
 In section [[From strings to meanings]] a lot of implementation specifics were
 already discussed.
-We separated that from this chapter because it became to big,
-and it had a lot more to do with just getting an environment ready
-that was flexible enough to deal with personality as a process.
 
 \cleared
 In this chapter we will first setup a small case study of personality
@@ -5255,42 +5251,24 @@ Then we will show how to model a part of this scenario in section
 [[Making a scenario]], to show how the bot works and how to steer it.
 Finally we will discuss how we tested the bot in section [[Testing]].
 
-*** Source code
-\newlyCleared
-We made the source code that was written to test this thesis available on
-[[https://jappieklooster.nl/chatbot]].
-
-*** Building
-\tripleCleared
-When one starts working on an existing software project the first
-obstacle faced is building/executing the project.
-This is however not discussed in this chapter,
-but done in detail in the appendix [[building]].
-
 ** Personality influence case study
 <<Personality influence case study>>
 
-\tripleCleared
+\toReview
 To make the influence of personality more concrete,
-and to get a possible expectation of what the chatbot should be able to do.
-We want to make a scenario of a doctor appointment where each
+we make a scenario of a doctor appointment where each
 patient has different personalities.
 First we have Sander the INTJ, secondly Susie the ENFP and Chris the ISTP.
 This type selection will give a rough usage of most Jungian functions.
 In all cases the patients have the same problem, a back pain.
 The cause of this problem in all cases is a worn out back.
-
-\tripleCleared
 After the dialogue we will also discuss the motivations for saying things the
 way they do.
-This is important since because we are doing AI and not just computer science
-we need to have an understanding what is going on in the mind of our test
-subjects.
 
 
 *** Sander the INTJ
-\tripleCleared
-First we should note the dominant and auxiliary functions of the someone with an
+\toReview
+First we should note the dominant and auxiliary functions of someone with an
 INTJ MBTI type.
 An INTJ has as dominant function introverted intuition $N_i$ and as auxiliary
 thinking extroverted $T_e$.
@@ -5299,7 +5277,7 @@ We would expect these function to be most obvious in the dialogue
 $N_i$ mainly focuses on connecting ideas and extroverted analyses objects
 in the external world.
 Combined with each other we get a personality that focuses on getting to goals
-by analyzing situation far ahead of time.
+by analyzing the situation far ahead of time.
 This results in the expected dialogue which can be seen in table
 [[tab:sander-conv-doct]].
 
@@ -5316,13 +5294,13 @@ This results in the expected dialogue which can be seen in table
 | Doctor   | Oh, yes then you need some pain killers for this. |
 | /Sander/ | /Thank you doctor/                                |
 
-\tripleCleared
+\toReview
 Sander gives the doctor the information he needs to come to the conclusion he
 himself probably already had drawn.
 We could even expect him to ask for the medicine immediately,
 however since this could make the doctor question his motives
 (he could be addicted for example) he decides not to do this.
-Doctor however doesn't go into the source of the problem.
+The doctor however doesn't go into the source of the problem.
 He just assumed the patient overstretched himself because he lifted something
 heavy.
 
@@ -5356,7 +5334,7 @@ The expected dialogue can be seen in table [[tab:suzie-conv-doct]].
 | Doctor  | Can you go to the hospital next Friday at 13:00?                   |
 | /Susie/ | /Yes, I will go then./                                             |
 
-\cleared
+\toReview
 We can now see a stark difference with the INTJ personality.
 First of all being dominated by extroversion, it was Susie who took the initiative.
 Secondly she directly asked for medicine, without thinking about the
@@ -5365,7 +5343,7 @@ Then when explaining the situation she jumped to an idea of why she could have
 this sudden pain,
 without thinking about if it even makes sense that you are all the sudden
 allergic to plants that have been in your home for a while.
-The doctor does however come to the conclusion that something is odd about
+The doctor however does come to the conclusion that something is odd about
 getting a back pain from lifting a watering can.
 So because Susie is more talkative the doctor decides to do more tests rather
 than just giving some pain killers.
@@ -5397,8 +5375,8 @@ The conversation can be seen in table [[tab:chris-conv-doct]].
 | Doctor  | I can give you some pain killers meanwhile.                       |
 | /Chris/ | /Okay, thanks doctor/                                             |
 
-\tripleCleared
-So this dialogue looks a lot more like that Sander (INTJ) than that of Susie (ENFP).
+\toReview
+So this dialogue looks a lot more like that of Sander (INTJ) than that of Susie (ENFP).
 However the motivation for the responses are quite different than that of Sander.
 Chris hadn't figured out yet that he needed pain killers when he arrived,
 since his auxiliary function is $S_e$, he hadn't thought that deep about the
@@ -5748,78 +5726,6 @@ However we haven't used those because setting them up initially takes much more
 effort than simple unit tests.
 Validation tests are quick to setup because the process isn't automated.
 
-*** Unit tests
-\tripleCleared
-Unit tests are executed each build.
-They provide extra guarantees upon behavior where type can't do this.
-In essence unit tests are an extension of the type checker.
-
-\tripleCleared
-Static typing provides better correctness guarantees than unit tests cite:unitvsstatic.
-It follows that if you have a stronger type system you need fewer unit tests,
-Java however has a rather basic type system cite:javavsscala,javavshaskell.
-Therefore we implemented over 70 unit tests in the code.
-
-\tripleCleared
-A framework called JUnit cite:junit is used to integrate with maven and execute
-the tests on compile time.
-It also has a handy assertion API.
-
-\tripleCleared
-The unit tests don't cover every aspect of the application but are
-mainly focused upon the Jungian Functions and their data structures.
-For example the $T_e$ tests can be seen in listing [[code:java-unit-te]].
-In =getTestTarget= we define which Jungian function is under test,
-which is handled by the parent class.
-Then as can be seen by its annotation,
-the method =no_goals_look_for_ones_that_change_scene= defines a test.
-
-#+CAPTION: $T_e$ test example
-#+NAME: code:java-unit-te
-#+BEGIN_SRC java
-  public class TeTest extends AJungFuncTest {
-      @Override
-      public JungianFunction getTestTarget() {
-          return JungianFunction.Te;
-      }
-      @Test
-      public void no_goals_look_for_ones_that_change_scene(){
-          Believes inputBelieves = believes.setGoals(Collections.emptySet());
-          builder.addOption(MockBelievesFactory.hellos);
-          Utterance expected = builder.addOption(MockBelievesFactory.needmedicine);
-          builder.addOption(MockBelievesFactory.whyhere);
-          DialogueTree inputTree = builder.getCurrent();
-
-          JungFuncArgs result = apply(inputBelieves, inputTree);
-
-          believes = inputBelieves;
-          believesShouldRemainTheSame(result.believes);
-
-          Assert.assertEquals("the scene changing dialogue is preffered",
-              Optional.of(expected),
-              result.tree.getPrefferedUtterance()
-          );
-      }
-  }
-
-#+END_SRC
-
-
-\tripleCleared
-Tests generally follow a similar pattern, first an expectation is build,
-then the input is created, the function to test is called, trough the =apply=
-method in this case, and finally the expectation is asserted.
-If the expectation isn't upheld an error will be shown when building the
-project.
-
-\tripleCleared
-$T_e$ only has one test that is specifically aimed at it,
-but several shared tests also target it.
-For example we know that rationale functions should prefer alteration if all
-things are equal.
-So we wrote a test for this and just applied the same test on all rationale
-functions.
-
 *** Validation test
 \tripleCleared
 To do validation tests we will try to model the scenario presented as an example
@@ -5829,6 +5735,7 @@ After this we test the bot by playing doctor in the scenario.
 The results were recorded and can be seen in appendix [[Test Results]].
 There were some issues with the scenario itself,
 however most issues we found were with the functions and their interactions.
+\todo{Give a description of these issues here. That is exactly what is interesting!}
 
 \clearpage
 * In conclusion
@@ -5838,7 +5745,7 @@ types in a chatbot.
 We built on top of the work of an existing chatbot,
 but decided to replace the core modeling language with an alternative
 because there was no space to do deliberation in.
-This effort resulted a much more free,
+This effort resulted in a more flexible,
 less verbose and more precise method of modelling dialogue.
 It also made Drools the center of the new chatbot,
 where each step of processing a user message was decided by business rules.
@@ -5883,20 +5790,20 @@ Alternative implementations could also be developed for the irrational functions
 we leave speculation about these as an exercise to the reader.
 
 ** Future work
-\tripleCleared
-Considering the move to Drools to the center of chatbot deliberation,
+\toReview
+Considering the move to position Drools in the center of chatbot deliberation,
 and a novel alternate take on modeling chatbot dialogue,
 there are a legion of possibilities to extend this work.
-We will present in this section a brief overview of the more obvious extensions,
+In this section we will present  a brief overview of the more obvious extensions,
 but we expect there will be many niches we haven't considered.
 
 *** Social practice support
-\newlyCleared
+\toReview
 We already hinted in section [[social practice]] that social practices were a
 consideration.
 However during the implementation we haven't looked deep into this,
 except for the fact that Drools maybe a good bases to do this.
-Although it was already in place when we arrived,
+Although it was already in place,
 we just made it the center of deliberation.
 This will make modelling norms for example more easy,
 for example we can consider it to be not normal when someone utters the same
