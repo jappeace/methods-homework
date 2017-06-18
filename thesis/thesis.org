@@ -1,7 +1,7 @@
 #+TITLE: Jungian personality in a chatbot
 #+LANGUAGE: en
 #+LaTeX_CLASS: article
-#+LaTeX_CLASS_OPTIONS: [a4paper,final]
+#+LaTeX_CLASS_OPTIONS: [a4paper,drafting]
 
 # disable tic so it doesn't appear at the top but where we want it instead
 #+Options: toc:nil ^:nil 
@@ -88,7 +88,7 @@ This caused us to replace the existing AIML based scheme with a novel
 approach. 
 In this approach, we opened up space to have varied responses to a similar
 utterance depending on the personality.
-The drools rule engine is now the center of deliberation in the chatbot.
+The Drools rule engine is now the center of deliberation in the chatbot.
 The new modelling method was also less verbose and more precise.
 We conclude by demonstrating that this scheme works as expected.
 
@@ -99,7 +99,7 @@ We conclude by demonstrating that this scheme works as expected.
 :UNNUMBERED: t
 :END:
 \tripleCleared
-Jung, chatbot, drools, YAML, AIML, MBTI, salve, communicate!
+Jung, chatbot, Drools, YAML, AIML, MBTI, salve, communicate!
 
 \newpage
 #+TOC: headlines 2
@@ -133,7 +133,7 @@ and replying correctly relies on a simple /ABC/ choice.
 \newlyCleared
 To deal with this, an alternative serious game called `Salve' was made,
 based on the chatbot Alice cite:augello2016social.
-To measure how a student performed, a production rule engine was used called drools.
+To measure how a student performed, a production rule engine was used called Drools.
 The social practice of a doctor consult was used in this particular instance,
 in other scenarios other social practices could be used.
 In this thesis we are interested in extending this work with personalities,
@@ -820,7 +820,7 @@ OCC cite:augello2016social.
 So it is only natural to say the architecture discussed in
 section [[Architecture]], is also an intelligent virtual agent architecture.
 This thesis did not try to unify OCC based emotions with personality,
-moving drools to the core of deliberation could make this easier however
+moving Drools to the core of deliberation could make this easier however
 (see section [[Drools background]]).
 More extended use of social practice, and the recombination of OCC could
 in future work lead to an agent that can chat much more naturally than
@@ -851,14 +851,14 @@ epistemics to add believes to it cite:meyer2014logics.
 \cleared
 If JADE cite:braubach2003jadex, and 2APL cite:dastani20082apl are agent
 orientated programming languages,
-then drools can be seen as a more low level variant.
-Things such as goals and ontology are not predefined in drools but there exists a concept
+then Drools can be seen as a more low level variant.
+Things such as goals and ontology are not predefined in Drools but there exists a concept
 of rule matching similar to 2APL.
 Drools is called a production rule system, which is based around the RETE
 algorithm cite:droolsdocs.
-A good example in which drools is used is the expert system called OptaPlanner
+A good example in which Drools is used is the expert system called OptaPlanner
 cite:vcimbora2015usability, which is a constraint satisfaction solver trough
-heuristics by using drools.
+heuristics by using Drools.
 
 \cleared
 Drools consists of three major concepts.
@@ -870,7 +870,7 @@ Finally there is the right hand side,
 which is java code that gets executed if the left hand side becomes true.
 This code can modify the facts,
 or interlope with outside java code trough global variables.
-Also note that drools is Turing complete cite:weppenaar2011solving.
+Also note that Drools is Turing complete cite:weppenaar2011solving.
 An example of a drool rule can be seen in listing [[code:drool:example]].
 
 #+CAPTION: Example of drool rule
@@ -891,13 +891,13 @@ end
 \cleared
 With listing [[code:drool:example]] we can also see the difference between facts
 and globals.
-The facts are used as values to execute drools upon.
+The facts are used as values to execute Drools upon.
 In the example this is the =SymbolDatabase=.
 Globals are interactions with objects that live outside of the rule engine.
 Such as the logging object =log= in the example.
 
 \newlyCleared
-An interesting difference between traditional BDI model and drools is that drools
+An interesting difference between traditional BDI model and Drools is that Drools
 speak about facts.
 In section [[BDI  explained]] that we never speak about facts,
 however drool does call the main data model the fact base.
@@ -1252,7 +1252,7 @@ This is of course an information state approach too.
  the judgement of these practices was for example encoded within the S-AIML
  language, however in the source code AIML has taken a step back.
  It is only used for text processing and not deliberation
- (which is now being taken over by drools as discussed in [[existing architecture]]).
+ (which is now being taken over by Drools as discussed in [[existing architecture]]).
  Section [[Functionality]] and [[Abstract architecture]],
  are based upon the published papers,
  however for sections [[existing architecture]] and [[Server architecture]],
@@ -1430,7 +1430,7 @@ the client enter.
     }
   }
 #+END_SRC
-#+CAPTION: Class diagram of the server, where KIE is the engine that handles the drools
+#+CAPTION: Class diagram of the server, where KIE is the engine that handles the Drools
 #+LABEL: fig:class
 #+RESULTS[da1283423804d9bccc8868552768b582306da369]: fig:class
 [[file:img/uml/class.png]]
@@ -1438,14 +1438,14 @@ the client enter.
 \cleared
 The =WebsocketService= uses a =ChatbotEngine= to determine how to reply to user utterances,
 Where =ChatbotEngineImpl= is the concrete implementation.
-=ChatbotEngineImpl= uses a =KieSession= for the drools and a =Chat= which is the
+=ChatbotEngineImpl= uses a =KieSession= for the Drools and a =Chat= which is the
 Alice bot interface.
 Once a =startGame= message is received the KIE service is started,
 which runs on a dedicated thread to do drool deliberation.
-At this point facts can be inserted for the drools to react upon,
+At this point facts can be inserted for the Drools to react upon,
 in case of the anamnesi scenario the =GameStart= fact is inserted,
 which is a marker object to indicate that the game has started.
-This allow drools to take the initiative,
+This allow Drools to take the initiative,
 for example when the user hasn't replied after 20 seconds the agent will ask
 the user why he hasn't replied yet.
 A detailed overview of construction can be seen in figure [[fig:construction]].
@@ -1453,9 +1453,9 @@ A detailed overview of construction can be seen in figure [[fig:construction]].
 \cleared
 In the class diagram (figure [[fig:class]]), we can see an attribute to the =Chat=
 class called predicates.
-This is a bag of variables the drools can use to keep track of the scenario
+This is a bag of variables the Drools can use to keep track of the scenario
 progression.
-The =setGlobal= method of =KieSession= is used to expose global objects to drools.
+The =setGlobal= method of =KieSession= is used to expose global objects to Drools.
 In this case the =ChatbotEngineImpl= is exposed.
 Insert can be used to insert facts.
 The difference between facts and globals is explained in section
@@ -1531,7 +1531,7 @@ stop
 **** Deliberation
 <<Deliberation>>
 \tripleCleared
-AIML has been extended to allow updating of the drools knowledge base,
+AIML has been extended to allow updating of the Drools knowledge base,
 as can be seen in listing [[code:s-aiml-inserts]].
 
 #+CAPTION: Extended AIML that uses knowledge
@@ -1547,7 +1547,7 @@ as can be seen in listing [[code:s-aiml-inserts]].
 </category>
 #+END_SRC
 
-\todo[inline]{Investigate if drools rule have to update precondition hashmaps individually? (Or if this is done automated? Well you could automate it so I think it doesn't matter). I think we should talk more about this?}
+\todo[inline]{Investigate if Drools rule have to update precondition hashmaps individually? (Or if this is done automated? Well you could automate it so I think it doesn't matter). I think we should talk more about this?}
 \todo{Now I'm like, noo it just doesn't matter}
 \cleared
 In this case if a user utters the sentence: ``why are you here'', the bot
@@ -1556,7 +1556,7 @@ scenario.
 Once the scenario is updated the possible responses of the chatbot are
 changed, as can be seen by the precondition tag.
 The template tag has some extra tags. The insert tag inserts a fact into
-the drools knowledge base, the =getDroolsTemplate= tag queries the drools
+the Drools knowledge base, the =getDroolsTemplate= tag queries the Drools
 knowledge base for a string.
 
 **** User utterance processing 
@@ -1583,9 +1583,9 @@ Figure [[fig:utterance-proccesing]] gives a detailed overview of utterance proce
           if (Has insert tag?) then (No)
           else (Yes)
           |#AntiqueWhite|Drool|
-          :Insert fact into drools;
+          :Insert fact into Drools;
           |#CCDDFF|Alice|
-          :Combine droolsting
+          :Combine Droolsting
                   with AIML;
           endif
           if (Has getDroolTemplate tag?) then (No)
@@ -1610,7 +1610,7 @@ Figure [[fig:utterance-proccesing]] gives a detailed overview of utterance proce
 #+CAPTION: Activity diagram of user utterance processing
 #+LABEL: fig:utterance-proccesing
 #+ATTR_LATEX: :width 1.0\textwidth
-#+RESULTS[2be41360a975175f4a0734807235d7983de36beb]: fig:utterance-proccesing
+#+RESULTS[f9f1a787a2ef8d9859808313637ca06b328116d6]: fig:utterance-proccesing
 [[file:img/uml/utterance-proccesing.png]]
 
 \newlyCleared
@@ -1621,12 +1621,12 @@ The drool system can be relatively easily be bypassed.
 If there are no tags in AIML the drool system will be oblivious of chat
 messages.
 We represented this situation in figure [[fig:state:aiml]],
-there is a clear choice between going from a pattern either to drools or to the
+there is a clear choice between going from a pattern either to Drools or to the
 template.
 If there is an insert tag then the `Drools' state is visited,
 if not we go directly to the `Template' state.
 Then the `Template' state can use =getDroolTemplates= tags to read information
-from drools.
+from Drools.
 Note that there is a loop for the =getDroolTemplates= tag
 in figure [[fig:utterance-proccesing]].
 This is because a blocking queue is used,
@@ -2715,7 +2715,7 @@ To combine the ideas discussed in section [[Jungian BDI]] with the existing prog
 some big architectural changes were introduced.
 For example the Alice bot was completely removed in favor of a new less tightly
 coupled scheme.
-The drools engine has become the center of deliberation (which previously was the AIML).
+The Drools engine has become the center of deliberation (which previously was the AIML).
 We will discuss these changes in this chapter.
 
 \cleared
@@ -2752,7 +2752,7 @@ the solid arrow means uses and the other lines mean interacts.
 #+BEGIN_SRC plantuml :cache yes :file img/uml/architecture-concept.png :exports results
   skinParam backgroundColor transparent
   package bot{
-    cloud drools {
+    cloud Drools {
       component score
       component scenario
       component interpreter
@@ -2772,7 +2772,7 @@ the solid arrow means uses and the other lines mean interacts.
     ]
     entity filereader
     filereader ..> meanings
-    drools --> meanings
+    Drools --> meanings
   }
   node server
   node client
@@ -2782,7 +2782,7 @@ the solid arrow means uses and the other lines mean interacts.
 #+END_SRC
 #+CAPTION: Deployment diagram of implemented architecture
 #+LABEL: fig:architecture-concept
-#+RESULTS[e65c17b0bd6822613fd73bff412f3b10b9b0e13d]: fig:architecture-concept
+#+RESULTS[d7ad4a538aa95d8a6289f8072fb1b615404a8cc0]: fig:architecture-concept
 [[file:img/uml/architecture-concept.png]]
 
 \cleared
@@ -2794,8 +2794,8 @@ in one package.
 These concepts have now been split up,
 the file reader handles the loading part of the bot,
 after that it just inserts the
-symbol, pattern and connection databases into the drools rule engine.
-The drools rule engine then handles all deliberation,
+symbol, pattern and connection databases into the Drools rule engine.
+The Drools rule engine then handles all deliberation,
 which can happen with the various components, such as personality emotions etc.
 Even the pattern matching is done by a drool rule with help of the
 pattern database.
@@ -2804,24 +2804,24 @@ it should be easy to add support for other data formats.
 
 \newlyCleared
 The biggest difference from the original architecture is the removal of
-distinction between drools and the chatbot.
+distinction between Drools and the chatbot.
 In the new architecture we make all information in the files available to
-the drools in a database.
+the Drools in a database.
 This is starkly different than the architecture used in section [[Server architecture]].
 In the old architecture,
-the reply for a message is already determined before drools had a chance to do
+the reply for a message is already determined before Drools had a chance to do
 deliberation.
-What's even worse is that if the drools want to utter a spontaneous utterance,
-then it had to be encoded in a string inside the drools themselves.
+What's even worse is that if the Drools want to utter a spontaneous utterance,
+then it had to be encoded in a string inside the Drools themselves.
 This means the strings facing the user are spread over both the AIML files
-and the drools.
+and the Drools.
 This is confusing for new scenario creators since completely different folders
 have to be accessed to change the strings.
 
 \tripleCleared
 The changes proposed here, result in a much more simple architecture.
 Only one place does deliberation rather than two and only one API is used for
-generating responses, whereas previously drools could generate replies, /and/
+generating responses, whereas previously Drools could generate replies, /and/
 the AIML bot.
 
 \tripleCleared
@@ -3033,8 +3033,8 @@ In figure [[fig:jungclass]] we can see the higher level structures of =Believes=
     +utterance:Utterance
     +connection_used:Connection
   }
-  package drools{
-    package drools.db{
+  package Drools{
+    package Drools.db{
       class ConnectionDatabase
     }
     ConnectionDatabase --* "*" Connection
@@ -3063,11 +3063,11 @@ In figure [[fig:jungclass]] we can see the higher level structures of =Believes=
     }
     Utterance --* Actor
   }
-  DialogueTree -[hidden]-> drools
+  DialogueTree -[hidden]-> Drools
 #+END_SRC
 #+CAPTION: Class diagram of the high level model
 #+LABEL: fig:jungclass
-#+RESULTS[7bbc0695a7950d00a11407c749254898824149ca]: fig:jungclass
+#+RESULTS[9637bf42245bada51e276c137daa1db820e43718]: fig:jungclass
 [[file:img/uml/jungclass.png]]
 
 \tripleCleared
@@ -3123,7 +3123,7 @@ for example.
 
 #+NAME: fig:dbclass
 #+BEGIN_SRC plantuml :cache yes :file img/uml/dbclass.png :exports results
-  package drools.db{
+  package Drools.db{
     abstract class Database<Key,Value>{
       -values:Map<Key,Value>
       +get(key:Key):Optional<Value>
@@ -3148,7 +3148,7 @@ for example.
 #+END_SRC
 #+CAPTION: The database package
 #+LABEL: fig:dbclass
-#+RESULTS[a2e3cbdbbab42de8a4c6c9d166b2ef419283222c]: fig:dbclass
+#+RESULTS[add574f335f862e5e54dc28214bdc3d97f659be0]: fig:dbclass
 [[file:img/uml/dbclass.png]]
 
 \tripleCleared
@@ -3363,18 +3363,18 @@ This is explained in depth in section [[Star tags]].
 *** Support types
 <<Support types>>
 \newlyCleared
-Because we are working with drools,
+Because we are working with Drools,
 we often use a technique of wrapping values into other types,
-to signify their progress in drools deliberation.
+to signify their progress in Drools deliberation.
 Basically we use types as labels to indicate progress.
-These types can either be defined in Java or drools.
-If they are defined in Java, both Java code and drools code can use it.
-If they are defined in drools, only drools code can use it.
+These types can either be defined in Java or Drools.
+If they are defined in Java, both Java code and Drools code can use it.
+If they are defined in Drools, only Drools code can use it.
 In figure [[fig:supportclassjava]] we can see the supporting types defined in
 Java and the relations they have with types defined in previous sections.
-We can see the types that are defined in the dialogue drools package in figure
+We can see the types that are defined in the dialogue Drools package in figure
 [[fig:supportclassdrools]]
-and that of the personality specific drools in figure [[fig:supportclassperson]].
+and that of the personality specific Drools in figure [[fig:supportclassperson]].
 
 #+NAME: fig:supportclassjava
 #+BEGIN_SRC plantuml :cache yes :file img/uml/supportclassjava.png :exports results
@@ -3386,7 +3386,7 @@ class Symbol
   }
 }
 
-package drools{
+package Drools{
   class UnparsedUserUtterance{
     +value:String
   }
@@ -3408,7 +3408,7 @@ package drools{
 #+CAPTION: Supporting types in Java
 #+LABEL: fig:supportclassjava
 #+ATTR_LATEX: :width 0.5\textwidth
-#+RESULTS[55010ae4b3d6cee5b4d1420c002d4a5dd2704576]: fig:supportclassjava
+#+RESULTS[f789c4bb26dece3f3c667895afb3d407f463bdc0]: fig:supportclassjava
 [[file:img/uml/supportclassjava.png]]
 
 \tripleCleared
@@ -3426,7 +3426,7 @@ the conversation to figure out the =PerlocationaryValueSet=.
 #+NAME: fig:supportclassdrools
 #+BEGIN_SRC plantuml :cache yes :file img/uml/supportclassdrools.png :exports results
 
-package drools{
+package Drools{
   package model{
     class Symbol
     class Utterance
@@ -3470,14 +3470,14 @@ package dialogue{
 }
 #+END_SRC
 
-#+CAPTION: Supporting types in the dialogue drools package
+#+CAPTION: Supporting types in the dialogue Drools package
 #+LABEL: fig:supportclassdrools
-#+RESULTS[11d3c6965221f225c096b4456d706c30e2bbe884]: fig:supportclassdrools
+#+RESULTS[a688b910e5ada103f1a84bfa09d6eaee207c0d0b]: fig:supportclassdrools
 [[file:img/uml/supportclassdrools.png]]
 
 \newlyCleared
 By studying figure [[fig:supportclassdrools]] we can start to understand what is
-going on inside the drools.
+going on inside the Drools.
 We can for example see that a distinction is made for when a result matches
 an in scene pattern or a neighbouring scene pattern.
 These structures are of course there to do scene switching.
@@ -3503,7 +3503,7 @@ package personality{
 
 #+END_SRC
 
-#+CAPTION: Supporting type in the personality drools package
+#+CAPTION: Supporting type in the personality Drools package
 #+LABEL: fig:supportclassperson
 #+ATTR_LATEX: :width 0.5\textwidth
 #+RESULTS[b074494c2edcbfd3dacf2340a12faa839b869329]: fig:supportclassperson
@@ -3512,7 +3512,7 @@ package personality{
 \tripleCleared
 In figure [[fig:supportclassperson]] we can see the drool defined =PersonalityProcess=.
 This structure tracks traversing the Jungian Functions.
-We manage this inside drools to give other rules the opportunity to inspect
+We manage this inside Drools to give other rules the opportunity to inspect
 the deliberation process while it's going.
 
 \FloatBarrier
@@ -3582,14 +3582,14 @@ This is why we postpone constructing these to the end.
   :Read believe file;
   :Construct patttern dbs;
   |#FFDEEE|Engine|
-  :Insert file reader results into drools;
+  :Insert file reader results into Drools;
   |WebSocket|
   :put game id in websocket user prefs;
   stop
 #+END_SRC
 #+CAPTION: Activity diagram of a server game construction
 #+LABEL: fig:initjung
-#+RESULTS[ae2a671ca00fca46fe02e4d96b7806774274ee3d]: fig:initjung
+#+RESULTS[45847c9f9bc829b639d91ab38fcd555cb9d9c944]: fig:initjung
 [[file:img/uml/initjung.png]]
 
 ** Operation
@@ -3652,7 +3652,7 @@ figure [[fig:utterance-proccesing]] with figure [[fig:insert_meaning]].
 What we can see directly by comparing these is the change in swimming lanes
 cite:planumlswimminglanes.
 The Alice swimming lane has been removed completely,
-and in its place we've got drools, which has become the center of
+and in its place we've got Drools, which has become the center of
 the application.
 Then the Personality swimming lane was introduced,
 this is of course in light of this thesis.
@@ -3662,9 +3662,9 @@ Since these activity diagrams are quite detailed in their description of what
 is going on,
 we made an overview of the key changes in the state diagrams 
 presented in figure [[fig:state:aiml]] and figure [[fig:state:yaml]].
-In the new architecture, everything happens inside drools.
+In the new architecture, everything happens inside Drools.
 Only technical things such as dealing with the protocol and setting up the
-connection are handled outside drools.
+connection are handled outside Drools.
 This makes it impossible to bypass it,
 and it also opens up more space to do high level deliberations.
 Finally since =PatternMatching= is just the execution of another rule,
@@ -3684,7 +3684,7 @@ Alternatives approaches are discussed in section [[Replace regex]].
   [*] -> PatternMatching
   Reply -> [*]
 #+END_SRC
-#+CAPTION: State diagram: Utterance processing with drools
+#+CAPTION: State diagram: Utterance processing with Drools
 #+ATTR_LATEX: :width 0.5\textwidth
 #+LABEL: fig:state:yaml
 #+RESULTS[91c67cdcbc4fe5fd0a81ff9cd72c7eddf5ea00be]: fig:state:yaml
@@ -3694,14 +3694,14 @@ Alternatives approaches are discussed in section [[Replace regex]].
 To ensure rules are executed in a particular order we often wrap and unwrap
 required data into types, as explained in section [[Support types]].
 For example the initial user utterance gets wrapped into an =UnparsedUttarence=
-type, before it's even inserted into the drools.
+type, before it's even inserted into the Drools.
 This type can be seen in figure [[fig:supportclassjava]].
 We could have just inserted a string and not created the type,
 but the reason for doing this with the initial string is to make it explicit:
 /This string needs to be parsed/.
 
 \tripleCleared
-So in drools we can match on this type (see section [[Drools background]]).
+So in Drools we can match on this type (see section [[Drools background]]).
 Which we do in the next step,
 parsing this string with pattern (regex) matching.
 This is actually the $\sigma \to s$ operation from section [[Narrowing the model]].
@@ -3871,7 +3871,7 @@ A deployment diagram of this architecture can bee seen in figure
 \cleared
 If we compare figure [[fig:n-agent-arch]] with figure [[fig:architecture-concept]] from
 section [[Implemented architecture]], we can see several large changes.
-First of all the scene and scenario are now split of from the bot drools.
+First of all the scene and scenario are now split of from the bot Drools.
 The reason for this is discussed in section [[System vs agent believes]], 
 but it is basically to separate the system from the agent believes.
 Also note that there is just one system, but there can be multiple bots.
@@ -3883,13 +3883,13 @@ is doing, for example by analyzing the bots' emotions.
 
 *** System vs agent believes
 \cleared
-What is required of the drools is that we make a separation between the 
+What is required of the Drools is that we make a separation between the 
 multilogue /system/ and agent /believes/.
 A good step in this direction is the =Believes= structure,
 which groups most agent thoughts, at least those used by the high-level system.
 Although it should be noted that the =Believes= structure itself also has
 problems, this is discussed in section [[Believes and DialogueTree]],
-but the gist of it is that it's better to replace this structure with a drools
+but the gist of it is that it's better to replace this structure with a Drools
 fact base.
 Since it has a self field however, it could be used to identify an agents'
 believes.
@@ -3969,7 +3969,7 @@ Deciding which approach is the best is a matter of experimentation.
 Then it should also be noted that the scenarios of the bots should be
 specified differently. At least for parts of it, while other parts should be
 shareable.
-So the YAML files should be specified distinctly per bot, the drools files
+So the YAML files should be specified distinctly per bot, the Drools files
 distinctly per bot and there could be a mechanism to share these.
 
 # empty buffer of figures
@@ -3991,10 +3991,10 @@ Originally, AIML was used for mapping user input to a reply.
 However, as explained in section [[Architecture]],
 AIML has some problems for our particular use case.
 The major two issues are:
-+ No way of giving drools space to do deliberation aside from updating the scenario. 
-+ No way of accessing the knowledge base from inside drools.
++ No way of giving Drools space to do deliberation aside from updating the scenario. 
++ No way of accessing the knowledge base from inside Drools.
 A relatively simple solution to both of these would be to use an XML parser to
-load AIML into a data structure and insert it into drools,
+load AIML into a data structure and insert it into Drools,
 however this won't solve the core of our problem:
 The way AIML models a conversation makes it hard if not impossible to list
 possible actions for an agent at a particular point in a conversation,
@@ -4094,9 +4094,9 @@ cite:aimlspec,
 there is no way to use full regular expressions,
 or statistical methods.
 Another issue that we can't access encoded utterances directly,
-so from drools there is no way to do spontaneous utterances unless they're hard
+so from Drools there is no way to do spontaneous utterances unless they're hard
 coded strings.
-Finally, since drools can be skipped all together (see figure [[fig:state:aiml]]),
+Finally, since Drools can be skipped all together (see figure [[fig:state:aiml]]),
 the bot could have amnesia about certain utterances,
 to prevent this every template tag would need an insert tag,
 which is boilerplate code cite:lammel2003scrap.
@@ -5047,7 +5047,7 @@ if a connection has a query that isn't satisfied, it is not available.
 Another advantage over AIML is that regular expressions allow much more precise
 input sanitation than wildcards.
 This could enforce input that is only numeric for example.
-Which in turn can be used within drools as a query.
+Which in turn can be used within Drools as a query.
 Finally we preform checks to make sure that symbols with template names
 only have connections leading up to them that satisfy the template names.
 AIML didn't have to do this in the first place of course,
@@ -5056,7 +5056,7 @@ since stars only acted per category.
 \tripleCleared
 A feature that is missing is retrieving drool facts from the knowledge base
 and inserting them into the template.
-However one can workaround this limitation by writing drools for this,
+However one can workaround this limitation by writing Drools for this,
 similarly to low level replies.
 A =MatchedQueryDB= can be constructed manually to fill with drool facts.
 
@@ -5097,7 +5097,7 @@ But they are just an additional restriction on the pattern matching,
 see section [[That tags]].
 Alternatively you count the injection of types (in S-AIML),
 but this isn't a formal encoding in AIML itself,
-but rather a way of informing drools what's going on.
+but rather a way of informing Drools what's going on.
 
 *** Mapping AIML
 <<Mapping AIML>>
@@ -5178,7 +5178,7 @@ called of AIML called S-AIML.
 \newlyCleared
 In S-AIML types are injected to track progress of the scenario.
 In contrast to the current scheme where the entire user utterance gets
-inserted and it's up to drools to make a symbolic understanding from it.
+inserted and it's up to Drools to make a symbolic understanding from it.
 To work around the issue of inserting types we actually have to generate
 drools in case of a particular symbol inserted,
 which then inserts the type specified by the insert tag.
@@ -5187,7 +5187,7 @@ replying we insert the specified type.
 This will allow the original drool rules to still execute.
 An example of this can be seen in listing [[code:drool:generated]].
 
-#+CAPTION: Generated drools from listing [[code:aiml-mapping]] insert tags
+#+CAPTION: Generated Drools from listing [[code:aiml-mapping]] insert tags
 #+NAME: code:drool:generated
 #+BEGIN_SRC java
 rule "insert types when symbol how_long_pain was uttered"
@@ -5208,7 +5208,7 @@ end
 \newlyCleared
 Something which complicates this is that attributes can be set trough JSON
 within the insert tags.
-This can be handled inside the drools rules because the inserted types
+This can be handled inside the Drools rules because the inserted types
 always have setters.
 So there could be java code generated for that.
 Although we haven't done this in the actual implementation since this feature
@@ -5840,7 +5840,7 @@ but decided to replace the core modeling language with an alternative
 because there was no space to do deliberation in.
 This effort resulted a much more free,
 less verbose and more precise method of modelling dialogue.
-It also made drools the center of the new chatbot,
+It also made Drools the center of the new chatbot,
 where each step of processing a user message was decided by business rules.
 
 \cleared
@@ -5884,7 +5884,7 @@ we leave speculation about these as an exercise to the reader.
 
 ** Future work
 \tripleCleared
-Considering the move to drools to the center of chatbot deliberation,
+Considering the move to Drools to the center of chatbot deliberation,
 and a novel alternate take on modeling chatbot dialogue,
 there are a legion of possibilities to extend this work.
 We will present in this section a brief overview of the more obvious extensions,
@@ -5895,14 +5895,14 @@ but we expect there will be many niches we haven't considered.
 We already hinted in section [[social practice]] that social practices were a
 consideration.
 However during the implementation we haven't looked deep into this,
-except for the fact that drools maybe a good bases to do this.
+except for the fact that Drools maybe a good bases to do this.
 Although it was already in place when we arrived,
 we just made it the center of deliberation.
 This will make modelling norms for example more easy,
 for example we can consider it to be not normal when someone utters the same
 symbol over and over.
 Since utterances are already recorded into believes for some of the Jungian functions,
-we can define a norm with a drools query.
+we can define a norm with a Drools query.
 Then we can react by moving to a particularly designed scene for repeating one self.
 There is much more that this can do, which is discussed thoroughly in section
 [[social practice]].
