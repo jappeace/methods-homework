@@ -600,16 +600,15 @@ This is also true for the irrational functions.
  | Empathy       | 1 | 2 | 3 | 4 | 5 | Logic     |
  | Dispassionate | 1 | 2 | 3 | 4 | 5 | Emotional |
 
- \doubleCleared
- The result of the PPSDQ would look something like: I-30 N-20 T-80 J-60, with
- a scale of 0 to 100. To calculate the Jungian functions as a probability measure
- some math is required. Our subject in our example is $70\%$ of the time \todo{this is not correct. If the score for introvertion is 70, it means the strength of this influence or tendency is 70 on a scale of 100. It has not much to do with frequencies or probabilities. I.e. choices can be very consistent  but behaviour in general less extreme introvert.}
- introverted and $30\%$ of the time extroverted.
- $60\%$ of the time judging and $40\%$ of the time perceiving.
- therefore $N_i$ would be calculated as: 0.7 \times 0.4 \times 0.8 = 0.224 or $22.4\%$.
- $N_e$ would be $0.3 \times 0.4 \times 0.8 = 0.096$ etc.
- From this you can make a preference sequence, where higher valued functions come
- first, or create a mixed strategy, where we select functions based upon
+ \toReview
+ The result of the PPSDQ would look something like: $I-30 N-20 T-80 J-60$, with
+ a scale of 0 to 100. 
+ This means the tendency for introversion would be about 30 on a scale of 100,
+ and similarly for the other dimensions. Note that $I-30$ is the same as $E-70$,
+ introversion and extroversion being on opposite ends of the same scale.
+ As an application, we can for example make a preference sequence,
+ where higher valued functions come first,
+ or create a mixed strategy, where we select functions based upon
  probability.
 
  \cleared
@@ -1670,7 +1669,7 @@ transformation.
 The keyword file and its associated transformation rules were called the
 `script'.
 
-\cleared
+\toReview
 The Alice chatbot is a more recent incarnation of the idea,
 but uses AIML as a basis for the `script' cite:wallace2001don.
 Because Alice is licensed under an open source license,
@@ -1681,7 +1680,12 @@ used AIML to deal with natural language.
 In section [[AIML issues]] we discuss our reasons to move away from this almost
 traditional chatbot paradigm, but in short:
 We can't use AIML for adding personality unless we'd modify it in such a way
-that it no longer is AIML. \todo{explain here already the basic reasons.}
+that it no longer is AIML.
+The primary reasons is that AIML selects a response when a pattern is matched,
+the template,
+however we want to have the ability to choose between various responses.
+This `choice' will then be the personality as a process.
+We call this the problem of not having deliberation `space'.
 
 \toReview
 In cite:vinyals2015neural a sub symbolic chatbot is presented that uses
@@ -1830,7 +1834,9 @@ This leads us to discuss the dialogue tree [[Dialogue tree]] and symbol graph
 Then we make a model that can combine individual functions in section
 [[Composing types]].
 After which we will look into the specific function attitudes and how to
-implement these as behavior in section [[Rational and irrational]]. \todo{How about 4.5?}
+implement these as behavior in section [[Rational and irrational]].
+In section [[Practical changes]] we will discuss some changes that were the result
+of testing.
 Finally we will consider how this presented method relates to Jungian
 theory in section [[Consistency with theory]]. 
 
@@ -1949,7 +1955,7 @@ it's still questionable if one can combine them successfully.
 
 ** A type signature approach
 <<A type signature approach>>
-\doubleCleared
+\toReview
 To give a better understanding of the scope of this project we will
 try to come up with a type signature of a pure function that models all the
 function attitudes.
@@ -1962,8 +1968,10 @@ and return a function $b \to c$, this process is called partial application
 cite:haskellpartialapplication.
 Capital letters indicate sets.
 Note that we have an overview of the symbols used in appendix [[Symbol overview]].
-
-\todo{Do we mention somewhere that $a \to a$ doesn't mean the value is the same?}
+Also note that if we have a function $a \to a$ it does not mean that the /value/
+of a stays the same, it just means that the type $a$ is used which may change in
+value. For example think of a function from an integer to an integer that
+increases the value by four.
 
 \doubleCleared
 We will go from an as broad as possible system (while using BDI) to a
@@ -1983,27 +1991,23 @@ individually.
 To do this we will define some terms, with which we will go from the broadest
 definition possible towards one that fits the project scope precisely.
 
-\todo[inline]{Seriously get rid of time T, its completely useless and makes things even more complex}
-\doubleCleared
-Let $\mathcal{B}$ denote the set of all \todo{Are we going to do at time T? I think it is confusing to do that on types}
-possible believes and let $B_t$ with $B_t \subseteq \mathcal{B}$ denote the
-believes at time $t$. 
+\toReview
+Let $\mathcal{B}$ denote the set of all
+possible believes and let $B$ with $B \subseteq \mathcal{B}$ denote the
+believes. 
 $\Pi$ is the set of all possible sense information,
-in which $\pi_t$ with $\pi_t \subseteq \Pi$ denotes the perception information at
-time $t$.
-$\mathcal{D}$ denotes the set of all possible actions, and $\Delta_t$
-indicates the set of actions executed at time
-$t$ where $\Delta_t \subseteq \mathcal{D}$.
+in which $\pi$ with $\pi \subseteq \Pi$ denotes the perception information.
+$\mathcal{D}$ denotes the set of all possible actions, and $\Delta$
+indicates the set of actions executed where $\Delta \subseteq \mathcal{D}$.
 With this definition we can define every possible agent configuration[fn::Note
 that this is just the deliberation part, there is no memory in a pure function,
 but the agent's memories can be stored in the believes.
 The believes can be reused in the next call,
 it's up to the caller to decide how this happens.
 This can be done on the thread of control the agent owns for example.
-Where it will block until a time $t$ has passed or a new perception $\pi$ comes in from
-the environment.]
+Where it will block until a new perception $\pi$ comes in from the environment.]
 as the following pure function type signature:
-\[ B_t \to \pi_t \overset{f_a}{\to} (B_{t+1}, \Delta_{t+1}) \]
+\[ B \to \pi \overset{f_a}{\to} (B, \Delta) \]
 This says, we first put in the current believe base, then the sensory
 information after which we get a new believe base and a set of actions.
 In this the intentions are encoded in the function used, and the desires are
@@ -2021,10 +2025,10 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  namely a mapping $\sigma \to \sigma$ where $\sigma$ is a string, where the domain is a user
  string and the codomain the bots' reply.
  Therefore we could express all chatbots in the following manner:
- \[ B_t \to \sigma \to (B_{t+1}, \sigma) \]
- Where $B_t$ are the set of believes of the chatbot, or its state.
+ \[ B \to \sigma \to (B, \sigma) \]
+ Where $B$ are the set of believes of the chatbot, or its state.
  We can model all chatbots in this manner because if they don't have state
- $B_t = \{ \}$.
+ $B = \{ \}$.
 
  \quadCleared
  However a string is still to broad since going from a textual representation
@@ -2054,23 +2058,21 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  that in turn map to itself,
  on this a random selection can be made.
 
- \doubleCleared
+ \toReview
  The simplification is now as follows,
  firstly we note that $\mathcal{S} \subset \Pi$,
  since understanding symbols is a form of sensation.
- Then we can define $S_t \subseteq \mathcal{S}$ which stands for the
- symbols the agent understood at time $t$.
- To ensure a reactive and proactive we also have to pass the current time
- as argument.
+ Then we can define $S \subseteq \mathcal{S}$ which stands for the
+ symbols the agent understood.
  This allows the agent to do deliberation without having
  received any symbol (empty set).
  Which leaves us with the following type signature:
- \[ B_t \to t \to S_t \overset{f_a}{\to} (B_{t+1}, \Delta_{t+1}) \]
+ \[ B \to S \overset{f_a}{\to} (B, \Delta) \]
 
 *** Dialogue tree
  <<Dialogue tree>>
- \doubleCleared
- We have some believes, time and symbols going in, some deliberation
+ \toReview
+ We have some believes and symbols going in, some deliberation
  going on and a new set of believes and actions going out.
  However this type signature isn't enough.
  To allow the agent to select action in a rational manner,
@@ -2079,7 +2081,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  The ply under that is the utterances we consider in response to that.
  With plies under that in turn being responses to those, etc.
 
- \doubleCleared
+ \toReview
  We need to mark which agent uttered what in the dialogue tree nodes,
  therefore we introduce $\Lambda$ as the set of all active actors, where $a \in \Lambda$.
  With an actor $a$ and a symbol $s$ we can start thinking about modeling an
@@ -2089,10 +2091,9 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  Therefore we introduce the set of all encoded perlocutionary speech acts as
  $\mathcal{P}$ of which a set of speech acts is $P \subseteq \mathcal{P}$.
  With this we can define utterance $u$ as a tuple:
- \[ u = (P,a,s,t) \]
+ \[ u = (P,a,s) \]
  Where $P$ is the set of perlocutionary values uttered, $a$ is the actor that
- uttered, $s$ the symbol that was uttered and $t$ the time at which the utterance
- was made.
+ uttered, $s$ the symbol that was uttered.
 
  \toReview
  Now we introduce $D$ a dialogue tree tuple:
@@ -2164,13 +2165,13 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  [[file:img/uml/dialoguetree.png]]
 
  \doubleCleared
- With this in place we can replace both the $S_t$ and $\Delta_{t+1}$ with the $D_t$ and
- $D_{t+1}$ respectively, we can also remove $t$, since it's now contained in the
+ With this in place we can replace both the $S$ and $\Delta$ with the $D$ and
+ $D$ respectively, we can also remove $t$, since it's now contained in the
  utterance.
  This is convenient because now we can model function attitudes as processing
  units that take a dialogue tree and modify it.
  We are left with the following type signature:
- \[ B_t \to D_t \overset{f_a}{\to} (B_{t+1}, D_{t+1}) \]
+ \[ B \to D \overset{f_a}{\to} (B, D) \]
  So we receive a dialogue tree from the user, which can just be a root node,
  and then after processing we put out a dialogue tree plus the replies which
  are the children, whereof the first child is the most preferred.
@@ -2261,7 +2262,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  \doubleCleared
  In this approach we will give $f_a$ another argument which is the next $f_a$.
  This looks like the following:
- \[ \left (\overset{next}{B_t \to D_t \to (B_{t+1}, D_{t+1})}\right ) \to B_t \to D_t \overset{f_a}{\to} (B_{t+1}, D_{t+1}) \]
+ \[ \left (\overset{next}{B \to D \to (B, D)}\right ) \to B \to D \overset{f_a}{\to} (B, D) \]
  Note that the function in the next bracket has the same prototype as the codomain.
  A more compact way of representing this type signature is the following:
  \[ \overset{next}{f_a} \to f_a \]
@@ -2540,7 +2541,7 @@ and didn't have any choices available to decide upon.
  Of course the believes are not intended to be direct program output but rather
  just part of the mind.
  In other words, the believes are intended to be kept in a container
- whereas the input $D_t$ and the output $D_{t+1}$ would only be visible for the
+ whereas the input $D$ and the output $D$ would only be visible for the
  `outside world'.
  Still we want to refine believe to something which is less broad in scope.
  To do this we analyzed the Jungian functions and see what
@@ -2898,7 +2899,7 @@ is constructed from.
   }
   class Connection {
     +to:Symbol
-    +restricted_to:Actor
+    +restrictedo:Actor
     +values:PerlocationaryValueSet
   }
   Connection --* Symbol
@@ -2945,7 +2946,7 @@ is constructed from.
 #+END_SRC
 #+CAPTION: Class diagram of the low level model
 #+LABEL: fig:droolclass
-#+RESULTS[63c13339c5b78776640fe21523eade9c064e7e97]: fig:droolclass
+#+RESULTS[9613fa0af1a6753d27b6e00f421e8f0f1145f62f]: fig:droolclass
 [[file:img/uml/droolclass.png]]
 
 \cleared
@@ -2981,7 +2982,7 @@ and the implementation for this class diagram can be seen in table
 Something that was thought about is how similar a =Connection= is to an
 =Utterance=. Except for the =instant= field, they are the same
 (note that the =informative= field of utterance is the same as the =to= and
-=restricted_to= fields of connection).
+=restrictedo= fields of connection).
 However their semantics are clearly different:
 A connection entails a possibility of an utterance, but it does /not/ mean it
 will be uttered, whereas an utterance is a used connection, that 
@@ -3051,7 +3052,7 @@ In figure [[fig:jungclass]] we can see the higher level structures of =Believes=
     Believes --* "*" Utterance
     class Connection {
       +to:Symbol
-      +restricted_to:Actor
+      +restrictedo:Actor
     }
     Connection --* Actor
     DialogueTree --* "*" DialogueTree
@@ -3070,7 +3071,7 @@ In figure [[fig:jungclass]] we can see the higher level structures of =Believes=
 #+END_SRC
 #+CAPTION: Class diagram of the high level model
 #+LABEL: fig:jungclass
-#+RESULTS[9637bf42245bada51e276c137daa1db820e43718]: fig:jungclass
+#+RESULTS[ef07c4845eb64d8ba10a99e04f62f5ea95cfdad3]: fig:jungclass
 [[file:img/uml/jungclass.png]]
 
 \quadCleared
@@ -3318,7 +3319,7 @@ in figure [[fig:templateclass]].
   Before --* Informative
   class Connection {
     +to:Symbol
-    +restricted_to:Actor
+    +restrictedo:Actor
     +values:PerlocationaryValueSet
     +before:Optional<Before>
   }
@@ -3337,7 +3338,7 @@ in figure [[fig:templateclass]].
 
 #+CAPTION: Before and template class diagram
 #+LABEL: fig:templateclass
-#+RESULTS[ee21800363fb4f9f8eb99a40012ae803d4facae7]: fig:cache notemplateclass
+#+RESULTS[9369d9064d088a03fc53246fb107cb2f5775046f]: fig:cache notemplateclass
 [[file:img/uml/templateclass.png]]
 
 
@@ -4644,23 +4645,23 @@ from:
 to:
  - symbol: greeting
  - symbol: ask_reason_here
-   restricted_to: doctor
+   restrictedo: doctor
 ---
 from:
  - ask_reason_here
 to:
- - restricted_to: patient
+ - restrictedo: patient
    symbol: need_medicine
- - restricted_to: patient
+ - restrictedo: patient
    symbol: broken_arms
- - restricted_to: patient
+ - restrictedo: patient
    symbol: feel_sick
 ---
 from:
  - need_medicine
  - greeting
 to:
- - restricted_to: doctor
+ - restrictedo: doctor
    symbol: why_need
  - symbol: status_inquery
  #+END_SRC
@@ -4706,7 +4707,7 @@ However because we model both bot and user, we do require this.
 To make sure certain strange situations don't occur, such as the patient asking
 the doctor if the doctor is sick,
 we added actor based restrictions on connections.
-This is done trough the =restricted_to= key,
+This is done trough the =restrictedo= key,
 which can be seen in listing [[code:yaml:complex]].
 Currently however this implementation is rather limited,
 it only allows for an `any' actor,
@@ -4758,9 +4759,9 @@ from:
 to:
  - symbol: ask_reason_here
    scene: information_gathering
-   restricted_to: doctor
+   restrictedo: doctor
  - symbol: good
-   restricted_to: doctor
+   restrictedo: doctor
 #+END_SRC
 
 \quadCleared
@@ -4831,7 +4832,7 @@ An example can be seen in listing [[code:yaml-before-field]].
    - "surprised_your_doctor"
   to:
    - symbol: "expect_him_be_here"
-     restricted_to: patient   
+     restrictedo: patient   
 #+END_SRC
 
 \doubleCleared
@@ -4858,12 +4859,12 @@ This is best illustrated with an example which can be seen in listing
      said: "why_is_docter"
      before:
         who: doctor
-        said: "im_the_doctor"
+        said: "imhe_doctor"
   from:
    - "surprised_your_doctor"
   to:
    - symbol: "expect_him_be_here"
-     restricted_to: patient   
+     restrictedo: patient   
 #+END_SRC
 
 \doubleCleared
@@ -4875,8 +4876,8 @@ restriction, making a recursive definition isn't a big extension.
 
 \cleared
 The AIML tag specification never defined when a `that' tag match would be
-active cite:aimlspec_that. However it can be derived implicitly from the
-reference cite:aimleference_that that it should always be on the previous
+active cite:aimlspechat. However it can be derived implicitly from the
+reference cite:aimleferencehat that it should always be on the previous
 utterance.
 We could add options for when an utterance was made, for example just now or
 any previous utterance. However in the interest of time we won't do this.
@@ -5033,7 +5034,7 @@ from:
 - my_name_is_x
 to:
 - symbol: hello_x
-  restricted_to: patient
+  restrictedo: patient
   utterances:
     name: # the template name to fill
       actor: doctor
@@ -5144,7 +5145,7 @@ with its respective file names in comments above.
    - "for_a_while_now"
   to:
    - symbol: "how_long_*_pain"
-     restricted_to: patient   
+     restrictedo: patient   
 #+END_SRC
 
 \cleared
@@ -5632,24 +5633,24 @@ to:
    values:
    - Polite
  - symbol: status
-   restricted_to: patient
+   restrictedo: patient
    values:
    - Polite
    - Enthusiasm
  - symbol: ask_reason_here
    scene: information_gathering
-   restricted_to: doctor
+   restrictedo: doctor
 ---
 from:
  - status
 to:
  - symbol: ask_reason_here
    scene: information_gathering
-   restricted_to: doctor
+   restrictedo: doctor
    values:
      - Impatient
  - symbol: good
-   restricted_to: doctor
+   restrictedo: doctor
    values:
      - Polite
      - Happy
@@ -5697,7 +5698,7 @@ to:
    values:
      - Concerned
 to_defaults:
-   restricted_to: patient
+   restrictedo: patient
 #+END_SRC
 
 
@@ -5737,9 +5738,27 @@ in section [[Personality influence case study]].
 How this is done is discussed in section [[Making a scenario]].
 After this we test the bot by playing doctor in the scenario.
 The results were recorded and can be seen in appendix [[Test Results]].
+
+\toReview
 There were some issues with the scenario itself,
 however most issues we found were with the functions and their interactions.
-\todo{Give a description of these issues here. That is exactly what is interesting!}
+The first issue real interaction issue which made us reconsider the
+design was that ENFP didn't utter multiple responses (see appendix [[Turn taking
+issue]]). This was solved as discussed in section [[Turn taking]], where we reinsert
+the dialogue tree as drools processing, however with the condition that the
+functions would prefer actor alternation if equal valuation happens (to prevent
+infinite loops).
+The second major issue was the $T_i$ function not using its default behavior
+(see appendix [[TI random choice first]] and [[TI random choice second]]), 
+which lead us to think about the level at which personality functions ought
+to operate in the dialogue tree in a more structured manner
+(see section [[Function ply depth]]).
+After solving the ply depth we did however decide to make the ISTP dialogue
+slightly easier for the chatbot because it required a lot of input at the same
+time, however this has little to do with personality.
+This is discussed in appendix [[Changed istp test slightly]].
+
+
 
 \clearpage
 * In conclusion
@@ -5984,11 +6003,11 @@ bibliography:refs.bib
 | $f_a$         |                                                                                            | Function attitudes                            |                                          |
 | $\mathcal{B}$ |                                                                                            | Set of all possible believes                  |                                          |
 | $t$           |                                                                                            | time                                          |                                          |
-| $B_t$         | $B_t \subseteq \mathcal{B}$                                                                | Believe $B$ at time $t$                       |                                          |
+| $B$           | $B \subseteq \mathcal{B}$                                                                  | Believe $B$                                   |                                          |
 | $\Pi$           |                                                                                            | Set of all possible sense information         | [fn:not-used:Not used in implementation] |
-| $\pi_t$         | $\pi_t \subseteq \Pi$                                                                          | Perception information $\pi$ at time $t$        | [fn:not-used]                            |
+| $\pi$           | $\pi \subseteq \Pi$                                                                            | Perception information $\pi$                    | [fn:not-used]                            |
 | $\mathcal{D}$ |                                                                                            | Set of all possible actions                   | [fn:not-used]                            |
-| $\Delta_t$         | $\Delta_t \subseteq \mathcal{D}$                                                                | Set of actions $\Delta$ executed at time $t$       | [fn:not-used]                            |
+| $\Delta$           | $\Delta \subseteq \mathcal{D}$                                                                  | Set of actions $\Delta$ executed                   | [fn:not-used]                            |
 | $\sigma$           |                                                                                            | A string                                      |                                          |
 | $\mathcal{S}$ |                                                                                            | All encoded symbols                           |                                          |
 | $s$           | $s \in \mathcal{S}, s=(\{\sigma\},\sigma)$                                                             | A symbol $s$                                  |                                          |
@@ -5996,15 +6015,15 @@ bibliography:refs.bib
 | $g'$          | $s \overset{g'}{\to} \sigma$                                                                      | Mapping function from $s$ to $\sigma$              |                                          |
 | $\mathcal{P}$ |                                                                                            | Set of all encoded perlocutionary speech acts |                                          |
 | $P$           | $P \subseteq \mathcal{P}$                                                                  | Set of perlocutionary speech acts             |                                          |
-| $p$           | $p \in \mathcal{P}$                                                                          | A perlocutionary speech act value            |                                          |
+| $p$           | $p \in \mathcal{P}$                                                                          | A perlocutionary speech act value             |                                          |
 | $\Lambda$           |                                                                                            | Set of all active actors                      |                                          |
 | $a$           | $a \in \Lambda$                                                                                    | an actor                                      |                                          |
-| $u$           | $u=(P,a,s,t)$                                                                              | Utterance made by $a$ at time $t$             |                                          |
+| $u$           | $u=(P,a,s,t)$                                                                              | Utterance made by $a$                         |                                          |
 | $D$           | $D=(u,[D])$                                                                                | Dialogue tree                                 |                                          |
 | $G$           |                                                                                            | A set of connections                          |                                          |
 | $c$           | $\begin{matrix} c=(P,A,s_1,s_2), c \in G \\ s_1, s_2 \in \mathcal{S} \wedge s_1 \neq s_2 \end{matrix}$ | Connection, from one symbol to another        |                                          |
 | $i$           |                                                                                            | An integer                                    |                                          |
-| $h$           | $p \overset{h}{\to} i$                                                                     | Mapping function from $p$ to $i$              |                                          |
+| $h$           | $p \overset{h}{\to} i$                                                                       | Mapping function from $p$ to $i$              |                                          |
 | $\Phi$           |                                                                                            | Set of goals in an agents believe base        |                                          |
 | $\phi$           | $\phi \in \Phi, \phi = (a,s)$                                                                         | A single goal, consisting of actor and symbol |                                          |
 \newpage
@@ -6367,6 +6386,7 @@ hold up.
    Or some standard java regex problem.
 
 *** ENFP
+<<Turn taking issue>>
 | Who     | Utterance                                                          | Issues |
 |---------+--------------------------------------------------------------------+--------|
 | Doctor  | Hi                                                                 |        |
@@ -6395,6 +6415,7 @@ hold up.
    graph should be implemented.
 
 *** ISTP
+<<TI random choice first>>
 | Who     | Utterance                                                         | Issues |
 |---------+-------------------------------------------------------------------+--------|
 | Doctor  | Hi                                                                |        |
@@ -6484,6 +6505,7 @@ Conversation went according to script.
    So this was easily fixed by modifying the perlocutionary value utility.
 
 *** ISTP
+<<TI random choice second>> 
 | Who     | Utterance                                                         | Issues |
 |---------+-------------------------------------------------------------------+--------|
 | Doctor  | Hi                                                                |        |
@@ -6532,7 +6554,7 @@ A potential better way of solving this would to allow irrational to either
 produce on the level of previous irrational,
 or if the produced action already exists, go one lower.
 But since we're starting to run into time constraints we just leave it at this
-'solution'.
+`solution'.
 
 ** Third test
 
@@ -6663,6 +6685,7 @@ Conversation went according to script.
 Conversation went according to script. 
 
 *** ISTP
+<<Changed istp test slightly>>
 | Who     | Utterance                                                         | Issues |
 |---------+-------------------------------------------------------------------+--------|
 | Doctor  | Hi                                                                |        |
@@ -6823,14 +6846,7 @@ Conversation went according to script.
 \tripleCleared
 Conversation went according to script. 
 
-
-# If we can ever figure out how to remove the name from this:
-# https://stackoverflow.com/questions/2709898/change-list-of-listings-text
-# * List of listings
-# \listlessness
-
 \newpage
-
 ** Seventh test
 <<final test>>
 # move this to the last test
@@ -6899,10 +6915,4 @@ Conversation went according to script.
 \toReview
 Conversation went according to script.
  
-
-# If we can ever figure out how to remove the name from this:
-# https://stackoverflow.com/questions/2709898/change-list-of-listings-text
-# * List of listings
-# \listlessness
-
 \newpage
