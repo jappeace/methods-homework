@@ -67,7 +67,6 @@
 #+LATEX_HEADER: \usepackage{placeins}
 
 \todo[inline]{Table alteration darker: dark enough now?}
-\todo[inline]{Re add source link, perhaps in building appendix?}
 ** Abstract                                                          
 :PROPERTIES:
 :UNNUMBERED: t
@@ -6009,14 +6008,43 @@ bibliography:refs.bib
 | $\Phi$           |                                                                                            | Set of goals in an agents believe base        |                                          |
 | $\phi$           | $\phi \in \Phi, \phi = (a,s)$                                                                         | A single goal, consisting of actor and symbol |                                          |
 \newpage
-* Building
+
+\clearpage
+* Source
+<<gaia>>
+\toReview
+A free variant[fn::LGPL-2.1
+license for the chatbot core and MIT license for reference implementation]
+of the software is available at
+[[https://jappieklooster.nl/chatbot]].
+Note that this source is *not* the same as the salve game therefore the build
+instructions in appendix [[building]] don't work for this source.
+We published the parts which we had copyright over and rewrote some parts we
+didn't have copyright over such as the server and client.
+In the process we also made building a lot easier.
+
+\toReview
+Building happens with gradle, which provides a script[fn::You do require a Java
+SDK to execute this script, for example:
+http://openjdk.java.net/install/index.html]
+to install all
+dependencies (including gradle):
+
+#+BEGIN_SRC sh
+./graldew run
+#+END_SRC
+
+\clearpage
+* Building salve
 <<building>>
 \tripleCleared
-To build this project two hurdles need to be overcome, because the
+To build the salve game two hurdles need to be overcome, because the
 server uses a starkly different tool chain than the client.
 In this appendix we will record how the application can be build.
 It may seem trivial but the Java EE world is incredibly complex.
 We assume a UNIX-like operating system with a package manager.
+
+Note that these instructions are *not* for the source described in appendix [[gaia]]
 
 ** Client
 \doubleCleared
