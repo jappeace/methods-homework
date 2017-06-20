@@ -1,7 +1,7 @@
 #+TITLE: Jungian personality in a chatbot
 #+LANGUAGE: en
 #+LaTeX_CLASS: article
-#+LaTeX_CLASS_OPTIONS: [a4paper,drafting]
+#+LaTeX_CLASS_OPTIONS: [a4paper,final]
 
 # disable tic so it doesn't appear at the top but where we want it instead
 #+Options: toc:nil ^:nil 
@@ -6844,7 +6844,6 @@ Conversation went according to script.
 
 \newpage
 ** Seventh test
-<<final test>>
 # move this to the last test
 
 | Commit | =bda8dcfb77e7f144ae04eb930611ea74f311a8e7= |
@@ -6881,6 +6880,79 @@ Conversation went according to script.
 | /Susie/ | /I got this pain in my back./                                      |        |
 | /Susie/ | /Do you think I'm allergic to plants?/                             |        |
 | Doctor  | Ha ha, no, I think we need to make a scan of your back.             |        |
+| Doctor  | Because a watering can is a little to light to get back-pain from. |        |
+| /Susie/ | /Of course doctor./                                                |        |
+| Doctor  | Can you go to the hospital next Friday at 13:00?                   |        |
+| /Susie/ | /Yes, I will go then./                                             |        |
+
+\toReview
+Conversation went according to script.
+
+*** ISTP
+| Who     | Utterance                                                         | Issues |
+|---------+-------------------------------------------------------------------+--------|
+| Doctor  | Hi                                                                |        |
+| /Chris/ | /Hello/                                                           |        |
+| Doctor  | How can I help?                                                   |        |
+| /Chris/ | /I have back pain doctor./                                        |        |
+| Doctor  | When did this first occur?                                        |        |
+| /Chris/ | /Well I was watering the plants,/                                 |        |
+| /Chris/ | /Perhaps I put to much water in the watering can/                 |        |
+| Doctor  | Yes, that could be the case.                                      |        |
+| Doctor  | However I would like to make a scan of your back just to be sure. |        |
+| /Chris/ | /Can't you just give some pain killers to help me?/               |        |
+| Doctor  | Yes but that will only work temporary.                            |        |
+| Doctor  | So let's plan a scan at the hospital next Friday at 13:00?        |        |
+| /Chris/ | /Yes, I will go then./                                            |        |
+| Doctor  | I can give you some pain killers meanwhile.                       |        |
+| /Chris/ | /Okay, thanks doctor/                                             |        |
+
+\toReview
+Conversation went according to script.
+ 
+\newpage
+
+** Eight test
+<<final test>>
+# move this to the last test
+
+| Commit | =fca7c62eb90e8f2021f92f9f74b9468306c1aebb= |
+| Date   |                               2017-06-09 |
+
+\toReview
+Before handing in the project for rc-2,
+I wanted to do another final final acceptance test,
+this time using the public repository and commit hash (see appendix [[gaia]]).
+
+*** INTJ
+| Who      | Scripted Utterance                                | Issues |
+|----------+---------------------------------------------------+--------|
+| Doctor   | Hi                                                |        |
+| /Sander/ | /Hello/                                           |        |
+| Doctor   | How can I help you?                               |        |
+| /Sander/ | /I have a back pain./                             |        |
+| Doctor   | When did this first occur?                        |        |
+| /Sander/ | /When I lifted a heavy object./                   |        |
+| Doctor   | Oh, yes then you need some pain killers for this. |        |
+| /Sander/ | /Thank you doctor/                                |        |
+
+\toReview
+Conversation went according to script.
+
+
+*** ENFP
+| Who     | Utterance                                                          | Issues |
+|---------+--------------------------------------------------------------------+--------|
+| Doctor  | Hi                                                                 |        |
+| /Susie/ | /Hello/                                                            |        |
+| /Susie/ | /How are you today doctor?/                                        |        |
+| Doctor  | I'm good, how can I help you?                                      |        |
+| /Susie/ | /I'm afraid I need some medicine/                                  |        |
+| Doctor  | Medicine? Why do you need that?                                    |        |
+| /Susie/ | /Well, I was watering the plants and all the sudden,/              |        |
+| /Susie/ | /I got this pain in my back./                                      |        |
+| /Susie/ | /Do you think I'm allergic to plants?/                             |        |
+| Doctor  | Ha ha, no, I think we need to make a scan of your back.            |        |
 | Doctor  | Because a watering can is a little to light to get back-pain from. |        |
 | /Susie/ | /Of course doctor./                                                |        |
 | Doctor  | Can you go to the hospital next Friday at 13:00?                   |        |

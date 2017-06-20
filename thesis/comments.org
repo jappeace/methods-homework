@@ -1,7 +1,6 @@
 #+TITLE: questions
 
 * Inleveren
-+ toReview flags reviewen
 + Code uplaoden op public repository (copyright verwijderen)
 + Validatie test met geuploade code (en sha)
 + Inleveren met test resultaten
