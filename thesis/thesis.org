@@ -221,19 +221,19 @@ and finally we will look at the serious game in its existing form.
 
 *** The big five
   <<OCEAN>>
- \toReview
+ \newlyCleared
  The first framework we'll discuss is called the big five.
  The term big five was first coined in 1981 by Goldberg cite:goldberg1981language.
  The big five were not big because of their intrinsic greatness,
  but rather to emphasize how broad these factors were.
 
- \toReview
+ \newlyCleared
  This framework was not really invented, but rather discovered trough
  lexical analysis by for example Tupes cite:tupes1961recurrent.
  Although the labels used were different,
  they conveyed the same idea as the big five model used now.
  The methodology used is something which is called factor analysis[fn::
- In the paper the term 'varimax rotational program' is used,
+ In the paper the term `varimax rotational program' is used,
  but if we look this term in Wikipedia, we can see the result is called factor
  analysis cite:varymaxrotanonalprogram].
  Factor analysis is a statistical methodology that tries to find underlying
@@ -290,7 +290,7 @@ and finally we will look at the serious game in its existing form.
  - Neuroticism or nervousness, a high score indicates that you like to brag and
    get upset when someone is angry at you.
 
- \toReview
+ \newlyCleared
  The big five has been extensively tested and the result has been replicated
  in multiple studies cite:pervin2008handbookp119.
  One can measure big five score trough a test called the NEO-PI, or the
@@ -311,7 +311,7 @@ and finally we will look at the serious game in its existing form.
  other factors.
  Solving this is a non-trivial endeavor.
 
- \toReview
+ \newlyCleared
  There are some existing solutions in which OCEAN is implemented, for
  example Allbeck cite:allbeck2002toward used it as a mapping to the EMOTE system,
  whereas cite:durupinar2008creating used the OCEAN values as a low level mapping
@@ -360,7 +360,7 @@ an introvert can still have extrovert moments and vice versa.
 It should also be noted that the unconsciousness according to Jung is
 flipped in attitude. cite:hall1973primer97-98attitude
 
-\toReview
+\newlyCleared
 Then there are four functions.
 The first two functions are called the /rational functions/
 because they act as a method of making judgements.
@@ -379,7 +379,7 @@ Therefore it has no origin in the same way as sensation has,
 and often is explained as ``just a hunch'' or ``I feel it in my bones''.
 cite:beauchamp2005communication,hall1973primer98-100functions
 
-\toReview
+\newlyCleared
 To use these functions they have to be combined with attitudes, producing
 /function attitudes/.
 Therefore a person will never be of a thinking type,
@@ -477,7 +477,7 @@ This is also true for the irrational functions.
  This dimension indicates together with the $I/E$ dimension which function
  attitude is dominant and which is auxiliary.
 
- \toReview
+ \newlyCleared
  <<sec:mbti:order_comparison>>
  Once completed with the MBTI you'll get character string as outcome,
  for example `INTJ'.
@@ -524,7 +524,7 @@ This is also true for the irrational functions.
  (OD) cite:sample2004myers. 
  But it has gotten some heavy criticism from the field of psychology.
 
- \toReview
+ \newlyCleared
  MBTI has always used a continuous scoring system in the results.
  However the creators insist that type is enough for making assessment judgments.
  Since MBTI reduces the test scores to type,
@@ -539,7 +539,7 @@ This is also true for the irrational functions.
  constructs are truly categorical suggested however that this was maybe not
  the case and a continuous scale for assessment judgements are required.
 
- \toReview
+ \newlyCleared
  In cite:sipps1985item the MBTI is put trough a method called factor analysis.
  This is the same technique where OCEAN is based upon (see section [[OCEAN]]).
  With this technique the desired outcome is that there are four question clusters
@@ -600,10 +600,10 @@ This is also true for the irrational functions.
  | Empathy       | 1 | 2 | 3 | 4 | 5 | Logic     |
  | Dispassionate | 1 | 2 | 3 | 4 | 5 | Emotional |
 
- \toReview
- The result of the PPSDQ would look something like: $I-30 N-20 T-80 J-60$, with
+ \newlyCleared
+ The result of the PPSDQ would look something like: $I-30,N-20,T-80,J-60$, with
  a scale of 0 to 100. 
- This means the tendency for introversion would be about 30 on a scale of 100,
+ This means the tendency for introversion would be about 30,
  and similarly for the other dimensions. Note that $I-30$ is the same as $E-70$,
  introversion and extroversion being on opposite ends of the same scale.
  As an application, we can for example make a preference sequence,
@@ -664,7 +664,7 @@ This is also true for the irrational functions.
  There is some relation between the big five and MBTI cite:furnham1996big.
  Therefore it's somewhat realistic, but quite easy to implement.
 
- \toReview
+ \newlyCleared
  Both of the alternatives of MBTI use a continuous scale and have a high
  correlation with the big five cite:arnau1997measurement.
  This means is that they are measuring something which is also measured by the
@@ -906,7 +906,7 @@ to the established BDI taxonomy.
 
 *** BDI + Personality
 <<BDI + Personality>>
-\toReview
+\newlyCleared
 There have been several works that attempted to combine BDI with personality
 theory.
 In cite:gmytrasiewicz2002emotions emotion and personality is taken together
@@ -917,7 +917,7 @@ However this formal model could be useful regardless of the lack of personality 
 especially the observation that there are only three possible transformations
 as the result of emotions:
 Transformations of actions space,
-transformation of the utility function and transformations of probabilities
+transformations of the utility function and transformations of probabilities
 of state.
 We mention this because we do transformations of action space
 (irrational functions) and utility
@@ -1136,7 +1136,7 @@ warning.
 /Perlocutionary/ acts are the acts that bring an effect to the hearer, such as
 scaring or saddening.
 
-\toReview
+\newlyCleared
 There are some basic assumptions of conversation, commonly described as the
 /rules of conversation/ developed by Grice cite:shoham2008multiagent_speechact_p241..245.
 Human communication happens on the assumption that both parties want to be
@@ -1669,7 +1669,7 @@ transformation.
 The keyword file and its associated transformation rules were called the
 `script'.
 
-\toReview
+\newlyCleared
 The Alice chatbot is a more recent incarnation of the idea,
 but uses AIML as a basis for the `script' cite:wallace2001don.
 Because Alice is licensed under an open source license,
@@ -1687,7 +1687,7 @@ however we want to have the ability to choose between various responses.
 This `choice' will then be the personality as a process.
 We call this the problem of not having deliberation `space'.
 
-\toReview
+\newlyCleared
 In cite:vinyals2015neural a sub symbolic chatbot is presented that uses
 machine learning.
 It appears that it can handle the general cases of conversation,
@@ -1739,7 +1739,7 @@ the natural terms without modifying the rules they specified.
 An example of one of these rules is:
 ``if actions is high or self consciousness is high then acceptance is favored''.
 
-\toReview
+\newlyCleared
 This has a major disadvantage in that a lot of rules need to be
 added to do action selection (there are 54 described in the paper),
 some of which become quite big (for example, some have 7 conditions).
@@ -1811,7 +1811,7 @@ labels. The details can be found in section [[Jungian BDI]].
 # In this chapter we talk about the abstract ideas, any information necessary
 # to execute the thesis without considering implementation details.
 # so I guess height and node count aren't necessary.
-\toReview
+\newlyCleared
 This chapter tries to answer the question:
 What is personality from a computationally perspective?
 We imagine personality being a preference towards a process rather
@@ -1906,7 +1906,7 @@ combination of Jungian functions attitudes which would result in
 eight factorial different units of processing,
 or specifically just for MBTI which would result in $16$.
 
-\toReview
+\newlyCleared
 We also chose to model function attitudes, rather than functions and attitudes.
 The reason for taking them as a combination is that there are more precise
 descriptions available for function attitudes, rather than functions and
@@ -1955,7 +1955,7 @@ it's still questionable if one can combine them successfully.
 
 ** A type signature approach
 <<A type signature approach>>
-\toReview
+\newlyCleared
 To give a better understanding of the scope of this project we will
 try to come up with a type signature of a pure function that models all the
 function attitudes.
@@ -1969,9 +1969,9 @@ cite:haskellpartialapplication.
 Capital letters indicate sets.
 Note that we have an overview of the symbols used in appendix [[Symbol overview]].
 Also note that if we have a function $a \to a$ it does not mean that the /value/
-of a stays the same, it just means that the type $a$ is used which may change in
+of $a$ stays the same, it just means that the type $a$ is used which may change in
 value. For example think of a function from an integer to an integer that
-increases the value by four.
+increases the value by four, which also has a signature like that.
 
 \doubleCleared
 We will go from an as broad as possible system (while using BDI) to a
@@ -1991,7 +1991,7 @@ individually.
 To do this we will define some terms, with which we will go from the broadest
 definition possible towards one that fits the project scope precisely.
 
-\toReview
+\newlyCleared
 Let $\mathcal{B}$ denote the set of all
 possible believes and let $B$ with $B \subseteq \mathcal{B}$ denote the
 believes. 
@@ -2058,7 +2058,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  that in turn map to itself,
  on this a random selection can be made.
 
- \toReview
+ \newlyCleared
  The simplification is now as follows,
  firstly we note that $\mathcal{S} \subset \Pi$,
  since understanding symbols is a form of sensation.
@@ -2071,7 +2071,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
 
 *** Dialogue tree
  <<Dialogue tree>>
- \toReview
+ \newlyCleared
  We have some believes and symbols going in, some deliberation
  going on and a new set of believes and actions going out.
  However this type signature isn't enough.
@@ -2081,7 +2081,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  The ply under that is the utterances we consider in response to that.
  With plies under that in turn being responses to those, etc.
 
- \toReview
+ \newlyCleared
  We need to mark which agent uttered what in the dialogue tree nodes,
  therefore we introduce $\Lambda$ as the set of all active actors, where $a \in \Lambda$.
  With an actor $a$ and a symbol $s$ we can start thinking about modeling an
@@ -2093,9 +2093,9 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  With this we can define utterance $u$ as a tuple:
  \[ u = (P,a,s) \]
  Where $P$ is the set of perlocutionary values uttered, $a$ is the actor that
- uttered, $s$ the symbol that was uttered.
+ uttered and $s$ the symbol that was uttered.
 
- \toReview
+ \newlyCleared
  Now we introduce $D$ a dialogue tree tuple:
  \[ D = (u, [D])\]
  Where $u$ is the utterance,
@@ -2531,7 +2531,7 @@ and didn't have any choices available to decide upon.
  Options that are goals still get precedence however.
 
 *** Believes
- \toReview
+ \newlyCleared
  Now you may argue at this point we haven't refined our types a lot, since
  the believe structure was defined as `Every possible believe',
  which is basically analogous to `Anything you can think of' or in a object
@@ -2847,7 +2847,7 @@ In this subsection we will discuss the main data structures used to implement
 the ideas from section [[Jungian BDI]].
 We use class diagrams to accomplish this which are based upon UML cite:fowler2004uml.
 
-\toReview
+\newlyCleared
 Before this is done we would like to point out several things to keep in mind.
 Firstly, we do not show everything precisely as implemented in the code,
 because that would clutter the diagrams.
@@ -2999,7 +2999,7 @@ We argue yes because they entail completely different semantics,
 the =Scene= class is used to group symbols and patterns,
 whereas the =Actor= class is used to identify actors.
 
-\toReview
+\newlyCleared
 The next question would be: Should we use an inheritance relation to make our
 code more DRY (don't repeat yourself) cite:thomas2010orthogonality?
 For by example introducing an abstract class =ANamed= and letting
@@ -4325,7 +4325,7 @@ In the next section we will analyze some possible candidates.
 
 *** XML vs JSON vs YAML, vs TOML
 <<xml vs everything>>
-\toReview
+\newlyCleared
 All these languages are standards cite:jsonspec,yamlspec,xmlspec,tomlspec.
 However there is a major difference between XML and JSON or YAML, and that is
 their intention.
@@ -5259,7 +5259,7 @@ Finally we will discuss how we tested the bot in section [[Testing]].
 ** Personality influence case study
 <<Personality influence case study>>
 
-\toReview
+\newlyCleared
 To make the influence of personality more concrete,
 we make a scenario of a doctor appointment where each
 patient has different personalities.
@@ -5272,7 +5272,7 @@ way they do.
 
 
 *** Sander the INTJ
-\toReview
+\newlyCleared
 First we should note the dominant and auxiliary functions of someone with an
 INTJ MBTI type.
 An INTJ has as dominant function introverted intuition $N_i$ and as auxiliary
@@ -5299,7 +5299,7 @@ This results in the expected dialogue which can be seen in table
 | Doctor   | Oh, yes then you need some pain killers for this. |
 | /Sander/ | /Thank you doctor/                                |
 
-\toReview
+\newlyCleared
 Sander gives the doctor the information he needs to come to the conclusion he
 himself probably already had drawn.
 We could even expect him to ask for the medicine immediately,
@@ -5339,7 +5339,7 @@ The expected dialogue can be seen in table [[tab:suzie-conv-doct]].
 | Doctor  | Can you go to the hospital next Friday at 13:00?                   |
 | /Susie/ | /Yes, I will go then./                                             |
 
-\toReview
+\newlyCleared
 We can now see a stark difference with the INTJ personality.
 First of all being dominated by extroversion, it was Susie who took the initiative.
 Secondly she directly asked for medicine, without thinking about the
@@ -5380,7 +5380,7 @@ The conversation can be seen in table [[tab:chris-conv-doct]].
 | Doctor  | I can give you some pain killers meanwhile.                       |
 | /Chris/ | /Okay, thanks doctor/                                             |
 
-\toReview
+\newlyCleared
 So this dialogue looks a lot more like that of Sander (INTJ) than that of Susie (ENFP).
 However the motivation for the responses are quite different than that of Sander.
 Chris hadn't figured out yet that he needed pain killers when he arrived,
@@ -5739,26 +5739,22 @@ How this is done is discussed in section [[Making a scenario]].
 After this we test the bot by playing doctor in the scenario.
 The results were recorded and can be seen in appendix [[Test Results]].
 
-\toReview
+\newlyCleared
 There were some issues with the scenario itself,
 however most issues we found were with the functions and their interactions.
 The first issue real interaction issue which made us reconsider the
-design was that ENFP didn't utter multiple responses (see appendix [[Turn taking
-issue]]). This was solved as discussed in section [[Turn taking]], where we reinsert
-the dialogue tree as drools processing, however with the condition that the
-functions would prefer actor alternation if equal valuation happens (to prevent
-infinite loops).
+design was that ENFP didn't utter multiple responses
+(which was discovered in appendix [[Turn taking issue]]).
+This was solved as discussed in section [[Turn taking]],
+where we reinsert the dialogue tree as drools processing,
+however with the condition that the
+functions would prefer actor alternation if equal valuation happens
+(to prevent infinite loops).
 The second major issue was the $T_i$ function not using its default behavior
-(see appendix [[TI random choice first]] and [[TI random choice second]]), 
+(discovered in [[TI random choice second]]), 
 which lead us to think about the level at which personality functions ought
 to operate in the dialogue tree in a more structured manner
 (see section [[Function ply depth]]).
-After solving the ply depth we did however decide to make the ISTP dialogue
-slightly easier for the chatbot because it required a lot of input at the same
-time, however this has little to do with personality.
-This is discussed in appendix [[Changed istp test slightly]].
-
-
 
 \clearpage
 * In conclusion
@@ -5813,7 +5809,7 @@ Alternative implementations could also be developed for the irrational functions
 we leave speculation about these as an exercise to the reader.
 
 ** Future work
-\toReview
+\newlyCleared
 Considering the move to position Drools in the center of chatbot deliberation,
 and a novel alternate take on modeling chatbot dialogue,
 there are a legion of possibilities to extend this work.
@@ -5821,7 +5817,7 @@ In this section we will present  a brief overview of the more obvious extensions
 but we expect there will be many niches we haven't considered.
 
 *** Social practice support
-\toReview
+\newlyCleared
 We already hinted in section [[social practice]] that social practices were a
 consideration.
 However during the implementation we haven't looked deep into this,
@@ -6031,7 +6027,7 @@ bibliography:refs.bib
 \clearpage
 * Source
 <<gaia>>
-\toReview
+\newlyCleared
 A free variant[fn::LGPL-2.1
 license for the chatbot core and MIT license for reference implementation]
 of the software is available at
@@ -6042,12 +6038,12 @@ We published the parts which we had copyright over and rewrote some parts we
 didn't have copyright over such as the server and client.
 In the process we also made building a lot easier.
 
-\toReview
-Building happens with gradle, which provides a script[fn::You do require a Java
+\newlyCleared
+Building happens with Gradle, which provides a script[fn::You do require a Java
 SDK to execute this script, for example:
 http://openjdk.java.net/install/index.html]
 to install all
-dependencies (including gradle):
+dependencies (including Gradle):
 
 #+BEGIN_SRC sh
 ./graldew run
