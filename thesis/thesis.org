@@ -6912,7 +6912,7 @@ Conversation went according to script.
  
 \newpage
 
-** Eight test
+** Eighth test
 <<final test>>
 # move this to the last test
 
@@ -6920,7 +6920,7 @@ Conversation went according to script.
 | Date   |                               2017-06-09 |
 
 \toReview
-Before handing in the project for rc-2,
+Before handing in the project for =rc-2=,
 I wanted to do another final final acceptance test,
 this time using the public repository and commit hash (see appendix [[gaia]]).
 
