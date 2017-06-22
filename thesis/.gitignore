@@ -1,4 +1,7 @@
+# ???
 code
+
+# latex
 pva.tex
 thesis.tex
 auto
@@ -17,6 +20,11 @@ _minted-*
 
 *.html
 
-reveal.js-*
+# IDK
 ltximg
+
+# presentation stuff
+reveal.js-*
 presentation.tex
+socket.io*
+output
