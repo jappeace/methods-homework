@@ -17,26 +17,28 @@ I like discussion..
 * Communication training
 + Important
 + Expensive
-
 * Communicate!
 #+CAPTION: Client view
 #+NAME:   fig:communicate-client
 [[./img/client-communicate.png]]
 
 ** Editor
-#+CAPTION: Editor view communicate!
-#+NAME:   fig:communicate-editor
-[[./img/editor.png]]
+ #+CAPTION: Editor view communicate!
+ #+NAME:   fig:communicate-editor
+ [[./img/editor.png]]
 
 * Salve
-+ Based on ALICE
-+ AIML
-+ Drools
-+ Unity
-
+** Social practice
++ Context
++ Culture
++ Activity
+** Emotions
++ 
+** Scenes
++ Group patterns
++ More argressive
 ** Architecture
 [[./img/abstract-architecture.png]]
-
 ** AIML
 #+CAPTION: AIML example: why are you here?
 #+NAME: code:aiml-example-why-here
@@ -52,7 +54,7 @@ I like discussion..
 </categroy>
 <category>
     <pattern>
-        How are you
+        How are you *
     </pattern>
     <template>
         Not doing too well today.
@@ -117,7 +119,6 @@ end
 + Use Salve game
 
 * Personality theories
-
 ** OCEAN
 - Taxonomy mining
 - Factor analyses
@@ -181,15 +182,9 @@ Because:
 - Can assume MBTI
 - Later PPSDQ or SL-TDI
 - Mapping to OCEAN
-* Goals
-+ +Compare personality theories+
-+ As a process
-+ Use Salve game
-
-
 * Dialogue as process
 ** Model the idea
-+ /type signatures/
++ /Type signatures/
 + Categories
 + Arrows
 
@@ -263,6 +258,13 @@ Add in between step:
 | $D$   | Dialogue tree    |
 | $f_a$ | Jungian function |
 
+*** In order
+\[ f_a \to f_a \]
+
+or 
+
+\[ \text{personality} = [f_a] \]
+
 ** Define process per function
 *** Rational vs Irrational
 + Action generation
@@ -303,12 +305,7 @@ Modified connections:
 | $c$ | connection               |
 | $s$ | Symbol                   |
 | $P$ | Perlocutionary value set |
-* Goals
-+ +Compare personality theories+
-+ +As a process+
-+ Use Salve game
 * Use Salve game
-
 ** Remember
 Every chat bot ever:
 \[ \sigma \to \sigma \]
@@ -385,7 +382,6 @@ how -> StatusInquiry
 [[file:img/uml/pres:aimlsyms.png]]
 
 *** $s \to \sigma$
-
 #+BEGIN_SRC nxml
 <aiml>
 <category>
@@ -444,6 +440,7 @@ With:
 + Drop category tags
 
 *** But Illegal XML
+
 *** So we use YAML
 #+BEGIN_SRC yaml
 literals:
@@ -530,9 +527,7 @@ to:
  #+END_SRC
 
 ** Steering
-
 *** Starting from a dialogue
-
 | Who      | Utterance                                         |
 |----------+---------------------------------------------------|
 | Doctor   | Hi                                                |
@@ -544,7 +539,7 @@ to:
 | Doctor   | Oh, yes then you need some pain killers for this. |
 | /Sander/ | /Thank you doctor/                                |
 
-*** Create utterences
+*** Create
 #+CAPTION: greeting.yml
 #+BEGIN_SRC yaml
   literals:
@@ -552,15 +547,7 @@ to:
     - Hi
 #+END_SRC
 
-#+CAPTION: ask_reason_here.yml
-#+BEGIN_SRC yaml
-  literals:
-    - How can I help you?
-  regexes:
-    - "[Hh]ow can (.*)"
-#+END_SRC
-
-*** Connect the known utterences
+#+CAPTION: _connections.yml
 #+BEGIN_SRC yaml
 from:
  - greeting
@@ -572,8 +559,62 @@ to:
 #+END_SRC
 
 *** Make believes
-#+CAPTION: Believes YAML file
-#+NAME: code:yaml:sc-believes
+
+**** Goals
+\[ \phi = (a, s) \]
+
+| /   | <>     |
+| $a$ | Actor  |
+| $s$ | Symbol |
+| $\phi$ | Goal   |
+
+#+BEGIN_SRC yaml
+goals:
+  - actor: doctor
+    scene: diagnoses
+    symbol: have_painkillers
+  - actor: patient
+    scene: information_gathering
+    symbol: back_pain
+#+END_SRC
+
+**** Values
+#+CAPTION: Believes YAML
+#+BEGIN_SRC yaml
+values:
+  enthusiasm: 8
+  polite: 5
+#+END_SRC
+
+#+CAPTION: Connections YAML
+#+BEGIN_SRC yaml
+from:
+ - greeting
+to:
+ - symbol: greeting 
+   values:
+   - Polite
+ - symbol: status
+   restricted_to: patient
+   values:
+   - Polite
+   - Enthusiasm
+#+END_SRC
+
+**** Actors
+#+BEGIN_SRC yaml
+self: patient
+actors:
+  - patient
+  - doctor
+#+END_SRC
+
+**** Personality
+#+BEGIN_SRC yaml
+# ENFP
+personality: [Ne, Fi, Te, Si]
+#+END_SRC
+**** All together
 #+BEGIN_SRC yaml
 goals:
   - actor: doctor
@@ -593,24 +634,6 @@ actors:
 
 # ENFP
 personality: [Ne, Fi, Te, Si]
-#+END_SRC
-
-*** Modify connections for values scenes etc
-#+BEGIN_SRC yaml
-from:
- - greeting
-to:
- - symbol: greeting 
-   values:
-   - Polite
- - symbol: status
-   restricted_to: patient
-   values:
-   - Polite
-   - Enthusiasm
- - symbol: ask_reason_here
-   scene: information_gathering
-   restricted_to: doctor
 #+END_SRC
 
 *** Can also add drool rules
@@ -637,15 +660,36 @@ then
 end
 #+END_SRC
 
-** Architecture
+** Current architecture
 #+ATTR_HTML: :style width:100%
 [[./img/uml/architecture-concept.png]]
 
-* Goals
-+ +Compare personality theories+
-+ +As a process+
-+ +Use Salve game+
 
-* Demo time!
-Also questions time.
+* Testing
++ Create dialogue
++ Implement
++ Act like doctor
++ Expect replies
++ INTJ, ENFP, ISTP
+* Conclusion
++ Used Jung theory
++ Replaced AIML
++ Center of deliberation
++ Works for scenario
+* Future work
+** Social practice
++ Culture
++ Context
++ Norms
+** Multilogue architecture
+[[./img/uml/n-agent-arch.png]]
+** Other ideas
++ Use linguistic theory
++ Dynamically create symbol graph
++ Fuzzy matching
++ Statistical matching
++ GPU based matching
++ Emotions
++ UI improvements
+* Questions?
 
