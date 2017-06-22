@@ -3829,6 +3829,7 @@ A deployment diagram of this architecture can bee seen in figure
 #+NAME: fig:n-agent-arch
 #+BEGIN_SRC plantuml :cache yes :file img/uml/n-agent-arch.png :exports results
 
+  skinParam backgroundColor transparent
   folder scene{
     cloud sys.drools {
       component score
@@ -3869,7 +3870,7 @@ A deployment diagram of this architecture can bee seen in figure
 #+END_SRC
 #+CAPTION: Deployment diagram of desired architecture
 #+LABEL: fig:n-agent-arch
-#+RESULTS[2175bf151e4fe4f5ae54fdba0ca134983678c0d2]: fig:n-agent-arch
+#+RESULTS[94d7551a55c1eccb6e27f58fb140524484d49d94]: fig:n-agent-arch
 [[file:img/uml/n-agent-arch.png]]
 
 \doubleCleared

@@ -3,6 +3,7 @@
 #+REVEAL_ROOT: ./reveal.js-3.5.0
 #+REVEAL_THEME: blood
 #+REVEAL_TRANS: linear
+#+REVEAL_PLUGINS: notes
 
 # disable tic so it doesn't appear at the top but where we want it instead
 #+Options: toc:nil ^:nil 
@@ -11,29 +12,75 @@
 # we don't want numbering to appear in front of headings until
 #+Options: H:5
 
+#+BEGIN_NOTES
+Welcome
+#+END_NOTES
+
 * Please interupt
 I like discussion..
+
+#+BEGIN_NOTES
+For comments
+Questions
+#+END_NOTES
 
 * Communication training
 + Important
 + Expensive
+
+#+BEGIN_NOTES
++ Important
+  + Humans, social creatures
+  + Communicating now!
++ Expensive
+  + Third party to listen
+  + Another to judge
++ Solution = serious games
+#+END_NOTES
+
 * Communicate!
 #+CAPTION: Client view
 #+NAME:   fig:communicate-client
 [[./img/client-communicate.png]]
+
+#+BEGIN_NOTES
++ The game
++ Choose the right button
++ Doctor patient
+#+END_NOTES
 
 ** Editor
  #+CAPTION: Editor view communicate!
  #+NAME:   fig:communicate-editor
  [[./img/editor.png]]
 
+
+#+BEGIN_NOTES
++ Teacher makes scenario
++ Problematic because
+  + Options visible
+  + No creativity
++ Solution: Chatbots
+#+END_NOTES
 * Salve
+#+BEGIN_NOTES
++ Based upon ALICE
+#+END_NOTES
+
 ** Social practice
 + Context
 + Culture
 + Activity
+#+BEGIN_NOTES
++ My teachers' research
++ Context=Teasing
++ Activity=Core concept of study
+#+END_NOTES
+
 ** Emotions
-+ 
++ OCC
++ Decay based
++ In drools
 ** Scenes
 + Group patterns
 + More argressive
@@ -497,35 +544,6 @@ StatusInquiry <= Greeting
 #+RESULTS[e79804d7cdce8255ed50bedfcf7c7c8cfb9484f2]: fig:pres:connections
 [[file:img/uml/pres:connections.png]]
 
-*** Extended example
-#+NAME: code-yaml-complex
-#+BEGIN_SRC yaml
-from:
- - greeting
-to:
- - symbol: greeting
- - symbol: ask_reason_here
-   restricted_to: doctor
----
-from:
- - ask_reason_here
-to:
- - restricted_to: patient
-   symbol: need_medicine
- - restricted_to: patient
-   symbol: broken_arms
- - restricted_to: patient
-   symbol: feel_sick
----
-from:
- - need_medicine
- - greeting
-to:
- - restricted_to: doctor
-   symbol: why_need
- - symbol: status_inquery
- #+END_SRC
-
 ** Steering
 *** Starting from a dialogue
 | Who      | Utterance                                         |
@@ -559,7 +577,6 @@ to:
 #+END_SRC
 
 *** Make believes
-
 **** Goals
 \[ \phi = (a, s) \]
 
@@ -663,7 +680,6 @@ end
 ** Current architecture
 #+ATTR_HTML: :style width:100%
 [[./img/uml/architecture-concept.png]]
-
 
 * Testing
 + Create dialogue
