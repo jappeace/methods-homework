@@ -648,7 +648,6 @@ This is also true for the irrational functions.
  that there exist personalities outside of the structure originally imposed by
  MBTI and the subsequent PPSDQ cite:loomis1980testing.
 
- 
 *** Comparison of theories
  \quadCleared
  To re-iterate, we are interested in a framework that is realistic, and easy to

@@ -3,11 +3,7 @@
 #+REVEAL_ROOT: ./reveal.js-3.5.0
 #+REVEAL_THEME: blood
 #+REVEAL_TRANS: linear
-#+REVEAL_MULTIPLEX_SOCKETIO_URL: ./socket.io-1.4.5.js
-#+REVEAL_MULTIPLEX_ID: f38051462c23494a
-#+REVEAL_MULTIPLEX_SECRET: 14981388466134251465
-#+REVEAL_MULTIPLEX_URL: https://reveal-js-multiplex-ccjbegmaii.now.sh/
-#+REVEAL_PLUGINS: (notes multiplex)
+#+REVEAL_PLUGINS: notes 
 
 # disable tic so it doesn't appear at the top but where we want it instead
 #+Options: toc:nil ^:nil 
@@ -85,11 +81,32 @@ Questions
 + OCC
 + Decay based
 + In drools
+
+#+BEGIN_NOTES
++ Emotions != personality
++ Start high goes slowly lower
++ Drools later
+#+END_NOTES
+
 ** Scenes
 + Group patterns
 + More argressive
+
+#+BEGIN_NOTES
++ Enable disable
++ Broader patterns
+#+END_NOTES
+
 ** Architecture
 [[./img/abstract-architecture.png]]
+
+#+BEGIN_NOTES
++ See discussed concepts
++ Abstract architecture
++ Analyzed in depth
++ Not technical
+#+END_NOTES
+
 ** AIML
 #+CAPTION: AIML example: why are you here?
 #+NAME: code:aiml-example-why-here
@@ -114,6 +131,13 @@ Questions
 </aiml>
 #+END_SRC
 
+#+BEGIN_NOTES
++ From pattern to reply
++ Can be broad
++ Star
++ This is all ALICE
+#+END_NOTES
+
 ** S-AIML
 
 #+CAPTION: Extended AIML that uses knowledge
@@ -133,6 +157,14 @@ Questions
 </category>
 </aiml>
 #+END_SRC
+
+#+BEGIN_NOTES
++ Extensions by salve
++ Read write to drools engine
+  + Disable patterns
+  + Enable patterns
+  + Alter templates
+#+END_NOTES
 
 ** Drools rule
 #+CAPTION: Drools rule example
@@ -159,17 +191,53 @@ then
 end
 #+END_SRC
 
+#+BEGIN_NOTES
++ Query
++ On fact base
++ Execute java code
+  + Alter fact base
+  + Interact with env
++ S-AIML reads factbase
+#+END_NOTES
+
 ** Client view
 #+CAPTION: Client view salve
 #+NAME:   fig:client-salve
 [[./img/client.png]]
+
+#+BEGIN_NOTES
++ Unity
++ User enters text
++ Bot replies
+  + Can show emotion
+  + Face expressions
+#+END_NOTES
 
 * Goals
 + Compare personality theories
 + As a process
 + Use Salve game
 
+#+BEGIN_NOTES
++ Everything before background
++ Then I came
++ These goals discussed initially
++ All things more later
++ I asked personality
+  + Because earlier interest
++ Teacher urged personality process
+  + Value based has been studied alot
+  + Process based is more elegant
++ I asked existing project
+  + I like reverse engeneering
+#+END_NOTES
+
 * Personality theories
+#+BEGIN_NOTES
++ Start with researching
++ I had little experience
++ Field of psychology
+#+END_NOTES
 ** OCEAN
 - Taxonomy mining
 - Factor analyses
@@ -177,32 +245,115 @@ end
 - Accepted
 - Measure: NEO-PI, NEO-FFI
 
+#+BEGIN_NOTES
++ Taxonomy=Data
++ Factor analyses
+  + Find variables
+  + Rotation
+#+END_NOTES
 ** Jung
 - Personality types
 - Free form questions
 - Introversion vs Extroversion
 - Rational vs Irattional
 
-*** $\mathcal{J} = \{ T_e, T_i, F_e, F_i, S_e, S_i, N_e, N_i\}$
+\[\mathcal{J} = \{ T_e, T_i, F_e, F_i, S_e, S_i, N_e, N_i\} \]
 
+#+BEGIN_NOTES
+- Attitudes
+- Functions
+- FA
+- Primary, auxiliary
+  - Can self identify
+- Jung: Type doesn't change
+  - Measurement can be innacurate
+  - Change trough trauma
+#+END_NOTES
+
+
+*** Rationale: Thinking
 | /     | <>                   |
 | $T_e$ | Thinking extroverted |
 | $T_i$ | Thinking introverted |
+
+#+BEGIN_NOTES
+- $T_e$
+  - Real world
+  - With goals
+  - Solving problems
+  - System to check
+  - My auxiliary
+- $T_i$
+  - Deductive thinking
+  - Axiomatic system
+  - Math
+  - Not solve problems (neccisarly)
+#+END_NOTES
+
+*** Rationale: Feeling
+| /     | <>                   |
 | $F_e$ | Feeling extroverted |
 | $F_i$ | Feeling introverted |
+
+#+BEGIN_NOTES
+- *Not* about emotions
+- $F_e$
+  - Judge objects on beauty
+  - Group values
+  - Fashion
+- $F_i$
+  - Personal values
+  - Empathetic
+  - Still waters run deep
+#+END_NOTES
+
+*** Irationale: Sensing
+| /     | <>                   |
 | $S_e$ | Sensing extroverted |
 | $S_i$ | Sensing introverted |
+
+
+#+BEGIN_NOTES
+- *Not* about emotions
+- $S_e$
+  - Act on concrete data now
+  - Practical and realistic
+  - Athletes and heavy machines
+- $S_i$
+  - Concrete data memories
+  - QA as possible job
+#+END_NOTES
+*** Irationale: Intuition
+| /     | <>                   |
 | $N_e$ | Intuition extroverted |
 | $N_i$ | Intuition introverted |
 
+#+BEGIN_NOTES
+- *Not* about emotions
+- $N_e$
+  - Ideas in every situation
+  - Entreperneurs
+  - Inspiring
+- $N_i$
+  - Posibilities in ideas
+  - Connecting ideas
+  - Maybe not understood
+  - Shaman or visonary
+  - My dominant
+#+END_NOTES
+
 ** MBTI
 - Carl Jung
-- In order
 - Quesstionaire measurement
+- In order
 - Critizised
 - PPSDQ, SL-TDI
 
 \[ INTJ = N_i > T_e  > F_i > S_e \]
+
+#+BEGIN_NOTES
+- Extends work of Jung
+#+END_NOTES
 
 ** Which one is the best?
 We need:
@@ -227,23 +378,75 @@ Because:
 - Solid thoery
 - Finite types (16)
 
+#+BEGIN_NOTES
+- 16 different chatbots
+  - Not OCEAN
+#+END_NOTES
+
 ** Which one is the best?
 
 ** Jung
 - Can assume MBTI
 - Later PPSDQ or SL-TDI
 - Mapping to OCEAN
+
+#+BEGIN_NOTES
+- What is mapping
+#+END_NOTES
+
 * Dialogue as process
-** Model the idea
-+ /Type signatures/
+
+#+BEGIN_NOTES
+- Model core idea.
+- Unite personality with dialogue
+#+END_NOTES
+
+** Some syntax
 + Categories
 + Arrows
 
-\[a \to b \to c \]
-\[a \to (b \to c) \]
-partial apply with $a$
+\[ a \to a \]
+\[ a \to b \]
 
-\[b \to c \]
+#+BEGIN_NOTES
+- Based on Haskell
+  - Roughly
+  - Because simple
+- Wanted to be understandable
+  - succeeded?
+  - Reduce possibilities
+- Category
+  - Integers
+  - Apples
+  - Unlike sets
+- Arrow
+  - is a function
+  - A processing step
+  - Some thinking
+- First +1
+  - Int -> Int
+- Second /2
+  - Int -> Float
+#+END_NOTES
+
+*** Model the idea
+ /Type signatures/
+
+ \[a \to b \to c \]
+ \[a \to (b \to c) \]
+
+ partial apply with $a$
+
+ \[ b \to c \]
+
+*** Data
+ \[ \text{a and b}=(a,b) \]
+ \[ \text{list a}=[a] \]
+
+ #+BEGIN_NOTES
+ - Algabraic data types
+ - List is ordered
+ #+END_NOTES
 
 ** Every agent ever
 \[ B \to \pi \to (B, \Delta) \]
@@ -252,6 +455,20 @@ partial apply with $a$
 | $B$ | Believes          |
 | $\pi$ | Sense information |
 | $\Delta$ | Actions           |
+
+#+BEGIN_NOTES
+- What is an agent?
+  - Concepts attributed to humans
+  - Autonomous
+  - Social
+- Fits?
+- Plans are arrows
+- Desires in believes
+- Not complete
+  - System carries believes back
+  - System delieves sense info
+  - System executes actions
+#+END_NOTES
 
 ** Every chatbot ever
 Stateless:
@@ -264,6 +481,14 @@ Statefull:
 | $\sigma$ | String   |
 | $B$ | Believes |
 
+#+BEGIN_NOTES
+- Reduction in scope
+- String is textmsg
+  - User types
+- Track state in believes
+  - State is disabling/enabling patterns
+#+END_NOTES
+
 ** Core idea
 Add in between step:
 \[ \sigma \to s \]
@@ -273,6 +498,13 @@ Add in between step:
 | $\sigma$ | String |
 | $s$ | Symbol |
 
+#+BEGIN_NOTES
+- Symbol is sthng we know
+  - Encoded in system
+  - 'Understanding'
+- We can get it from to string
+#+END_NOTES
+
 *** Statefull symbol chatbot
 
 \[B \to s \to  (s, B)\]
@@ -280,6 +512,13 @@ Add in between step:
 | /   | <>       |
 | $B$ | Believes |
 | $s$ | Symbol   |
+
+#+BEGIN_NOTES
+- More simple because..
+  - We KNOW
+- Incomplete
+  - No connections
+#+END_NOTES
 
 *** Connect symbols in graph
 \[ c = (s_1, s_2) \]
@@ -291,6 +530,12 @@ Add in between step:
 | $\mathcal{S}$ | All encoded symbols |
 | $G$           | Symbol graph        |
 
+#+BEGIN_NOTES
+- Connection is symbol one and two
+- Connections are in graph
+- Symbols are encoded
+#+END_NOTES
+
 *** Add game tree
  \[ u = (a,s) \]
  \[ D = (u, [D])\]
@@ -301,6 +546,16 @@ Add in between step:
 | $s$ | Symbol        |
 | $D$ | Dialogue tree |
 
+#+BEGIN_NOTES
+- Utterance is sthng said
+  - By agent
+  - In symbol
+- If we think ahead
+  - Get tree structure
+  - Dialogutree models that
+- First child in diatree is preffered
+#+END_NOTES
+
 *** Reasoning model
  \[ B \to D \overset{f_a}{\to} (B, D) \]
 
@@ -309,12 +564,27 @@ Add in between step:
 | $D$   | Dialogue tree    |
 | $f_a$ | Jungian function |
 
+#+BEGIN_NOTES
+- More complex
+- Can think ahead
+- Can pass reasoning to next $f_a$
+- This is what we want
+#+END_NOTES
+
 *** In order
 \[ f_a \to f_a \]
 
 or 
 
 \[ \text{personality} = [f_a] \]
+
+#+BEGIN_NOTES
+- Either as next arg
+  - Controll in $F_a$
+- In list
+  - Controll in system
+- We use both
+#+END_NOTES
 
 ** Define process per function
 *** Rational vs Irrational
