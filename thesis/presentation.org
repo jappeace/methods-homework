@@ -3,7 +3,11 @@
 #+REVEAL_ROOT: ./reveal.js-3.5.0
 #+REVEAL_THEME: blood
 #+REVEAL_TRANS: linear
-#+REVEAL_PLUGINS: notes
+#+REVEAL_MULTIPLEX_SOCKETIO_URL: ./socket.io-1.4.5.js
+#+REVEAL_MULTIPLEX_ID: f38051462c23494a
+#+REVEAL_MULTIPLEX_SECRET: 14981388466134251465
+#+REVEAL_MULTIPLEX_URL: https://reveal-js-multiplex-ccjbegmaii.now.sh/
+#+REVEAL_PLUGINS: (notes multiplex)
 
 # disable tic so it doesn't appear at the top but where we want it instead
 #+Options: toc:nil ^:nil 
