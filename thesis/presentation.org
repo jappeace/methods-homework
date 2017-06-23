@@ -482,6 +482,8 @@ Statefull:
 | $B$ | Believes |
 
 #+BEGIN_NOTES
+- What is a chatbot?
+  - Program that replies in text
 - Reduction in scope
 - String is textmsg
   - User types
@@ -499,7 +501,7 @@ Add in between step:
 | $s$ | Symbol |
 
 #+BEGIN_NOTES
-- Symbol is sthng we know
+- Symbol is something we know
   - Encoded in system
   - 'Understanding'
 - We can get it from to string
@@ -587,10 +589,22 @@ or
 #+END_NOTES
 
 ** Define process per function
+
+#+BEGIN_NOTES
+- Think intrepertation
+- Jung combines dialogue deliberation
+#+END_NOTES
+
 *** Rational vs Irrational
 + Action generation
 + Sort by preference
 + Modify the Dialogue tree
+
+#+BEGIN_NOTES
+- Our intrepertation
+  - Other interpretations can coincide
+- Think alligns
+#+END_NOTES
 
 *** Irrational
 Action generation
@@ -599,12 +613,24 @@ Action generation
 + $S_e$ Breath (all available)
 + $S_i$ Learned connection else random
 
+#+BEGIN_NOTES
++ $N$ should be back progegation
+  + Trouble with loops
++ $S_i$ should be memories
+#+END_NOTES
 *** Rational
-Sort by preference
+Sorts by preference
 + $T_e$ Priority on goals, else scene transitions
 + $T_i$ Priority on goals, else favour more options
 + $F_i$ Interal perlocutionary values
 + $F_e$ Learned perlocutionary values
+
+#+BEGIN_NOTES
++ Goals encoded in believes
++ Perlocutionary values, values in believes
++ $F$ use lookup table
++ $F_e$ is learning like Campos
+#+END_NOTES
 
 **** Goals
 \[ \phi = (a, s) \]
@@ -617,6 +643,10 @@ Sort by preference
 - Can compare priority
 - Can see if finished
 
+#+BEGIN_NOTES
+Used by thinking
+#+END_NOTES
+
 **** Perlocutionary values
 Modified connections:
 
@@ -626,13 +656,27 @@ Modified connections:
 | $c$ | connection               |
 | $s$ | Symbol                   |
 | $P$ | Perlocutionary value set |
+
+#+BEGIN_NOTES
+Used by Feeling
+#+END_NOTES
+
 * Use Salve game
+
+#+BEGIN_NOTES
++ How to combine?
+#+END_NOTES
+
 ** Remember
 Every chat bot ever:
 \[ \sigma \to \sigma \]
 
 | /   | <>       |
 | $\sigma$ | String   |
+
+#+BEGIN_NOTES
++ String is a user message
+#+END_NOTES
 
 ** Even Alice with AIML
 \[ \sigma \to \sigma \]
@@ -650,8 +694,9 @@ Every chat bot ever:
 #+END_SRC
 
 #+NAME: fig:pres:depaimlcats
-#+BEGIN_SRC plantuml :cache yes :file img/uml/pres:depaimlcats.png :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/pres:depaimlcats.svg :exports results
 skinParam backgroundColor transparent
+
 usecase "How are you" as how
 
 storage "Not doing well today." as notwell
@@ -660,9 +705,9 @@ how -> notwell
 #+END_SRC
 
 #+LABEL: fig:pres:depaimlcats
-#+ATTR_HTML: :style width:50%
-#+RESULTS[4eecfb19d7735dd69705fc1ab1e8ef174d0b6bde]: fig:pres:depaimlcats
-[[file:img/uml/pres:depaimlcats.png]]
+#+ATTR_HTML: :style width:100%
+#+RESULTS[c47369a41cc60a9075bf6b0c9147590aab9f9c32]: fig:pres:depaimlcats
+[[file:img/uml/pres:depaimlcats.svg]]
 
 ** The in between step
 \[ \sigma \to s \]
