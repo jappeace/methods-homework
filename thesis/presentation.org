@@ -733,7 +733,7 @@ how -> notwell
 #+END_SRC
 
 #+NAME: fig:pres:aimlsyms
-#+BEGIN_SRC plantuml :cache yes :file img/uml/pres:aimlsyms.png :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/pres:aimlsyms.svg :exports results
 skinParam backgroundColor transparent
 usecase "How are you" as how
 
@@ -743,9 +743,9 @@ how -> StatusInquiry
 #+END_SRC
 
 #+LABEL: fig:pres:aimlsyms
-#+ATTR_HTML: :style width:50%
-#+RESULTS[abf8c7cfccd18abae2fbb1e63b5eee57d78e9122]: fig:pres:aimlsyms
-[[file:img/uml/pres:aimlsyms.png]]
+#+ATTR_HTML: :style width:100%
+#+RESULTS[f83625dd3fa507ca4453e722687426a5ec24e8a2]: fig:pres:aimlsyms
+[[file:img/uml/pres:aimlsyms.svg]]
 
 *** $s \to \sigma$
 #+BEGIN_SRC nxml
@@ -766,7 +766,7 @@ how -> StatusInquiry
 #+END_SRC
 
 #+NAME: fig:pres:aimlliters
-#+BEGIN_SRC plantuml :cache yes :file img/uml/pres:aimlliters.png :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/pres:aimlliters.svg :exports results
 skinParam backgroundColor transparent
   usecase "How are you?" as howq
   usecase "How are you *" as how
@@ -784,9 +784,9 @@ howstar --> StatusInquiry
 #+END_SRC
 
 #+LABEL: fig:pres:aimlliters
-#+ATTR_HTML: :style width:50%
-#+RESULTS[9a3cf96aaf94827cf42c7415f6a275a2e4efb4c1]: fig:pres:aimlliters
-[[file:img/uml/pres:aimlliters.png]]
+#+ATTR_HTML: :style width:80%
+#+RESULTS[aa85d6107856d0b7663a997957e89a8222357207]: fig:pres:aimlliters
+[[file:img/uml/pres:aimlliters.svg]]
 
 *** Terser
 #+BEGIN_SRC xml
@@ -806,6 +806,12 @@ With:
 + Drop category tags
 
 *** But Illegal XML
+
+#+BEGIN_NOTES
++ Why use XML?
+  + Not dataformat
+  + Very verbose
+#+END_NOTES
 
 *** So we use YAML
 #+BEGIN_SRC yaml
@@ -830,6 +836,12 @@ Still with symbol name as filename.
 | $\mathcal{S}$ | All encoded symbols   |
 | $G$           | Symbol graph          |
 
+#+BEGIN_NOTES
++ Need to represent
++ Added actors restriction
+  + Prevent werid situations
+#+END_NOTES
+
 *** In YAML
 #+BEGIN_SRC yaml
 from:
@@ -840,9 +852,7 @@ to:
 #+END_SRC
 
 #+NAME: fig:pres:connections
-#+BEGIN_SRC plantuml :cache yes :file img/uml/pres:connections.png :exports results
-skinParam backgroundColor transparent
-
+#+BEGIN_SRC plantuml :cache yes :file img/uml/pres:connections.svg :exports results
 node StatusInquiry[
   StatusInquiry
   ----
@@ -856,14 +866,25 @@ node Greeting [
 
 Greeting => Greeting
 StatusInquiry <= Greeting 
-
 #+END_SRC
 
 #+LABEL: fig:pres:connections
-#+RESULTS[e79804d7cdce8255ed50bedfcf7c7c8cfb9484f2]: fig:pres:connections
-[[file:img/uml/pres:connections.png]]
+#+RESULTS[e7b66c174ba1f6ac72d727dc7de36084cd03de5f]: fig:pres:connections
+[[file:img/uml/pres:connections.svg]]
+
+
+#+BEGIN_NOTES
++ This is how
++ This in place
+  + Think about personality
+#+END_NOTES
 
 ** Steering
+#+BEGIN_NOTES
++ Have connections
++ How certain personalities go where
+#+END_NOTES
+
 *** Starting from a dialogue
 | Who      | Utterance                                         |
 |----------+---------------------------------------------------|
@@ -875,6 +896,11 @@ StatusInquiry <= Greeting
 | /Sander/ | /When I lifted a heavy object./                   |
 | Doctor   | Oh, yes then you need some pain killers for this. |
 | /Sander/ | /Thank you doctor/                                |
+
+#+BEGIN_NOTES
++ Start with dialogue
++ One for each personality
+#+END_NOTES
 
 *** Create
 #+CAPTION: greeting.yml
@@ -895,7 +921,13 @@ to:
    scene: information_gathering
 #+END_SRC
 
+#+BEGIN_NOTES
++ Encode symbols
++ Respective connections
+#+END_NOTES
+
 *** Make believes
+
 **** Goals
 \[ \phi = (a, s) \]
 
@@ -914,6 +946,11 @@ goals:
     symbol: back_pain
 #+END_SRC
 
+#+BEGIN_NOTES
++ Goals encoded in believes
++ Top is most important
++ No equality (as list)
+#+END_NOTES
 **** Values
 #+CAPTION: Believes YAML
 #+BEGIN_SRC yaml
@@ -937,6 +974,14 @@ to:
    - Enthusiasm
 #+END_SRC
 
+#+BEGIN_NOTES
++ Lookup table in believes
++ The scenario tells what is polite
+  + Valuation happens with believes
++ Not value based
+  + A personality can hate being polite
+#+END_NOTES
+
 **** Actors
 #+BEGIN_SRC yaml
 self: patient
@@ -945,11 +990,22 @@ actors:
   - doctor
 #+END_SRC
 
+#+BEGIN_NOTES
++ To expend connections
++ To know one self
++ Just a technicallity
+#+END_NOTES
+
 **** Personality
 #+BEGIN_SRC yaml
 # ENFP
 personality: [Ne, Fi, Te, Si]
 #+END_SRC
+
+#+BEGIN_NOTES
++ Jungian functions
++ Left one most important
+#+END_NOTES
 **** All together
 #+BEGIN_SRC yaml
 goals:
@@ -971,6 +1027,10 @@ actors:
 # ENFP
 personality: [Ne, Fi, Te, Si]
 #+END_SRC
+
+#+BEGIN_NOTES
++ Everything combined
+#+END_NOTES
 
 *** Can also add drool rules
 #+CAPTION: Low level greeting reply
@@ -996,9 +1056,17 @@ then
 end
 #+END_SRC
 
+
+#+BEGIN_NOTES
++ Gode mode
+  + As see next
++ Required for greeting
++ Can treat repition specifically
+#+END_NOTES
+
 ** Current architecture
 #+ATTR_HTML: :style width:100%
-[[./img/uml/architecture-concept.png]]
+[[./img/uml/architecture-concept.svg]]
 
 * Testing
 + Create dialogue
@@ -1017,7 +1085,7 @@ end
 + Context
 + Norms
 ** Multilogue architecture
-[[./img/uml/n-agent-arch.png]]
+[[./img/uml/n-agent-arch.svg]]
 ** Other ideas
 + Use linguistic theory
 + Dynamically create symbol graph
