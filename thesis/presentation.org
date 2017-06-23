@@ -706,7 +706,7 @@ how -> notwell
 
 #+LABEL: fig:pres:depaimlcats
 #+ATTR_HTML: :style width:100%
-#+RESULTS[c47369a41cc60a9075bf6b0c9147590aab9f9c32]: fig:pres:depaimlcats
+#+RESULTS[cdac880ca96d70107675a3e4cdecac66c5964660]: fig:pres:depaimlcats
 [[file:img/uml/pres:depaimlcats.svg]]
 
 ** The in between step
@@ -869,7 +869,7 @@ StatusInquiry <= Greeting
 #+END_SRC
 
 #+LABEL: fig:pres:connections
-#+RESULTS[e7b66c174ba1f6ac72d727dc7de36084cd03de5f]: fig:pres:connections
+#+RESULTS[0089ec823ad6cc3d0e145d4f62c3fe471a7895b6]: fig:pres:connections
 [[file:img/uml/pres:connections.svg]]
 
 
