@@ -1086,8 +1086,9 @@ in the following manner:
 + /Competences/, Give injection, empathetic talk
 
 #+NAME: fig:sp-activity
-#+BEGIN_SRC plantuml :cache yes :file img/uml/sp-activity.svg :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/sp-activity.tex :cmdline -tlatex:nopreamble :exports none
 [*] --> Greeting
+
 
 state "Data gathering" as data
 
@@ -1101,12 +1102,14 @@ data --> Finishing
 Diagnoses --> Finishing
 
 Finishing --> [*]
-
 #+END_SRC
+
+#+RESULTS[b4df1201e0762c4d97c613c3385c786f94799dea]: fig:sp-activity
+[[file:img/uml/sp-activity.tex]]
+
 #+CAPTION: Plan pattern example 
 #+LABEL: fig:sp-activity
-#+RESULTS[eed5090d9e8baa37213edc00927d934a7624b873]: fig:sp-activity
-[[file:img/uml/sp-activity.svg]]
+#+INCLUDE: "./img/uml/sp-activity.tex" :only-contents t 
 
 \doubleCleared
 We can imagine personality should have /a/ influence on social practice
