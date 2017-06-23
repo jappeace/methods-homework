@@ -66,11 +66,6 @@
 # for \FloatBarrier, prevents figures from floating over sections etc
 #+LATEX_HEADER: \usepackage{placeins}
 
-# Plant uml svg exports
-#+LATEX_HEADER: \usepackage[convert=yes]{svg}
-
-#+LATEX_HEADER: \graphicspath{{img/uml/}}
-
 \todo[inline]{Table alteration darker: dark enough now?}
 ** Abstract                                                          
 :PROPERTIES:
@@ -1086,9 +1081,8 @@ in the following manner:
 + /Competences/, Give injection, empathetic talk
 
 #+NAME: fig:sp-activity
-#+BEGIN_SRC plantuml :cache yes :file img/uml/sp-activity.tex :cmdline -tlatex:nopreamble :exports none
+#+BEGIN_SRC plantuml :cache yes :file img/uml/sp-activity.png :exports results
 [*] --> Greeting
-
 
 state "Data gathering" as data
 
@@ -1102,14 +1096,13 @@ data --> Finishing
 Diagnoses --> Finishing
 
 Finishing --> [*]
+
 #+END_SRC
-
-#+RESULTS[b4df1201e0762c4d97c613c3385c786f94799dea]: fig:sp-activity
-[[file:img/uml/sp-activity.tex]]
-
 #+CAPTION: Plan pattern example 
 #+LABEL: fig:sp-activity
-#+INCLUDE: "./img/uml/sp-activity.tex" :only-contents t 
+#+ATTR_LATEX: :width 0.5\textwidth
+#+RESULTS[7a43fec1ceafd4b5f5a5ceaf9e08cbc3996b06c6]: fig:sp-activity
+[[file:img/uml/sp-activity.png]]
 
 \doubleCleared
 We can imagine personality should have /a/ influence on social practice
@@ -1340,15 +1333,15 @@ A web socket is used because it allows the chatbot to be pro-active,
 which is more difficult with a technology such as REST.
 
 #+NAME: fig:components
-#+BEGIN_SRC plantuml :cache yes :file img/uml/components.svg :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/components.png :exports results
 [Unity Client] <--> Websocket : json
 [Wildfly Server] <--> Websocket : json
 #+END_SRC
 #+CAPTION: Component diagram of the application
 #+LABEL: fig:components
 #+ATTR_LATEX: :width 0.5\textwidth
-#+RESULTS[78b9fd7f0d976eae4f410396d83d0158117c2524]: fig:components
-[[file:img/uml/components.svg]]
+#+RESULTS[6554c350da9b80944f22f0c6c29686b4608b9b50]: fig:components
+[[file:img/uml/components.png]]
 
 **** Source tree
     \quadCleared
@@ -1372,7 +1365,7 @@ which is more difficult with a technology such as REST.
     figure [[fig:sequence]].
 
 #+NAME: fig:sequence
-#+BEGIN_SRC plantuml :cache yes :file img/uml/sequence.svg :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/sequence.png :exports results
   actor client
   entity server
   client -> server : login(userid,password)
@@ -1389,8 +1382,8 @@ which is more difficult with a technology such as REST.
 #+CAPTION: Sequence diagram of a typical game
 #+LABEL: fig:sequence
 #+ATTR_LATEX: :width 0.5\textwidth
-#+RESULTS[d3140b3491b1038d272dadf5795bd158a6bdfa0a]: fig:sequence
-[[file:img/uml/sequence.svg]]
+#+RESULTS[db5e6bada22b64bf70a330d1219fedc990f11453]: fig:sequence
+[[file:img/uml/sequence.png]]
 
 *** Server architecture
 <<Server architecture>>
@@ -1402,7 +1395,7 @@ The most important classes are shown in figure [[fig:class]].
 the client enter.
 
 #+NAME: fig:class
-#+BEGIN_SRC plantuml :cache yes :file img/uml/class.svg :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/class.png :exports results
   interface ChatBotEngine{
     +String chat(String request)
     +void setSession(Session session)
@@ -1438,8 +1431,8 @@ the client enter.
 #+END_SRC
 #+CAPTION: Class diagram of the server, where KIE is the engine that handles the Drools
 #+LABEL: fig:class
-#+RESULTS[a966b405e8e6d1dd5ec6bb030979a0ac4bfbf228]: fig:class
-[[file:img/uml/class.svg]]
+#+RESULTS[da1283423804d9bccc8868552768b582306da369]: fig:class
+[[file:img/uml/class.png]]
 
 \doubleCleared
 The =WebsocketService= uses a =ChatbotEngine= to determine how to reply to user utterances,
@@ -1470,7 +1463,7 @@ are used as communication with external libraries
 (for example the =WebSocket= and =ChatSession=).
 
 #+NAME: fig:construction
-#+BEGIN_SRC plantuml :cache yes :file img/uml/construction.svg :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/construction.png :exports results
 |WebSocket|
 start
 :Receve StartGame message;
@@ -1490,8 +1483,8 @@ stop
 #+END_SRC
 #+CAPTION: Activity diagram of a server game construction
 #+LABEL: fig:construction
-#+RESULTS[c63c005e4eaa89849bf28e81a7a880d92f94aeae]: fig:construction
-[[file:img/uml/construction.svg]]
+#+RESULTS[3acde42e45cb6f546f0d34b2c135845e8f592a48]: fig:construction
+[[file:img/uml/construction.png]]
 
 **** Text processing
 <<Text Processing>>
@@ -1575,7 +1568,7 @@ Figure [[fig:utterance-proccesing]] gives a detailed overview of utterance proce
 
 
 #+NAME: fig:utterance-proccesing
-#+BEGIN_SRC plantuml :cache yes :file img/uml/utterance-proccesing.svg :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/utterance-proccesing.png :exports results
           |WebSocket|
           start
           :Utterance received;
@@ -1616,8 +1609,8 @@ Figure [[fig:utterance-proccesing]] gives a detailed overview of utterance proce
 #+CAPTION: Activity diagram of user utterance processing
 #+LABEL: fig:utterance-proccesing
 #+ATTR_LATEX: :width 1.0\textwidth
-#+RESULTS[d1acd617781b255f666c0bbe2b4b39b9f09ebe44]: fig:utterance-proccesing
-[[file:img/uml/utterance-proccesing.svg]]
+#+RESULTS[f9f1a787a2ef8d9859808313637ca06b328116d6]: fig:utterance-proccesing
+[[file:img/uml/utterance-proccesing.png]]
 
 \cleared
 As can be seen in the diagram the message processing happens inside the Alice
@@ -1640,7 +1633,7 @@ which will block the thread until there is an item in the list.
 This is represented in the state diagram as the =ReadDroolTag= state.
 
 #+NAME: fig:state:aiml
-#+BEGIN_SRC plantuml :cache yes :file img/uml/figstateaiml.svg :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/figstateaiml.png :exports results
 [*] -> Pattern
 Pattern -> Template
 Pattern --> Drools
@@ -1652,8 +1645,8 @@ Template -> [*]
 #+CAPTION: State diagram of utterance processing
 #+LABEL: fig:state:aiml
 #+ATTR_LATEX: :width 0.5\textwidth
-#+RESULTS[92b99acad1bbc48ed73eab7868a8574b19934e24]: fig:state:aiml
-[[file:img/uml/figstateaiml.svg]]
+#+RESULTS[e004be8f35a1f147fb2883719a5fb53bf630e02b]: fig:state:aiml
+[[file:img/uml/figstateaiml.png]]
 
 
 \clearpage
@@ -2114,7 +2107,7 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  An example of an expended dialogue tree can be seen in figure [[fig:dialoguetree]].
 
  #+NAME: fig:dialoguetree
- #+BEGIN_SRC plantuml :cache yes :file img/uml/dialoguetree.svg :exports results
+ #+BEGIN_SRC plantuml :cache yes :file img/uml/dialoguetree.png :exports results
  object D0{
  a = "doctor"
  s = "Greeting"
@@ -2167,8 +2160,8 @@ so $f_a$ can be any of the function attitudes discussed in section [[sec:types]]
  #+CAPTION: Object diagram of a dialogue tree, at the leaves deliberation stopped.
  #+LABEL: fig:dialoguetree
  #+ATTR_LATEX: :width 0.5\textwidth
- #+RESULTS[f96b0acb8ceaa17cb1a60b03cdd688a5ca6e0c00]: fig:dialoguetree
- [[file:img/uml/dialoguetree.svg]]
+ #+RESULTS[cd0e7e478418a395091db0d14239c8421fe35813]: fig:dialoguetree
+ [[file:img/uml/dialoguetree.png]]
 
  \doubleCleared
  With this in place we can replace both the $S$ and $\Delta$ with the $D$ and
@@ -2759,7 +2752,7 @@ where the dashed arrow means constructs,
 the solid arrow means uses and the other lines mean interacts.
 
 #+NAME: fig:architecture-concept
-#+BEGIN_SRC plantuml :cache yes :file img/uml/architecture-concept.svg :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/architecture-concept.png :exports results
   skinParam backgroundColor transparent
   package bot{
     cloud Drools {
@@ -2792,8 +2785,8 @@ the solid arrow means uses and the other lines mean interacts.
 #+END_SRC
 #+CAPTION: Deployment diagram of implemented architecture
 #+LABEL: fig:architecture-concept
-#+RESULTS[c66351300477c65fb648fb89070f2f2039533c02]: fig:architecture-concept
-[[file:img/uml/architecture-concept.svg]]
+#+RESULTS[d7ad4a538aa95d8a6289f8072fb1b615404a8cc0]: fig:architecture-concept
+[[file:img/uml/architecture-concept.png]]
 
 \doubleCleared
 In figure [[fig:architecture-concept]] we can see the new deployment diagram.
@@ -2883,7 +2876,7 @@ used. These are the basic assumptions, or building blocks the implementation
 is constructed from.
 
 #+NAME: fig:droolclass
-#+BEGIN_SRC plantuml :cache yes :file img/uml/droolclass.svg :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/droolclass.png :exports results
   skinParam backgroundColor transparent
   enum PerlocutionaryValue
   class PerlocutionaryValueSet{
@@ -2952,8 +2945,8 @@ is constructed from.
 #+END_SRC
 #+CAPTION: Class diagram of the low level model
 #+LABEL: fig:droolclass
-#+RESULTS[975327b9657d2bd204622d2a9e7ef9659900c380]: fig:droolclass
-[[file:img/uml/droolclass.svg]]
+#+RESULTS[9613fa0af1a6753d27b6e00f421e8f0f1145f62f]: fig:droolclass
+[[file:img/uml/droolclass.png]]
 
 \cleared
 From figure [[fig:droolclass]] we can clearly see the importance of the =Symbol=
@@ -3026,9 +3019,8 @@ In figure [[fig:jungclass]] we can see the higher level structures of =Believes=
 =DialogueTree=. Note that we significantly simplified all classes from section
 [[Low level diagram]] in this figure to save space.
 
-
 #+NAME: fig:jungclass
-#+BEGIN_SRC plantuml :cache yes :file img/uml/jungclass.svg :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/jungclass.png :exports results
   skinParam backgroundColor transparent
   class Believes{
     +programmedConnections:ConnectionDatabase
@@ -3042,7 +3034,7 @@ In figure [[fig:jungclass]] we can see the higher level structures of =Believes=
   class DialogueTree{
     +options:[DialogueTree]
     +utterance:Utterance
-    +connectionUsed:Connection
+    +connection_used:Connection
   }
   package Drools{
     package Drools.db{
@@ -3075,12 +3067,11 @@ In figure [[fig:jungclass]] we can see the higher level structures of =Believes=
     Utterance --* Actor
   }
   DialogueTree -[hidden]-> Drools
-  skinparam defaultFontName Arial
 #+END_SRC
 #+CAPTION: Class diagram of the high level model
 #+LABEL: fig:jungclass
-#+RESULTS[58b22c2b359c2525b04f4f41a9f62e21af8eb35f]: fig:jungclass
-[[file:img/uml/jungclass.svg]]
+#+RESULTS[ef07c4845eb64d8ba10a99e04f62f5ea95cfdad3]: fig:jungclass
+[[file:img/uml/jungclass.png]]
 
 \quadCleared
 From figure [[fig:jungclass]] we can see the main clients of the low level drool package
@@ -3134,7 +3125,7 @@ value of the generic parameters is known which is done by connection database
 for example.
 
 #+NAME: fig:dbclass
-#+BEGIN_SRC plantuml :cache yes :file img/uml/dbclass.svg :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/dbclass.png :exports results
   package Drools.db{
     abstract class Database<Key,Value>{
       -values:Map<Key,Value>
@@ -3160,8 +3151,8 @@ for example.
 #+END_SRC
 #+CAPTION: The database package
 #+LABEL: fig:dbclass
-#+RESULTS[c77b1cc3dd10ba2b2f9ae45c00f5f9c2900d66fc]: fig:dbclass
-[[file:img/uml/dbclass.svg]]
+#+RESULTS[add574f335f862e5e54dc28214bdc3d97f659be0]: fig:dbclass
+[[file:img/uml/dbclass.png]]
 
 \quadCleared
 =SymbolDatabase= is the first database constructed during the initialization
@@ -3237,7 +3228,7 @@ To apply the function we use =applyNext()=,
 which returns a new =JungFuncArgs= object with the resulting values.
 
 #+NAME: fig:jungjavaclass
-#+BEGIN_SRC plantuml :cache yes :file img/uml/jungjavaclass.svg :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/jungjavaclass.png :exports results
 skinParam backgroundColor transparent
 interface JungFuncAccessor{
   + getFunction() : Function<JungFuncArgs, JungFuncArgs>
@@ -3271,8 +3262,8 @@ JungianFunction ..> JungFuncArgs
 #+END_SRC
 #+CAPTION: Jung in Java
 #+LABEL: fig:jungjavaclass
-#+RESULTS[b3462078b9075e0fac4b3e7e29f37c4977253d2f]: fig:jungjavaclass
-[[file:img/uml/jungjavaclass.svg]]
+#+RESULTS[726a09e81b64e8427cef8d44efb090848628fcc6]: fig:jungjavaclass
+[[file:img/uml/jungjavaclass.png]]
 
 *** Before and templates
 <<Before and templates>>
@@ -3283,7 +3274,7 @@ To do this several new data structures had to be introduced which can be seen
 in figure [[fig:templateclass]].
 
 #+NAME: fig:cache notemplateclass
-#+BEGIN_SRC plantuml :cache yes :file img/uml/templateclass.svg :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/templateclass.png :exports results
   class Symbol {
     +name:String
     +scene:Scene
@@ -3346,8 +3337,8 @@ in figure [[fig:templateclass]].
 
 #+CAPTION: Before and template class diagram
 #+LABEL: fig:templateclass
-#+RESULTS[73b86f2020355c74bee13fe24094eabe082c0bb2]: fig:cache notemplateclass
-[[file:img/uml/templateclass.svg]]
+#+RESULTS[9369d9064d088a03fc53246fb107cb2f5775046f]: fig:cache notemplateclass
+[[file:img/uml/templateclass.png]]
 
 
 \quadCleared
@@ -3389,7 +3380,7 @@ We can see the types that are defined in the dialogue Drools package in figure
 and that of the personality specific Drools in figure [[fig:supportclassperson]].
 
 #+NAME: fig:supportclassjava
-#+BEGIN_SRC plantuml :cache yes :file img/uml/supportclassjava.svg :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/supportclassjava.png :exports results
 
 package model{
 class Symbol
@@ -3420,8 +3411,8 @@ package Drools{
 #+CAPTION: Supporting types in Java
 #+LABEL: fig:supportclassjava
 #+ATTR_LATEX: :width 0.5\textwidth
-#+RESULTS[365b29c44b43ab74679e2923e45d5cd4a5bf2546]: fig:supportclassjava
-[[file:img/uml/supportclassjava.svg]]
+#+RESULTS[f789c4bb26dece3f3c667895afb3d407f463bdc0]: fig:supportclassjava
+[[file:img/uml/supportclassjava.png]]
 
 \quadCleared
 The classes described in figure [[fig:supportclassjava]] have the primary function
@@ -3436,7 +3427,7 @@ We for example need to know which connection was used to get to this point in
 the conversation to figure out the =PerlocationaryValueSet=.
 
 #+NAME: fig:supportclassdrools
-#+BEGIN_SRC plantuml :cache yes :file img/uml/supportclassdrools.svg :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/supportclassdrools.png :exports results
 
 package Drools{
   package model{
@@ -3484,8 +3475,8 @@ package dialogue{
 
 #+CAPTION: Supporting types in the dialogue Drools package
 #+LABEL: fig:supportclassdrools
-#+RESULTS[b486c7988e3c402bbe66f1f3bc2a4ff42b1eeb65]: fig:supportclassdrools
-[[file:img/uml/supportclassdrools.svg]]
+#+RESULTS[a688b910e5ada103f1a84bfa09d6eaee207c0d0b]: fig:supportclassdrools
+[[file:img/uml/supportclassdrools.png]]
 
 \cleared
 By studying figure [[fig:supportclassdrools]] we can start to understand what is
@@ -3497,7 +3488,7 @@ We can also see that to create a reply we need to have a =QueryDatabase=.
 This is the result of the template match searched in the utterance history.
 
 #+NAME: fig:supportclassperson
-#+BEGIN_SRC plantuml :cache yes :file img/uml/supportclassperson.svg :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/supportclassperson.png :exports results
 package model{
   class Believes
   class DialogueTree
@@ -3505,7 +3496,7 @@ package model{
 
 package personality{
   class PersonalityProcess{
-    +underConsideration: DialogueTree
+    +under_consideration: DialogueTree
     +believes:Believes
     +functionTasks:[]
   }
@@ -3518,8 +3509,8 @@ package personality{
 #+CAPTION: Supporting type in the personality Drools package
 #+LABEL: fig:supportclassperson
 #+ATTR_LATEX: :width 0.5\textwidth
-#+RESULTS[1281f58adc8a2f4679449a728907e9b051ec385f]: fig:supportclassperson
-[[file:img/uml/supportclassperson.svg]]
+#+RESULTS[b074494c2edcbfd3dacf2340a12faa839b869329]: fig:supportclassperson
+[[file:img/uml/supportclassperson.png]]
 
 \quadCleared
 In figure [[fig:supportclassperson]] we can see the drool defined =PersonalityProcess=.
@@ -3580,7 +3571,7 @@ in section [[db package]].
 This is why we postpone constructing these to the end.
 
 #+NAME: fig:initjung
-#+BEGIN_SRC plantuml :cache yes :file img/uml/initjung.svg :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/initjung.png :exports results
   |WebSocket|
   start
   :Receve StartGame message;
@@ -3601,8 +3592,8 @@ This is why we postpone constructing these to the end.
 #+END_SRC
 #+CAPTION: Activity diagram of a server game construction
 #+LABEL: fig:initjung
-#+RESULTS[9e6fc78f0b09cdece5abcbec1ab39ca3f74f72d1]: fig:initjung
-[[file:img/uml/initjung.svg]]
+#+RESULTS[45847c9f9bc829b639d91ab38fcd555cb9d9c944]: fig:initjung
+[[file:img/uml/initjung.png]]
 
 ** Operation
 \quadCleared
@@ -3614,7 +3605,7 @@ Together with the outline and the figures defined in section [[Support types]],
 we can quite precisely explain what is going on.
  
  #+NAME: fig:insert_meaning
- #+BEGIN_SRC plantuml :cache yes :file img/uml/insert_meaning.svg :exports results
+ #+BEGIN_SRC plantuml :cache yes :file img/uml/insert_meaning.png :exports results
  |WebSocket|
  start
  :Receve message;
@@ -3653,8 +3644,8 @@ we can quite precisely explain what is going on.
  #+END_SRC
  #+CAPTION: Activity diagram of deliberating on a user message
  #+LABEL: fig:insert_meaning
- #+RESULTS[417105dd5131143bcbee5cd630a0e635ef1534d3]: fig:insert_meaning
- [[file:img/uml/insert_meaning.svg]]
+ #+RESULTS[ba2ef7b0333cc8277765f73cc81a4e7ac3846b44]: fig:insert_meaning
+ [[file:img/uml/insert_meaning.png]]
 
 \doubleCleared
 This operation is starkly different from the one presented in section
@@ -3685,7 +3676,7 @@ the user said.
 Alternatives approaches are discussed in section [[Replace regex]].
 
 #+NAME: fig:state:yaml
-#+BEGIN_SRC plantuml :cache yes :file img/uml/figstateyaml.svg :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/figstateyaml.png :exports results
   state Drools{
   PatternMatching -> LowLevel
   PatternMatching --> HighLevel
@@ -3699,8 +3690,8 @@ Alternatives approaches are discussed in section [[Replace regex]].
 #+CAPTION: State diagram: Utterance processing with Drools
 #+ATTR_LATEX: :width 0.5\textwidth
 #+LABEL: fig:state:yaml
-#+RESULTS[8b739209d731c44590d640d152d5e1b1965c08b2]: fig:state:yaml
-[[file:img/uml/figstateyaml.svg]]
+#+RESULTS[91c67cdcbc4fe5fd0a81ff9cd72c7eddf5ea00be]: fig:state:yaml
+[[file:img/uml/figstateyaml.png]]
 
 \quadCleared
 To ensure rules are executed in a particular order we often wrap and unwrap
@@ -3835,7 +3826,7 @@ A deployment diagram of this architecture can bee seen in figure
 
 
 #+NAME: fig:n-agent-arch
-#+BEGIN_SRC plantuml :cache yes :file img/uml/n-agent-arch.svg :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/n-agent-arch.png :exports results
 
   skinParam backgroundColor transparent
   folder scene{
@@ -3878,8 +3869,8 @@ A deployment diagram of this architecture can bee seen in figure
 #+END_SRC
 #+CAPTION: Deployment diagram of desired architecture
 #+LABEL: fig:n-agent-arch
-#+RESULTS[8aae556e92ce43156f9ba70eeb4cee16b127e007]: fig:n-agent-arch
-[[file:img/uml/n-agent-arch.svg]]
+#+RESULTS[94d7551a55c1eccb6e27f58fb140524484d49d94]: fig:n-agent-arch
+[[file:img/uml/n-agent-arch.png]]
 
 \doubleCleared
 If we compare figure [[fig:n-agent-arch]] with figure [[fig:architecture-concept]] from
@@ -4076,30 +4067,27 @@ process, or plans (See section [[BDI + Personality]]).
 #+END_SRC
 
 #+NAME: fig:dep:aimlcats
-#+BEGIN_SRC plantuml :cache yes :file img/uml/yesp:aimlcats.svg :exports results
-  skinParam backgroundColor transparent
-  skinparam defaultFontName Arial Unicode MS
+#+BEGIN_SRC plantuml :cache yes :file img/uml/dep:aimlcats.png :exports results
+frame "user says"{
+  usecase "How are you" as how
+  usecase "How * you" as howstar
+  usecase Hello
+}
 
-  frame "user says"{
-    usecase "How are yous" as how
-    usecase "How * you" as howstar
-    usecase Hello
-  }
+frame "bot replies"{
+  storage "Not doing well today." as notwell
+  storage Hi
+}
 
-  frame "bot replies"{
-    storage "Not doing well today." as notwell
-    storage Hi
-  }
-
-  how -->> notwell
-  howstar -->> notwell
-  Hello -->> Hi
+how -->> notwell
+howstar -->> notwell
+Hello -->> Hi
 #+END_SRC
 
 #+CAPTION: Deployment diagram of AIML example
 #+LABEL: fig:dep:aimlcats
-#+RESULTS[ce575e5498ad57ecf17085047230ed27c44178b2]: fig:dep:aimlcats
-[[file:img/uml/yesp:aimlcats.svg]]
+#+RESULTS[0889516e6ef32d64003ace8ae606a81cc01e305d]: fig:dep:aimlcats
+[[file:img/uml/dep:aimlcats.png]]
 
 \quadCleared
 There are also some other small problems,
@@ -4177,7 +4165,7 @@ The new deployment diagram can be seen in figure [[fig:dep:aimlsyms]].
 #+END_SRC
 
 #+NAME: fig:dep:aimlsyms
-#+BEGIN_SRC plantuml :cache yes :file img/uml/dep:aimlsyms.svg :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/dep:aimlsyms.png :exports results
 frame "user sais"{
   usecase "How are you" as how
   usecase "How * you" as howstar
@@ -4196,8 +4184,8 @@ Hello -->> Greeting
 
 #+CAPTION: Patterns to symbols
 #+LABEL: fig:dep:aimlsyms
-#+RESULTS[c67dd9864a1afd0948a20c7ef030f4d163336d9d]: fig:dep:aimlsyms
-[[file:img/uml/dep:aimlsyms.svg]]
+#+RESULTS[106f5543883a89c0ef55c28146a484e5a0abd7cd]: fig:dep:aimlsyms
+[[file:img/uml/dep:aimlsyms.png]]
 
 \quadCleared
 These changes remove the reactive nature of the chatbot,
@@ -4270,7 +4258,7 @@ engine.
 #+END_SRC
 
 #+NAME: fig:dep:aimlliters
-#+BEGIN_SRC plantuml :cache yes :file img/uml/dep:aimlliters.svg :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/dep:aimlliters.png :exports results
 frame "user sais"{
   usecase "How are you?" as howq
   usecase "How are you *" as how
@@ -4301,8 +4289,8 @@ Hello -->> Greeting
 
 #+CAPTION: Patterns to symbols with literals
 #+LABEL: fig:dep:aimlliters
-#+RESULTS[d489b99ec0553a17c7eba84e8a8941d95989afea]: fig:dep:aimlliters
-[[file:img/uml/dep:aimlliters.svg]]
+#+RESULTS[8f9d88e8099c1ee4b136d0f0b0d17eb31a02a660]: fig:dep:aimlliters
+[[file:img/uml/dep:aimlliters.png]]
 
 \quadCleared
 We can make the syntax from listing [[code:ailm-grouped-literal]] even more terse.
@@ -4570,7 +4558,7 @@ to:
 #+END_SRC
 
 #+NAME: fig:dep:connections
-#+BEGIN_SRC plantuml :cache yes :file img/uml/dep:connections.svg :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/dep:connections.png :exports results
 
   frame "user sais"{
     usecase "How are you?" as howq
@@ -4603,8 +4591,8 @@ to:
 
 #+CAPTION: Symbol graph deployment diagram
 #+LABEL: fig:dep:connections
-#+RESULTS[eff8ae6d361af92dbd48f2e5850237cdb6b88596]: fig:dep:connections
-[[file:img/uml/dep:connections.svg]]
+#+RESULTS[e40a7a65df711e768167e64733acb2fb35e01334]: fig:dep:connections
+[[file:img/uml/dep:connections.png]]
 
 *** Single file
 \quadCleared
@@ -4679,35 +4667,35 @@ to:
  #+END_SRC
 
 #+NAME: fig:dep:filedconns
-#+BEGIN_SRC plantuml :cache yes :file img/uml/dep:filedconns.svg :exports results
+#+BEGIN_SRC plantuml :cache yes :file img/uml/dep:filedconns.png :exports results
 cloud "symbols"{
-  node askReasonHere
-  node brokenArms
-  node feelSick
+  node ask_reason_here
+  node broken_arms
+  node feel_sick
 
   node greeting
-  node statusInquery
-  node whyNeed
-  node needMedicine
+  node status_inquery
+  node why_need
+  node need_medicine
 
-  askReasonHere --> needMedicine : a = patient
-  askReasonHere --> brokenArms : a = patient
-  askReasonHere -> feelSick : a = patient
+  ask_reason_here --> need_medicine : a = patient
+  ask_reason_here --> broken_arms : a = patient
+  ask_reason_here -> feel_sick : a = patient
 
-  needMedicine --> statusInquery
-  needMedicine --> whyNeed : a = doctor
-  greeting --> statusInquery
+  need_medicine --> status_inquery
+  need_medicine --> why_need : a = doctor
+  greeting --> status_inquery
   greeting --> greeting
-  greeting --> whyNeed : a = doctor
-  greeting --> askReasonHere : a = doctor
+  greeting --> why_need : a = doctor
+  greeting --> ask_reason_here : a = doctor
 }
 #+END_SRC
 
 #+CAPTION: Symbol graph of connections grouped in file
 #+LABEL: fig:dep:filedconns
 #+ATTR_LATEX: :width 0.65\textwidth
-#+RESULTS[54daf296efabb0c31143610889003114757e0e45]: fig:dep:filedconns
-[[file:img/uml/dep:filedconns.svg]]
+#+RESULTS[95cead6c9a6fb358accf6686cac4a2b62f2d9111]: fig:dep:filedconns
+[[file:img/uml/dep:filedconns.png]]
 
 **** Actors
 \doubleCleared
